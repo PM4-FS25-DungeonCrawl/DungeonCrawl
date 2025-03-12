@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Ensure full history for better analysis
+        #Install C Compiler
+      - name: Install Build Wrapper
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/build-wrapper-linux-x86/build-wrapper-linux-x86.zip
+          unzip build-wrapper-linux-x86.zip
+        #Build project with the C compiler
+      - name: Build with Wrapper
+        run: |
+          ./build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output make clean all
+
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          args: >
+            -Dsonar.cfamily.build-wrapper-output=bw-output
+            -Dsonar.projectKey=your_project_key
+
+      # Uncomment the following step to enforce quality gate failure
+      # - name: SonarQube Quality Gate
+      #   uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
