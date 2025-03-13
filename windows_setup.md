@@ -59,4 +59,6 @@ enable "Emulate terminal in the output console"
 
 navigate into project directory in WSL, then run:
 
+mkdir buildDir
+
 meson setup builddir
