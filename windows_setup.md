@@ -29,8 +29,8 @@ in the CLion settings
 
 under "File | Settings | Build, Execution, Deployment | Toolchains"
 
+click on the +, click WSL
 
-WSL
 
 Toolset: Ubuntu
 
@@ -55,7 +55,7 @@ in the Run window at the bottom, under … | Modify run configuration
 enable "Emulate terminal in the output console"
 
 
-#Before running
+# Before running
 
 navigate into project directory in WSL, then run:
 
