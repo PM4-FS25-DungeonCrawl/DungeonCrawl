@@ -13,4 +13,4 @@ helper_files = files(
 
 test_exe = executable('test_rogue', test_files, helper_files)
 
-test('rogue_test', test_exe)
+test('DungeonCrawl_test', test_exe)

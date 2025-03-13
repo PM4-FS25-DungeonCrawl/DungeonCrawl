@@ -22,7 +22,7 @@ subdir('test')
 
 # Define the executable
 executable(
-  'rogue',
+  'DungeonCrawl',
   src_files, 
   debug_files,
 )
