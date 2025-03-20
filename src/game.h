@@ -11,6 +11,4 @@ int init_game();
 
 int add(int a, int b);
 
-extern int map[HEIGHT][WIDTH];
-
 #endif // GAME_H

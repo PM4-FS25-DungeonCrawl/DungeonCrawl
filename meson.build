@@ -9,6 +9,7 @@ project('rogue', 'c',
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
   'src/main.c',
+  'src/map_mode.c',
   'src/game.c',
   'include/termbox2.c'
 )
@@ -22,7 +23,7 @@ subdir('test')
 
 # Define the executable
 executable(
-  'rogue',
+  'DungeonCrawl',
   src_files, 
   debug_files,
 )

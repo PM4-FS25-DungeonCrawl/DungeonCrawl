@@ -6,6 +6,7 @@ test_files = files(
 # Include files that need to be tested
 helper_files = files(
     '../src/game.c',
+    '../src/map_mode.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )
@@ -13,4 +14,4 @@ helper_files = files(
 
 test_exe = executable('test_rogue', test_files, helper_files)
 
-test('rogue_test', test_exe)
+test('DungeonCrawl_test', test_exe)

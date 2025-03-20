@@ -1,0 +1,31 @@
+name: C Project CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # or another OS if needed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc
+
+      - name: Configure Meson
+        run: meson setup builddir
+
+      - name: Compile project
+        run: ninja -C builddir
+
+      - name: Run tests
+        run: meson test -C builddir --verbose
