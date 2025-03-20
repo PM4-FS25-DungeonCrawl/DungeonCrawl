@@ -51,7 +51,7 @@ void handle_input(const struct tb_event *event) {
     }
 }
 
-int mapModeStep() {
+int mapModeUpdate() {
     struct tb_event ev;
     int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);

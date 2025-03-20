@@ -29,7 +29,7 @@ int init_game(){
             case MAIN_MENU:
                 break;
             case MAP_MODE:
-                if (mapModeStep()) {
+                if (mapModeUpdate()) {
                     currentState = EXIT;
                 }
                 break;

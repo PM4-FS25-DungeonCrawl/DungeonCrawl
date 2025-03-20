@@ -7,7 +7,7 @@
 #define WIDTH 20
 #define HEIGHT 10
 
-int mapModeStep();
+int mapModeUpdate();
 
 extern int map[HEIGHT][WIDTH];
 
