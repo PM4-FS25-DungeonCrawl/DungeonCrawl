@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <stdio.h>
-#include "../include/termbox2.h"
 #include "../src/game.h"
 
 void test_add(){
