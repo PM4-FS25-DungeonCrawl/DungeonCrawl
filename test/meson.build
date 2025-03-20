@@ -6,6 +6,7 @@ test_files = files(
 # Include files that need to be tested
 helper_files = files(
     '../src/game.c',
+    '../src/map_mode.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )
