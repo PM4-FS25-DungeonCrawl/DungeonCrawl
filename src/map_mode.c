@@ -4,7 +4,7 @@
 #include "../debug/debug.h"
 
 
-int map[HEIGHT][WIDTH] = {
+int maze[HEIGHT][WIDTH] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
     {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
     {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
@@ -16,13 +16,20 @@ int map[HEIGHT][WIDTH] = {
     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
 
-position player_position = {1, 1};
+int revealed_maze[HEIGHT][WIDTH];
 
-void draw_maze(void) {
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (map[y][x] == 1) {
+Vector2D player_position = {1, 1};
+
+/**
+ * @brief draws the maze to the screen, based on the revealed_maze array
+ */
+void draw_maze(const int init_y, const int init_x) {
+    for (int y = init_y; y < HEIGHT + init_y; y++) {
+        for (int x = init_x; x < WIDTH + init_x; x++) {
+            if (revealed_maze[y][x] == Wall) {
                 tb_printf(x, y,TB_BLUE,TB_BLUE, "#");
+            } else if (revealed_maze[y][x] == Hidden) {
+                tb_printf(x, y,TB_GREEN,TB_GREEN, "X");
             } else if (x == player_position.x && y == player_position.y) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
@@ -34,6 +41,7 @@ void draw_maze(void) {
 
 void draw_ui(void) {
     tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
+    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_position.x, player_position.y);
 }
 
 void handle_input(const struct tb_event *event) {
@@ -45,13 +53,97 @@ void handle_input(const struct tb_event *event) {
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
-    if (map[new_y][new_x] == 0) {
+    if (maze[new_y][new_x] == 0) {
         player_position.x = new_x;
         player_position.y = new_y;
     }
 }
 
-int map_mode_update() {
+int absolute(int x) {
+    if (x < 0) {
+        return -x;
+    }
+    return x;
+}
+
+
+const Vector2D directions[4] = {
+        { 1,  0},  // +x
+        {-1,  0},  // -x
+        { 0,  1},  // +y
+        { 0, -1}   // -y
+};
+
+const Vector2D checks_vector[4][2] = {
+    {{-1, 1}, {0, 1}},
+    {{1, -1}, {0, -1}},
+    {{-1, -1}, {-1, 0}},
+    {{1, 1}, {1, 0}}
+};
+
+/**
+ * @note function description in the header file
+ */
+void draw_light_on_player(const int* base_map, int* revealed_map, const int height, const int width,
+                          const Vector2D player, const int light_radius) {
+
+    for (int i = 0; i < 4; i++) {
+        const Vector2D dir = directions[i];
+        const Vector2D diagonal_check = checks_vector[i][0];
+        const Vector2D reverse_check = checks_vector[i][1];
+
+        int correction = 0;
+        int prev_wall_at = -1;
+
+        //int prev_all_wall = 1;
+
+        for (int j = 0; j <= light_radius; j++) {
+
+            const int start_x = player.x + j * dir.y;
+            int start_y = player.y + j * dir.x;
+
+            if (dir.x != 0) {
+                start_y = player.y - j * dir.x;
+            }
+
+            if (start_x < 0 || start_x >= width || start_y < 0 || start_y >= height) {
+                //start position is out of bounds, skip to the next direction
+                break;
+            }
+            for (int k = 1; k <= light_radius - correction; k++) {
+                const int x = start_x + k * dir.x;
+                const int y = start_y + k * dir.y;
+                //debug print
+                //printf("j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d\n", j, k, start_x, start_y, x, y);
+
+                if (revealed_map[y * width + x] == Hidden) {
+                    const int rel_diagonal = base_map[(y + diagonal_check.y) * width + (x + diagonal_check.x)];
+                    const int rel_reverse = base_map[(y + reverse_check.y) * width + (x + reverse_check.x)];
+                    if (rel_diagonal == Wall && rel_reverse == Wall && j > 1) {
+                        break;
+                    }
+
+                    if (base_map[y * width + x] == Wall) {
+                        revealed_map[y * width + x] = Wall;
+                        if (j == 0) {
+                            prev_wall_at = absolute(y * dir.y + x * dir.x);
+                            break;
+                        }
+                        if (prev_wall_at == absolute(y * dir.y + x * dir.x)) {
+                            break;
+                        }
+                    }
+                    if (base_map[y * width + x] == Floor) {
+                        revealed_map[y * width + x] = Floor;
+                    }
+                }
+            }
+            correction++;
+        }
+    }
+}
+
+int map_mode_update(void) {
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
@@ -61,9 +153,22 @@ int map_mode_update() {
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return QUIT;
         handle_input(&ev);
     }
-    draw_maze();
+    draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
+    draw_maze(0, 0);
     draw_ui();
     tb_present();
 
     return CONTINUE;
+}
+
+int init_map_mode(void) {
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            revealed_maze[y][x] = Hidden;
+        }
+    }
+    // at the start, tile under the player must be revealed
+    revealed_maze[player_position.y][player_position.x] = Floor;
+    draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
+    return 0;
 }

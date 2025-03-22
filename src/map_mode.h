@@ -7,23 +7,50 @@
 #define CONTINUE 0
 #define QUIT 1
 
-#define WIDTH 20
-#define HEIGHT 10
+#ifdef TEST_MAP_MODE
+    //test mode is active
+#else
+    #define LIGHT_RADIUS 2
+    #define WIDTH 20
+    #define HEIGHT 10
+    extern int maze[HEIGHT][WIDTH];
+#endif
 
 /**
- * @brief Player position struct
+ * @brief 2-dimensional vector struct
  */
 typedef struct {
-    int x;
-    int y;
-} position;
+    int x, y;
+} Vector2D;
+
+/**
+ * @brief Enum for the different tiles in the maze
+ */
+enum tiles {
+    Floor = 0,
+    Wall = 1,
+    Hidden = 2
+};
+
+/**
+ * Draws the light around the player on the revealed_map.
+ * @param base_map the pointer to the 2D array containing all the map tiles (no Hidden tiles)
+ * @param revealed_map the pointer to the 2D array to reveal the base_map,
+ * based on the player's position and light radius
+ * @param height the height of the map
+ * @param width the width of the map
+ * @param player the player's position on the map
+ * @param light_radius the radius of the light around the player
+ */
+void draw_light_on_player(const int* base_map, int* revealed_map, int height, int width,
+                          Vector2D player, int light_radius);
 
 /**
  * Updates the player position based on the player's input and redraws the maze.
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
-int map_mode_update();
+int map_mode_update(void);
 
-extern int map[HEIGHT][WIDTH];
+int init_map_mode(void);
 
 #endif //MAP_MODE_H

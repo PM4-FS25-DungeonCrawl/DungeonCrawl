@@ -21,6 +21,8 @@ int init_game(){
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
+    init_map_mode();
+
     bool doRun = true;
     enum game_state currentState = MAP_MODE;
 
