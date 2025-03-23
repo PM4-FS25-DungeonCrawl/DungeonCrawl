@@ -35,6 +35,12 @@ jobs:
         run: |
           Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 
+      - name: Add Meson to PATH and refresh environment
+        if: runner.os == 'Windows'
+        run: |
+         $env:PATH = "$env:PATH;C:\ProgramData\chocolatey\lib\meson\tools"
+         echo $env:PATH
+        shell: powershell
 
       - name: Add Meson and Ninja to PATH (Windows)
         if: runner.os == 'Windows'
