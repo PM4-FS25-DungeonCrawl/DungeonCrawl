@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "map_mode.h"
-#include "../include/termbox2.h"
 #include "../debug/debug.h"
+#include "../include/termbox2.h"
 
 
 int maze[HEIGHT][WIDTH] = {
@@ -19,7 +19,7 @@ int maze[HEIGHT][WIDTH] = {
 
 int revealed_maze[HEIGHT][WIDTH];
 
-Vector2D player_position = {1, 1};
+Vector2D player_position = {3, 1};
 
 /**
  * @brief draws the maze to the screen, based on the revealed_maze array
@@ -60,11 +60,11 @@ void handle_input(const struct tb_event *event) {
     }
 }
 
-int absolute(int x) {
-    if (x < 0) {
-        return -x;
+int absolute(const int val) {
+    if (val < 0) {
+        return -val;
     }
-    return x;
+    return val;
 }
 
 
@@ -98,6 +98,7 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
         //light radius is negative or 0, do nothing
         return;
     }
+    int line = 0;
 
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
@@ -124,8 +125,14 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
             for (int k = 1; k <= light_radius - correction; k++) {
                 const int x = start_x + k * dir.x;
                 const int y = start_y + k * dir.y;
+                if (x < 0 || x >= width || y < 0 || y >= height) {
+                    //calculated x or y is out of bound
+                    break;
+                }
+
                 //debug print
-                //printf("j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d\n", j, k, start_x, start_y, x, y);
+                DEBUG_PRINT(WIDTH + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d\n", dir.x, dir.y, j, k, start_x, start_y, x, y);
+                line++;
 
                 if (revealed_map[y * width + x] == Hidden) {
                     //initialize the relative diagonal and reverse tiles based on the y and x values
@@ -140,6 +147,8 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
 
                     if (base_map[y * width + x] == Wall) {
                         revealed_map[y * width + x] = Wall;
+                        DEBUG_PRINT(WIDTH + 5, 20 + line, "Wall detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.x, dir.y);
+
                         if (j == 0) {
                             prev_wall_at = absolute(y * dir.y + x * dir.x);
                             break;

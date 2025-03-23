@@ -9,8 +9,10 @@
 
 #ifdef TEST_MAP_MODE
     //test mode is active
+    #define DEBUG_PRINT(x, y, ...) printf(__VA_ARGS__)
 #else
-    #define LIGHT_RADIUS 2
+    #define DEBUG_PRINT(x, y, ...) print_text(x, y, __VA_ARGS__)
+    #define LIGHT_RADIUS 3
     #define WIDTH 20
     #define HEIGHT 10
     extern int maze[HEIGHT][WIDTH];
