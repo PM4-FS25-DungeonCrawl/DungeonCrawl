@@ -4,55 +4,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "character_stats.h"
 
 #define MAX_ABILITIES 3
 
-// Enum for Damage Types
-typedef enum {
-    PHYSICAL,
-    MAGICAL
-} DamageType;
-
-// Struct for Abilities
-typedef struct {
-    char name[50];
-    int damageValue;
-    DamageType damageType;
-} Ability;
-
-// Struct for Player
-typedef struct {
-    char name[50];
-
-    int health;
-
-    // aromr, deflection, fortitude and will are currently not used
-    int armor;
-    int deflection;
-    int fortitude;
-    int will;
-
-    Ability basicAttack;
-    Ability abilities[MAX_ABILITIES];
-    int abilityCount;
-} Player;
-
-// Struct for Monster
-typedef struct {
-    char name[50];
-
-    int health;
-
-    // aromr, deflection, fortitude and will are currently not used
-    int armor;
-    int deflection;
-    int fortitude;
-    int will;
-
-    Ability basicAttack;
-    Ability abilities[MAX_ABILITIES];
-    int abilityCount;
-} Monster;
 
 // Function to initialize a Player
 void initPlayer(Player *p, const char *name, int health, int armor, int deflection, int fortitude, int will, Ability basicAttack) {
