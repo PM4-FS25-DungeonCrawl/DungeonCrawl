@@ -26,28 +26,11 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install meson ninja
 
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: choco install meson ninja
-
-      - name: Set up Chocolatey Environment
-        if: runner.os == 'Windows'
+      - name: Install Meson & Ninja via Pip
         run: |
-          Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+          python -m pip install --upgrade pip
+          pip install meson ninja
 
-      - name: Add Meson to PATH and refresh environment
-        if: runner.os == 'Windows'
-        run: |
-         $env:PATH = "$env:PATH;C:\ProgramData\chocolatey\lib\meson\tools"
-         echo $env:PATH
-        shell: powershell
-
-      - name: Add Meson and Ninja to PATH (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "C:\ProgramData\chocolatey\lib\meson\tools" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
-          echo "C:\ProgramData\chocolatey\lib\ninja\tools" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
-          refreshenv
 
       - name: Configure Meson
         run: meson setup builddir
