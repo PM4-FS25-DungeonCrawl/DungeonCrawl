@@ -82,7 +82,7 @@ void initMonster(Monster *monster, const char *name, int health, int armor, int 
     monster->will = will;
 
     monster->basicAttack = basicAttack;
-    monster->abilityCount = 0; // Optional: if you plan to add special abilities
+    monster->abilityCount = 0;
 }
 
 
