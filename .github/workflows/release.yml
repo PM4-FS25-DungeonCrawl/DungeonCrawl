@@ -30,6 +30,13 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install meson ninja
 
+      - name: Add Meson and Ninja to PATH (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          echo "C:\ProgramData\chocolatey\lib\meson\tools" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          echo "C:\ProgramData\chocolatey\lib\ninja\tools" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+          refreshenv
+
       - name: Configure Meson
         run: meson setup builddir
 
