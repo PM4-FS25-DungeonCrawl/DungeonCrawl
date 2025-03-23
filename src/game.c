@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include "game.h"
 #include "map_mode.h"
 #include "../include/termbox2.h"
