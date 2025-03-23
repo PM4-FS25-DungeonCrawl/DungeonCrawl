@@ -34,6 +34,10 @@ enum tiles {
 
 /**
  * Draws the light around the player on the revealed_map.
+ * The algorithmen reveals the map around the player, based on the base_map, in the revealed_map.
+ * The light radius is the distance from the player, where the map tile is still visible.
+ * A light radius of 3 means 3 tiles are visible in each direction (up, down, left, right) from the player.
+ *
  * @param base_map the pointer to the 2D array containing all the map tiles (no Hidden tiles)
  * @param revealed_map the pointer to the 2D array to reveal the base_map,
  * based on the player's position and light radius

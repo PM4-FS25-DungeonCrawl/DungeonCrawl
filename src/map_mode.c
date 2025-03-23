@@ -75,6 +75,12 @@ const Vector2D directions[4] = {
         { 0, -1}   // -y
 };
 
+/*
+ * Each array row corresponds to the vector in {@link directions} array.
+ * A row contains:
+ * - the diagonal check vector
+ * - the reverse check vector
+ */
 const Vector2D checks_vector[4][2] = {
     {{-1, 1}, {0, 1}},
     {{1, -1}, {0, -1}},
@@ -88,6 +94,11 @@ const Vector2D checks_vector[4][2] = {
 void draw_light_on_player(const int* base_map, int* revealed_map, const int height, const int width,
                           const Vector2D player, const int light_radius) {
 
+    if (light_radius <= 0) {
+        //light radius is negative or 0, do nothing
+        return;
+    }
+
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
         const Vector2D diagonal_check = checks_vector[i][0];
@@ -96,14 +107,13 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
         int correction = 0;
         int prev_wall_at = -1;
 
-        //int prev_all_wall = 1;
-
         for (int j = 0; j <= light_radius; j++) {
 
             const int start_x = player.x + j * dir.y;
             int start_y = player.y + j * dir.x;
 
             if (dir.x != 0) {
+                //if the direction is vertical negate the subtrahend
                 start_y = player.y - j * dir.x;
             }
 
@@ -118,9 +128,13 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                 //printf("j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d\n", j, k, start_x, start_y, x, y);
 
                 if (revealed_map[y * width + x] == Hidden) {
+                    //initialize the relative diagonal and reverse tiles based on the y and x values
                     const int rel_diagonal = base_map[(y + diagonal_check.y) * width + (x + diagonal_check.x)];
                     const int rel_reverse = base_map[(y + reverse_check.y) * width + (x + reverse_check.x)];
+
                     if (rel_diagonal == Wall && rel_reverse == Wall && j > 1) {
+                        //if the diagonal and reverse tiles are walls, and the distance from the player is greater than 1
+                        //then the tile must be hidden because reverse tile is blocking the view
                         break;
                     }
 
