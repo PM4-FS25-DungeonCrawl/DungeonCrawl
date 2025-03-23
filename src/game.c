@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include "game.h"
 #include "map_mode.h"
+#include "map_generator_stupid.h"
 #include "../include/termbox2.h"
 
 enum game_state {
     MAIN_MENU,
     MAP_MODE,
     COMBAT_MODE,
+    GENERATE_MAP,
     EXIT
 };
 
@@ -22,11 +24,15 @@ int init_game(){
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
     bool doRun = true;
-    enum game_state currentState = MAP_MODE;
+    enum game_state currentState = GENERATE_MAP;
 
     while (doRun) {
         switch (currentState) {
             case MAIN_MENU:
+                break;
+            case GENERATE_MAP:
+                generate_map();
+                currentState = MAP_MODE;
                 break;
             case MAP_MODE:
                 if (mapModeUpdate()) {

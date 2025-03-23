@@ -1,14 +1,13 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
+#include "map_generator_stupid.h"
+
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
 
-#define WIDTH 20
-#define HEIGHT 10
+void setNewMap(enum map_tile (*newMap)[WIDTH][HEIGHT], int newPlayerX, int newPlayerY);
 
 int mapModeUpdate();
-
-extern int map[HEIGHT][WIDTH];
 
 #endif //MAP_MODE_H

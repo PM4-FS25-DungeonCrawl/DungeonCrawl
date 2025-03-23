@@ -11,6 +11,7 @@ src_files = files(
   'src/main.c',
   'src/map_mode.c',
   'src/game.c',
+  'src/map_generator_stupid.c',
   'include/termbox2.c'
 )
 

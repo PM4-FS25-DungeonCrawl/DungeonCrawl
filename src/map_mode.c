@@ -3,28 +3,23 @@
 #include "../include/termbox2.h"
 #include "../debug/debug.h"
 
+enum map_tile (*map)[WIDTH][HEIGHT];
 
-int map[HEIGHT][WIDTH] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
-    {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
+int playerX = 1;
+int playerY = 1;
 
-int player_x = 1;
-int player_y = 1;
+void setNewMap(enum map_tile (*newMap)[WIDTH][HEIGHT], int newPlayerX, int newPlayerY) {
+    map = newMap;
+    playerX = newPlayerX;
+    playerY = newPlayerY;
+}
 
 void draw_maze(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (map[y][x] == 1) {
-                tb_printf(x, y,TB_BLUE,TB_BLUE, "#");
-            } else if (x == player_x && y == player_y) {
+            if ((*map)[x][y] == WALL) {
+                tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+            } else if (x == playerX && y == playerY) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
                 tb_printf(x, y, TB_BLACK, TB_BLACK, " ");
@@ -38,16 +33,16 @@ void draw_ui(void) {
 }
 
 void handle_input(const struct tb_event *event) {
-    int new_x = player_x;
-    int new_y = player_y;
+    int new_x = playerX;
+    int new_y = playerY;
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
-    if (map[new_y][new_x] == 0) {
-        player_x = new_x;
-        player_y = new_y;
+    if ((*map)[new_y][new_x] == FLOOR) {
+        playerX = new_x;
+        playerY = new_y;
     }
 }
 
