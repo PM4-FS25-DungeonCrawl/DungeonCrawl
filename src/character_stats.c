@@ -6,8 +6,6 @@
 #include <string.h>
 #include "character_stats.h"
 
-#define MAX_ABILITIES 3
-
 
 // Function to initialize a Player
 void initPlayer(Player *p, const char *name, int health, int armor, int deflection, int fortitude, int will, Ability basicAttack) {
