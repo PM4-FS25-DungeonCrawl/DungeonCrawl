@@ -1,0 +1,92 @@
+name: Build & Release Executable
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on main branch
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]  # Multi-OS build
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc
+
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install meson ninja
+
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: choco install meson ninja
+
+      - name: Configure Meson
+        run: meson setup builddir
+
+      - name: Compile project
+        run: ninja -C builddir
+
+      - name: Get Latest Version Tag # Do tagging for release
+        id: get_version
+        run: |
+          latest_tag=$(git tag --sort=-v:refname | head -n 1)
+          if [[ -z "$latest_tag" ]]; then
+            latest_tag="v0.1.0"  # Default version if no tags exist
+          fi
+          echo "LATEST_VERSION=$latest_tag" >> $GITHUB_ENV
+
+      - name: Bump Version (Patch) # Increase version
+        id: bump_version
+        uses: actions-ecosystem/action-bump-semver@v1
+        with:
+          current_version: ${{ env.LATEST_VERSION }}
+          level: patch  # Change to "minor" or "major" if needed
+
+      - name: Create New Git Tag #Make a new git tag for the release
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git tag ${{ steps.bump_version.outputs.new_version }}
+          git push origin ${{ steps.bump_version.outputs.new_version }}
+
+      - name: Upload Executable as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: executable-${{ runner.os }}
+          path: builddir/my_executable${{ runner.os == 'Windows' && '.exe' || '' }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest # Push the release
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.new_version }}
+          name: Release ${{ needs.build.outputs.new_version }}
+          body: "Release: Built from latest commit."
+          draft: false
+          prerelease: false
+          files: |
+            executable-ubuntu-latest/my_executable
+            executable-macos-latest/my_executable
+            executable-windows-latest/my_executable.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
