@@ -1,11 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
-#define TEST_MAP_MODE
-#define WIDTH 10
-#define HEIGHT 10
-#include "../src/map_mode.h"
 #include "test_map_mode.h"
+#include "../src/map_mode.h"
 
 int test_maze[HEIGHT][WIDTH];
 int revealed_test_maze[HEIGHT][WIDTH];
@@ -42,8 +39,8 @@ void print_array(int *array, int height, int width) {
 void test_draw_light_on_player(void) {
     init_test_mazes();
 
-    Vector2D player = {5, 5};
-    int light_radius = 3;
+    const Vector2D player = {5, 5};
+    constexpr int light_radius = 3;
     draw_light_on_player((int *)test_maze, (int *)revealed_test_maze, HEIGHT, WIDTH, player, light_radius);
     //print_array((int *)revealed_test_maze, HEIGHT, WIDTH);
     //player position will not be drawn
