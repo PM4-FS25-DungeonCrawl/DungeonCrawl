@@ -30,6 +30,11 @@ jobs:
         if: runner.os == 'Windows'
         run: choco install meson ninja
 
+      - name: Set up Chocolatey Environment
+        run: |
+          Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+
+
       - name: Add Meson and Ninja to PATH (Windows)
         if: runner.os == 'Windows'
         run: |
