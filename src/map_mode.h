@@ -20,7 +20,7 @@
         #define DEBUG_PRINT(x, y, ...)
     #endif
 
-    #define LIGHT_RADIUS 2
+    #define LIGHT_RADIUS 3
     #define WIDTH 20
     #define HEIGHT 10
     extern int maze[HEIGHT][WIDTH];

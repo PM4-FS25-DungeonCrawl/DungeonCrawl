@@ -166,6 +166,8 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                             break;
                         }
                         if (prev_wall_at == absolute(y * dir.y + x * dir.x)) {
+                            //if the previous j-loop had a wall at x or y coordinate, the loop must break
+                            //or else diagonals tiles (behind a wall and not visible by the player) are revealed
                             break;
                         }
                     }
@@ -173,7 +175,16 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                         revealed_map[access_idx] = Floor;
                     }
                 } else if (revealed_map[access_idx] == Wall) {
-                    break;
+                    if (j == 0) {
+                        //gets the x or y value of the calculated coordinates
+                        prev_wall_at = absolute(y * dir.y + x * dir.x);
+                        break;
+                    }
+                    if (prev_wall_at == absolute(y * dir.y + x * dir.x)) {
+                        //if the previous j-loop had a wall at x or y coordinate, the loop must break
+                        //or else diagonals tiles (behind a wall and not visible by the player) are revealed
+                        break;
+                    }
                 }
             }
             correction++;
