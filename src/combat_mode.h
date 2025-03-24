@@ -7,7 +7,6 @@
 #include "character_stats.h"
 #include "../include/termbox2.h"
 
-
 // === ENUM ===
 typedef enum {
     MENU_COMBAT,
