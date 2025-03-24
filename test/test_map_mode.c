@@ -25,7 +25,7 @@ void reset_test_mazes(void) {
     }
 }
 
-void print_array(int *array, int height, int width) {
+void print_array(const int *array, const int height, const int width) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             printf("%d ", array[y * width + x]);
@@ -34,7 +34,6 @@ void print_array(int *array, int height, int width) {
     }
     printf("\n");
 }
-
 
 void test_draw_light_on_player(void) {
     init_test_mazes();
@@ -95,7 +94,7 @@ void test_draw_light_on_player(void) {
 
     draw_light_on_player((int *)test_maze, (int *)revealed_test_maze, HEIGHT, WIDTH, player, light_radius);
     //print_array((int *)revealed_test_maze, HEIGHT, WIDTH);
-    //test: complettly surrounded by walls
+    //test: completely surrounded by walls, iter = 1
     assert(revealed_test_maze[2][5] == Hidden);
 
     assert(revealed_test_maze[3][4] == Hidden);
@@ -127,7 +126,43 @@ void test_draw_light_on_player(void) {
     assert(revealed_test_maze[7][6] == Hidden);
 
     assert(revealed_test_maze[8][5] == Hidden);
-    printf("Test: \"complettly surrounded by walls\" passed\n");
+    printf("Test: \"completely surrounded by walls (iter: 1)\" passed\n");
+
+    draw_light_on_player((int *)test_maze, (int *)revealed_test_maze, HEIGHT, WIDTH, player, light_radius);
+    //print_array((int *)revealed_test_maze, HEIGHT, WIDTH);
+    //test: completely surrounded by walls, iter = 2
+    assert(revealed_test_maze[2][5] == Hidden);
+
+    assert(revealed_test_maze[3][4] == Hidden);
+    assert(revealed_test_maze[3][5] == Hidden);
+    assert(revealed_test_maze[3][6] == Hidden);
+
+    assert(revealed_test_maze[4][3] == Hidden);
+    assert(revealed_test_maze[4][4] == Wall);
+    assert(revealed_test_maze[4][5] == Wall);
+    assert(revealed_test_maze[4][6] == Wall);
+    assert(revealed_test_maze[4][7] == Hidden);
+
+    assert(revealed_test_maze[5][2] == Hidden);
+    assert(revealed_test_maze[5][3] == Hidden);
+    assert(revealed_test_maze[5][4] == Wall);
+    //skip player position
+    assert(revealed_test_maze[5][6] == Wall);
+    assert(revealed_test_maze[5][7] == Hidden);
+    assert(revealed_test_maze[5][8] == Hidden);
+
+    assert(revealed_test_maze[6][3] == Hidden);
+    assert(revealed_test_maze[6][4] == Wall);
+    assert(revealed_test_maze[6][5] == Wall);
+    assert(revealed_test_maze[6][6] == Wall);
+    assert(revealed_test_maze[6][7] == Hidden);
+
+    assert(revealed_test_maze[7][4] == Hidden);
+    assert(revealed_test_maze[7][5] == Hidden);
+    assert(revealed_test_maze[7][6] == Hidden);
+
+    assert(revealed_test_maze[8][5] == Hidden);
+    printf("Test: \"completely surrounded by walls (iter: 2)\" passed\n");
     //end test
 
     //new setup
