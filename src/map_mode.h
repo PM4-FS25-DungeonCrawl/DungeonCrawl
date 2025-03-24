@@ -1,6 +1,8 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
+//#define DEBUG_TRUE
+
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
 
@@ -11,8 +13,14 @@
     //test mode is active
     #define DEBUG_PRINT(x, y, ...) printf(__VA_ARGS__)
 #else
-    #define DEBUG_PRINT(x, y, ...) print_text(x, y, __VA_ARGS__)
-    #define LIGHT_RADIUS 3
+    #ifdef DEBUG_TRUE
+        #define DEBUG_PRINT(x, y, ...) print_text(x, y, __VA_ARGS__)
+    #else
+        //empty debug print
+        #define DEBUG_PRINT(x, y, ...)
+    #endif
+
+    #define LIGHT_RADIUS 2
     #define WIDTH 20
     #define HEIGHT 10
     extern int maze[HEIGHT][WIDTH];
