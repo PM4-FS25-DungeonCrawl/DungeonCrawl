@@ -1,6 +1,8 @@
 #include "combat_mode.h"
 
 void combat(Player *player, Monster *monster) {
+
+    // Set initial state of combat
     combat_state current_state = MENU_COMBAT;
 
     // Select menu state
@@ -21,6 +23,7 @@ void combat(Player *player, Monster *monster) {
             break;
         }
     }
+
     // Handle state after combat
     if (player->health <= 0) {
         player_died();
@@ -30,8 +33,10 @@ void combat(Player *player, Monster *monster) {
 }
 
 combat_state combat_menu(Player *player, Monster *monster) {
+    
     // Clear screen
     tb_clear();
+    // Set starting point in y axis for termbox2   
     int y = 1;
 
     // Display player info
@@ -54,14 +59,15 @@ combat_state combat_menu(Player *player, Monster *monster) {
     struct tb_event event;
     combat_state next_state = MENU_COMBAT;
 
+    // Wait for an event
+    tb_poll_event(&event);
+
     if (event.type == TB_EVENT_KEY) {
         if (event.ch == '1') {
             next_state = MENU_ABILITY;
-            tb_print(1, y++, TB_WHITE, TB_DEFAULT, "ABILITY MENU");
         } else if (event.ch == '2') {
             next_state = MENU_ITEM;
-            tb_print(1, y++, TB_WHITE, TB_DEFAULT, "ITEM MENU");
-        } else if (event.key == TB_KEY_ESC || (event.key == TB_KEY_CTRL_C)) {
+        } else if (event.key == TB_KEY_CTRL_C) {
             tb_shutdown();
             exit(0);
         }
