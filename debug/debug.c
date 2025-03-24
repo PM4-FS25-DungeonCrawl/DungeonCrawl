@@ -17,7 +17,7 @@ void print_text(const int x, const int y, const char *format, ...) {
     va_list args;
     va_start(args, format);
 
-    char buffer[512];
+    char buffer[256];
     vsnprintf(buffer, sizeof(buffer), format, args);
 
     va_end(args);
