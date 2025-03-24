@@ -10,6 +10,8 @@ project('rogue', 'c',
 src_files = files(
   'src/main.c',
   'src/map_mode.c',
+  'src/combat_mode.c',
+  'src/character_stats.c',
   'src/game.c',
   'include/termbox2.c'
 )
@@ -26,4 +28,5 @@ executable(
   'DungeonCrawl',
   src_files, 
   debug_files,
+  c_args: ['-w']
 )

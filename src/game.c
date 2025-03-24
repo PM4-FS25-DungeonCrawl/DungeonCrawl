@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include "game.h"
 #include "map_mode.h"
+#include "combat_mode.h"
+#include "character_stats.h"
 #include "../include/termbox2.h"
 
 enum game_state {
@@ -23,7 +25,7 @@ int init_game(){
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
     bool doRun = true;
-    enum game_state currentState = MAP_MODE;
+    enum game_state currentState = COMBAT_MODE;
 
     while (doRun) {
         switch (currentState) {
@@ -35,6 +37,20 @@ int init_game(){
                 }
                 break;
             case COMBAT_MODE:
+                // Initialize abilities
+                Ability basicAttack;
+                initAbility(&basicAttack, "Basic Attack", 10, PHYSICAL);
+
+                // Initialize player
+                Player player;
+                initPlayer(&player, "Hero", 100, 10, 5, 5, 5, basicAttack);
+
+                // Initialize monster
+                Monster monster;
+                initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, basicAttack);
+
+                combat(&player, &monster);
+                currentState = EXIT;
                 break;
             case EXIT:
                 doRun = false;
