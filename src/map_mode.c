@@ -19,7 +19,7 @@ int maze[HEIGHT][WIDTH] = {
 
 int revealed_maze[HEIGHT][WIDTH];
 
-Vector2D player_position = {3, 1};
+Vector2D player_position = {3, 3};
 
 /**
  * @brief draws the maze to the screen, based on the revealed_maze array
@@ -98,7 +98,9 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
         //light radius is negative or 0, do nothing
         return;
     }
-    int line = 0;
+
+    //line for debug print
+    int line = 5;
 
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
@@ -130,11 +132,14 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                     break;
                 }
 
-                //debug print
-                DEBUG_PRINT(WIDTH + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d\n", dir.x, dir.y, j, k, start_x, start_y, x, y);
-                line++;
+                //calculated access index
+                const int access_idx = y * width + x;
 
-                if (revealed_map[y * width + x] == Hidden) {
+                //debug print
+                DEBUG_PRINT(WIDTH + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d, idx=%d\n", dir.x, dir.y, j, k, start_x, start_y, x, y, access_idx);
+                line += 1;
+
+                if (revealed_map[access_idx] == Hidden) {
                     //initialize the relative diagonal and reverse tiles based on the y and x values
                     const int rel_diagonal = base_map[(y + diagonal_check.y) * width + (x + diagonal_check.x)];
                     const int rel_reverse = base_map[(y + reverse_check.y) * width + (x + reverse_check.x)];
@@ -142,14 +147,21 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                     if (rel_diagonal == Wall && rel_reverse == Wall && j > 1) {
                         //if the diagonal and reverse tiles are walls, and the distance from the player is greater than 1
                         //then the tile must be hidden because reverse tile is blocking the view
+                        DEBUG_PRINT(WIDTH + 5, line, "Edge case (diag + reverse) detected");
+                        line += 1;
                         break;
                     }
 
-                    if (base_map[y * width + x] == Wall) {
-                        revealed_map[y * width + x] = Wall;
-                        DEBUG_PRINT(WIDTH + 5, 20 + line, "Wall detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.x, dir.y);
+                    DEBUG_PRINT(WIDTH + 5, line, "Tile with access index %d is %d", access_idx, base_map[access_idx]);
+                    line += 1;
+
+                    if (base_map[access_idx] == Wall) {
+                        revealed_map[access_idx] = Wall;
+                        DEBUG_PRINT(WIDTH + 5, line, "Wall detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.x, dir.y);
+                        line += 1;
 
                         if (j == 0) {
+                            //gets the x or y value of the calculated coordinates
                             prev_wall_at = absolute(y * dir.y + x * dir.x);
                             break;
                         }
@@ -157,9 +169,11 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                             break;
                         }
                     }
-                    if (base_map[y * width + x] == Floor) {
-                        revealed_map[y * width + x] = Floor;
+                    if (base_map[access_idx] == Floor) {
+                        revealed_map[access_idx] = Floor;
                     }
+                } else if (revealed_map[access_idx] == Wall) {
+                    break;
                 }
             }
             correction++;
@@ -167,17 +181,30 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
     }
 }
 
+//debug counters to count how many times the function is called
+int count_call_mmu = 0;
+//debug counter to count
+int ret_i_o = 0;
+
 int map_mode_update(void) {
+    count_call_mmu++;
+    DEBUG_PRINT(WIDTH+5, 2, "map_mode_update called nr: %d", count_call_mmu);
+
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
-
+    
     if (ret == TB_OK) {
+        ret_i_o++;
+        DEBUG_PRINT(WIDTH+5, 3, "ret in map_mode_update i.O. nr: %d", ret_i_o);
+
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return QUIT;
         handle_input(&ev);
+
+        draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
     }
-    draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
+
     draw_maze(0, 0);
     draw_ui();
     tb_present();
@@ -191,8 +218,9 @@ int init_map_mode(void) {
             revealed_maze[y][x] = Hidden;
         }
     }
+    DEBUG_PRINT(WIDTH+5, 0, "init_map_mode");
     // at the start, tile under the player must be revealed
     revealed_maze[player_position.y][player_position.x] = Floor;
-    draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
+    DEBUG_PRINT(WIDTH+5, 1, "player position revealed");
     return 0;
 }
