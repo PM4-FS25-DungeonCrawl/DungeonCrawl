@@ -1,0 +1,32 @@
+#ifndef COMBAT_MODE_H
+#define COMBAT_MODE_H
+
+// === INCLUDE ===
+#include <stdio.h>
+#include <stdbool.h>
+#include "character_stats.h"
+#include "../include/termbox2.h"
+
+
+// === ENUM ===
+typedef enum {
+    MENU_COMBAT,
+    MENU_ABILITY,
+    MENU_ITEM
+} combat_state;
+
+// === FUNCTION DECLARATIONS ===
+void combat(Player *player, Monster *monster);
+void combat_menu(Player *player, Monster *monster);
+void ability_menu(Player *player, Monster *monster);
+void item_menu(Player *player, Monster *monster);
+void use_ability(Player *player, Monster *monster, Ability *ability);
+bool roll_hit(Player *player, Ability *ability, int dice_size);
+int roll_damage(Player *player, Ability *ability, int dice_size);
+void deal_damage(int damage, Monster *monster);
+void take_damage(Monster *monster, Player *player);
+void use_item();
+void player_won();
+void player_died();
+
+#endif COMBAT_MODE_H //COMBAT_MODE_H
