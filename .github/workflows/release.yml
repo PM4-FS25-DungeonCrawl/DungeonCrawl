@@ -38,8 +38,7 @@ jobs:
           choco install cygwin --params "/InstallDir:C:\cygwin64" -y
           choco install cygwin --source=cygwin --package-parameters="'/InstallDir:C:\cygwin64 /Components:make,gcc-core,gcc-g++'" -y
           echo "C:\\cygwin64\\bin" >> $GITHUB_PATH
-          RefreshEnv
-
+          $env:Path += ";C:\cygwin64\bin"
       # Configure Meson
       - name: Configure Meson
         run: meson setup builddir
