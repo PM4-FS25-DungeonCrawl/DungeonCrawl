@@ -29,11 +29,16 @@ jobs:
         run: |
           brew install meson ninja
 
-      # Install dependencies via pip (for all systems)
-      - name: Install Meson & Ninja via Pip
+      # Install dependencies for Windows (including Cygwin)
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
         run: |
           python -m pip install --upgrade pip
           pip install meson ninja
+          choco install cygwin --params "/InstallDir:C:\cygwin64" -y
+          choco install cygwin --source=cygwin --package-parameters="'/InstallDir:C:\cygwin64 /Components:make,gcc-core,gcc-g++'" -y
+          echo "C:\\cygwin64\\bin" >> $GITHUB_PATH
+          RefreshEnv
 
       # Configure Meson
       - name: Configure Meson
@@ -42,32 +47,6 @@ jobs:
       # Compile project using Ninja
       - name: Compile project
         run: ninja -C builddir
-
-      # Get the latest tag from Git to set the version
-      - name: Get Latest Version Tag
-        id: get_version
-        run: |
-          latest_tag=$(git tag --sort=-v:refname | head -n 1)
-          if [[ -z "$latest_tag" ]]; then
-            latest_tag="v0.1.0"  # Default version if no tags exist
-          fi
-          echo "LATEST_VERSION=$latest_tag" >> $GITHUB_ENV
-
-      # Bump the version (Patch)
-      - name: Bump Version (Patch)
-        id: bump_version
-        uses: actions-ecosystem/action-bump-semver@v1
-        with:
-          current_version: ${{ env.LATEST_VERSION }}
-          level: patch  # Change to "minor" or "major" if needed
-
-      # Create a new git tag for the release
-      - name: Create New Git Tag
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git tag ${{ steps.bump_version.outputs.new_version }}
-          git push origin ${{ steps.bump_version.outputs.new_version }}
 
       # Upload the executables as artifacts
       - name: Upload Executable as Artifact
@@ -84,16 +63,39 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v3
+      - name: Get Latest Version Tag
+        id: get_version
+        run: |
+          latest_tag=$(git tag --sort=-v:refname | head -n 1)
+          if [[ -z "$latest_tag" ]]; then
+            latest_tag="v0.1.0"  # Default version if no tags exist
+          fi
+          echo "LATEST_VERSION=$latest_tag" >> $GITHUB_ENV
+
+      # Bump the version (Patch)
+      - name: Bump Version (Patch)
+        id: bump_version
+        uses: actions-ecosystem/action-bump-semver@v1
         with:
-          name: executable-ubuntu-latest
+          current_version: ${{ env.LATEST_VERSION }}
+          level: patch
+
+      # Create a new git tag for the release
+      - name: Create New Git Tag
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git tag ${{ steps.bump_version.outputs.new_version }}
+          git push origin ${{ steps.bump_version.outputs.new_version }}
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.build.outputs.new_version }}
-          name: Release ${{ needs.build.outputs.new_version }}
+          tag_name: ${{ steps.bump_version.outputs.new_version }}
+          name: Release ${{ steps.bump_version.outputs.new_version }}
           body: "Release: Built from the latest commit."
           draft: false
           prerelease: false
