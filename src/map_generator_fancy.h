@@ -5,8 +5,9 @@
 #ifndef MAP_GENERATOR_FANCY_H
 #define MAP_GENERATOR_FANCY_H
 
-#define WIDTH 80
-#define HEIGHT 18
+//this ??
+#define WIDTH 21 // must be odd
+#define HEIGHT 17 // must be odd
 
 enum map_tile {
     WALL = 0,
