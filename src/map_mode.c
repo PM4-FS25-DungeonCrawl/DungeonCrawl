@@ -102,7 +102,6 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
     //line for debug print
     int line = 5;
 
-
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
         const Vector2D diagonal_check = checks_vector[i][0];
