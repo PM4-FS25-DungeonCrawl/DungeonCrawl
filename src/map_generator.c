@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "map_generator_fancy.h"
+#include "map_generator.h"
 #include "map_mode.h"
 
-enum map_tile maze[HEIGHT][WIDTH];
+enum map_tile maze[WIDTH][HEIGHT];
 
 // randomizing direction and stuff
 
@@ -40,28 +40,28 @@ void dfs(int x, int y) {
         int nx = x + directions[i].dx;
         int ny = y + directions[i].dy;
         if (is_in_bounds(nx, ny)) {
-            maze[ny][nx] = FLOOR;
-            maze[y + directions[i].dy/2][x + directions[i].dx/2] = ' ';
+            maze[nx][ny] = FLOOR;
+            maze[x + directions[i].dx][y + directions[i].dy] = ' ';
             dfs(nx, ny);
         }
     }
 }
 
-// knowck down some walls so the maze looks better
+// knock down some walls so the maze looks better
 void knock_down_some_walls(int count) {
     int attempts = 0;
     while (count > 0 && attempts < 10000) {
         int x = rand() % (WIDTH-2) + 1;
         int y = rand() % (HEIGHT-2) + 1;
-        if (maze[y][x] == WALL) {
+        if (maze[x][y] == WALL) {
             // Only knock down if surrounded by paths
             int adj_paths = 0;
-            if (maze[y-1][x] == FLOOR) adj_paths++;
-            if (maze[y+1][x] == FLOOR) adj_paths++;
-            if (maze[y][x-1] == FLOOR) adj_paths++;
-            if (maze[y][x+1] == FLOOR) adj_paths++;
+            if (maze[x][y-1] == FLOOR) adj_paths++;
+            if (maze[x][y+1] == FLOOR) adj_paths++;
+            if (maze[x-1][y] == FLOOR) adj_paths++;
+            if (maze[x+1][y] == FLOOR) adj_paths++;
             if (adj_paths >= 2) {
-                maze[y][x] = FLOOR;
+                maze[x][y] = FLOOR;
                 count--;
             }
         }
@@ -71,40 +71,39 @@ void knock_down_some_walls(int count) {
 
 void generate_maze(int start_x, int start_y) {
   	// just walls so path can be carved out
-    for (int y = 0; y < HEIGHT; y++)
-        for (int x = 0; x < WIDTH; x++)
-            maze[y][x] = WALL;
+    for (int x = 0; x < WIDTH; x++)
+        for (int y = 0; y < HEIGHT; y++)
+            maze[x][y] = WALL;
 
-    // take predifened start and run dfs to carve path
-    maze[start_y][start_x] = FLOOR;
+    // take predefined start and run dfs to carve path
+    maze[start_x][start_y] = FLOOR;
     dfs(start_x, start_y);
 
-    // tweak this for more/less loops
+    // tweak this for more/fewer loops
     knock_down_some_walls(20);
 }
 
-//place exit & make sure the maze is solveable
+//place exit & make sure the maze is solvable
 void place_exit(int *exit_x, int *exit_y) {
-    int max_dist = 0;
     for (int x = 1; x < WIDTH-1; x += 2) {
-        if (maze[0][x] == FLOOR) {
+        if (maze[x][0] == FLOOR) {
             *exit_x = x;
             *exit_y = 0;
             return;
         }
-        if (maze[HEIGHT-1][x] == FLOOR) {
+        if (maze[x][HEIGHT-1] == FLOOR) {
             *exit_x = x;
             *exit_y = HEIGHT-1;
             return;
         }
     }
     for (int y = 1; y < HEIGHT-1; y += 2) {
-        if (maze[y][0] == FLOOR) {
+        if (maze[0][y] == FLOOR) {
             *exit_x = 0;
             *exit_y = y;
             return;
         }
-        if (maze[y][WIDTH-1] == FLOOR) {
+        if (maze[WIDTH-1][y] == FLOOR) {
             *exit_x = WIDTH-1;
             *exit_y = y;
             return;
@@ -113,9 +112,10 @@ void place_exit(int *exit_x, int *exit_y) {
 }
 
 void generate_map() {
-    //srand(time(NULL)); I will do this later
+    srand(time(nullptr));
 
     // must be odd and inside bounds, so (1,1) for now
+    // TODO: make this random
     int start_x = 1;
     int start_y = 1;
     generate_maze(start_x, start_y);
@@ -123,6 +123,6 @@ void generate_map() {
     int exit_x, exit_y;
     place_exit(&exit_x, &exit_y);
 
-    //this needs to be adjusted but I don't wanna decide myself on how to do it
-    //setNewMap(&maze, start_x, start_y);
+    //this needs to be adjusted, but I don't want to decide myself on how to do it
+    setNewMap(&maze, start_x, start_y);
 }

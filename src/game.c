@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "game.h"
 #include "map_mode.h"
-#include "map_generator_stupid.h"
+#include "map_generator.h"
 #include "../include/termbox2.h"
 
 enum game_state {

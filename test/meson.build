@@ -7,7 +7,7 @@ test_files = files(
 helper_files = files(
     '../src/game.c',
     '../src/map_mode.c',
-    '../src/map_generator_stupid.c',
+    '../src/map_generator.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )
