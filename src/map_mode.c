@@ -67,6 +67,7 @@ int absolute(const int val) {
     return val;
 }
 
+
 const Vector2D directions[4] = {
         { 1,  0},  // +x
         {-1,  0},  // -x
