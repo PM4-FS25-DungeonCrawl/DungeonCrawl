@@ -8,12 +8,14 @@
 
 
 // Function to initialize a Player
-void initPlayer(Player *p, const char *name, int health, int armor, int deflection, int fortitude, int will, Ability basicAttack) {
+void initPlayer(Player *p, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack) {
     strncpy(p->name, name, sizeof(p->name) - 1);
     p->name[sizeof(p->name) - 1] = '\0';
 
     p->health = health;
     p->armor = armor;
+    p->accuracy = accuracy;
+    p->might = might;
     p->deflection = deflection;
     p->fortitude = fortitude;
     p->will = will;
@@ -24,12 +26,14 @@ void initPlayer(Player *p, const char *name, int health, int armor, int deflecti
 
 
 // Function to initialize a Monster
-void initMonster(Monster *monster, const char *name, int health, int armor, int deflection, int fortitude, int will, Ability basicAttack) {
+void initMonster(Monster *monster, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack) {
     strncpy(monster->name, name, sizeof(monster->name) - 1);
     monster->name[sizeof(monster->name) - 1] = '\0';
 
     monster->health = health;
     monster->armor = armor;
+    monster->accuracy = accuracy;
+    monster->might = might;
     monster->deflection = deflection;
     monster->fortitude = fortitude;
     monster->will = will;

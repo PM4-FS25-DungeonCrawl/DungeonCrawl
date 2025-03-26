@@ -15,7 +15,7 @@ typedef enum {
 } combat_state;
 
 // === FUNCTION DECLARATIONS ===
-void combat(Player *player, Monster *monster);
+bool combat(Player *player, Monster *monster);
 combat_state combat_menu(Player *player, Monster *monster);
 void ability_menu(Player *player, Monster *monster);
 void item_menu(Player *player, Monster *monster);
@@ -26,7 +26,6 @@ int roll_dice(DiceSize dice_size);
 void deal_damage(int damage, Monster *monster);
 void take_damage(Monster *monster, Player *player);
 void use_item();
-void player_won();
-void player_died();
+int print_combat_view(Player *player, Monster *monster);
 
 #endif // COMBAT_MODE_H

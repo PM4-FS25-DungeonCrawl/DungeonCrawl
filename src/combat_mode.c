@@ -1,6 +1,6 @@
 #include "combat_mode.h"
 
-void combat(Player *player, Monster *monster) {
+bool combat(Player *player, Monster *monster) {
 
     // Set initial state of combat
     combat_state current_state = MENU_COMBAT;
@@ -24,53 +24,59 @@ void combat(Player *player, Monster *monster) {
         }
     }
 
-    // Handle state after combat
-    if (player->health <= 0) {
-        player_died();
-    } else if (monster->health <= 0) {
-        player_won();
-    }
+    // Return true if player is alive, false if they died
+    return (player->health > 0);
 }
 
 combat_state combat_menu(Player *player, Monster *monster) {
-    
-    // Prepare screen
-    tb_clear(); 
-    int y = 1;
 
-    // Display player info
-    char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
+    int selected_index = 0;
+    const char *menu_options[] = {"Use Ability", "Use Item"};
+    int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
 
-    // Display monster info
-    char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
+    while (true) {
 
-    // Display menu options
-    y += 5;
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Combat Menu");
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[1] Use Ability");
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[2] Use Item");
-    tb_present();
+        // Prepare screen
+        tb_clear();
+        int y = print_combat_view(player, monster);
 
-    // Get player input
-    struct tb_event event;
-    combat_state next_state = MENU_COMBAT;
+        // Display menu options
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
 
-    // Wait for an event
-    tb_poll_event(&event);
+        for(int i = 0; i < menu_count; i++) {
+            if (i == selected_index) {
+                tb_print(1, y++, TB_BLACK, TB_WHITE, menu_options[i]);
+            } else {
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, menu_options[i]);
+            }
+        }
 
-    if (event.ch == '1') {
-        next_state = MENU_ABILITY;
-    } else if (event.ch == '2') {
-        next_state = MENU_ITEM;
-    } else if (event.key == TB_KEY_CTRL_C) {
-        tb_shutdown();
-        exit(0);
+        // Print to terminal and check for key press
+        tb_present();
+        struct tb_event event;
+        tb_poll_event(&event);
+
+        if (event.type == TB_EVENT_KEY) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                //Move up
+                selected_index = (selected_index - 1 + menu_count) % menu_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                // Move down
+                selected_index = (selected_index + 1) % menu_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                // Return the selected state
+                if (selected_index == 0) {
+                    return MENU_ABILITY;
+                } else if (selected_index == 1) {
+                    return MENU_ITEM;
+                }
+            } else if (event.key == TB_KEY_CTRL_C) {
+                // Exit the game
+                tb_shutdown();
+                exit(0);
+            }
+        }
     }
-    return next_state;
 }
 
 void ability_menu(Player *player, Monster *monster) {
@@ -82,10 +88,10 @@ void ability_menu(Player *player, Monster *monster) {
         
         // Prepare screen
         tb_clear();
-        int y = 1;
+        int y = print_combat_view(player, monster);
 
         // Display menu options
-        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Ability Menu [ESC to go back]:");
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
         for(int i = 0; i < ability_count; i++){
             if (i == selected_index) {
                 tb_print(1, y++, TB_WHITE, TB_WHITE, player->abilities[i].name);
@@ -93,6 +99,9 @@ void ability_menu(Player *player, Monster *monster) {
                 tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->abilities[i].name);
             }
         }
+
+        y++;
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 
         // Print to terminal and check for key press
         tb_present();
@@ -168,12 +177,26 @@ void use_item() {
     /* TODO */
 }
 
-void player_won() {
-    /* TODO */1
-}
+int print_combat_view(Player *player, Monster *monster){
 
-void player_died() {
-    /* TODO */
+    int y = 1;
+
+    // Display player info
+    char player_info[100];
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
+
+    // Display monster info
+    char monster_info[100];
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
+
+    y += 5;
+    for (int i = 0; i < 20; i++) {
+        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "_");
+    }
+
+    return y;
 }
 
 int roll_dice(DiceSize dice_size) {
