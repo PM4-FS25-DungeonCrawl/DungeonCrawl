@@ -1,7 +1,3 @@
-//
-// Created by Nicola on 23.03.2025.
-//
-
 #ifndef CHARACTER_STATS_H
 #define CHARACTER_STATS_H
 
@@ -9,6 +5,7 @@
 
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
+#define MAX_WEAKNESSES 2
 
 // === ENUMS ===
 
@@ -17,6 +14,13 @@ typedef enum {
     PHYSICAL,
     MAGICAL
 } DamageType;
+
+// Enum for Character Types
+typedef enum {
+    PLAYER,
+    MONSTER,
+    BOSS
+} CharacterType;
 
 // ENUM for dice sizes
 typedef enum {
@@ -38,13 +42,12 @@ typedef struct {
     DamageType damageType;
 } Ability;
 
-// Struct for Player
+// Struct for Character
 typedef struct {
-    char name[50];
+    CharacterType type;
+    char name[20];
 
     int health;
-
-    // armor, deflection, fortitude and will are currently not used
     int armor;
     int accuracy;
     int might;
@@ -52,39 +55,26 @@ typedef struct {
     int fortitude;
     int will;
 
-    Ability basicAttack;
     Ability abilities[MAX_ABILITIES];
-    int abilityCount;
+    int ability_count;
+} Character;
+
+// Struct for Player
+typedef struct {
+    Character base;
 } Player;
 
 // Struct for Monster
 typedef struct {
-    char name[50];
-
-    int health;
-
-    // armor, deflection, fortitude and will are currently not used
-    int armor;
-    int accuracy;
-    int might;
-    int deflection;
-    int fortitude;
-    int will;
-
-    Ability basicAttack;
-    Ability abilities[MAX_ABILITIES];
-
-    int abilityCount;
+    Character base;
+    DamageType weaknesses[MAX_WEAKNESSES];
+    int weakness_count;
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
-
-void initPlayer(Player *p, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack);
-
-void addAbilityToPlayer(Player *p, Ability ability);
-
-void initMonster(Monster *monster, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack);
-
+void addAbilityToCharacter(Character *c, Ability ability);
+void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will);
+void addWeaknessToMonster(Monster *m, DamageType weakness);
 
 #endif //CHARACTER_STATS_H

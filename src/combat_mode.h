@@ -19,13 +19,13 @@ bool combat(Player *player, Monster *monster);
 combat_state combat_menu(Player *player, Monster *monster);
 void ability_menu(Player *player, Monster *monster);
 void item_menu(Player *player, Monster *monster);
-void use_ability(Player *player, Monster *monster, Ability *ability);
-bool roll_hit(Player *player, Ability *ability, Monster *monster);
+void use_ability(Character *attacker, Character *defender, Ability *ability);
+bool roll_hit(Character *attacker, Ability *ability, Character *defender);
 int roll_damage(Ability *ability);
+bool is_weak_to(DamageType *weaknesses, int count, DamageType target);
 int roll_dice(DiceSize dice_size);
-void deal_damage(int damage, Monster *monster);
-void take_damage(Monster *monster, Player *player);
+void deal_damage(int damage, DamageType damage_type, Character *character);
 void use_item();
-int print_combat_view(Player *player, Monster *monster);
+int print_combat_view(Character *player, Character *monster);
 
 #endif // COMBAT_MODE_H

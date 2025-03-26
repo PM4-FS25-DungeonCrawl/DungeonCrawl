@@ -38,23 +38,24 @@ int init_game(){
                 break;
             case COMBAT_MODE:
                 // Initialize abilities
-                Ability basicAttack;
-                initAbility(&basicAttack, "Basic Attack", 3, 20, D12, PHYSICAL);
                 Ability fireball;
-                initAbility(&fireball, "Fireball", 4, 10, D6, MAGICAL);
+                initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
                 Ability swordslash;
-                initAbility(&swordslash, "Swordslash", 4, 10, D8, PHYSICAL);
+                initAbility(&swordslash, "Swordslash", 4, 10, D6, PHYSICAL);
+                Ability bite;
+                initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
 
                 // Initialize player
                 Player player;
-                initPlayer(&player, "Hero", 100, 10, 5, 5, 5, 5, 5, basicAttack);
-
-                addAbilityToPlayer(&player, fireball);
-                addAbilityToPlayer(&player, swordslash);
+                initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5, 5);
+                addAbilityToCharacter(&player.base, fireball);
+                addAbilityToCharacter(&player.base, swordslash);
 
                 // Initialize monster
                 Monster monster;
-                initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, 3, 3, basicAttack);
+                initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3, 3);
+                addAbilityToCharacter(&monster.base, bite);
+                addWeaknessToMonster(&monster, MAGICAL);
 
                 currentState = (combat(&player, &monster))? COMBAT_MODE : EXIT;
                 break;

@@ -1,47 +1,21 @@
-//
-// Created by Nicola on 23.03.2025.
-//
-
 #include <stdio.h>
 #include <string.h>
 #include "character_stats.h"
 
 
-// Function to initialize a Player
-void initPlayer(Player *p, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack) {
-    strncpy(p->name, name, sizeof(p->name) - 1);
-    p->name[sizeof(p->name) - 1] = '\0';
-
-    p->health = health;
-    p->armor = armor;
-    p->accuracy = accuracy;
-    p->might = might;
-    p->deflection = deflection;
-    p->fortitude = fortitude;
-    p->will = will;
-
-    p->basicAttack = basicAttack;
-    p->abilityCount = 0;
+// Function to initialize a Character
+void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will) {
+    strncpy(c->name, name, sizeof(c->name) - 1);
+    c->name[sizeof(c->name) - 1] = '\0';
+    c->health = health;
+    c->armor = armor;
+    c->accuracy = accuracy;
+    c->might = might;
+    c->deflection = deflection;
+    c->fortitude = fortitude;
+    c->will = will;
+    c->ability_count = 0;
 }
-
-
-// Function to initialize a Monster
-void initMonster(Monster *monster, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack) {
-    strncpy(monster->name, name, sizeof(monster->name) - 1);
-    monster->name[sizeof(monster->name) - 1] = '\0';
-
-    monster->health = health;
-    monster->armor = armor;
-    monster->accuracy = accuracy;
-    monster->might = might;
-    monster->deflection = deflection;
-    monster->fortitude = fortitude;
-    monster->will = will;
-
-    monster->basicAttack = basicAttack;
-    monster->abilityCount = 0;
-}
-
 
 // Function to initialize an Ability
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type) {
@@ -53,11 +27,19 @@ void initAbility(Ability *a, const char *name, int rollCount, int accuracy, Dice
     a->damageType = type;
 }
 
-// Function to add an Ability to a Player
-void addAbilityToPlayer(Player *p, Ability ability) {
-    if (p->abilityCount < MAX_ABILITIES) {
-        p->abilities[p->abilityCount++] = ability;
+// Function to add an Ability to a Character
+void addAbilityToCharacter(Character *c, Ability ability) {
+    if (c->ability_count < MAX_ABILITIES) {
+        c->abilities[c->ability_count++] = ability;
     } else {
-        printf("Player %s cannot learn more abilities!\n", p->name);
+        printf("Character %s cannot learn more abilities!\n", c->name);
+    }
+}
+
+void addWeaknessToMonster(Monster *m, DamageType weakness) {
+    if (m->weakness_count < MAX_WEAKNESSES) {
+        m->weaknesses[m->weakness_count++] = weakness;
+    } else {
+        printf("Monster %s cannot gain more weaknesses!\n", m->base.name);
     }
 }

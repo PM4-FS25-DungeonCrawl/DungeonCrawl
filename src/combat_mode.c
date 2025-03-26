@@ -12,9 +12,8 @@ bool combat(Player *player, Monster *monster) {
     combat_state current_state = MENU_COMBAT;
 
     // Select menu state
-    while(player->health > 0 && monster->health > 0) {
-        switch (current_state)
-        {
+    while(player->base.health > 0 && monster->base.health > 0) {
+        switch (current_state) {
         case MENU_COMBAT:
             current_state = combat_menu(player, monster);
             break;
@@ -31,7 +30,7 @@ bool combat(Player *player, Monster *monster) {
     }
 
     // Return true if player is alive, false if they died
-    return (player->health > 0);
+    return (player->base.health > 0);
 }
 
 combat_state combat_menu(Player *player, Monster *monster) {
@@ -44,7 +43,7 @@ combat_state combat_menu(Player *player, Monster *monster) {
 
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(player, monster);
+        int y = print_combat_view(&player->base, &monster->base);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
@@ -88,21 +87,21 @@ combat_state combat_menu(Player *player, Monster *monster) {
 void ability_menu(Player *player, Monster *monster) {
     
     int selected_index = 0;
-    int ability_count = player->abilityCount;
+    int ability_count = player->base.ability_count;
 
     while (true) {
         
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(player, monster);
+        int y = print_combat_view(&player->base, &monster->base);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
         for(int i = 0; i < ability_count; i++){
             if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, player->abilities[i].name);
+                tb_print(1, y++, TB_WHITE, TB_WHITE, player->base.abilities[i].name);
             } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->abilities[i].name);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->base.abilities[i].name);
             }
         }
 
@@ -124,7 +123,7 @@ void ability_menu(Player *player, Monster *monster) {
                 selected_index = (selected_index + 1) % ability_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected ability
-                use_ability(player, monster, &player->abilities[selected_index]);
+                use_ability(&player->base, &monster->base, &player->base.abilities[selected_index]);
                 break; // Exit the menu after using the ability
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -138,22 +137,22 @@ void item_menu(Player *player, Monster *monster) {
     /* TODO */
 }
 
-void use_ability(Player *player, Monster *monster, Ability *ability) {
+void use_ability(Character *attacker, Character *defender, Ability *ability) {
     // Roll to hit
-    if (roll_hit(player, ability, monster)) {
+    if (roll_hit(attacker, ability, defender)) {
         // Roll damage
         int damage = roll_damage(ability);
-        deal_damage(damage, monster);
+        deal_damage(damage, ability->damageType, defender);
     }
 }
 
-bool roll_hit(Player *player, Ability *ability, Monster *monster) {
+bool roll_hit(Character *attacker, Ability *ability, Character *defender) {
     int roll = roll_dice(D20);
     switch (ability->damageType) {
         case PHYSICAL:
-            return roll + ability->accuracy > monster->deflection;
+            return roll + ability->accuracy > defender->deflection;
         case MAGICAL:
-            return roll + ability->accuracy > monster->fortitude;
+            return roll + ability->accuracy > defender->fortitude;
     }
     return false;
 }
@@ -167,21 +166,32 @@ int roll_damage(Ability *ability) {
     return roll;
 }
 
-void deal_damage(int damage, Monster *monster) {
+void deal_damage(int damage, DamageType damage_type, Character *character) {
     /* TODO critical hits are ignored */
-    damage -= monster->armor;
-    if (damage > 0) monster->health -= damage;
+    if (character->type == MONSTER) {
+        Monster *monster = (Monster *)character;
+        if (is_weak_to(monster->weaknesses, monster->weakness_count, damage_type)) {
+            damage *= 2;
+        }
+    }
+    damage -= character->armor;
+    if (damage > 0) character->health -= damage;
 }
 
-void take_damage(Monster *monster, Player *player) {
-    /* TODO */
+bool is_weak_to(DamageType *weaknesses, int count, DamageType target) {
+    for (int i = 0; i < count; i++) {
+        if (weaknesses[i] == target) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void use_item() {
     /* TODO */
 }
 
-int print_combat_view(Player *player, Monster *monster){
+int print_combat_view(Character *player, Character *monster){
 
     int y = 1;
 
