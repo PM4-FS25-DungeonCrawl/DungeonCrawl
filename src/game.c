@@ -39,11 +39,11 @@ int init_game(){
             case COMBAT_MODE:
                 // Initialize abilities
                 Ability basicAttack;
-                initAbility(&basicAttack, "Basic Attack", 10, PHYSICAL);
+                initAbility(&basicAttack, "Basic Attack", 1, 20, D12, PHYSICAL);
                 Ability fireball;
-                initAbility(&fireball, "Fireball", 20, MAGICAL);
+                initAbility(&fireball, "Fireball", 2, 10, D6, MAGICAL);
                 Ability swordslash;
-                initAbility(&swordslash, "Swordslash", 20, PHYSICAL);
+                initAbility(&swordslash, "Swordslash", 2, 10, D8, PHYSICAL);
 
                 // Initialize player
                 Player player;

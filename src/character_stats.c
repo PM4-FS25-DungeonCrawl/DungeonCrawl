@@ -44,10 +44,12 @@ void initMonster(Monster *monster, const char *name, int health, int armor, int 
 
 
 // Function to initialize an Ability
-void initAbility(Ability *a, const char *name, int damageValue, DamageType type) {
+void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type) {
     strncpy(a->name, name, sizeof(a->name) - 1);
     a->name[sizeof(a->name) - 1] = '\0';
-    a->damageValue = damageValue;
+    a->rollCount = rollCount;
+    a->accuracy = accuracy;
+    a->diceSize = diceSize;
     a->damageType = type;
 }
 
