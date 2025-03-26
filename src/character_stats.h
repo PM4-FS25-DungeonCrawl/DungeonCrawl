@@ -1,7 +1,3 @@
-//
-// Created by Nicola on 23.03.2025.
-//
-
 #ifndef CHARACTER_STATS_H
 #define CHARACTER_STATS_H
 
