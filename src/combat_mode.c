@@ -34,7 +34,7 @@ combat_state combat_menu(Player *player, Monster *monster) {
     const char *menu_options[] = {"Use Ability", "Use Item"};
     int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
     
-    while (true) {
+    while (1) {
         
         // Prepare screen
         tb_clear();
@@ -84,7 +84,7 @@ void ability_menu(Player *player, Monster *monster) {
     int selected_index = 0;
     int ability_count = player->abilityCount;
 
-    while (true) {
+    while (1) {
         
         // Prepare screen
         tb_clear();
@@ -138,7 +138,7 @@ void use_ability(Player *player, Monster *monster, Ability *ability) {
 
 bool roll_hit(Player *player, Ability *ability, int dice_size) {
     /* TODO */
-    return true;
+    return 1;
 }
 
 int roll_damage(Player *player, Ability *ability, int dice_size) {
