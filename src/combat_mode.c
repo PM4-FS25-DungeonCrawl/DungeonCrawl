@@ -20,13 +20,16 @@ bool combat(Player *player, Monster *monster) {
         case MENU_ABILITY:
             ability_menu(player, monster);
             current_state = MENU_COMBAT;
+            use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
             break;
         case MENU_ITEM:
             item_menu(player, monster);
             current_state = MENU_COMBAT;
+            use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
         default:
             break;
         }
+        
     }
 
     // Return true if player is alive, false if they died
@@ -216,4 +219,9 @@ int print_combat_view(Character *player, Character *monster){
 int roll_dice(DiceSize dice_size) {
     /* TODO better randomness? (warning message)*/
     return rand() % dice_size + 1;
+}
+
+Ability *get_random_ability(Character *character){
+    int random_index = rand() % character->ability_count;
+    return &character->abilities[random_index];
 }

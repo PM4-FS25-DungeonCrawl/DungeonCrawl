@@ -27,5 +27,6 @@ int roll_dice(DiceSize dice_size);
 void deal_damage(int damage, DamageType damage_type, Character *character);
 void use_item();
 int print_combat_view(Character *player, Character *monster);
+Ability *get_random_ability(Character *character);
 
 #endif // COMBAT_MODE_H
