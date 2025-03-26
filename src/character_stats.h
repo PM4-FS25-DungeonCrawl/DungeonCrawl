@@ -1,3 +1,7 @@
+//
+// Created by Nicola on 23.03.2025.
+//
+
 #ifndef CHARACTER_STATS_H
 #define CHARACTER_STATS_H
 
@@ -14,12 +18,23 @@ typedef enum {
     MAGICAL
 } DamageType;
 
+// ENUM for dice sizes
+typedef enum {
+    D6 = 6,
+    D8 = 8,
+    D10 = 10,
+    D12 = 12,
+    D20 = 20
+} DiceSize;
+
 // === STRUCTS ===
 
 // Struct for Abilities
 typedef struct {
     char name[50];
-    int damageValue;
+    int rollCount;
+    int accuracy;
+    DiceSize diceSize;
     DamageType damageType;
 } Ability;
 
@@ -28,6 +43,8 @@ typedef struct {
     char name[50];
 
     int health;
+
+    // armor, deflection, fortitude and will are currently not used
     int armor;
     int accuracy;
     int might;
@@ -45,6 +62,8 @@ typedef struct {
     char name[50];
 
     int health;
+
+    // armor, deflection, fortitude and will are currently not used
     int armor;
     int accuracy;
     int might;
@@ -59,7 +78,7 @@ typedef struct {
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
-void initAbility(Ability *a, const char *name, int damageValue, DamageType type);
+void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
 
 void initPlayer(Player *p, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack);
 

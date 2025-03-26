@@ -1,5 +1,11 @@
 #include "combat_mode.h"
 
+/* TODO: Print lines for missed attacks and damage dealt
+ * TODO: Critical hits
+ * TODO: Enemy attacks after attacking
+ * TODO: Might and weakness system
+ */
+
 bool combat(Player *player, Monster *monster) {
 
     // Set initial state of combat
@@ -33,9 +39,9 @@ combat_state combat_menu(Player *player, Monster *monster) {
     int selected_index = 0;
     const char *menu_options[] = {"Use Ability", "Use Item"};
     int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
-    
-    while (1) {
-        
+
+    while (true) {
+
         // Prepare screen
         tb_clear();
         int y = print_combat_view(player, monster);
@@ -50,12 +56,12 @@ combat_state combat_menu(Player *player, Monster *monster) {
                 tb_print(1, y++, TB_WHITE, TB_DEFAULT, menu_options[i]);
             }
         }
-        
+
         // Print to terminal and check for key press
         tb_present();
         struct tb_event event;
         tb_poll_event(&event);
-        
+
         if (event.type == TB_EVENT_KEY) {
             if (event.key == TB_KEY_ARROW_UP) {
                 //Move up
@@ -84,7 +90,7 @@ void ability_menu(Player *player, Monster *monster) {
     int selected_index = 0;
     int ability_count = player->abilityCount;
 
-    while (1) {
+    while (true) {
         
         // Prepare screen
         tb_clear();
@@ -133,21 +139,38 @@ void item_menu(Player *player, Monster *monster) {
 }
 
 void use_ability(Player *player, Monster *monster, Ability *ability) {
-    /* TODO */
+    // Roll to hit
+    if (roll_hit(player, ability, monster)) {
+        // Roll damage
+        int damage = roll_damage(ability);
+        deal_damage(damage, monster);
+    }
 }
 
-bool roll_hit(Player *player, Ability *ability, int dice_size) {
-    /* TODO */
-    return 1;
+bool roll_hit(Player *player, Ability *ability, Monster *monster) {
+    int roll = roll_dice(D20);
+    switch (ability->damageType) {
+        case PHYSICAL:
+            return roll + ability->accuracy > monster->deflection;
+        case MAGICAL:
+            return roll + ability->accuracy > monster->fortitude;
+    }
+    return false;
 }
 
-int roll_damage(Player *player, Ability *ability, int dice_size) {
-    /* TODO */
-    return ability->damageValue;
+int roll_damage(Ability *ability) {
+    int roll = 0;
+    // Roll the dice several times
+    for (int i = 0; i < ability->rollCount; i++){
+        roll += roll_dice(ability->diceSize);
+    }
+    return roll;
 }
 
 void deal_damage(int damage, Monster *monster) {
-    /* TODO */
+    /* TODO critical hits are ignored */
+    damage -= monster->armor;
+    if (damage > 0) monster->health -= damage;
 }
 
 void take_damage(Monster *monster, Player *player) {
@@ -176,6 +199,11 @@ int print_combat_view(Player *player, Monster *monster){
     for (int i = 0; i < 20; i++) {
         tb_printf(1, y, TB_WHITE, TB_DEFAULT, "_");
     }
-        
+
     return y;
+}
+
+int roll_dice(DiceSize dice_size) {
+    /* TODO better randomness? (warning message)*/
+    return rand() % dice_size + 1;
 }
