@@ -47,14 +47,14 @@ int init_game(){
 
                 // Initialize player
                 Player player;
-                initPlayer(&player, "Hero", 100, 10, 5, 5, 5, basicAttack);
+                initPlayer(&player, "Hero", 100, 10, 5, 5, 5, 5, 5, basicAttack);
 
                 addAbilityToPlayer(&player, fireball);
                 addAbilityToPlayer(&player, swordslash);
 
                 // Initialize monster
                 Monster monster;
-                initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, basicAttack);
+                initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, 3, 3, basicAttack);
 
                 currentState = (combat(&player, &monster))? COMBAT_MODE : EXIT;
                 break;
