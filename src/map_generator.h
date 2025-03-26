@@ -2,12 +2,14 @@
 // Created by jilze on 23/03/2025.
 //
 
-#ifndef MAP_GENERATOR_FANCY_H
-#define MAP_GENERATOR_FANCY_H
+#ifndef MAP_GENERATOR_H
+#define MAP_GENERATOR_H
+
+#include <stdio.h>
 
 //this ??
-#define WIDTH 21 // must be odd
-#define HEIGHT 17 // must be odd
+#define WIDTH 81 // must be odd
+#define HEIGHT 21 // must be odd
 
 enum map_tile {
     WALL = 0,
@@ -16,4 +18,4 @@ enum map_tile {
 
 void generate_map();
 
-#endif //MAP_GENERATOR_FANCY_H
+#endif //MAP_GENERATOR_H
