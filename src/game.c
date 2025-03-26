@@ -45,6 +45,15 @@ int init_game(){
                 Player player;
                 initPlayer(&player, "Hero", 100, 10, 5, 5, 5, basicAttack);
 
+                Ability fireball;
+                initAbility(&fireball, "Fireball", 20, MAGICAL);
+
+                Ability swordslash;
+                initAbility(&swordslash, "Swordslash", 20, PHYSICAL);
+
+                addAbilityToPlayer(&player, fireball);
+                addAbilityToPlayer(&player, swordslash);
+
                 // Initialize monster
                 Monster monster;
                 initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, basicAttack);
