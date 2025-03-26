@@ -9,16 +9,15 @@
 
 //TODO: refactor!!
 
-// Global maze array
-static enum map_tile maze[WIDTH][HEIGHT];
-
-static bool visited[WIDTH][HEIGHT];
+//maze array
+enum map_tile maze[WIDTH][HEIGHT];
+bool visited[WIDTH][HEIGHT];
 
 typedef struct {
     int dx, dy;
 } Direction;
 
-static Direction directions[] = {
+Direction directions[] = {
     { -1, 0 },  // left
     { 1, 0 },   // right
     { 0, -1 },  // up
@@ -26,7 +25,7 @@ static Direction directions[] = {
 };
 
 // Shuffle array using Fisher-Yates algorithm
-static void shuffle(Direction *dir, int n) {
+void shuffle(Direction *dir, int n) {
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         Direction tmp = dir[j];
@@ -36,17 +35,17 @@ static void shuffle(Direction *dir, int n) {
 }
 
 // Check if cell is within bounds of the maze
-static int is_in_bounds(int x, int y) {
+int is_in_bounds(int x, int y) {
     return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
 }
 
 // Check if a cell is a valid cell to visit (in bounds and not visited)
-static int is_valid_cell(int x, int y) {
+int is_valid_cell(int x, int y) {
     return is_in_bounds(x, y) && !visited[x][y];
 }
 
-// Recursive backtracking algorithm to generate maze
-static void carve_passages(int x, int y) {
+// Recursive backtracking algorithm to generate maze (based on dfs)
+void carve_passages(int x, int y) {
     visited[x][y] = true;
     maze[x][y] = FLOOR;
     
@@ -77,7 +76,7 @@ static void carve_passages(int x, int y) {
 }
 
 // Add loops to the maze by knocking down some walls
-static void add_loops(int num_loops) {
+void add_loops(int num_loops) {
     int count = 0;
     int max_attempts = num_loops * 10; // Limit the number of attempts
     
@@ -112,7 +111,7 @@ static void add_loops(int num_loops) {
 }
 
 // Place the exit on a random edge of the maze, ensuring there's a path to it
-static void place_exit(int start_x, int start_y, int start_edge, int *exit_x, int *exit_y) {
+void place_exit(int start_x, int start_y, int start_edge, int *exit_x, int *exit_y) {
     // Define the edges where the exit can be placed
     int exit_edge = start_edge;
     while (exit_edge == start_edge) {
@@ -120,7 +119,6 @@ static void place_exit(int start_x, int start_y, int start_edge, int *exit_x, in
     }
 
     do {
-
         switch(exit_edge) {
             case 0: // Top exit_edge
                 *exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
@@ -150,7 +148,7 @@ static void place_exit(int start_x, int start_y, int start_edge, int *exit_x, in
     
 
 // Initialize the maze with walls
-static void initialize_maze() {
+void initialize_maze() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             maze[x][y] = WALL;
@@ -160,11 +158,10 @@ static void initialize_maze() {
 }
 
 // Generate a new maze
-static void generate_maze(int start_x, int start_y) {
+void generate_maze(int start_x, int start_y) {
       
     // Make sure start position is valid for dfs (odd coordinates)
     // relevant if we want to implement the starting position differently
-    
     if (start_x % 2 == 0) {
         start_x++;
     }
