@@ -25,7 +25,6 @@ int roll_damage(Player *player, Ability *ability, int dice_size);
 void deal_damage(int damage, Monster *monster);
 void take_damage(Monster *monster, Player *player);
 void use_item();
-void player_won();
-void player_died();
+int print_combat_view(Player *player, Monster *monster);
 
 #endif // COMBAT_MODE_H

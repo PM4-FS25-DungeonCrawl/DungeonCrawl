@@ -32,20 +32,9 @@ combat_state combat_menu(Player *player, Monster *monster) {
     
     // Prepare screen
     tb_clear(); 
-    int y = 1;
-
-    // Display player info
-    char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
-
-    // Display monster info
-    char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
+    int y = print_combat_view(player, monster);
 
     // Display menu options
-    y += 5;
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Combat Menu");
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[1] Use Ability");
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[2] Use Item");
@@ -78,7 +67,7 @@ void ability_menu(Player *player, Monster *monster) {
         
         // Prepare screen
         tb_clear();
-        int y = 1;
+        int y = print_combat_view(player, monster);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Ability Menu [ESC to go back]:");
@@ -143,4 +132,26 @@ void take_damage(Monster *monster, Player *player) {
 
 void use_item() {
     /* TODO */
+}
+
+int print_combat_view(Player *player, Monster *monster){
+
+    int y = 1;
+
+    // Display player info
+    char player_info[100];
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
+
+    // Display monster info
+    char monster_info[100];
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
+
+    y += 5;
+    for (int i = 0; i < 20; i++) {
+        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "_");
+    }
+        
+    return y;
 }
