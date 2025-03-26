@@ -1,5 +1,11 @@
 #include "combat_mode.h"
 
+/* TODO: Print lines for missed attacks and damage dealt
+ * TODO: Critical hits
+ * TODO: Enemy attacks after attacking
+ * TODO: Might and weakness system
+ */
+
 bool combat(Player *player, Monster *monster) {
 
     // Set initial state of combat
@@ -164,7 +170,7 @@ int roll_damage(Ability *ability) {
 void deal_damage(int damage, Monster *monster) {
     /* TODO critical hits are ignored */
     damage -= monster->armor;
-    monster->health -= damage;
+    if (damage > 0) monster->health -= damage;
 }
 
 void take_damage(Monster *monster, Player *player) {
