@@ -40,16 +40,14 @@ int init_game(){
                 // Initialize abilities
                 Ability basicAttack;
                 initAbility(&basicAttack, "Basic Attack", 10, PHYSICAL);
+                Ability fireball;
+                initAbility(&fireball, "Fireball", 20, MAGICAL);
+                Ability swordslash;
+                initAbility(&swordslash, "Swordslash", 20, PHYSICAL);
 
                 // Initialize player
                 Player player;
                 initPlayer(&player, "Hero", 100, 10, 5, 5, 5, basicAttack);
-
-                Ability fireball;
-                initAbility(&fireball, "Fireball", 20, MAGICAL);
-
-                Ability swordslash;
-                initAbility(&swordslash, "Swordslash", 20, PHYSICAL);
 
                 addAbilityToPlayer(&player, fireball);
                 addAbilityToPlayer(&player, swordslash);
@@ -58,8 +56,7 @@ int init_game(){
                 Monster monster;
                 initMonster(&monster, "Goblin", 50, 5, 3, 3, 3, basicAttack);
 
-                combat(&player, &monster);
-                currentState = EXIT;
+                currentState = (combat(&player, &monster))? COMBAT_MODE : EXIT;
                 break;
             case EXIT:
                 doRun = false;
