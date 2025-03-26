@@ -133,29 +133,26 @@ void item_menu(Player *player, Monster *monster) {
 }
 
 void use_ability(Player *player, Monster *monster, Ability *ability) {
-    /* TODO */
     // Roll to hit
-    if (roll_hit(player, ability, monster, D20 )) {
+    if (roll_hit(player, ability, monster)) {
         // Roll damage
         int damage = roll_damage(ability);
         deal_damage(damage, monster);
     }
 }
 
-bool roll_hit(Player *player, Ability *ability, Monster *monster, int dice_size) {
-    /* TODO */
-    int roll = roll_dice(dice_size);
+bool roll_hit(Player *player, Ability *ability, Monster *monster) {
+    int roll = roll_dice(D20);
     switch (ability->damageType) {
         case PHYSICAL:
             return roll + ability->accuracy > monster->deflection;
         case MAGICAL:
             return roll + ability->accuracy > monster->fortitude;
     }
-    return true;
+    return false;
 }
 
 int roll_damage(Ability *ability) {
-    /* TODO */
     int roll = 0;
     // Roll the dice several times
     for (int i = 0; i < ability->rollCount; i++){
@@ -165,7 +162,8 @@ int roll_damage(Ability *ability) {
 }
 
 void deal_damage(int damage, Monster *monster) {
-    /* TODO damage type gets neglected */
+    /* TODO critical hits are ignored */
+    damage -= monster->armor;
     monster->health -= damage;
 }
 

@@ -20,7 +20,7 @@ combat_state combat_menu(Player *player, Monster *monster);
 void ability_menu(Player *player, Monster *monster);
 void item_menu(Player *player, Monster *monster);
 void use_ability(Player *player, Monster *monster, Ability *ability);
-bool roll_hit(Player *player, Ability *ability, Monster *monster, int dice_size);
+bool roll_hit(Player *player, Ability *ability, Monster *monster);
 int roll_damage(Ability *ability);
 int roll_dice(DiceSize dice_size);
 void deal_damage(int damage, Monster *monster);

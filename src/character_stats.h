@@ -78,7 +78,7 @@ typedef struct {
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
-void initAbility(Ability *a, const char *name, int damageValue, DamageType type);
+void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
 
 void initPlayer(Player *p, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will, Ability basicAttack);
 
