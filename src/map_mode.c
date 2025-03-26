@@ -40,10 +40,14 @@ void handle_input(const struct tb_event *event) {
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
-    if ((*map)[new_y][new_x] == FLOOR) {
-        playerX = new_x;
-        playerY = new_y;
+    if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
+        if ((*map)[new_x][new_y] == FLOOR) {
+            //TODO: make a function "move_player" out of this, there you can also handle uncovering more of the map :)
+            playerX = new_x;
+            playerY = new_y;
+        }
     }
+
 }
 
 int mapModeUpdate() {
