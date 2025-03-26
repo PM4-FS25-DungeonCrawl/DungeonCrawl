@@ -15,7 +15,7 @@ typedef enum {
 } combat_state;
 
 // === FUNCTION DECLARATIONS ===
-void combat(Player *player, Monster *monster);
+bool combat(Player *player, Monster *monster);
 combat_state combat_menu(Player *player, Monster *monster);
 void ability_menu(Player *player, Monster *monster);
 void item_menu(Player *player, Monster *monster);

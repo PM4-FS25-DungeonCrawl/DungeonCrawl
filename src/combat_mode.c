@@ -1,6 +1,6 @@
 #include "combat_mode.h"
 
-void combat(Player *player, Monster *monster) {
+bool combat(Player *player, Monster *monster) {
 
     // Set initial state of combat
     combat_state current_state = MENU_COMBAT;
@@ -24,12 +24,8 @@ void combat(Player *player, Monster *monster) {
         }
     }
 
-    // Handle state after combat
-    if (player->health <= 0) {
-        player_died();
-    } else if (monster->health <= 0) {
-        player_won();
-    }
+    // Return true if player is alive, false if they died
+    return (player->health > 0);
 }
 
 combat_state combat_menu(Player *player, Monster *monster) {
@@ -146,13 +142,5 @@ void take_damage(Monster *monster, Player *player) {
 }
 
 void use_item() {
-    /* TODO */
-}
-
-void player_won() {
-    /* TODO */
-}
-
-void player_died() {
     /* TODO */
 }
