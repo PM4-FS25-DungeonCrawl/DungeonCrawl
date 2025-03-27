@@ -41,7 +41,7 @@ int init_game(){
             case COMBAT_MODE:
                 break;
             case EXIT:
-                close_log_file();
+                close_log_file(1);
                 doRun = false;
             default:
         }
