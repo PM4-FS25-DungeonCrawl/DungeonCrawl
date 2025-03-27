@@ -3,15 +3,12 @@
 #include <stdint.h>
 
 #include "map_generator.h"
+#include "map.h"
 #include "map_mode.h"
+#include "map_populator.h"
 
-#define     TOP     0
-#define     BOTTOM  1
-#define     LEFT    2
-#define     RIGHT   3
-
-//maze array
-enum map_tile maze[WIDTH][HEIGHT];
+// map array to store the maze
+enum map_tile map[WIDTH][HEIGHT];
 int visited[WIDTH][HEIGHT];
 
 typedef struct {
@@ -35,7 +32,7 @@ void shuffle(Direction *dir, int n) {
     }
 }
 
-// Check if cell is within bounds of the maze
+// Check if cell is within bounds of the map
 int is_in_bounds(int x, int y) {
     return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
 }
@@ -48,23 +45,23 @@ int is_valid_cell(int x, int y) {
 int validate_exit_position(int exit_edge, int x, int y) {
     switch (exit_edge) {
         case TOP:
-            return maze[x][y + 1] == FLOOR;
+            return map[x][y + 1] == FLOOR;
         case BOTTOM:
-            return maze[x][y - 1] == FLOOR;
+            return map[x][y - 1] == FLOOR;
         case LEFT:
-            return maze[x + 1][y] == FLOOR;
+            return map[x + 1][y] == FLOOR;
         case RIGHT:
-            return maze[x - 1][y] == FLOOR;
+            return map[x - 1][y] == FLOOR;
         default:
             //TODO log error
             return 0;
     }
 }
 
-// Recursive backtracking algorithm to generate maze (based on dfs)
+// Recursive backtracking algorithm to generate map (based on dfs)
 void carve_passages(int x, int y) {
     visited[x][y] = 1;
-    maze[x][y] = FLOOR;
+    map[x][y] = FLOOR;
 
     // Create a copy of directions and shuffle them
     Direction shuffled_dirs[4];
@@ -84,13 +81,13 @@ void carve_passages(int x, int y) {
             int wall_y = y + shuffled_dirs[i].dy;
 
             // make the wall a floor and continue the path
-            maze[wall_x][wall_y] = FLOOR;
+            map[wall_x][wall_y] = FLOOR;
             carve_passages(nx, ny);
         }
     }
 }
 
-// Add loops to the maze by knocking down some walls
+// Add loops to the map by knocking down some walls
 void add_loops(int num_loops) {
     int count = 0;
     int max_attempts = num_loops * 10; // Limit the number of attempts
@@ -101,7 +98,7 @@ void add_loops(int num_loops) {
         int y = 1 + rand() % (HEIGHT - 2);
 
         // If the wall has exactly 2 opposing floor neighbors, knock it down to create a loop
-        if (maze[x][y] == WALL) {
+        if (map[x][y] == WALL) {
             int neighbor_directions[] = {0, 0, 0, 0};
             // Count neighboring floor cells
             int floor_count = 0;
@@ -110,7 +107,7 @@ void add_loops(int num_loops) {
                 int dx = x + directions[i].dx;
                 int dy = y + directions[i].dy;
 
-                if (maze[dx][dy] == FLOOR) {
+                if (map[dx][dy] == FLOOR) {
                     floor_count++;
                     neighbor_directions[i] = 1;
                 }
@@ -120,7 +117,7 @@ void add_loops(int num_loops) {
             if (floor_count == 2) {
                 if ((neighbor_directions[TOP] && neighbor_directions[BOTTOM]) || (
                         neighbor_directions[LEFT] && neighbor_directions[RIGHT])) {
-                    maze[x][y] = FLOOR;
+                    map[x][y] = FLOOR;
                     count++;
                 }
             }
@@ -130,7 +127,7 @@ void add_loops(int num_loops) {
     }
 }
 
-// Place the exit on a random edge of the maze, ensuring there's a path to it
+// Place the exit on a random edge of the map, ensuring there's a path to it
 int place_exit(int start_edge, int *exit_x, int *exit_y) {
     // get a random exit edge that is different from the start edge
     int exit_edge = start_edge;
@@ -162,22 +159,22 @@ int place_exit(int start_edge, int *exit_x, int *exit_y) {
         }
     } while (!validate_exit_position(exit_edge, *exit_x, *exit_y));
 
-    maze[*exit_x][*exit_y] = EXIT_DOOR;
+    map[*exit_x][*exit_y] = EXIT_DOOR;
     return exit_edge;
 }
 
 
-// Initialize the maze with walls
-void initialize_maze() {
+// Initialize the map with walls
+void initialize_map() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            maze[x][y] = WALL;
+            map[x][y] = WALL;
             visited[x][y] = 0;
         }
     }
 }
 
-// Generate a new maze
+// Generate a new map
 void generate_maze(int start_x, int start_y) {
     // Make sure start position is valid for dfs (odd coordinates)
     // relevant if we want to implement the starting position differently
@@ -188,10 +185,10 @@ void generate_maze(int start_x, int start_y) {
         start_y++;
     }
 
-    // Generate the maze using recursive backtracking
+    // Generate the map using recursive backtracking
     carve_passages(start_x, start_y);
 
-    // Add some loops to the maze
+    // Add some loops to the map
     int num_loops = (WIDTH * HEIGHT) / 100 + 1; // Use fewer loops to prevent overflow
     add_loops(num_loops);
 }
@@ -201,22 +198,22 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
         case TOP:
             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
             *start_y = 1;
-            maze[*start_x][0] = START_DOOR;
+            map[*start_x][0] = START_DOOR;
             break;
         case RIGHT:
             *start_x = WIDTH - 2;
             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-            maze[WIDTH - 1][*start_y] = START_DOOR;
+            map[WIDTH - 1][*start_y] = START_DOOR;
             break;
         case BOTTOM:
             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
             *start_y = HEIGHT - 2;
-            maze[*start_x][HEIGHT - 1] = START_DOOR;
+            map[*start_x][HEIGHT - 1] = START_DOOR;
             break;
         case LEFT:
             *start_x = 1;
             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-            maze[0][*start_y] = START_DOOR;
+            map[0][*start_y] = START_DOOR;
             break;
         default:
             // TODO log error
@@ -232,10 +229,10 @@ void generate_map() {
     seed ^= (uintptr_t) &stack_var;
     srand(seed);
 
-    // Initialize the maze with walls
-    initialize_maze();
+    // Initialize the map with walls
+    initialize_map();
 
-    // Generate maze with a random start position (at the start_edge)
+    // Generate map with a random start position (at the start_edge)
     // Start position must be an odd coordinate (for dfs) and should be at least 3 cells away from other edges (not start_edge)
     int start_x, start_y;
     int start_edge = rand() % 4;
@@ -244,7 +241,9 @@ void generate_map() {
     generate_maze(start_x, start_y);
 
     int exit_x, exit_y;
-    place_exit(start_edge, &exit_x, &exit_y);
+    int exit_edge = place_exit(start_edge, &exit_x, &exit_y);
 
-    setNewMap(&maze, start_x, start_y);
+    populate_map(start_edge, exit_edge);
+
+    set_start(start_x, start_y);
 }

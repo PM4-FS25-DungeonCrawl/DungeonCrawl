@@ -8,6 +8,7 @@ helper_files = files(
     '../src/game.c',
     '../src/map_mode.c',
     '../src/map_generator.c',
+    '../src/map_populator.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )

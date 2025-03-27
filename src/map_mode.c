@@ -2,25 +2,23 @@
 #include "map_mode.h"
 #include "../include/termbox2.h"
 #include "../debug/debug.h"
-
-enum map_tile (*map)[WIDTH][HEIGHT];
+#include "map.h"
 
 int playerX = 1;
 int playerY = 1;
 
-void setNewMap(enum map_tile (*newMap)[WIDTH][HEIGHT], int newPlayerX, int newPlayerY) {
-    map = newMap;
+void set_start(int newPlayerX, int newPlayerY) {
     playerX = newPlayerX;
     playerY = newPlayerY;
 }
 
-void draw_maze(void) {
+void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             if (x == playerX && y == playerY) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
-                switch ((*map)[x][y]) {
+                switch (map[x][y]) {
                     case WALL:
                         tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
                         break;
@@ -55,7 +53,7 @@ void handle_input(const struct tb_event *event) {
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
-        if ((*map)[new_x][new_y] == FLOOR) {
+        if (map[new_x][new_y] == FLOOR) {
             //TODO: make a function "move_player" out of this, there you can also handle uncovering more of the map :)
             playerX = new_x;
             playerY = new_y;
@@ -73,7 +71,7 @@ int mapModeUpdate() {
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return 1;
         handle_input(&ev);
     }
-    draw_maze();
+    draw_map();
     draw_ui();
     tb_present();
 
