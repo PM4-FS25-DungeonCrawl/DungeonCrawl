@@ -1,7 +1,7 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
-//#define DEBUG_TRUE
+//#define DEBUG
 
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
@@ -13,7 +13,7 @@
     //test mode is active
     #define DEBUG_PRINT(x, y, ...) printf(__VA_ARGS__)
 #else
-    #ifdef DEBUG_TRUE
+    #ifdef DEBUG
         #define DEBUG_PRINT(x, y, ...) print_text(x, y, __VA_ARGS__)
     #else
         //empty debug print
