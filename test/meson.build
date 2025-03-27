@@ -10,8 +10,8 @@ helper_files = files(
     '../src/map_mode.c',
     '../include/termbox2.c',
     '../debug/debug.c',
-    '../database/database.c',
     '../include/sqlite3.c',
+    '../src/database/database.c'
 )
 
 

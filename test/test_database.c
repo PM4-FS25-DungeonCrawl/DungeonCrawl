@@ -2,7 +2,7 @@
 // Created by jabar on 27.03.2025.
 //
 #include <stdio.h>
-#include "../database/database.h"
+#include "../src/database/database.h"
 #include <assert.h>
 
 

@@ -18,12 +18,19 @@ debug_files = files(
   'debug/debug.c'
 )
 
+# List of all database files
+database_files = files(
+  'include/sqlite3.c',
+  'src/database/database.c'
+)
+
 # Include the test directory in the build.
 subdir('test')
 
 # Define the executable
 executable(
   'DungeonCrawl',
-  src_files, 
+  src_files,
   debug_files,
+  database_files
 )
