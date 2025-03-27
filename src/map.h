@@ -4,6 +4,9 @@
 #define WIDTH 39 // must be odd
 #define HEIGHT 19 // must be odd
 
+#define ENEMY_COUNT 8
+#define ENEMY_MIN_DISTANCE 3
+
 #define     TOP     0
 #define     BOTTOM  1
 #define     LEFT    2
