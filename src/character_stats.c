@@ -2,6 +2,7 @@
 
 // Function to initialize a Character
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will) {
+    c->type = type;
     strncpy(c->name, name, sizeof(c->name) - 1);
     c->name[sizeof(c->name) - 1] = '\0';
     c->health = health;
@@ -45,8 +46,8 @@ void initWeaknesses(Monster *m, int array[sizeof(Weakness)]) {
 int get_weakness_value(Monster *m, DamageType key) {
     for (int i = 0; i < sizeof(m->weakness_map); i++) {
         if (m->weakness_map[i].type == key){
-            return m->weakness_map->value;
+            return m->weakness_map[i].value;
         }     
     }
-    return 0;
+    return 1;
 }
