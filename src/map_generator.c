@@ -11,11 +11,7 @@
 enum map_tile map[WIDTH][HEIGHT];
 int visited[WIDTH][HEIGHT];
 
-typedef struct {
-    int dx, dy;
-} Direction;
-
-Direction directions[] = {
+Direction directions[4] = {
     {0, -1}, // up
     {0, 1}, // down
     {-1, 0}, // left
@@ -128,7 +124,7 @@ void add_loops(int num_loops) {
 }
 
 // Place the exit on a random edge of the map, ensuring there's a path to it
-int place_exit(int start_edge, int *exit_x, int *exit_y) {
+void place_exit(int start_edge, int *exit_x, int *exit_y) {
     // get a random exit edge that is different from the start edge
     int exit_edge = start_edge;
     while (exit_edge == start_edge) {
@@ -155,12 +151,11 @@ int place_exit(int start_edge, int *exit_x, int *exit_y) {
                 break;
             default:
                 //TODO log error
-                break;
+                return;
         }
     } while (!validate_exit_position(exit_edge, *exit_x, *exit_y));
 
     map[*exit_x][*exit_y] = EXIT_DOOR;
-    return exit_edge;
 }
 
 
@@ -193,6 +188,7 @@ void generate_maze(int start_x, int start_y) {
     add_loops(num_loops);
 }
 
+// set the start position on the map
 void set_start_position(int start_edge, int *start_x, int *start_y) {
     switch (start_edge) {
         case TOP:
@@ -217,10 +213,11 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
             break;
         default:
             // TODO log error
-            break;
+            return;
     }
 }
 
+// generate the map and populate it with keys, enemies, and the exit
 void generate_map() {
     // Better random seed using a combination of time and process info
     unsigned int seed = (unsigned int) time(nullptr);
@@ -241,9 +238,9 @@ void generate_map() {
     generate_maze(start_x, start_y);
 
     int exit_x, exit_y;
-    int exit_edge = place_exit(start_edge, &exit_x, &exit_y);
+    place_exit(start_edge, &exit_x, &exit_y);
 
-    populate_map(start_edge, exit_edge);
+    populate_map();
 
     set_start(start_x, start_y);
 }

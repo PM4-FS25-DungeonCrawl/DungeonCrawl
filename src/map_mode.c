@@ -31,9 +31,12 @@ void draw_map(void) {
                     case EXIT_DOOR:
                         tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
                         break;
+                    case KEY:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                        break;
                     default:
                         //TODO log error
-                        break;
+                        return;
                 }
             }
         }

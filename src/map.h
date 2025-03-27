@@ -13,8 +13,15 @@ enum map_tile {
     WALL = 0,
     FLOOR = 1,
     START_DOOR = 2,
-    EXIT_DOOR = 3
+    EXIT_DOOR = 3,
+    KEY = 4
 };
+
+typedef struct {
+    int dx, dy;
+} Direction;
+
+extern Direction directions[4];
 
 //maze array
 extern enum map_tile map[WIDTH][HEIGHT];
