@@ -17,12 +17,26 @@ void setNewMap(enum map_tile (*newMap)[WIDTH][HEIGHT], int newPlayerX, int newPl
 void draw_maze(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if ((*map)[x][y] == WALL) {
-                tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
-            } else if (x == playerX && y == playerY) {
+            if (x == playerX && y == playerY) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
-                tb_printf(x, y, TB_BLACK, TB_BLACK, " ");
+                switch ((*map)[x][y]) {
+                    case WALL:
+                        tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                        break;
+                    case FLOOR:
+                        tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                        break;
+                    case START_DOOR:
+                        tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                        break;
+                    case EXIT_DOOR:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                        break;
+                    default:
+                        //TODO log error
+                        break;
+                }
             }
         }
     }
@@ -47,7 +61,6 @@ void handle_input(const struct tb_event *event) {
             playerY = new_y;
         }
     }
-
 }
 
 int mapModeUpdate() {
