@@ -6,10 +6,10 @@
 #define LOGGER_H
 
 #define MAX_N_FILES 5
-#define MAX_FILE_SIZE 1024 * 1024 // max siz = 1 MB
+#define MAX_FILE_SIZE 1024 * 1024 // max size = 1 MB
 
 // relative directory
-#define LOG_DIRECTORY "../../log/"
+#define LOG_DIRECTORY "../../log"
 #define LOG_FILE_FORMAT "log-%d.txt"
 
 #define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"

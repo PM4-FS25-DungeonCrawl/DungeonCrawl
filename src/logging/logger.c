@@ -5,8 +5,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 #include <dirent.h>
-#include <string.h>
 #include <time.h>
 
 #include "logger.h"
@@ -16,15 +16,15 @@ const char *log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 char filename[256];
 FILE *log_file = nullptr;
 
-int current_file_id = 0;
+int file_id = 0;
 
 void open_log_file(void) {
 
     //open file in append modus
     char name[15];
-    snprintf(name, 15, LOG_FILE_FORMAT, current_file_id);
+    snprintf(name, 15, LOG_FILE_FORMAT, file_id);
 
-    snprintf(filename, 256, "%s%s", LOG_DIRECTORY, name);
+    snprintf(filename, 256, "%s/%s", LOG_DIRECTORY, name);
 
     log_file = fopen(filename, "a");
     if (!log_file) {
@@ -46,24 +46,24 @@ void check_log_file(void) {
         // Überprüfen, ob die aktuelle Logdatei die maximale Größe erreicht hat
         fseek(log_file, 0, SEEK_END);
         const long file_size = ftell(log_file);
-        if (file_size < MAX_FILE_SIZE) {
-            return;
+        if (file_size >= MAX_FILE_SIZE) {
+            // the max size is reached
+            close_log_file();
+            file_id = (file_id + 1) % MAX_N_FILES;
+            open_log_file();
         }
-        close_log_file();
-        current_file_id = (current_file_id + 1) % MAX_N_FILES;
     }
-
-    // Öffnen einer neuen Logdatei
-    open_log_file();
 }
 
 /**
  * Gets from the file (last used) in the log directory, the id.
+ * @return the latest used file id, in the range 0 (ink.) to MAX_N_FILES (exkl.) or -1 if dir could not be read.
  */
-int get_current_file_id(void) {
+int get_latest_file_id(void) {
     DIR *dir = opendir(LOG_DIRECTORY);
     struct dirent *entry;
-    int max_id = 0;
+    int latest_id = 0;
+    time_t latest_time = 0;
 
     if (!dir) {
         return -1;
@@ -71,18 +71,29 @@ int get_current_file_id(void) {
 
     while ((entry = readdir(dir)) != NULL) {
         int id;
-        if (strtol(entry->d_name, LOG_FILE_FORMAT, &id) == 1) {
-            if (id > max_id) {
-                max_id = id;
+        struct stat file_stat;
+
+        if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+            char filepath[PATH_MAX];
+            snprintf(filepath, sizeof(filepath), "%s/%s", LOG_DIRECTORY, entry->d_name);
+
+            if (stat(filepath, &file_stat) == 0) {
+                if (file_stat.st_mtime > latest_time) {
+                    latest_time = file_stat.st_mtime;
+                    latest_id = id;
+                }
             }
         }
     }
 
     closedir(dir);
 
-    return max_id == -1 ? 0 : max_id;
+    return latest_id;
 }
 
+/**
+ * Closes the current log file
+ */
 void close_log_file(void) {
     if (log_file) {
         fclose(log_file);
@@ -90,9 +101,26 @@ void close_log_file(void) {
     }
 }
 
-
+/**
+ * Writes a log message to the log file.
+ *
+ * This function opens the log file if it is not already open and checks
+ * if the current log file has reached the maximum size. If so, the current
+ * log file is closed and a new log file is opened.
+ *
+ * @param level The log level of the message (DEBUG, FINE, INFO, WARNING, ERROR).
+ * @param module The name of the module writing the log message.
+ * @param format The format of the log message, similar to printf.
+ * @param ... Additional arguments used in the format string.
+ */
 void log_msg(const LogLevel level, const char *module, const char *format, ...) {
-    //open log file once
+    //open log file for the first time in a session
+    if (!log_file) {
+        file_id = get_latest_file_id();
+        if (file_id != -1) {
+            open_log_file();
+        }
+    }
     check_log_file();
 
     //get timestamp
