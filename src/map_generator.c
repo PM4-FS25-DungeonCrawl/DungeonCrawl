@@ -196,6 +196,34 @@ void generate_maze(int start_x, int start_y) {
     add_loops(num_loops);
 }
 
+void set_start_position(int start_edge, int *start_x, int *start_y) {
+    switch (start_edge) {
+        case TOP:
+            *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+            *start_y = 1;
+            maze[*start_x][0] = START_DOOR;
+            break;
+        case RIGHT:
+            *start_x = WIDTH - 2;
+            *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+            maze[WIDTH - 1][*start_y] = START_DOOR;
+            break;
+        case BOTTOM:
+            *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+            *start_y = HEIGHT - 2;
+            maze[*start_x][HEIGHT - 1] = START_DOOR;
+            break;
+        case LEFT:
+            *start_x = 1;
+            *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+            maze[0][*start_y] = START_DOOR;
+            break;
+        default:
+            // TODO log error
+            break;
+    }
+}
+
 void generate_map() {
     // Better random seed using a combination of time and process info
     unsigned int seed = (unsigned int) time(nullptr);
@@ -211,39 +239,12 @@ void generate_map() {
     // Start position must be an odd coordinate (for dfs) and should be at least 3 cells away from other edges (not start_edge)
     int start_x, start_y;
     int start_edge = rand() % 4;
-
-    switch (start_edge) {
-        case 0: // Top start_edge
-            start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
-            start_y = 1;
-            maze[start_x][0] = START_DOOR;
-            break;
-        case 1: // Right start_edge
-            start_x = WIDTH - 2;
-            start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-            maze[WIDTH - 1][start_y] = START_DOOR;
-            break;
-        case 2: // Bottom start_edge
-            start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
-            start_y = HEIGHT - 2;
-            maze[start_x][HEIGHT - 1] = START_DOOR;
-            break;
-        case 3: // Left start_edge
-            start_x = 1;
-            start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-            maze[0][start_y] = START_DOOR;
-            break;
-        default:
-            // TODO log error
-            return;
-    }
+    set_start_position(start_edge, &start_x, &start_y);
 
     generate_maze(start_x, start_y);
 
-    // Place exit and ensure there's a path from start to exit
     int exit_x, exit_y;
     place_exit(start_edge, &exit_x, &exit_y);
 
-    // Set the new map
     setNewMap(&maze, start_x, start_y);
 }
