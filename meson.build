@@ -18,6 +18,10 @@ debug_files = files(
   'debug/debug.c'
 )
 
+logging_files = files(
+  'src/logging/logger.c'
+)
+
 # Include the test directory in the build.
 subdir('test')
 
@@ -26,4 +30,5 @@ executable(
   'DungeonCrawl',
   src_files, 
   debug_files,
+  logging_files
 )
