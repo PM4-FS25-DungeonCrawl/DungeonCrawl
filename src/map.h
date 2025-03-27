@@ -14,7 +14,8 @@ enum map_tile {
     FLOOR = 1,
     START_DOOR = 2,
     EXIT_DOOR = 3,
-    KEY = 4
+    KEY = 4,
+    SKELETON = 5,
 };
 
 typedef struct {

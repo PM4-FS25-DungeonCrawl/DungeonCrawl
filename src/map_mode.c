@@ -34,6 +34,9 @@ void draw_map(void) {
                     case KEY:
                         tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
                         break;
+                    case SKELETON:
+                        tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                        break;
                     default:
                         //TODO log error
                         return;
