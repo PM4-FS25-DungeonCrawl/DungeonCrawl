@@ -1,6 +1,7 @@
 # Include test files
 test_files = files(
-    'test_game.c'
+    'test_game.c',
+    'test_map_mode.c'
 )
 
 # Include files that need to be tested
