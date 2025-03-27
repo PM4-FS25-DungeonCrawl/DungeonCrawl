@@ -19,7 +19,6 @@ FILE *log_file = nullptr;
 int file_id = 0;
 
 void open_log_file(void) {
-
     //open file in append modus
     char name[15];
     snprintf(name, 15, LOG_FILE_FORMAT, file_id);
@@ -115,7 +114,7 @@ void close_log_file(void) {
  */
 void log_msg(const LogLevel level, const char *module, const char *format, ...) {
     //open log file for the first time in a session
-    if (!log_file) {
+    if (log_file == nullptr) {
         file_id = get_latest_file_id();
         if (file_id != -1) {
             open_log_file();

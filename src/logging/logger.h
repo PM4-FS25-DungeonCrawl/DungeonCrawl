@@ -8,8 +8,8 @@
 #define MAX_N_FILES 5
 #define MAX_FILE_SIZE 1024 * 1024 // max size = 1 MB
 
-// relative directory
-#define LOG_DIRECTORY "../../log"
+// relative directory from main.c
+#define LOG_DIRECTORY "../log"
 #define LOG_FILE_FORMAT "log-%d.txt"
 
 #define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"
