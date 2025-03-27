@@ -55,7 +55,7 @@ int init_game(){
                 Monster monster;
                 initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3, 3);
                 addAbilityToCharacter(&monster.base, bite);
-                addWeaknessToMonster(&monster, MAGICAL);
+                initWeaknesses(&monster, (int[]){0,10});
 
                 currentState = (combat(&player, &monster))? COMBAT_MODE : EXIT;
                 break;

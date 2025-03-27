@@ -2,6 +2,7 @@
 #define CHARACTER_STATS_H
 
 #include <stdio.h>
+#include <string.h>
 
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
@@ -32,6 +33,12 @@ typedef enum {
 } DiceSize;
 
 // === STRUCTS ===
+
+// Struct for Weakness
+typedef struct {
+    DamageType type;
+    int value;
+} Weakness;
 
 // Struct for Abilities
 typedef struct {
@@ -67,14 +74,14 @@ typedef struct {
 // Struct for Monster
 typedef struct {
     Character base;
-    DamageType weaknesses[MAX_WEAKNESSES];
-    int weakness_count;
+    Weakness weakness_map[sizeof(DamageType)];
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
 void addAbilityToCharacter(Character *c, Ability ability);
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will);
-void addWeaknessToMonster(Monster *m, DamageType weakness);
+void initWeaknesses(Monster *m, int array[sizeof(Weakness)]);
+int get_weakness_value(Monster *m, DamageType key);
 
 #endif //CHARACTER_STATS_H

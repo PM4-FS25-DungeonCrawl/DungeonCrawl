@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <string.h>
 #include "character_stats.h"
-
 
 // Function to initialize a Character
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will) {
@@ -36,10 +33,20 @@ void addAbilityToCharacter(Character *c, Ability ability) {
     }
 }
 
-void addWeaknessToMonster(Monster *m, DamageType weakness) {
-    if (m->weakness_count < MAX_WEAKNESSES) {
-        m->weaknesses[m->weakness_count++] = weakness;
-    } else {
-        printf("Monster %s cannot gain more weaknesses!\n", m->base.name);
+// Function to initialize the map containing all weaknesses
+void initWeaknesses(Monster *m, int array[sizeof(Weakness)]) {
+    for (int i = 0; i < sizeof(array); i++) {
+        m->weakness_map[i].type = (DamageType)i;
+        m->weakness_map[i].value = array[i];
     }
+}
+
+// Function to get the value corresponding to a damage type
+int get_weakness_value(Monster *m, DamageType key) {
+    for (int i = 0; i < sizeof(m->weakness_map); i++) {
+        if (m->weakness_map[i].type == key){
+            return m->weakness_map->value;
+        }     
+    }
+    return 0;
 }

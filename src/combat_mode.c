@@ -1,5 +1,4 @@
 #include "combat_mode.h"
-
 /* TODO: Print lines for missed attacks and damage dealt
  * TODO: Critical hits
  * TODO: Enemy attacks after attacking
@@ -173,9 +172,7 @@ void deal_damage(int damage, DamageType damage_type, Character *character) {
     /* TODO critical hits are ignored */
     if (character->type == MONSTER) {
         Monster *monster = (Monster *)character;
-        if (is_weak_to(monster->weaknesses, monster->weakness_count, damage_type)) {
-            damage *= 2;
-        }
+        damage += get_weakness_value(monster, damage_type);
     }
     damage -= character->armor;
     if (damage > 0) character->health -= damage;
