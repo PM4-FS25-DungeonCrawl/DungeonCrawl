@@ -19,7 +19,8 @@ debug_files = files(
 )
 
 logging_files = files(
-  'src/logging/logger.c'
+  'src/logging/logger.c',
+  'src/logging/ringbuffer.c'
 )
 
 # Include the test directory in the build.

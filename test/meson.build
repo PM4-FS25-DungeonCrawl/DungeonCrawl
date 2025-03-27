@@ -9,7 +9,9 @@ helper_files = files(
     '../src/game.c',
     '../src/map_mode.c',
     '../include/termbox2.c',
-    '../debug/debug.c'
+    '../debug/debug.c',
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c'
 )
 
 
