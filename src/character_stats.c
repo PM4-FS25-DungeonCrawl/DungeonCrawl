@@ -1,13 +1,12 @@
 #include "character_stats.h"
 
 // Function to initialize a Character
-void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will) {
+void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will) {
     c->type = type;
     strncpy(c->name, name, sizeof(c->name) - 1);
     c->name[sizeof(c->name) - 1] = '\0';
     c->health = health;
     c->armor = armor;
-    c->accuracy = accuracy;
     c->might = might;
     c->deflection = deflection;
     c->fortitude = fortitude;
