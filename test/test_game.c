@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include "../src/game.h"
+#include "test_database.h"
 
 void test_add(){
     int x = 5;
@@ -11,5 +12,6 @@ void test_add(){
 
 int main(void) {
     test_add();
+    test_db_open();
     return 0;
 }

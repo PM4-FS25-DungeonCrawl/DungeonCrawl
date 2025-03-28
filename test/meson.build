@@ -1,6 +1,7 @@
 # Include test files
 test_files = files(
-    'test_game.c'
+    'test_game.c',
+    'test_database.c'
 )
 
 # Include files that need to be tested
@@ -10,7 +11,9 @@ helper_files = files(
     '../src/map_generator.c',
     '../src/map_populator.c',
     '../include/termbox2.c',
-    '../debug/debug.c'
+    '../debug/debug.c',
+    '../include/sqlite3.c',
+    '../src/database/database.c'
 )
 
 
