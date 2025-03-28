@@ -25,27 +25,12 @@ void initAbility(Ability *a, const char *name, int rollCount, int accuracy, Dice
     a->damageType = type;
 }
 
-void initUsableItem(UsableItem *item, const char *name, UsableItemEffectType effectType, int value) {
-    strncpy(item->name, name, sizeof(item->name) - 1);
-    item->name[sizeof(item->name) - 1] = '\0';
-    item->effectType = effectType;
-    item->EffectValue = value;
-}
-
 // Function to add an Ability to a Character
 void addAbilityToCharacter(Character *c, Ability ability) {
     if (c->ability_count < MAX_ABILITIES) {
         c->abilities[c->ability_count++] = ability;
     } else {
         printf("Character %s cannot learn more abilities!\n", c->name);
-    }
-}
-
-void addItemToPlayer(Player *p, UsableItem item) {
-    if (p->item_count < MAX_USABLE_ITEMS) {
-        p->inventory[p->item_count++] = item;
-    } else {
-        printf("Item Inventory is full!\n");
     }
 }
 
