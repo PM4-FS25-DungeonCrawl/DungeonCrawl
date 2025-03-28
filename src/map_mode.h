@@ -4,11 +4,8 @@
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
 
-#define WIDTH 20
-#define HEIGHT 10
+void set_start(int newPlayerX, int newPlayerY);
 
 int mapModeUpdate();
-
-extern int map[HEIGHT][WIDTH];
 
 #endif //MAP_MODE_H

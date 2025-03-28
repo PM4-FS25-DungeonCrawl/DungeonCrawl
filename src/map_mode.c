@@ -2,32 +2,45 @@
 #include "map_mode.h"
 #include "../include/termbox2.h"
 #include "../debug/debug.h"
+#include "map.h"
 
+int playerX = 1;
+int playerY = 1;
 
-int map[HEIGHT][WIDTH] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
-    {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
+void set_start(int newPlayerX, int newPlayerY) {
+    playerX = newPlayerX;
+    playerY = newPlayerY;
+}
 
-int player_x = 1;
-int player_y = 1;
-
-void draw_maze(void) {
+void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (map[y][x] == 1) {
-                tb_printf(x, y,TB_BLUE,TB_BLUE, "#");
-            } else if (x == player_x && y == player_y) {
+            if (x == playerX && y == playerY) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
-                tb_printf(x, y, TB_BLACK, TB_BLACK, " ");
+                switch (map[x][y]) {
+                    case WALL:
+                        tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                        break;
+                    case FLOOR:
+                        tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                        break;
+                    case START_DOOR:
+                        tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                        break;
+                    case EXIT_DOOR:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                        break;
+                    case KEY:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                        break;
+                    case SKELETON:
+                        tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                        break;
+                    default:
+                        //TODO log error
+                        return;
+                }
             }
         }
     }
@@ -38,16 +51,19 @@ void draw_ui(void) {
 }
 
 void handle_input(const struct tb_event *event) {
-    int new_x = player_x;
-    int new_y = player_y;
+    int new_x = playerX;
+    int new_y = playerY;
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
-    if (map[new_y][new_x] == 0) {
-        player_x = new_x;
-        player_y = new_y;
+    if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
+        if (map[new_x][new_y] == FLOOR) {
+            //TODO: make a function "move_player" out of this, there you can also handle uncovering more of the map :)
+            playerX = new_x;
+            playerY = new_y;
+        }
     }
 }
 
@@ -61,7 +77,7 @@ int mapModeUpdate() {
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return 1;
         handle_input(&ev);
     }
-    draw_maze();
+    draw_map();
     draw_ui();
     tb_present();
 
