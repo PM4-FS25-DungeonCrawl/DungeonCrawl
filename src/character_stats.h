@@ -6,7 +6,6 @@
 #include "items.h"
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
-#define MAX_WEAKNESSES 2
 #define MAX_ITEMS 10
 
 // === ENUMS ===
@@ -14,7 +13,8 @@
 // Enum for Damage Types
 typedef enum {
     PHYSICAL,
-    MAGICAL
+    MAGICAL,
+    DAMAGE_TYPE_COUNT
 } DamageType;
 
 // Enum for Character Types
@@ -76,14 +76,14 @@ typedef struct {
 // Struct for Monster
 typedef struct {
     Character base;
-    Weakness weakness_map[sizeof(DamageType)];
+    Weakness weakness_map[DAMAGE_TYPE_COUNT];
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
 void addAbilityToCharacter(Character *c, Ability ability);
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
-void initWeaknesses(Monster *m, int array[sizeof(Weakness)]);
+void initWeaknesses(Monster *m, int array[]);
 int get_weakness_value(Monster *m, DamageType key);
 void add_item_to_player(Player *player, Item *item);
 
