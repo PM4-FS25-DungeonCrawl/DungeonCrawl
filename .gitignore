@@ -52,4 +52,7 @@ Mkfile.old
 dkms.conf
 
 # Exclude Idea Directory
-.idea
+.Idea
+
+# Exclude VSCode Directory
+.vscode

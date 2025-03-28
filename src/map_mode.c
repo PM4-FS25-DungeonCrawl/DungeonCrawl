@@ -1,40 +1,52 @@
 #include <stdio.h>
 #include "map_mode.h"
 #include "../debug/debug.h"
+
 #include "../include/termbox2.h"
 
+#include "map.h"
 
-int maze[HEIGHT][WIDTH] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1},
-    {1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1},
-    {1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1},
-    {1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1},
-    {1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
 
-int revealed_maze[HEIGHT][WIDTH];
+int playerX = 1;
+int playerY = 1;
+
 
 Vector2D player_position = {3, 3};
 
-/**
- * @brief draws the maze to the screen, based on the revealed_maze array
- */
-void draw_maze(const int init_y, const int init_x) {
-    for (int y = init_y; y < HEIGHT + init_y; y++) {
-        for (int x = init_x; x < WIDTH + init_x; x++) {
-            if (revealed_maze[y][x] == Wall) {
-                tb_printf(x, y,TB_BLUE,TB_BLUE, "#");
-            } else if (revealed_maze[y][x] == Hidden) {
-                tb_printf(x, y,TB_GREEN,TB_GREEN, "X");
-            } else if (x == player_position.x && y == player_position.y) {
+void set_start(int newPlayerX, int newPlayerY) {
+    playerX = newPlayerX;
+    playerY = newPlayerY;
+}
+
+void draw_map(void) {
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            if (x == playerX && y == playerY) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
-                tb_printf(x, y, TB_BLACK, TB_BLACK, " ");
+                switch (map[x][y]) {
+                    case WALL:
+                        tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                        break;
+                    case FLOOR:
+                        tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                        break;
+                    case START_DOOR:
+                        tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                        break;
+                    case EXIT_DOOR:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                        break;
+                    case KEY:
+                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                        break;
+                    case SKELETON:
+                        tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                        break;
+                    default:
+                        //TODO log error
+                        return;
+                }
             }
         }
     }
@@ -46,17 +58,27 @@ void draw_ui(void) {
 }
 
 void handle_input(const struct tb_event *event) {
-    int new_x = player_position.x;
-    int new_y = player_position.y;
+    //int new_x = player_position.x;
+    //int new_y = player_position.y;
+
+    int new_x = playerX;
+    int new_y = playerY;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;
     if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
 
-    if (maze[new_y][new_x] == 0) {
-        player_position.x = new_x;
-        player_position.y = new_y;
+
+    if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
+        if (map[new_x][new_y] == FLOOR) {
+            //TODO: make a function "move_player" out of this, there you can also handle uncovering more of the map :)
+            //player_position.x = new_x;
+            //player_position.y = new_y;
+          
+            playerX = new_x;
+            playerY = new_y;
+        }
     }
 }
 
@@ -216,7 +238,9 @@ int map_mode_update(void) {
         draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
     }
 
-    draw_maze(0, 0);
+    //draw_maze(0, 0);
+
+    draw_map();
     draw_ui();
     tb_present();
 

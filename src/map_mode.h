@@ -6,6 +6,7 @@
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
 
+
 #define CONTINUE 0
 #define QUIT 1
 
@@ -59,11 +60,15 @@ enum tiles {
 void draw_light_on_player(const int* base_map, int* revealed_map, int height, int width,
                           Vector2D player, int light_radius);
 
+void set_start(int newPlayerX, int newPlayerY);
+
+
 /**
  * Updates the player position based on the player's input and redraws the maze.
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
 int map_mode_update(void);
+
 
 int init_map_mode(void);
 
