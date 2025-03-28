@@ -7,11 +7,13 @@ test_files = files(
 helper_files = files(
     '../src/game.c',
     '../src/map_mode.c',
+    '../src/combat_mode.c',
+    '../src/character_stats.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )
 
 
-test_exe = executable('test_rogue', test_files, helper_files)
+test_exe = executable('test_rogue', test_files, helper_files, c_args: ['-w'])
 
 test('DungeonCrawl_test', test_exe)
