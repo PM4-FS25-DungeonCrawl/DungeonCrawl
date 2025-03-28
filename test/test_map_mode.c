@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "../src/map.h"
-#include "../src/map_mode.h"
+#include "../src/map/map.h"
+#include "../src/map/map_mode.h"
 #include "test_map_mode.h"
 
 constexpr int width = 10;

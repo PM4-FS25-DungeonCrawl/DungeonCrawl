@@ -8,10 +8,10 @@ test_files = files(
 helper_files = files(
     '../include/termbox2.c',
     '../src/game.c',
-    '../src/map.c',
-    '../src/map_mode.c',
-    '../src/map_generator.c',
-    '../src/map_populator.c',
+    '../src/map/map.c',
+    '../src/map/map_mode.c',
+    '../src/map/map_generator.c',
+    '../src/map/map_populator.c',
     '../debug/debug.c'
 )
 
