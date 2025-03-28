@@ -141,14 +141,14 @@ void item_menu(Player *player, Monster *monster) {
 
 void use_ability(Character *attacker, Character *defender, Ability *ability) {
     // Roll to hit
-    if (roll_hit(attacker, ability, defender)) {
+    if (roll_hit(ability, defender)) {
         // Roll damage
         int damage = roll_damage(ability);
         deal_damage(damage, ability->damageType, defender);
     }
 }
 
-bool roll_hit(Character *attacker, Ability *ability, Character *defender) {
+bool roll_hit(Ability *ability, Character *defender) {
     int roll = roll_dice(D20);
     switch (ability->damageType) {
         case PHYSICAL:
