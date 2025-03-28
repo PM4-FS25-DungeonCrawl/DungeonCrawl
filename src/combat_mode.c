@@ -187,7 +187,7 @@ bool is_weak_to(DamageType *weaknesses, int count, DamageType target) {
     return false;
 }
 
-void use_item() {
+void use_item(Player *player, int index) {
     /* TODO */
 }
 
