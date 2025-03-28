@@ -13,10 +13,24 @@ const Character test_base = {
 
 Ability test_ability = {
     .damageType = PHYSICAL,
-    .accuracy = 100,
     .rollCount = 3,
-    .diceSize = 6
+    .diceSize = D6
 };
+
+void test_roll_hit() {
+Character defender = test_base;
+
+    // Test with high accuracy ability (should always hit)
+    test_ability.accuracy = 100;
+    assert(roll_hit(&test_ability, &defender) == true);
+
+    // Test with low accuracy ability (should miss often)
+    test_ability.accuracy = 0;
+    defender.deflection = 20;
+    assert(roll_hit(&test_ability, &defender) == false);
+
+    printf("test_roll_hit passed!\n");    
+}
 
 void test_roll_damage() {
     int damage = roll_damage(&test_ability);
@@ -38,6 +52,7 @@ void test_deal_damage_to_armor() {
 }
 
 int main(void){
+    test_roll_hit();
     test_roll_damage();
     test_deal_damage_to_armor();
     return 0;
