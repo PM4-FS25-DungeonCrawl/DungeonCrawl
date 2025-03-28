@@ -9,6 +9,7 @@ helper_files = files(
     '../src/map_mode.c',
     '../src/combat_mode.c',
     '../src/character_stats.c',
+    '../src/items.c',
     '../include/termbox2.c',
     '../debug/debug.c'
 )

@@ -52,7 +52,7 @@ int init_game(){
                 for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
                 addAbilityToCharacter(&player.base, fireball);
                 addAbilityToCharacter(&player.base, swordslash);
-                Item healingPotion;
+                UsableItem healingPotion;
                 init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
                 add_item_to_player(&player, (Item *)&healingPotion);
 
