@@ -1,7 +1,7 @@
 # Include test files
 test_files = files(
-    'test_game.c',
-    'test_map_mode.c'
+    'test_main.c',
+    'map/drawop/test_draw_light.c'
 )
 
 # Include files that need to be tested
@@ -12,6 +12,7 @@ helper_files = files(
     '../src/map/map_mode.c',
     '../src/map/map_generator.c',
     '../src/map/map_populator.c',
+    '../src/map/drawop/draw_light.c',
     '../debug/debug.c'
 )
 

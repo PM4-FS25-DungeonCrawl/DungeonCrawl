@@ -6,15 +6,20 @@ project('DungeonCrawl', 'c',
 # List of external dependencies
 # termbox = dependency('termbox2')
 
+
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
-  'include/termbox2.c',
   'src/main.c',
   'src/game.c',
   'src/map/map.c',
   'src/map/map_mode.c',
   'src/map/map_generator.c',
   'src/map/map_populator.c',
+  'src/map/drawop/draw_light.c'
+)
+
+include_files = files(
+  'include/termbox2.c'
 )
 
 debug_files = files(
@@ -27,6 +32,7 @@ subdir('test')
 # Define the executable
 executable(
   'DungeonCrawl',
-  src_files, 
+  src_files,
+  include_files,
   debug_files,
 )
