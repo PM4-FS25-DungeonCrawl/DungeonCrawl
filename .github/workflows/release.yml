@@ -66,8 +66,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.bump_version.outputs.new_version }}
-          name: Release ${{ steps.bump_version.outputs.new_version }}
+          tag_name: ${{ steps.auto_tag.outputs.new_tag }}
+          name: Release ${{ steps.auto_tag.outputs.new_tag }}
           body: "Release: Built from the latest commit."
           draft: false
           prerelease: false
