@@ -4,6 +4,7 @@
 #include "map_mode.h"
 #include "combat_mode.h"
 #include "character_stats.h"
+#include "items.h"
 #include "../include/termbox2.h"
 
 enum game_state {
@@ -48,8 +49,16 @@ int init_game(){
                 // Initialize player
                 Player player;
                 initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5, 5);
+                player.item_count = 0; //manually initializing player specific values
+                for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
                 addAbilityToCharacter(&player.base, fireball);
                 addAbilityToCharacter(&player.base, swordslash);
+                Item healingPotion;
+                init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
+                add_item_to_player(&player, (Item *)&healingPotion);
+
+
+
 
                 // Initialize monster
                 Monster monster;

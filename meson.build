@@ -13,6 +13,7 @@ src_files = files(
   'src/combat_mode.c',
   'src/character_stats.c',
   'src/game.c',
+  'src/items.c',
   'include/termbox2.c'
 )
 

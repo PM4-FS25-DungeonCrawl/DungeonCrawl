@@ -3,10 +3,11 @@
 
 #include <stdio.h>
 #include <string.h>
-
+#include "items.h"
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
 #define MAX_WEAKNESSES 2
+#define MAX_ITEMS 10
 
 // === ENUMS ===
 
@@ -69,6 +70,8 @@ typedef struct {
 // Struct for Player
 typedef struct {
     Character base;
+    Item *inventory[MAX_ITEMS];
+    int item_count;
 } Player;
 
 // Struct for Monster
@@ -83,5 +86,7 @@ void addAbilityToCharacter(Character *c, Ability ability);
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will);
 void initWeaknesses(Monster *m, int array[sizeof(Weakness)]);
 int get_weakness_value(Monster *m, DamageType key);
+void add_item_to_player(Player *player, Item *item);
+
 
 #endif //CHARACTER_STATS_H

@@ -25,7 +25,7 @@ int roll_damage(Ability *ability);
 bool is_weak_to(DamageType *weaknesses, int count, DamageType target);
 int roll_dice(DiceSize dice_size);
 void deal_damage(int damage, DamageType damage_type, Character *character);
-void use_item();
+void use_item(Player *player, int index);
 int print_combat_view(Character *player, Character *monster);
 Ability *get_random_ability(Character *character);
 
