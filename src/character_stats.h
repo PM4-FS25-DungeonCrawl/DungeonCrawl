@@ -80,7 +80,7 @@ typedef struct {
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
 void addAbilityToCharacter(Character *c, Ability ability);
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
-void initWeaknesses(Monster *m, int array[sizeof(Weakness)]);
+void initWeaknesses(Monster *m, int array[]);
 int get_weakness_value(Monster *m, DamageType key);
 
 #endif //CHARACTER_STATS_H
