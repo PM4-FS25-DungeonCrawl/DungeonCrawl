@@ -47,13 +47,13 @@ int init_game(){
 
                 // Initialize player
                 Player player;
-                initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5, 5);
+                initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5);
                 addAbilityToCharacter(&player.base, fireball);
                 addAbilityToCharacter(&player.base, swordslash);
 
                 // Initialize monster
                 Monster monster;
-                initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3, 3);
+                initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3);
                 addAbilityToCharacter(&monster.base, bite);
                 initWeaknesses(&monster, (int[]){0,10});
 
