@@ -45,6 +45,13 @@ int init_game(){
                 Ability bite;
                 initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
 
+                // Initialize usable Items
+                UsableItem HealingPotion;
+                initUsableItem(&HealingPotion, "Healing Potion", HEALING, 30);
+                UsableItem ArmorPotion;
+                initUsableItem(&ArmorPotion, "Stoneshield Potion", ARMOR_INCREASE, 5);
+
+
                 // Initialize player
                 Player player;
                 initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5, 5);

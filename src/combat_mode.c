@@ -187,8 +187,25 @@ bool is_weak_to(DamageType *weaknesses, int count, DamageType target) {
     return false;
 }
 
-void use_item() {
-    /* TODO */
+void use_item(Player *player, int index) {
+    if (index < 0 || index >= player->item_count) return;
+
+    UsableItem item = player->inventory[index];
+
+    switch (item.effectType) {
+    case HEALING:
+        player->base.health += item.EffectValue;
+        break;
+    case ARMOR_INCREASE:
+        player->base.armor += item.EffectValue;
+        break;
+    }
+
+    // Remove the used item
+    for (int i = index; i < player->item_count - 1; i++) {
+        player->inventory[i] = player->inventory[i + 1];
+    }
+    player->item_count--;
 }
 
 int print_combat_view(Character *player, Character *monster){

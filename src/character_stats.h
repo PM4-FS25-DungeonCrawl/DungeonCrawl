@@ -7,6 +7,7 @@
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
 #define MAX_WEAKNESSES 2
+#define MAX_USABLE_ITEMS 5
 
 // === ENUMS ===
 
@@ -15,6 +16,19 @@ typedef enum {
     PHYSICAL,
     MAGICAL
 } DamageType;
+
+// Enum for UsableItem effects
+typedef enum {
+    HEALING,
+    ARMOR_INCREASE
+} UsableItemEffectType;
+
+// Struct for Usable Items
+typedef struct {
+    char name[50];
+    UsableItemEffectType effectType;
+    int EffectValue;
+} UsableItem;
 
 // Enum for Character Types
 typedef enum {
@@ -69,6 +83,8 @@ typedef struct {
 // Struct for Player
 typedef struct {
     Character base;
+    UsableItem inventory[MAX_USABLE_ITEMS];
+    int item_count;
 } Player;
 
 // Struct for Monster
@@ -79,7 +95,9 @@ typedef struct {
 
 // === FUNCTION DECLARATIONS ===
 void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
+void initUsableItem(UsableItem *item, const char *name, UsableItemEffectType effectType, int EffectValue);
 void addAbilityToCharacter(Character *c, Ability ability);
+void addItemToCharacter(Character *c, UsableItem item);
 void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int accuracy, int might, int deflection, int fortitude, int will);
 void initWeaknesses(Monster *m, int array[sizeof(Weakness)]);
 int get_weakness_value(Monster *m, DamageType key);
