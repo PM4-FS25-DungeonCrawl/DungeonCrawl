@@ -1,9 +1,10 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include "test_draw_light.h"
+
 #include "../src/map/map.h"
-#include "../src/map/map_mode.h"
-#include "test_map_mode.h"
+#include "../src/map/drawop/draw_light.h"
 
 constexpr int width = 10;
 constexpr int height = 10;
@@ -219,5 +220,5 @@ void test_draw_light_on_player(void) {
     }
     printf("Test: \"hallway with walls left and right\" passed\n");
 
-    printf("Test_draw_light_on_player all tests passed\n");
+    printf("test_draw_light_on_player all tests passed\n");
 }
