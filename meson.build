@@ -1,5 +1,5 @@
 # Define project language and version.
-project('rogue', 'c',
+project('DungeonCrawl', 'c',
   version : '0.1',
   default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
 
@@ -8,12 +8,13 @@ project('rogue', 'c',
 
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
+  'include/termbox2.c',
   'src/main.c',
-  'src/map_mode.c',
   'src/game.c',
+  'src/map.c',
+  'src/map_mode.c',
   'src/map_generator.c',
   'src/map_populator.c',
-  'include/termbox2.c'
 )
 
 debug_files = files(

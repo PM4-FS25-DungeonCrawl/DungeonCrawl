@@ -1,30 +1,29 @@
 #include <stdio.h>
-#include "map_mode.h"
-#include "../debug/debug.h"
+#include <math.h>
 
 #include "../include/termbox2.h"
+#include "../debug/debug.h"
+#include "map_mode.h"
 
-#include "map.h"
+enum map_tile revealed_map[WIDTH][HEIGHT];
 
+Vector2D player;
 
-int playerX = 1;
-int playerY = 1;
+void set_start(const int newPlayerX, const int newPlayerY) {
+    player.dx = newPlayerX;
+    player.dy = newPlayerY;
 
-
-Vector2D player_position = {3, 3};
-
-void set_start(int newPlayerX, int newPlayerY) {
-    playerX = newPlayerX;
-    playerY = newPlayerY;
+    // at the start, tile under the player must be revealed
+    revealed_map[player.dx][player.dy] = FLOOR;
 }
 
 void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (x == playerX && y == playerY) {
+            if (x == player.dx && y == player.dy) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
-                switch (map[x][y]) {
+                switch (revealed_map[x][y]) {
                     case WALL:
                         tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
                         break;
@@ -43,6 +42,9 @@ void draw_map(void) {
                     case SKELETON:
                         tb_printf(x, y, TB_WHITE, TB_RED, "!");
                         break;
+                    case HIDDEN:
+                        tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
+                        break;
                     default:
                         //TODO log error
                         return;
@@ -54,15 +56,12 @@ void draw_map(void) {
 
 void draw_ui(void) {
     tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_position.x, player_position.y);
+    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player.dx, player.dy);
 }
 
 void handle_input(const struct tb_event *event) {
-    //int new_x = player_position.x;
-    //int new_y = player_position.y;
-
-    int new_x = playerX;
-    int new_y = playerY;
+    int new_x = player.dx;
+    int new_y = player.dy;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
@@ -71,58 +70,77 @@ void handle_input(const struct tb_event *event) {
 
 
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
+        //TODO: different or same cases for the different tiles
         if (map[new_x][new_y] == FLOOR) {
-            //TODO: make a function "move_player" out of this, there you can also handle uncovering more of the map :)
-            //player_position.x = new_x;
-            //player_position.y = new_y;
-          
-            playerX = new_x;
-            playerY = new_y;
+
+            player.dx = new_x;
+            player.dy = new_y;
+
+            draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player, LIGHT_RADIUS);
         }
     }
 }
 
-int absolute(const int val) {
-    if (val < 0) {
-        return -val;
+/**
+ * This is a helper function to check if the loop needs to break with this specific edge case.
+ * @param x current tile x-coordinates
+ * @param y current tile y-coordinates
+ * @param dir the direction to check
+ * @param j loop counter
+ * @param prev_wall_at pointer to variable, which should be written
+ * @return 1 if loops must break, 0 when not
+ */
+int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *prev_wall_at) {
+    if (j == 0) {
+        //gets the x or y value of the calculated coordinates
+        *prev_wall_at = abs(y * dir.dy + x * dir.dx);
+        return 1;
     }
-    return val;
+    if (*prev_wall_at == abs(y * dir.dy + x * dir.dx)) {
+        //if the previous j-loop had a wall at x or y coordinate, the loop must break
+        //or else diagonals tiles (behind a wall and not visible by the player) are revealed
+        return 1;
+    }
+    return 0;
 }
 
 
-const Vector2D directions[4] = {
-        { 1,  0},  // +x
-        {-1,  0},  // -x
-        { 0,  1},  // +y
-        { 0, -1}   // -y
-};
-
-/*
+/**
  * Each array row corresponds to the vector in {@link directions} array.
  * A row contains:
  * - the diagonal check vector
  * - the reverse check vector
  */
 const Vector2D checks_vector[4][2] = {
-    {{-1, 1}, {0, 1}},
-    {{1, -1}, {0, -1}},
-    {{-1, -1}, {-1, 0}},
-    {{1, 1}, {1, 0}}
+    {{1, 1}, {1, 0}}, // for up
+    {{-1, -1}, {-1, 0}}, // for down
+    {{1, -1}, {0, -1}}, // for left
+    {{-1, 1}, {0, 1}}, // for right
 };
 
 /**
- * @note function description in the header file
+ * Draws the light around the player in arr2.
+ * The algorithmen reveals the map around the player, based on the arr1, in arr2.
+ * The light radius is the distance from the player, where the map tile is still visible.
+ * A light radius of 3 means 3 tiles are visible in each direction (up, down, left, right) from the player.
+ *
+ * @param arr1 the pointer to the 2D array containing all the map tiles (no Hidden tiles)
+ * @param arr2 the pointer to the 2D array to reveal the arr1,
+ * based on the player's position and light radius
+ * @param height the height of the map
+ * @param width the width of the map
+ * @param player the player's position on the map
+ * @param light_radius the radius of the light around the player
  */
-void draw_light_on_player(const int* base_map, int* revealed_map, const int height, const int width,
+void draw_light_on_player(const int* arr1, int* arr2, const int height, const int width,
                           const Vector2D player, const int light_radius) {
-
     if (light_radius <= 0) {
         //light radius is negative or 0, do nothing
         return;
     }
 
     //line for debug print
-    int line = 5;
+    int line = 0;
 
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
@@ -134,12 +152,12 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
 
         for (int j = 0; j <= light_radius; j++) {
 
-            const int start_x = player.x + j * dir.y;
-            int start_y = player.y + j * dir.x;
+            const int start_x = player.dx + j * dir.dy;
+            int start_y = player.dy + j * dir.dx;
 
-            if (dir.x != 0) {
+            if (dir.dx != 0) {
                 //if the direction is vertical negate the subtrahend
-                start_y = player.y - j * dir.x;
+                start_y = player.dy - j * dir.dx;
             }
 
             if (start_x < 0 || start_x >= width || start_y < 0 || start_y >= height) {
@@ -147,66 +165,73 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
                 break;
             }
             for (int k = 1; k <= light_radius - correction; k++) {
-                const int x = start_x + k * dir.x;
-                const int y = start_y + k * dir.y;
+                const int x = start_x + k * dir.dx;
+                const int y = start_y + k * dir.dy;
                 if (x < 0 || x >= width || y < 0 || y >= height) {
                     //calculated x or y is out of bound
                     break;
                 }
 
                 //calculated access index
-                const int access_idx = y * width + x;
+                const int access_idx = x * height + y;
 
                 //debug print
-                DEBUG_PRINT(WIDTH + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d, idx=%d\n", dir.x, dir.y, j, k, start_x, start_y, x, y, access_idx);
+                DEBUG_PRINT(width + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d, idx=%d\n", dir.dx, dir.dy, j, k, start_x, start_y, x, y, access_idx);
                 line += 1;
 
-                if (revealed_map[access_idx] == Hidden) {
+                if (arr2[access_idx] == HIDDEN) {
                     //initialize the relative diagonal and reverse tiles based on the y and x values
-                    const int rel_diagonal = base_map[(y + diagonal_check.y) * width + (x + diagonal_check.x)];
-                    const int rel_reverse = base_map[(y + reverse_check.y) * width + (x + reverse_check.x)];
+                    const int rel_diagonal = arr1[(x + diagonal_check.dx) * height + y + diagonal_check.dy];
+                    const int rel_reverse = arr1[(x + reverse_check.dx) * height + y + reverse_check.dy];
 
-                    if (rel_diagonal == Wall && rel_reverse == Wall && j > 1) {
+                    if (rel_diagonal == WALL && rel_reverse == WALL && j > 1) {
                         //if the diagonal and reverse tiles are walls, and the distance from the player is greater than 1
                         //then the tile must be hidden because reverse tile is blocking the view
-                        DEBUG_PRINT(WIDTH + 5, line, "Edge case (diag + reverse) detected");
+                        DEBUG_PRINT(width + 5, line, "Edge case (diag + reverse) detected");
                         line += 1;
                         break;
                     }
 
-                    DEBUG_PRINT(WIDTH + 5, line, "Tile with access index %d is %d", access_idx, base_map[access_idx]);
+                    DEBUG_PRINT(width + 5, line, "Tile with access index %d is %d", access_idx, arr1[access_idx]);
                     line += 1;
 
-                    if (base_map[access_idx] == Wall) {
-                        revealed_map[access_idx] = Wall;
-                        DEBUG_PRINT(WIDTH + 5, line, "Wall detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.x, dir.y);
-                        line += 1;
+                    // if set to 1 break loop
+                    int break_loop = 0;
 
-                        if (j == 0) {
-                            //gets the x or y value of the calculated coordinates
-                            prev_wall_at = absolute(y * dir.y + x * dir.x);
+                    switch (arr1[access_idx]) {
+                        case WALL:
+                            arr2[access_idx] = WALL;
+                            DEBUG_PRINT(width + 5, line, "WALL detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.dx, dir.dy);
+                            line += 1;
+
+                            if (need_loop_break(x, y, dir, j, &prev_wall_at)) {
+                                break_loop = 1;
+                            }
                             break;
-                        }
-                        if (prev_wall_at == absolute(y * dir.y + x * dir.x)) {
-                            //if the previous j-loop had a wall at x or y coordinate, the loop must break
-                            //or else diagonals tiles (behind a wall and not visible by the player) are revealed
+                        case FLOOR:
+                            arr2[access_idx] = FLOOR;
                             break;
-                        }
+                        case START_DOOR:
+                            arr2[access_idx] = START_DOOR;
+                            break;
+                        case EXIT_DOOR:
+                            arr2[access_idx] = EXIT_DOOR;
+                            break;
+                        case KEY:
+                            arr2[access_idx] = KEY;
+                            break;
+                        case SKELETON:
+                            arr2[access_idx] = SKELETON;
+                            break;
+                        default:
+                            //does nothing
+                            break;
                     }
-                    if (base_map[access_idx] == Floor) {
-                        revealed_map[access_idx] = Floor;
-                    }
-                } else if (revealed_map[access_idx] == Wall) {
-                    if (j == 0) {
-                        //gets the x or y value of the calculated coordinates
-                        prev_wall_at = absolute(y * dir.y + x * dir.x);
+                    if (break_loop) {
                         break;
                     }
-                    if (prev_wall_at == absolute(y * dir.y + x * dir.x)) {
-                        //if the previous j-loop had a wall at x or y coordinate, the loop must break
-                        //or else diagonals tiles (behind a wall and not visible by the player) are revealed
-                        break;
-                    }
+                } else if (arr2[access_idx] == WALL && need_loop_break(x, y, dir, j, &prev_wall_at)) {
+                    break;
                 }
             }
             correction++;
@@ -214,31 +239,21 @@ void draw_light_on_player(const int* base_map, int* revealed_map, const int heig
     }
 }
 
-//debug counters to count how many times the function is called
-int count_call_mmu = 0;
-//debug counter to count
-int ret_i_o = 0;
-
+/**
+ * Updates the player position based on the player's input and redraws the maze.
+ * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
+ */
 int map_mode_update(void) {
-    count_call_mmu++;
-    DEBUG_PRINT(WIDTH+5, 2, "map_mode_update called nr: %d", count_call_mmu);
-
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
     
     if (ret == TB_OK) {
-        ret_i_o++;
-        DEBUG_PRINT(WIDTH+5, 3, "ret in map_mode_update i.O. nr: %d", ret_i_o);
 
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return QUIT;
         handle_input(&ev);
-
-        draw_light_on_player((int *)maze, (int *)revealed_maze, HEIGHT, WIDTH, player_position, LIGHT_RADIUS);
     }
-
-    //draw_maze(0, 0);
 
     draw_map();
     draw_ui();
@@ -250,12 +265,8 @@ int map_mode_update(void) {
 int init_map_mode(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            revealed_maze[y][x] = Hidden;
+            revealed_map[x][y] = HIDDEN;
         }
     }
-    DEBUG_PRINT(WIDTH+5, 0, "init_map_mode");
-    // at the start, tile under the player must be revealed
-    revealed_maze[player_position.y][player_position.x] = Floor;
-    DEBUG_PRINT(WIDTH+5, 1, "player position revealed");
     return 0;
 }
