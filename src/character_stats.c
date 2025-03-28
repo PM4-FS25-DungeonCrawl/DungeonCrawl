@@ -35,7 +35,7 @@ void addAbilityToCharacter(Character *c, Ability ability) {
 
 // Function to initialize the map containing all weaknesses
 void initWeaknesses(Monster *m, int array[]) {
-    for (int i = 0; i < MAX_WEAKNESSES; i++) {
+    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
         m->weakness_map[i].type = (DamageType)i;
         m->weakness_map[i].value = array[i];
     }

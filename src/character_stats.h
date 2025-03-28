@@ -6,14 +6,14 @@
 
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
-#define MAX_WEAKNESSES 2
 
 // === ENUMS ===
 
 // Enum for Damage Types
 typedef enum {
     PHYSICAL,
-    MAGICAL
+    MAGICAL,
+    DAMAGE_TYPE_COUNT
 } DamageType;
 
 // Enum for Character Types
@@ -73,7 +73,7 @@ typedef struct {
 // Struct for Monster
 typedef struct {
     Character base;
-    Weakness weakness_map[sizeof(DamageType)];
+    Weakness weakness_map[DAMAGE_TYPE_COUNT];
 } Monster;
 
 // === FUNCTION DECLARATIONS ===
