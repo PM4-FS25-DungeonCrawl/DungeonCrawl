@@ -41,7 +41,7 @@ jobs:
       - name: Upload Executable as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: executable-${{ runner.os }}
+          name: dungeonCrawl-executable-${{ runner.os }}
           path: builddir/DungeonCrawl
 
   release:
@@ -74,7 +74,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/executable-ubuntu-latest/DungeonCrawl
-            artifacts/executable-macos-latest/DungeonCrawl
+            artifacts/dungeonCrawl-executable-ubuntu
+            artifacts/dungeonCrawl-executable-macos
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
