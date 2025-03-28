@@ -65,6 +65,14 @@ jobs:
         with:
           path: artifacts  # Store all artifacts in the 'artifacts/' folder
 
+      - name: Unzip Linux Artifact
+        run: |
+          unzip -o artifacts/dungeonCrawl-executable-Linux.zip -d artifacts/linux/
+      
+      - name: Unzip macOS Artifact
+        run: |
+          unzip -o artifacts/dungeonCrawl-executable-macOS.zip -d artifacts/macos/
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
