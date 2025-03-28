@@ -74,7 +74,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            executable-ubuntu-latest/my_executable
-            executable-macos-latest/my_executable
+            artifacts/executable-ubuntu-latest/DungeonCrawl
+            artifacts/executable-macos-latest/DungeonCrawl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
