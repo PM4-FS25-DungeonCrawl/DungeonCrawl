@@ -178,15 +178,6 @@ void deal_damage(int damage, DamageType damage_type, Character *character) {
     if (damage > 0) character->health -= damage;
 }
 
-bool is_weak_to(DamageType *weaknesses, int count, DamageType target) {
-    for (int i = 0; i < count; i++) {
-        if (weaknesses[i] == target) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void use_item() {
     /* TODO */
 }

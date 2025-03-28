@@ -22,7 +22,6 @@ void item_menu(Player *player, Monster *monster);
 void use_ability(Character *attacker, Character *defender, Ability *ability);
 bool roll_hit(Character *attacker, Ability *ability, Character *defender);
 int roll_damage(Ability *ability);
-bool is_weak_to(DamageType *weaknesses, int count, DamageType target);
 int roll_dice(DiceSize dice_size);
 void deal_damage(int damage, DamageType damage_type, Character *character);
 void use_item();
