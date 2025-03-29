@@ -3,17 +3,6 @@
 #include "../map.h"
 #include "draw_light.h"
 
-//#define DEBUG_TRUE
-
-#ifdef DEBUG_TRUE
-    #define DEBUG_PRINT(x, y, ...) print_text(x, y, __VA_ARGS__)
-#else
-    //empty debug print
-    #define DEBUG_PRINT(x, y, ...)
-#endif
-
-
-
 /**
  * This is a helper function to check if the loop needs to break with this specific edge case.
  * @param x current tile x-coordinates
@@ -51,8 +40,6 @@ const Vector2D checks_vector[4][2] = {
     {{-1, 1}, {0, 1}}, // for right
 };
 
-
-
 /**
  * Draws the light around the player in arr2.
  * The algorithmen reveals the map around the player, based on the arr1, in arr2.
@@ -73,9 +60,6 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
         //light radius is negative or 0, do nothing
         return;
     }
-
-    //line for debug print
-    int line = 0;
 
     for (int i = 0; i < 4; i++) {
         const Vector2D dir = directions[i];
@@ -110,10 +94,6 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
                 //calculated access index
                 const int access_idx = x * height + y;
 
-                //debug print
-                DEBUG_PRINT(width + 5, line, "dir=(%d,%d), j=%d, k=%d, sx=%d, sy=%d, x=%d, y=%d, idx=%d\n", dir.dx, dir.dy, j, k, start_x, start_y, x, y, access_idx);
-                line += 1;
-
                 if (arr2[access_idx] == HIDDEN) {
                     //initialize the relative diagonal and reverse tiles based on the y and x values
                     const int rel_diagonal = arr1[(x + diagonal_check.dx) * height + y + diagonal_check.dy];
@@ -122,13 +102,8 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
                     if (rel_diagonal == WALL && rel_reverse == WALL && j > 1) {
                         //if the diagonal and reverse tiles are walls, and the distance from the player is greater than 1
                         //then the tile must be hidden because reverse tile is blocking the view
-                        DEBUG_PRINT(width + 5, line, "Edge case (diag + reverse) detected");
-                        line += 1;
                         break;
                     }
-
-                    DEBUG_PRINT(width + 5, line, "Tile with access index %d is %d", access_idx, arr1[access_idx]);
-                    line += 1;
 
                     // if set to 1 break loop
                     int break_loop = 0;
@@ -136,8 +111,6 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
                     switch (arr1[access_idx]) {
                         case WALL:
                             arr2[access_idx] = WALL;
-                            DEBUG_PRINT(width + 5, line, "WALL detected at (%d,%d) with dir(%d,%d) -> break", x, y, dir.dx, dir.dy);
-                            line += 1;
 
                             if (need_loop_break(x, y, dir, j, &prev_wall_at)) {
                                 break_loop = 1;
