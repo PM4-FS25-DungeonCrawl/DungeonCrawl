@@ -74,13 +74,17 @@ void handle_input(const struct tb_event *event) {
 
 
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
-        //TODO: different or same cases for the different tiles
-        if (map[new_x][new_y] == FLOOR) {
+        switch (map[new_x][new_y]) {
+            case WALL:
+                //ignore wall
+                break;
+            default:
+                //TODO: extend functionality with different tiles
+                player.dx = new_x;
+                player.dy = new_y;
 
-            player.dx = new_x;
-            player.dy = new_y;
-
-            draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player, LIGHT_RADIUS);
+                draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player, LIGHT_RADIUS);
+                break;
         }
     }
 }
