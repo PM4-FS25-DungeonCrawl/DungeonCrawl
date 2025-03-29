@@ -136,7 +136,60 @@ void ability_menu(Player *player, Monster *monster) {
 }
 
 void item_menu(Player *player, Monster *monster) {
-    /* TODO */
+
+    int selected_index = 0;
+    int usable_item_count = 0;
+    UsableItem *usable_items[MAX_ITEMS];
+
+    // Collect all usable items
+    for (int i = 0; i < player->item_count; i++) {
+        if (player->inventory[i]->type == ITEM_TYPE_USABLE) {
+            usable_items[usable_item_count++] = (UsableItem *)player->inventory[i];
+        }
+    }
+
+    while (true) {
+
+        // Prepare screen
+        tb_clear();
+        int y = print_combat_view(&player->base, &monster->base);
+
+        // Display menu options
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
+        for (int i = 0; i < usable_item_count; i++) {
+            if (i == selected_index) {
+                tb_print(1, y++, TB_BLACK, TB_WHITE, usable_items[i]->base.name);
+            } else {
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, usable_items[i]->base.name);
+            }
+        }
+
+        y++;
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
+
+        // Print to terminal and check for key press
+        tb_present();
+        struct tb_event event;
+        tb_poll_event(&event);
+
+        // Do key press event
+        if (event.type == TB_EVENT_KEY) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                // Move up
+                selected_index = (selected_index - 1 + usable_item_count) % usable_item_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                // Move down
+                selected_index = (selected_index + 1) % usable_item_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                // Use the selected item
+                use_item(player, usable_items[selected_index]);
+                break; // Exit the menu after using the item
+            } else if (event.key == TB_KEY_ESC) {
+                // Go back to the combat menu
+                break;
+            }
+        }
+    }
 }
 
 void use_ability(Character *attacker, Character *defender, Ability *ability) {
@@ -178,8 +231,28 @@ void deal_damage(int damage, DamageType damage_type, Character *character) {
     if (damage > 0) character->health -= damage;
 }
 
-void use_item() {
-    /* TODO */
+void use_item(Player *player, UsableItem *item) {
+    switch (item->effectType) {
+    case HEALING:
+        player->base.health += item->value;
+        break;
+    case ARMOR_INCREASE:
+        player->base.armor += item->value;
+        break;
+    default:
+        break;
+    }
+
+    for (int i = 0; i < player->item_count; i++) {
+        if (player->inventory[i] == (Item *)item) {
+            for (int j = i; j < player->item_count - 1; j++) {
+                player->inventory[j] = player->inventory[j + 1];
+            }
+            player->inventory[player->item_count - 1] = NULL;
+            player->item_count--;
+            break;
+        }
+    }
 }
 
 int print_combat_view(Character *player, Character *monster){
