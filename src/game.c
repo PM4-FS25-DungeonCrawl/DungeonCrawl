@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "game.h"
-#include "map_mode.h"
-#include "map_generator.h"
+#include "map/map_mode.h"
+#include "map/map_generator.h"
 #include "../include/termbox2.h"
 
 enum game_state {
@@ -24,6 +24,8 @@ int init_game(){
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
+    init_map_mode();
+
     bool doRun = true;
     enum game_state currentState = GENERATE_MAP;
 
@@ -36,7 +38,7 @@ int init_game(){
                 currentState = MAP_MODE;
                 break;
             case MAP_MODE:
-                if (mapModeUpdate()) {
+                if (map_mode_update()) {
                     currentState = EXIT;
                 }
                 break;

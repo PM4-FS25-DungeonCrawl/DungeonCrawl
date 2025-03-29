@@ -19,15 +19,18 @@ enum map_tile {
     EXIT_DOOR = 3,
     KEY = 4,
     SKELETON = 5,
+    HIDDEN = 99
 };
 
+/**
+ * @brief 2-dimensional vector struct
+ */
 typedef struct {
     int dx, dy;
-} Direction;
+} Vector2D;
 
-extern Direction directions[4];
+extern Vector2D directions[4];
 
-//maze array
+//map array
 extern enum map_tile map[WIDTH][HEIGHT];
-
 #endif //MAP_H
