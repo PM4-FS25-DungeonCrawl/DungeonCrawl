@@ -18,7 +18,6 @@ helper_files = files(
     '../src/logging/ringbuffer.c'
 )
 
-
 test_exe = executable('_test', test_files, helper_files)
 
 test('DungeonCrawl_test', test_exe, args: [])
