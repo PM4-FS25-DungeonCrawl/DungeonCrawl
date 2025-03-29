@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "game.h"
-#include "map_mode.h"
+#include "map/map_mode.h"
+#include "map/map_generator.h"
 #include "../include/termbox2.h"
 #include "logging/logger.h"
 
@@ -9,6 +10,7 @@ enum game_state {
     MAIN_MENU,
     MAP_MODE,
     COMBAT_MODE,
+    GENERATE_MAP,
     EXIT
 };
 
@@ -27,11 +29,15 @@ int init_game(){
 
     log_msg(INFO, "Game", "game loop starting");
     bool doRun = true;
-    enum game_state currentState = MAP_MODE;
+    enum game_state currentState = GENERATE_MAP;
 
     while (doRun) {
         switch (currentState) {
             case MAIN_MENU:
+                break;
+            case GENERATE_MAP:
+                generate_map();
+                currentState = MAP_MODE;
                 break;
             case MAP_MODE:
                 if (map_mode_update()) {
