@@ -13,9 +13,10 @@ helper_files = files(
     '../src/map/map_generator.c',
     '../src/map/map_populator.c',
     '../src/map/drawop/draw_light.c',
-    '../debug/debug.c'
+    '../debug/debug.c',
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c'
 )
-
 
 test_exe = executable('_test', test_files, helper_files)
 

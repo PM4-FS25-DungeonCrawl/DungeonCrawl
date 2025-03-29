@@ -4,6 +4,7 @@
 #include "map/map_mode.h"
 #include "map/map_generator.h"
 #include "../include/termbox2.h"
+#include "logging/logger.h"
 
 enum game_state {
     MAIN_MENU,
@@ -26,6 +27,7 @@ int init_game(){
 
     init_map_mode();
 
+    log_msg(INFO, "Game", "game loop starting");
     bool doRun = true;
     enum game_state currentState = GENERATE_MAP;
 
@@ -45,6 +47,7 @@ int init_game(){
             case COMBAT_MODE:
                 break;
             case EXIT:
+                close_log_file(1);
                 doRun = false;
             default:
         }

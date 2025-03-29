@@ -26,6 +26,11 @@ debug_files = files(
   'debug/debug.c'
 )
 
+logging_files = files(
+  'src/logging/logger.c',
+  'src/logging/ringbuffer.c'
+)
+
 # Include the test directory in the build.
 subdir('test')
 
@@ -35,4 +40,5 @@ executable(
   src_files,
   include_files,
   debug_files,
+  logging_files
 )
