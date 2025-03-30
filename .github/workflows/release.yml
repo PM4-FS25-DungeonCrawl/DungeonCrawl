@@ -65,6 +65,11 @@ jobs:
         with:
           path: artifacts  # Store all artifacts in the 'artifacts/' folder
 
+      - name: Rename Artifacts for Clarity #There will be a conflict due to files having the same name otherwhise
+        run: |
+          mv artifacts/dungeonCrawl-executable-Linux/DungeonCrawl artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+          mv artifacts/dungeonCrawl-executable-macOS/DungeonCrawl artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -74,7 +79,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl
-            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl
+            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
