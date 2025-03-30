@@ -300,17 +300,19 @@ int print_combat_view(Character *player, Character *monster, bool red_monster_sp
 
     // Display monster sprite
     char monster_sprite[100];
-    snprintf(monster_sprite, sizeof(monster_sprite), "dummy monster sprite");
+    snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");
+
+
     if (red_monster_sprite) {
         tb_print(1, y++, TB_RED, TB_DEFAULT, monster_sprite);
     } else {
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_sprite);
     }
 
+    // Add two empty lines after the monster sprite
     y += 2;
-    for (int i = 0; i < 20; i++) {
-        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "");
-    }
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
 
     return y;
 }
@@ -328,7 +330,7 @@ Ability *get_random_ability(Character *character){
 void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt) {
     tb_clear();
     int y = print_combat_view(&player->base, &monster->base, false);
-
+    if (damage_dealt <= 0) damage_dealt = 0;
     // Display attack message
     char message[100];
     snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base.name, damage_dealt);
