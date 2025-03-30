@@ -74,7 +74,6 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-executable-Linux
-            artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-executable-Linux
+            artifacts/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
