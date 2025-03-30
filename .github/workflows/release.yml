@@ -43,6 +43,8 @@ jobs:
         with:
           name: dungeonCrawl-executable-${{ runner.os }}
           path: builddir/DungeonCrawl
+      - name: List Downloaded Artifacts
+        run: ls -R artifacts
 
   release:
     needs: build
@@ -64,6 +66,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts  # Store all artifacts in the 'artifacts/' folder
+      - name: List Downloaded Artifacts
+        run: ls -R artifacts
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -74,6 +78,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/*
+            artifacts/dungeonCrawl-executable-Linux
+            artifacts/dungeonCrawl-executable-macOS
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
