@@ -125,7 +125,29 @@ void ability_menu(Player *player, Monster *monster) {
                 selected_index = (selected_index + 1) % ability_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected ability
-                use_ability(&player->base, &monster->base, &player->base.abilities[selected_index]);
+                int damage_dealt;
+                damage_dealt = use_ability(&player->base, &monster->base, &player->base.abilities[selected_index]);
+
+
+                // Change monster sprite color to red
+                tb_clear();
+                y = print_combat_view(&player->base, &monster->base, true);
+                tb_present();
+                usleep(300000); // 0.5 seconds
+
+                // Restore monster sprite color
+                tb_clear();
+                y = print_combat_view(&player->base, &monster->base, false);
+                char message[100];
+                // TODO: There is no special message for missed or critical hits
+                snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->base.abilities[selected_index].name, damage_dealt);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
+                tb_present();
+
+
+
+                // Wait for any key press to continue
+                tb_poll_event(&event);
                 break; // Exit the menu after using the ability
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -197,9 +219,8 @@ void use_ability(Character *attacker, Character *defender, Ability *ability) {
     if (roll_hit(ability, defender)) {
         // Roll damage
         int damage = roll_damage(ability);
-        deal_damage(damage, ability->damageType, defender);
-    }
-}
+        return deal_damage(damage, ability->damageType, defender);
+}}
 
 bool roll_hit(Ability *ability, Character *defender) {
     int roll = roll_dice(D20);
@@ -221,7 +242,7 @@ int roll_damage(Ability *ability) {
     return roll;
 }
 
-void deal_damage(int damage, DamageType damage_type, Character *character) {
+int deal_damage(int damage, DamageType damage_type, Character *character) {
     /* TODO critical hits are ignored */
     if (character->type == MONSTER) {
         Monster *monster = (Monster *)character;
@@ -229,6 +250,8 @@ void deal_damage(int damage, DamageType damage_type, Character *character) {
     }
     damage -= character->armor;
     if (damage > 0) character->health -= damage;
+
+    return damage;
 }
 
 void use_item(Player *player, UsableItem *item) {
