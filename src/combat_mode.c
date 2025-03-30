@@ -137,6 +137,7 @@ void ability_menu(Player *player, Monster *monster) {
 
                 // Display attack message
                 char message[100];
+                if (damage_dealt <= 0) damage_dealt = 0;
                 // TODO: There is no special message for missed or critical hits
                 snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->base.abilities[selected_index].name, damage_dealt);
                 tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
