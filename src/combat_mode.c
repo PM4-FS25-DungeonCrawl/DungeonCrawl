@@ -19,12 +19,14 @@ bool combat(Player *player, Monster *monster) {
         case MENU_ABILITY:
             ability_menu(player, monster);
             current_state = MENU_COMBAT;
-            use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+            int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+            display_enemy_attack_message(player, monster, damage_dealt);
             break;
         case MENU_ITEM:
             item_menu(player, monster);
             current_state = MENU_COMBAT;
-            use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+            damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+            display_enemy_attack_message(player, monster, damage_dealt);
         default:
             break;
         }
@@ -321,4 +323,19 @@ int roll_dice(DiceSize dice_size) {
 Ability *get_random_ability(Character *character){
     int random_index = rand() % character->ability_count;
     return &character->abilities[random_index];
+}
+
+void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt) {
+    tb_clear();
+    int y = print_combat_view(&player->base, &monster->base, false);
+
+    // Display attack message
+    char message[100];
+    snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base.name, damage_dealt);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
+    tb_present();
+
+    // Wait for any key press to continue
+    struct tb_event event;
+    tb_poll_event(&event);
 }

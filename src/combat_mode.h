@@ -27,5 +27,6 @@ int deal_damage(int damage, DamageType damage_type, Character *character);
 void use_item(Player *player, UsableItem *item);
 int print_combat_view(Character *player, Character *monster, bool red_monster_sprite);
 Ability *get_random_ability(Character *character);
+void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt);
 
 #endif // COMBAT_MODE_H
