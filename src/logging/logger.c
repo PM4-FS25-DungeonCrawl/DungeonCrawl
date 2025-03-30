@@ -20,6 +20,9 @@
 
 #define MAX_HEADER_SIZE 256
 
+#define RUNNING 1
+#define TERMINATED 0
+
 const char *log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 
 //predefines of functions, used in this module
@@ -30,10 +33,29 @@ FILE *log_file = nullptr;
 //the used RingBuffer to write log messages in
 RingBuffer log_buffer;
 
-//states if the file writing thread is still running, if set 0 the thread terminates
-int thread_is_running = 1;
+//states if the file writing thread is still running, if set to 0 the thread terminates or is terminated
+int thread_is_running = TERMINATED;
 //the id of the used file
 int file_id = 0;
+
+/**
+ * ensures that the predefined log directory already exist,
+ * if not create a new one
+ */
+void ensure_log_dir(void) {
+    struct stat st;
+
+    if (stat(LOG_DIRECTORY, &st) == -1) {
+        //Directory doesn't exist -> create a new one
+
+        if (mkdir(LOG_DIRECTORY, 0755) == -1) {
+            //directory konnte nicht erstellt werden
+            //TODO: Errorhandling?
+        }
+    }
+}
+
+
 
 /**
  * Opens the log file with current saved file id in append modus.
@@ -83,6 +105,8 @@ void check_log_file(void) {
  * @return the latest used file id, in the range 0 (ink.) to MAX_N_FILES (exkl.) or -1 if directory was not found.
  */
 int get_latest_file_id(void) {
+    ensure_log_dir();
+
     DIR *dir = opendir(LOG_DIRECTORY);
     struct dirent *entry;
     int latest_id = 0;
@@ -125,7 +149,7 @@ void close_log_file(const int terminate_thread) {
         log_file = nullptr;
     }
     if (terminate_thread && thread_is_running) {
-        thread_is_running = 0;
+        thread_is_running = TERMINATED;
     }
 }
 
@@ -146,29 +170,31 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
         init_ring_buffer(&log_buffer); // init ring buffer to write the message in
 
         start_log_writer_thread(); //start thread
-
     }
 
-    //get timestamp
-    const time_t now = time(nullptr);
-    const struct tm *tm = localtime(&now);
-    char timestamp[20];
-    strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
+    //if thread is not running, something went wrong with opening the log dir, log file
+    if (thread_is_running) {
+        //get timestamp
+        const time_t now = time(nullptr);
+        const struct tm *tm = localtime(&now);
+        char timestamp[20];
+        strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
 
-    //get log level
-    const char *log_level = log_level_str[level];
+        //get log level
+        const char *log_level = log_level_str[level];
 
-    va_list args;
-    va_start(args, format);
-    //temp msg placeholder
-    char msg[MAX_HEADER_SIZE];
-    vsnprintf(msg, sizeof(msg), format, args);
+        va_list args;
+        va_start(args, format);
+        //temp msg placeholder
+        char msg[MAX_HEADER_SIZE];
+        vsnprintf(msg, sizeof(msg), format, args);
 
-    char log_msg[MAX_MSG_LENGTH];
-    snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
-    va_end(args);
+        char log_msg[MAX_MSG_LENGTH];
+        snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
+        va_end(args);
 
-    write_to_ring_buffer(&log_buffer, log_msg);
+        write_to_ring_buffer(&log_buffer, log_msg);
+    }
 }
 
 #ifdef _WIN32
@@ -224,11 +250,12 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
                 if (log_file == nullptr && file_id != -1) {
                     file_id = get_latest_file_id();
                     if (file_id != -1) {
-                        //if the file id could be defined, doesn't try to open the file
+                        //if the file id could be defined, opens the file
                         open_log_file();
                     } else {
-                        //stops the thread from running
-                        thread_is_running = 0;
+                        //stops the thread from running, no logs will be created
+                        //TODO: Errorhandling?
+                        thread_is_running = TERMINATED;
                     }
                 }
                 check_log_file();
@@ -249,6 +276,7 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
  * Starts the logging writing thread
  */
 void start_log_writer_thread(void) {
+    thread_is_running = RUNNING;
     #ifdef _WIN32
         HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
         if (thread) {
