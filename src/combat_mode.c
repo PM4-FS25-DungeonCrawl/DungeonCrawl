@@ -45,7 +45,7 @@ combat_state combat_menu(Player *player, Monster *monster) {
 
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(&player->base, &monster->base);
+        int y = print_combat_view(&player->base, &monster->base, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
@@ -95,7 +95,7 @@ void ability_menu(Player *player, Monster *monster) {
         
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(&player->base, &monster->base);
+        int y = print_combat_view(&player->base, &monster->base, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
@@ -132,19 +132,18 @@ void ability_menu(Player *player, Monster *monster) {
                 // Change monster sprite color to red
                 tb_clear();
                 y = print_combat_view(&player->base, &monster->base, true);
-                tb_present();
-                usleep(300000); // 0.5 seconds
 
-                // Restore monster sprite color
-                tb_clear();
-                y = print_combat_view(&player->base, &monster->base, false);
+                // Display attack message
                 char message[100];
                 // TODO: There is no special message for missed or critical hits
                 snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->base.abilities[selected_index].name, damage_dealt);
                 tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
                 tb_present();
+                usleep(500000);
 
-
+                // Restore monster sprite color
+                y = print_combat_view(&player->base, &monster->base, false);
+                tb_present();
 
                 // Wait for any key press to continue
                 tb_poll_event(&event);
@@ -174,7 +173,7 @@ void item_menu(Player *player, Monster *monster) {
 
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(&player->base, &monster->base);
+        int y = print_combat_view(&player->base, &monster->base, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
@@ -214,7 +213,7 @@ void item_menu(Player *player, Monster *monster) {
     }
 }
 
-void use_ability(Character *attacker, Character *defender, Ability *ability) {
+int use_ability(Character *attacker, Character *defender, Ability *ability) {
     // Roll to hit
     if (roll_hit(ability, defender)) {
         // Roll damage
@@ -278,7 +277,7 @@ void use_item(Player *player, UsableItem *item) {
     }
 }
 
-int print_combat_view(Character *player, Character *monster){
+int print_combat_view(Character *player, Character *monster, bool red_monster_sprite){
 
     int y = 1;
 
@@ -292,9 +291,23 @@ int print_combat_view(Character *player, Character *monster){
     snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
 
-    y += 5;
+    y += 2;
     for (int i = 0; i < 20; i++) {
-        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "_");
+        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "");
+    }
+
+    // Display monster sprite
+    char monster_sprite[100];
+    snprintf(monster_sprite, sizeof(monster_sprite), "dummy monster sprite");
+    if (red_monster_sprite) {
+        tb_print(1, y++, TB_RED, TB_DEFAULT, monster_sprite);
+    } else {
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_sprite);
+    }
+
+    y += 2;
+    for (int i = 0; i < 20; i++) {
+        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "");
     }
 
     return y;
