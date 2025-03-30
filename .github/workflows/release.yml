@@ -44,7 +44,7 @@ jobs:
           name: dungeonCrawl-executable-${{ runner.os }}
           path: builddir/DungeonCrawl
       - name: List Downloaded Artifacts
-        run: ls -R artifacts
+        run: ls -R
 
   release:
     needs: build
