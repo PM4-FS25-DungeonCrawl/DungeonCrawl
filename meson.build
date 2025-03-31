@@ -26,6 +26,12 @@ debug_files = files(
   'debug/debug.c'
 )
 
+# List of all database files
+database_files = files(
+  'include/sqlite3.c',
+  'src/database/database.c'
+)
+
 logging_files = files(
   'src/logging/logger.c',
   'src/logging/ringbuffer.c'
@@ -40,5 +46,6 @@ executable(
   src_files,
   include_files,
   debug_files,
+  database_files,
   logging_files
 )
