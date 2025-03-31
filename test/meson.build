@@ -16,9 +16,10 @@ helper_files = files(
     '../src/map/drawop/draw_light.c',
     '../debug/debug.c',
     '../include/sqlite3.c',
-    '../src/database/database.c'
+    '../src/database/database.c',
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c'
 )
-
 
 test_exe = executable('_test', test_files, helper_files)
 

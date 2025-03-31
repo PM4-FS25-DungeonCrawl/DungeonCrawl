@@ -32,6 +32,11 @@ database_files = files(
   'src/database/database.c'
 )
 
+logging_files = files(
+  'src/logging/logger.c',
+  'src/logging/ringbuffer.c'
+)
+
 # Include the test directory in the build.
 subdir('test')
 
@@ -41,5 +46,6 @@ executable(
   src_files,
   include_files,
   debug_files,
-  database_files
+  database_files,
+  logging_files
 )
