@@ -6,7 +6,7 @@
  * TODO: Might and weakness system
  */
 
-bool combat(Player *player, Monster *monster) {
+bool combat(player *player, monster *monster) {
 
     // Set initial state of combat
     combat_state current_state = MENU_COMBAT;
@@ -40,7 +40,7 @@ bool combat(Player *player, Monster *monster) {
     return (player->base.health > 0);
 }
 
-combat_state combat_menu(Player *player, Monster *monster) {
+combat_state combat_menu(player *player, monster *monster) {
 
     int selected_index = 0;
     const char *menu_options[] = {"Use Ability", "Use Item"};
@@ -91,7 +91,7 @@ combat_state combat_menu(Player *player, Monster *monster) {
     }
 }
 
-bool ability_menu(Player *player, Monster *monster) {
+bool ability_menu(player *player, monster *monster) {
     
     int selected_index = 0;
     int ability_count = player->base.ability_count;
@@ -164,7 +164,7 @@ bool ability_menu(Player *player, Monster *monster) {
     return ability_used;
 }
 
-bool item_menu(Player *player, Monster *monster) {
+bool item_menu(player *player, monster *monster) {
 
     int selected_index = 0;
     int usable_item_count = 0;
@@ -224,7 +224,7 @@ bool item_menu(Player *player, Monster *monster) {
     return item_used;
 }
 
-int use_ability(Character *attacker, Character *defender, Ability *ability) {
+int use_ability(character *attacker, character *defender, ability *ability) {
     // Roll to hit
     if (roll_hit(ability, defender)) {
         // Roll damage
@@ -232,7 +232,7 @@ int use_ability(Character *attacker, Character *defender, Ability *ability) {
         return deal_damage(damage, ability->damageType, defender);
 }}
 
-bool roll_hit(Ability *ability, Character *defender) {
+bool roll_hit(ability *ability, character *defender) {
     int roll = roll_dice(D20);
     switch (ability->damageType) {
         case PHYSICAL:
@@ -243,7 +243,7 @@ bool roll_hit(Ability *ability, Character *defender) {
     return false;
 }
 
-int roll_damage(Ability *ability) {
+int roll_damage(ability *ability) {
     int roll = 0;
     // Roll the dice several times
     for (int i = 0; i < ability->rollCount; i++){
@@ -252,10 +252,10 @@ int roll_damage(Ability *ability) {
     return roll;
 }
 
-int deal_damage(int damage, DamageType damage_type, Character *character) {
+int deal_damage(int damage, damage_type damage_type, character *character) {
     /* TODO critical hits are ignored */
     if (character->type == MONSTER) {
-        Monster *monster = (Monster *)character;
+        monster *monster = (monster *)character;
         damage += get_weakness_value(monster, damage_type);
     }
     damage -= character->armor;
@@ -264,7 +264,7 @@ int deal_damage(int damage, DamageType damage_type, Character *character) {
     return damage;
 }
 
-void use_item(Player *player,Monster *monster, UsableItem *item) {
+void use_item(player *player,monster *monster, UsableItem *item) {
     switch (item->effectType) {
     case HEALING:
         player->base.health += item->value;
@@ -290,7 +290,7 @@ void use_item(Player *player,Monster *monster, UsableItem *item) {
     }
 }
 
-int print_combat_view(Character *player, Character *monster, bool red_monster_sprite){
+int print_combat_view(character *player, character *monster, bool red_monster_sprite){
 
     int y = 1;
 
@@ -328,24 +328,24 @@ int print_combat_view(Character *player, Character *monster, bool red_monster_sp
     return y;
 }
 
-int roll_dice(DiceSize dice_size) {
+int roll_dice(dice_size dice_size) {
     /* TODO better randomness? (warning message)*/
     return rand() % dice_size + 1;
 }
 
-Ability *get_random_ability(Character *character){
+ability *get_random_ability(character *character){
     int random_index = rand() % character->ability_count;
     return &character->abilities[random_index];
 }
 
-void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt) {
+void display_enemy_attack_message(player *player, monster *monster, int damage_dealt) {
     if (damage_dealt <= 0) damage_dealt = 0;
     char message[100];
     snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base.name, damage_dealt);
     display_combat_message(player, monster, message);
 }
 
-void display_item_message(Player *player, Monster *monster, UsableItem *item) {
+void display_item_message(player *player, monster *monster, UsableItem *item) {
     tb_clear();
     char message[100];
     switch (item->effectType) {
@@ -362,7 +362,7 @@ void display_item_message(Player *player, Monster *monster, UsableItem *item) {
     }
 }
 
-void display_combat_message(Player *player, Monster *monster, const char *message) {
+void display_combat_message(player *player, monster *monster, const char *message) {
     tb_clear();
     int y = print_combat_view(&player->base, &monster->base, false);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);

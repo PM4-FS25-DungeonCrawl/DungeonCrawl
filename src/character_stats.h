@@ -15,14 +15,14 @@ typedef enum {
     PHYSICAL,
     MAGICAL,
     DAMAGE_TYPE_COUNT
-} DamageType;
+} damage_type;
 
 // Enum for Character Types
 typedef enum {
     PLAYER,
     MONSTER,
     BOSS
-} CharacterType;
+} character_type;
 
 // ENUM for dice sizes
 typedef enum {
@@ -31,28 +31,28 @@ typedef enum {
     D10 = 10,
     D12 = 12,
     D20 = 20
-} DiceSize;
+} dice_size;
 
 // === STRUCTS ===
 
 // Struct for Weakness
 typedef struct {
-    DamageType type;
+    damage_type type;
     int value;
-} Weakness;
+} weakness;
 
 // Struct for Abilities
 typedef struct {
     char name[50];
     int rollCount;
     int accuracy;
-    DiceSize diceSize;
-    DamageType damageType;
-} Ability;
+    dice_size diceSize;
+    damage_type damageType;
+} ability;
 
 // Struct for Character
 typedef struct {
-    CharacterType type;
+    character_type type;
     char name[20];
 
     int health;
@@ -62,30 +62,30 @@ typedef struct {
     int fortitude;
     int will;
 
-    Ability abilities[MAX_ABILITIES];
+    ability abilities[MAX_ABILITIES];
     int ability_count;
-} Character;
+} character;
 
 // Struct for Player
 typedef struct {
-    Character base;
+    character base;
     Item *inventory[MAX_ITEMS];
     int item_count;
-} Player;
+} player;
 
 // Struct for Monster
 typedef struct {
-    Character base;
-    Weakness weakness_map[DAMAGE_TYPE_COUNT];
-} Monster;
+    character base;
+    weakness weakness_map[DAMAGE_TYPE_COUNT];
+} monster;
 
 // === FUNCTION DECLARATIONS ===
-void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type);
-void addAbilityToCharacter(Character *c, Ability ability);
-void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
-void initWeaknesses(Monster *m, int array[]);
-int get_weakness_value(Monster *m, DamageType key);
-void add_item_to_player(Player *player, Item *item);
+void initAbility(ability *a, const char *name, int rollCount, int accuracy, dice_size diceSize, damage_type type);
+void addAbilityToCharacter(character *c, ability ability);
+void initCharacter(character_type type, character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
+void initWeaknesses(monster *m, int array[]);
+int get_weakness_value(monster *m, damage_type key);
+void add_item_to_player(player *player, Item *item);
 
 
 #endif //CHARACTER_STATS_H

@@ -3,8 +3,8 @@
 #include "../src/combat_mode.h"
 
 // Helper function to initialize a test Character
-Character create_test_character(CharacterType type, int health, int armor, int might, int deflection, int fortitude, int will) {
-    Character character = {
+character create_test_character(character_type type, int health, int armor, int might, int deflection, int fortitude, int will) {
+    character character = {
         .type = type,
         .health = health,
         .armor = armor,
@@ -18,30 +18,30 @@ Character create_test_character(CharacterType type, int health, int armor, int m
 }
 
 // Helper function to initialize a test Player
-Player create_test_player(int health, int armor, int might, int deflection, int fortitude, int will) {
-    Player player;
+player create_test_player(int health, int armor, int might, int deflection, int fortitude, int will) {
+    player player;
     player.base = create_test_character(PLAYER, health, armor, might, deflection, fortitude, will);
     return player;
 }
 
 // Helper function to initialize a test Monster
-Monster create_test_monster(int health, int armor, int might, int deflection, int fortitude, int will, int weaknesses[]) {
-    Monster monster;
+monster create_test_monster(int health, int armor, int might, int deflection, int fortitude, int will, int weaknesses[]) {
+    monster monster;
     monster.base = create_test_character(MONSTER, health, armor, might, deflection, fortitude, will);
     initWeaknesses(&monster, weaknesses);
     return monster;
 }
 
 // Helper function to create a test Ability
-Ability create_test_ability(const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type) {
-    Ability ability;
+ability create_test_ability(const char *name, int rollCount, int accuracy, dice_size diceSize, damage_type type) {
+    ability ability;
     initAbility(&ability, name, rollCount, accuracy, diceSize, type);
     return ability;
 }
 
 void test_roll_hit() {
-    Monster defender = create_test_monster(100, 0, 0, 0, 0, 0, (int[]){0,0});
-    Ability test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
+    monster defender = create_test_monster(100, 0, 0, 0, 0, 0, (int[]){0,0});
+    ability test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
 
     // Test with high accuracy ability (should always hit)
     assert(roll_hit(&test_ability, &defender.base) == true);
@@ -55,7 +55,7 @@ void test_roll_hit() {
 }
 
 void test_roll_damage() {
-    Ability test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
+    ability test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
     int damage = roll_damage(&test_ability);
 
     // The result should be between 3 (minimum) and 18 (maximum)
@@ -64,7 +64,7 @@ void test_roll_damage() {
 }
 
 void test_deal_damage_to_armor() {
-    Player test_player = create_test_player(100, 10, 0, 0, 0, 0);
+    player test_player = create_test_player(100, 10, 0, 0, 0, 0);
 
     deal_damage(50, PHYSICAL, &test_player.base);
 

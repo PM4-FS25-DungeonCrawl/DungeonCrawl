@@ -1,7 +1,7 @@
 #include "character_stats.h"
 
 // Function to initialize a Character
-void initCharacter(CharacterType type, Character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will) {
+void initCharacter(character_type type, character *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will) {
     c->type = type;
     strncpy(c->name, name, sizeof(c->name) - 1);
     c->name[sizeof(c->name) - 1] = '\0';
@@ -15,7 +15,7 @@ void initCharacter(CharacterType type, Character *c, const char *name, int healt
 }
 
 // Function to initialize an Ability
-void initAbility(Ability *a, const char *name, int rollCount, int accuracy, DiceSize diceSize, DamageType type) {
+void initAbility(ability *a, const char *name, int rollCount, int accuracy, dice_size diceSize, damage_type type) {
     strncpy(a->name, name, sizeof(a->name) - 1);
     a->name[sizeof(a->name) - 1] = '\0';
     a->rollCount = rollCount;
@@ -25,7 +25,7 @@ void initAbility(Ability *a, const char *name, int rollCount, int accuracy, Dice
 }
 
 // Function to add an Ability to a Character
-void addAbilityToCharacter(Character *c, Ability ability) {
+void addAbilityToCharacter(character *c, ability ability) {
     if (c->ability_count < MAX_ABILITIES) {
         c->abilities[c->ability_count++] = ability;
     } else {
@@ -34,15 +34,15 @@ void addAbilityToCharacter(Character *c, Ability ability) {
 }
 
 // Function to initialize the map containing all weaknesses
-void initWeaknesses(Monster *m, int array[]) {
+void initWeaknesses(monster *m, int array[]) {
     for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        m->weakness_map[i].type = (DamageType)i;
+        m->weakness_map[i].type = (damage_type)i;
         m->weakness_map[i].value = array[i];
     }
 }
 
 // Function to get the value corresponding to a damage type
-int get_weakness_value(Monster *m, DamageType key) {
+int get_weakness_value(monster *m, damage_type key) {
     for (int i = 0; i < sizeof(m->weakness_map); i++) {
         if (m->weakness_map[i].type == key){
             return m->weakness_map[i].value;
@@ -51,7 +51,7 @@ int get_weakness_value(Monster *m, DamageType key) {
     return 1;
 }
 
-void add_item_to_player(Player *p, Item *item) {
+void add_item_to_player(player *p, Item *item) {
     if (p->item_count < MAX_ITEMS) {
         p->inventory[p->item_count++] = item;
     } else {

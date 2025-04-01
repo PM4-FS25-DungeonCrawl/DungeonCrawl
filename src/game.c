@@ -48,15 +48,15 @@ int init_game(){
                 break;
             case COMBAT_MODE:
                 // Initialize abilities
-                Ability fireball;
+                ability fireball;
                 initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
-                Ability swordslash;
+                ability swordslash;
                 initAbility(&swordslash, "Swordslash", 4, 10, D6, PHYSICAL);
-                Ability bite;
+                ability bite;
                 initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
 
                 // Initialize player
-                Player player;
+                player player;
                 initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5);
                 player.item_count = 0; //manually initializing player specific values
                 for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
@@ -70,7 +70,7 @@ int init_game(){
 
 
                 // Initialize monster
-                Monster monster;
+                monster monster;
                 initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3);
                 addAbilityToCharacter(&monster.base, bite);
                 initWeaknesses(&monster, (int[]){0,10});
