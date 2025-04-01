@@ -46,7 +46,7 @@ int init_game(){
                     currentState = EXIT;
                 }
                 break;
-            case COMBAT_MODE:
+            case COMBAT_MODE: {
                 // Initialize abilities
                 ability_t fireball;
                 initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
@@ -77,6 +77,7 @@ int init_game(){
 
                 currentState = (combat(&player, &monster))? MAP_MODE : EXIT;
                 break;
+            }
             case EXIT:
                 close_log_file(1);
                 doRun = false;
