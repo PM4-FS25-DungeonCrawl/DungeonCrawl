@@ -12,7 +12,7 @@
 #define     LEFT    2
 #define     RIGHT   3
 
-enum map_tile {
+typedef enum {
     WALL = 0,
     FLOOR = 1,
     START_DOOR = 2,
@@ -20,7 +20,7 @@ enum map_tile {
     KEY = 4,
     SKELETON = 5,
     HIDDEN = 99
-};
+} map_tile;
 
 /**
  * @brief 2-dimensional vector struct
@@ -32,5 +32,5 @@ typedef struct {
 extern Vector2D directions[4];
 
 //map array
-extern enum map_tile map[WIDTH][HEIGHT];
+extern map_tile map[WIDTH][HEIGHT];
 #endif //MAP_H

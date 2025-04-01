@@ -9,7 +9,7 @@
 #include "drawop/draw_light.h"
 
 
-enum map_tile revealed_map[WIDTH][HEIGHT];
+map_tile revealed_map[WIDTH][HEIGHT];
 
 Vector2D player;
 
