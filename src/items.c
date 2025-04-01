@@ -15,6 +15,3 @@ void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot,
     item->slot = slot;
     item->armor_bonus = armor_bonus;
 }
-
-
-
