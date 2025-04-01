@@ -6,11 +6,11 @@
 #include "../src/map/map.h"
 #include "../src/map/drawop/draw_light.h"
 
-constexpr int width = 10;
-constexpr int height = 10;
+const int width = 10;
+const int height = 10;
 
-enum map_tile test_map[width][height];
-enum map_tile revealed_test_map[width][height];
+map_tile test_map[10][10];
+map_tile revealed_test_map[10][10];
 
 void init_test_mazes(void) {
     for (int y = 0; y < height; y++) {
@@ -44,7 +44,7 @@ void test_draw_light_on_player(void) {
     init_test_mazes();
 
     const Vector2D player = {5, 5};
-    constexpr int light_radius = 3;
+    const int light_radius = 3;
     draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //player position will not be drawn
