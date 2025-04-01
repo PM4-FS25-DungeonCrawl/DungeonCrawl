@@ -17,8 +17,8 @@ typedef enum {
 // === FUNCTION DECLARATIONS ===
 bool combat(Player *player, Monster *monster);
 combat_state combat_menu(Player *player, Monster *monster);
-void ability_menu(Player *player, Monster *monster);
-void item_menu(Player *player, Monster *monster);
+bool ability_menu(Player *player, Monster *monster);
+bool item_menu(Player *player, Monster *monster);
 int use_ability(Character *attacker, Character *defender, Ability *ability);
 bool roll_hit(Ability *ability, Character *defender);
 int roll_damage(Ability *ability);

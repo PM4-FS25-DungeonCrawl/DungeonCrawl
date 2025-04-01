@@ -17,16 +17,18 @@ bool combat(Player *player, Monster *monster) {
             current_state = combat_menu(player, monster);
             break;
         case MENU_ABILITY:
-            ability_menu(player, monster);
+            if(ability_menu(player, monster)){
+                int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+                display_enemy_attack_message(player, monster, damage_dealt);
+            }
             current_state = MENU_COMBAT;
-            int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
-            display_enemy_attack_message(player, monster, damage_dealt);
             break;
         case MENU_ITEM:
-            item_menu(player, monster);
+            if (item_menu(player, monster)) {  // Only attack if item was used
+                int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+                display_enemy_attack_message(player, monster, damage_dealt);
+            }
             current_state = MENU_COMBAT;
-            damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
-            display_enemy_attack_message(player, monster, damage_dealt);
         default:
             break;
         }
@@ -88,10 +90,11 @@ combat_state combat_menu(Player *player, Monster *monster) {
     }
 }
 
-void ability_menu(Player *player, Monster *monster) {
+bool ability_menu(Player *player, Monster *monster) {
     
     int selected_index = 0;
     int ability_count = player->base.ability_count;
+    bool ability_used = false;
 
     while (true) {
         
@@ -130,7 +133,6 @@ void ability_menu(Player *player, Monster *monster) {
                 int damage_dealt;
                 damage_dealt = use_ability(&player->base, &monster->base, &player->base.abilities[selected_index]);
 
-
                 // Change monster sprite color to red
                 tb_clear();
                 y = print_combat_view(&player->base, &monster->base, true);
@@ -150,6 +152,7 @@ void ability_menu(Player *player, Monster *monster) {
 
                 // Wait for any key press to continue
                 tb_poll_event(&event);
+                ability_used = true;
                 break; // Exit the menu after using the ability
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -157,13 +160,15 @@ void ability_menu(Player *player, Monster *monster) {
             }
         }
     }
+    return ability_used;
 }
 
-void item_menu(Player *player, Monster *monster) {
+bool item_menu(Player *player, Monster *monster) {
 
     int selected_index = 0;
     int usable_item_count = 0;
     UsableItem *usable_items[MAX_ITEMS];
+    bool item_used = false;
 
     // Collect all usable items
     for (int i = 0; i < player->item_count; i++) {
@@ -207,6 +212,7 @@ void item_menu(Player *player, Monster *monster) {
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
                 use_item(player, monster, usable_items[selected_index]);
+                item_used = true;
                 break; // Exit the menu after using the item
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -214,6 +220,7 @@ void item_menu(Player *player, Monster *monster) {
             }
         }
     }
+    return item_used;
 }
 
 int use_ability(Character *attacker, Character *defender, Ability *ability) {
