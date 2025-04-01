@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "game.h"
-#include "combat_mode.h"
 #include "character_stats.h"
+#include "combat_mode.h"
 #include "map/map_mode.h"
 #include "map/map_generator.h"
 #include "../include/termbox2.h"
