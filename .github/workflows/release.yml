@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]  # Multi-OS build
+        os: [ubuntu-latest, macos-latest]  # Multi-OS build
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -28,17 +28,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install meson ninja
-
-      # Install dependencies for Windows (including Cygwin)
-      - name: Install dependencies (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          python -m pip install --upgrade pip
-          pip install meson ninja
-          choco install cygwin --params "/InstallDir:C:\cygwin64" -y
-          choco install cygwin --source=cygwin --package-parameters="'/InstallDir:C:\cygwin64 /Components:make,gcc-core,gcc-g++'" -y
-          echo "C:\\cygwin64\\bin" >> $GITHUB_PATH
-          $env:Path += ";C:\cygwin64\bin"
+          
       # Configure Meson
       - name: Configure Meson
         run: meson setup builddir
@@ -51,8 +41,8 @@ jobs:
       - name: Upload Executable as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: executable-${{ runner.os }}
-          path: builddir/my_executable${{ runner.os == 'Windows' && '.exe' || '' }}
+          name: dungeonCrawl-executable-${{ runner.os }}
+          path: builddir/DungeonCrawl
 
   release:
     needs: build
@@ -62,45 +52,34 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get Latest Version Tag
-        id: get_version
-        run: |
-          latest_tag=$(git tag --sort=-v:refname | head -n 1)
-          if [[ -z "$latest_tag" ]]; then
-            latest_tag="v0.1.0"  # Default version if no tags exist
-          fi
-          echo "LATEST_VERSION=$latest_tag" >> $GITHUB_ENV
-
-      # Bump the version (Patch)
-      - name: Bump Version (Patch)
-        id: bump_version
-        uses: actions-ecosystem/action-bump-semver@v1
-        with:
-          current_version: ${{ env.LATEST_VERSION }}
-          level: patch
-
-      # Create a new git tag for the release
-      - name: Create New Git Tag
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git tag ${{ steps.bump_version.outputs.new_version }}
-          git push origin ${{ steps.bump_version.outputs.new_version }}
+      - name: Auto Tag Release
+        id: auto_tag
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch  # Can be 'patch', 'minor', or 'major'
+          WITH_V: true  # Adds 'v' prefix (e.g., v1.0.1)
 
       - name: Download Build Artifacts
         uses: actions/download-artifact@v4
+        with:
+          path: artifacts  # Store all artifacts in the 'artifacts/' folder
+
+      - name: Rename Artifacts for Clarity #There will be a conflict due to files having the same name otherwhise
+        run: |
+          mv artifacts/dungeonCrawl-executable-Linux/DungeonCrawl artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+          mv artifacts/dungeonCrawl-executable-macOS/DungeonCrawl artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.bump_version.outputs.new_version }}
-          name: Release ${{ steps.bump_version.outputs.new_version }}
+          tag_name: ${{ steps.auto_tag.outputs.new_tag }}
+          name: Release ${{ steps.auto_tag.outputs.new_tag }}
           body: "Release: Built from the latest commit."
           draft: false
           prerelease: false
           files: |
-            executable-ubuntu-latest/my_executable
-            executable-macos-latest/my_executable
-            executable-windows-latest/my_executable.exe
+            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

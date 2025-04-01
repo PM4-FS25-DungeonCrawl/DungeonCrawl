@@ -1,6 +1,6 @@
 #include "map.h"
 
-enum map_tile map[WIDTH][HEIGHT];
+map_tile map[WIDTH][HEIGHT];
 
 Vector2D directions[4] = {
     {0, -1}, // up
