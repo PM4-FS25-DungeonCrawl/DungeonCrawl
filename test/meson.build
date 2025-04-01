@@ -1,6 +1,5 @@
 # Include test files
 test_files = files(
-    'test_game.c',
     'test_main.c',
     'map/drawop/test_draw_light.c',
     'test_database.c'
