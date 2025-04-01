@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "game.h"
+#include "combat_mode.h"
+#include "character_stats.h"
 #include "map/map_mode.h"
 #include "map/map_generator.h"
 #include "../include/termbox2.h"
@@ -45,6 +47,35 @@ int init_game(){
                 }
                 break;
             case COMBAT_MODE:
+                // Initialize abilities
+                Ability fireball;
+                initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
+                Ability swordslash;
+                initAbility(&swordslash, "Swordslash", 4, 10, D6, PHYSICAL);
+                Ability bite;
+                initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
+
+                // Initialize player
+                Player player;
+                initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5);
+                player.item_count = 0; //manually initializing player specific values
+                for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
+                addAbilityToCharacter(&player.base, fireball);
+                addAbilityToCharacter(&player.base, swordslash);
+                UsableItem healingPotion;
+                init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
+                add_item_to_player(&player, (Item *)&healingPotion);
+
+
+
+
+                // Initialize monster
+                Monster monster;
+                initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3);
+                addAbilityToCharacter(&monster.base, bite);
+                initWeaknesses(&monster, (int[]){0,10});
+
+                currentState = (combat(&player, &monster))? MAP_MODE : EXIT;
                 break;
             case EXIT:
                 close_log_file(1);
