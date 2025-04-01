@@ -1,10 +1,3 @@
-# Include test files
-test_files = files(
-    'test_main.c',
-    'map/drawop/test_draw_light.c',
-    'test_database.c'
-)
-
 # Include files that need to be tested
 helper_files = files(
     '../src/game.c',
@@ -26,8 +19,10 @@ helper_files = files(
 )
 
 
-test_exe = executable('_test', test_files, helper_files, c_args: ['-w'])
-test_exe_combat = executable('test_combat_mode', 'test_combat_mode.c', helper_files, c_args: ['-w'])
+test_database = executable('test_database', 'test_database.c', helper_files, c_args: ['-w'])
+test_draw_light = executable('test_draw_light', 'map/drawop/test_draw_light.c', helper_files, c_args: ['-w'])
+test_combat = executable('test_combat_mode', 'test_combat_mode.c', helper_files, c_args: ['-w'])
 
-test('DungeonCrawl_test', test_exe)
-test('test_combat_mode', test_exe_combat)
+test('test_database', test_database)
+test('test_draw_light', test_draw_light)
+test('test_combat_mode', test_combat)
