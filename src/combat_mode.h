@@ -24,9 +24,11 @@ bool roll_hit(Ability *ability, Character *defender);
 int roll_damage(Ability *ability);
 int roll_dice(DiceSize dice_size);
 int deal_damage(int damage, DamageType damage_type, Character *character);
-void use_item(Player *player, UsableItem *item);
+void use_item(Player *player,Monster *monster, UsableItem *item);
 int print_combat_view(Character *player, Character *monster, bool red_monster_sprite);
 Ability *get_random_ability(Character *character);
 void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt);
+void display_item_message(Player *player, Monster *monster, UsableItem *item);
+void display_combat_message(Player *player, Monster *monster, const char *message);
 
 #endif // COMBAT_MODE_H

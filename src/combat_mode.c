@@ -206,7 +206,7 @@ void item_menu(Player *player, Monster *monster) {
                 selected_index = (selected_index + 1) % usable_item_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
-                use_item(player, usable_items[selected_index]);
+                use_item(player, monster, usable_items[selected_index]);
                 break; // Exit the menu after using the item
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -256,13 +256,15 @@ int deal_damage(int damage, DamageType damage_type, Character *character) {
     return damage;
 }
 
-void use_item(Player *player, UsableItem *item) {
+void use_item(Player *player,Monster *monster, UsableItem *item) {
     switch (item->effectType) {
     case HEALING:
         player->base.health += item->value;
+        display_item_message(player, monster, item);
         break;
     case ARMOR_INCREASE:
         player->base.armor += item->value;
+        display_item_message(player, monster, item);
         break;
     default:
         break;
@@ -329,16 +331,35 @@ Ability *get_random_ability(Character *character){
 }
 
 void display_enemy_attack_message(Player *player, Monster *monster, int damage_dealt) {
-    tb_clear();
-    int y = print_combat_view(&player->base, &monster->base, false);
     if (damage_dealt <= 0) damage_dealt = 0;
-    // Display attack message
     char message[100];
     snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base.name, damage_dealt);
+    display_combat_message(player, monster, message);
+}
+
+void display_item_message(Player *player, Monster *monster, UsableItem *item) {
+    tb_clear();
+    char message[100];
+    switch (item->effectType) {
+    case HEALING:
+        snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base.name, item->value);
+        display_combat_message(player, monster, message);
+        break;
+    case ARMOR_INCREASE:
+        snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->base.name, item->value);
+        display_combat_message(player, monster, message);
+        break;
+    default:
+        break;
+    }
+}
+
+void display_combat_message(Player *player, Monster *monster, const char *message) {
+    tb_clear();
+    int y = print_combat_view(&player->base, &monster->base, false);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
     tb_present();
 
-    // Wait for any key press to continue
     struct tb_event event;
     tb_poll_event(&event);
 }
