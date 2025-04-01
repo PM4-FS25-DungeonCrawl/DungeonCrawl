@@ -30,6 +30,7 @@ bool combat(player_t *player, monster_t *monster) {
                 display_enemy_attack_message(player, monster, damage_dealt);
             }
             current_state = MENU_COMBAT;
+            break;
         default:
             break;
         }
@@ -230,15 +231,21 @@ int use_ability(character_t *attacker, character_t *defender, ability_t *ability
         // Roll damage
         int damage = roll_damage(ability);
         return deal_damage(damage, ability->damageType, defender);
-}}
+    }
+    return 0;
+}
 
 bool roll_hit(ability_t *ability, character_t *defender) {
     int roll = roll_dice(D20);
     switch (ability->damageType) {
         case PHYSICAL:
             return roll + ability->accuracy > defender->deflection;
+            break;
         case MAGICAL:
             return roll + ability->accuracy > defender->fortitude;
+            break;
+        default:
+            break;
     }
     return false;
 }
@@ -266,16 +273,16 @@ int deal_damage(int damage, damage_type_t damage_type, character_t *character) {
 
 void use_item(player_t *player,monster_t *monster, UsableItem *item) {
     switch (item->effectType) {
-    case HEALING:
-        player->base.health += item->value;
-        display_item_message(player, monster, item);
-        break;
-    case ARMOR_INCREASE:
-        player->base.armor += item->value;
-        display_item_message(player, monster, item);
-        break;
-    default:
-        break;
+        case HEALING:
+            player->base.health += item->value;
+            display_item_message(player, monster, item);
+            break;
+        case ARMOR_INCREASE:
+            player->base.armor += item->value;
+            display_item_message(player, monster, item);
+            break;
+        default:
+            break;
     }
 
     for (int i = 0; i < player->item_count; i++) {
@@ -349,16 +356,16 @@ void display_item_message(player_t *player, monster_t *monster, UsableItem *item
     tb_clear();
     char message[100];
     switch (item->effectType) {
-    case HEALING:
-        snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base.name, item->value);
-        display_combat_message(player, monster, message);
-        break;
-    case ARMOR_INCREASE:
-        snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->base.name, item->value);
-        display_combat_message(player, monster, message);
-        break;
-    default:
-        break;
+        case HEALING:
+            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base.name, item->value);
+            display_combat_message(player, monster, message);
+            break;
+        case ARMOR_INCREASE:
+            snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->base.name, item->value);
+            display_combat_message(player, monster, message);
+            break;
+        default:
+            break;
     }
 }
 
