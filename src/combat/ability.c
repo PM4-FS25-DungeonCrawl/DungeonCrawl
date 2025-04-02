@@ -1,0 +1,45 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "ability.h"
+#include "../logging/logger.h"
+
+void init_ability(ability_t ability, char* name, int roll_count, int accuracy, dice_size_t dice_size, damage_type_t damage_type);
+
+/**
+ * Initialize the ability table, allocates memory and returns the pointer to the table.
+ *
+ * @return Pointer to the ability table.
+ */
+ability_table_t* init_ability_table(void) {
+    ability_table_t* table = malloc(sizeof(ability_table_t));
+    if (table == NULL) {
+        log_msg(ERROR, "Ability", "Failed to allocate memory for ability table");
+        return NULL; // Handle memory allocation failure
+    }
+
+    init_ability(table->table[0],"Fireball", 4, 10, D10, MAGICAL);
+    init_ability(table->table[1],"Sword Slash", 4, 10, D6, PHYSICAL);
+    init_ability(table->table[2],"Bite", 3, 20, D8, PHYSICAL);
+
+    return table;
+}
+
+void init_ability(ability_t ability, char* name, const int roll_count, const int accuracy, const dice_size_t dice_size, const damage_type_t damage_type) {
+    snprintf(ability.name, MAX_STRING_LENGTH, "%s", name);
+    ability.roll_count = roll_count;
+    ability.accuracy = accuracy;
+    ability.dice_size = dice_size;
+    ability.damage_type = damage_type;
+}
+
+
+void free_ability_table(ability_table_t* table) {
+    if (table != NULL) {
+        free(table);
+    }
+}
+
+
+
+

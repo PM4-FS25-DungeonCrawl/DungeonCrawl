@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
+
 #include "game.h"
+
+#include "combat/ability.h"
+#include "combat/npc.h"
+#include "combat/pc.h"
+
 #include "character_stats.h"
 #include "combat_mode.h"
 #include "map/map_mode.h"
@@ -21,68 +27,58 @@ int add(int a, int b) {
 }
 
 int init_game(){
-    if (tb_init()!= 0) {
-        fprintf(stderr, "Failed to initialize termbox \n");
+    if (tb_init() != 0) {
+        log_msg(ERROR, "Game", "Failed to initialize termbox");
         return 1;
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
+    log_msg(INFO, "Game", "game loop starting");
+    bool running = true;
+    game_state_t current_state = GENERATE_MAP;
+
     init_map_mode();
 
-    bool doRun = true;
-    game_state_t currentState = GENERATE_MAP;
+    ability_table_t* ability_table = init_ability_table();
+    monster_t* goblin = init_goblin(); //initialize standard goblin
+    player_t* player = init_player("Hero", 100, 10, 5, 5, 5, 5);
+    usable_item_t* healingPotion = init_usable_item("Healing Potion", HEALING, 20);
+    if (ability_table == NULL || goblin == NULL || player == NULL || healingPotion == NULL) {
+        log_msg(ERROR, "Game", "Failed to initialize game components");
+        current_state = EXIT;
+    }
 
-    log_msg(INFO, "Game", "game loop starting");
-    while (doRun) {
-        switch (currentState) {
+    // add abilities to player and goblin
+    add_ability_to_character(goblin->base, &ability_table->table[BITE]);
+    add_ability_to_character(player->base, &ability_table->table[FIREBALL]);
+    add_ability_to_character(player->base, &ability_table->table[SWORD_SLASH]);
+
+    //add healing potion to player
+    add_item_to_player(player, healingPotion);
+
+    while (running) {
+        switch (current_state) {
             case MAIN_MENU:
                 break;
             case GENERATE_MAP:
                 generate_map();
-                currentState = MAP_MODE;
+                current_state = MAP_MODE;
                 break;
             case MAP_MODE:
                 if (map_mode_update()) {
-                    currentState = EXIT;
+                    current_state = EXIT;
                 }
                 break;
             case COMBAT_MODE: {
-                // Initialize abilities
-                ability_t fireball;
-                initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
-                ability_t swordslash;
-                initAbility(&swordslash, "Swordslash", 4, 10, D6, PHYSICAL);
-                ability_t bite;
-                initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
-
-                // Initialize player
-                player_t player;
-                initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5);
-                player.item_count = 0; //manually initializing player specific values
-                for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
-                addAbilityToCharacter(&player.base, fireball);
-                addAbilityToCharacter(&player.base, swordslash);
-                usable_item_t healingPotion;
-                init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
-                add_item_to_player(&player, (item_t *)&healingPotion);
 
 
-
-
-                // Initialize monster
-                monster_t monster;
-                initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3);
-                addAbilityToCharacter(&monster.base, bite);
-                initWeaknesses(&monster, (int[]){0,10});
-
-                currentState = (combat(&player, &monster))? MAP_MODE : EXIT;
+                // current_state = (combat(&player, &monster))? MAP_MODE : EXIT;
                 break;
             }
             case EXIT:
+                free_ability_table(ability_table);
                 close_log_file(1);
-                doRun = false;
-                break;
-            default:
+                running = false;
                 break;
         }
     }
