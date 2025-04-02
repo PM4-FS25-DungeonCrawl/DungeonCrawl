@@ -9,13 +9,13 @@
 #include "drawop/draw_light.h"
 
 
-map_tile revealed_map[WIDTH][HEIGHT];
+map_tile_t revealed_map[WIDTH][HEIGHT];
 
-Vector2D player_pos;
+vector2d_t player_pos;
 
-void set_start(const int newPlayerX, const int newPlayerY) {
-    player_pos.dx = newPlayerX;
-    player_pos.dy = newPlayerY;
+void set_player_start_pos(const int player_x, const int player_y) {
+    player_pos.dx = player_x;
+    player_pos.dy = player_y;
 
     // at the start, tile under the player must be revealed
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;

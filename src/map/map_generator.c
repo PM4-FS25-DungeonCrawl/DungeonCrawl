@@ -12,10 +12,10 @@ int visited[WIDTH][HEIGHT];
 
 
 // Shuffle array using Fisher-Yates algorithm
-void shuffle(Vector2D *dir, int n) {
+void shuffle(vector2d_t *dir, int n) {
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
-        Vector2D tmp = dir[j];
+        vector2d_t tmp = dir[j];
         dir[j] = dir[i];
         dir[i] = tmp;
     }
@@ -53,7 +53,7 @@ void carve_passages(int x, int y) {
     map[x][y] = FLOOR;
 
     // Create a copy of directions and shuffle them
-    Vector2D shuffled_dirs[4];
+    vector2d_t shuffled_dirs[4];
     for (int i = 0; i < 4; i++) {
         shuffled_dirs[i] = directions[i];
     }
@@ -235,5 +235,5 @@ void generate_map() {
 
     populate_map();
 
-    set_start(start_x, start_y);
+    set_player_start_pos(start_x, start_y);
 }

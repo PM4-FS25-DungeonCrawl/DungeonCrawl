@@ -9,7 +9,7 @@
 bool combat(player_t *player, monster_t *monster) {
 
     // Set initial state of combat
-    combat_state current_state = MENU_COMBAT;
+    combat_state_t current_state = MENU_COMBAT;
 
     // Select menu state
     while(player->base.health > 0 && monster->base.health > 0) {
@@ -41,7 +41,7 @@ bool combat(player_t *player, monster_t *monster) {
     return (player->base.health > 0);
 }
 
-combat_state combat_menu(player_t *player, monster_t *monster) {
+combat_state_t combat_menu(player_t *player, monster_t *monster) {
 
     int selected_index = 0;
     const char *menu_options[] = {"Use Ability", "Use Item"};
@@ -169,13 +169,13 @@ bool item_menu(player_t *player, monster_t *monster) {
 
     int selected_index = 0;
     int usable_item_count = 0;
-    UsableItem *usable_items[MAX_ITEMS];
+    usable_item_t *usable_items[MAX_ITEMS];
     bool item_used = false;
 
     // Collect all usable items
     for (int i = 0; i < player->item_count; i++) {
         if (player->inventory[i]->type == ITEM_TYPE_USABLE) {
-            usable_items[usable_item_count++] = (UsableItem *)player->inventory[i];
+            usable_items[usable_item_count++] = (usable_item_t *)player->inventory[i];
         }
     }
 
@@ -271,7 +271,7 @@ int deal_damage(int damage, damage_type_t damage_type, character_t *character) {
     return damage;
 }
 
-void use_item(player_t *player,monster_t *monster, UsableItem *item) {
+void use_item(player_t *player,monster_t *monster, usable_item_t *item) {
     switch (item->effectType) {
         case HEALING:
             player->base.health += item->value;
@@ -286,7 +286,7 @@ void use_item(player_t *player,monster_t *monster, UsableItem *item) {
     }
 
     for (int i = 0; i < player->item_count; i++) {
-        if (player->inventory[i] == (Item *)item) {
+        if (player->inventory[i] == (item_t *)item) {
             for (int j = i; j < player->item_count - 1; j++) {
                 player->inventory[j] = player->inventory[j + 1];
             }
@@ -352,7 +352,7 @@ void display_enemy_attack_message(player_t *player, monster_t *monster, int dama
     display_combat_message(player, monster, message);
 }
 
-void display_item_message(player_t *player, monster_t *monster, UsableItem *item) {
+void display_item_message(player_t *player, monster_t *monster, usable_item_t *item) {
     tb_clear();
     char message[100];
     switch (item->effectType) {

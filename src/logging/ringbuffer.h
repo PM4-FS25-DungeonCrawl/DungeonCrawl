@@ -14,7 +14,7 @@
         int count;
         CRITICAL_SECTION mutex;
         CONDITION_VARIABLE cond;
-    } RingBuffer;
+    } ring_buffer_t;
 #else
     #include <pthread.h>
 
@@ -25,13 +25,13 @@
         int count;
         pthread_mutex_t mutex;
         pthread_cond_t cond;
-    } RingBuffer;
+    } ring_buffer_t;
 #endif
 
-void init_ring_buffer(RingBuffer *buffer);
+void init_ring_buffer(ring_buffer_t *buffer);
 
-void write_to_ring_buffer(RingBuffer *buffer, const char *message);
+void write_to_ring_buffer(ring_buffer_t *buffer, const char *message);
 
-int read_from_ring_buffer(RingBuffer *buffer, char *message);
+int read_from_ring_buffer(ring_buffer_t *buffer, char *message);
 
 #endif //RINGBUFFER_H

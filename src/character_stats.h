@@ -69,7 +69,7 @@ typedef struct {
 // Struct for Player
 typedef struct {
     character_t base;
-    Item *inventory[MAX_ITEMS];
+    item_t *inventory[MAX_ITEMS];
     int item_count;
 } player_t;
 
@@ -85,7 +85,7 @@ void addAbilityToCharacter(character_t *c, ability_t ability);
 void initCharacter(character_type_t type, character_t *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
 void initWeaknesses(monster_t *m, int array[]);
 int get_weakness_value(monster_t *m, damage_type_t key);
-void add_item_to_player(player_t *player, Item *item);
+void add_item_to_player(player_t *player, item_t *item);
 
 
 #endif //CHARACTER_STATS_H

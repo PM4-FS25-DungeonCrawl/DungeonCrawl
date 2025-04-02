@@ -51,7 +51,7 @@ int get_weakness_value(monster_t *m, damage_type_t key) {
     return 1;
 }
 
-void add_item_to_player(player_t *p, Item *item) {
+void add_item_to_player(player_t *p, item_t *item) {
     if (p->item_count < MAX_ITEMS) {
         p->inventory[p->item_count++] = item;
     } else {

@@ -8,13 +8,13 @@
 #include "../include/termbox2.h"
 #include "logging/logger.h"
 
-enum game_state {
+typedef enum {
     MAIN_MENU,
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
     EXIT
-};
+} game_state_t;
 
 int add(int a, int b) {
     return a + b;
@@ -29,10 +29,10 @@ int init_game(){
 
     init_map_mode();
 
-    log_msg(INFO, "Game", "game loop starting");
     bool doRun = true;
-    enum game_state currentState = GENERATE_MAP;
+    game_state_t currentState = GENERATE_MAP;
 
+    log_msg(INFO, "Game", "game loop starting");
     while (doRun) {
         switch (currentState) {
             case MAIN_MENU:
@@ -62,9 +62,9 @@ int init_game(){
                 for (int i = 0; i < MAX_ITEMS; i++) player.inventory[i] = NULL;
                 addAbilityToCharacter(&player.base, fireball);
                 addAbilityToCharacter(&player.base, swordslash);
-                UsableItem healingPotion;
+                usable_item_t healingPotion;
                 init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
-                add_item_to_player(&player, (Item *)&healingPotion);
+                add_item_to_player(&player, (item_t *)&healingPotion);
 
 
 

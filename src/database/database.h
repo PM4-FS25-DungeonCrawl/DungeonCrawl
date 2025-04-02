@@ -1,7 +1,3 @@
-//
-// Created by jabar on 27.03.2025.
-//
-
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -10,9 +6,9 @@
 typedef struct{
     sqlite3 *db;
     char *err_msg;
-} DBConnection;
+} db_connection_t;
 
-int db_open(DBConnection *db_connection, const char *db_name);
-void db_close(DBConnection *db_connection);
+int db_open(db_connection_t *db_connection, const char *db_name);
+void db_close(db_connection_t *db_connection);
 
 #endif //DATABASE_H

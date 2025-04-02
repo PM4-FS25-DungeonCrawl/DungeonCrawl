@@ -7,7 +7,7 @@
 typedef enum {
     ITEM_TYPE_USABLE,
     ITEM_TYPE_EQUIPPABLE
-} ItemType;
+} item_type_t;
 
 typedef enum {
     SLOT_HEAD,
@@ -19,38 +19,38 @@ typedef enum {
     SLOT_FINGER_RIGHT,
     SLOT_FINGER_LEFT,
     SLOT_COUNT
-} GearSlot;
+} gear_slot_t;
 
 typedef enum {
     HEALING,
     ARMOR_INCREASE
     // more effects can be added
-} UsableItemEffectType;
+} usable_item_effect_t;
 
 // Base Item
 typedef struct {
     char name[50];
-    ItemType type;
-} Item;
+    item_type_t type;
+} item_t;
 
-// Equippable Item
+// Equipable Item
 typedef struct {
-    Item base;
-    GearSlot slot;
+    item_t base;
+    gear_slot_t slot;
     int armor_bonus;
     // Armor Pieces can have other stats, e.g. +might etc. for now only armor
-} EquippableItem;
+} equipable_item_t;
 
 // Usable Item
 typedef struct {
-    Item base;
-    UsableItemEffectType effectType;
+    item_t base;
+    usable_item_effect_t effectType;
     int value; // e.g. value = 30, healing potion heals for 30 health
     // for other item effects more values might be needed
-} UsableItem;
+} usable_item_t;
 
 // Function Declarations
-void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType effectType, int value);
-void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot, int armor_bonus);
+void init_usable_item(usable_item_t *item, const char *name, usable_item_effect_t effectType, int value);
+void init_equipable_item(equipable_item_t *item, const char *name, gear_slot_t slot, int armor_bonus);
 
 #endif // ITEMS_H

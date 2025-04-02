@@ -1,6 +1,6 @@
 #include "items.h"
 
-void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType effectType, int value) {
+void init_usable_item(usable_item_t *item, const char *name, usable_item_effect_t effectType, int value) {
     strncpy(item->base.name, name, sizeof(item->base.name) - 1);
     item->base.name[sizeof(item->base.name) - 1] = '\0';
     item->base.type = ITEM_TYPE_USABLE;
@@ -8,7 +8,7 @@ void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType e
     item->value = value;
 }
 
-void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot, int armor_bonus) {
+void init_equipable_item(equipable_item_t *item, const char *name, gear_slot_t slot, int armor_bonus) {
     strncpy(item->base.name, name, sizeof(item->base.name) - 1);
     item->base.name[sizeof(item->base.name) - 1] = '\0';
     item->base.type = ITEM_TYPE_EQUIPPABLE;

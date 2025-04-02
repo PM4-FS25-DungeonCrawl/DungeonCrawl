@@ -11,7 +11,7 @@
 
 int init_map_mode(void);
 
-void set_start(int newPlayerX, int newPlayerY);
+void set_player_start_pos(int player_x, int player_y);
 
 int map_mode_update(void);
 

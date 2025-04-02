@@ -20,7 +20,7 @@
     #define SIGNAL_WAIT(cond, mutex) pthread_cond_wait(cond, mutex)
 #endif
 
-void init_ring_buffer(RingBuffer *buffer) {
+void init_ring_buffer(ring_buffer_t *buffer) {
     buffer->head = 0;
     buffer->tail = 0;
     buffer->count = 0;
@@ -28,7 +28,7 @@ void init_ring_buffer(RingBuffer *buffer) {
     INIT_COND(&buffer->cond);
 }
 
-void write_to_ring_buffer(RingBuffer *buffer, const char *message) {
+void write_to_ring_buffer(ring_buffer_t *buffer, const char *message) {
     MUTEX_LOCK(&buffer->mutex);
     if (buffer->count < BUFFER_SIZE) {
         strncpy(buffer->messages[buffer->tail], message, MAX_MSG_LENGTH);
@@ -40,7 +40,7 @@ void write_to_ring_buffer(RingBuffer *buffer, const char *message) {
 }
 
 
-int read_from_ring_buffer(RingBuffer *buffer, char *message) {
+int read_from_ring_buffer(ring_buffer_t *buffer, char *message) {
     MUTEX_LOCK(&buffer->mutex);
     while (buffer->count == 0) {
         SIGNAL_WAIT(&buffer->cond, &buffer->mutex);

@@ -12,7 +12,7 @@
  * @param prev_wall_at pointer to variable, which should be written
  * @return 1 if loops must break, 0 when not
  */
-int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *prev_wall_at) {
+int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *prev_wall_at) {
     if (j == 0) {
         //gets the x or y value of the calculated coordinates
         *prev_wall_at = abs(y * dir.dy + x * dir.dx);
@@ -33,7 +33,7 @@ int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *pr
  * - the diagonal check vector
  * - the reverse check vector
  */
-const Vector2D checks_vector[4][2] = {
+const vector2d_t checks_vector[4][2] = {
     {{1, 1}, {1, 0}}, // for up
     {{-1, -1}, {-1, 0}}, // for down
     {{1, -1}, {0, -1}}, // for left
@@ -55,16 +55,16 @@ const Vector2D checks_vector[4][2] = {
  * @param light_radius the radius of the light around the player
  */
 void draw_light_on_player(const int* arr1, int* arr2, const int height, const int width,
-                          const Vector2D player, const int light_radius) {
+                          const vector2d_t player, const int light_radius) {
     if (light_radius <= 0) {
         //light radius is negative or 0, do nothing
         return;
     }
 
     for (int i = 0; i < 4; i++) {
-        const Vector2D dir = directions[i];
-        const Vector2D diagonal_check = checks_vector[i][0];
-        const Vector2D reverse_check = checks_vector[i][1];
+        const vector2d_t dir = directions[i];
+        const vector2d_t diagonal_check = checks_vector[i][0];
+        const vector2d_t reverse_check = checks_vector[i][1];
 
         int correction = 0;
         int prev_wall_at = -1;
