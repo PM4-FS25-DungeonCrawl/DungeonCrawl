@@ -274,7 +274,8 @@ int deal_damage(int damage, damage_type_t damage_type, character_t *character) {
 void use_item(player_t *player,monster_t *monster, UsableItem *item) {
     switch (item->effectType) {
         case HEALING:
-            player->base.health += item->value;
+            int new_health = player->base.health + item->value;
+            player->base.health = ((new_health) > 100)? 100 : new_health;
             display_item_message(player, monster, item);
             break;
         case ARMOR_INCREASE:
