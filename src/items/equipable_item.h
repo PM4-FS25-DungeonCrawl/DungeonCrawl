@@ -22,5 +22,6 @@ typedef struct {
 } equipable_item_t;
 
 equipable_item_t* init_equipable_item(const char* name, gear_slot_t slot, int armor_bonus);
+void free_equipable_item(equipable_item_t* item);
 
 #endif //EQUIPABLE_ITEM_H

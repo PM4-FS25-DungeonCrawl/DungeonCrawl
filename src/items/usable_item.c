@@ -16,3 +16,9 @@ usable_item_t* init_usable_item(const char* name, usable_item_effect_t effectTyp
     item->value = value;
     return item;
 }
+
+void free_usable_item(usable_item_t* item) {
+    if (item != NULL) {
+        free(item);
+    }
+}

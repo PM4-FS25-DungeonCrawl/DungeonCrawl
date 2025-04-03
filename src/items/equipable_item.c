@@ -16,3 +16,9 @@ equipable_item_t* init_equipable_item(const char* name, const gear_slot_t slot, 
     item->armor_bonus = armor_bonus;
     return item;
 }
+
+void free_equipable_item(equipable_item_t* item) {
+    if (item != NULL) {
+        free(item);
+    }
+}

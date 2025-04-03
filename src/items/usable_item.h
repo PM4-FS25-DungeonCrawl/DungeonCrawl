@@ -16,4 +16,6 @@ typedef struct {
 } usable_item_t;
 
 usable_item_t* init_usable_item(const char* name, usable_item_effect_t effectType, int value);
+void free_usable_item(usable_item_t* item);
+
 #endif //USABLE_ITEM_H
