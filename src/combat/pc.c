@@ -29,19 +29,15 @@ void free_player(player_t* player) {
         free_character(player->base);
 
         for (int i = 0; i < MAX_ITEMS; i++) {
-            if (player->usable_items[i] != NULL) {
-                free(player->usable_items[i]);
-            }
-            if (player->equipable_items[i] != NULL) {
-                free(player->equipable_items[i]);
-            }
+            free_usable_item(player->usable_items[i]);
+            free_equipable_item(player->equipable_items[i]);
         }
 
         free(player);
     }
 }
 
-void add_item_to_player(player_t* player, usable_item_t* item) {
+void add_usable_item_to_player(player_t* player, usable_item_t* item) {
     if (player->item_count < MAX_ITEMS) {
         player->usable_items[player->item_count] = item;
         player->item_count++;
@@ -50,7 +46,7 @@ void add_item_to_player(player_t* player, usable_item_t* item) {
     }
 }
 
-void add_item_to_player(player_t* player, equipable_item_t* item) {
+void add_equipable_item_to_player(player_t* player, equipable_item_t *item) {
     if (player->item_count < MAX_ITEMS) {
         player->equipable_items[player->item_count] = item;
         player->item_count++;

@@ -19,7 +19,7 @@ typedef struct {
 player_t* init_player(const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
 void free_player(player_t* player);
 
-void add_item_to_player(player_t *player, usable_item_t *item);
-void add_item_to_player(player_t *player, equipable_item_t *item);
+void add_usable_item_to_player(player_t *player, usable_item_t *item);
+void add_equipable_item_to_player(player_t *player, equipable_item_t *item);
 
 #endif //PLAYER_H
