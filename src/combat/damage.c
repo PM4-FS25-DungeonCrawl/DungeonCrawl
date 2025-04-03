@@ -3,7 +3,7 @@
 #include "damage.h"
 #include "../logging/logger.h"
 
-weakness_t* init_weaknesse(damage_type_t type, int value) {
+weakness_t* init_weakness(damage_type_t type, int value) {
     weakness_t* weaknesses = malloc(sizeof(weakness_t));
     if (weaknesses == NULL) {
         // memory for weaknesses could not be allocated
