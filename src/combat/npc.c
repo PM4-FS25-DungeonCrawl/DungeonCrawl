@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
-#include "npc.h"
-#include "ability.h"
 #include "../logging/logger.h"
+#include "npc.h"
+
 
 monster_t* init_goblin(void) {
     monster_t* goblin = malloc(sizeof(monster_t));
