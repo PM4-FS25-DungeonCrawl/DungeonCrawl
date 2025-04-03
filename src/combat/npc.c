@@ -43,3 +43,12 @@ void free_goblin(monster_t* goblin) {
         free(goblin);
     }
 }
+
+int get_weakness_value(monster_t* m, damage_type_t key) {
+    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
+        if (m->weakness_table[i]->type == key) {
+            return m->weakness_table[i]->value;
+        }
+    }
+    return 0; // default value if no weakness found
+}

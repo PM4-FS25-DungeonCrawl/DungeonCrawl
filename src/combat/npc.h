@@ -12,4 +12,6 @@ typedef struct {
 monster_t* init_goblin(void);
 void free_goblin(monster_t* goblin);
 
+int get_weakness_value(monster_t* m, damage_type_t key);
+
 #endif //MONSTER_H
