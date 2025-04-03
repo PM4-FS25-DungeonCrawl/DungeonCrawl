@@ -4,6 +4,8 @@
 #include "equipable_item.h"
 #include "usable_item.h"
 
+// TODO: implement item table for all items.
+
 // typedef enum {
 //     USABLE,
 //     EQUIPABLE
