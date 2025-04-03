@@ -31,7 +31,7 @@ int init_game(){
 
     log_msg(INFO, "Game", "game loop starting");
     bool doRun = true;
-    enum game_state currentState = GENERATE_MAP;
+    enum game_state currentState = COMBAT_MODE;
 
     while (doRun) {
         switch (currentState) {
@@ -75,7 +75,7 @@ int init_game(){
                 addAbilityToCharacter(&monster.base, bite);
                 initWeaknesses(&monster, (int[]){0,10});
 
-                currentState = (combat(&player, &monster))? MAP_MODE : EXIT;
+                currentState = (combat(&player, &monster))? GENERATE_MAP : EXIT;
                 break;
             }
             case EXIT:
