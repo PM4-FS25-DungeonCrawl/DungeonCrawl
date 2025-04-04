@@ -52,6 +52,9 @@ jobs:
 
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
         with:
