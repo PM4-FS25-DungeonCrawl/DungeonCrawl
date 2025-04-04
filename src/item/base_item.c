@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../common.h"
+#include "src/common.h"
 #include "base_item.h"
 
 item_t* init_item(const char* name, item_type_t type, void* extension) {

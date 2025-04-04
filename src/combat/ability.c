@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../common.h"
+#include "src/common.h"
 #include "ability.h"
 
 void init_ability(ability_t ability, char* name, int roll_count, int accuracy, dice_size_t dice_size, damage_type_t damage_type);

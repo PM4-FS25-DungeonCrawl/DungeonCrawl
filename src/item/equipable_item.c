@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../common.h"
+#include "src/common.h"
 #include "equipable_item.h"
 
 equipable_item_t* init_equipable_item(const char* name, const gear_slot_t slot, const int armor_bonus) {
