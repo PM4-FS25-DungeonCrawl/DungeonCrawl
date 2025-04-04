@@ -2,15 +2,16 @@
 #define ABILITY_H
 
 #include "damage.h"
-#include "combat_common.h"
+#include "../common.h"
 
 #define ABILITY_TABLE_SIZE 3
+//index of the different abilities in the table
 #define FIREBALL 0
 #define SWORD_SLASH 1
 #define BITE 2
 
 typedef struct {
-    char name[MAX_STRING_LENGTH];
+    char name[MAX_NAME_LENGTH];
     int roll_count;
     int accuracy;
     dice_size_t dice_size;

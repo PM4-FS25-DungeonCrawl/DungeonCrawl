@@ -26,7 +26,7 @@ ability_table_t* init_ability_table(void) {
 }
 
 void init_ability(ability_t ability, char* name, const int roll_count, const int accuracy, const dice_size_t dice_size, const damage_type_t damage_type) {
-    snprintf(ability.name, MAX_STRING_LENGTH, "%s", name);
+    snprintf(ability.name, sizeof(ability.name), "%s", name);
     ability.roll_count = roll_count;
     ability.accuracy = accuracy;
     ability.dice_size = dice_size;
