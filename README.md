@@ -13,4 +13,4 @@ Jil & Nino
 Lucien
 
 # TestCoverage
-The testcoverage can be checked [here](https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html){:target="_blank"}
+The testcoverage can be checked <a href="[placeholder.com](https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html)" target="_blank">here</a>.
