@@ -79,7 +79,7 @@ int init_game(){
                 break;
             }
             case EXIT:
-                close_log_file(1);
+                close_log_file(true);
                 doRun = false;
                 break;
             default:
