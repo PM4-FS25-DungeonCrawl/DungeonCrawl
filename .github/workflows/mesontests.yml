@@ -43,7 +43,15 @@ jobs:
         run: |
           gcovr -r . --html --html-details -o coverage-report.html
           gcovr -r .  # simple text summary in console
+          
+  update-coverage:
+    name: Commit coverage report
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: ${{ github.ref == 'refs/heads/develop' && success() }}
 
+    
+    steps:
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -52,7 +60,6 @@ jobs:
 
 
       - name: Commit coverage report to documents/coverage/
-        if: github.event_name == 'push'  # Only commit on push, not PR
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
