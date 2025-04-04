@@ -11,8 +11,8 @@
     #define SIGNAL_COND(cond) WakeConditionVariable(cond)
     #define SIGNAL_WAIT(cond, mutex) SleepConditionVariableCS(cond, mutex, INFINITE)
 #else
-    #define INIT_MUTEX(mutex) pthread_mutex_init(mutex, nullptr)
-    #define INIT_COND(cond) pthread_cond_init(cond, nullptr)
+    #define INIT_MUTEX(mutex) pthread_mutex_init(mutex, NULL)
+    #define INIT_COND(cond) pthread_cond_init(cond, NULL)
 
     #define MUTEX_LOCK(mutex) pthread_mutex_lock(mutex)
     #define MUTEX_UNLOCK(mutex) pthread_mutex_unlock(mutex)

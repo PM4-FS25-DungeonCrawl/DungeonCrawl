@@ -11,20 +11,20 @@
 
 map_tile revealed_map[WIDTH][HEIGHT];
 
-Vector2D player;
+Vector2D player_pos;
 
 void set_start(const int newPlayerX, const int newPlayerY) {
-    player.dx = newPlayerX;
-    player.dy = newPlayerY;
+    player_pos.dx = newPlayerX;
+    player_pos.dy = newPlayerY;
 
     // at the start, tile under the player must be revealed
-    revealed_map[player.dx][player.dy] = FLOOR;
+    revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
 void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
-            if (x == player.dx && y == player.dy) {
+            if (x == player_pos.dx && y == player_pos.dy) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
             } else {
                 switch (revealed_map[x][y]) {
@@ -60,12 +60,12 @@ void draw_map(void) {
 
 void draw_ui(void) {
     tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player.dx, player.dy);
+    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 }
 
 void handle_input(const struct tb_event *event) {
-    int new_x = player.dx;
-    int new_y = player.dy;
+    int new_x = player_pos.dx;
+    int new_y = player_pos.dy;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
@@ -80,10 +80,10 @@ void handle_input(const struct tb_event *event) {
                 break;
             default:
                 //TODO: extend functionality with different tiles
-                player.dx = new_x;
-                player.dy = new_y;
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
 
-                draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player, LIGHT_RADIUS);
+                draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
                 break;
         }
     }

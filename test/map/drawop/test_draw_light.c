@@ -1,8 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "test_draw_light.h"
-
 #include "../src/map/map.h"
 #include "../src/map/drawop/draw_light.h"
 
@@ -221,4 +219,10 @@ void test_draw_light_on_player(void) {
     printf("Test: \"hallway with walls left and right\" passed\n");
 
     printf("test_draw_light_on_player all tests passed\n");
+}
+
+
+int main(void) {
+    test_draw_light_on_player();
+    return 0;
 }

@@ -10,6 +10,7 @@
 
 #define MAX_N_FILES 5
 #define MAX_FILE_SIZE 1048576 // max size = 1 MB
+#define PATH_MAX 4096
 
 // relative directory from main.c
 #define LOG_DIRECTORY "../log"
@@ -29,7 +30,7 @@ const char *log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 void start_log_writer_thread(void);
 
 //the used file-pointer to write the log messages in
-FILE *log_file = nullptr;
+FILE *log_file = NULL;
 //the used RingBuffer to write log messages in
 RingBuffer log_buffer;
 
@@ -146,7 +147,7 @@ int get_latest_file_id(void) {
 void close_log_file(const int terminate_thread) {
     if (log_file) {
         fclose(log_file);
-        log_file = nullptr;
+        log_file = NULL;
     }
     if (terminate_thread && thread_is_running) {
         thread_is_running = TERMINATED;
@@ -166,7 +167,7 @@ void close_log_file(const int terminate_thread) {
  */
 void log_msg(const LogLevel level, const char *module, const char *format, ...) {
     //starting thread
-    if (log_file == nullptr) {
+    if (log_file == NULL) {
         init_ring_buffer(&log_buffer); // init ring buffer to write the message in
 
         start_log_writer_thread(); //start thread
@@ -175,7 +176,7 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
     //if thread is not running, something went wrong with opening the log dir, log file
     if (thread_is_running) {
         //get timestamp
-        const time_t now = time(nullptr);
+        const time_t now = time(NULL);
         const struct tm *tm = localtime(&now);
         char timestamp[20];
         strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
@@ -212,7 +213,7 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
                 // message successfully read from ringbuffer
 
                 // open log file for the first time this session
-                if (log_file == nullptr) {
+                if (log_file == NULL) {
                     file_id = get_latest_file_id();
                     if (file_id != -1) {
                         //if the file id could be defined, doesn't try to open the file
@@ -247,7 +248,7 @@ void log_msg(const LogLevel level, const char *module, const char *format, ...) 
 
                 // open log file for the first time this session
                 // only tries once -> no logs will be created
-                if (log_file == nullptr && file_id != -1) {
+                if (log_file == NULL && file_id != -1) {
                     file_id = get_latest_file_id();
                     if (file_id != -1) {
                         //if the file id could be defined, opens the file
@@ -284,7 +285,7 @@ void start_log_writer_thread(void) {
         }
     #else
         pthread_t thread;
-        pthread_create(&thread, nullptr, log_writer_thread, NULL);
+        pthread_create(&thread, NULL, log_writer_thread, NULL);
         pthread_detach(thread);
     #endif
 }
