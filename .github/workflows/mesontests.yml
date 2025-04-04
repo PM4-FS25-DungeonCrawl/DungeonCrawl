@@ -19,6 +19,15 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
+          sudo apt install -y meson ninja-build gcc python3-pip
+          pip3 install gcovr
+
+      - name: Configure Meson with coverage flags
+        run: meson setup builddir --buildtype=debug --prefix=$PWD/builddir -Db_coverage=true
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
           sudo apt install -y meson ninja-build gcc
 
       - name: Configure Meson
