@@ -86,7 +86,7 @@ jobs:
           rm -f documents/coverage/coverage-report.html
 
           # Move the new report there
-          mv coverage-report.html documents/coverage/coverage-report.html
+          mv coverage-report/coverage-report.html documents/coverage/coverage-report.html
 
           git add documents/coverage/coverage-report.html
           git commit -m "Update coverage report [skip ci]" || echo "No changes to commit"
