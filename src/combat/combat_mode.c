@@ -1,7 +1,8 @@
-#include "npc.h"
-#include "pc.h"
+
+#include "src/item/base_item.h"
+#include "src/item/usable_item.h"
+
 #include "combat_mode.h"
-#include "../logging/logger.h"
 #include "../include/termbox2.h"
 
 #define ABILITY_MENU_STRING "Use Ability"
@@ -16,21 +17,20 @@ typedef enum {
 } internal_combat_state_t;
 
 // === Internal Functions ===
-internal_combat_state_t combat_menu(const player_t* player, const monster_t* monster);
-internal_combat_state_t ability_menu(player_t* player, monster_t* monster);
-internal_combat_state_t item_menu(player_t* player, monster_t* monster);
-int print_combat_view(character_t* player_base, character_t* monster_base, bool red_monster_sprite);
-int use_ability(bool player_defend, player_t* player, monster_t* monster, const ability_t* ability);
-void use_item(player_t *player, const monster_t *monster, usable_item_t *item);
-int roll_dice(dice_size_t dice_size);
-void display_item_message(const player_t *player, const monster_t *monster, usable_item_t *item);
-void display_combat_message(const player_t *player, const monster_t *monster, const char *message);
-void display_enemy_attack_message(const player_t* player, const monster_t* monster, int damage_dealt);
+internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
+internal_combat_state_t ability_menu(character_t* player, character_t* monster);
+internal_combat_state_t item_menu(character_t* player, character_t* monster);
+int use_ability(bool player_defend, character_t* player, character_t* monster, const ability_t* ability);
+void use_item(character_t* player, const character_t* monster, item_t* item);
+int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite);
+void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item);
+void display_combat_message(const character_t* player, const character_t* monster, const char *message);
+void display_enemy_attack_message(const character_t* player, const character_t* monster, int damage_dealt);
 ability_t* get_random_ability(const character_t* character);
 
 
 
-combat_result_t start_combat(player_t* player, monster_t* monster) {
+combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
@@ -45,20 +45,20 @@ combat_result_t start_combat(player_t* player, monster_t* monster) {
                 break;
             case ABILITY_MENU:
                 combat_state = ability_menu(player, monster);
-                damage_dealt = use_ability(true, player, monster, get_random_ability(monster->base));
+                damage_dealt = use_ability(true, player, monster, get_random_ability(monster));
                 display_enemy_attack_message(player, monster, damage_dealt);
                 break;
             case ITEM_MENU:
                 combat_state = item_menu(player, monster);
-                damage_dealt = use_ability(true, player, monster, get_random_ability(monster->base));
+                damage_dealt = use_ability(true, player, monster, get_random_ability(monster));
                 display_enemy_attack_message(player, monster, damage_dealt);
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
-                if (player->base->health <= 0) {
+                if (player->health <= 0) {
                     combat_result = PLAYER_LOST;
                     combat_active = false; // exit the combat loop
-                } else if (monster->base->health <= 0) {
+                } else if (monster->health <= 0) {
                     combat_result = PLAYER_WON;
                     combat_active = false; // exit the combat loop
                 } else {
@@ -75,7 +75,7 @@ combat_result_t start_combat(player_t* player, monster_t* monster) {
     return combat_result;
 }
 
-internal_combat_state_t combat_menu(const player_t* player, const monster_t* monster) {
+internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     int selected_index = 0;
     const char *menu_options[] = {ABILITY_MENU_STRING, ITEM_MENU_STRING};
     const int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
@@ -86,7 +86,7 @@ internal_combat_state_t combat_menu(const player_t* player, const monster_t* mon
     while (!submenu_selected) {
         // prepare screen
         tb_clear();
-        int y = print_combat_view(player->base, monster->base, false);
+        int y = display_combat_view(player, monster, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
@@ -132,9 +132,9 @@ internal_combat_state_t combat_menu(const player_t* player, const monster_t* mon
     return new_state;
 }
 
-internal_combat_state_t ability_menu(player_t* player, monster_t* monster) {
+internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     int selected_index = 0;
-    const int ability_count = player->base->ability_count;
+    const int ability_count = player->ability_count;
 
     internal_combat_state_t new_state = ABILITY_MENU;
     bool ability_used = false;
@@ -142,15 +142,15 @@ internal_combat_state_t ability_menu(player_t* player, monster_t* monster) {
     while (!ability_used) {
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(player->base, monster->base, false);
+        int y = display_combat_view(player, monster, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
         for(int i = 0; i < ability_count; i++){
             if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, player->base->abilities[i]->name);
+                tb_print(1, y++, TB_WHITE, TB_WHITE, player->abilities[i]->name);
             } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->base->abilities[i]->name);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->abilities[i]->name);
             }
         }
 
@@ -170,23 +170,23 @@ internal_combat_state_t ability_menu(player_t* player, monster_t* monster) {
                 // Move down
                 selected_index = (selected_index + 1) % ability_count;
             } else if (event.key == TB_KEY_ENTER) {
-                int damage_dealt = use_ability(false, player, monster, player->base->abilities[selected_index]);
+                int damage_dealt = use_ability(false, player, monster, player->abilities[selected_index]);
 
                 // Change monster sprite color to red
                 tb_clear();
-                y = print_combat_view(player->base, monster->base, true);
+                y = display_combat_view(player, monster, true);
 
                 // Display attack message
                 char message[256];
                 if (damage_dealt <= 0) damage_dealt = 0; // What does this line do?
                 // TODO: There is no special message for missed or critical hits
-                snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->base->abilities[selected_index]->name, damage_dealt);
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
+                snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->abilities[selected_index]->name, damage_dealt);
+                tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
                 tb_present();
                 usleep(500000);
 
                 // Restore monster sprite color
-                y = print_combat_view(player->base, monster->base, false);
+                (void) display_combat_view(player, monster, false);
                 tb_present();
 
                 usleep(500000);
@@ -203,36 +203,34 @@ internal_combat_state_t ability_menu(player_t* player, monster_t* monster) {
     return new_state;
 }
 
-internal_combat_state_t item_menu(player_t* player, monster_t* monster) {
-
+internal_combat_state_t item_menu(character_t* player, character_t* monster) {
     int selected_index = 0;
     int usable_item_count = 0;
-    usable_item_t* usable_items[MAX_ITEMS];
+    usable_item_t* usable_items[ITEM_LIMIT];
 
     internal_combat_state_t new_state = ITEM_MENU;
     bool item_used = false;
 
     // Collect all usable items
     for (int i = 0; i < player->item_count; i++) {
-        if (player->usable_items[i] != NULL) {
-            //can lead to potential inconsistencie with the inventory and the max capacitiy
-            // if the add item function doesn't work as intendend.
-            usable_items[usable_item_count++] = player->usable_items[i];
+        if (player->items[i] != NULL && player->items[i]->type == USABLE) {
+            usable_items[usable_item_count] = player->items[i]->extension;
+            usable_item_count++;
         }
     }
 
     while (!item_used) {
         // Prepare screen
         tb_clear();
-        int y = print_combat_view(player->base, monster->base, false);
+        int y = display_combat_view(player, monster, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
         for (int i = 0; i < usable_item_count; i++) {
             if (i == selected_index) {
-                tb_print(1, y++, TB_BLACK, TB_WHITE, usable_items[i]->name);
+                tb_print(1, y++, TB_BLACK, TB_WHITE, usable_items[i]->base->name);
             } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, usable_items[i]->name);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, usable_items[i]->base->name);
             }
         }
 
@@ -253,7 +251,7 @@ internal_combat_state_t item_menu(player_t* player, monster_t* monster) {
                 selected_index = (selected_index + 1) % usable_item_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
-                use_item(player, monster, usable_items[selected_index]);
+                use_item(player, monster, usable_items[selected_index]->base);
                 new_state = ITEM_MENU;
                 item_used = true;
             } else if (event.key == TB_KEY_ESC) {
@@ -267,17 +265,17 @@ internal_combat_state_t item_menu(player_t* player, monster_t* monster) {
     return new_state;
 }
 
-int print_combat_view(character_t* player_base, character_t* monster_base, bool red_monster_sprite) {
+int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite) {
     int y = 1;
 
     // Display player info
     char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player_base->name, player_base->health);
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
 
     // Display monster info
     char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster_base->name, monster_base->health);
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
 
     y += 2;
@@ -304,109 +302,44 @@ int print_combat_view(character_t* player_base, character_t* monster_base, bool 
     return y;
 }
 
-int use_ability(const bool player_defend, player_t* player, monster_t* monster, const ability_t* ability) {
-    //does use_ability need an return value?
-    // Roll to hit
+//TODO: debug why does this function always return 0, stated by CLion
+int use_ability(const bool player_defend, character_t* player, character_t* monster, const ability_t* ability) {
+    // does use_ability need a return value?
+    int damage_dealt = 0;
+
     if (player_defend) {
-        if (roll_hit(player->base, ability)) {
+        if (roll_hit(player, ability)) {
             // Roll damage
-            const int damage = roll_damage(ability);
-            return deal_damage_to_player(damage, ability->damage_type, player);
+            int damage = roll_damage(ability);
+            damage_dealt = deal_damage(player, ability->damage_type,  damage);
         }
     } else {
-        if (roll_hit(monster->base, ability)) {
+        if (roll_hit(monster, ability)) {
             // Roll damage
-            const int damage = roll_damage(ability);
-            return deal_damage_to_monster(damage, ability->damage_type, monster);
+            int damage = roll_damage(ability);
+            damage_dealt = deal_damage(monster, ability->damage_type, damage);
         }
     }
-    return 0;
+    return damage_dealt;
 }
 
-void use_item(player_t* player, const monster_t* monster, usable_item_t* item) {
-    switch (item->effectType) {
-        case HEALING:
-            player->base->health += item->value;
-            display_item_message(player, monster, item);
-            break;
-        case ARMOR_INCREASE:
-            player->base->armor += item->value;
-            display_item_message(player, monster, item);
-            break;
-        default:
-            log_msg(WARNING, "Combat Mode", "Unknown item effect type in use_item");
-            break;
-    }
-
-    for (int i = 0; i < player->item_count; i++) {
-        if (player->usable_items[i] == item) {
-            for (int j = i; j < player->item_count - 1; j++) {
-                player->usable_items[j] = player->usable_items[j + 1];
-            }
-            player->usable_items[player->item_count - 1] = NULL;
-            player->item_count -= 1;
-            break;
-        }
+void use_item(character_t* player, const character_t* monster, item_t* item) {
+    bool consumed = use_usable_item(player, item);
+    if (consumed) {
+        display_item_message(player, monster, (usable_item_t*) item->extension);
     }
 }
 
-bool roll_hit(const character_t* defender, const ability_t* ability) {
-    const int roll = roll_dice(D20);
-    bool hit = false;
-
-    switch (ability->damage_type) {
-        case PHYSICAL:
-            hit = roll + ability->accuracy > defender->deflection;
-            break;
-        case MAGICAL:
-            hit = roll + ability->accuracy > defender->fortitude;
-            break;
-        default:
-            log_msg(WARNING, "Combat Mode", "Unknown damage type was used, properly DAMAGE_TYPE_COUNT");
-            break;
-    }
-    return hit;
-}
-
-int roll_damage(const ability_t* ability) {
-    int roll = 0;
-    // Roll the dice several times
-    for (int i = 0; i < ability->roll_count; i++){
-        roll += roll_dice(ability->dice_size);
-    }
-    return roll;
-}
-
-int roll_dice(const dice_size_t dice_size) {
-    // TODO better randomness? (warning message)
-    return rand() % dice_size + 1;
-}
-
-int deal_damage_to_monster(int damage, const damage_type_t damage_type, monster_t* monster) {
-    // TODO critical hits are ignored
-    damage += get_weakness_value(monster, damage_type);
-    damage -= monster->base->armor;
-    if (damage > 0) monster->base->health -= damage;
-    return damage;
-}
-
-int deal_damage_to_player(int damage, const damage_type_t damage_type, player_t* player) {
-    // TODO critical hits are ignored
-    damage -= player->base->armor;
-    if (damage > 0) player->base->health -= damage;
-    return damage;
-}
-
-void display_item_message(const player_t *player, const monster_t *monster, usable_item_t *item) {
+void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item) {
     tb_clear();
     char message[256];
     switch (item->effectType) {
         case HEALING:
-            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->name, item->value);
+            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base->name, item->value);
             display_combat_message(player, monster, message);
             break;
         case ARMOR_INCREASE:
-            snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->name, item->value);
+            snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->base->name, item->value);
             display_combat_message(player, monster, message);
             break;
         default:
@@ -414,9 +347,9 @@ void display_item_message(const player_t *player, const monster_t *monster, usab
     }
 }
 
-void display_combat_message(const player_t* player, const monster_t* monster, const char *message) {
+void display_combat_message(const character_t* player, const character_t* monster, const char* message) {
     tb_clear();
-    int y = print_combat_view(player->base, monster->base, false);
+    int y = display_combat_view(player, monster, false);
     y += 1;
     tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
     tb_present();
@@ -425,10 +358,10 @@ void display_combat_message(const player_t* player, const monster_t* monster, co
 }
 
 
-void display_enemy_attack_message(const player_t* player, const monster_t* monster, int damage_dealt) {
+void display_enemy_attack_message(const character_t* player, const character_t* monster, int damage_dealt) {
     if (damage_dealt <= 0) damage_dealt = 0;
     char message[256];
-    snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base->name, damage_dealt);
+    snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->name, damage_dealt);
     display_combat_message(player, monster, message);
 }
 

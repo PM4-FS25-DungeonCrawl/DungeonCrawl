@@ -24,7 +24,7 @@ typedef struct {
     int fortitude;
     int will;
 
-    damage_modifier_t dmg_modifier[DAMAGE_TYPE_COUNT];
+    damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
 
     ability_t* abilities[ABILITY_LIMIT];
     int ability_count;
@@ -39,9 +39,12 @@ void free_character(character_t* character);
 void set_character_stats(character_t* character, int health, int armor, int might, int deflection, int fortitude, int will);
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
-void add_ability_to_character(character_t* c, ability_t* ability);
+void add_ability(character_t* c, ability_t* ability);
 
-void add_item_to_character(character_t* c, item_t* item);
-void remove_item_from_character(character_t* c, item_t* item);
+void add_item(character_t* c, item_t* item);
+void remove_item(character_t* c, item_t* item);
+bool use_usable_item(character_t* character, item_t* item);
+
+int deal_damage(character_t* character, damage_type_t damage_type, int damage);
 
 #endif //CHARACTER_H

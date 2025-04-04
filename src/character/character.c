@@ -35,15 +35,15 @@ void set_character_stats(character_t* character, int health, int armor, int migh
 
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {
     for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        if (character->dmg_modifier[i].type == type) {
-            character->dmg_modifier[i].value = value;
+        if (character->resistance[i].type == type) {
+            character->resistance[i].value = value;
             return;
         }
     }
     log_msg(WARNING, "Character", "Unknown damage type: %d", type);
 }
 
-void add_ability_to_character(character_t* c, ability_t* ability) {
+void add_ability(character_t* c, ability_t* ability) {
     if (c->ability_count < ABILITY_LIMIT) {
         c->abilities[c->ability_count] = ability;
         c->ability_count++;
@@ -52,7 +52,7 @@ void add_ability_to_character(character_t* c, ability_t* ability) {
     }
 }
 
-void add_item_to_character(character_t* c, item_t* item) {
+void add_item(character_t* c, item_t* item) {
     if (c->item_count < ITEM_LIMIT) {
         c->items[c->item_count] = item;
         c->item_count++;
@@ -61,7 +61,7 @@ void add_item_to_character(character_t* c, item_t* item) {
     }
 }
 
-void remove_item_from_character(character_t* c, item_t* item) {
+void remove_item(character_t* c, item_t* item) {
     for (int i = 0; i < c->item_count; i++) {
         if (c->items[i] == item) {
             for (int j = i; j < c->item_count - 1; j++) {
@@ -72,4 +72,37 @@ void remove_item_from_character(character_t* c, item_t* item) {
             break;
         }
     }
+}
+
+bool use_usable_item(character_t* character, item_t* item) {
+    if (item->type != USABLE) {
+        log_msg(ERROR, "Character", "%s cannot use usable_item %s", character->name, item->name);
+        return false;
+    }
+    usable_item_t* usable_item = (usable_item_t*) (item->extension);
+
+    switch (usable_item->effectType) {
+        case HEALING:
+            character->health += usable_item->value;
+            if (character->health > 100) character->health = 100; // max health
+            break;
+        case ARMOR_INCREASE:
+            character->armor += usable_item->value;
+            break;
+        default:
+            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", usable_item->effectType);
+            break;
+    }
+
+    remove_item(character, item);
+    return true;
+}
+
+int deal_damage(character_t* character, damage_type_t damage_type, int damage) {
+    // TODO critical hits are ignored
+    // negative damage resistance leads to more damage
+    damage += character->resistance[damage_type].value;
+    damage -= character->armor;
+    if (damage > 0) character->health -= damage;
+    return damage;
 }

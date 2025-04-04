@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 #include "game.h"
 
@@ -47,12 +46,12 @@ int init_game(){
         current_state = EXIT;
     } else {
         // add abilities to player and goblin
-        add_ability_to_character(goblin, &ability_table->table[BITE]);
-        add_ability_to_character(player, &ability_table->table[FIREBALL]);
-        add_ability_to_character(player, &ability_table->table[SWORD_SLASH]);
+        add_ability(goblin, &ability_table->table[BITE]);
+        add_ability(player, &ability_table->table[FIREBALL]);
+        add_ability(player, &ability_table->table[SWORD_SLASH]);
 
         //add healing potion to player
-        add_item_to_character(player, healing_potion->base);
+        add_item(player, healing_potion->base);
         log_msg(INFO, "Game", "game loop starting");
     }
 
@@ -70,7 +69,7 @@ int init_game(){
                     current_state = EXIT;
                 }
                 break;
-            case COMBAT_MODE: {
+            case COMBAT_MODE:
                 switch (start_combat(player, goblin)) {
                     case PLAYER_WON:
                         log_msg(FINE, "Game", "Player won the combat");
@@ -88,7 +87,6 @@ int init_game(){
                         break;
                 }
                 break;
-            }
             case EXIT:
                 free_ability_table(ability_table);
                 free_character(goblin);

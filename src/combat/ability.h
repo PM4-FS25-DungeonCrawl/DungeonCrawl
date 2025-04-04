@@ -11,7 +11,7 @@
 
 typedef struct {
     char name[MAX_NAME_LENGTH];
-    int roll_count;
+    int roll_amount;
     int accuracy;
     dice_size_t dice_size;
     damage_type_t damage_type;

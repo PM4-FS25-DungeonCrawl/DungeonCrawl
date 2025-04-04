@@ -4,7 +4,7 @@
 #include "src/common.h"
 #include "ability.h"
 
-void init_ability(ability_t ability, char* name, int roll_count, int accuracy, dice_size_t dice_size, damage_type_t damage_type);
+void init_ability(ability_t ability, char* name, int roll_amount, int accuracy, dice_size_t dice_size, damage_type_t damage_type);
 
 /**
  * Initialize the ability table, allocates memory and returns the pointer to the table.
@@ -22,9 +22,9 @@ ability_table_t* init_ability_table(void) {
     return table;
 }
 
-void init_ability(ability_t ability, char* name, const int roll_count, const int accuracy, const dice_size_t dice_size, const damage_type_t damage_type) {
+void init_ability(ability_t ability, char* name, const int roll_amount, const int accuracy, const dice_size_t dice_size, const damage_type_t damage_type) {
     snprintf(ability.name, sizeof(ability.name), "%s", name);
-    ability.roll_count = roll_count;
+    ability.roll_amount = roll_amount;
     ability.accuracy = accuracy;
     ability.dice_size = dice_size;
     ability.damage_type = damage_type;
