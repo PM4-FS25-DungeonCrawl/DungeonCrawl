@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
+#include "src/common.h"
 #include "monster.h"
-#include "../logging/logger.h"
 
 /**
  * Creates a new standard goblin with no abilities or items.
@@ -9,11 +9,8 @@
  */
 character_t* create_new_goblin(void) {
     character_t* goblin = init_character(MONSTER, "Goblin");
-    if (goblin == NULL) {
-        // memory for goblin could not be allocated
-        log_msg(ERROR, "Goblin", "Failed to allocate memory for goblin");
-        return NULL;
-    }
+    NULL_PTR_HANDLER(goblin, "Goblin", "Failed to allocate memory for goblin");
+
     set_character_stats(goblin, 50, 5, 3, 3, 3, 3);
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);

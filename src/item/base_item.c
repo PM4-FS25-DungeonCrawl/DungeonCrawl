@@ -1,16 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../common.h"
 #include "base_item.h"
-#include "../logging/logger.h"
 
 item_t* init_item(const char* name, item_type_t type, void* extension) {
+    NULL_PTR_HANDLER(extension, "Item", "Extension pointer is NULL");
     item_t* item = malloc(sizeof(item_t));
-    if (item == NULL) {
-        // memory for item could not be allocated
-        log_msg(ERROR, "Item", "Failed to allocate memory for item: %s", name);
-        return NULL;
-    }
+    NULL_PTR_HANDLER(item, "Item", "Failed to allocate memory for item: %s", name);
+
     snprintf(item->name, sizeof(item->name), "%s", name);
     item->type = type;
     item->extension = extension;

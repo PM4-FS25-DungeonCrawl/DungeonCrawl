@@ -1,7 +1,6 @@
 #ifndef BASE_ITEM_H
 #define BASE_ITEM_H
 
-#include "../common.h"
 #include "equipable_item.h"
 #include "usable_item.h"
 

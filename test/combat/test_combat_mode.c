@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 #include "../src/combat/ability.h"
-#include "../src/combat/character.h"
-#include "../src/combat/damage.h"
+#include "../../src/character/character.h"
 #include "../src/combat/pc.h"
 //even CLion marks these as unused, they are needed for the tests
+#include "../src/combat/damage.h"
 #include "../src/combat/npc.h"
 #include "../src/logging/logger.h"
 

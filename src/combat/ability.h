@@ -2,7 +2,6 @@
 #define ABILITY_H
 
 #include "damage.h"
-#include "../common.h"
 
 #define ABILITY_TABLE_SIZE 3
 //index of the different abilities in the table

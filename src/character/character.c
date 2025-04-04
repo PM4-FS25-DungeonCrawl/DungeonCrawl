@@ -1,19 +1,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "src/common.h"
 #include "character.h"
-#include "src/logging/logger.h"
 
 character_t* init_character(const character_type_t type, const char *name) {
     character_t* character = malloc(sizeof(character_t));
-    if (character == NULL) {
-        // memory for character could not be allocated
-        log_msg(ERROR, "Character", "Failed to allocate memory for character: %s", name);
-        return NULL;
-    }
+    NULL_PTR_HANDLER(character, "Character", "Failed to allocate memory for character: %s", name);
 
     character->type = type;
-    snprintf(character->name, MAX_STRING_LENGTH, "%s", name);
+    snprintf(character->name, sizeof(character->name), "%s", name);
     character->ability_count = 0;
     character->item_count = 0;
 

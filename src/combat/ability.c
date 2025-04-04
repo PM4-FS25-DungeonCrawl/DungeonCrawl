@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../common.h"
 #include "ability.h"
-#include "../logging/logger.h"
 
 void init_ability(ability_t ability, char* name, int roll_count, int accuracy, dice_size_t dice_size, damage_type_t damage_type);
 
@@ -13,10 +13,7 @@ void init_ability(ability_t ability, char* name, int roll_count, int accuracy, d
  */
 ability_table_t* init_ability_table(void) {
     ability_table_t* table = malloc(sizeof(ability_table_t));
-    if (table == NULL) {
-        log_msg(ERROR, "Ability", "Failed to allocate memory for ability table");
-        return NULL; // Handle memory allocation failure
-    }
+    NULL_PTR_HANDLER(table, "Ability", "Failed to allocate memory for ability table");
 
     init_ability(table->table[0],"Fireball", 4, 10, D10, MAGICAL);
     init_ability(table->table[1],"Sword Slash", 4, 10, D6, PHYSICAL);

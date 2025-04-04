@@ -2,7 +2,6 @@
 #define CHARACTER_H
 
 #include "src/combat/ability.h"
-#include "src/common.h"
 #include "src/item/base_item.h"
 
 #define ABILITY_LIMIT 3

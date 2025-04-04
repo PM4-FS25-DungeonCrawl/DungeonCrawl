@@ -1,21 +1,19 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../common.h"
 #include "usable_item.h"
-#include "../logging/logger.h"
 
 usable_item_t* init_usable_item(const char* name, usable_item_effect_t effectType, int value) {
     usable_item_t* item = malloc(sizeof(usable_item_t));
-    if (item == NULL) {
-        // memory for item could not be allocated
-        log_msg(ERROR, "Usable Item", "Failed to allocate memory for item: %s", name);
-        return NULL;
-    }
+    NULL_PTR_HANDLER(item, "Usable Item", "Failed to allocate memory for item: %s", name);
+
     item_t* base = init_item(name, USABLE, item);
     if (base == NULL) {
         free(item);
         return NULL;
     }
+
     item->base = base;
     item->effectType = effectType;
     item->value = value;
