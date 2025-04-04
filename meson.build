@@ -19,15 +19,17 @@ src_files = files(
     'src/map/map_populator.c',
     'src/map/drawop/draw_light.c',
 
-    'src/items/equipable_item.c',
-    'src/items/usable_item.c',
+    'src/character/character.c',
+    'src/character/player.c',
+    'src/character/monster.c',
+
+    'src/item/base_item.c',
+    'src/item/equipable_item.c',
+    'src/item/usable_item.c',
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
-    'src/combat/character.c',
-    'src/combat/damage.c',
-    'src/combat/pc.c',
-    'src/combat/npc.c'
+    'src/combat/damage.c'
 )
 
 include_files = files(
