@@ -3,13 +3,18 @@
 
 #include "game.h"
 
+#include "character/character.h"
+#include "character/player.h"
+#include "character/monster.h"
+
+#include "item/base_item.h"
+
 #include "combat/ability.h"
-#include "combat/npc.h"
-#include "combat/pc.h"
 #include "combat/combat_mode.h"
 
 #include "map/map_mode.h"
 #include "map/map_generator.h"
+
 #include "../include/termbox2.h"
 #include "logging/logger.h"
 
@@ -34,20 +39,20 @@ int init_game(){
     init_map_mode();
 
     ability_table_t* ability_table = init_ability_table();
-    monster_t* goblin = init_goblin(); //initialize standard goblin
-    player_t* player = init_player("Hero", 100, 10, 5, 5, 5, 5);
-    usable_item_t* healingPotion = init_usable_item("Healing Potion", HEALING, 20);
-    if (ability_table == NULL || goblin == NULL || player == NULL || healingPotion == NULL) {
+    character_t * goblin = create_new_goblin(); //initialize standard goblin
+    character_t * player = create_new_player(); //initialize blank player
+    usable_item_t* healing_potion = init_usable_item("Healing Potion", HEALING, 20);
+    if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         current_state = EXIT;
     } else {
         // add abilities to player and goblin
-        add_ability_to_character(goblin->base, &ability_table->table[BITE]);
-        add_ability_to_character(player->base, &ability_table->table[FIREBALL]);
-        add_ability_to_character(player->base, &ability_table->table[SWORD_SLASH]);
+        add_ability_to_character(goblin, &ability_table->table[BITE]);
+        add_ability_to_character(player, &ability_table->table[FIREBALL]);
+        add_ability_to_character(player, &ability_table->table[SWORD_SLASH]);
 
         //add healing potion to player
-        add_usable_item_to_player(player, healingPotion);
+        add_item_to_character(player, healing_potion->base);
         log_msg(INFO, "Game", "game loop starting");
     }
 
@@ -86,8 +91,9 @@ int init_game(){
             }
             case EXIT:
                 free_ability_table(ability_table);
-                free_goblin(goblin);
-                free_player(player);
+                free_character(goblin);
+                free_character(player);
+                free_usable_item(healing_potion);
                 close_log_file(1);
                 running = false;
                 break;
