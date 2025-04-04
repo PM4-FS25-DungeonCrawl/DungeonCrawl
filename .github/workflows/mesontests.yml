@@ -67,6 +67,9 @@ jobs:
           name: coverage-report
           path: coverage-report/
 
+      - name: Get path
+        run: ls -la coverage-report/
+
 
       - name: Commit coverage report to documents/coverage/
         run: |
