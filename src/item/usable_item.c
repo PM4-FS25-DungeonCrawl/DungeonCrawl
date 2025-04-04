@@ -11,7 +11,12 @@ usable_item_t* init_usable_item(const char* name, usable_item_effect_t effectTyp
         log_msg(ERROR, "Usable Item", "Failed to allocate memory for item: %s", name);
         return NULL;
     }
-    snprintf(item->name, sizeof(item->name), "%s", name);
+    item_t* base = init_item(name, USABLE, item);
+    if (base == NULL) {
+        free(item);
+        return NULL;
+    }
+    item->base = base;
     item->effectType = effectType;
     item->value = value;
     return item;

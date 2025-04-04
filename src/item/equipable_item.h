@@ -1,6 +1,7 @@
 #ifndef EQUIPABLE_ITEM_H
 #define EQUIPABLE_ITEM_H
 
+#include "base_item.h"
 
 typedef enum {
     SLOT_HEAD,
@@ -15,7 +16,7 @@ typedef enum {
 } gear_slot_t;
 
 typedef struct {
-    char name[50];
+    item_t* base; // base item structure
     gear_slot_t slot;
     int armor_bonus;
     // Armor Pieces can have other stats, e.g. +might etc. for now only armor

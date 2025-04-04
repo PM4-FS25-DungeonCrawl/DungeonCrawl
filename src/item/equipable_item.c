@@ -11,7 +11,12 @@ equipable_item_t* init_equipable_item(const char* name, const gear_slot_t slot, 
         log_msg(ERROR, "Equipable Item", "Failed to allocate memory for item: %s", name);
         return NULL;
     }
-    snprintf(item->name, sizeof(item->name), "%s", name);
+    item_t* base = init_item(name, EQUIPABLE, item);
+    if (base == NULL) {
+        free(item);
+        return NULL;
+    }
+    item->base = base;
     item->slot = slot;
     item->armor_bonus = armor_bonus;
     return item;

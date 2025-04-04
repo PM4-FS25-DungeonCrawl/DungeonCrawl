@@ -1,6 +1,7 @@
 #ifndef USABLE_ITEM_H
 #define USABLE_ITEM_H
 
+#include "base_item.h"
 
 typedef enum {
     HEALING,
@@ -9,7 +10,7 @@ typedef enum {
 } usable_item_effect_t;
 
 typedef struct {
-    char name[50];
+    item_t* base; // base item structure
     usable_item_effect_t effectType;
     int value; // e.g. value = 30, healing potion heals for 30 health
     // for other item effects more values might be needed
