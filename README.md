@@ -9,5 +9,8 @@ regular C naming conventions
 # Scrum people
 Jil & Nino
 
-# manual 
+# Manual 
 Lucien
+
+# TestCoverage
+The testcoverage can be checked [here](https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html)
