@@ -49,3 +49,26 @@ jobs:
         with:
           name: coverage-report
           path: coverage-report.html
+
+
+      - name: Commit coverage report to documents/coverage/
+        if: github.event_name == 'push'  # Only commit on push, not PR
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Ensure we're on the actual branch, not detached HEAD
+          git checkout ${{ github.ref_name }}
+
+          # Prepare the documents/coverage folder
+          mkdir -p documents/coverage
+
+          # Remove only previous coverage files (preserve other docs)
+          rm -f documents/coverage/coverage-report.html
+
+          # Move the new report there
+          mv coverage-report.html documents/coverage/coverage-report.html
+
+          git add documents/coverage/coverage-report.html
+          git commit -m "Update coverage report [skip ci]" || echo "No changes to commit"
+          git push origin ${{ github.ref_name }}
