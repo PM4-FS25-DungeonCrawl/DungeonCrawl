@@ -1,6 +1,0 @@
-#ifndef COMBAT_COMMON_H
-#define COMBAT_COMMON_H
-
-#define MAX_STRING_LENGTH 50
-
-#endif //COMBAT_COMMON_H
