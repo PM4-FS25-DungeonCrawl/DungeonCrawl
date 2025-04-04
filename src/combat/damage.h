@@ -1,17 +1,19 @@
 #ifndef DAMAGE_H
 #define DAMAGE_H
 
-#include "src/character/character.h"
-#include "ability.h"
+#include "../character/character_fw.h"
+#include "ability_fw.h"
 
+#ifndef DAMAGE_TYPE_COUNT
 #define DAMAGE_TYPE_COUNT 2
+#endif
 
-typedef enum {
+typedef enum damage_type_t {
     PHYSICAL,
     MAGICAL
 } damage_type_t;
 
-typedef enum {
+typedef enum dice_size_t {
     D6 = 6,
     D8 = 8,
     D10 = 10,
@@ -19,7 +21,7 @@ typedef enum {
     D20 = 20
 } dice_size_t;
 
-typedef struct {
+typedef struct damage_resistance_t {
     damage_type_t type;
     int value;
 } damage_resistance_t;

@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-#include "src/common.h"
 #include "player.h"
 
 character_t* create_new_player(void) {

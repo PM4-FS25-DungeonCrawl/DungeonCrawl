@@ -1,8 +1,10 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "src/combat/ability.h"
-#include "src/item/base_item.h"
+#include "../common.h"
+#include "../combat/damage.h"
+#include "../item/base_item.h"
+#include "../combat/ability_fw.h"
 
 #define ABILITY_LIMIT 3
 #define ITEM_LIMIT 10
@@ -13,7 +15,7 @@ typedef enum {
     BOSS
 } character_type_t;
 
-typedef struct {
+typedef struct character_t {
     character_type_t type;
     char name[MAX_NAME_LENGTH];
 

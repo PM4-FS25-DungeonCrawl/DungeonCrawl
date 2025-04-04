@@ -1,6 +1,8 @@
 #include <stdlib.h>
 
 #include "damage.h"
+#include "ability.h"
+#include "../character/character.h"
 
 int roll_dice(const dice_size_t dice_size) {
     // TODO better randomness? (warning message)

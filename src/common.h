@@ -3,7 +3,7 @@
 
 #include "logging/logger.h"
 
-#define MAX_NAME_LENGTH 50
+#define MAX_NAME_LENGTH 64
 
 #define NULL_PTR_HANDLER(ptr, modul, format, ...) \
     if (ptr == NULL) { \

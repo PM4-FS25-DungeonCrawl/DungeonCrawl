@@ -1,8 +1,7 @@
 #ifndef BASE_ITEM_H
 #define BASE_ITEM_H
 
-#include "equipable_item.h"
-#include "usable_item.h"
+#include "../common.h"
 
 typedef enum {
     USABLE,

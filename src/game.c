@@ -6,10 +6,12 @@
 #include "character/player.h"
 #include "character/monster.h"
 
-#include "item/base_item.h"
+#include "item/equipable_item.h"
+#include "item/usable_item.h"
 
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
+#include "combat/damage.h"
 
 #include "map/map_mode.h"
 #include "map/map_generator.h"

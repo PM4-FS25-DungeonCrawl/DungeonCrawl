@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "src/common.h"
 #include "base_item.h"
+#include "equipable_item.h"
+#include "usable_item.h"
 
 item_t* init_item(const char* name, item_type_t type, void* extension) {
     NULL_PTR_HANDLER(extension, "Item", "Extension pointer is NULL");

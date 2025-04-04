@@ -1,6 +1,7 @@
 #ifndef ABILITY_H
 #define ABILITY_H
 
+#include "../common.h"
 #include "damage.h"
 
 #define ABILITY_TABLE_SIZE 3
@@ -9,7 +10,8 @@
 #define SWORD_SLASH 1
 #define BITE 2
 
-typedef struct {
+
+typedef struct ability_t {
     char name[MAX_NAME_LENGTH];
     int roll_amount;
     int accuracy;

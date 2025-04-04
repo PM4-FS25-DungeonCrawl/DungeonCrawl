@@ -1,8 +1,8 @@
-
-#include "src/item/base_item.h"
-#include "src/item/usable_item.h"
-
 #include "combat_mode.h"
+#include "ability.h"
+#include "../character/character.h"
+#include "../item/base_item.h"
+#include "../item/usable_item.h"
 #include "../include/termbox2.h"
 
 #define ABILITY_MENU_STRING "Use Ability"

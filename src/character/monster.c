@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-#include "src/common.h"
 #include "monster.h"
 
 /**

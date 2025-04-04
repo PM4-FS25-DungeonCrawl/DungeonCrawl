@@ -1,8 +1,6 @@
 #ifndef EQUIPABLE_ITEM_H
 #define EQUIPABLE_ITEM_H
 
-#include "base_item.h"
-
 typedef enum {
     SLOT_HEAD,
     SLOT_CHEST,

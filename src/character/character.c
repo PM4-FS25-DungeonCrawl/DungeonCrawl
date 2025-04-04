@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "src/common.h"
 #include "character.h"
+#include "../item/usable_item.h"
 
 character_t* init_character(const character_type_t type, const char *name) {
     character_t* character = malloc(sizeof(character_t));
@@ -79,7 +79,7 @@ bool use_usable_item(character_t* character, item_t* item) {
         log_msg(ERROR, "Character", "%s cannot use usable_item %s", character->name, item->name);
         return false;
     }
-    usable_item_t* usable_item = (usable_item_t*) (item->extension);
+    const usable_item_t* usable_item = (usable_item_t*) (item->extension);
 
     switch (usable_item->effectType) {
         case HEALING:

@@ -1,7 +1,7 @@
 #ifndef COMBAT_MODE_H
 #define COMBAT_MODE_H
 
-#include "src/character/character.h"
+#include "../character/character_fw.h"
 
 typedef enum {
     PLAYER_WON,

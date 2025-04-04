@@ -1,8 +1,6 @@
 #ifndef USABLE_ITEM_H
 #define USABLE_ITEM_H
 
-#include "base_item.h"
-
 typedef enum {
     HEALING,
     ARMOR_INCREASE

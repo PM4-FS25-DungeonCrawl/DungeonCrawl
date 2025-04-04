@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "src/common.h"
+#include "base_item.h"
+#include "../common.h"
 #include "usable_item.h"
 
 usable_item_t* init_usable_item(const char* name, usable_item_effect_t effectType, int value) {
