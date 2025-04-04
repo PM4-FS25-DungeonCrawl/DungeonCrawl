@@ -1,10 +1,11 @@
 #ifndef DAMAGE_H
 #define DAMAGE_H
 
+#define DAMAGE_TYPE_COUNT 2
+
 typedef enum {
     PHYSICAL,
-    MAGICAL,
-    DAMAGE_TYPE_COUNT
+    MAGICAL
 } damage_type_t;
 
 typedef enum {
@@ -18,9 +19,6 @@ typedef enum {
 typedef struct {
     damage_type_t type;
     int value;
-} weakness_t;
-
-weakness_t* init_weakness(damage_type_t type, int value);
-void free_weakness(weakness_t* weaknesses);
+} damage_modifier_t;
 
 #endif //DAMAGE_H
