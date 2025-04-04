@@ -3,26 +3,21 @@
 #include <stdio.h>
 
 #include "../src/combat/ability.h"
-#include "../../src/character/character.h"
-#include "../src/combat/pc.h"
-//even CLion marks these as unused, they are needed for the tests
+#include "../src/character/character.h"
 #include "../src/combat/damage.h"
-#include "../src/combat/npc.h"
-#include "../src/logging/logger.h"
 
 #include "../src/combat/combat_mode.h"
 
 
-
 void test_roll_hit() {
     // allocate memory for the test objects
-    character_t* base = malloc(sizeof(character_t));
+    character_t* test_character = malloc(sizeof(character_t));
     ability_t* test_ability = malloc(sizeof(ability_t));
 
-    base->health = 100; // set health
-    base->armor = 0; // set armor
+    test_character->health = 100; // set health
+    test_character->armor = 0; // set armor
 
-    test_ability->roll_count = 3;
+    test_ability->roll_amount = 3;
     test_ability->accuracy = 100;
     test_ability->dice_size = D6;
     test_ability->damage_type = PHYSICAL;
@@ -30,24 +25,24 @@ void test_roll_hit() {
 
 
     // Test with high accuracy ability (should always hit)
-    if (roll_hit(base, test_ability) != true) {
+    if (roll_hit(test_character, test_ability) != true) {
         free(test_ability);
-        free(base);
+        free(test_character);
         assert(false);
     }
 
     // Test with low accuracy ability (should miss often)
     test_ability->accuracy = 0;
-    base->deflection = 20;
-    if (roll_hit(base, test_ability) != false) {
+    test_character->deflection = 20;
+    if (roll_hit(test_character, test_ability) != false) {
         free(test_ability);
-        free(base);
+        free(test_character);
         assert(false);
     }
 
     free(test_ability);
-    free(base);
-    printf("test_roll_hit passed!\n");    
+    free(test_character);
+    printf("test_roll_hit passed!\n");
 }
 
 void test_roll_damage() {
@@ -62,15 +57,13 @@ void test_roll_damage() {
 }
 
 void test_deal_damage_to_armor() {
-    character_t* base = malloc(sizeof(character_t));
-    base->health = 100;
-    base->armor = 10; // set armor
+    character_t* test_player = malloc(sizeof(character_t));
+    test_player->health = 100;
+    test_player->armor = 10; // set armor
 
-    player_t* test_player = malloc(sizeof(player_t));
-    test_player->base = base;
 
-    deal_damage_to_player(50, PHYSICAL, test_player);
-    const int new_health = test_player->base->health;
+    deal_damage(test_player, PHYSICAL, 50);
+    const int new_health = test_player->health;
     free(test_player); // free memory before assert
 
     // Damage after armor reduction: 50 - 10 = 40
@@ -84,3 +77,4 @@ int main(void){
     test_deal_damage_to_armor();
     return 0;
 }
+
