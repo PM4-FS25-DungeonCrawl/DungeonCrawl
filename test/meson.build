@@ -22,3 +22,28 @@ test_combat = executable('test_combat_mode', 'test_combat_mode.c', helper_combat
 test('test_database', test_database)
 test('test_draw_light', test_draw_light)
 test('test_combat_mode', test_combat)
+
+##all src files that needed to be checked by clang-tidy
+#src_files = [
+#    'src/character_stats.c',
+#    'src/combat_mode.c',
+#    'src/game.c',
+#    'src/items.c',
+
+#    # include map/
+#    'src/map/map_generator.c',
+#    'src/map/map_mode.c',
+#    'src/map/map_populator.c',
+#    'src/map/drawop/draw_light.c',
+
+#    # include logging/
+#    'src/logging/logger.c',
+#    'src/logging/ringbuffer.c',
+
+#    # include database/
+#    'src/database/database.c'
+#]
+#
+#foreach src : src_files
+#    test('clang-tidy-' + src, find_program('clang-tidy'), args: [src])
+#endforeach

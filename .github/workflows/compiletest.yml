@@ -25,7 +25,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y meson ninja-build gcc g++ 
+          sudo apt install -y meson ninja-build gcc g++
 
       # Install dependencies for macOS
       - name: Install dependencies (macOS)
