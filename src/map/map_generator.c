@@ -255,7 +255,7 @@ void make_exit_into_start(int *start_edge, int *start_x, int *start_y) {
 // generate the map and populate it with keys, enemies, and the exit
 void generate_map() {
     // Better random seed using a combination of time and process info
-    unsigned int seed = (unsigned int) time(nullptr);
+    unsigned int seed = (unsigned int) time(NULL);
     // XOR with address of a stack variable to add more entropy
     int stack_var;
     seed ^= (uintptr_t) &stack_var;
