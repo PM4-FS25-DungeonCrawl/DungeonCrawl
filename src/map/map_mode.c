@@ -9,10 +9,9 @@
 #include "drawop/draw_light.h"
 #include "../logging/logger.h"
 
-
-map_tile revealed_map[WIDTH][HEIGHT];
-
 Vector2D player_pos;
+
+int player_has_key = 0;
 
 void set_start(const int newPlayerX, const int newPlayerY) {
     player_pos.dx = newPlayerX;
@@ -65,9 +64,11 @@ void draw_ui(void) {
     tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 }
 
-void handle_input(const struct tb_event *event) {
+int handle_input(const struct tb_event *event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
+
+    if (event->key == TB_KEY_ESC || event->key == TB_KEY_CTRL_C) return QUIT;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
@@ -79,19 +80,30 @@ void handle_input(const struct tb_event *event) {
         switch (map[new_x][new_y]) {
             case WALL:
                 //ignore wall
-                break;
             case START_DOOR:
                 // ignore start door
                 break;
-            default:
-                //TODO: extend functionality with different tiles
+            case KEY:
+                player_has_key = 1;
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;
-
-                draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+                revealed_map[new_x][new_y] = FLOOR;
+                break;
+            case EXIT_DOOR:
+                if (player_has_key) {
+                    player_has_key = 0;
+                    player_pos.dx = new_x;
+                    player_pos.dy = new_y;
+                    return NEXT_FLOOR;
+                }
+            break;
+            default:
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
                 break;
         }
     }
+    return CONTINUE;
 }
 
 /**
@@ -99,21 +111,22 @@ void handle_input(const struct tb_event *event) {
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
 int map_mode_update(void) {
+    int do_quit = CONTINUE;
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
 
     if (ret == TB_OK) {
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
-        if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return QUIT;
-        handle_input(&ev);
+        do_quit = handle_input(&ev);
     }
 
+    draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map();
     draw_ui();
     tb_present();
 
-    return CONTINUE;
+    return do_quit;
 }
 
 int init_map_mode(void) {

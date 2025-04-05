@@ -6,6 +6,7 @@
 
 #define CONTINUE 0
 #define QUIT 1
+#define NEXT_FLOOR 2
 
 #define LIGHT_RADIUS 3
 

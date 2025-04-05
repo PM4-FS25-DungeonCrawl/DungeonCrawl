@@ -33,4 +33,6 @@ extern Vector2D directions[4];
 
 //map array
 extern map_tile map[WIDTH][HEIGHT];
+
+extern map_tile revealed_map[WIDTH][HEIGHT];
 #endif //MAP_H
