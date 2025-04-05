@@ -42,8 +42,17 @@ int init_game(){
                 currentState = MAP_MODE;
                 break;
             case MAP_MODE:
-                if (map_mode_update()) {
-                    currentState = EXIT;
+                switch (map_mode_update()) {
+                    case CONTINUE:
+                        break;
+                    case QUIT:
+                        currentState = EXIT;
+                        break;
+                    case NEXT_FLOOR:
+                        currentState = GENERATE_MAP;
+                        break;
+                    default:
+                        log_msg(ERROR, "game", "Unknown return value from map_mode_update");
                 }
                 break;
             case COMBAT_MODE: {
