@@ -7,6 +7,7 @@
 #include "map.h"
 #include "map_mode.h"
 #include "drawop/draw_light.h"
+#include "../logging/logger.h"
 
 
 map_tile revealed_map[WIDTH][HEIGHT];
@@ -26,33 +27,34 @@ void draw_map(void) {
         for (int x = 0; x < WIDTH; x++) {
             if (x == player_pos.dx && y == player_pos.dy) {
                 tb_printf(x, y, TB_RED, TB_BLACK, "@");
-            } else {
-                switch (revealed_map[x][y]) {
-                    case WALL:
-                        tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
-                        break;
-                    case FLOOR:
-                        tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
-                        break;
-                    case START_DOOR:
-                        tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
-                        break;
-                    case EXIT_DOOR:
-                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
-                        break;
-                    case KEY:
-                        tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
-                        break;
-                    case SKELETON:
-                        tb_printf(x, y, TB_WHITE, TB_RED, "!");
-                        break;
-                    case HIDDEN:
-                        tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
-                        break;
-                    default:
-                        //TODO log error
-                        return;
-                }
+                continue;
+            }
+
+            switch (revealed_map[x][y]) {
+                case WALL:
+                    tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                    break;
+                case FLOOR:
+                    tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                    break;
+                case START_DOOR:
+                    tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                    break;
+                case EXIT_DOOR:
+                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                    break;
+                case KEY:
+                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                    break;
+                case SKELETON:
+                    tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                    break;
+                case HIDDEN:
+                    tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
+                    break;
+                default:
+                    log_msg(ERROR, "map_mode", "Unknown tile type: %d", revealed_map[x][y]);
+                    return;
             }
         }
     }
@@ -78,6 +80,9 @@ void handle_input(const struct tb_event *event) {
             case WALL:
                 //ignore wall
                 break;
+            case START_DOOR:
+                // ignore start door
+                break;
             default:
                 //TODO: extend functionality with different tiles
                 player_pos.dx = new_x;
@@ -97,9 +102,8 @@ int map_mode_update(void) {
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
-    
-    if (ret == TB_OK) {
 
+    if (ret == TB_OK) {
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
         if (ev.key == TB_KEY_ESC || ev.key == TB_KEY_CTRL_C) return QUIT;
         handle_input(&ev);

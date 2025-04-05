@@ -6,6 +6,7 @@
 #include "map.h"
 #include "map_mode.h"
 #include "map_populator.h"
+#include "../logging/logger.h"
 
 // map array to store the maze
 int visited[WIDTH][HEIGHT];
@@ -42,7 +43,7 @@ int validate_exit_position(int exit_edge, int x, int y) {
         case RIGHT:
             return map[x - 1][y] == FLOOR;
         default:
-            //TODO log error
+            log_msg(ERROR, "map_generator", "Invalid exit edge: %d", exit_edge);
             return 0;
     }
 }
@@ -76,6 +77,21 @@ void carve_passages(int x, int y) {
     }
 }
 
+// Count neighboring floor cells
+int check_neighboring_floors(int x, int y, int *neighbor_directions) {
+    int count = 0;
+    for (int i = 0; i < 4; i++) {
+        int dx = x + directions[i].dx;
+        int dy = y + directions[i].dy;
+
+        if (map[dx][dy] == FLOOR) {
+            count++;
+            neighbor_directions[i] = 1;
+        }
+    }
+    return count;
+}
+
 // Add loops to the map by knocking down some walls
 void add_loops(int num_loops) {
     int count = 0;
@@ -89,26 +105,15 @@ void add_loops(int num_loops) {
         // If the wall has exactly 2 opposing floor neighbors, knock it down to create a loop
         if (map[x][y] == WALL) {
             int neighbor_directions[] = {0, 0, 0, 0};
-            // Count neighboring floor cells
-            int floor_count = 0;
 
-            for (int i = 0; i < 4; i++) {
-                int dx = x + directions[i].dx;
-                int dy = y + directions[i].dy;
-
-                if (map[dx][dy] == FLOOR) {
-                    floor_count++;
-                    neighbor_directions[i] = 1;
-                }
-            }
+            int floor_count = check_neighboring_floors(x, y, neighbor_directions);
 
             // check if the wall has exactly 2 opposing floor neighbors
-            if (floor_count == 2) {
-                if ((neighbor_directions[TOP] && neighbor_directions[BOTTOM]) || (
-                        neighbor_directions[LEFT] && neighbor_directions[RIGHT])) {
-                    map[x][y] = FLOOR;
-                    count++;
-                }
+            if ((floor_count == 2) &&
+                ((neighbor_directions[TOP] && neighbor_directions[BOTTOM]) ||
+                (neighbor_directions[LEFT] && neighbor_directions[RIGHT]))) {
+                map[x][y] = FLOOR;
+                count++;
             }
         }
 
@@ -143,7 +148,7 @@ void place_exit(int start_edge, int *exit_x, int *exit_y) {
                 *exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
                 break;
             default:
-                //TODO log error
+                log_msg(ERROR, "map_generator", "Invalid exit edge: %d", exit_edge);
                 return;
         }
     } while (!validate_exit_position(exit_edge, *exit_x, *exit_y));
@@ -205,7 +210,7 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
             map[0][*start_y] = START_DOOR;
             break;
         default:
-            // TODO log error
+            log_msg(ERROR, "map_generator", "Invalid start edge: %d", start_edge);
             return;
     }
 }
@@ -213,7 +218,7 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
 // generate the map and populate it with keys, enemies, and the exit
 void generate_map() {
     // Better random seed using a combination of time and process info
-    unsigned int seed = (unsigned int) time(NULL);
+    unsigned int seed = (unsigned int) time(nullptr);
     // XOR with address of a stack variable to add more entropy
     int stack_var;
     seed ^= (uintptr_t) &stack_var;
@@ -224,13 +229,15 @@ void generate_map() {
 
     // Generate map with a random start position (at the start_edge)
     // Start position must be an odd coordinate (for dfs) and should be at least 3 cells away from other edges (not start_edge)
-    int start_x, start_y;
+    int start_x = 0;
+    int start_y = 0;
     int start_edge = rand() % 4;
     set_start_position(start_edge, &start_x, &start_y);
 
     generate_maze(start_x, start_y);
 
-    int exit_x, exit_y;
+    int exit_x;
+    int exit_y;
     place_exit(start_edge, &exit_x, &exit_y);
 
     populate_map();
