@@ -22,7 +22,8 @@ int is_dead_end(int x, int y) {
 
 // Place a key in a dead end that is not the start or exit edge
 void place_key() {
-    int x, y;
+    int x;
+    int y;
 
     // check for dead ends in a snake pattern and place the key in the first one found
     do {
@@ -48,7 +49,8 @@ int is_close_to_enemy(int x, int y) {
 // Place enemies in random locations
 void place_enemies() {
     for (int i = 0; i < ENEMY_COUNT; i++) {
-        int x, y;
+        int x;
+        int y;
 
         // Place enemies in random locations
         do {
