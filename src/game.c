@@ -66,9 +66,17 @@ int init_game(){
                 current_state = MAP_MODE;
                 break;
             case MAP_MODE:
-                // TODO: should change the state of the state machine, when walking into a monster
-                if (map_mode_update()) {
-                    current_state = EXIT;
+                switch (map_mode_update()) {
+                    case CONTINUE:
+                        break;
+                    case QUIT:
+                        currentState = EXIT;
+                        break;
+                    case NEXT_FLOOR:
+                        currentState = GENERATE_MAP;
+                        break;
+                    default:
+                        log_msg(ERROR, "game", "Unknown return value from map_mode_update");
                 }
                 break;
             case COMBAT_MODE:
