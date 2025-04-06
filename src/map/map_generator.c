@@ -15,8 +15,11 @@ int exit_edge = 0;
 int exit_x = 0;
 int exit_y = 0;
 
-
-// Shuffle array using Fisher-Yates algorithm
+/**
+ * Shuffle array using Fisher-Yates algorithm
+ * @param dir array of directions
+ * @param n size of the array
+ */
 void shuffle(Vector2D *dir, int n) {
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
@@ -26,33 +29,54 @@ void shuffle(Vector2D *dir, int n) {
     }
 }
 
-// Check if cell is within bounds of the map
+/**
+ * Check if cell is within bounds of the map
+ * @param x x coordinate of the cell
+ * @param y y coordinate of the cell
+ * @return 1 if in bounds, 0 otherwise
+ */
 int is_in_bounds(int x, int y) {
     return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
 }
 
-// Check if a cell is a valid cell to visit (in bounds and not visited)
+/**
+ * Check if a cell is a valid cell to visit (in bounds and not visited)
+ * @param x x coordinate of the cell
+ * @param y y coordinate of the cell
+ * @return 1 if valid, 0 otherwise
+ */
 int is_valid_cell(int x, int y) {
     return is_in_bounds(x, y) && !visited[x][y];
 }
 
-int validate_exit_position() {
-    switch (exit_edge) {
+/**
+ * Check if the exit position is adjacent to a floor cell
+ * @param exit_e the edge of the exit (TOP, BOTTOM, LEFT, RIGHT)
+ * @param x x coordinate of the exit
+ * @param y y coordinate of the exit
+ * @return 1 if valid, 0 otherwise
+ */
+int validate_exit_position(int exit_e, int x, int y) {
+    switch (exit_e) {
         case TOP:
-            return map[exit_x][exit_y + 1] == FLOOR;
+            return map[x][y + 1] == FLOOR;
         case BOTTOM:
-            return map[exit_x][exit_y - 1] == FLOOR;
+            return map[x][y - 1] == FLOOR;
         case LEFT:
-            return map[exit_x + 1][exit_y] == FLOOR;
+            return map[x + 1][y] == FLOOR;
         case RIGHT:
-            return map[exit_x - 1][exit_y] == FLOOR;
+            return map[x - 1][y] == FLOOR;
         default:
-            log_msg(ERROR, "map_generator", "Invalid exit edge: %d", exit_edge);
+            log_msg(ERROR, "map_generator", "Invalid exit edge: %d", exit_e);
             return 0;
     }
 }
 
-// Recursive backtracking algorithm to generate map (based on dfs)
+/**
+ * Recursive backtracking algorithm to generate map (based on dfs)
+ * @param x starting x coordinate
+ * @param y starting y coordinate
+ */
 void carve_passages(int x, int y) {
     visited[x][y] = 1;
     map[x][y] = FLOOR;
@@ -81,7 +105,13 @@ void carve_passages(int x, int y) {
     }
 }
 
-// Count neighboring floor cells
+/**
+ * Count neighboring floor cells
+ * @param x x coordinate of the cell
+ * @param y y coordinate of the cell
+ * @param neighbor_directions bool array to store on which sides the neighbors are
+ * @return number of neighboring floor cells
+ */
 int check_neighboring_floors(int x, int y, int *neighbor_directions) {
     int count = 0;
     for (int i = 0; i < 4; i++) {
@@ -96,7 +126,10 @@ int check_neighboring_floors(int x, int y, int *neighbor_directions) {
     return count;
 }
 
-// Add loops to the map by knocking down some walls
+/**
+ * Add loops to the map by knocking down some walls
+ * @param num_loops number of loops to add
+ */
 void add_loops(int num_loops) {
     int count = 0;
     int max_attempts = num_loops * 10; // Limit the number of attempts
@@ -125,7 +158,10 @@ void add_loops(int num_loops) {
     }
 }
 
-// Place the exit on a random edge of the map, ensuring there's a path to it
+/**
+ * Place the exit on a random edge of the map, ensuring there's a path to it
+ * @param start_edge the edge from which the player enters the map, the exit cannot be on this edge
+ */
 void place_exit(int start_edge) {
     // get a random exit edge that is different from the start edge
     exit_edge = start_edge;
@@ -155,13 +191,15 @@ void place_exit(int start_edge) {
                 log_msg(ERROR, "map_generator", "Invalid exit edge: %d", exit_edge);
                 return;
         }
-    } while (!validate_exit_position());
+    } while (!validate_exit_position(exit_edge, exit_x, exit_y));
 
     map[exit_x][exit_y] = EXIT_DOOR;
 }
 
 
-// Initialize the map with walls
+/**
+ * Initialize the map with walls
+ */
 void initialize_map() {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
@@ -172,7 +210,9 @@ void initialize_map() {
     }
 }
 
-// Generate a new map
+/**
+ * Generate a new maze using recursive backtracking
+ */
 void generate_maze(int start_x, int start_y) {
     // Make sure start position is valid for dfs (odd coordinates)
     // relevant if we want to implement the starting position differently
@@ -191,7 +231,12 @@ void generate_maze(int start_x, int start_y) {
     add_loops(num_loops);
 }
 
-// set the start position on the map
+/**
+ * set the start position on the map
+ * @param start_edge the edge from which the player enters the map
+ * @param start_x pointer to the x coordinate of the start position
+ * @param start_y pointer to the y coordinate of the start position
+ */
 void set_start_position(int start_edge, int *start_x, int *start_y) {
     switch (start_edge) {
         case TOP:
@@ -220,6 +265,11 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
     }
 }
 
+/**
+ * Set the start position on the map based on the previous exit position
+ * @param start_x pointer to the x coordinate of the start position
+ * @param start_y pointer to the y coordinate of the start position
+ */
 void make_exit_into_start(int *start_edge, int *start_x, int *start_y) {
     switch (exit_edge) {
         case TOP:
@@ -252,7 +302,9 @@ void make_exit_into_start(int *start_edge, int *start_x, int *start_y) {
     }
 }
 
-// generate the map and populate it with keys, enemies, and the exit
+/**
+ * generate the map and populate it with keys, enemies, and the exit
+ */
 void generate_map() {
     // Better random seed using a combination of time and process info
     unsigned int seed = (unsigned int) time(NULL);
