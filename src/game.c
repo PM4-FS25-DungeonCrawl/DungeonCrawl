@@ -70,10 +70,10 @@ int init_game(){
                     case CONTINUE:
                         break;
                     case QUIT:
-                        currentState = EXIT;
+                        current_state = EXIT;
                         break;
                     case NEXT_FLOOR:
-                        currentState = GENERATE_MAP;
+                        current_state = GENERATE_MAP;
                         break;
                     default:
                         log_msg(ERROR, "game", "Unknown return value from map_mode_update");
