@@ -112,7 +112,7 @@ void carve_passages(int x, int y) {
  * @param neighbor_directions bool array to store on which sides the neighbors are
  * @return number of neighboring floor cells
  */
-int check_neighboring_floors(int x, int y, int *neighbor_directions) {
+int check_neighboring_floors(int x, int y, int neighbor_directions[4]) {
     int count = 0;
     for (int i = 0; i < 4; i++) {
         int dx = x + directions[i].dx;

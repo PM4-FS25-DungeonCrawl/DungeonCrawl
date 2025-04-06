@@ -110,8 +110,8 @@ int handle_input(const struct tb_event *event) {
  * Updates the player position based on the player's input and redraws the maze.
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
-int map_mode_update(void) {
-    int do_quit = CONTINUE;
+map_mode_result_t map_mode_update(void) {
+    map_mode_result_t do_quit = CONTINUE;
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
