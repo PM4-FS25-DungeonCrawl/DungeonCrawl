@@ -7,10 +7,10 @@ typedef enum {
     INFO,
     WARNING,
     ERROR
-} LogLevel;
+} log_level_t;
 
 void close_log_file(int terminate_thread);
 
-void log_msg(LogLevel level, const char *module, const char *format, ...);
+void log_msg(log_level_t level, const char *module, const char *format, ...);
 
 #endif //LOGGER_H

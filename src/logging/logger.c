@@ -32,7 +32,7 @@ void start_log_writer_thread(void);
 //the used file-pointer to write the log messages in
 FILE *log_file = NULL;
 //the used RingBuffer to write log messages in
-RingBuffer log_buffer;
+ring_buffer_t log_buffer;
 
 //states if the file writing thread is still running, if set to 0 the thread terminates or is terminated
 int thread_is_running = TERMINATED;
@@ -165,7 +165,7 @@ void close_log_file(const int terminate_thread) {
  * @param format The format of the log message, similar to printf.
  * @param ... Additional arguments used in the format string.
  */
-void log_msg(const LogLevel level, const char *module, const char *format, ...) {
+void log_msg(const log_level_t level, const char *module, const char *format, ...) {
     //starting thread
     if (log_file == NULL) {
         init_ring_buffer(&log_buffer); // init ring buffer to write the message in
