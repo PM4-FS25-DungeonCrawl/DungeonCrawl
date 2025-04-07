@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "../src/map/drawop/draw_light.h"
 #include "../src/map/map.h"
+#include "../src/map/drawop/draw_light.h"
 
 const int width = 10;
 const int height = 10;

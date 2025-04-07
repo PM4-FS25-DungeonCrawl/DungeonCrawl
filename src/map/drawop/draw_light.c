@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-#include "../map.h"
 #include "draw_light.h"
 
 /**

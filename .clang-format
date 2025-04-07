@@ -38,6 +38,7 @@ BreakTemplateDeclarations: Yes
 ColumnLimit: 0
 CompactNamespaces: false
 ContinuationIndentWidth: 8
+IncludeBlocks: Regroup
 IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
@@ -55,6 +56,7 @@ ObjCSpaceBeforeProtocolList: true
 PackConstructorInitializers: Never
 PointerAlignment: Left
 ReflowComments: false
+SortIncludes: CaseInsensitive
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
