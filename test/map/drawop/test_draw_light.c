@@ -1,8 +1,8 @@
+#include "../src/map/drawop/draw_light.h"
+#include "../src/map/map.h"
+
 #include <assert.h>
 #include <stdio.h>
-
-#include "../src/map/map.h"
-#include "../src/map/drawop/draw_light.h"
 
 const int width = 10;
 const int height = 10;
@@ -28,7 +28,7 @@ void reset_test_mazes(void) {
     }
 }
 
-void print_array(const int *array) {
+void print_array(const int* array) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             printf("%d ", array[x * height + y]);
@@ -43,7 +43,7 @@ void test_draw_light_on_player(void) {
 
     const Vector2D player = {5, 5};
     const int light_radius = 3;
-    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //player position will not be drawn
     assert(revealed_test_map[5][5] == HIDDEN);
@@ -95,7 +95,7 @@ void test_draw_light_on_player(void) {
     test_map[6][5] = WALL;
     test_map[6][6] = WALL;
 
-    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //test: completely surrounded by walls, iter = 1
     assert(revealed_test_map[2][5] == HIDDEN);
@@ -131,7 +131,7 @@ void test_draw_light_on_player(void) {
     assert(revealed_test_map[8][5] == HIDDEN);
     printf("Test: \"completely surrounded by walls (iter: 1)\" passed\n");
 
-    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //test: completely surrounded by walls, iter = 2
     assert(revealed_test_map[2][5] == HIDDEN);
@@ -175,7 +175,7 @@ void test_draw_light_on_player(void) {
         test_map[y][6] = WALL;
     }
 
-    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //test: hallway with walls top and bottom
     for (int i = 4; i <= 6; i++) {
@@ -201,7 +201,7 @@ void test_draw_light_on_player(void) {
         test_map[6][x] = WALL;
     }
 
-    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //test: hallway with walls left and right
     for (int i = 4; i <= 6; i++) {
         assert(revealed_test_map[3][i] == HIDDEN);

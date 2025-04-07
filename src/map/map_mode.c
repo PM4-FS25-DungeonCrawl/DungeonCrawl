@@ -1,13 +1,13 @@
-#include <stdio.h>
-#include <math.h>
-
-#include "../../include/termbox2.h"
-#include "../../debug/debug.h"
-
-#include "map.h"
 #include "map_mode.h"
-#include "drawop/draw_light.h"
+
+#include "../../debug/debug.h"
+#include "../../include/termbox2.h"
 #include "../logging/logger.h"
+#include "drawop/draw_light.h"
+#include "map.h"
+
+#include <math.h>
+#include <stdio.h>
 
 Vector2D player_pos;
 
@@ -64,7 +64,7 @@ void draw_ui(void) {
     tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 }
 
-int handle_input(const struct tb_event *event) {
+int handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
@@ -96,7 +96,7 @@ int handle_input(const struct tb_event *event) {
                     player_pos.dy = new_y;
                     return NEXT_FLOOR;
                 }
-            break;
+                break;
             default:
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;
@@ -121,7 +121,7 @@ map_mode_result_t map_mode_update(void) {
         do_quit = handle_input(&ev);
     }
 
-    draw_light_on_player((int *) map, (int *) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_light_on_player((int*) map, (int*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map();
     draw_ui();
     tb_present();

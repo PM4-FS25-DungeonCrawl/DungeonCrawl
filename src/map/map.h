@@ -2,15 +2,15 @@
 #define MAP_H
 
 #define WIDTH 39 // must be odd
-#define HEIGHT 19 // must be odd
+#define HEIGHT 19// must be odd
 
 #define ENEMY_COUNT 8
 #define ENEMY_MIN_DISTANCE 3
 
-#define     TOP     0
-#define     BOTTOM  1
-#define     LEFT    2
-#define     RIGHT   3
+#define TOP 0
+#define BOTTOM 1
+#define LEFT 2
+#define RIGHT 3
 
 typedef enum {
     WALL = 0,
@@ -35,4 +35,4 @@ extern Vector2D directions[4];
 extern map_tile map[WIDTH][HEIGHT];
 
 extern map_tile revealed_map[WIDTH][HEIGHT];
-#endif //MAP_H
+#endif//MAP_H
