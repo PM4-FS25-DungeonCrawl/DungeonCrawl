@@ -1,12 +1,12 @@
 name: Compile in develop
 
 on:
-  push:
-    branches:
-      - develop  # Trigger in develop
-  pull_request:
-    branches:
-      - develop
+#  push:
+#    branches:
+#      - develop  # Trigger in develop
+#  pull_request:
+#    branches:
+#      - develop
   workflow_run:
     workflows: ["Auto-format Code"]
     types:
