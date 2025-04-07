@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - develop  # Trigger on push to develop branch
-      - 36-init-clang-format
   pull_request:
     branches:
       - develop  # Trigger on pull request to develop branch
