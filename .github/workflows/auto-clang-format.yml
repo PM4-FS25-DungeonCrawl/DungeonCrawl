@@ -20,6 +20,7 @@ jobs:
 
       - name: Format Code
         run: |
+          git fetch origin ${{ github.head_ref || github.ref_name }}
           git checkout -B ${{ github.head_ref || github.ref_name }} origin/${{ github.head_ref || github.ref_name }}
           
           find src/ test/ -type f \( -name '*.c' -o -name '*.h' \) | xargs clang-format-19 -i
