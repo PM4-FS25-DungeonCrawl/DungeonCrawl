@@ -1,14 +1,8 @@
 name: Compile test
 
 on:
-  pull_request:
-    branches:
-      - develop
-    push:
-     branches:
-      - develop
   workflow_run:
-    workflows: [ "Auto clang-format" ]
+    workflows: [ "format-code" ]
     types:
       - completed
 
