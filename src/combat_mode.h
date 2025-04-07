@@ -10,7 +10,7 @@
 // === ENUM ===
 typedef enum {
     MENU_COMBAT,
-          MENU_ABILITY,
+    MENU_ABILITY,
     MENU_ITEM
 } combat_state;
 
