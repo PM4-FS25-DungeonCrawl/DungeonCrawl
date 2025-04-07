@@ -8,9 +8,9 @@
 
 // === ENUM ===
 typedef enum {
-	MENU_COMBAT,
-	MENU_ABILITY,
-	MENU_ITEM
+    MENU_COMBAT,
+    MENU_ABILITY,
+    MENU_ITEM
 } combat_state;
 
 // === FUNCTION DECLARATIONS ===

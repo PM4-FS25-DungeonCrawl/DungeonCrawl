@@ -12,71 +12,71 @@
 
 // Enum for Damage Types
 typedef enum {
-	PHYSICAL,
-	MAGICAL,
-	DAMAGE_TYPE_COUNT
+    PHYSICAL,
+    MAGICAL,
+    DAMAGE_TYPE_COUNT
 } damage_type_t;
 
 // Enum for Character Types
 typedef enum {
-	PLAYER,
-	MONSTER,
-	BOSS
+    PLAYER,
+    MONSTER,
+    BOSS
 } character_type_t;
 
 // ENUM for dice sizes
 typedef enum {
-	D6 = 6,
-	D8 = 8,
-	D10 = 10,
-	D12 = 12,
-	D20 = 20
+    D6 = 6,
+    D8 = 8,
+    D10 = 10,
+    D12 = 12,
+    D20 = 20
 } dice_size_t;
 
 // === STRUCTS ===
 
 // Struct for Weakness
 typedef struct {
-	damage_type_t type;
-	int value;
+    damage_type_t type;
+    int value;
 } weakness_t;
 
 // Struct for Abilities
 typedef struct {
-	char name[50];
-	int rollCount;
-	int accuracy;
-	dice_size_t diceSize;
-	damage_type_t damageType;
+    char name[50];
+    int rollCount;
+    int accuracy;
+    dice_size_t diceSize;
+    damage_type_t damageType;
 } ability_t;
 
 // Struct for Character
 typedef struct {
-	character_type_t type;
-	char name[20];
+    character_type_t type;
+    char name[20];
 
-	int health;
-	int armor;
-	int might;
-	int deflection;
-	int fortitude;
-	int will;
+    int health;
+    int armor;
+    int might;
+    int deflection;
+    int fortitude;
+    int will;
 
-	ability_t abilities[MAX_ABILITIES];
-	int ability_count;
+    ability_t abilities[MAX_ABILITIES];
+    int ability_count;
 } character_t;
 
 // Struct for Player
 typedef struct {
-	character_t base;
-	Item* inventory[MAX_ITEMS];
-	int item_count;
+    character_t base;
+    Item* inventory[MAX_ITEMS];
+    int item_count;
 } player_t;
 
 // Struct for Monster
 typedef struct {
-	character_t base;
-	weakness_t weakness_map[DAMAGE_TYPE_COUNT];
+    character_t base;
+    weakness_t weakness_map[DAMAGE_TYPE_COUNT];
 } monster_t;
 
 // === FUNCTION DECLARATIONS ===

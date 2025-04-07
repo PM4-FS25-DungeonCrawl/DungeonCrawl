@@ -8,8 +8,8 @@
 #include "../../include/sqlite3.h"
 
 typedef struct {
-	sqlite3* db;
-	char* err_msg;
+    sqlite3* db;
+    char* err_msg;
 } DBConnection;
 
 int db_open(DBConnection* db_connection, const char* db_name);

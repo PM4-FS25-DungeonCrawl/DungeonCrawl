@@ -13,20 +13,20 @@
 #define RIGHT 3
 
 typedef enum {
-	WALL = 0,
-	FLOOR = 1,
-	START_DOOR = 2,
-	EXIT_DOOR = 3,
-	KEY = 4,
-	SKELETON = 5,
-	HIDDEN = 99
+    WALL = 0,
+    FLOOR = 1,
+    START_DOOR = 2,
+    EXIT_DOOR = 3,
+    KEY = 4,
+    SKELETON = 5,
+    HIDDEN = 99
 } map_tile;
 
 /**
  * @brief 2-dimensional vector struct
  */
 typedef struct {
-	int dx, dy;
+    int dx, dy;
 } Vector2D;
 
 extern Vector2D directions[4];

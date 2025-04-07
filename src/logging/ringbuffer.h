@@ -5,10 +5,10 @@
 #define MAX_MSG_LENGTH 1024
 
 #ifdef _WIN32
-	#include <windows.h>
+    #include <windows.h>
 
 typedef struct {
-	    char **messages[;
+        char **messages[;
         int head;
         int tail;
         int count;
@@ -16,15 +16,15 @@ typedef struct {
         CONDITION_VARIABLE cond;
 } ring_buffer_t;
 #else
-	#include <pthread.h>
+    #include <pthread.h>
 
 typedef struct {
-	char** messages;
-	int head;
-	int tail;
-	int count;
-	pthread_mutex_t mutex;
-	pthread_cond_t cond;
+    char** messages;
+    int head;
+    int tail;
+    int count;
+    pthread_mutex_t mutex;
+    pthread_cond_t cond;
 } ring_buffer_t;
 #endif
 

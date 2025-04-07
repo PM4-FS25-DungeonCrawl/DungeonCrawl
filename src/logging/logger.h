@@ -2,11 +2,11 @@
 #define LOGGER_H
 
 typedef enum {
-	DEBUG,
-	FINE,
-	INFO,
-	WARNING,
-	ERROR
+    DEBUG,
+    FINE,
+    INFO,
+    WARNING,
+    ERROR
 } log_level_t;
 
 void close_log_file(bool terminate_thread);

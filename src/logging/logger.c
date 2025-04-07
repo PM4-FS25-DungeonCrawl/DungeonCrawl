@@ -46,17 +46,17 @@ int file_id = 0;
  * if not create a new one
  */
 void ensure_log_dir(void) {
-	struct stat st;
+    struct stat st;
 
-	if (stat(LOG_DIRECTORY, &st) == -1) {
-		//directory doesn't exist -> create a new one
+    if (stat(LOG_DIRECTORY, &st) == -1) {
+        //directory doesn't exist -> create a new one
 
-		if (mkdir(LOG_DIRECTORY, 0755) == -1) {
-			//directory could not be created
-			log_failed = true;
-			close_log_file(true);
-		}
-	}
+        if (mkdir(LOG_DIRECTORY, 0755) == -1) {
+            //directory could not be created
+            log_failed = true;
+            close_log_file(true);
+        }
+    }
 }
 
 
@@ -67,19 +67,19 @@ void ensure_log_dir(void) {
  * @return 1 if the file could not be open, 0 when successfully
  */
 int open_log_file(void) {
-	char name[15];
-	snprintf(name, 15, LOG_FILE_FORMAT, file_id);
+    char name[15];
+    snprintf(name, 15, LOG_FILE_FORMAT, file_id);
 
-	char filename[256];
-	snprintf(filename, 256, "%s/%s", LOG_DIRECTORY, name);
+    char filename[256];
+    snprintf(filename, 256, "%s/%s", LOG_DIRECTORY, name);
 
-	//open file in append modus
-	log_file = fopen(filename, "a");
-	if (!log_file) {
-		//file could not be open
-		return FAILED;
-	}
-	return SUCCESS;
+    //open file in append modus
+    log_file = fopen(filename, "a");
+    if (!log_file) {
+        //file could not be open
+        return FAILED;
+    }
+    return SUCCESS;
 }
 
 /**
@@ -92,21 +92,21 @@ int open_log_file(void) {
  * - Or opening the file that was last used, the current id will be set.
  */
 void check_log_file(void) {
-	if (log_file) {
-		// check if the log file has reached the max size
-		fseek(log_file, 0, SEEK_END);
-		const long file_size = ftell(log_file);
-		if (file_size >= MAX_FILE_SIZE) {
-			// the max size is reached
-			close_log_file(false);
-			file_id = (file_id + 1) % MAX_N_FILES;
-			if (open_log_file() == FAILED) {
-				//file could not be opened
-				log_failed = true;
-				close_log_file(true);
-			}
-		}
-	}
+    if (log_file) {
+        // check if the log file has reached the max size
+        fseek(log_file, 0, SEEK_END);
+        const long file_size = ftell(log_file);
+        if (file_size >= MAX_FILE_SIZE) {
+            // the max size is reached
+            close_log_file(false);
+            file_id = (file_id + 1) % MAX_N_FILES;
+            if (open_log_file() == FAILED) {
+                //file could not be opened
+                log_failed = true;
+                close_log_file(true);
+            }
+        }
+    }
 }
 
 /**
@@ -114,37 +114,37 @@ void check_log_file(void) {
  * @return the latest used file id, in the range 0 (ink.) to MAX_N_FILES (exkl.) or -1 if directory was not found.
  */
 int get_latest_file_id(void) {
-	ensure_log_dir();
+    ensure_log_dir();
 
-	DIR* dir = opendir(LOG_DIRECTORY);
-	struct dirent* entry;
-	int latest_id = 0;
-	time_t latest_time = 0;
+    DIR* dir = opendir(LOG_DIRECTORY);
+    struct dirent* entry;
+    int latest_id = 0;
+    time_t latest_time = 0;
 
-	if (!dir) {
-		return FAILED;
-	}
+    if (!dir) {
+        return FAILED;
+    }
 
-	while ((entry = readdir(dir)) != NULL) {
-		int id;
-		struct stat file_stat;
+    while ((entry = readdir(dir)) != NULL) {
+        int id;
+        struct stat file_stat;
 
-		if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
-			char filepath[PATH_MAX];
-			snprintf(filepath, sizeof(filepath), "%s/%s", LOG_DIRECTORY, entry->d_name);
+        if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+            char filepath[PATH_MAX];
+            snprintf(filepath, sizeof(filepath), "%s/%s", LOG_DIRECTORY, entry->d_name);
 
-			if (stat(filepath, &file_stat) == 0) {
-				if (file_stat.st_mtime > latest_time) {
-					latest_time = file_stat.st_mtime;
-					latest_id = id;
-				}
-			}
-		}
-	}
+            if (stat(filepath, &file_stat) == 0) {
+                if (file_stat.st_mtime > latest_time) {
+                    latest_time = file_stat.st_mtime;
+                    latest_id = id;
+                }
+            }
+        }
+    }
 
-	closedir(dir);
+    closedir(dir);
 
-	return latest_id;
+    return latest_id;
 }
 
 /**
@@ -153,14 +153,14 @@ int get_latest_file_id(void) {
  * @param terminate_thread if 1 the running thread will also be terminated
  */
 void close_log_file(const bool terminate_thread) {
-	if (log_file) {
-		fclose(log_file);
-		log_file = NULL;
-	}
-	if (terminate_thread && thread_is_running) {
-		thread_is_running = true;
-		free_ring_buffer(&log_buffer);
-	}
+    if (log_file) {
+        fclose(log_file);
+        log_file = NULL;
+    }
+    if (terminate_thread && thread_is_running) {
+        thread_is_running = true;
+        free_ring_buffer(&log_buffer);
+    }
 }
 
 /**
@@ -175,36 +175,36 @@ void close_log_file(const bool terminate_thread) {
  * @param ... Additional arguments used in the format string.
  */
 void log_msg(const log_level_t level, const char* module, const char* format, ...) {
-	//starting thread
-	if (log_file == NULL && !log_failed) {
-		init_ring_buffer(&log_buffer);// init ring buffer to write the message in
+    //starting thread
+    if (log_file == NULL && !log_failed) {
+        init_ring_buffer(&log_buffer);// init ring buffer to write the message in
 
-		start_log_writer_thread();//start thread
-	}
+        start_log_writer_thread();//start thread
+    }
 
-	//if thread is not running, something went wrong with opening the log dir, log file
-	if (thread_is_running) {
-		//get timestamp
-		const time_t now = time(NULL);
-		const struct tm* tm = localtime(&now);
-		char timestamp[20];
-		strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
+    //if thread is not running, something went wrong with opening the log dir, log file
+    if (thread_is_running) {
+        //get timestamp
+        const time_t now = time(NULL);
+        const struct tm* tm = localtime(&now);
+        char timestamp[20];
+        strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
 
-		//get log level
-		const char* log_level = log_level_str[level];
+        //get log level
+        const char* log_level = log_level_str[level];
 
-		va_list args;
-		va_start(args, format);
-		//temp msg placeholder
-		char msg[MAX_HEADER_SIZE];
-		vsnprintf(msg, sizeof(msg), format, args);
+        va_list args;
+        va_start(args, format);
+        //temp msg placeholder
+        char msg[MAX_HEADER_SIZE];
+        vsnprintf(msg, sizeof(msg), format, args);
 
-		char log_msg[MAX_MSG_LENGTH];
-		snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
-		va_end(args);
+        char log_msg[MAX_MSG_LENGTH];
+        snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
+        va_end(args);
 
-		write_to_ring_buffer(&log_buffer, log_msg);
-	}
+        write_to_ring_buffer(&log_buffer, log_msg);
+    }
 }
 
 #ifdef _WIN32
@@ -216,31 +216,31 @@ void log_msg(const log_level_t level, const char* module, const char* format, ..
      * @return 0
      */
 DWORD WINAPI log_writer_thread(LPVOID param) {
-	while (thread_is_running) {
-		char log_msg[MAX_MSG_LENGTH];
-		if (read_from_ring_buffer(&log_buffer, log_msg)) {
-			// message successfully read from ringbuffer
+    while (thread_is_running) {
+        char log_msg[MAX_MSG_LENGTH];
+        if (read_from_ring_buffer(&log_buffer, log_msg)) {
+            // message successfully read from ringbuffer
 
-			// open log file for the first time this session
-			if (log_file == NULL) {
-				file_id = get_latest_file_id();
-				if (file_id == FAILED || open_log_file() == FAILED) {
-					//failed to get file id or open file
-					log_failed = true;
-					close_log_file(true);
-				}
-			}
-			check_log_file();
+            // open log file for the first time this session
+            if (log_file == NULL) {
+                file_id = get_latest_file_id();
+                if (file_id == FAILED || open_log_file() == FAILED) {
+                    //failed to get file id or open file
+                    log_failed = true;
+                    close_log_file(true);
+                }
+            }
+            check_log_file();
 
 
-			if (log_file) {
-				//writes to the log file
-				fprintf(log_file, "%s", log_msg);
-				fflush(log_file);
-			}
-		}
-	}
-	return 0;
+            if (log_file) {
+                //writes to the log file
+                fprintf(log_file, "%s", log_msg);
+                fflush(log_file);
+            }
+        }
+    }
+    return 0;
 }
 #else
 /**
@@ -251,32 +251,32 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
      * @return NULL
      */
 void* log_writer_thread(void* arg) {
-	while (thread_is_running) {
-		char log_msg[MAX_MSG_LENGTH];
-		if (read_from_ring_buffer(&log_buffer, log_msg)) {
-			// message successfully read from ringbuffer
+    while (thread_is_running) {
+        char log_msg[MAX_MSG_LENGTH];
+        if (read_from_ring_buffer(&log_buffer, log_msg)) {
+            // message successfully read from ringbuffer
 
-			// open log file for the first time this session
-			// only tries once -> no logs will be created
-			if (log_file == NULL && file_id != -1) {
-				file_id = get_latest_file_id();
-				if (file_id == FAILED || open_log_file() == FAILED) {
-					//failed to get file id or open file
-					log_failed = true;
-					close_log_file(true);
-				}
-			}
-			check_log_file();
+            // open log file for the first time this session
+            // only tries once -> no logs will be created
+            if (log_file == NULL && file_id != -1) {
+                file_id = get_latest_file_id();
+                if (file_id == FAILED || open_log_file() == FAILED) {
+                    //failed to get file id or open file
+                    log_failed = true;
+                    close_log_file(true);
+                }
+            }
+            check_log_file();
 
 
-			if (log_file) {
-				//writes to the log file
-				fprintf(log_file, "%s", log_msg);
-				fflush(log_file);
-			}
-		}
-	}
-	return NULL;
+            if (log_file) {
+                //writes to the log file
+                fprintf(log_file, "%s", log_msg);
+                fflush(log_file);
+            }
+        }
+    }
+    return NULL;
 }
 #endif
 
@@ -284,15 +284,15 @@ void* log_writer_thread(void* arg) {
  * Starts the logging writing thread
  */
 void start_log_writer_thread(void) {
-	thread_is_running = true;
+    thread_is_running = true;
 #ifdef _WIN32
-	HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
-	if (thread) {
-		CloseHandle(thread);
-	}
+    HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
+    if (thread) {
+        CloseHandle(thread);
+    }
 #else
-	pthread_t thread;
-	pthread_create(&thread, NULL, log_writer_thread, NULL);
-	pthread_detach(thread);
+    pthread_t thread;
+    pthread_create(&thread, NULL, log_writer_thread, NULL);
+    pthread_detach(thread);
 #endif
 }
