@@ -21,7 +21,7 @@ void set_start(const int newPlayerX, const int newPlayerY) {
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
-void draw_map(void){
+void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             if (x == player_pos.dx && y == player_pos.dy) {
