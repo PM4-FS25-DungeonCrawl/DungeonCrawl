@@ -87,6 +87,9 @@ jobs:
 
           # Ensure we're on the actual branch, not detached HEAD
           git checkout ${{ github.ref_name }}
+          
+          # Ensure the current branch is up to date
+          git fetch origin ${{ github.ref_name }}
 
           # Prepare the documents/coverage folder
           mkdir -p documents/coverage
