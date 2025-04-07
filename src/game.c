@@ -22,7 +22,7 @@ int add(int a, int b) {
     return a + b;
 }
 
-int init_game() {
+int init_game(){
     if (tb_init() != 0) {
         fprintf(stderr, "Failed to initialize termbox \n");
         return 1;

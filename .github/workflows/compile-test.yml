@@ -14,6 +14,7 @@ on:
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if the previous workflow failed
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]  # Multi-OS build
