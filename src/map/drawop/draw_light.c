@@ -1,7 +1,6 @@
-#include <stdlib.h>
-
-#include "../map.h"
 #include "draw_light.h"
+
+#include <stdlib.h>
 
 /**
  * This is a helper function to check if the loop needs to break with this specific edge case.
@@ -12,7 +11,7 @@
  * @param prev_wall_at pointer to variable, which should be written
  * @return 1 if loops must break, 0 when not
  */
-int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *prev_wall_at) {
+int need_loop_break(const int x, const int y, const Vector2D dir, int j, int* prev_wall_at) {
     if (j == 0) {
         //gets the x or y value of the calculated coordinates
         *prev_wall_at = abs(y * dir.dy + x * dir.dx);
@@ -34,10 +33,10 @@ int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *pr
  * - the reverse check vector
  */
 const Vector2D checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
+        {{1, 1}, {1, 0}},   // for up
+        {{-1, -1}, {-1, 0}},// for down
+        {{1, -1}, {0, -1}}, // for left
+        {{-1, 1}, {0, 1}},  // for right
 };
 
 /**
@@ -70,7 +69,6 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
         int prev_wall_at = -1;
 
         for (int j = 0; j <= light_radius; j++) {
-
             const int start_x = player.dx + j * dir.dy;
             int start_y = player.dy + j * dir.dx;
 

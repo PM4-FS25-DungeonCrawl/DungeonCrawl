@@ -1,9 +1,10 @@
 #ifndef CHARACTER_STATS_H
 #define CHARACTER_STATS_H
 
+#include "items.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "items.h"
 // === CONSTANTS ===
 #define MAX_ABILITIES 3
 #define MAX_ITEMS 10
@@ -69,7 +70,7 @@ typedef struct {
 // Struct for Player
 typedef struct {
     character_t base;
-    Item *inventory[MAX_ITEMS];
+    Item* inventory[MAX_ITEMS];
     int item_count;
 } player_t;
 
@@ -80,12 +81,12 @@ typedef struct {
 } monster_t;
 
 // === FUNCTION DECLARATIONS ===
-void initAbility(ability_t *a, const char *name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type);
-void addAbilityToCharacter(character_t *c, ability_t ability);
-void initCharacter(character_type_t type, character_t *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
-void initWeaknesses(monster_t *m, int array[]);
-int get_weakness_value(monster_t *m, damage_type_t key);
-void add_item_to_player(player_t *player, Item *item);
+void initAbility(ability_t* a, const char* name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type);
+void addAbilityToCharacter(character_t* c, ability_t ability);
+void initCharacter(character_type_t type, character_t* c, const char* name, int health, int armor, int might, int deflection, int fortitude, int will);
+void initWeaknesses(monster_t* m, int array[]);
+int get_weakness_value(monster_t* m, damage_type_t key);
+void add_item_to_player(player_t* player, Item* item);
 
 
-#endif //CHARACTER_STATS_H
+#endif//CHARACTER_STATS_H
