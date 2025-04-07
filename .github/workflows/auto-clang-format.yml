@@ -20,7 +20,7 @@ jobs:
 
       - name: Format Code
         run: |
-          find src/ test/ -type f \( -name '*.c' -o -name '*.h' \) | xargs clang-format-14 -i
+          find src/ test/ -type f \( -name '*.c' -o -name '*.h' \) | xargs clang-format-19 -i
 
       - name: Commit changes
         run: |
