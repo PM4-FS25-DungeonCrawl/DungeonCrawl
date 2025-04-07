@@ -1,14 +1,14 @@
 name: Compile after clang-format
 
 on:
-  push:
+  pull_request:
     branches:
       - develop  # Trigger in develop
   workflow_run:
     workflows: [ "Auto clang-format" ]
     types:
       - completed
-#  pull_request:
+#  push:
 #    branches:
 #      - develop
 
