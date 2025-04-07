@@ -26,6 +26,10 @@ jobs:
         run: |
             git config --global user.name "github-actions"
             git config --global user.email "github-actions@github.com"
+          
+            # Ensure we're on the actual branch, not detached HEAD
+            git checkout ${{ github.head_ref }}
+            
             git add .
             git diff --staged --quiet || git commit -m "Auto-format code"
-            git push origin HEAD:${{ github.head_ref || github.ref_name }}
+            git push origin HEAD:${{ github.head_ref }}
