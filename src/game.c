@@ -13,7 +13,7 @@
 enum game_state {
     MAIN_MENU,
     MAP_MODE,
-    COMBAT_MODE,
+       COMBAT_MODE,
     GENERATE_MAP,
     EXIT
 };
