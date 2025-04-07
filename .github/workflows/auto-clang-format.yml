@@ -14,9 +14,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Clang-Format v21
+      - name: Install Clang-Format v19
         run: | 
-          sudo apt install -y clang-format-21
+          sudo apt install -y clang-format-19
 
       - name: Format Code
         run: |
