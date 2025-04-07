@@ -42,10 +42,12 @@ IndentCaseLabels: true
 IndentPPDirectives: BeforeHash
 IndentWidth: 4
 # KeepEmptyLinesAtTheStartOfBlocks: true # deprecated
-KeepEmptyLines:
-  AtEndOfFile: false
-  AtStartOfFile: false
-  AtStartOfBlock: false
+
+# Key not found?
+#KeepEmptyLines:
+#  AtEndOfFile: false
+#  AtStartOfFile: false
+#  AtStartOfBlock: false
   # AtStartOfNamespace: false
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
