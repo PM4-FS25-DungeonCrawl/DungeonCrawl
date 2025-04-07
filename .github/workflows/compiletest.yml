@@ -7,10 +7,14 @@ on:
   pull_request:
     branches:
       - develop
-  
+  workflow_run:
+    workflows: ["Auto-format Code"]
+    types:
+      - completed
 
 jobs:
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]  # Multi-OS build

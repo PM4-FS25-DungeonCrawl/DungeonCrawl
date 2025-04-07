@@ -7,9 +7,15 @@ on:
   pull_request:
     branches:
       - develop
+  workflow_run:
+    workflows: [ "Auto-format Code" ]
+    types:
+      - completed
+
 
 jobs:
   build-and-test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest  # or another OS if needed
 
     steps:

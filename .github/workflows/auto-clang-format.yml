@@ -9,6 +9,7 @@ on:
 
 jobs:
   format-code:
+    name: Auto-format Code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
