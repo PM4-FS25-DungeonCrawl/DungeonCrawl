@@ -1,6 +1,3 @@
-//
-// Created by jabar on 27.03.2025.
-//
 #include <stdio.h>
 #include "database.h"
 

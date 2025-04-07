@@ -1,7 +1,3 @@
-//
-// Created by jabar on 27.03.2025.
-//
-
 #ifndef DATABASE_H
 #define DATABASE_H
 
