@@ -1,20 +1,22 @@
-name: Compile in develop
+name: Compile after clang-format
 
 on:
-#  push:
-#    branches:
-#      - develop  # Trigger in develop
+#  workflow_run:
+#    workflows: [ "Auto clang-format" ]
+#    types:
+#      - completed
+  push:
+    branches:
+      - develop  # Trigger in develop
 #  pull_request:
 #    branches:
 #      - develop
-  workflow_run:
-    workflows: ["Auto-format Code"]
-    types:
-      - completed
+
 
 jobs:
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if the previous workflow failed
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if the previous workflow failed
+    if: github.actor == 'github-actions'
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]  # Multi-OS build
