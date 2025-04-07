@@ -7,9 +7,9 @@
 #define LIGHT_RADIUS 3
 
 typedef enum {
-    CONTINUE,
-    QUIT,
-    NEXT_FLOOR
+	CONTINUE,
+	QUIT,
+	NEXT_FLOOR
 } map_mode_result_t;
 
 
@@ -19,4 +19,4 @@ void set_start(int newPlayerX, int newPlayerY);
 
 map_mode_result_t map_mode_update(void);
 
-#endif //MAP_MODE_H
+#endif//MAP_MODE_H
