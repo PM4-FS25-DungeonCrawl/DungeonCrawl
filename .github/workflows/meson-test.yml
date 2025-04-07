@@ -1,16 +1,17 @@
 name: Meson test and coverage report
 
 on:
-#  pull_request:
-#    branches:
-#      - develop
+  pull_request:
+    branches:
+      - develop
+  push:
+    branches:
+      - develop
   workflow_run:
     workflows: [ "Auto clang-format" ]
     types:
       - completed
-#  push:
-#    branches:
-#      - develop
+
 
 
 
