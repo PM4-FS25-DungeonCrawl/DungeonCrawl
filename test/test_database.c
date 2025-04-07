@@ -1,4 +1,5 @@
 #include "../src/database/database.h"
+
 #include <assert.h>
 #include <stdio.h>
 

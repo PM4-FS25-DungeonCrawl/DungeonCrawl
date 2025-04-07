@@ -1,12 +1,13 @@
+#include "logger.h"
+
+#include "ringbuffer.h"//includes pthread.h or windows.h
+
 #include <dirent.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <time.h>
-
-#include "logger.h"
-#include "ringbuffer.h"//includes pthread.h or windows.h
 
 #define MAX_N_FILES 5
 #define MAX_FILE_SIZE 1048576// max size = 1 MB

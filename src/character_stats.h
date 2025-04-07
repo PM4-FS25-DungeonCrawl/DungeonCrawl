@@ -2,6 +2,7 @@
 #define CHARACTER_STATS_H
 
 #include "items.h"
+
 #include <stdio.h>
 #include <string.h>
 // === CONSTANTS ===

@@ -1,7 +1,7 @@
+#include "ringbuffer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "ringbuffer.h"
 
 #ifdef _WIN32
     #define INIT_MUTEX(mutex) InitializeCriticalSection(mutex)

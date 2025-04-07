@@ -1,4 +1,5 @@
 #include "../src/combat_mode.h"
+
 #include <assert.h>
 #include <stdio.h>
 

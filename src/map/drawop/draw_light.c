@@ -1,6 +1,6 @@
-#include <stdlib.h>
-
 #include "draw_light.h"
+
+#include <stdlib.h>
 
 /**
  * This is a helper function to check if the loop needs to break with this specific edge case.

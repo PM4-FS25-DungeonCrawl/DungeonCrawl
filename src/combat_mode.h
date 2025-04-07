@@ -3,6 +3,7 @@
 
 // === INCLUDE ===
 #include "character_stats.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 

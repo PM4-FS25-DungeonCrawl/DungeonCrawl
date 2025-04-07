@@ -1,13 +1,13 @@
-#include <math.h>
-#include <stdio.h>
+#include "map_mode.h"
 
 #include "../../debug/debug.h"
 #include "../../include/termbox2.h"
-
 #include "../logging/logger.h"
 #include "drawop/draw_light.h"
 #include "map.h"
-#include "map_mode.h"
+
+#include <math.h>
+#include <stdio.h>
 
 Vector2D player_pos;
 

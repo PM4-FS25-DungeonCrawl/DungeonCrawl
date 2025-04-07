@@ -2,6 +2,7 @@
 // Created by jabar on 27.03.2025.
 //
 #include "database.h"
+
 #include <stdio.h>
 
 int db_open(DBConnection* db_connection, const char* db_name) {

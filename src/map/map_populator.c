@@ -1,7 +1,8 @@
-#include <stdlib.h>
+#include "map_populator.h"
 
 #include "map.h"
-#include "map_populator.h"
+
+#include <stdlib.h>
 
 // Check if a cell is a dead end (is floor and has only one neighboring non-wall cell)
 int is_dead_end(int x, int y) {

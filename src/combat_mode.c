@@ -1,4 +1,5 @@
 #include "combat_mode.h"
+
 #include "../include/termbox2.h"
 /* TODO: Print lines for missed attacks and damage dealt
  * TODO: Critical hits

@@ -1,10 +1,12 @@
 #include "game.h"
+
 #include "../include/termbox2.h"
 #include "character_stats.h"
 #include "combat_mode.h"
 #include "logging/logger.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 

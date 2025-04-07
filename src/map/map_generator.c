@@ -1,12 +1,13 @@
-#include <stdint.h>
-#include <stdlib.h>
-#include <time.h>
+#include "map_generator.h"
 
 #include "../logging/logger.h"
 #include "map.h"
-#include "map_generator.h"
 #include "map_mode.h"
 #include "map_populator.h"
+
+#include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
 
 // map array to store the maze
 int visited[WIDTH][HEIGHT];
