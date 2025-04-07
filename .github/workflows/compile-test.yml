@@ -4,10 +4,10 @@ on:
   pull_request:
     branches:
       - develop  # Trigger in develop
-  workflow_run:
-    workflows: [ "Auto clang-format" ]
-    types:
-      - completed
+#  workflow_run:
+#    workflows: [ "Auto clang-format" ]
+#    types:
+#      - completed
 #  push:
 #    branches:
 #      - develop
@@ -15,8 +15,8 @@ on:
 
 jobs:
   build:
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if the previous workflow failed
-    if: github.event.workflow_run.conclusion == 'success' || github.actor == 'github-actions'
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }} # skip if the previous workflow failed
+#    if: github.event.workflow_run.conclusion == 'success' || github.actor == 'github-actions'
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]  # Multi-OS build
