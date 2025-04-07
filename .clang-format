@@ -44,11 +44,11 @@ IndentWidth: 4
 # KeepEmptyLinesAtTheStartOfBlocks: true # deprecated
 
 # Key not found?
-#KeepEmptyLines:
-#  AtEndOfFile: false
-#  AtStartOfFile: false
-#  AtStartOfBlock: false
-  # AtStartOfNamespace: false
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfFile: false
+  AtStartOfBlock: false
+  AtStartOfNamespace: false
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: All
 ObjCSpaceAfterProperty: false
