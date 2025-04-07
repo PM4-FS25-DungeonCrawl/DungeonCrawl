@@ -14,10 +14,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Clang-Format v14
+      - name: Install Clang-Format v21
         run: | 
           sudo apt update
-          sudo apt install -y clang-format-14
+          sudo apt install -y clang-format-21
 
       - name: Format Code
         run: |
