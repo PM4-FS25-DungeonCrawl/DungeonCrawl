@@ -1,9 +1,9 @@
-name: Compile after clang-format
+name: Compile test
 
 on:
   pull_request:
     branches:
-      - develop  # Trigger in develop
+      - develop
 #  workflow_run:
 #    workflows: [ "Auto clang-format" ]
 #    types:

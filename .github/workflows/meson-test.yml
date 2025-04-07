@@ -1,4 +1,4 @@
-name: Run tests after clang-format
+name: Meson test and coverage report
 
 on:
   pull_request:
