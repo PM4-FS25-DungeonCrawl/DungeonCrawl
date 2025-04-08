@@ -53,7 +53,7 @@ int attribute_key(const DBConnection *db_connection, const char *attribute_name)
  * @param language enum language_t where the value define the database column to use
  */
 char *get_localization_string(const DBConnection *db_connection, const char *attribute_path,
-                              local_language_t *language) {
+                              const local_language_t *language) {
     //Check if the database is open
     if (!db_is_open(db_connection)) {
         log_msg(ERROR, "Localization Database", "Database is not open");
