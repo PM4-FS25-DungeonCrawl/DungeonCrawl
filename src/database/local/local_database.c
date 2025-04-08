@@ -13,11 +13,10 @@ int attribute_key(const char *attribute_name) {
   const DBConnection db_connection = *db_get_connection();
     //Check if the database is open
 	if (!db_is_open()) {
-		log_msg(ERROR, "Localization Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
+		log_msg(ERROR, "Local Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
 //		fprintf(stderr, "Database is not open\n");
 	    return -1;
 	}
-    log_msg(FINE, "Localization Database", "logger also works with tests");
 
 	// Prepare the SQL statement
 	char *stmt = "SELECT AT_ID FROM attribute WHERE AT_NAME = ?";

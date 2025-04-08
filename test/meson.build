@@ -22,12 +22,12 @@ helper_combat = files(
 )
 
 # needed directories for each test
-incdir_database = include_directories(
-    '../test/'
-)
+#incdir_database = include_directories(
+#    '../test/'
+#)
 
 # executables
-test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'], include_directories: incdir_database)
+test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
 test_draw_light = executable('test_draw_light', 'map/drawop/test_draw_light.c', helper_draw_light, c_args: ['-w'])
 test_combat = executable('test_combat_mode', 'test_combat_mode.c', helper_combat, c_args: ['-w'])
 
