@@ -35,7 +35,7 @@ int init_game() {
     bool doRun = true;
     enum game_state currentState = GENERATE_MAP;
 
-    while (doRun){
+    while (doRun) {
         switch (currentState) {
             case MAIN_MENU:
                 break;
