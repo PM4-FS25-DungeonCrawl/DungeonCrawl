@@ -19,4 +19,4 @@ void add_observer(update_observer_t update_func);
 
 void local_shutdown(void);
 
-#endif //LOCAL_H
+#endif//LOCAL_H

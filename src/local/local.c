@@ -1,6 +1,6 @@
-#include <stdlib.h>
-
 #include "local.h"
+
+#include <stdlib.h>
 
 // forward declaration of the observer node structure
 typedef struct observer_node_t observer_node_t;
@@ -9,7 +9,7 @@ typedef struct observer_node_t observer_node_t;
  * List node for the observer list
  */
 typedef struct observer_node_t {
-    update_observer_t update_func; //function pointer to the observer
+    update_observer_t update_func;//function pointer to the observer
     observer_node_t* next;
 } observer_node_t;
 
@@ -21,7 +21,7 @@ observer_node_t* observer_list = NULL;
 /**
  * The current language setting
  */
-language_t current_language= LANG_EN;
+language_t current_language = LANG_EN;
 
 /**
  * Initialize the local module.
@@ -46,7 +46,7 @@ void local_init(void) {
 char* get_local_string(const char* key) {
     // This function should return the localized string for the given key
     // For now, we will just return the key itself
-    return (char*)key;
+    return (char*) key;
 }
 
 /**
@@ -56,7 +56,7 @@ char* get_local_string(const char* key) {
  */
 bool set_language(const language_t lang) {
     if (lang >= LANG_MAX) {
-        return false; // Invalid language
+        return false;// Invalid language
     }
     current_language = lang;
 
@@ -64,7 +64,7 @@ bool set_language(const language_t lang) {
     const observer_node_t* current = observer_list;
     while (current != NULL) {
         if (current->update_func != NULL) {
-            current->update_func(current_language); // call the observer function
+            current->update_func(current_language);// call the observer function
         }
         current = current->next;
     }
@@ -111,5 +111,3 @@ void local_shutdown(void) {
         current = next;
     }
 }
-
-

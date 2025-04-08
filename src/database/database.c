@@ -1,9 +1,10 @@
-#include <stdio.h>
 #include "database.h"
 
-DBConnection *dungeon_crawl_db = NULL;
+#include <stdio.h>
 
-int db_open(DBConnection *db_connection, const char *db_name) {
+DBConnection* dungeon_crawl_db = NULL;
+
+int db_open(DBConnection* db_connection, const char* db_name) {
     dungeon_crawl_db = db_connection;
     int rc = sqlite3_open(db_name, &dungeon_crawl_db->db);
     if (rc) {
@@ -22,6 +23,6 @@ int db_is_open() {
     return dungeon_crawl_db->db != NULL;
 }
 
-DBConnection *db_get_connection() {
+DBConnection* db_get_connection() {
     return dungeon_crawl_db;
 }
