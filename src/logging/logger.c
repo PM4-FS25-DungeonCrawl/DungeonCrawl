@@ -162,14 +162,14 @@ void close_log_file(const bool terminate_thread) {
     }
     if (terminate_thread) {
         thread_is_running = false;
-        free_ring_buffer(&log_buffer);
+        free_ringbuffer(&log_buffer);
     }
 }
 
 void init_logger(void) {
     if (log_file == NULL) {
         // init ring buffer to write the message in
-        if (init_ring_buffer(&log_buffer) == 0) {
+        if (init_ringbuffer(&log_buffer) == 0) {
             file_id = get_latest_file_id();
             if (file_id == FAILED || open_log_file() == FAILED) {
                 //failed to get file id or open file
@@ -217,11 +217,11 @@ void log_msg(const log_level_t level, const char* module, const char* format, ..
 
     if (log_file != NULL && thread_is_running) {
         //if the log file is open and the thread is running
-        write_to_ring_buffer(&log_buffer, log_msg);
+        write_to_ringbuffer(&log_buffer, log_msg);
     } else {
         //if the log file is not open or the thread is not running
         //print to stdout
-        printf(log_msg);
+        printf("%s", log_msg);
     }
 }
 
@@ -266,7 +266,7 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
 void* log_writer_thread(void* arg) {
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
-        if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
+        if (read_from_ringbuffer(&log_buffer, log_msg) == 0) {
             // message successfully read from ringbuffer
 
             check_log_file();
