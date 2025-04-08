@@ -1,4 +1,4 @@
-name: Meson test and coverage report
+name: Develop Workflow
 
 on:
   pull_request:
@@ -45,14 +45,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install Dependencies (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt update
           sudo apt install -y meson ninja-build gcc python3-pip
           pip3 install gcovr
 
-      - name: Install dependencies (macOS)
+      - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
           brew install meson ninja    
@@ -61,27 +61,21 @@ jobs:
         if: runner.os == 'Linux'
         run: meson setup builddir --buildtype=debug --prefix=$PWD/builddir -Db_coverage=true
 
-      - name: Install dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt update
-          sudo apt install -y meson ninja-build gcc
-
       - name: Configure Meson
         run: meson setup builddir
 
-      - name: Compile project
+      - name: Compile Project
         run: ninja -C builddir
 
-      - name: Run tests
+      - name: Run tests on Linux
         if: runner.os == 'Linux'
         run: meson test -C builddir --verbose
 
       - name: Generate coverage report (text summary)
         if: runner.os == 'Linux'
         run: |
-          gcovr -r . --html --html-details -o coverage-report.html
-          gcovr -r .  # simple text summary in console
+          gcovr -r . --filter src/ --html --html-details -o coverage-report.html
+          gcovr -r . --filter src/ # simple text summary in console
 
       - name: Upload coverage report as artifact
         if: runner.os == 'Linux'
@@ -96,7 +90,6 @@ jobs:
     needs: build-and-test
     if: ${{ github.ref == 'refs/heads/develop' && success() }}
 
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
