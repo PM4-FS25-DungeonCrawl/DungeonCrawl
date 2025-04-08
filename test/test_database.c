@@ -1,6 +1,7 @@
 #include "../src/database/database.h"
-#include "../src/database/local/local_database.h"
 #include "../src/database/local/attribute_database.h"
+#include "../src/database/local/local_database.h"
+
 #include <assert.h>
 #include <stdio.h>
 

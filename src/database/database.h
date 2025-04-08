@@ -8,9 +8,9 @@ typedef struct {
     char* err_msg;
 } DBConnection;
 
-int db_open(DBConnection *db_connection, const char *db_name);
+int db_open(DBConnection* db_connection, const char* db_name);
 void db_close();
 int db_is_open();
-DBConnection *db_get_connection();
+DBConnection* db_get_connection();
 
 #endif//DATABASE_H
