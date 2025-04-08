@@ -1,0 +1,134 @@
+Error while trying to load a compilation database:
+Could not auto-detect compilation database from directory "builddir"
+No compilation database found in /home/runner/work/DungeonCrawl/DungeonCrawl/builddir or any parent directory
+fixed-compilation-database: Error while opening fixed database: No such file or directory
+json-compilation-database: Error while opening JSON database: No such file or directory
+Running without flags.
+12762 warnings and 11 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
+14034 warnings and 11 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
+14034 warnings and 11 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/main.c.
+14579 warnings and 11 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+15279 warnings and 11 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/items.c.
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/character_stats.c:37:39: warning: pointer parameter 'array' can be pointer to const [readability-non-const-parameter]
+   37 | void initWeaknesses(monster_t* m, int array[]) {
+      |                                       ^
+      |                                   const 
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/combat_mode.c:332:12: warning: rand() has limited randomness [cert-msc50-cpp]
+  332 |     return rand() % dice_size + 1;
+      |            ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/combat_mode.c:332:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/combat_mode.c:336:24: warning: rand() has limited randomness [cert-msc50-cpp]
+  336 |     int random_index = rand() % character->ability_count;
+      |                        ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:32:21: error: unknown type name 'bool' [clang-diagnostic-error]
+   32 | void close_log_file(bool terminate_thread);
+      |                     ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:40:1: error: unknown type name 'bool' [clang-diagnostic-error]
+   40 | bool thread_is_running = false;
+      | ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:40:26: error: use of undeclared identifier 'false'; did you mean 'fclose'? [clang-diagnostic-error]
+   40 | bool thread_is_running = false;
+      |                          ^~~~~
+      |                          fclose
+/usr/include/stdio.h:184:12: note: 'fclose' declared here
+  184 | extern int fclose (FILE *__stream) __nonnull ((1));
+      |            ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:102:28: error: use of undeclared identifier 'false'; did you mean 'fclose'? [clang-diagnostic-error]
+  102 |             close_log_file(false);
+      |                            ^~~~~
+      |                            fclose
+/usr/include/stdio.h:184:12: note: 'fclose' declared here
+  184 | extern int fclose (FILE *__stream) __nonnull ((1));
+      |            ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:106:32: error: use of undeclared identifier 'true' [clang-diagnostic-error]
+  106 |                 close_log_file(true);
+      |                                ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:135:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  135 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+      |             ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:158:27: error: unknown type name 'bool' [clang-diagnostic-error]
+  158 | void close_log_file(const bool terminate_thread) {
+      |                           ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:164:29: error: expected expression [clang-diagnostic-error]
+  164 |         thread_is_running = false;
+      |                             ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:164:29: error: use of undeclared identifier 'false'; did you mean 'else'? [clang-diagnostic-error]
+  164 |         thread_is_running = false;
+      |                             ^~~~~
+      |                             else
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:176:32: error: use of undeclared identifier 'true' [clang-diagnostic-error]
+  176 |                 close_log_file(true);
+      |                                ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:230:20: error: use of undeclared identifier 'true' [clang-diagnostic-error]
+  230 |     close_log_file(true);
+      |                    ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c:289:25: error: use of undeclared identifier 'true' [clang-diagnostic-error]
+  289 |     thread_is_running = true;
+      |                         ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:26:17: warning: rand() has limited randomness [cert-msc50-cpp]
+   26 |         int j = rand() % (i + 1);
+      |                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:81:6: warning: function 'carve_passages' is within a recursive call chain [misc-no-recursion]
+   81 | void carve_passages(int x, int y) {
+      |      ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:81:6: note: example recursive call chain, starting from function 'carve_passages'
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:104:13: note: Frame #1: function 'carve_passages' calls function 'carve_passages' here:
+  104 |             carve_passages(nx, ny);
+      |             ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:104:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:140:21: warning: rand() has limited randomness [cert-msc50-cpp]
+  140 |         int x = 1 + rand() % (WIDTH - 2);
+      |                     ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:141:21: warning: rand() has limited randomness [cert-msc50-cpp]
+  141 |         int y = 1 + rand() % (HEIGHT - 2);
+      |                     ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:170:21: warning: rand() has limited randomness [cert-msc50-cpp]
+  170 |         exit_edge = rand() % 4;
+      |                     ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:176:35: warning: rand() has limited randomness [cert-msc50-cpp]
+  176 |                 exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
+      |                                   ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:180:35: warning: rand() has limited randomness [cert-msc50-cpp]
+  180 |                 exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
+      |                                   ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:185:35: warning: rand() has limited randomness [cert-msc50-cpp]
+  185 |                 exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
+      |                                   ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:189:35: warning: rand() has limited randomness [cert-msc50-cpp]
+  189 |                 exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
+      |                                   ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:244:33: warning: rand() has limited randomness [cert-msc50-cpp]
+  244 |             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+      |                                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:250:33: warning: rand() has limited randomness [cert-msc50-cpp]
+  250 |             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+      |                                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:254:33: warning: rand() has limited randomness [cert-msc50-cpp]
+  254 |             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+      |                                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:260:33: warning: rand() has limited randomness [cert-msc50-cpp]
+  260 |             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+      |                                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c:327:22: warning: rand() has limited randomness [cert-msc50-cpp]
+  327 |         start_edge = rand() % 4;
+      |                      ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c:31:13: warning: rand() has limited randomness [cert-msc50-cpp]
+   31 |         x = rand() % (WIDTH - 2) + 1;
+      |             ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c:32:13: warning: rand() has limited randomness [cert-msc50-cpp]
+   32 |         y = rand() % (HEIGHT - 2) + 1;
+      |             ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c:58:17: warning: rand() has limited randomness [cert-msc50-cpp]
+   58 |             x = rand() % (WIDTH - 2) + 1;
+      |                 ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c:59:17: warning: rand() has limited randomness [cert-msc50-cpp]
+   59 |             y = rand() % (HEIGHT - 2) + 1;
+      |                 ^
+Suppressed 15256 warnings (15254 in non-user code, 2 with check filters).
+Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+Found compiler error(s).
