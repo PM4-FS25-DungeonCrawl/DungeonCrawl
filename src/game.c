@@ -24,7 +24,7 @@ int add(int a, int b) {
 
 int init_game() {
     if (tb_init() != 0) {
-        fprintf(stderr, "Failed to initialize termbox \n");
+        log_msg(ERROR, "game", "Failed to initialize termbox");
         return 1;
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);

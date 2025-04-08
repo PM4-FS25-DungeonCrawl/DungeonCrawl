@@ -160,7 +160,7 @@ void close_log_file(const bool terminate_thread) {
         fclose(log_file);
         log_file = NULL;
     }
-    if (terminate_thread && thread_is_running) {
+    if (terminate_thread) {
         thread_is_running = false;
         free_ring_buffer(&log_buffer);
     }
@@ -170,7 +170,13 @@ void init_logger(void) {
     if (log_file == NULL) {
         // init ring buffer to write the message in
         if (init_ring_buffer(&log_buffer) == 0) {
-            start_log_writer_thread();// start thread
+            file_id = get_latest_file_id();
+            if (file_id == FAILED || open_log_file() == FAILED) {
+                //failed to get file id or open file
+                close_log_file(true);
+            } else {
+                start_log_writer_thread();// start thread
+            }
         }
     }
 }
@@ -238,16 +244,7 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
         if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
             // message successfully read from ringbuffer
 
-            // open log file for the first time this session
-            if (log_file == NULL) {
-                file_id = get_latest_file_id();
-                if (file_id == FAILED || open_log_file() == FAILED) {
-                    //failed to get file id or open file
-                    close_log_file(true);
-                }
-            }
             check_log_file();
-
 
             if (log_file) {
                 //writes to the log file
@@ -267,16 +264,6 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
  * @return NULL
  */
 void* log_writer_thread(void* arg) {
-    // open log file for the first time this session
-    // only tries once
-    if (log_file == NULL) {
-        file_id = get_latest_file_id();
-        if (file_id == FAILED || open_log_file() == FAILED) {
-            //failed to get file id or open file
-            close_log_file(true);
-        }
-    }
-
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
         if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
