@@ -81,5 +81,5 @@ int read_from_ring_buffer(ring_buffer_t* buffer, char* message) {
     buffer->head = (buffer->head + 1) % BUFFER_SIZE;
     buffer->count--;
     MUTEX_UNLOCK(&buffer->mutex);
-    return 1;
+    return 0;
 }

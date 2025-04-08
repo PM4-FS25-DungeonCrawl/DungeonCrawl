@@ -88,7 +88,6 @@ int init_game() {
                 break;
             }
             case EXIT:
-                close_log_file(true);
                 doRun = false;
                 break;
             default:
@@ -96,6 +95,7 @@ int init_game() {
         }
     }
 
+    shutdown_logger();
     tb_shutdown();
     return 0;
 }

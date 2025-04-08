@@ -20,7 +20,7 @@
 #define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"
 #define MSG_FORMAT "[%s] [%s] [%s] : %s\n"
 
-#define MAX_HEADER_SIZE 256
+#define MAX_HEADER_SIZE 512
 
 #define FAILED (-1)
 #define SUCCESS 0
@@ -29,35 +29,35 @@ const char* log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 
 //predefines of functions, used in this module
 void start_log_writer_thread(void);
+void close_log_file(bool terminate_thread);
 
 //the used file-pointer to write the log messages in
 FILE* log_file = NULL;
 //the used RingBuffer to write log messages in
 ring_buffer_t log_buffer;
 
-//states if the file writing thread is still running, if set to 0 the thread terminates or is terminated
+//states if the file writing thread is still running, if set to false the thread terminates or is terminated
 bool thread_is_running = false;
-//when this variable is true, the logger is failed and no log msg are written
-bool log_failed = false;
 //the id of the used file
 int file_id = 0;
 
 /**
  * ensures that the predefined log directory already exist,
- * if not create a new one
+ * if not create a new one.
+ *
+ * @return -1 if the directory could not be created, 0 if the directory already exists or was created successfully
  */
-void ensure_log_dir(void) {
+int ensure_log_dir(void) {
     struct stat st;
 
     if (stat(LOG_DIRECTORY, &st) == -1) {
         //directory doesn't exist -> create a new one
 
         if (mkdir(LOG_DIRECTORY, 0755) == -1) {
-            //directory could not be created
-            log_failed = true;
-            close_log_file(true);
+            return FAILED;
         }
     }
+    return SUCCESS;
 }
 
 
@@ -65,11 +65,11 @@ void ensure_log_dir(void) {
  * Opens the log file with current saved file id in append modus.
  * If no file is found creates a new file corresponding to fopen(...).
  *
- * @return 1 if the file could not be open, 0 when successfully
+ * @return -1 if the file could not be open, 0 when successfully
  */
 int open_log_file(void) {
-    char name[15];
-    snprintf(name, 15, LOG_FILE_FORMAT, file_id);
+    char name[16];
+    snprintf(name, 16, LOG_FILE_FORMAT, file_id);
 
     char filename[256];
     snprintf(filename, 256, "%s/%s", LOG_DIRECTORY, name);
@@ -103,7 +103,6 @@ void check_log_file(void) {
             file_id = (file_id + 1) % MAX_N_FILES;
             if (open_log_file() == FAILED) {
                 //file could not be opened
-                log_failed = true;
                 close_log_file(true);
             }
         }
@@ -115,7 +114,10 @@ void check_log_file(void) {
  * @return the latest used file id, in the range 0 (ink.) to MAX_N_FILES (exkl.) or -1 if directory was not found.
  */
 int get_latest_file_id(void) {
-    ensure_log_dir();
+    if (ensure_log_dir() == FAILED) {
+        //directory could not be created
+        return FAILED;
+    }
 
     DIR* dir = opendir(LOG_DIRECTORY);
     struct dirent* entry;
@@ -151,24 +153,31 @@ int get_latest_file_id(void) {
 /**
  * Closes the current log file
  *
- * @param terminate_thread if 1 the running thread will also be terminated
+ * @param terminate_thread if true the running thread will also be terminated
  */
 void close_log_file(const bool terminate_thread) {
-    if (log_file) {
+    if (log_file != NULL) {
         fclose(log_file);
         log_file = NULL;
     }
     if (terminate_thread && thread_is_running) {
-        thread_is_running = true;
+        thread_is_running = false;
         free_ring_buffer(&log_buffer);
     }
 }
 
+void init_logger(void) {
+    if (log_file == NULL) {
+        // init ring buffer to write the message in
+        if (init_ring_buffer(&log_buffer)) {
+            start_log_writer_thread();// start thread
+        }
+    }
+}
+
 /**
- * Writes a log message to the log file.
- *
- * If it is the first call of the session the ring buffer will be initialized
- * and the writing thread will be started.
+ * Writes a log message to the log file. If the log file isn't open or the log writer thread is not running,
+ * prints the log message to stdout.
  *
  * @param level The log level of the message (DEBUG, FINE, INFO, WARNING, ERROR).
  * @param module The name of the module writing the log message.
@@ -176,46 +185,53 @@ void close_log_file(const bool terminate_thread) {
  * @param ... Additional arguments used in the format string.
  */
 void log_msg(const log_level_t level, const char* module, const char* format, ...) {
-    //starting thread
-    if (log_file == NULL && !log_failed) {
-        init_ring_buffer(&log_buffer);// init ring buffer to write the message in
+    //get timestamp
+    const time_t now = time(NULL);
+    const struct tm* tm = localtime(&now);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
 
-        start_log_writer_thread();//start thread
+    //get log level
+    const char* log_level;
+    if (level >= MAX_LOG_LEVEL) {
+        log_level = log_level_str[INFO];
+    } else {
+        log_level = log_level_str[level];
     }
 
-    //if thread is not running, something went wrong with opening the log dir, log file
-    if (thread_is_running) {
-        //get timestamp
-        const time_t now = time(NULL);
-        const struct tm* tm = localtime(&now);
-        char timestamp[20];
-        strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
+    va_list args;
+    va_start(args, format);
+    //temp msg placeholder
+    char msg[MAX_HEADER_SIZE];
+    vsnprintf(msg, sizeof(msg), format, args);
 
-        //get log level
-        const char* log_level = log_level_str[level];
+    char log_msg[MAX_MSG_LENGTH];
+    snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
+    va_end(args);
 
-        va_list args;
-        va_start(args, format);
-        //temp msg placeholder
-        char msg[MAX_HEADER_SIZE];
-        vsnprintf(msg, sizeof(msg), format, args);
-
-        char log_msg[MAX_MSG_LENGTH];
-        snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
-        va_end(args);
-
+    if (log_file != NULL && thread_is_running) {
+        //if the log file is open and the thread is running
         write_to_ring_buffer(&log_buffer, log_msg);
+    } else {
+        //if the log file is not open or the thread is not running
+        //print to stdout
+        printf(log_msg);
     }
+}
+
+void shutdown_logger(void) {
+    //close log file
+    close_log_file(true);
 }
 
 #ifdef _WIN32
 /**
-     * This function will be called from a different thread to read from the ringbuffer
-     * and then write in the log file
-     *
-     * @param arg a pointer for different arguments, set by the thread. Will not be used!
-     * @return 0
-     */
+ * This function will be called from a different thread to read from the ringbuffer
+ * and then write in the log file
+ *
+ * @param arg a pointer for different arguments, set by the thread. Will not be used!
+ * @return 0
+ */
 DWORD WINAPI log_writer_thread(LPVOID param) {
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
@@ -227,7 +243,6 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
                 file_id = get_latest_file_id();
                 if (file_id == FAILED || open_log_file() == FAILED) {
                     //failed to get file id or open file
-                    log_failed = true;
                     close_log_file(true);
                 }
             }
@@ -245,30 +260,29 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
 }
 #else
 /**
-     * This function will be called from a different thread to read from the ringbuffer
-     * and then write in the log file
-     *
-     * @param arg a pointer for different arguments, set by the thread. Will not be used!
-     * @return NULL
-     */
+ * This function will be called from a different thread to read from the ringbuffer
+ * and then write in the log file
+ *
+ * @param arg a pointer for different arguments, set by the thread. Will not be used!
+ * @return NULL
+ */
 void* log_writer_thread(void* arg) {
+    // open log file for the first time this session
+    // only tries once
+    if (log_file == NULL) {
+        file_id = get_latest_file_id();
+        if (file_id == FAILED || open_log_file() == FAILED) {
+            //failed to get file id or open file
+            close_log_file(true);
+        }
+    }
+
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
         if (read_from_ring_buffer(&log_buffer, log_msg)) {
             // message successfully read from ringbuffer
 
-            // open log file for the first time this session
-            // only tries once -> no logs will be created
-            if (log_file == NULL && file_id != -1) {
-                file_id = get_latest_file_id();
-                if (file_id == FAILED || open_log_file() == FAILED) {
-                    //failed to get file id or open file
-                    log_failed = true;
-                    close_log_file(true);
-                }
-            }
             check_log_file();
-
 
             if (log_file) {
                 //writes to the log file
