@@ -45,12 +45,12 @@ typedef struct {
 typedef struct {
     Item base;
     UsableItemEffectType effectType;
-    int value; // e.g. value = 30, healing potion heals for 30 health
-    // for other item effects more values might be needed
+    int value;// e.g. value = 30, healing potion heals for 30 health
+              // for other item effects more values might be needed
 } UsableItem;
 
 // Function Declarations
-void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType effectType, int value);
-void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot, int armor_bonus);
+void init_usable_item(UsableItem* item, const char* name, UsableItemEffectType effectType, int value);
+void init_equippable_item(EquippableItem* item, const char* name, GearSlot slot, int armor_bonus);
 
-#endif // ITEMS_H
+#endif// ITEMS_H
