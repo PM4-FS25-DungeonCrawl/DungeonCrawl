@@ -23,7 +23,7 @@ void test_attribute_key() {
     assert(db_is_open(&db_connection) == 1);
 
     // Create a test attribute
-    const int attr_key = attribute_key(&db_connection,TEST_ATTRIBUTE_NAME);
+    const int attr_key = attribute_key(&db_connection, TEST_ATTRIBUTE_NAME);
     assert(attr_key != -1);
 
     // Check if the attribute key is correct
