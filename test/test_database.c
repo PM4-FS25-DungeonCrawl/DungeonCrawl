@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../src/database/database.h"
-#include "../src/database/localization/localization_database.h"
-#include "../src/database/localization/attribute_database.h"
+#include "../src/database/local/local_database.h"
+#include "../src/database/local/attribute_database.h"
 #include <assert.h>
 
 #define TEST_ATTRIBUTE_NAME "RARESWORD"
@@ -22,7 +22,7 @@ void test_attribute_key() {
     assert(db_is_open() == 1);
 
     // Create a test attribute
-    int attr_key = attribute_key(TEST_ATTRIBUTE_NAME);
+    const int attr_key = attribute_key(TEST_ATTRIBUTE_NAME);
     assert(attr_key != -1);
 
     // Check if the attribute key is correct

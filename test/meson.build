@@ -1,8 +1,12 @@
 # needed files for each test
 helper_db = files(
+    # used to resolve compile errors with log_msg
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c',
+    # actual needed files
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/localization/localization_database.c'
+    '../src/database/local/local_database.c'
 )
 
 helper_draw_light = files(
