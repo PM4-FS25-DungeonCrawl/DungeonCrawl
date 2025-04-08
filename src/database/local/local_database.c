@@ -1,7 +1,9 @@
-#include "../database.h"
 #include "local_database.h"
-#include "attribute_database.h"
+
 #include "../../logging/logger.h"
+#include "../database.h"
+#include "attribute_database.h"
+
 #include <stdio.h>
 
 #define ATTRIBUTE_KEY_STATEMENT "SELECT AT_ID FROM attribute WHERE AT_NAME = ?"
@@ -14,11 +16,11 @@ int attribute_key(const char* attribute_name) {
     // Get the database connection
     const DBConnection db_connection = *db_get_connection();
     //Check if the database is open
-	if (!db_is_open()) {
-		log_msg(ERROR, "Local Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
-//		fprintf(stderr, "Database is not open\n");
-	    return -1;
-	}
+    if (!db_is_open()) {
+        log_msg(ERROR, "Local Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
+        //		fprintf(stderr, "Database is not open\n");
+        return -1;
+    }
 
     // Prepare the SQL statement
     sqlite3_stmt* statement;
