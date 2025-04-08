@@ -35,7 +35,7 @@ int init_game(){
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
     bool running = true; //should only be set in the state machine
-    game_state_t current_state = GENERATE_MAP;
+    game_state_t current_state = COMBAT_MODE;
 
     init_map_mode();
 
@@ -43,6 +43,7 @@ int init_game(){
     character_t * goblin = create_new_goblin(); //initialize standard goblin
     character_t * player = create_new_player(); //initialize blank player
     usable_item_t* healing_potion = init_usable_item("Healing Potion", HEALING, 20);
+
     if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         current_state = EXIT;

@@ -13,12 +13,18 @@
 character_t test_character = {
     .type = PLAYER,
     .name = "Test Character",
-    .health = 100,
-    .armor = 0,
-    .might = 0,
-    .deflection = 0,
-    .fortitude = 0,
-    .will = 0,
+    .base_stats.health = 100,
+    .base_stats.armor = 0,
+    .base_stats.might = 0,
+    .base_stats.deflection = 0,
+    .base_stats.fortitude = 0,
+    .base_stats.will = 0,
+    .current_stats.health = 100,
+    .current_stats.armor = 0,
+    .current_stats.might = 0,
+    .current_stats.deflection = 0,
+    .current_stats.fortitude = 0,
+    .current_stats.will = 0,
     .resistance = {0},
     .abilities = NULL,
     .ability_count = 0,
@@ -40,7 +46,7 @@ void test_roll_hit() {
 
     // Test with low accuracy ability (should miss)
     test_ability.accuracy = 0;
-    test_character.deflection = 20;
+    test_character.current_stats.deflection = 20;
     assert(roll_hit(&test_character, &test_ability) == false);
 
     printf("test_roll_hit passed!\n");
@@ -55,12 +61,12 @@ void test_roll_damage() {
 }
 
 void test_deal_damage_to_armor() {
-    test_character.health = 100;
-    test_character.armor = 10; // set armor
+    test_character.current_stats.health = 100;
+    test_character.current_stats.armor = 10; // set armor
 
     // Damage after armor reduction: 50 - 10 = 40
     deal_damage(&test_character, PHYSICAL, 50);
-    assert(test_character.health == 60); // 100 - (50 - 10) = 60
+    assert(test_character.current_stats.health == 60); // 100 - (50 - 10) = 60
 
     printf("test_deal_damage_to_armor passed!\n");
 }

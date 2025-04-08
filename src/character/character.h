@@ -15,16 +15,21 @@ typedef enum {
     BOSS
 } character_type_t;
 
-typedef struct character_t {
-    character_type_t type;
-    char name[MAX_NAME_LENGTH];
-
+typedef struct {
     int health;
     int armor;
     int might;
     int deflection;
     int fortitude;
     int will;
+} stats_t;
+
+typedef struct character_t {
+    character_type_t type;
+    char name[MAX_NAME_LENGTH];
+
+    stats_t base_stats;
+    stats_t current_stats;
 
     damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
 
@@ -48,5 +53,7 @@ void remove_item(character_t* c, item_t* item);
 bool use_usable_item(character_t* character, item_t* item);
 
 int deal_damage(character_t* character, damage_type_t damage_type, int damage);
+
+void reset_current_stats(character_t * character);
 
 #endif //CHARACTER_H

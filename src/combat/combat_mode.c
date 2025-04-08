@@ -55,10 +55,10 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
-                if (player->health <= 0) {
+                if (player->current_stats.health <= 0) {
                     combat_result = PLAYER_LOST;
                     combat_active = false; // exit the combat loop
-                } else if (monster->health <= 0) {
+                } else if (monster->current_stats.health <= 0) {
                     combat_result = PLAYER_WON;
                     combat_active = false; // exit the combat loop
                 } else {
@@ -270,12 +270,12 @@ int display_combat_view(const character_t* player, const character_t* monster, b
 
     // Display player info
     char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->current_stats.health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
 
     // Display monster info
     char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->current_stats.health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
 
     y += 2;
@@ -356,7 +356,6 @@ void display_combat_message(const character_t* player, const character_t* monste
 
     usleep(10000000); //sleep for 10 seconds
 }
-
 
 void display_enemy_attack_message(const character_t* player, const character_t* monster, int damage_dealt) {
     if (damage_dealt <= 0) damage_dealt = 0;
