@@ -1,5 +1,8 @@
-#ifndef LOCALIZATION_DATABASE_H
-#define LOCALIZATION_DATABASE_H
+#ifndef LOCAL_DATABASE_H
+#define LOCAL_DATABASE_H
+#include "../database.h"
+#include "../../local/local.h"
+
 // functions for localization table
-char* get_localization_string(const char* attribute_path, int language_id);
-#endif//LOCALIZATION_DATABASE_H
+char *get_localization_string(const DBConnection *db_connection, const char *attribute_path, local_language_t *language);
+#endif//LOCAL_DATABASE_H
