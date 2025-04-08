@@ -21,6 +21,13 @@
     #define SIGNAL_WAIT(cond, mutex) pthread_cond_wait(cond, mutex)
 #endif
 
+
+/**
+ * Initializes the ring buffer.
+ *
+ * @param buffer the buffer pointer to be initialized
+ * @return 0 if initialization was successfully or 1 if not
+ */
 int init_ring_buffer(ring_buffer_t* buffer) {
     buffer->head = 0;
     buffer->tail = 0;
@@ -52,6 +59,11 @@ int init_ring_buffer(ring_buffer_t* buffer) {
     return 0;
 }
 
+/**
+ * Frees the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ */
 void free_ring_buffer(const ring_buffer_t* buffer) {
     if (buffer->messages) {
         for (int i = 0; i < BUFFER_SIZE; i++) {
@@ -61,6 +73,12 @@ void free_ring_buffer(const ring_buffer_t* buffer) {
     }
 }
 
+/**
+ * Writes a message to the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ * @param message the message to be written in the ringbuffer
+ */
 void write_to_ring_buffer(ring_buffer_t* buffer, const char* message) {
     MUTEX_LOCK(&buffer->mutex);
     if (buffer->count < BUFFER_SIZE) {
@@ -72,6 +90,13 @@ void write_to_ring_buffer(ring_buffer_t* buffer, const char* message) {
     MUTEX_UNLOCK(&buffer->mutex);
 }
 
+/**
+ * Reads a message from the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ * @param message the placeholder of the message to be read
+ * @return 0 if a message was successfully read
+ */
 int read_from_ring_buffer(ring_buffer_t* buffer, char* message) {
     MUTEX_LOCK(&buffer->mutex);
     while (buffer->count == 0) {

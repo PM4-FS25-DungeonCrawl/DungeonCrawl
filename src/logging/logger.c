@@ -169,7 +169,7 @@ void close_log_file(const bool terminate_thread) {
 void init_logger(void) {
     if (log_file == NULL) {
         // init ring buffer to write the message in
-        if (init_ring_buffer(&log_buffer)) {
+        if (init_ring_buffer(&log_buffer) == 0) {
             start_log_writer_thread();// start thread
         }
     }
@@ -235,7 +235,7 @@ void shutdown_logger(void) {
 DWORD WINAPI log_writer_thread(LPVOID param) {
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
-        if (read_from_ring_buffer(&log_buffer, log_msg)) {
+        if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
             // message successfully read from ringbuffer
 
             // open log file for the first time this session
@@ -279,7 +279,7 @@ void* log_writer_thread(void* arg) {
 
     while (thread_is_running) {
         char log_msg[MAX_MSG_LENGTH];
-        if (read_from_ring_buffer(&log_buffer, log_msg)) {
+        if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
             // message successfully read from ringbuffer
 
             check_log_file();
