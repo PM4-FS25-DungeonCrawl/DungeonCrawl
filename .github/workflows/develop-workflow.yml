@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, macos-latest ]  # Multi-OS build
-      runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     needs: format-code
 
     steps:
