@@ -4,7 +4,7 @@
 #include "../database.h"
 #include "attribute_database.h"
 
-#include <stdio.h>
+#define ATTRIBUTE_KEY_STATEMENT "SELECT AT_ID FROM attribute WHERE AT_NAME = ?"
 
 /**
  * Get the attribute key (AT_ID) from the table attribute
@@ -16,18 +16,15 @@ int attribute_key(const char* attribute_name) {
     //Check if the database is open
     if (!db_is_open()) {
         log_msg(ERROR, "Localization Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
-        //		fprintf(stderr, "Database is not open\n");
         return -1;
     }
     log_msg(FINE, "Localization Database", "logger also works with tests");
 
     // Prepare the SQL statement
-    char* stmt = "SELECT AT_ID FROM attribute WHERE AT_NAME = ?";
     sqlite3_stmt* statement;
-    int rc = sqlite3_prepare_v2(db_connection.db, stmt, -1, &statement, 0);
+    int rc = sqlite3_prepare_v2(db_connection.db, ATTRIBUTE_KEY_STATEMENT, -1, &statement, 0);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "Localization Database", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection.db));
-        //fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db_connection.db));
         return -1;
     }
     // Bind the attribute name to the statement
@@ -36,7 +33,6 @@ int attribute_key(const char* attribute_name) {
     rc = sqlite3_step(statement);
     if (rc != SQLITE_ROW) {
         log_msg(ERROR, "Localization Database", "Failed to execute statement: %s", sqlite3_errmsg(db_connection.db));
-        //fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db_connection.db));
         sqlite3_finalize(statement);
         return -1;
     }
