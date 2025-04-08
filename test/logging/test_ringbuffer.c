@@ -22,8 +22,8 @@ void test_init_ringbuffer(void) {
 }
 
 void test_read_write_ringbuffer(void) {
-    const char *test_message1 = "Test Message 1";
-    const char *test_message2 = "Test Message 2";
+    const char* test_message1 = "Test Message 1";
+    const char* test_message2 = "Test Message 2";
     char buffer[32];
 
     write_to_ringbuffer(&test_ringbuffer, test_message1);
@@ -47,7 +47,6 @@ void tear_down(void) {
     free_ringbuffer(&test_ringbuffer);
     printf("test_free_ringbuffer passed\n");
 }
-
 
 
 int main(void) {
