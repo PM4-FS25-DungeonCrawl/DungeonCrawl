@@ -10,14 +10,17 @@ typedef enum {
     SLOT_NECK,
     SLOT_FINGER_RIGHT,
     SLOT_FINGER_LEFT,
-    SLOT_COUNT
+    SLOT_LEFT_HAND, // Weapon slot
+    SLOT_RIGHT_HAND, // Weapon slot
+    SLOT_BOTH_HANDS, // Weapon slot
+    MAX_SLOT
 } gear_slot_t;
 
 typedef struct {
     item_t* base; // base item structure
     gear_slot_t slot;
-    int armor_bonus;
-    // Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    int armor_bonus; // Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    // abilitiy_t abilities[6];
 } equipable_item_t;
 
 equipable_item_t* init_equipable_item(const char* name, gear_slot_t slot, int armor_bonus);

@@ -4,9 +4,7 @@
 #include "../character/character_fw.h"
 #include "ability_fw.h"
 
-#ifndef DAMAGE_TYPE_COUNT
 #define DAMAGE_TYPE_COUNT 2
-#endif
 
 typedef enum damage_type_t {
     PHYSICAL,

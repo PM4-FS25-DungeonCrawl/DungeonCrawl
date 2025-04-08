@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "character.h"
+#include "../combat/ability.h"
 #include "../item/usable_item.h"
 
 character_t* init_character(const character_type_t type, const char *name) {

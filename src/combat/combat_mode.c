@@ -189,7 +189,8 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                 (void) display_combat_view(player, monster, false);
                 tb_present();
 
-                usleep(500000);
+                // usleep(500000);
+                tb_poll_event(&event);
                 new_state = EVALUATE_COMBAT;
                 ability_used = true;
             } else if (event.key == TB_KEY_ESC) {
@@ -354,7 +355,9 @@ void display_combat_message(const character_t* player, const character_t* monste
     tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
     tb_present();
 
-    usleep(10000000); //sleep for 10 seconds
+    //usleep(10000000); //sleep for 10 seconds
+    struct tb_event event;
+    tb_poll_event(&event);
 }
 
 void display_enemy_attack_message(const character_t* player, const character_t* monster, int damage_dealt) {

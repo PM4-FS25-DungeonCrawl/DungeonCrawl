@@ -9,7 +9,7 @@ typedef enum {
     FIREBALL,
     SWORD_SLASH,
     BITE,
-    ABILITIES_SIZE
+    MAX_ABILITIES
 } abilities_t;
 
 typedef struct ability_t {
@@ -21,7 +21,7 @@ typedef struct ability_t {
 } ability_t;
 
 typedef struct {
-    ability_t table[ABILITIES_SIZE];
+    ability_t abilities[MAX_ABILITIES];
 } ability_table_t;
 
 

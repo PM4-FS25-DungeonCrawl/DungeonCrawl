@@ -49,11 +49,11 @@ int init_game(){
         current_state = EXIT;
     } else {
         // add abilities to player and goblin
-        add_ability(goblin, &ability_table->table[BITE]);
+        add_ability(goblin, &ability_table->abilities[BITE]);
         log_msg(INFO, "Game", "Added ability: %s to goblin", goblin->abilities[0]->name);
-        add_ability(player, &ability_table->table[FIREBALL]);
+        add_ability(player, &ability_table->abilities[FIREBALL]);
         log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[0]->name);
-        add_ability(player, &ability_table->table[SWORD_SLASH]);
+        add_ability(player, &ability_table->abilities[SWORD_SLASH]);
         log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[1]->name);
         //add healing potion to player
         add_item(player, healing_potion->base);
