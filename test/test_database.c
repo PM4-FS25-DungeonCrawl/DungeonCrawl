@@ -1,13 +1,13 @@
-#include <stdio.h>
 #include "../src/database/database.h"
 #include "../src/database/local/local_database.h"
 #include "../src/database/local/attribute_database.h"
 #include <assert.h>
+#include <stdio.h>
 
 #define TEST_ATTRIBUTE_NAME "RARESWORD"
 #define EXPECTED_ATTRIBUTE_KEY 6
 
-void test_db_open(){
+void test_db_open() {
     DBConnection db_connection;
     assert(db_open(&db_connection, "../../test/test_data.db") == 1);
     assert(db_is_open() == 1);

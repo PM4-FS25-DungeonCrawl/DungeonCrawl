@@ -1,19 +1,19 @@
+#include "../src/combat_mode.h"
+
 #include <assert.h>
 #include <stdio.h>
-#include "../src/combat_mode.h"
 
 // Helper function to initialize a test Character
 character_t create_test_character(character_type_t type, int health, int armor, int might, int deflection, int fortitude, int will) {
     character_t character = {
-        .type = type,
-        .health = health,
-        .armor = armor,
-        .might = might,
-        .deflection = deflection,
-        .fortitude = fortitude,
-        .will = will,
-        .ability_count = 0
-    };
+            .type = type,
+            .health = health,
+            .armor = armor,
+            .might = might,
+            .deflection = deflection,
+            .fortitude = fortitude,
+            .will = will,
+            .ability_count = 0};
     return character;
 }
 
@@ -33,14 +33,14 @@ monster_t create_test_monster(int health, int armor, int might, int deflection, 
 }
 
 // Helper function to create a test Ability
-ability_t create_test_ability(const char *name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type) {
+ability_t create_test_ability(const char* name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type) {
     ability_t ability;
     initAbility(&ability, name, rollCount, accuracy, diceSize, type);
     return ability;
 }
 
 void test_roll_hit() {
-    monster_t defender = create_test_monster(100, 0, 0, 0, 0, 0, (int[]){0,0});
+    monster_t defender = create_test_monster(100, 0, 0, 0, 0, 0, (int[]) {0, 0});
     ability_t test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
 
     // Test with high accuracy ability (should always hit)
@@ -51,7 +51,7 @@ void test_roll_hit() {
     defender.base.deflection = 20;
     assert(roll_hit(&test_ability, &defender.base) == false);
 
-    printf("test_roll_hit passed!\n");    
+    printf("test_roll_hit passed!\n");
 }
 
 void test_roll_damage() {
@@ -73,7 +73,7 @@ void test_deal_damage_to_armor() {
     printf("test_deal_damage_to_armor passed!\n");
 }
 
-int main(void){
+int main(void) {
     test_roll_hit();
     test_roll_damage();
     test_deal_damage_to_armor();
