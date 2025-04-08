@@ -28,9 +28,9 @@ typedef struct {
 } ring_buffer_t;
 #endif
 
-int init_ring_buffer(ring_buffer_t* buffer);
-void free_ring_buffer(const ring_buffer_t* buffer);
-void write_to_ring_buffer(ring_buffer_t* buffer, const char* message);
-int read_from_ring_buffer(ring_buffer_t* buffer, char* message);
+int init_ringbuffer(ring_buffer_t* buffer);
+void free_ringbuffer(const ring_buffer_t* buffer);
+void write_to_ringbuffer(ring_buffer_t* buffer, const char* message);
+int read_from_ringbuffer(ring_buffer_t* buffer, char* message);
 
 #endif//RINGBUFFER_H
