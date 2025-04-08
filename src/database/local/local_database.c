@@ -10,23 +10,21 @@
 
 /**
  * Get the attribute key (AT_ID) from the table attribute
+ * @param db_connection (DBConnection)
  * @param attribute_name (AT_NAME)
  */
-int attribute_key(const char* attribute_name) {
-    // Get the database connection
-    const DBConnection db_connection = *db_get_connection();
+int attribute_key(const DBConnection* db_connection, const char* attribute_name) {
     //Check if the database is open
-    if (!db_is_open()) {
-        log_msg(ERROR, "Local Database", "Database could not be open, error: %s", sqlite3_errmsg(db_connection.db));
-        //		fprintf(stderr, "Database is not open\n");
+    if (!db_is_open(db_connection)) {
+        log_msg(ERROR, "Localization Database", "Database is not open");
         return -1;
     }
 
     // Prepare the SQL statement
     sqlite3_stmt* statement;
-    int rc = sqlite3_prepare_v2(db_connection.db, ATTRIBUTE_KEY_STATEMENT, -1, &statement, 0);
+    int rc = sqlite3_prepare_v2(db_connection->db, ATTRIBUTE_KEY_STATEMENT, -1, &statement, 0);
     if (rc != SQLITE_OK) {
-        log_msg(ERROR, "Localization Database", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection.db));
+        log_msg(ERROR, "Localization Database", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
         return -1;
     }
     // Bind the attribute name to the statement
@@ -34,7 +32,7 @@ int attribute_key(const char* attribute_name) {
     // Execute the statement
     rc = sqlite3_step(statement);
     if (rc != SQLITE_ROW) {
-        log_msg(ERROR, "Localization Database", "Failed to execute statement: %s", sqlite3_errmsg(db_connection.db));
+        log_msg(ERROR, "Localization Database", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
         //fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db_connection.db));
         sqlite3_finalize(statement);
         return -1;

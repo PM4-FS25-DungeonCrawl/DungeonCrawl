@@ -11,32 +11,32 @@
 DBConnection db_connection;
 
 void test_db_open() {
-    assert(db_open(&db_connection, "test/test_data.db") == 1);
-    assert(db_is_open() == 1);
-    db_close();
-    assert(db_is_open() == 0);
+    assert(db_open(&db_connection, "../test/test_data.db") == 1);
+    assert(db_is_open(&db_connection) == 1);
+    db_close(&db_connection);
+    assert(db_is_open(&db_connection) == 0);
     printf("Test_db_open passed\n");
 }
 
 void test_attribute_key() {
-    assert(db_open(&db_connection, "test/test_data.db") == 1);
-    assert(db_is_open() == 1);
+    assert(db_open(&db_connection, "../test/test_data.db") == 1);
+    assert(db_is_open(&db_connection) == 1);
 
     // Create a test attribute
-    const int attr_key = attribute_key(TEST_ATTRIBUTE_NAME);
+    const int attr_key = attribute_key(&db_connection,TEST_ATTRIBUTE_NAME);
     assert(attr_key != -1);
 
     // Check if the attribute key is correct
     assert(attr_key == EXPECTED_ATTRIBUTE_KEY);
 
-    db_close();
-    assert(db_is_open() == 0);
+    db_close(&db_connection);
+    assert(db_is_open(&db_connection) == 0);
     printf("Test_attribute_key passed\n");
 }
 
 
 int main() {
     test_db_open();
-    //test_attribute_key();
+    test_attribute_key();
     return 0;
 }

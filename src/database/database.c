@@ -2,27 +2,25 @@
 
 #include <stdio.h>
 
-DBConnection* dungeon_crawl_db = NULL;
-
 int db_open(DBConnection* db_connection, const char* db_name) {
-    dungeon_crawl_db = db_connection;
-    int rc = sqlite3_open(db_name, &dungeon_crawl_db->db);
+    int rc = sqlite3_open(db_name, &db_connection->db);
     if (rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(dungeon_crawl_db->db));
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
         return 0;
     }
     return 1;
 }
 
-void db_close() {
-    sqlite3_close(dungeon_crawl_db->db);
-    dungeon_crawl_db->db = NULL;
+void db_close(DBConnection* db_connection) {
+    if (db_connection->db != NULL) {
+        sqlite3_close(db_connection->db);
+        db_connection->db = NULL;
+    }
 }
 
-int db_is_open() {
-    return dungeon_crawl_db->db != NULL;
-}
-
-DBConnection* db_get_connection() {
-    return dungeon_crawl_db;
+int db_is_open(const DBConnection* db_connection) {
+    if (db_connection->db == NULL) {
+        return 0;
+    }
+    return 1;
 }

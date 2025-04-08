@@ -9,8 +9,7 @@ typedef struct {
 } DBConnection;
 
 int db_open(DBConnection* db_connection, const char* db_name);
-void db_close();
-int db_is_open();
-DBConnection* db_get_connection();
+void db_close(DBConnection* db_connection);
+int db_is_open(const DBConnection* db_connection);
 
 #endif//DATABASE_H
