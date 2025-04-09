@@ -1,4 +1,5 @@
 #include "local.h"
+#include "../database/local/local_database.h"
 
 #include <stdlib.h>
 
@@ -27,7 +28,7 @@ language_t current_language = LANG_EN;
  * Initialize the local module.
  * This function should be called before using any other functions in this module.
  */
-void local_init(void) {
+void init_local(void) {
     // Initialize the observer list
     observer_list = malloc(sizeof(observer_node_t));
     if (observer_list == NULL) {
@@ -55,7 +56,7 @@ char* get_local_string(const char* key) {
  * @return true if the language was set successfully, false otherwise
  */
 bool set_language(const language_t lang) {
-    if (lang >= LANG_MAX) {
+    if (lang >= MAX_LANG) {
         return false;// Invalid language
     }
     current_language = lang;
@@ -102,7 +103,7 @@ void add_observer(const update_observer_t update_func) {
  * Shutdown the local module and frees any allocated resources.
  * This function should be called when the module is no longer needed.
  */
-void local_shutdown(void) {
+void shutdown_local(void) {
     // free the observer list
     observer_node_t* current = observer_list;
     while (current != NULL) {

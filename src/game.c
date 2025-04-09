@@ -6,6 +6,7 @@
 #include "logging/logger.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
+#include "local/local.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -95,6 +96,7 @@ int init_game() {
         }
     }
 
+    shutdown_local();
     shutdown_logger();
     tb_shutdown();
     return 0;
