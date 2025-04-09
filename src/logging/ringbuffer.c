@@ -21,7 +21,14 @@
     #define SIGNAL_WAIT(cond, mutex) pthread_cond_wait(cond, mutex)
 #endif
 
-int init_ring_buffer(ring_buffer_t* buffer) {
+
+/**
+ * Initializes the ring buffer.
+ *
+ * @param buffer the buffer pointer to be initialized
+ * @return 0 if initialization was successfully or 1 if not
+ */
+int init_ringbuffer(ring_buffer_t* buffer) {
     buffer->head = 0;
     buffer->tail = 0;
     buffer->count = 0;
@@ -52,7 +59,12 @@ int init_ring_buffer(ring_buffer_t* buffer) {
     return 0;
 }
 
-void free_ring_buffer(const ring_buffer_t* buffer) {
+/**
+ * Frees the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ */
+void free_ringbuffer(const ring_buffer_t* buffer) {
     if (buffer->messages) {
         for (int i = 0; i < BUFFER_SIZE; i++) {
             free(buffer->messages[i]);
@@ -61,7 +73,13 @@ void free_ring_buffer(const ring_buffer_t* buffer) {
     }
 }
 
-void write_to_ring_buffer(ring_buffer_t* buffer, const char* message) {
+/**
+ * Writes a message to the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ * @param message the message to be written in the ringbuffer
+ */
+void write_to_ringbuffer(ring_buffer_t* buffer, const char* message) {
     MUTEX_LOCK(&buffer->mutex);
     if (buffer->count < BUFFER_SIZE) {
         snprintf(buffer->messages[buffer->tail], MAX_MSG_LENGTH, "%s", message);
@@ -72,7 +90,14 @@ void write_to_ring_buffer(ring_buffer_t* buffer, const char* message) {
     MUTEX_UNLOCK(&buffer->mutex);
 }
 
-int read_from_ring_buffer(ring_buffer_t* buffer, char* message) {
+/**
+ * Reads a message from the ring buffer.
+ *
+ * @param buffer the pointer to the ringbuffer
+ * @param message the placeholder of the message to be read
+ * @return 0 if a message was successfully read
+ */
+int read_from_ringbuffer(ring_buffer_t* buffer, char* message) {
     MUTEX_LOCK(&buffer->mutex);
     while (buffer->count == 0) {
         SIGNAL_WAIT(&buffer->cond, &buffer->mutex);
@@ -81,5 +106,5 @@ int read_from_ring_buffer(ring_buffer_t* buffer, char* message) {
     buffer->head = (buffer->head + 1) % BUFFER_SIZE;
     buffer->count--;
     MUTEX_UNLOCK(&buffer->mutex);
-    return 1;
+    return 0;
 }
