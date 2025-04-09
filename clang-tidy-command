@@ -1,6 +1,0 @@
-find src/ -name "*.c" | xargs clang-tidy -p builddir --export-fixes=fixes.yaml
-
-find src/ -name "*.c" | xargs clang-tidy -p builddir > output.txt 2>&1
-
-find src/ -name "*.c" | xargs clang-tidy -p builddir 2>&1 | grep -vE '^\[.*\] Processing file|^[0-9]+ warnings generated' > clang-tidy-fixes.txt
-
