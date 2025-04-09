@@ -98,7 +98,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add .
+          git add clang-tidy-fixes.txt
           git diff --staged --quiet || git commit -m "clang-tidy report"
           git push origin HEAD:${{ github.head_ref || github.ref_name }}
 
