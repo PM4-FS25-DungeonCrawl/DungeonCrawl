@@ -1,4 +1,5 @@
 #include "local.h"
+
 #include "../database/local/local_database.h"
 
 #include <stdlib.h>

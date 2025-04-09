@@ -1,6 +1,6 @@
 #include "game.h"
-#include "logging/logger.h"
 #include "local/local.h"
+#include "logging/logger.h"
 
 int main(void) {
     init_logger();
