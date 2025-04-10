@@ -15,10 +15,10 @@ bool roll_hit(const character_t* defender, const ability_t* ability) {
 
     switch (ability->damage_type) {
         case PHYSICAL:
-            hit = roll + ability->accuracy > defender->current_stats.deflection;
+            // hit = roll + ability->accuracy > defender->current_stats.deflection;
             break;
         case MAGICAL:
-            hit = roll + ability->accuracy > defender->current_stats.fortitude;
+            // hit = roll + ability->accuracy > defender->current_stats.fortitude;
             break;
     }
     return hit;

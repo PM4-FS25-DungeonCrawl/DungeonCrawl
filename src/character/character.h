@@ -1,6 +1,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+#include "stats.h"
 #include "../common.h"
 #include "../combat/damage.h"
 #include "../item/base_item.h"
@@ -15,21 +16,15 @@ typedef enum {
     BOSS
 } character_type_t;
 
-typedef struct {
-    int health;
-    int armor;
-    int might;
-    int deflection;
-    int fortitude;
-    int will;
-} stats_t;
-
 typedef struct character_t {
     character_type_t type;
     char name[MAX_NAME_LENGTH];
 
     stats_t base_stats;
     stats_t current_stats;
+
+    resources_t max_resources;
+    resources_t current_resources;
 
     damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
 
@@ -43,7 +38,9 @@ typedef struct character_t {
 character_t* init_character(character_type_t type, const char *name);
 void free_character(character_t* character);
 
-void set_character_stats(character_t* character, int health, int armor, int might, int deflection, int fortitude, int will);
+void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
+void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
+void update_character_resources(resources_t* max_resources, stats_t* base_stats);
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
 void add_ability(character_t* c, ability_t* ability);

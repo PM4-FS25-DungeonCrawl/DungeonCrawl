@@ -1,6 +1,13 @@
 #ifndef STATS_H
 #define STATS_H
 
+typedef enum {
+    STRENGTH,
+    INTELLIGENCE,
+    DEXTERITY,
+    CONSTITUTION
+} stat_type_t;
+
 typedef struct {
     int strength;       // 1 strength = 1 physical damage and 1 stamina
     int intelligence;   // 1 intelligence = 1 magic damage and 1 mana
