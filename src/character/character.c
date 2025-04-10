@@ -66,6 +66,19 @@ void add_ability(character_t* c, ability_t* ability) {
     }
 }
 
+void remove_ability(character_t* c, ability_t* ability) {
+    for (int i = 0; i < c->ability_count; i++) {
+        if (c->abilities[i] == ability) {
+            for (int j = i; j < c->ability_count - 1; j++) {
+                c->abilities[j] = c->abilities[j + 1];
+            }
+            c->abilities[c->ability_count - 1] = NULL;
+            c->ability_count--;
+            break;
+        }
+    }
+}
+
 void add_item(character_t* c, item_t* item) {
     if (c->item_count < ITEM_LIMIT) {
         c->items[c->item_count] = item;
@@ -86,41 +99,4 @@ void remove_item(character_t* c, item_t* item) {
             break;
         }
     }
-}
-
-bool use_usable_item(character_t* character, item_t* item) {
-    if (item->type != USABLE) {
-        log_msg(ERROR, "Character", "%s cannot use usable_item %s", character->name, item->name);
-        return false;
-    }
-    const usable_item_t* usable_item = (usable_item_t*) (item->extension);
-
-    switch (usable_item->effectType) {
-        case HEALING:
-            if (usable_item->value > (character->max_resources.health - character->current_resources.health)) {
-                character->current_resources.health = character->max_resources.health;
-            } else {
-                character->current_resources.health += usable_item->value;
-            }
-            break;
-        default:
-            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", usable_item->effectType);
-            break;
-    }
-
-    remove_item(character, item);
-    return true;
-}
-
-int deal_damage(character_t* character, damage_type_t damage_type, int damage) {
-    // TODO critical hits are ignored
-    // negative damage resistance leads to more damage
-    damage += character->resistance[damage_type].value;
-    // damage -= character->current_stats.armor;
-    if (damage > 0) character->current_resources.health -= damage;
-    return damage;
-}
-
-void reset_current_stats(character_t * character) {
-    character->current_stats = character->base_stats;
 }

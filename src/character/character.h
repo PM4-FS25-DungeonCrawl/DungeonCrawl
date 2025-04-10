@@ -48,9 +48,6 @@ void add_ability(character_t* c, ability_t* ability);
 
 void add_item(character_t* c, item_t* item);
 void remove_item(character_t* c, item_t* item);
-bool use_usable_item(character_t* character, item_t* item);
-
-int deal_damage(character_t* character, damage_type_t damage_type, int damage);
 
 void reset_current_stats(character_t * character);
 

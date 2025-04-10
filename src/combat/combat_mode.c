@@ -22,6 +22,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster);
 internal_combat_state_t item_menu(character_t* player, character_t* monster);
 int use_ability(bool player_defend, character_t* player, character_t* monster, const ability_t* ability);
 void use_item(character_t* player, const character_t* monster, item_t* item);
+bool use_usable_item(character_t* character, item_t* item);
 int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite);
 void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item);
 void display_combat_message(const character_t* player, const character_t* monster, const char *message);
@@ -370,4 +371,28 @@ void display_enemy_attack_message(const character_t* player, const character_t* 
 ability_t* get_random_ability(const character_t* character) {
     const int random_index = rand() % character->ability_count;
     return character->abilities[random_index];
+}
+
+bool use_usable_item(character_t* character, item_t* item) {
+    if (item->type != USABLE) {
+        log_msg(ERROR, "Character", "%s cannot use usable_item %s", character->name, item->name);
+        return false;
+    }
+    const usable_item_t* usable_item = (usable_item_t*) (item->extension);
+
+    switch (usable_item->effectType) {
+        case HEALING:
+            if (usable_item->value > (character->max_resources.health - character->current_resources.health)) {
+                character->current_resources.health = character->max_resources.health;
+            } else {
+                character->current_resources.health += usable_item->value;
+            }
+            break;
+        default:
+            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", usable_item->effectType);
+            break;
+    }
+
+    remove_item(character, item);
+    return true;
 }

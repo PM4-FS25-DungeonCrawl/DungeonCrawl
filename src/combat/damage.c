@@ -32,3 +32,16 @@ int roll_damage(const ability_t* ability) {
     }
     return roll;
 }
+
+int deal_damage(character_t* character, damage_type_t damage_type, int damage) {
+    // TODO critical hits are ignored
+    // negative damage resistance leads to more damage
+    damage += character->resistance[damage_type].value;
+    // damage -= character->current_stats.armor;
+    if (damage > 0) character->current_resources.health -= damage;
+    return damage;
+}
+
+void reset_current_stats(character_t * character) {
+    character->current_stats = character->base_stats;
+}
