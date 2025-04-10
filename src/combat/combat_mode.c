@@ -24,7 +24,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 void use_item(character_t* player, const character_t* monster, item_t* item);
 bool use_usable_item(character_t* character, item_t* item);
 void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]);
-void display_item_options(int y, int selected_index, int option_count, const usable_item_t* items[]);
+void display_item_options(int y, int selected_index, int option_count, const item_t* items[]);
 int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite);
 void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item);
 void display_combat_message(const character_t* player, const character_t* monster, const char *message, bool red_monster_sprite);
@@ -50,7 +50,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
             case ITEM_MENU:
                 combat_state = item_menu(player, monster);
-                use_ability(monster, player, get_random_ability(monster));
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
@@ -214,7 +213,8 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
                 use_item(player, monster, usable_items[selected_index]->base);
-                new_state = ITEM_MENU;
+                use_ability(monster, player, get_random_ability(monster));
+                new_state = EVALUATE_COMBAT;
                 item_used = true;
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
@@ -370,13 +370,13 @@ void display_ability_options(int y, int selected_index, int option_count, const 
         tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
 
-void display_item_options(int y, int selected_index, int option_count, const usable_item_t* items[]) {
+void display_item_options(int y, int selected_index, int option_count, const item_t* items[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
         for(int i = 0; i < option_count; i++){
             if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, items[i]->base->name);
+                tb_print(1, y++, TB_WHITE, TB_WHITE, items[i]->name);
             } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, items[i]->base->name);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, items[i]->name);
             }
         }
         tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
