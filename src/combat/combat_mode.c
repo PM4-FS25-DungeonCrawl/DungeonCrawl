@@ -4,6 +4,7 @@
 #include "../item/base_item.h"
 #include "../item/usable_item.h"
 #include "../include/termbox2.h"
+#include "./display/combat_display.h"
 
 #define ABILITY_MENU_STRING "Use Ability"
 #define ITEM_MENU_STRING "Use Item"
@@ -23,16 +24,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster);
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_item(character_t* player, const character_t* monster, item_t* item);
 bool use_usable_item(character_t* character, item_t* item);
-void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]);
-void display_item_options(int y, int selected_index, int option_count, const item_t* items[]);
-int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite);
-void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item);
-void display_combat_message(const character_t* player, const character_t* monster, const char *message, bool red_monster_sprite);
-void display_attack_message(const character_t* attacker, const character_t* target, const ability_t* ability, int damage_dealt);
-void display_missed_message(const character_t* player, const character_t* monster, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);
-
-
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
@@ -175,6 +167,9 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 }
 
 internal_combat_state_t item_menu(character_t* player, character_t* monster) {
+    if(player->item_count == 0) {
+        return COMBAT_MENU;
+    }
     int selected_index = 0;
     int usable_item_count = 0;
     usable_item_t* usable_items[ITEM_LIMIT];
@@ -227,43 +222,6 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
     return new_state;
 }
 
-int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite) {
-    int y = 1;
-
-    // Display player info
-    char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->current_resources.health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
-
-    // Display monster info
-    char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->current_resources.health);
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
-
-    y += 2;
-    for (int i = 0; i < 20; i++) {
-        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "");
-    }
-
-    // Display monster sprite
-    char monster_sprite[100];
-    snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");
-
-
-    if (red_monster_sprite) {
-        tb_print(1, y++, TB_RED, TB_DEFAULT, monster_sprite);
-    } else {
-        tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_sprite);
-    }
-
-    // Add two empty lines after the monster sprite
-    y += 2;
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
-
-    return y;
-}
-
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
     if (roll_hit(attacker, ability)) {
@@ -283,51 +241,7 @@ void use_item(character_t* player, const character_t* monster, item_t* item) {
     }
 }
 
-void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item) {
-    tb_clear();
-    char message[256];
-    switch (item->effectType) {
-        case HEALING:
-            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base->name, item->value);
-            display_combat_message(player, monster, message, false);
-            break;
-        default:
-            break;
-    }
-}
 
-void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_monster_sprite) {
-    tb_clear();
-    int y;
-    if (attacker->type == PLAYER) {
-        y = display_combat_view(attacker, target, red_monster_sprite);
-    } else {
-        y = display_combat_view(target, attacker, red_monster_sprite);
-    }
-    y += 1;
-    tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
-    tb_present();
-
-    struct tb_event event;
-    tb_poll_event(&event);
-}
-
-void display_attack_message(const character_t* attacker, const character_t* target, const ability_t* ability, int damage_dealt) {
-    if (damage_dealt <= 0) damage_dealt = 0;
-    char message[256];
-    snprintf(message, sizeof(message), "%s attacked using %s! Dealt %d damage. Press any key to continue...", attacker->name, ability->name, damage_dealt);
-    if (attacker->type == PLAYER) {
-        display_combat_message(attacker, target, message, true);
-    } else {
-        display_combat_message(attacker, target, message, false);
-    }
-}
-
-void display_missed_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
-    char message[256];
-    snprintf(message, sizeof(message), "%s attacked using %s! The attack missed :( Press any key to continue...", attacker->name, ability->name);
-    display_combat_message(attacker, target, message, false);
-}
 
 ability_t* get_random_ability(const character_t* character) {
     const int random_index = rand() % character->ability_count;
@@ -356,28 +270,4 @@ bool use_usable_item(character_t* character, item_t* item) {
 
     remove_item(character, item);
     return true;
-}
-
-void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]) {
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
-        for(int i = 0; i < option_count; i++){
-            if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, abilities[i]->name);
-            } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, abilities[i]->name);
-            }
-        }
-        tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
-}
-
-void display_item_options(int y, int selected_index, int option_count, const item_t* items[]) {
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
-        for(int i = 0; i < option_count; i++){
-            if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, items[i]->name);
-            } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, items[i]->name);
-            }
-        }
-        tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
