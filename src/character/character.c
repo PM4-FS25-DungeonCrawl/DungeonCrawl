@@ -30,6 +30,8 @@ void set_character_stats(character_t* character, int strength, int intelligence,
     character->current_stats = character->base_stats;
     update_character_resources(&character->max_resources, &character->base_stats);
     character->current_resources = character->max_resources;
+    character->defenses.armor = 0;
+    character->defenses.magic_resist = 0;
 }
 
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution) {

@@ -27,6 +27,7 @@ typedef struct character_t {
     resources_t current_resources;
 
     damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
+    defenses_t defenses;
 
     ability_t* abilities[ABILITY_LIMIT];
     int ability_count;
