@@ -1,6 +1,6 @@
-#include <stdlib.h>
-
 #include "monster.h"
+
+#include <stdlib.h>
 
 /**
  * Creates a new standard goblin with no abilities or items.

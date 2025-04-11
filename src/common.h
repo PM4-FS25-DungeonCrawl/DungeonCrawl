@@ -5,10 +5,10 @@
 
 #define MAX_NAME_LENGTH 64
 
-#define NULL_PTR_HANDLER(ptr, modul, format, ...) \
-    if (ptr == NULL) { \
+#define NULL_PTR_HANDLER(ptr, modul, format, ...)     \
+    if (ptr == NULL) {                                \
         log_msg(ERROR, modul, format, ##__VA_ARGS__); \
-        return NULL; \
+        return NULL;                                  \
     }
 
-#endif //COMMON_H
+#endif//COMMON_H

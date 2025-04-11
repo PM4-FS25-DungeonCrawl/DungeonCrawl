@@ -28,4 +28,4 @@ bool roll_hit(int attacker_dex, int defender_dex);
 int roll_damage(const ability_t* ability);
 int deal_damage(character_t* character, damage_type_t damage_type, int damage);
 
-#endif //DAMAGE_H
+#endif//DAMAGE_H

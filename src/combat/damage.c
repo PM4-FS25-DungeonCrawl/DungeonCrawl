@@ -1,9 +1,10 @@
-#include <stdlib.h>
 #include "damage.h"
-#include "ability.h"
-#include "../logging/logger.h"
 
 #include "../character/character.h"
+#include "../logging/logger.h"
+#include "ability.h"
+
+#include <stdlib.h>
 
 int roll_dice(const dice_size_t dice_size) {
     // TODO better randomness? (warning message)
@@ -18,13 +19,13 @@ bool roll_hit(int attacker_dex, int defender_dex) {
     log_msg(INFO, "Defender", "rolled %d", defender_roll);
     bool hit = false;
 
-    return attacker_roll + (attacker_dex/2) > defender_roll + (defender_dex/2);
+    return attacker_roll + (attacker_dex / 2) > defender_roll + (defender_dex / 2);
 }
 
 int roll_damage(const ability_t* ability) {
     int roll = 0;
     // Roll the dice several times
-    for (int i = 0; i < ability->roll_amount; i++){
+    for (int i = 0; i < ability->roll_amount; i++) {
         roll += roll_dice(ability->dice_size);
     }
     log_msg(INFO, "ability:", "%s rolled %d damage", ability->name, roll);
@@ -40,6 +41,6 @@ int deal_damage(character_t* character, damage_type_t damage_type, int damage) {
     return damage;
 }
 
-void reset_current_stats(character_t * character) {
+void reset_current_stats(character_t* character) {
     character->current_stats = character->base_stats;
 }

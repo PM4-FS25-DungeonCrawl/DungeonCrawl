@@ -1,14 +1,16 @@
 #include "level.h"
-#include <math.h>
+
 #include "../logging/logger.h"
+
+#include <math.h>
 
 
 int calculate_xp_for_next_level(int level) {
     //TODO Maybe change to a more complex formula
-    return (int)(100 + 10 * level);
+    return (int) (100 + 10 * level);
 }
 
-void add_xp(character_t *player, int xp_earned) {
+void add_xp(character_t* player, int xp_earned) {
     player->xp += xp_earned;
     log_msg(INFO, "XP", "Player earned %d XP. Total XP: %d", xp_earned, player->xp);
 
@@ -18,7 +20,7 @@ void add_xp(character_t *player, int xp_earned) {
     }
 }
 
-void level_up(character_t *player) {
+void level_up(character_t* player) {
     player->level++;
     player->xp -= calculate_xp_for_next_level(player->level - 1);
     player->skill_points += 1;

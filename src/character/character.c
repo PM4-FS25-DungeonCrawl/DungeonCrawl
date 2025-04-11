@@ -1,10 +1,11 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "character.h"
+
 #include "../combat/ability.h"
 
-character_t* init_character(const character_type_t type, const char *name) {
+#include <stdio.h>
+#include <stdlib.h>
+
+character_t* init_character(const character_type_t type, const char* name) {
     character_t* character = malloc(sizeof(character_t));
     NULL_PTR_HANDLER(character, "Character", "Failed to allocate memory for character: %s", name);
 
@@ -40,7 +41,7 @@ void set_character_stats(character_t* character, int strength, int intelligence,
 
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution) {
     stats->strength = strength;
-    stats-> intelligence = intelligence;
+    stats->intelligence = intelligence;
     stats->dexterity = dexterity;
     stats->constitution = constitution;
 }
@@ -149,7 +150,6 @@ void equip_gear(character_t* c, gear_t* item) {
 
 void unequip_gear(character_t* c, gear_slot_t slot) {
     if (slot < MAX_SLOT && c->equipment[slot] != NULL) {
-
         gear_t* item = c->equipment[slot];
         c->defenses.armor -= item->defenses.armor;
         c->defenses.magic_resist -= item->defenses.magic_resist;
@@ -162,15 +162,14 @@ void unequip_gear(character_t* c, gear_slot_t slot) {
     }
 }
 
-void set_initial_xp(character_t *character, int xp) {
+void set_initial_xp(character_t* character, int xp) {
     character->xp = xp;
 }
 
-void set_level(character_t *character, int level) {
+void set_level(character_t* character, int level) {
     character->level = level;
 }
 
-void set_xp_reward(character_t *character, int xp_reward) {
+void set_xp_reward(character_t* character, int xp_reward) {
     character->xp_reward = xp_reward;
 }
-

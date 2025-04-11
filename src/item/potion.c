@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "potion.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 potion_t* init_potion(const char* name, potion_type_t type, int value) {
     potion_t* item = malloc(sizeof(potion_t));

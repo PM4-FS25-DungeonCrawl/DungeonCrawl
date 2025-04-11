@@ -1,10 +1,11 @@
 #include "combat_mode.h"
-#include "ability.h"
-#include "../character/level.h"
+
 #include "../character/character.h"
-#include "../item/potion.h"
+#include "../character/level.h"
 #include "../include/termbox2.h"
+#include "../item/potion.h"
 #include "./display/combat_display.h"
+#include "ability.h"
 
 #define ABILITY_MENU_STRING "Use Ability"
 #define ITEM_MENU_STRING "Use Potion"
@@ -13,8 +14,8 @@ typedef enum {
     COMBAT_MENU,
     ABILITY_MENU,
     ITEM_MENU,
-    EVALUATE_COMBAT, //checks if the combat reached an end
-    EXIT //means exit combat & game
+    EVALUATE_COMBAT,//checks if the combat reached an end
+    EXIT            //means exit combat & game
 } internal_combat_state_t;
 
 // === Internal Functions ===
@@ -33,7 +34,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     combat_result_t combat_result = EXIT_GAME;
     bool combat_active = true;
 
-    while(combat_active) {
+    while (combat_active) {
         switch (combat_state) {
             case COMBAT_MENU:
                 combat_state = combat_menu(player, monster);
@@ -48,10 +49,10 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 // evaluate the combat result
                 if (player->current_resources.health <= 0) {
                     combat_result = PLAYER_LOST;
-                    combat_active = false; // exit the combat loop
+                    combat_active = false;// exit the combat loop
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
-                    combat_active = false; // exit the combat loop
+                    combat_active = false;// exit the combat loop
                     player->xp += monster->xp_reward;
                     if (player->xp >= calculate_xp_for_next_level(player->level)) {
                         level_up(player);
@@ -62,7 +63,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
             case EXIT:
                 combat_result = EXIT_GAME;
-                combat_active = false; // exit the combat loop
+                combat_active = false;// exit the combat loop
                 break;
         }
     }
@@ -72,7 +73,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     int selected_index = 0;
-    const char *menu_options[] = {ABILITY_MENU_STRING, ITEM_MENU_STRING};
+    const char* menu_options[] = {ABILITY_MENU_STRING, ITEM_MENU_STRING};
     const int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
 
     internal_combat_state_t new_state = COMBAT_MENU;
@@ -86,7 +87,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
 
-        for(int i = 0; i < menu_count; i++) {
+        for (int i = 0; i < menu_count; i++) {
             if (i == selected_index) {
                 tb_print(1, y++, TB_BLACK, TB_WHITE, menu_options[i]);
             } else {
@@ -166,13 +167,12 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                 ability_used = true;
             }
         }
-
     }
     return new_state;
 }
 
 internal_combat_state_t item_menu(character_t* player, character_t* monster) {
-    if(player->potion_inventory_count == 0) {
+    if (player->potion_inventory_count == 0) {
         return COMBAT_MENU;
     }
     int selected_index = 0;
@@ -222,24 +222,20 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
                 item_used = true;
             }
         }
-
     }
     return new_state;
 }
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
-    if (consume_ability_resource(attacker, ability))
-    {
+    if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
-            int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
+            int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
             display_attack_message(attacker, target, ability, damage_dealt);
         } else {
             display_missed_message(attacker, target, ability);
         }
-    }
-    else
-    {
+    } else {
         display_oom_message(attacker, target, ability);
     }
 
@@ -279,12 +275,12 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
     int* resource = NULL;
 
     switch (ability->damage_type) {
-    case PHYSICAL:
-        resource = &attacker->current_resources.stamina;
-        break;
-    case MAGICAL:
-        resource = &attacker->current_resources.mana;
-        break;
+        case PHYSICAL:
+            resource = &attacker->current_resources.stamina;
+            break;
+        case MAGICAL:
+            resource = &attacker->current_resources.mana;
+            break;
     }
 
     if (resource != NULL && *resource >= ability->resource_cost) {
@@ -293,4 +289,3 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
     }
     return false;
 }
-

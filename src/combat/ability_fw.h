@@ -4,4 +4,4 @@
 // forward declaration for ability_t
 typedef struct ability_t ability_t;
 
-#endif //ABILITY_FW_H
+#endif//ABILITY_FW_H

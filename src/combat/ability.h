@@ -29,4 +29,4 @@ typedef struct {
 ability_table_t* init_ability_table(void);
 void free_ability_table(ability_table_t* table);
 
-#endif //ABILITY_H
+#endif//ABILITY_H

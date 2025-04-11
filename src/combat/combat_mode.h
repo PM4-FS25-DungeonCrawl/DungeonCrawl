@@ -11,4 +11,4 @@ typedef enum {
 
 combat_result_t start_combat(character_t* player, character_t* monster);
 
-#endif //COMBAT_MODE_H
+#endif//COMBAT_MODE_H

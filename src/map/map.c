@@ -5,8 +5,8 @@ map_tile_t revealed_map[WIDTH][HEIGHT];
 
 
 vector2d_t directions[4] = {
-    {0, -1}, // up
-    {0, 1}, // down
-    {-1, 0}, // left
-    {1, 0} // right
+        {0, -1},// up
+        {0, 1}, // down
+        {-1, 0},// left
+        {1, 0}  // right
 };

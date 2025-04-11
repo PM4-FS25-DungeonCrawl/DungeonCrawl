@@ -5,4 +5,4 @@
 
 character_t* create_new_player(void);
 
-#endif //PLAYER_H
+#endif//PLAYER_H

@@ -1,9 +1,10 @@
-#include <stdlib.h>
-#include <stdio.h>
-
-#include "../common.h"
-#include "../character/stats.h"
 #include "gear.h"
+
+#include "../character/stats.h"
+#include "../common.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 
 gear_t* init_gear(const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses) {

@@ -5,4 +5,4 @@
 
 character_t* create_new_goblin(void);
 
-#endif //MONSTER_H
+#endif//MONSTER_H

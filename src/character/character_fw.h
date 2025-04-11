@@ -4,4 +4,4 @@
 // forward declaration for character_t
 typedef struct character_t character_t;
 
-#endif //CHARACTER_FW_H
+#endif//CHARACTER_FW_H

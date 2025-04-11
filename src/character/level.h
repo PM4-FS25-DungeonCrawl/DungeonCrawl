@@ -9,7 +9,7 @@
 
 // Function prototypes
 int calculate_xp_for_next_level(int level);
-void add_xp(character_t *player, int xp_earned);
-void level_up(character_t *player);
+void add_xp(character_t* player, int xp_earned);
+void level_up(character_t* player);
 
-#endif // XP_LEVEL_H
+#endif// XP_LEVEL_H

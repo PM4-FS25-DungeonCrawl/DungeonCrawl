@@ -1,19 +1,18 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-
-#include "../src/combat/ability.h"
 #include "../src/character/character.h"
-#include "../src/combat/damage.h"
+#include "../src/combat/ability.h"
 #include "../src/combat/combat_mode.h"
+#include "../src/combat/damage.h"
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 ability_t test_ability = {
-    .name = "Test Ability",
-    .roll_amount = 3,
-    .accuracy = 100,
-    .dice_size = D6,
-    .damage_type = PHYSICAL
-};
+        .name = "Test Ability",
+        .roll_amount = 3,
+        .accuracy = 100,
+        .dice_size = D6,
+        .damage_type = PHYSICAL};
 
 // allocate in data segment
 character_t* create_test_character() {
@@ -23,7 +22,6 @@ character_t* create_test_character() {
 }
 
 void test_roll_hit() {
-
     character_t* test_character = create_test_character();
     character_t* enemy_test_character = create_test_character();
 
@@ -58,10 +56,9 @@ void test_deal_damage_to_armor() {
     printf("test_deal_damage_to_armor passed!\n");
 }
 
-int main(void){
+int main(void) {
     test_roll_hit();
     test_roll_damage();
     test_deal_damage_to_armor();
     return 0;
 }
-

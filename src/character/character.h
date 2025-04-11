@@ -1,12 +1,12 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "stats.h"
-#include "../common.h"
-#include "../combat/damage.h"
-#include "../item/potion.h"
-#include "../item/gear.h"
 #include "../combat/ability_fw.h"
+#include "../combat/damage.h"
+#include "../common.h"
+#include "../item/gear.h"
+#include "../item/potion.h"
+#include "stats.h"
 
 #define ABILITY_LIMIT 3
 #define EQUIPABLE_ITEM_LIMIT 20
@@ -48,7 +48,7 @@ typedef struct character_t {
     int skill_points;
 } character_t;
 
-character_t* init_character(character_type_t type, const char *name);
+character_t* init_character(character_type_t type, const char* name);
 void free_character(character_t* character);
 
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
@@ -67,10 +67,10 @@ void remove_potion(character_t* c, potion_t* item);
 void equip_gear(character_t* c, gear_t* item);
 void unequip_gear(character_t* c, gear_slot_t slot);
 
-void reset_current_stats(character_t * character);
+void reset_current_stats(character_t* character);
 
-void set_level(character_t * character, int level);
-void set_xp_reward(character_t * character, int xp_reward);
-void set_initial_xp(character_t * character, int xp);
+void set_level(character_t* character, int level);
+void set_xp_reward(character_t* character, int xp_reward);
+void set_initial_xp(character_t* character, int xp);
 
-#endif //CHARACTER_H
+#endif//CHARACTER_H

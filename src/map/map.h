@@ -2,7 +2,7 @@
 #define MAP_H
 
 #define WIDTH 39 // must be odd
-#define HEIGHT 19 // must be odd
+#define HEIGHT 19// must be odd
 
 #define ENEMY_COUNT 8
 #define ENEMY_MIN_DISTANCE 3
@@ -35,4 +35,4 @@ extern vector2d_t directions[4];
 extern map_tile_t map[WIDTH][HEIGHT];
 extern map_tile_t revealed_map[WIDTH][HEIGHT];
 
-#endif //MAP_H
+#endif//MAP_H

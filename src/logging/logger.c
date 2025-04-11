@@ -287,14 +287,14 @@ void* log_writer_thread(void* arg) {
  */
 void start_log_writer_thread(void) {
     thread_is_running = true;
-    #ifdef _WIN32
-        HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
-        if (thread) {
-            CloseHandle(thread);
-        }
-    #else
-        pthread_t thread;
-        pthread_create(&thread, NULL, log_writer_thread, NULL);
-        pthread_detach(thread);
-    #endif
+#ifdef _WIN32
+    HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
+    if (thread) {
+        CloseHandle(thread);
+    }
+#else
+    pthread_t thread;
+    pthread_create(&thread, NULL, log_writer_thread, NULL);
+    pthread_detach(thread);
+#endif
 }

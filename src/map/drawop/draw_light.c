@@ -11,7 +11,7 @@
  * @param prev_wall_at pointer to variable, which should be written
  * @return 1 if loops must break, 0 when not
  */
-int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *prev_wall_at) {
+int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int* prev_wall_at) {
     if (j == 0) {
         //gets the x or y value of the calculated coordinates
         *prev_wall_at = abs(y * dir.dy + x * dir.dx);
@@ -33,10 +33,10 @@ int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *
  * - the reverse check vector
  */
 const vector2d_t checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
+        {{1, 1}, {1, 0}},   // for up
+        {{-1, -1}, {-1, 0}},// for down
+        {{1, -1}, {0, -1}}, // for left
+        {{-1, 1}, {0, 1}},  // for right
 };
 
 /**

@@ -1,24 +1,20 @@
-#include <stdio.h>
-#include <time.h>
-
 #include "game.h"
 
+#include "../include/termbox2.h"
 #include "character/character.h"
-#include "character/player.h"
 #include "character/monster.h"
-
-#include "item/gear.h"
-#include "item/potion.h"
-
+#include "character/player.h"
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
 #include "combat/damage.h"
-
-#include "map/map_mode.h"
-#include "map/map_generator.h"
-
-#include "../include/termbox2.h"
+#include "item/gear.h"
+#include "item/potion.h"
 #include "logging/logger.h"
+#include "map/map_generator.h"
+#include "map/map_mode.h"
+
+#include <stdio.h>
+#include <time.h>
 
 typedef enum {
     MAIN_MENU,
@@ -28,7 +24,7 @@ typedef enum {
     EXIT
 } game_state_t;
 
-int init_game(){
+int init_game() {
     if (tb_init() != 0) {
         log_msg(ERROR, "Game", "Failed to initialize termbox");
         return 1;
@@ -39,14 +35,14 @@ int init_game(){
     srand(time(NULL));
 
 
-    bool running = true; //should only be set in the state machine
+    bool running = true;//should only be set in the state machine
     game_state_t current_state = COMBAT_MODE;
 
     init_map_mode();
 
     ability_table_t* ability_table = init_ability_table();
-    character_t * goblin = create_new_goblin(); //initialize standard goblin
-    character_t * player = create_new_player(); //initialize blank player
+    character_t* goblin = create_new_goblin();//initialize standard goblin
+    character_t* player = create_new_player();//initialize blank player
     potion_t* healing_potion = init_potion("Healing Potion", HEALING, 20);
 
     if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
