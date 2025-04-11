@@ -1,7 +1,7 @@
 #include "draw_map_mode.h"
 
-#include "../../ascii_art/ascii.h"
 #include "../../../include/termbox2.h"
+#include "../../ascii_art/ascii.h"
 #include "../../logging/logger.h"
 
 /**
