@@ -5,7 +5,7 @@ int display_combat_view(const character_t* player, const character_t* monster, b
 
     // Display player info
     char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->current_resources.health);
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d | Mana %d | Stamina %d", player->name, player->current_resources.health, player->current_resources.mana, player->current_resources.stamina);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
 
     // Display monster info
@@ -81,6 +81,24 @@ void display_missed_message(const character_t* attacker, const character_t* targ
     snprintf(message, sizeof(message), "%s attacked using %s! The attack missed :( Press any key to continue...", attacker->name, ability->name);
     display_combat_message(attacker, target, message, false);
 }
+
+void display_oom_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
+    char message[256];
+    switch (ability->damage_type) {
+        case PHYSICAL:
+            snprintf(message, sizeof(message), "%s has not enough stamina to use %s! Press any key to continue...", attacker->name, ability->name);
+            display_combat_message(attacker, target, message, false);
+            break;
+        case MAGICAL:
+            snprintf(message, sizeof(message), "%s has not enough mana to use %s! Press any key to continue...", attacker->name, ability->name);
+            display_combat_message(attacker, target, message, false);
+            break;
+       default:
+            break;
+
+    }
+}
+
 
 void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
