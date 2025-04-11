@@ -90,6 +90,7 @@ void write_to_ringbuffer(ring_buffer_t* buffer, const char* message) {
     MUTEX_UNLOCK(&buffer->mutex);
 }
 
+
 /**
  * Reads a message from the ring buffer.
  *
