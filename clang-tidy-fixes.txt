@@ -1,49 +1,12 @@
-../src/combat/combat_mode.c:253:30: warning: rand() has limited randomness [cert-msc50-cpp]
-  253 |     const int random_index = rand() % character->ability_count;
-      |                              ^
-../src/combat/damage.c:12:12: warning: rand() has limited randomness [cert-msc50-cpp]
+../src/combat/damage.c:12:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    12 |     return rand() % dice_size + 1;
       |            ^
-../src/combat/damage.c:12:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-../src/combat/display/combat_display.h:11:6: warning: function 'display_combat_message' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-   11 | void display_combat_message(const character_t* player, const character_t* monster, const char* message, bool red_monster_sprite);
-      |      ^
-../src/combat/display/combat_display.c:52:6: note: the definition seen here
-   52 | void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_monster_sprite) {
-      |      ^
-../src/combat/display/combat_display.h:11:6: note: differing parameters are named here: ('player', 'monster'), in definition: ('attacker', 'target')
-   11 | void display_combat_message(const character_t* player, const character_t* monster, const char* message, bool red_monster_sprite);
-      |      ^                                         ~~~~~~                     ~~~~~~~
-      |                                                attacker                   target
-../src/combat/display/combat_display.h:12:6: warning: function 'display_potion_message' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-   12 | void display_potion_message(const character_t* player, const character_t* monster, potion_t* item);
-      |      ^
-../src/combat/display/combat_display.c:39:6: note: the definition seen here
-   39 | void display_potion_message(const character_t* player, const character_t* monster, potion_t* potion) {
-      |      ^
-../src/combat/display/combat_display.h:12:6: note: differing parameters are named here: ('item'), in definition: ('potion')
-   12 | void display_potion_message(const character_t* player, const character_t* monster, potion_t* item);
-      |      ^                                                                                       ~~~~
-      |                                                                                              potion
-../src/combat/display/combat_display.h:14:6: warning: function 'display_missed_message' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-   14 | void display_missed_message(const character_t* player, const character_t* monster, const ability_t* ability);
-      |      ^
-../src/combat/display/combat_display.c:79:6: note: the definition seen here
-   79 | void display_missed_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
-      |      ^
-../src/combat/display/combat_display.h:14:6: note: differing parameters are named here: ('player', 'monster'), in definition: ('attacker', 'target')
-   14 | void display_missed_message(const character_t* player, const character_t* monster, const ability_t* ability);
-      |      ^                                         ~~~~~~                     ~~~~~~~
-      |                                                attacker                   target
 ../src/game.c:35:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    35 |     srand(time(NULL));
       |     ^
 ../src/logging/logger.c:135:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   135 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/map/map_generator.c:27:17: warning: rand() has limited randomness [cert-msc50-cpp]
-   27 |         int j = rand() % (i + 1);
-      |                 ^
 ../src/map/map_generator.c:82:6: warning: function 'carve_passages' is within a recursive call chain [misc-no-recursion]
    82 | void carve_passages(int x, int y) {
       |      ^
@@ -52,53 +15,5 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-../src/map/map_generator.c:141:21: warning: rand() has limited randomness [cert-msc50-cpp]
-  141 |         int x = 1 + rand() % (WIDTH - 2);
-      |                     ^
-../src/map/map_generator.c:142:21: warning: rand() has limited randomness [cert-msc50-cpp]
-  142 |         int y = 1 + rand() % (HEIGHT - 2);
-      |                     ^
-../src/map/map_generator.c:171:21: warning: rand() has limited randomness [cert-msc50-cpp]
-  171 |         exit_edge = rand() % 4;
-      |                     ^
-../src/map/map_generator.c:177:35: warning: rand() has limited randomness [cert-msc50-cpp]
-  177 |                 exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
-      |                                   ^
-../src/map/map_generator.c:181:35: warning: rand() has limited randomness [cert-msc50-cpp]
-  181 |                 exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
-      |                                   ^
-../src/map/map_generator.c:186:35: warning: rand() has limited randomness [cert-msc50-cpp]
-  186 |                 exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
-      |                                   ^
-../src/map/map_generator.c:190:35: warning: rand() has limited randomness [cert-msc50-cpp]
-  190 |                 exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
-      |                                   ^
-../src/map/map_generator.c:245:33: warning: rand() has limited randomness [cert-msc50-cpp]
-  245 |             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
-      |                                 ^
-../src/map/map_generator.c:251:33: warning: rand() has limited randomness [cert-msc50-cpp]
-  251 |             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-      |                                 ^
-../src/map/map_generator.c:255:33: warning: rand() has limited randomness [cert-msc50-cpp]
-  255 |             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
-      |                                 ^
-../src/map/map_generator.c:261:33: warning: rand() has limited randomness [cert-msc50-cpp]
-  261 |             *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
-      |                                 ^
-../src/map/map_generator.c:328:22: warning: rand() has limited randomness [cert-msc50-cpp]
-  328 |         start_edge = rand() % 4;
-      |                      ^
-../src/map/map_populator.c:31:13: warning: rand() has limited randomness [cert-msc50-cpp]
-   31 |         x = rand() % (WIDTH - 2) + 1;
-      |             ^
-../src/map/map_populator.c:32:13: warning: rand() has limited randomness [cert-msc50-cpp]
-   32 |         y = rand() % (HEIGHT - 2) + 1;
-      |             ^
-../src/map/map_populator.c:58:17: warning: rand() has limited randomness [cert-msc50-cpp]
-   58 |             x = rand() % (WIDTH - 2) + 1;
-      |                 ^
-../src/map/map_populator.c:59:17: warning: rand() has limited randomness [cert-msc50-cpp]
-   59 |             y = rand() % (HEIGHT - 2) + 1;
-      |                 ^
 Suppressed 39947 warnings (39904 in non-user code, 43 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
