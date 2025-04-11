@@ -22,6 +22,7 @@ src_files = files(
     'src/character/character.c',
     'src/character/player.c',
     'src/character/monster.c',
+    'src/character/level.c',
 
     'src/item/base_item.c',
     'src/item/equipable_item.c',

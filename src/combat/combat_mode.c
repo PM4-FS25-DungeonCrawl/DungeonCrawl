@@ -1,5 +1,6 @@
 #include "combat_mode.h"
 #include "ability.h"
+#include "../character/level.h"
 #include "../character/character.h"
 #include "../item/base_item.h"
 #include "../item/usable_item.h"
@@ -51,6 +52,10 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
                     combat_active = false; // exit the combat loop
+                    player->xp += monster->xp_reward;
+                    if (player->xp >= calculate_xp_for_next_level(player->level)) {
+                        level_up(player);
+                    }
                 } else {
                     combat_state = COMBAT_MENU;
                 }
@@ -224,8 +229,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
-    if (roll_hit(attacker, ability)) {
-        // TODO: Implement critical hit
+    if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
         int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
         display_attack_message(attacker, target, ability, damage_dealt);
     } else {

@@ -170,3 +170,16 @@ void unequip_item(character_t* c, gear_slot_t slot) {
         log_msg(WARNING, "Character", "No item equipped in slot %d!", slot);
     }
 }
+
+void set_initial_xp(character_t *character, int xp) {
+    character->xp = xp;
+}
+
+void set_level(character_t *character, int level) {
+    character->level = level;
+}
+
+void set_xp_reward(character_t *character, int xp_reward) {
+    character->xp_reward = xp_reward;
+}
+

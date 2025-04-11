@@ -41,6 +41,11 @@ typedef struct character_t {
     int usable_item_count;
 
     equipable_item_t* equipped_items[MAX_SLOT];
+
+    int level;
+    int xp;
+    int xp_reward;
+    int skill_points;
 } character_t;
 
 character_t* init_character(character_type_t type, const char *name);
@@ -63,5 +68,9 @@ void equip_item(character_t* c, equipable_item_t* item);
 void unequip_item(character_t* c, gear_slot_t slot);
 
 void reset_current_stats(character_t * character);
+
+void set_level(character_t * character, int level);
+void set_xp_reward(character_t * character, int xp_reward);
+void set_initial_xp(character_t * character, int xp);
 
 #endif //CHARACTER_H
