@@ -1,12 +1,12 @@
 #include "map_mode.h"
 
-#include "../../debug/debug.h"
 #include "../../include/termbox2.h"
 #include "../logging/logger.h"
 #include "draw/draw_light.h"
+#include "draw/draw_map_mode.h"
 #include "map.h"
 
-
+vector2d_t map_anchor = {0, 0};
 vector2d_t player_pos;
 int player_has_key = 0;
 
@@ -16,49 +16,6 @@ void set_player_start_pos(const int player_x, const int player_y) {
     player_pos.dy = player_y;
     // at the start, tile under the player must be revealed
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
-}
-
-void draw_map(void) {
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (x == player_pos.dx && y == player_pos.dy) {
-                tb_printf(x, y, TB_RED, TB_BLACK, "@");
-                continue;
-            }
-
-            switch (revealed_map[x][y]) {
-                case WALL:
-                    tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
-                    break;
-                case FLOOR:
-                    tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
-                    break;
-                case START_DOOR:
-                    tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
-                    break;
-                case EXIT_DOOR:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
-                    break;
-                case KEY:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
-                    break;
-                case SKELETON:
-                    tb_printf(x, y, TB_WHITE, TB_RED, "!");
-                    break;
-                case HIDDEN:
-                    tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
-                    break;
-                default:
-                    log_msg(ERROR, "map_mode", "Unknown tile type: %d", revealed_map[x][y]);
-                    return;
-            }
-        }
-    }
-}
-
-void draw_ui(void) {
-    tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 }
 
 map_mode_result_t handle_input(const struct tb_event* event) {
@@ -112,7 +69,6 @@ map_mode_result_t map_mode_update(void) {
     map_mode_result_t next_state = CONTINUE;
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
-    db_printEventStruct(3, 20, &ev);
 
     if (ret == TB_OK) {
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
@@ -120,8 +76,9 @@ map_mode_result_t map_mode_update(void) {
     }
 
     draw_light_on_player(map, revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
-    draw_map();
-    draw_ui();
+    draw_map(revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
+    draw_map_ui(0, HEIGHT, player_pos);
+
     tb_present();
 
     return next_state;

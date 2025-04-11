@@ -19,6 +19,7 @@ src_files = files(
     'src/map/map_populator.c',
 
     'src/map/draw/draw_light.c',
+    'src/map/draw/draw_map_mode.c',
 
     'src/character/character.c',
     'src/character/player.c',
