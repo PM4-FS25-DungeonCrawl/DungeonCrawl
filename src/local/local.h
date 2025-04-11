@@ -22,7 +22,7 @@ typedef void (*update_observer_t)(local_language_t lang);
 void init_local(void);
 
 char* get_local_string(const char* key);
-bool set_language(const language_t lang);
+bool set_language(const local_language_t local_lang);
 
 void add_observer(update_observer_t update_func);
 
