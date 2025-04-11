@@ -34,6 +34,10 @@ int init_game(){
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
+    // seeding random function
+    srand(time(NULL));
+
+
     bool running = true; //should only be set in the state machine
     game_state_t current_state = COMBAT_MODE;
 
