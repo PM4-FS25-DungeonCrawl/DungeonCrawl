@@ -1,5 +1,6 @@
 #include "combat_mode.h"
 #include "ability.h"
+#include "../character/level.h"
 #include "../character/character.h"
 #include "../item/base_item.h"
 #include "../item/usable_item.h"
@@ -62,6 +63,10 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
                     combat_active = false; // exit the combat loop
+                    player->xp += monster->xp_reward;
+                    if (player->xp >= calculate_xp_for_next_level(player->level)) {
+                        level_up(player);
+                    }
                 } else {
                     combat_state = COMBAT_MENU;
                 }

@@ -34,6 +34,11 @@ typedef struct character_t {
 
     item_t* items[ITEM_LIMIT];
     int item_count;
+
+    int level;
+    int xp;
+    int xp_reward;
+    int skill_points;
 } character_t;
 
 character_t* init_character(character_type_t type, const char *name);
@@ -50,5 +55,9 @@ void add_item(character_t* c, item_t* item);
 void remove_item(character_t* c, item_t* item);
 
 void reset_current_stats(character_t * character);
+
+void set_level(character_t * character, int level);
+void set_xp_reward(character_t * character, int xp_reward);
+void set_initial_xp(character_t * character, int xp);
 
 #endif //CHARACTER_H

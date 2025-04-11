@@ -100,3 +100,15 @@ void remove_item(character_t* c, item_t* item) {
         }
     }
 }
+
+void set_initial_xp(character_t *character, int xp) {
+    character->xp = xp;
+}
+
+void set_level(character_t *character, int level) {
+    character->level = level;
+}
+
+void set_xp_reward(character_t *character, int xp_reward) {
+    character->xp_reward = xp_reward;
+}
