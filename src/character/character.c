@@ -3,7 +3,7 @@
 
 #include "character.h"
 #include "../combat/ability.h"
-#include "../item/usable_item.h"
+#include "../item/equipable_item.h"
 
 character_t* init_character(const character_type_t type, const char *name) {
     character_t* character = malloc(sizeof(character_t));
@@ -12,7 +12,12 @@ character_t* init_character(const character_type_t type, const char *name) {
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);
     character->ability_count = 0;
-    character->item_count = 0;
+    character->equipable_item_count = 0;
+    character->usable_item_count = 0;
+
+    for (int i = 0; i < MAX_SLOT; i++) {
+        character->equipped_items[i] = NULL;
+    }
 
     return character;
 }
@@ -80,24 +85,101 @@ void remove_ability(character_t* c, ability_t* ability) {
 }
 
 void add_item(character_t* c, item_t* item) {
-    if (c->item_count < ITEM_LIMIT) {
-        c->items[c->item_count] = item;
-        c->item_count++;
+    if (item->type == EQUIPABLE) {
+        add_equipable_item(c, item);
+    } else if (item->type == USABLE) {
+        add_usable_item(c, item);
     } else {
-        log_msg(INFO, "Character", "%s cannot carry more items!", c->name);
+        log_msg(WARNING, "Character", "Unknown item type for %s!", item->name);
     }
 }
 
 void remove_item(character_t* c, item_t* item) {
-    for (int i = 0; i < c->item_count; i++) {
-        if (c->items[i] == item) {
-            for (int j = i; j < c->item_count - 1; j++) {
-                c->items[j] = c->items[j + 1];
+    if (item->type == EQUIPABLE) {
+        remove_equipable_item(c, item);
+    } else if (item->type == USABLE) {
+        remove_usable_item(c, item);
+    } else {
+        log_msg(WARNING, "Character", "Unknown item type for %s!", item->name);
+    }
+}
+
+void add_equipable_item(character_t* c, item_t* item) {
+    if (c->equipable_item_count < EQUIPABLE_ITEM_LIMIT) {
+        c->equipable_items[c->equipable_item_count] = item;
+        c->equipable_item_count++;
+    } else {
+        log_msg(INFO, "Character", "%s cannot carry more equipable items!", c->name);
+    }
+}
+
+void remove_equipable_item(character_t* c, item_t* item) {
+    for (int i = 0; i < c->equipable_item_count; i++) {
+        if (c->equipable_items[i] == item) {
+            for (int j = i; j < c->equipable_item_count - 1; j++) {
+                c->equipable_items[j] = c->equipable_items[j + 1];
             }
-            c->items[c->item_count - 1] = NULL;
-            c->item_count--;
-            break;
+            c->equipable_items[c->equipable_item_count - 1] = NULL;
+            c->equipable_item_count--;
+            return;
         }
+    }
+    log_msg(WARNING, "Character", "Equipable item %s not found in inventory!", item->name);
+}
+
+void add_usable_item(character_t* c, item_t* item) {
+    if (c->usable_item_count < USABLE_ITEM_LIMIT) {
+        c->usable_items[c->usable_item_count] = item;
+        c->usable_item_count++;
+    } else {
+        log_msg(INFO, "Character", "%s cannot carry more useable items!", c->name);
+    }
+}
+
+void remove_usable_item(character_t* c, item_t* item) {
+    for (int i = 0; i < c->usable_item_count; i++) {
+        if (c->usable_items[i] == item) {
+            for (int j = i; j < c->usable_item_count - 1; j++) {
+                c->usable_items[j] = c->usable_items[j + 1];
+            }
+            c->usable_items[c->usable_item_count - 1] = NULL;
+            c->usable_item_count--;
+            return;
+        }
+    }
+    log_msg(WARNING, "Character", "Usable item %s not found in inventory!", item->name);
+}
+
+void equip_item(character_t* c, equipable_item_t* item) {
+    if (item->slot < MAX_SLOT) {
+        if (c->equipped_items[item->slot] != NULL) {
+            log_msg(WARNING, "Character", "Slot %d is already occupied!", item->slot);
+            return;
+        }
+
+        remove_equipable_item(c, item->base);
+        c->equipped_items[item->slot] = item;
+        c->defenses.armor += item->armor_bonus;
+        c->defenses.magic_resist += item->magic_resist_bonus;
+
+        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->base->name, item->slot);
+    } else {
+        log_msg(WARNING, "Character", "Invalid slot for item %s!", item->base->name);
+    }
+}
+
+void unequip_item(character_t* c, gear_slot_t slot) {
+    if (slot < MAX_SLOT && c->equipped_items[slot] != NULL) {
+
+        equipable_item_t* item = c->equipped_items[slot];
+        c->defenses.armor -= item->armor_bonus;
+        c->defenses.magic_resist -= item->magic_resist_bonus;
+        add_equipable_item(c, item->base);
+
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->base->name, slot);
+        c->equipped_items[slot] = NULL;
+    } else {
+        log_msg(WARNING, "Character", "No item equipped in slot %d!", slot);
     }
 }
 
@@ -112,3 +194,4 @@ void set_level(character_t *character, int level) {
 void set_xp_reward(character_t *character, int xp_reward) {
     character->xp_reward = xp_reward;
 }
+

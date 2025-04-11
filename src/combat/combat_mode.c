@@ -173,20 +173,20 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 }
 
 internal_combat_state_t item_menu(character_t* player, character_t* monster) {
-    if(player->item_count == 0) {
+    if(player->usable_item_count == 0) {
         return COMBAT_MENU;
     }
     int selected_index = 0;
     int usable_item_count = 0;
-    usable_item_t* usable_items[ITEM_LIMIT];
+    usable_item_t* usable_items[USABLE_ITEM_LIMIT];
 
     internal_combat_state_t new_state = ITEM_MENU;
     bool item_used = false;
 
     // Collect all usable items
-    for (int i = 0; i < player->item_count; i++) {
-        if (player->items[i] != NULL && player->items[i]->type == USABLE) {
-            usable_items[usable_item_count] = player->items[i]->extension;
+    for (int i = 0; i < player->usable_item_count; i++) {
+        if (player->usable_items[i] != NULL && player->usable_items[i]->type == USABLE) {
+            usable_items[usable_item_count] = player->usable_items[i]->extension;
             usable_item_count++;
         }
     }
@@ -197,7 +197,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
         int y = display_combat_view(player, monster, false);
 
         // Display menu options
-        display_item_options(y, selected_index, player->item_count, &player->items);
+        display_item_options(y, selected_index, player->usable_item_count, &player->usable_items);
 
         // print to terminal and check for key press
         tb_present();
@@ -254,8 +254,6 @@ void use_item(character_t* player, const character_t* monster, item_t* item) {
     }
 }
 
-
-
 ability_t* get_random_ability(const character_t* character) {
     const int random_index = rand() % character->ability_count;
     return character->abilities[random_index];
@@ -303,3 +301,4 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
     }
     return false;
 }
+

@@ -19,11 +19,12 @@ typedef enum {
 typedef struct {
     item_t* base; // base item structure
     gear_slot_t slot;
-    int armor_bonus; // Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    int armor_bonus; // Armor Pieces can have other stats, e.g. +might etc.
+    int magic_resist_bonus;
     // abilitiy_t abilities[6];
 } equipable_item_t;
 
-equipable_item_t* init_equipable_item(const char* name, gear_slot_t slot, int armor_bonus);
+equipable_item_t* init_equipable_item(const char* name, gear_slot_t slot, int armor_bonus, int magic_resist_bonus);
 void free_equipable_item(equipable_item_t* item);
 
 #endif //EQUIPABLE_ITEM_H

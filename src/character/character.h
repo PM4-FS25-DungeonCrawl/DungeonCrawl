@@ -5,10 +5,12 @@
 #include "../common.h"
 #include "../combat/damage.h"
 #include "../item/base_item.h"
+#include "../item/equipable_item.h"
 #include "../combat/ability_fw.h"
 
 #define ABILITY_LIMIT 3
-#define ITEM_LIMIT 10
+#define EQUIPABLE_ITEM_LIMIT 20
+#define USABLE_ITEM_LIMIT 20
 
 typedef enum {
     PLAYER,
@@ -32,8 +34,13 @@ typedef struct character_t {
     ability_t* abilities[ABILITY_LIMIT];
     int ability_count;
 
-    item_t* items[ITEM_LIMIT];
-    int item_count;
+    item_t* equipable_items[EQUIPABLE_ITEM_LIMIT];
+    int equipable_item_count;
+
+    item_t* usable_items[USABLE_ITEM_LIMIT];
+    int usable_item_count;
+
+    equipable_item_t* equipped_items[MAX_SLOT];
 
     int level;
     int xp;
@@ -53,6 +60,12 @@ void add_ability(character_t* c, ability_t* ability);
 
 void add_item(character_t* c, item_t* item);
 void remove_item(character_t* c, item_t* item);
+void add_equipable_item(character_t* c, item_t* item);
+void remove_equipable_item(character_t* c, item_t* item);
+void add_usable_item(character_t* c, item_t* item);
+void remove_usable_item(character_t* c, item_t* item);
+void equip_item(character_t* c, equipable_item_t* item);
+void unequip_item(character_t* c, gear_slot_t slot);
 
 void reset_current_stats(character_t * character);
 
