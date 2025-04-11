@@ -71,5 +71,5 @@
 ../src/map/map_populator.c:59:17: warning: rand() has limited randomness [cert-msc50-cpp]
    59 |             y = rand() % (HEIGHT - 2) + 1;
       |                 ^
-Suppressed 21652 warnings (21647 in non-user code, 5 with check filters).
+Suppressed 25753 warnings (25748 in non-user code, 5 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
