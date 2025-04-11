@@ -53,7 +53,7 @@ char* get_local_string(const char* key) {
 
 /**
  * Set the current language.
- * @param lang the language to set
+ * @param local_lang the language to set
  * @return true if the language was set successfully, false otherwise
  */
 bool set_language(const local_language_t local_lang) {
