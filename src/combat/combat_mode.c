@@ -141,7 +141,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         int y = display_combat_view(player, monster, false);
 
         // Display menu options
-        display_ability_options(y, selected_index, player->ability_count, &player->abilities);
+        display_ability_options(y, selected_index, player->abilities);
 
         // print to terminal and check for key press
         tb_present();
@@ -197,7 +197,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
         int y = display_combat_view(player, monster, false);
 
         // Display menu options
-        display_item_options(y, selected_index, player->usable_item_count, &player->usable_items);
+        display_item_options(y, selected_index, player->usable_items);
 
         // print to terminal and check for key press
         tb_present();
