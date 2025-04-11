@@ -5,7 +5,7 @@ helper_db = files(
 
 helper_draw_light = files(
     '../src/map/map.c',
-    '../src/map/drawop/draw_light.c'
+    '../src/map/draw/draw_light.c'
 )
 
 helper_combat = files(
@@ -32,7 +32,7 @@ helper_ringbuffer = files(
 )
 
 test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
-test_draw_light = executable('test_draw_light', 'map/drawop/test_draw_light.c', helper_draw_light, c_args: ['-w'])
+test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'])
 test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c_args: ['-w'])
 test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'])
 

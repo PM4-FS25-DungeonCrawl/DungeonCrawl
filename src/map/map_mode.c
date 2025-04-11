@@ -3,11 +3,8 @@
 #include "../../debug/debug.h"
 #include "../../include/termbox2.h"
 #include "../logging/logger.h"
-#include "drawop/draw_light.h"
+#include "draw/draw_light.h"
 #include "map.h"
-
-#include <math.h>
-#include <stdio.h>
 
 
 vector2d_t player_pos;
@@ -64,7 +61,7 @@ void draw_ui(void) {
     tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 }
 
-int handle_input(const struct tb_event* event) {
+map_mode_result_t handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
@@ -79,7 +76,8 @@ int handle_input(const struct tb_event* event) {
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
         switch (map[new_x][new_y]) {
             case WALL:
-                //ignore wall
+                // ignore wall
+                // break;
             case START_DOOR:
                 // ignore start door
                 break;
@@ -111,22 +109,22 @@ int handle_input(const struct tb_event* event) {
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
 map_mode_result_t map_mode_update(void) {
-    map_mode_result_t do_quit = CONTINUE;
+    map_mode_result_t next_state = CONTINUE;
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
     db_printEventStruct(3, 20, &ev);
 
     if (ret == TB_OK) {
         tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
-        do_quit = handle_input(&ev);
+        next_state = handle_input(&ev);
     }
 
-    draw_light_on_player((int*) map, (int*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_light_on_player(map, revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map();
     draw_ui();
     tb_present();
 
-    return do_quit;
+    return next_state;
 }
 
 int init_map_mode(void) {

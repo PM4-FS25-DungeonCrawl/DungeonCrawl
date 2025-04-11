@@ -53,7 +53,7 @@ const vector2d_t checks_vector[4][2] = {
  * @param player the player's position on the map
  * @param light_radius the radius of the light around the player
  */
-void draw_light_on_player(const int* arr1, int* arr2, const int height, const int width,
+void draw_light_on_player(const map_tile_t* arr1, map_tile_t* arr2, const int height, const int width,
                           const vector2d_t player, const int light_radius) {
     if (light_radius <= 0) {
         //light radius is negative or 0, do nothing
