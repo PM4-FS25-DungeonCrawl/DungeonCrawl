@@ -116,6 +116,7 @@ int init_game(){
         }
     }
 
+    shutdown_logger();
     tb_shutdown();
     return 0;
 }

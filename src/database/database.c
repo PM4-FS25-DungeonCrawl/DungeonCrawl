@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include "database.h"
 
-int db_open(db_connection_t *db_connection, const char *db_name) {
+#include <stdio.h>
+
+int db_open(DBConnection* db_connection, const char* db_name) {
     int rc = sqlite3_open(db_name, &db_connection->db);
     if (rc) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
@@ -10,6 +11,6 @@ int db_open(db_connection_t *db_connection, const char *db_name) {
     return 1;
 }
 
-void db_close(db_connection_t *db_connection) {
+void db_close(DBConnection* db_connection) {
     sqlite3_close(db_connection->db);
 }

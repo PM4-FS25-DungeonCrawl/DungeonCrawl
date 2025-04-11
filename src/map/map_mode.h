@@ -19,4 +19,4 @@ void set_player_start_pos(int player_x, int player_y);
 
 map_mode_result_t map_mode_update(void);
 
-#endif //MAP_MODE_H
+#endif//MAP_MODE_H

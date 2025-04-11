@@ -7,10 +7,10 @@
 #define ENEMY_COUNT 8
 #define ENEMY_MIN_DISTANCE 3
 
-#define     TOP     0
-#define     BOTTOM  1
-#define     LEFT    2
-#define     RIGHT   3
+#define TOP 0
+#define BOTTOM 1
+#define LEFT 2
+#define RIGHT 3
 
 typedef enum {
     WALL = 0,

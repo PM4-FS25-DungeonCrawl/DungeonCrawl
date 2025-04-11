@@ -1,7 +1,6 @@
-#include <stdlib.h>
-
-#include "../map.h"
 #include "draw_light.h"
+
+#include <stdlib.h>
 
 /**
  * This is a helper function to check if the loop needs to break with this specific edge case.
@@ -70,7 +69,6 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
         int prev_wall_at = -1;
 
         for (int j = 0; j <= light_radius; j++) {
-
             const int start_x = player.dx + j * dir.dy;
             int start_y = player.dy + j * dir.dx;
 

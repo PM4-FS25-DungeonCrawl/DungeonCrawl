@@ -3,4 +3,4 @@
 
 void generate_map();
 
-#endif //MAP_GENERATOR_H
+#endif//MAP_GENERATOR_H

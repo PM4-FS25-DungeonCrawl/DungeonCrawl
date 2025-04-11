@@ -6,11 +6,11 @@ typedef enum {
     FINE,
     INFO,
     WARNING,
-    ERROR
+    ERROR,
+    MAX_LOG_LEVEL
 } log_level_t;
 
-void close_log_file(int terminate_thread);
-
-void log_msg(log_level_t level, const char *module, const char *format, ...);
-
-#endif //LOGGER_H
+void init_logger(void);
+void log_msg(log_level_t level, const char* module, const char* format, ...);
+void shutdown_logger(void);
+#endif//LOGGER_H

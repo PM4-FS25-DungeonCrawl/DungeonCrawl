@@ -1,12 +1,13 @@
-#include <stdlib.h>
-#include <time.h>
-#include <stdint.h>
-
 #include "map_generator.h"
+
+#include "../logging/logger.h"
 #include "map.h"
 #include "map_mode.h"
 #include "map_populator.h"
-#include "../logging/logger.h"
+
+#include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
 
 // map array to store the maze
 int visited[WIDTH][HEIGHT];
@@ -21,7 +22,7 @@ int exit_y = 0;
  * @param dir array of directions
  * @param n size of the array
  */
-void shuffle(vector2d_t *dir, int n) {
+void shuffle(vector2d_t* dir, int n) {
     for (int i = n - 1; i > 0; i--) {
         int j = rand() % (i + 1);
         vector2d_t tmp = dir[j];
@@ -91,7 +92,7 @@ void carve_passages(int x, int y) {
 
     // Try each direction in random order
     for (int i = 0; i < 4; i++) {
-        int nx = x + shuffled_dirs[i].dx * 2; // Move two cells in the direction
+        int nx = x + shuffled_dirs[i].dx * 2;// Move two cells in the direction
         int ny = y + shuffled_dirs[i].dy * 2;
 
         if (is_valid_cell(nx, ny)) {
@@ -133,7 +134,7 @@ int check_neighboring_floors(int x, int y, int neighbor_directions[4]) {
  */
 void add_loops(int num_loops) {
     int count = 0;
-    int max_attempts = num_loops * 10; // Limit the number of attempts
+    int max_attempts = num_loops * 10;// Limit the number of attempts
 
     while (count < num_loops && max_attempts > 0) {
         // Pick a random cell
@@ -149,7 +150,7 @@ void add_loops(int num_loops) {
             // check if the wall has exactly 2 opposing floor neighbors
             if ((floor_count == 2) &&
                 ((neighbor_directions[TOP] && neighbor_directions[BOTTOM]) ||
-                (neighbor_directions[LEFT] && neighbor_directions[RIGHT]))) {
+                 (neighbor_directions[LEFT] && neighbor_directions[RIGHT]))) {
                 map[x][y] = FLOOR;
                 count++;
             }
@@ -228,7 +229,7 @@ void generate_maze(int start_x, int start_y) {
     carve_passages(start_x, start_y);
 
     // Add some loops to the map
-    int num_loops = (WIDTH * HEIGHT) / 100 + 1; // Use fewer loops to prevent overflow
+    int num_loops = (WIDTH * HEIGHT) / 100 + 1;// Use fewer loops to prevent overflow
     add_loops(num_loops);
 }
 
@@ -238,7 +239,7 @@ void generate_maze(int start_x, int start_y) {
  * @param start_x pointer to the x coordinate of the start position
  * @param start_y pointer to the y coordinate of the start position
  */
-void set_start_position(int start_edge, int *start_x, int *start_y) {
+void set_start_position(int start_edge, int* start_x, int* start_y) {
     switch (start_edge) {
         case TOP:
             *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
@@ -271,7 +272,7 @@ void set_start_position(int start_edge, int *start_x, int *start_y) {
  * @param start_x pointer to the x coordinate of the start position
  * @param start_y pointer to the y coordinate of the start position
  */
-void make_exit_into_start(int *start_edge, int *start_x, int *start_y) {
+void make_exit_into_start(int* start_edge, int* start_x, int* start_y) {
     switch (exit_edge) {
         case TOP:
             *start_edge = BOTTOM;
