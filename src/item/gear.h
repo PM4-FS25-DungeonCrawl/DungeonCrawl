@@ -1,6 +1,9 @@
 #ifndef GEAR_H
 #define GEAR_H
 
+#include "../character/stats.h"
+#include "../common.h"
+
 typedef enum {
     SLOT_HEAD,
     SLOT_CHEST,
