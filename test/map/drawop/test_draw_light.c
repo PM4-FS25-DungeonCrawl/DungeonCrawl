@@ -7,8 +7,8 @@
 const int width = 10;
 const int height = 10;
 
-map_tile test_map[10][10];
-map_tile revealed_test_map[10][10];
+map_tile_t test_map[10][10];
+map_tile_t revealed_test_map[10][10];
 
 void init_test_mazes(void) {
     for (int y = 0; y < height; y++) {
@@ -41,7 +41,7 @@ void print_array(const int* array) {
 void test_draw_light_on_player(void) {
     init_test_mazes();
 
-    const Vector2D player = {5, 5};
+    const vector2d_t player = {5, 5};
     const int light_radius = 3;
     draw_light_on_player((int*) test_map, (int*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);

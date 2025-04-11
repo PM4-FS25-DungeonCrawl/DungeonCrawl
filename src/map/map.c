@@ -1,9 +1,10 @@
 #include "map.h"
 
-map_tile map[WIDTH][HEIGHT];
-map_tile revealed_map[WIDTH][HEIGHT];
+map_tile_t map[WIDTH][HEIGHT];
+map_tile_t revealed_map[WIDTH][HEIGHT];
 
-Vector2D directions[4] = {
+
+vector2d_t directions[4] = {
         {0, -1},// up
         {0, 1}, // down
         {-1, 0},// left
