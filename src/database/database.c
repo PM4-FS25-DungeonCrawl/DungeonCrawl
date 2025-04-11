@@ -12,5 +12,15 @@ int db_open(DBConnection* db_connection, const char* db_name) {
 }
 
 void db_close(DBConnection* db_connection) {
-    sqlite3_close(db_connection->db);
+    if (db_connection->db != NULL) {
+        sqlite3_close(db_connection->db);
+        db_connection->db = NULL;
+    }
+}
+
+int db_is_open(const DBConnection* db_connection) {
+    if (db_connection->db == NULL) {
+        return 0;
+    }
+    return 1;
 }

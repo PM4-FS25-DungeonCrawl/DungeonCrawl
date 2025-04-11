@@ -9,6 +9,7 @@
 #include "combat/damage.h"
 #include "item/gear.h"
 #include "item/potion.h"
+#include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
@@ -111,6 +112,7 @@ int init_game() {
         }
     }
 
+    shutdown_local();
     shutdown_logger();
     tb_shutdown();
     return 0;

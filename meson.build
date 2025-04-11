@@ -11,7 +11,6 @@ project('DungeonCrawl', 'c',
 src_files = files(
     'src/main.c',
     'src/game.c',
-    'src/game.c',
 
     'src/map/map.c',
     'src/map/map_mode.c',
@@ -44,12 +43,17 @@ debug_files = files(
 # List of all database files
 database_files = files(
     'include/sqlite3.c',
-    'src/database/database.c'
+    'src/database/database.c',
+    'src/database/local/local_database.c'
 )
 
 logging_files = files(
     'src/logging/logger.c',
     'src/logging/ringbuffer.c'
+)
+
+local_files = files(
+    'src/local/local.c'
 )
 
 # Include the test directory in the build.
@@ -62,5 +66,6 @@ executable(
     include_files,
     debug_files,
     database_files,
-    logging_files
+    logging_files,
+    local_files
 )

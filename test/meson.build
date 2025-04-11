@@ -1,7 +1,13 @@
 # needed files for each test
 helper_db = files(
+    # used to resolve compile errors with log_msg
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c',
+    # actual needed files
     '../include/sqlite3.c',
-    '../src/database/database.c')
+    '../src/database/database.c',
+    '../src/database/local/local_database.c'
+)
 
 helper_draw_light = files(
     '../src/map/map.c',
@@ -27,15 +33,23 @@ helper_combat = files(
     '../src/logging/ringbuffer.c'
 )
 
+
+# needed directories for each test
+#incdir_database = include_directories(
+#    '../test/'
+#)
+
 helper_ringbuffer = files(
     '../src/logging/ringbuffer.c'
 )
 
+# executables
 test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
 test_draw_light = executable('test_draw_light', 'map/drawop/test_draw_light.c', helper_draw_light, c_args: ['-w'])
 test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c_args: ['-w'])
 test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'])
 
+# test
 test('test_database', test_database)
 test('test_draw_light', test_draw_light)
 test('test_damage', test_damage)
