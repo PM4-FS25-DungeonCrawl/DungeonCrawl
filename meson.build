@@ -30,7 +30,8 @@ src_files = files(
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
-    'src/combat/damage.c'
+    'src/combat/damage.c',
+    'src/combat/display/combat_display.c'
 )
 
 include_files = files(

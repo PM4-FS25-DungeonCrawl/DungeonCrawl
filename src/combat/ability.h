@@ -10,7 +10,7 @@ typedef enum {
     SWORD_SLASH,
     BITE,
     MAX_ABILITIES
-} abilities_t;
+} ability_names_t;
 
 typedef struct ability_t {
     char name[MAX_NAME_LENGTH];
