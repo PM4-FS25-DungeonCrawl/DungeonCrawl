@@ -15,6 +15,7 @@ helper_combat = files(
     '../src/combat/display/combat_display.c',
 
     '../src/character/character.c',
+    '../src/character/level.c',
     '../src/character/player.c',
     '../src/character/monster.c',
 

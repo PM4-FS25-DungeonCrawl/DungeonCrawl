@@ -24,7 +24,7 @@ typedef struct damage_resistance_t {
     int value;
 } damage_resistance_t;
 
-bool roll_hit(const character_t* defender, const ability_t* ability);
+bool roll_hit(int attacker_dex, int defender_dex);
 int roll_damage(const ability_t* ability);
 int deal_damage(character_t* character, damage_type_t damage_type, int damage);
 

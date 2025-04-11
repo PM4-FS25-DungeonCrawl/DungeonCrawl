@@ -229,8 +229,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
-    if (roll_hit(attacker, ability)) {
-        // TODO: Implement critical hit
+    if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
         int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
         display_attack_message(attacker, target, ability, damage_dealt);
     } else {
