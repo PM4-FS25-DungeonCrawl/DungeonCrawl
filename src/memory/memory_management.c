@@ -42,7 +42,7 @@ memory_pool_t* init_memory_pool(size_t size) {
  *
  * @param pool the pool to allocate memory from
  * @param size the size of the memory to allocate
- * @return the pointer to the allocated memory, or NULL if there is no free space on the pool
+ * @return the pointer to the reserved memory space, or NULL if there is no free space on the pool
  */
 void* memory_pool_alloc(memory_pool_t* pool, size_t size) {
     memory_block_t* current = pool->first;
