@@ -62,11 +62,7 @@ char* get_localization_string(const DBConnection* db_connection, const char* att
 
     // Allocate a buffer for the full SQL statement
     size_t buffer_size = strlen("SELECT ") + strlen(language->column_name) + strlen(LOCAL_STRING_STATEMENT) + 1;
-    char* local_string_stmt = malloc(buffer_size);
-    if (local_string_stmt == NULL) {
-        log_msg(ERROR, "Localization Database", "Memory allocation failed");
-        return "NULL";
-    }
+    char local_string_stmt[buffer_size];
 
     // Construct the SQL statement
     snprintf(local_string_stmt, buffer_size, "SELECT %s%s", language->column_name, LOCAL_STRING_STATEMENT);
@@ -74,7 +70,6 @@ char* get_localization_string(const DBConnection* db_connection, const char* att
     // Prepare the SQL statement
     sqlite3_stmt* statement;
     int rc = sqlite3_prepare_v2(db_connection->db, local_string_stmt, -1, &statement, 0);
-    free(local_string_stmt);// Free the allocated memory after use
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "Localization Database", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
         return "NULL";

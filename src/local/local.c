@@ -23,7 +23,7 @@ observer_node_t* observer_list = NULL;
 /**
  * The current language setting
  */
-language_t current_language = LANG_EN;
+local_language_t current_language = LANGUAGE_EN;
 
 /**
  * Initialize the local module.
@@ -47,8 +47,8 @@ void init_local(void) {
  */
 char* get_local_string(const char* key) {
     // This function should return the localized string for the given key
-    // For now, we will just return the key itself
-    return (char*) key;
+    // TODO: Implement the DB Connection, for now it is NULL
+    return get_localization_string(NULL, key, &current_language);
 }
 
 /**
@@ -56,11 +56,11 @@ char* get_local_string(const char* key) {
  * @param lang the language to set
  * @return true if the language was set successfully, false otherwise
  */
-bool set_language(const language_t lang) {
-    if (lang >= MAX_LANG) {
+bool set_language(const local_language_t local_lang) {
+    if (local_lang.lang >= MAX_LANG) {
         return false;// Invalid language
     }
-    current_language = lang;
+    current_language = local_lang;
 
     // go through the observer list and call each observer function
     const observer_node_t* current = observer_list;
