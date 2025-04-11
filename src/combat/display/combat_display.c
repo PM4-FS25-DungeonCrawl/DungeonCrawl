@@ -113,13 +113,15 @@ void display_ability_options(int y, int selected_index, const ability_t* abiliti
     tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
 
-void display_potion_options(int y, int selected_index, int option_count, const potion_t* potions[]) {
+void display_potion_options(int y, int selected_index, const potion_t* potions[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Potions:");
-        for(int i = 0; i < option_count; i++){
-            if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, potions[i]->name);
-            } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, potions[i]->name);
+        for(int i = 0; i < USABLE_ITEM_LIMIT; i++){
+            if (potions[i] != NULL){
+                if (i == selected_index) {
+                    tb_print(1, y++, TB_WHITE, TB_WHITE, potions[i]->name);
+                } else {
+                    tb_print(1, y++, TB_WHITE, TB_DEFAULT, potions[i]->name);
+                }
             }
         }
         tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
