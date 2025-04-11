@@ -4,12 +4,12 @@ int display_combat_view(const character_t* attacker, const character_t* target, 
     int y = 1;
 
     // Display player info
-    char player_info[100];
+    char player_info[256];
     snprintf(player_info, sizeof(player_info), "Player: %s | Health %d | Mana %d | Stamina %d", attacker->name, attacker->current_resources.health, attacker->current_resources.mana, attacker->current_resources.stamina);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
 
     // Display monster info
-    char monster_info[100];
+    char monster_info[256];
     snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", target->name, target->current_resources.health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
 
@@ -19,7 +19,7 @@ int display_combat_view(const character_t* attacker, const character_t* target, 
     }
 
     // Display monster sprite
-    char monster_sprite[100];
+    char monster_sprite[256];
     snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");// TODO: make a list of sprites and connect to monster
 
     if (red_target_sprite) {
