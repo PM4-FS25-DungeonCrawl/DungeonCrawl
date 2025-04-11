@@ -25,6 +25,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster);
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_item(character_t* player, const character_t* monster, item_t* item);
 bool use_usable_item(character_t* character, item_t* item);
+bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
@@ -229,12 +230,20 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
-    if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
-        int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
-        display_attack_message(attacker, target, ability, damage_dealt);
-    } else {
-        display_missed_message(attacker, target, ability);
+    if (consume_ability_resource(attacker, ability))
+    {
+        if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
+            int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
+            display_attack_message(attacker, target, ability, damage_dealt);
+        } else {
+            display_missed_message(attacker, target, ability);
+        }
     }
+    else
+    {
+        display_oom_message(attacker, target, ability);
+    }
+
     tb_present();
 }
 
@@ -273,3 +282,23 @@ bool use_usable_item(character_t* character, item_t* item) {
     remove_item(character, item);
     return true;
 }
+
+bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
+    int* resource = NULL;
+
+    switch (ability->damage_type) {
+    case PHYSICAL:
+        resource = &attacker->current_resources.stamina;
+        break;
+    case MAGICAL:
+        resource = &attacker->current_resources.mana;
+        break;
+    }
+
+    if (resource != NULL && *resource >= ability->resource_cost) {
+        *resource -= ability->resource_cost;
+        return true;
+    }
+    return false;
+}
+

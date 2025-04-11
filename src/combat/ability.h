@@ -16,6 +16,7 @@ typedef struct ability_t {
     char name[MAX_NAME_LENGTH];
     int roll_amount;
     int accuracy;
+    int resource_cost;
     dice_size_t dice_size;
     damage_type_t damage_type;
 } ability_t;
