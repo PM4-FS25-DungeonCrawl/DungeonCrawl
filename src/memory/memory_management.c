@@ -31,7 +31,7 @@ memory_pool_t* init_memory_pool(size_t size) {
     pool->first = (memory_block_t*) pool->memory;
     pool->first->size = size - sizeof(memory_block_t);
     pool->first->active = 0; // mark the block as free
-    pool->first->next = NULL; // no next block
+    pool->first->next = NULL;// no next block
 
     return pool;
 }
@@ -55,24 +55,24 @@ void* memory_pool_alloc(memory_pool_t* pool, size_t size) {
             if (remaining > MIN_MEMORY_BLOCK_SIZE) {
                 // remaining is large enough
                 // create a new block for the remaining memory
-                memory_block_t* new_block = (memory_block_t*) ((char*)current + sizeof(memory_block_t) + size);
+                memory_block_t* new_block = (memory_block_t*) ((char*) current + sizeof(memory_block_t) + size);
 
                 new_block->size = remaining - sizeof(memory_block_t);
-                new_block->active = 0; // mark the new block as free
-                new_block->next = current->next; // link to the next block
+                new_block->active = 0;          // mark the new block as free
+                new_block->next = current->next;// link to the next block
 
-                current->size = size; // set the size of the current block
+                current->size = size;// set the size of the current block
 
-                current->next = new_block; // link to the new block
+                current->next = new_block;// link to the new block
             } else {
                 log_msg(WARNING, "Memory", "No more space left in the block, using the whole block");
             }
 
             //the remaining memory space is too small, so the current block will be used entirely
             current->active = 1;
-            return (void*)(current + 1); // return pointer to user data
+            return (void*) (current + 1);// return pointer to user data
         }
-        current = current->next; // move to the next block
+        current = current->next;// move to the next block
     }
 
     log_msg(ERROR, "Memory", "No free block found for allocation");
@@ -93,8 +93,8 @@ void memory_pool_free(memory_pool_t* pool, void* ptr) {
         return;
     }
 
-    memory_block_t* block = (memory_block_t*)ptr - 1;
-    if (block < pool->first || block >= (memory_block_t*)((char*)pool->first + pool->pool_size)) {
+    memory_block_t* block = (memory_block_t*) ptr - 1;
+    if (block < pool->first || block >= (memory_block_t*) ((char*) pool->first + pool->pool_size)) {
         log_msg(ERROR, "Memory", "Pointer is not in the memory pool");
         return;
     }
@@ -106,9 +106,9 @@ void memory_pool_free(memory_pool_t* pool, void* ptr) {
         if (!current->active && !current->next->active) {
             // merge with the next block
             current->size += sizeof(memory_block_t) + current->next->size;
-            current->next = current->next->next; // link to the next block
+            current->next = current->next->next;// link to the next block
         } else {
-            current = current->next; // move to the next block
+            current = current->next;// move to the next block
         }
     }
 }

@@ -27,12 +27,12 @@ void test_init_memory_pool(void) {
 }
 
 void test_memory_alloc_free(void) {
-    size_t alloc_size1 = 1024; // 1KB
+    size_t alloc_size1 = 1024;// 1KB
     void* ptr = memory_pool_alloc(pool1, alloc_size1);
     assert(ptr != NULL);
 
     // test basic functionality of alloc and free
-    memory_block_t* block = (memory_block_t*)ptr - 1;
+    memory_block_t* block = (memory_block_t*) ptr - 1;
     assert(block->size == alloc_size1);
     assert(block->active == 1);
 
@@ -47,7 +47,7 @@ void test_memory_alloc_free(void) {
     printf("Test: \"basic alloc/free calls\" passed\n");
 
     // test if larger size memory request are placed correctly in the pool
-    size_t alloc_size2 = 2048; // 2KB
+    size_t alloc_size2 = 2048;// 2KB
     void* ptr1 = memory_pool_alloc(pool1, alloc_size1);
     void* ptr2 = memory_pool_alloc(pool1, alloc_size1);
     assert(ptr1 != NULL);
