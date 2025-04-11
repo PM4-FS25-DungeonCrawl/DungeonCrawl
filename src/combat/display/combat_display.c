@@ -1,16 +1,16 @@
 #include "combat_display.h"
 
-int display_combat_view(const character_t* player, const character_t* monster, bool red_monster_sprite) {
+int display_combat_view(const character_t* attacker, const character_t* target, const bool red_target_sprite) {
     int y = 1;
 
     // Display player info
     char player_info[100];
-    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d | Mana %d | Stamina %d", player->name, player->current_resources.health, player->current_resources.mana, player->current_resources.stamina);
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d | Mana %d | Stamina %d", attacker->name, attacker->current_resources.health, attacker->current_resources.mana, attacker->current_resources.stamina);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
 
     // Display monster info
     char monster_info[100];
-    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->current_resources.health);
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", target->name, target->current_resources.health);
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
 
     y += 2;
@@ -22,7 +22,7 @@ int display_combat_view(const character_t* player, const character_t* monster, b
     char monster_sprite[100];
     snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");// TODO: make a list of sprites and connect to monster
 
-    if (red_monster_sprite) {
+    if (red_target_sprite) {
         tb_print(1, y++, TB_RED, TB_DEFAULT, monster_sprite);
     } else {
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_sprite);
@@ -36,26 +36,26 @@ int display_combat_view(const character_t* player, const character_t* monster, b
     return y;
 }
 
-void display_potion_message(const character_t* player, const character_t* monster, potion_t* potion) {
+void display_potion_message(const character_t* attacker, const character_t* target, potion_t* potion) {
     tb_clear();
     char message[256];
     switch (potion->effectType) {
         case HEALING:
             snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", potion->name, potion->value);
-            display_combat_message(player, monster, message, false);
+            display_combat_message(attacker, target, message, false);
             break;
         default:
             break;
     }
 }
 
-void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_monster_sprite) {
+void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_target_sprite) {
     tb_clear();
     int y;
     if (attacker->type == PLAYER) {
-        y = display_combat_view(attacker, target, red_monster_sprite);
+        y = display_combat_view(attacker, target, red_target_sprite);
     } else {
-        y = display_combat_view(target, attacker, red_monster_sprite);
+        y = display_combat_view(target, attacker, red_target_sprite);
     }
     y += 1;
     tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
@@ -98,7 +98,7 @@ void display_oom_message(const character_t* attacker, const character_t* target,
     }
 }
 
-void display_ability_options(int y, int selected_index, const ability_t* abilities[]) {
+void display_ability_options(int y, const int selected_index, const ability_t* abilities[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
     for (int i = 0; i < ABILITY_LIMIT; i++) {
         if (abilities[i] != NULL) {
@@ -112,7 +112,7 @@ void display_ability_options(int y, int selected_index, const ability_t* abiliti
     tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
 
-void display_potion_options(int y, int selected_index, const potion_t* potions[]) {
+void display_potion_options(int y, const int selected_index, const potion_t* potions[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Potions:");
     for (int i = 0; i < USABLE_ITEM_LIMIT; i++) {
         if (potions[i] != NULL) {
