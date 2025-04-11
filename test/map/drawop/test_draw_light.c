@@ -1,5 +1,4 @@
 #include "../src/map/drawop/draw_light.h"
-#include "../src/map/map.h"
 
 #include <assert.h>
 #include <stdio.h>
