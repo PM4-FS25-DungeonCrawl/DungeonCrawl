@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 
 #include "game.h"
 
@@ -6,8 +7,8 @@
 #include "character/player.h"
 #include "character/monster.h"
 
-#include "item/equipable_item.h"
-#include "item/usable_item.h"
+#include "item/gear.h"
+#include "item/potion.h"
 
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
@@ -46,7 +47,7 @@ int init_game(){
     ability_table_t* ability_table = init_ability_table();
     character_t * goblin = create_new_goblin(); //initialize standard goblin
     character_t * player = create_new_player(); //initialize blank player
-    usable_item_t* healing_potion = init_usable_item("Healing Potion", HEALING, 20);
+    potion_t* healing_potion = init_potion("Healing Potion", HEALING, 20);
 
     if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
@@ -60,7 +61,7 @@ int init_game(){
         add_ability(player, &ability_table->abilities[SWORD_SLASH]);
         log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[1]->name);
         //add healing potion to player
-        add_item(player, healing_potion->base);
+        add_potion(player, healing_potion);
         log_msg(INFO, "Game", "game loop starting");
     }
 
@@ -108,7 +109,7 @@ int init_game(){
                 free_ability_table(ability_table);
                 free_character(goblin);
                 free_character(player);
-                free_usable_item(healing_potion);
+                free_potion(healing_potion);
                 close_log_file(1);
                 running = false;
                 break;

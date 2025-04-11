@@ -3,7 +3,6 @@
 
 #include "character.h"
 #include "../combat/ability.h"
-#include "../item/equipable_item.h"
 
 character_t* init_character(const character_type_t type, const char *name) {
     character_t* character = malloc(sizeof(character_t));
@@ -12,11 +11,11 @@ character_t* init_character(const character_type_t type, const char *name) {
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);
     character->ability_count = 0;
-    character->equipable_item_count = 0;
-    character->usable_item_count = 0;
+    character->gear_inventory_count = 0;
+    character->potion_inventory_count = 0;
 
     for (int i = 0; i < MAX_SLOT; i++) {
-        character->equipped_items[i] = NULL;
+        character->equipment[i] = NULL;
     }
 
     return character;
@@ -84,100 +83,80 @@ void remove_ability(character_t* c, ability_t* ability) {
     }
 }
 
-void add_item(character_t* c, item_t* item) {
-    if (item->type == EQUIPABLE) {
-        add_equipable_item(c, item);
-    } else if (item->type == USABLE) {
-        add_usable_item(c, item);
-    } else {
-        log_msg(WARNING, "Character", "Unknown item type for %s!", item->name);
-    }
-}
-
-void remove_item(character_t* c, item_t* item) {
-    if (item->type == EQUIPABLE) {
-        remove_equipable_item(c, item);
-    } else if (item->type == USABLE) {
-        remove_usable_item(c, item);
-    } else {
-        log_msg(WARNING, "Character", "Unknown item type for %s!", item->name);
-    }
-}
-
-void add_equipable_item(character_t* c, item_t* item) {
-    if (c->equipable_item_count < EQUIPABLE_ITEM_LIMIT) {
-        c->equipable_items[c->equipable_item_count] = item;
-        c->equipable_item_count++;
+void add_gear(character_t* c, gear_t* item) {
+    if (c->gear_inventory_count < EQUIPABLE_ITEM_LIMIT) {
+        c->gear_inventory[c->gear_inventory_count] = item;
+        c->gear_inventory_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more equipable items!", c->name);
     }
 }
 
-void remove_equipable_item(character_t* c, item_t* item) {
-    for (int i = 0; i < c->equipable_item_count; i++) {
-        if (c->equipable_items[i] == item) {
-            for (int j = i; j < c->equipable_item_count - 1; j++) {
-                c->equipable_items[j] = c->equipable_items[j + 1];
+void remove_gear(character_t* c, gear_t* item) {
+    for (int i = 0; i < c->gear_inventory_count; i++) {
+        if (c->gear_inventory[i] == item) {
+            for (int j = i; j < c->gear_inventory_count - 1; j++) {
+                c->gear_inventory[j] = c->gear_inventory[j + 1];
             }
-            c->equipable_items[c->equipable_item_count - 1] = NULL;
-            c->equipable_item_count--;
+            c->gear_inventory[c->gear_inventory_count - 1] = NULL;
+            c->gear_inventory_count--;
             return;
         }
     }
     log_msg(WARNING, "Character", "Equipable item %s not found in inventory!", item->name);
 }
 
-void add_usable_item(character_t* c, item_t* item) {
-    if (c->usable_item_count < USABLE_ITEM_LIMIT) {
-        c->usable_items[c->usable_item_count] = item;
-        c->usable_item_count++;
+void add_potion(character_t* c, potion_t* item) {
+    if (c->potion_inventory_count < USABLE_ITEM_LIMIT) {
+        c->potion_inventory[c->potion_inventory_count] = item;
+        c->potion_inventory_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more useable items!", c->name);
     }
 }
 
-void remove_usable_item(character_t* c, item_t* item) {
-    for (int i = 0; i < c->usable_item_count; i++) {
-        if (c->usable_items[i] == item) {
-            for (int j = i; j < c->usable_item_count - 1; j++) {
-                c->usable_items[j] = c->usable_items[j + 1];
+void remove_potion(character_t* c, potion_t* item) {
+    for (int i = 0; i < c->potion_inventory_count; i++) {
+        if (c->potion_inventory[i] == item) {
+            for (int j = i; j < c->potion_inventory_count - 1; j++) {
+                c->potion_inventory[j] = c->potion_inventory[j + 1];
             }
-            c->usable_items[c->usable_item_count - 1] = NULL;
-            c->usable_item_count--;
+            c->potion_inventory[c->potion_inventory_count - 1] = NULL;
+            c->potion_inventory_count;
             return;
         }
     }
     log_msg(WARNING, "Character", "Usable item %s not found in inventory!", item->name);
 }
 
-void equip_item(character_t* c, equipable_item_t* item) {
+void equip_gear(character_t* c, gear_t* item) {
     if (item->slot < MAX_SLOT) {
-        if (c->equipped_items[item->slot] != NULL) {
+        if (c->equipment[item->slot] != NULL) {
             log_msg(WARNING, "Character", "Slot %d is already occupied!", item->slot);
             return;
         }
 
-        remove_equipable_item(c, item->base);
-        c->equipped_items[item->slot] = item;
-        c->defenses.armor += item->armor_bonus;
-        c->defenses.magic_resist += item->magic_resist_bonus;
+        remove_gear(c, item);
+        c->equipment[item->slot] = item;
+        c->defenses.armor += item->defenses.armor;
+        c->defenses.magic_resist += item->defenses.magic_resist;
 
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->base->name, item->slot);
+        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->name, item->slot);
     } else {
-        log_msg(WARNING, "Character", "Invalid slot for item %s!", item->base->name);
+        log_msg(WARNING, "Character", "Invalid slot for item %s!", item->name);
     }
 }
 
-void unequip_item(character_t* c, gear_slot_t slot) {
-    if (slot < MAX_SLOT && c->equipped_items[slot] != NULL) {
+void unequip_gear(character_t* c, gear_slot_t slot) {
+    if (slot < MAX_SLOT && c->equipment[slot] != NULL) {
 
-        equipable_item_t* item = c->equipped_items[slot];
-        c->defenses.armor -= item->armor_bonus;
-        c->defenses.magic_resist -= item->magic_resist_bonus;
-        add_equipable_item(c, item->base);
+        gear_t* item = c->equipment[slot];
+        c->defenses.armor -= item->defenses.armor;
+        c->defenses.magic_resist -= item->defenses.magic_resist;
+        add_gear(c, item);
 
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->base->name, slot);
-        c->equipped_items[slot] = NULL;
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->name, slot);
+        c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No item equipped in slot %d!", slot);
     }

@@ -24,9 +24,8 @@ src_files = files(
     'src/character/monster.c',
     'src/character/level.c',
 
-    'src/item/base_item.c',
-    'src/item/equipable_item.c',
-    'src/item/usable_item.c',
+    'src/item/gear.c',
+    'src/item/potion.c',
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',

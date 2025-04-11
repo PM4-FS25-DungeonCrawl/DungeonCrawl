@@ -2,13 +2,12 @@
 #include "ability.h"
 #include "../character/level.h"
 #include "../character/character.h"
-#include "../item/base_item.h"
-#include "../item/usable_item.h"
+#include "../item/potion.h"
 #include "../include/termbox2.h"
 #include "./display/combat_display.h"
 
 #define ABILITY_MENU_STRING "Use Ability"
-#define ITEM_MENU_STRING "Use Item"
+#define ITEM_MENU_STRING "Use Potion"
 
 typedef enum {
     COMBAT_MENU,
@@ -23,8 +22,8 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
 internal_combat_state_t item_menu(character_t* player, character_t* monster);
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
-void use_item(character_t* player, const character_t* monster, item_t* item);
-bool use_usable_item(character_t* character, item_t* item);
+void use_item(character_t* player, const character_t* monster, potion_t* item);
+bool use_usable_item(character_t* character, potion_t* item);
 bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);
 
@@ -173,21 +172,21 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 }
 
 internal_combat_state_t item_menu(character_t* player, character_t* monster) {
-    if(player->usable_item_count == 0) {
+    if(player->potion_inventory_count == 0) {
         return COMBAT_MENU;
     }
     int selected_index = 0;
-    int usable_item_count = 0;
-    usable_item_t* usable_items[USABLE_ITEM_LIMIT];
+    int potion_count = 0;
+    potion_t* potions[USABLE_ITEM_LIMIT];
 
     internal_combat_state_t new_state = ITEM_MENU;
     bool item_used = false;
 
     // Collect all usable items
-    for (int i = 0; i < player->usable_item_count; i++) {
-        if (player->usable_items[i] != NULL && player->usable_items[i]->type == USABLE) {
-            usable_items[usable_item_count] = player->usable_items[i]->extension;
-            usable_item_count++;
+    for (int i = 0; i < player->potion_inventory_count; i++) {
+        if (player->potion_inventory[i] != NULL) {
+            potions[potion_count] = player->potion_inventory[i];
+            potion_count++;
         }
     }
 
@@ -197,7 +196,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
         int y = display_combat_view(player, monster, false);
 
         // Display menu options
-        display_item_options(y, selected_index, player->usable_items);
+        display_potion_options(y, selected_index, player->potion_inventory_count, &player->potion_inventory);
 
         // print to terminal and check for key press
         tb_present();
@@ -207,13 +206,13 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
         if (ret == TB_OK) {
             if (event.key == TB_KEY_ARROW_UP) {
                 // Move up
-                selected_index = (selected_index - 1 + usable_item_count) % usable_item_count;
+                selected_index = (selected_index - 1 + potion_count) % potion_count;
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 // Move down
-                selected_index = (selected_index + 1) % usable_item_count;
+                selected_index = (selected_index + 1) % potion_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
-                use_item(player, monster, usable_items[selected_index]->base);
+                use_item(player, monster, potions[selected_index]);
                 use_ability(monster, player, get_random_ability(monster));
                 new_state = EVALUATE_COMBAT;
                 item_used = true;
@@ -247,10 +246,10 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     tb_present();
 }
 
-void use_item(character_t* player, const character_t* monster, item_t* item) {
+void use_item(character_t* player, const character_t* monster, potion_t* item) {
     bool consumed = use_usable_item(player, item);
     if (consumed) {
-        display_item_message(player, monster, (usable_item_t*) item->extension);
+        display_potion_message(player, monster, item);
     }
 }
 
@@ -259,27 +258,20 @@ ability_t* get_random_ability(const character_t* character) {
     return character->abilities[random_index];
 }
 
-bool use_usable_item(character_t* character, item_t* item) {
-    if (item->type != USABLE) {
-        log_msg(ERROR, "Character", "%s cannot use usable_item %s", character->name, item->name);
-        return false;
-    }
-    const usable_item_t* usable_item = (usable_item_t*) (item->extension);
-
-    switch (usable_item->effectType) {
+bool use_usable_item(character_t* character, potion_t* item) {
+    switch (item->effectType) {
         case HEALING:
-            if (usable_item->value > (character->max_resources.health - character->current_resources.health)) {
+            if (item->value > (character->max_resources.health - character->current_resources.health)) {
                 character->current_resources.health = character->max_resources.health;
             } else {
-                character->current_resources.health += usable_item->value;
+                character->current_resources.health += item->value;
             }
             break;
         default:
-            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", usable_item->effectType);
+            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", item->effectType);
             break;
     }
-
-    remove_item(character, item);
+    remove_potion(character, item);
     return true;
 }
 

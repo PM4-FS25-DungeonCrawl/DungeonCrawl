@@ -19,9 +19,8 @@ helper_combat = files(
     '../src/character/player.c',
     '../src/character/monster.c',
 
-    '../src/item/base_item.c',
-    '../src/item/equipable_item.c',
-    '../src/item/usable_item.c',
+    '../src/item/gear.c',
+    '../src/item/potion.c',
 
     '../include/termbox2.c',
     '../src/logging/logger.c',

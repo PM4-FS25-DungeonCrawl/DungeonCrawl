@@ -36,12 +36,12 @@ int display_combat_view(const character_t* player, const character_t* monster, b
     return y;
 }
 
-void display_item_message(const character_t* player, const character_t* monster, usable_item_t* item) {
+void display_potion_message(const character_t* player, const character_t* monster, potion_t* potion) {
     tb_clear();
     char message[256];
-    switch (item->effectType) {
+    switch (potion->effectType) {
         case HEALING:
-            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base->name, item->value);
+            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", potion->name, potion->value);
             display_combat_message(player, monster, message, false);
             break;
         default:
@@ -99,8 +99,7 @@ void display_oom_message(const character_t* attacker, const character_t* target,
     }
 }
 
-
-void display_ability_options(int y, const int selected_index, const ability_t* abilities[]) {
+void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
     for(int i = 0; i < ABILITY_LIMIT; i++){
         if (abilities[i] != NULL) {
@@ -114,16 +113,14 @@ void display_ability_options(int y, const int selected_index, const ability_t* a
     tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
 
-void display_item_options(int y, const int selected_index, const item_t* items[]) {
-    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
-    for(int i = 0; i < USABLE_ITEM_LIMIT; i++) {
-        if (items[i] != NULL) {
+void display_potion_options(int y, int selected_index, int option_count, const potion_t* potions[]) {
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Potions:");
+        for(int i = 0; i < option_count; i++){
             if (i == selected_index) {
-                tb_print(1, y++, TB_WHITE, TB_WHITE, items[i]->name);
+                tb_print(1, y++, TB_WHITE, TB_WHITE, potions[i]->name);
             } else {
-                tb_print(1, y++, TB_WHITE, TB_DEFAULT, items[i]->name);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, potions[i]->name);
             }
         }
-    }
-    tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
+        tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
