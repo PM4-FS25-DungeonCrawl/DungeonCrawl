@@ -1,5 +1,6 @@
 #include "draw_map_mode.h"
 
+#include "../../ascii_art/ascii.h"
 #include "../../../include/termbox2.h"
 #include "../../logging/logger.h"
 
@@ -88,4 +89,9 @@ void draw_map(const map_tile_t* arr, const int height, const int width, const ve
 void draw_map_ui(const int x, const int y, const vector2d_t player_pos) {
     tb_printf(x, y, TB_WHITE, TB_BLACK, "HP: 100");
     tb_printf(x, y + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+
+    //draw a ascii art helmet
+    for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {
+        tb_printf(x, i, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i - y - 3]);
+    }
 }
