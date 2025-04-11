@@ -99,7 +99,7 @@ void display_oom_message(const character_t* attacker, const character_t* target,
     }
 }
 
-void display_ability_options(int y, int selected_index, int option_count, const ability_t* abilities[]) {
+void display_ability_options(int y, int selected_index, const ability_t* abilities[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
     for(int i = 0; i < ABILITY_LIMIT; i++){
         if (abilities[i] != NULL) {
