@@ -2,7 +2,9 @@
 #include <math.h>
 #include "../logging/logger.h"
 
+
 int calculate_xp_for_next_level(int level) {
+    //TODO Maybe change to a more complex formula
     return (int)(100 + 10 * level);
 }
 
