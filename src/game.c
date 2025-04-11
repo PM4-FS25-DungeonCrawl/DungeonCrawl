@@ -110,7 +110,6 @@ int init_game(){
                 free_character(goblin);
                 free_character(player);
                 free_potion(healing_potion);
-                close_log_file(1);
                 running = false;
                 break;
         }
