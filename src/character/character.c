@@ -106,7 +106,8 @@ void remove_item(character_t* c, item_t* item) {
 
 void add_equipable_item(character_t* c, item_t* item) {
     if (c->equipable_item_count < EQUIPABLE_ITEM_LIMIT) {
-        c->equipable_items[c->equipable_item_count++] = item;
+        c->equipable_items[c->equipable_item_count] = item;
+        c->equipable_item_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more equipable items!", c->name);
     }
@@ -115,15 +116,21 @@ void add_equipable_item(character_t* c, item_t* item) {
 void remove_equipable_item(character_t* c, item_t* item) {
     for (int i = 0; i < c->equipable_item_count; i++) {
         if (c->equipable_items[i] == item) {
-            c->equipable_items[i] = c->equipable_items[--c->equipable_item_count];
+            for (int j = i; j < c->equipable_item_count - 1; j++) {
+                c->equipable_items[j] = c->equipable_items[j + 1];
+            }
+            c->equipable_items[c->equipable_item_count - 1] = NULL;
+            c->equipable_item_count--;
             return;
         }
     }
+    log_msg(WARNING, "Character", "Equipable item %s not found in inventory!", item->name);
 }
 
 void add_usable_item(character_t* c, item_t* item) {
     if (c->usable_item_count < USABLE_ITEM_LIMIT) {
-        c->usable_items[c->usable_item_count++] = item;
+        c->usable_items[c->usable_item_count] = item;
+        c->usable_item_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more useable items!", c->name);
     }
@@ -132,10 +139,15 @@ void add_usable_item(character_t* c, item_t* item) {
 void remove_usable_item(character_t* c, item_t* item) {
     for (int i = 0; i < c->usable_item_count; i++) {
         if (c->usable_items[i] == item) {
-            c->usable_items[i] = c->usable_items[--c->usable_item_count];
+            for (int j = i; j < c->usable_item_count - 1; j++) {
+                c->usable_items[j] = c->usable_items[j + 1];
+            }
+            c->usable_items[c->usable_item_count - 1] = NULL;
+            c->usable_item_count--;
             return;
         }
     }
+    log_msg(WARNING, "Character", "Usable item %s not found in inventory!", item->name);
 }
 
 void equip_item(character_t* c, equipable_item_t* item) {
