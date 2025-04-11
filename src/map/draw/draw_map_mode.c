@@ -51,28 +51,28 @@ void draw_map(const map_tile_t* arr, const int height, const int width, const ve
             switch (arr[access_idx]) {
                 case WALL:
                     tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
-                break;
+                    break;
                 case FLOOR:
                     tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
-                break;
+                    break;
                 case START_DOOR:
                     tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
-                break;
+                    break;
                 case EXIT_DOOR:
                     tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
-                break;
+                    break;
                 case KEY:
                     tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
-                break;
+                    break;
                 case SKELETON:
                     tb_printf(x, y, TB_WHITE, TB_RED, "!");
-                break;
+                    break;
                 case HIDDEN:
                     tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
-                break;
+                    break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
-                return;
+                    return;
             }
         }
     }
