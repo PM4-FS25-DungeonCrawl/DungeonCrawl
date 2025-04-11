@@ -1,8 +1,6 @@
 #include "game.h"
 
 #include "../include/termbox2.h"
-
-#include "local/local.h"
 #include "character/character.h"
 #include "character/monster.h"
 #include "character/player.h"
@@ -11,6 +9,7 @@
 #include "combat/damage.h"
 #include "item/gear.h"
 #include "item/potion.h"
+#include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
