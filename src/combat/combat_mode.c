@@ -25,7 +25,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster);
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_item(character_t* player, const character_t* monster, item_t* item);
 bool use_usable_item(character_t* character, item_t* item);
-bool consume_ability_resource(character_t* attacker, const character_t* target, const ability_t* ability);
+bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
@@ -230,7 +230,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     tb_clear();
-    if (consume_ability_resource(attacker, target, ability))
+    if (consume_ability_resource(attacker, ability))
     {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             int damage_dealt = deal_damage(target, ability->damage_type,  roll_damage(ability));
@@ -285,8 +285,8 @@ bool use_usable_item(character_t* character, item_t* item) {
     return true;
 }
 
-bool consume_ability_resource(character_t* attacker, const character_t* target, const ability_t* ability) {
-    int* resource = nullptr;
+bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
+    int* resource = NULL;
 
     switch (ability->damage_type) {
     case PHYSICAL:
