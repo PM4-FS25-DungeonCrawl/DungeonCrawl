@@ -11,4 +11,12 @@
         return NULL;                                  \
     }
 
+
+/**
+ * @brief 2-dimensional vector struct
+ */
+typedef struct {
+    int dx, dy;
+} vector2d_t;
+
 #endif//COMMON_H
