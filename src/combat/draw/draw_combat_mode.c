@@ -1,6 +1,6 @@
 #include "draw_combat_mode.h"
 
-int display_combat_view(const character_t* attacker, const character_t* target, const bool red_target_sprite) {
+int draw_combat_view(const character_t* attacker, const character_t* target, const bool red_target_sprite) {
     int y = 1;
 
     // Display player info
@@ -19,10 +19,10 @@ int display_combat_view(const character_t* attacker, const character_t* target, 
     }
 
     // Display monster sprite
-    return display_enemy(y, red_target_sprite);
+    return draw_enemy(y, red_target_sprite);
 }
 
-int display_enemy(int y, bool red_target_sprite) {
+int draw_enemy(int y, bool red_target_sprite) {
     char monster_sprite[256];
     snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");// TODO: make a list of sprites and connect to monster
 
@@ -39,26 +39,26 @@ int display_enemy(int y, bool red_target_sprite) {
     return y;
 }
 
-void display_potion_message(const character_t* attacker, const character_t* target, potion_t* potion) {
+void draw_potion_message(const character_t* attacker, const character_t* target, potion_t* potion) {
     tb_clear();
     char message[256];
     switch (potion->effectType) {
         case HEALING:
             snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", potion->name, potion->value);
-            display_combat_message(attacker, target, message, false);
+            draw_combat_message(attacker, target, message, false);
             break;
         default:
             break;
     }
 }
 
-void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_target_sprite) {
+void draw_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_target_sprite) {
     tb_clear();
     int y;
     if (attacker->type == PLAYER) {
-        y = display_combat_view(attacker, target, red_target_sprite);
+        y = draw_combat_view(attacker, target, red_target_sprite);
     } else {
-        y = display_combat_view(target, attacker, red_target_sprite);
+        y = draw_combat_view(target, attacker, red_target_sprite);
     }
     y += 1;
     tb_print(1, y, TB_WHITE, TB_DEFAULT, message);
@@ -68,40 +68,40 @@ void display_combat_message(const character_t* attacker, const character_t* targ
     tb_poll_event(&event);
 }
 
-void display_attack_message(const character_t* attacker, const character_t* target, const ability_t* ability, int damage_dealt) {
+void draw_attack_message(const character_t* attacker, const character_t* target, const ability_t* ability, int damage_dealt) {
     if (damage_dealt <= 0) damage_dealt = 0;
     char message[256];
     snprintf(message, sizeof(message), "%s attacked using %s! Dealt %d damage. Press any key to continue...", attacker->name, ability->name, damage_dealt);
     if (attacker->type == PLAYER) {
-        display_combat_message(attacker, target, message, true);
+        draw_combat_message(attacker, target, message, true);
     } else {
-        display_combat_message(attacker, target, message, false);
+        draw_combat_message(attacker, target, message, false);
     }
 }
 
-void display_missed_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
+void draw_missed_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
     char message[256];
     snprintf(message, sizeof(message), "%s attacked using %s! The attack missed :( Press any key to continue...", attacker->name, ability->name);
-    display_combat_message(attacker, target, message, false);
+    draw_combat_message(attacker, target, message, false);
 }
 
-void display_oom_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
+void draw_oom_message(const character_t* attacker, const character_t* target, const ability_t* ability) {
     char message[256];
     switch (ability->damage_type) {
         case PHYSICAL:
             snprintf(message, sizeof(message), "%s has not enough stamina to use %s! Press any key to continue...", attacker->name, ability->name);
-            display_combat_message(attacker, target, message, false);
+            draw_combat_message(attacker, target, message, false);
             break;
         case MAGICAL:
             snprintf(message, sizeof(message), "%s has not enough mana to use %s! Press any key to continue...", attacker->name, ability->name);
-            display_combat_message(attacker, target, message, false);
+            draw_combat_message(attacker, target, message, false);
             break;
         default:
             break;
     }
 }
 
-void display_ability_options(int y, const int selected_index, const ability_t* abilities[]) {
+void draw_ability_options(int y, const int selected_index, const ability_t* abilities[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
     for (int i = 0; i < ABILITY_LIMIT; i++) {
         if (abilities[i] != NULL) {
@@ -115,7 +115,7 @@ void display_ability_options(int y, const int selected_index, const ability_t* a
     tb_print(1, y + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
 }
 
-void display_potion_options(int y, const int selected_index, const potion_t* potions[]) {
+void draw_potion_options(int y, const int selected_index, const potion_t* potions[]) {
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Potions:");
     for (int i = 0; i < USABLE_ITEM_LIMIT; i++) {
         if (potions[i] != NULL) {

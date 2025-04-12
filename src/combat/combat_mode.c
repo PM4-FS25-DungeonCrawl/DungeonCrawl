@@ -82,7 +82,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
     while (!submenu_selected) {
         // prepare screen
         tb_clear();
-        int y = display_combat_view(player, monster, false);
+        int y = draw_combat_view(player, monster, false);
 
         // Display menu options
         tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
@@ -138,10 +138,10 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
     while (!ability_used) {
         // Prepare screen
         tb_clear();
-        int y = display_combat_view(player, monster, false);
+        int y = draw_combat_view(player, monster, false);
 
         // Display menu options
-        display_ability_options(y, selected_index, player->abilities);
+        draw_ability_options(y, selected_index, player->abilities);
 
         // print to terminal and check for key press
         tb_present();
@@ -193,10 +193,10 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
     while (!item_used) {
         // Prepare screen
         tb_clear();
-        int y = display_combat_view(player, monster, false);
+        int y = draw_combat_view(player, monster, false);
 
         // Display menu options
-        display_potion_options(y, selected_index, player->potion_inventory);
+        draw_potion_options(y, selected_index, player->potion_inventory);
 
         // print to terminal and check for key press
         tb_present();
@@ -231,12 +231,12 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
-            display_attack_message(attacker, target, ability, damage_dealt);
+            draw_attack_message(attacker, target, ability, damage_dealt);
         } else {
-            display_missed_message(attacker, target, ability);
+            draw_missed_message(attacker, target, ability);
         }
     } else {
-        display_oom_message(attacker, target, ability);
+        draw_oom_message(attacker, target, ability);
     }
 
     tb_present();
@@ -245,7 +245,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 void use_item(character_t* player, const character_t* monster, potion_t* item) {
     bool consumed = use_usable_item(player, item);
     if (consumed) {
-        display_potion_message(player, monster, item);
+        draw_potion_message(player, monster, item);
     }
 }
 
