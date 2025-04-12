@@ -182,14 +182,6 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
     internal_combat_state_t new_state = ITEM_MENU;
     bool item_used = false;
 
-    // Collect all usable items
-    for (int i = 0; i < player->potion_inventory_count; i++) {
-        if (player->potion_inventory[i] != NULL) {
-            potions[potion_count] = player->potion_inventory[i];
-            potion_count++;
-        }
-    }
-
     while (!item_used) {
         // Prepare screen
         tb_clear();
@@ -212,7 +204,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
                 selected_index = (selected_index + 1) % potion_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected item
-                use_item(player, monster, potions[selected_index]);
+                use_item(player, monster, player->potion_inventory[selected_index]);
                 use_ability(monster, player, get_random_ability(monster));
                 new_state = EVALUATE_COMBAT;
                 item_used = true;
