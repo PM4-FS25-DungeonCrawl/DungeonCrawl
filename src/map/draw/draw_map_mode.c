@@ -4,13 +4,16 @@
 #include "../../ascii_art/ascii.h"
 #include "../../logging/logger.h"
 
+
+void draw_player_info(int x, int y, vector2d_t player_pos);
+
 /**
- * @brief Draws the map based on the given parameters.
+ * @brief Draws the map mode ui based on the given parameters.
  *
  * @param arr the map array to be drawn
  * @param height the height of the map
  * @param width the width of the map
- * @param anchor the anchor position of the map, defined as the top left corner
+ * @param anchor the anchor position of the map mode, defined as the top left corner
  * @param player_pos the position of the player
  *
  * @note this function checks makes different checks to ensure the given parameters are valid.
@@ -21,21 +24,21 @@
  * - check if the player position is within the bounds of the map
  * If any of the checks fail, an error message is logged and the function returns.
  */
-void draw_map(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
+void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
     if (arr == NULL) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map given array is NULL");
+        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given array is NULL");
         return;
     }
     if (height <= 0 || width <= 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map given height or width is zero or negative");
+        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
         return;
     }
     if (anchor.dx < 0 || anchor.dy < 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map given anchor is negative");
+        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given anchor is negative");
         return;
     }
     if (player_pos.dx < anchor.dx || player_pos.dy < anchor.dy || player_pos.dx >= anchor.dx + width || player_pos.dy >= anchor.dy + height) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map given player position out of bounds");
+        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given player position out of bounds");
         return;
     }
 
@@ -77,18 +80,20 @@ void draw_map(const map_tile_t* arr, const int height, const int width, const ve
             }
         }
     }
+
+    draw_player_info(anchor.dx, anchor.dy + height + 1, player_pos);
 }
 
 /**
- * @brief Draws the general UI of the map mode.
+ * @brief Draws the player information of the map mode.
  *
- * @param x The x position of the UI to be drawn
- * @param y The y position of the UI to be drawn
- * @param player_pos The player position
+ * @param x the x position of the player info to be drawn
+ * @param y the y position of the player info to be drawn
+ * @param player_pos the current player position
  */
-void draw_map_ui(const int x, const int y, const vector2d_t player_pos) {
+void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     tb_printf(x, y, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(x, y + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    tb_printf(x, y + 1, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
     for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {

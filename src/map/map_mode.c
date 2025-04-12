@@ -76,8 +76,7 @@ map_mode_result_t map_mode_update(void) {
     }
 
     draw_light_on_player(map, revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
-    draw_map(revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-    draw_map_ui(0, HEIGHT, player_pos);
+    draw_map_mode(revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
 
     tb_present();
 
