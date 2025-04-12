@@ -4,7 +4,7 @@
 #include "../character/level.h"
 #include "../include/termbox2.h"
 #include "../item/potion.h"
-#include "./display/combat_display.h"
+#include "./draw/draw_combat_mode.h"
 #include "ability.h"
 
 #define ABILITY_MENU_STRING "Use Ability"

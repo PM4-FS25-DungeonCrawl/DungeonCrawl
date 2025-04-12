@@ -1,4 +1,4 @@
-#include "combat_display.h"
+#include "draw_combat_mode.h"
 
 int display_combat_view(const character_t* attacker, const character_t* target, const bool red_target_sprite) {
     int y = 1;
