@@ -8,6 +8,7 @@
 #include "../ability.h"
 
 int display_combat_view(const character_t* attacker, const character_t* target, bool red_target_sprite);
+int display_enemy(int y, bool red_target_sprite);
 void display_potion_message(const character_t* attacker, const character_t* target, potion_t* potion);
 void display_combat_message(const character_t* attacker, const character_t* target, const char* message, bool red_target_sprite);
 void display_attack_message(const character_t* attacker, const character_t* target, const ability_t* ability, int damage_dealt);
