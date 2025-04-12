@@ -1,5 +1,5 @@
-#ifndef COMBAT_DISPLAY_H
-#define COMBAT_DISPLAY_H
+#ifndef DRAW_COMBAT_MODE_H
+#define DRAW_COMBAT_MODE_H
 
 #include "../../../include/termbox2.h"
 #include "../../character/character.h"
@@ -15,4 +15,4 @@ void display_missed_message(const character_t* attacker, const character_t* targ
 void display_oom_message(const character_t* attacker, const character_t* target, const ability_t* ability);
 void display_ability_options(int y, int selected_index, const ability_t* abilities[]);
 void display_potion_options(int y, int selected_index, const potion_t* potions[]);
-#endif//COMBAT_DISPLAY_H
+#endif//DRAW_COMBAT_MODE_H
