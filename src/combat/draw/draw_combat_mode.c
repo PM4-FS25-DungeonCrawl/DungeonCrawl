@@ -19,6 +19,10 @@ int display_combat_view(const character_t* attacker, const character_t* target, 
     }
 
     // Display monster sprite
+    return display_enemy(y, red_target_sprite);
+}
+
+int display_enemy(int y, bool red_target_sprite) {
     char monster_sprite[256];
     snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");// TODO: make a list of sprites and connect to monster
 
@@ -32,7 +36,6 @@ int display_combat_view(const character_t* attacker, const character_t* target, 
     y += 2;
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
     tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
-
     return y;
 }
 
