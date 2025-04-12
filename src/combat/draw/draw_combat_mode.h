@@ -4,9 +4,9 @@
 #include "../../../include/termbox2.h"
 #include "../../character/character.h"
 #include "../../character/character_fw.h"
+#include "../../common.h"
 #include "../../item/potion.h"
 #include "../ability.h"
-#include "../../common.h"
 
 int draw_combat_view(const character_t* attacker, const character_t* target, bool red_target_sprite);
 int draw_enemy(int y, bool red_target_sprite);
