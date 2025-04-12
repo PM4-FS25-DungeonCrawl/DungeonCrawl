@@ -196,7 +196,7 @@ internal_combat_state_t item_menu(character_t* player, character_t* monster) {
         int y = display_combat_view(player, monster, false);
 
         // Display menu options
-        display_potion_options(y, selected_index, &player->potion_inventory);
+        display_potion_options(y, selected_index, player->potion_inventory);
 
         // print to terminal and check for key press
         tb_present();
