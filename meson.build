@@ -54,6 +54,10 @@ logging_files = files(
     'src/logging/ringbuffer.c'
 )
 
+memory_files = files(
+  'src/memory/memory_management.c'
+)
+
 # Include the test directory in the build.
 subdir('test')
 
@@ -64,5 +68,6 @@ executable(
     include_files,
     debug_files,
     database_files,
-    logging_files
+    logging_files,
+    memory_files
 )
