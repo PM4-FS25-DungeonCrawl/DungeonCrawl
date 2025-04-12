@@ -9,9 +9,8 @@ void clear_lines(int y);
 vector2d_t draw_combat_view(const character_t* player, const character_t* enemy, char* enemy_sprite, bool red_target_sprite) {
     tb_clear();
     vector2d_t anchor = {
-        .dx = 1,
-        .dy = 1
-    };
+            .dx = 1,
+            .dy = 1};
 
     anchor.dy = draw_resource_bar(anchor.dy, player);
     anchor.dy = draw_resource_bar(anchor.dy, enemy);

@@ -15,8 +15,10 @@ potion_t* init_potion(const char* name, potion_type_t type, int value) {
 
 const char* potion_type_to_string(potion_type_t type) {
     switch (type) {
-        case HEALING: return "Healing";
-        default: return "Unknown";
+        case HEALING:
+            return "Healing";
+        default:
+            return "Unknown";
     }
 }
 

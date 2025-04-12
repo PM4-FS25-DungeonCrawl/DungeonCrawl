@@ -1,7 +1,9 @@
 #include "damage.h"
+
 #include "../character/character.h"
 #include "../logging/logger.h"
 #include "ability.h"
+
 #include <stdlib.h>
 
 int roll_dice(const dice_size_t dice_size);
@@ -48,19 +50,28 @@ void reset_current_stats(character_t* character) {
 // Helper function to convert dice_size_t to string
 const char* dice_size_to_string(dice_size_t size) {
     switch (size) {
-        case D6: return "D6";
-        case D8: return "D8";
-        case D10: return "D10";
-        case D12: return "D12";
-        case D20: return "D20";
-        default: return "Unknown";
+        case D6:
+            return "D6";
+        case D8:
+            return "D8";
+        case D10:
+            return "D10";
+        case D12:
+            return "D12";
+        case D20:
+            return "D20";
+        default:
+            return "Unknown";
     }
 }
 
 const char* damage_type_to_string(damage_type_t type) {
     switch (type) {
-        case PHYSICAL: return "Physical";
-        case MAGICAL: return "Magic";
-        default: return "Unknown";
+        case PHYSICAL:
+            return "Physical";
+        case MAGICAL:
+            return "Magic";
+        default:
+            return "Unknown";
     }
 }

@@ -76,9 +76,9 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
-    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite" , false);
+    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite", false);
     int selected_index = 0;
- 
+
     const char* menu_options[] = {ABILITY_MENU_STRING, ITEM_MENU_STRING};
     const int menu_option_count = sizeof(menu_options) / sizeof(menu_options[0]);
 
@@ -87,7 +87,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, "Combat Menu:", menu_options, menu_option_count, selected_index);        
+        draw_combat_menu(anchor, "Combat Menu:", menu_options, menu_option_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -120,18 +120,18 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     // draw combat view
-    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite" , false);
+    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite", false);
     int selected_index = 0;
 
     const int ability_count = player->ability_count;
     const char** menu_options = generate_ability_menu_options(&player->abilities, ability_count);
-    
+
     internal_combat_state_t new_state = ABILITY_MENU;
     bool ability_used = false;
 
     while (!ability_used) {
         // draw menu options
-        draw_combat_menu(anchor, "Ability Menu:", menu_options, ability_count, selected_index); 
+        draw_combat_menu(anchor, "Ability Menu:", menu_options, ability_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -171,7 +171,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         draw_combat_log(anchor, message);
         return COMBAT_MENU;
     }
-    
+
     int potion_count = player->potion_inventory_count;
     const char** menu_options = generate_potion_menu_options(&player->potion_inventory, potion_count);
 
@@ -223,36 +223,36 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
         monster = attacker;
         sprite = false;
     }
-    
+
     vector2d_t anchor = draw_combat_view(player, monster, "Enemy Sprite", false);
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
             draw_combat_view(player, monster, "Enemy Sprite", sprite);
-            
+
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), "%s uses %s and deals %d %s damage to %s!",
-                attacker->name,
-                ability->name,
-                damage_dealt,
-                damage_type_to_string(ability->damage_type),
-                target->name);
+                     attacker->name,
+                     ability->name,
+                     damage_dealt,
+                     damage_type_to_string(ability->damage_type),
+                     target->name);
             draw_combat_log(anchor, message);
         } else {
             draw_combat_view(player, monster, "Enemy Sprite", false);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), "%s uses %s, but it missed!",
-                attacker->name,
-                ability->name);
+                     attacker->name,
+                     ability->name);
             draw_combat_log(anchor, message);
         }
     } else {
         memset(message, 0, sizeof(message));
         snprintf(message, sizeof(message), "%s tries to cast %s, but doesn't have enough resources!",
-            attacker->name,
-            ability->name);
+                 attacker->name,
+                 ability->name);
         draw_combat_log(anchor, message);
     }
     tb_present();
@@ -262,13 +262,12 @@ void use_item(character_t* player, const character_t* monster, potion_t* potion)
     vector2d_t anchor = draw_combat_view(player, monster, "Enemy Sprite", false);
     bool consumed = invoke_potion_effect(player, potion);
     if (consumed) {
-
         char message[256];
         snprintf(message, sizeof(message), "%s uses a %s potion, restoring %d %s!",
-            player->name,
-            potion->name,
-            potion->value,
-            potion_type_to_string(potion->effectType));
+                 player->name,
+                 potion->name,
+                 potion->value,
+                 potion_type_to_string(potion->effectType));
         draw_combat_log(anchor, message);
     }
 }
