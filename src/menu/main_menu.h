@@ -1,6 +1,8 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
+#include <stdbool.h>
+
 typedef enum {
     MENU_START_GAME,
     MENU_CONTINUE,
