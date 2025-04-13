@@ -27,11 +27,11 @@ void test_roll_hit() {
 
     // attacker has a higher dexterity value, should hit
     attacker->current_stats.dexterity = 20;
-    defender->current_stats.dexterity = 5;
+    defender->current_stats.dexterity = 0;
     assert(roll_hit(attacker->current_stats.dexterity, defender->current_stats.dexterity) == true);
 
     // defender has a higher dexterity value, should miss
-    attacker->current_stats.dexterity = 5;
+    attacker->current_stats.dexterity = 0;
     defender->current_stats.dexterity = 20;
     assert(roll_hit(attacker->current_stats.dexterity, defender->current_stats.dexterity) == false);
 
