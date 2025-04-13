@@ -1,9 +1,10 @@
+#include "../../src/character/character.h"
+#include "../../src/combat/ability.h"
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../src/character/character.h"
-#include "../../src/combat/ability.h"
 
 // initialize a character for testing
 character_t* setup_character() {
