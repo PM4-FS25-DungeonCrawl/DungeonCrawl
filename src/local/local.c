@@ -1,8 +1,12 @@
 #include "local.h"
 
+#include "../database/database.h"
 #include "../database/local/local_database.h"
 
 #include <stdlib.h>
+
+//Macros for the Local Database Path
+#define LOCAL_DB_PATH "resources/database/local/dungeoncrawl_local.db"
 
 // forward declaration of the observer node structure
 typedef struct observer_node_t observer_node_t;
@@ -26,6 +30,11 @@ observer_node_t* observer_list = NULL;
 local_language_t current_language = LANGUAGE_EN;
 
 /**
+ * The database connection
+ */
+DBConnection local_db_connection;
+
+/**
  * Initialize the local module.
  * This function should be called before using any other functions in this module.
  */
@@ -38,6 +47,11 @@ void init_local(void) {
     }
     observer_list->update_func = NULL;
     observer_list->next = NULL;
+    // Initialize the database connection
+    if (!db_open(&local_db_connection, LOCAL_DB_PATH)) {
+        // Handle database connection failure
+        return;
+    }
 }
 
 /**
@@ -47,8 +61,7 @@ void init_local(void) {
  */
 char* get_local_string(const char* key) {
     // This function should return the localized string for the given key
-    // TODO: Implement the DB Connection, for now it is NULL
-    return get_localization_string(NULL, key, &current_language);
+    return get_localization_string(&local_db_connection, key, &current_language);
 }
 
 /**
@@ -112,4 +125,5 @@ void shutdown_local(void) {
         free(current);
         current = next;
     }
+    db_close(&local_db_connection);
 }

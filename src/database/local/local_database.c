@@ -36,7 +36,6 @@ int attribute_key(const DBConnection* db_connection, const char* attribute_name)
     rc = sqlite3_step(statement);
     if (rc != SQLITE_ROW) {
         log_msg(ERROR, "Localization Database", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
-        //fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db_connection.db));
         sqlite3_finalize(statement);
         return -1;
     }
@@ -60,8 +59,8 @@ char* get_localization_string(const DBConnection* db_connection, const char* att
         return "NULL";
     }
 
-    // Allocate a buffer for the full SQL statement
-    size_t buffer_size = strlen("SELECT ") + strlen(language->column_name) + strlen(LOCAL_STRING_STATEMENT) + 1;
+    // a buffer for the full SQL statement
+    const size_t buffer_size = strlen("SELECT ") + strlen(language->column_name) + strlen(LOCAL_STRING_STATEMENT) + 1;
     char local_string_stmt[buffer_size];
 
     // Construct the SQL statement
