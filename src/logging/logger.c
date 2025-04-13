@@ -13,8 +13,8 @@
 #define MAX_FILE_SIZE 1048576// max size = 1 MB
 #define PATH_MAX 4096
 
-// relative directory from main.c
-#define LOG_DIRECTORY "../log"
+// relative directory from project root
+#define LOG_DIRECTORY "log"
 #define LOG_FILE_FORMAT "log-%d.txt"
 
 #define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"
