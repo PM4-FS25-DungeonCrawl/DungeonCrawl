@@ -7,6 +7,8 @@
 // Menu options
 #define NEW_GAME_OPTION "New Game"
 #define CONTINUE_OPTION "Continue"
+#define SAVE_GAME_OPTION "Save Game"
+#define LOAD_GAME_OPTION "Load Game"
 #define EXIT_OPTION "Exit"
 
 // Menu constants
@@ -19,6 +21,8 @@
 // We'll create these dynamically based on game_in_progress
 static const char* NEW_GAME = NEW_GAME_OPTION;
 static const char* CONTINUE = CONTINUE_OPTION;
+static const char* SAVE_GAME = SAVE_GAME_OPTION;
+static const char* LOAD_GAME = LOAD_GAME_OPTION;
 static const char* EXIT = EXIT_OPTION;
 
 void init_main_menu(void) {
@@ -56,21 +60,24 @@ void draw_menu(const char** menu_options, int menu_count, int selected_index) {
 
 menu_result_t show_main_menu(bool game_in_progress) {
     // Create dynamic menu options based on game_in_progress flag
-    const char* menu_options[3];
+    const char* menu_options[5]; // Increased size for new options
     int menu_count;
     
-    // Always include New Game and Exit
+    // Always include New Game, Load Game and Exit
     menu_options[0] = NEW_GAME;
     
     if (game_in_progress) {
-        // If game is in progress, show Continue option
+        // If game is in progress, show Continue and Save Game options
         menu_options[1] = CONTINUE;
+        menu_options[2] = SAVE_GAME;
+        menu_options[3] = LOAD_GAME;
+        menu_options[4] = EXIT;
+        menu_count = 5;
+    } else {
+        // If no game in progress, don't show Continue and Save Game options
+        menu_options[1] = LOAD_GAME;
         menu_options[2] = EXIT;
         menu_count = 3;
-    } else {
-        // If no game in progress, don't show Continue option
-        menu_options[1] = EXIT;
-        menu_count = 2;
     }
     
     int selected_index = 0;
@@ -98,6 +105,50 @@ menu_result_t show_main_menu(bool game_in_progress) {
                 } else if (menu_options[selected_index] == CONTINUE) {
                     result = MENU_CONTINUE;
                     menu_active = false;
+                } else if (menu_options[selected_index] == SAVE_GAME) {
+                    // Prompt user for save file name
+                    tb_clear();
+                    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Enter name for save file (placeholder):");
+                    tb_present();
+                    
+                    // Wait for any key press to simulate accepting input
+                    struct tb_event save_event;
+                    tb_poll_event(&save_event);
+                    
+                    log_msg(INFO, "Menu", "Save Game selected (placeholder)");
+                    result = MENU_SAVE_GAME;
+                    menu_active = false;
+                } else if (menu_options[selected_index] == LOAD_GAME) {
+                    if (game_in_progress) {
+                        // Warn user about unsaved progress
+                        tb_clear();
+                        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Warning: All unsaved progress will be lost!");
+                        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, "Do you want to continue? (Y/N)");
+                        tb_present();
+                        
+                        // Wait for Y or N
+                        bool waiting_for_confirmation = true;
+                        while (waiting_for_confirmation) {
+                            struct tb_event confirm_event;
+                            tb_poll_event(&confirm_event);
+                            
+                            if (confirm_event.ch == 'y' || confirm_event.ch == 'Y') {
+                                waiting_for_confirmation = false;
+                                log_msg(INFO, "Menu", "Load Game confirmed (placeholder)");
+                                result = MENU_LOAD_GAME;
+                                menu_active = false;
+                            } else if (confirm_event.ch == 'n' || confirm_event.ch == 'N') {
+                                waiting_for_confirmation = false;
+                                // Return to main menu
+                                draw_menu(menu_options, menu_count, selected_index);
+                            }
+                        }
+                    } else {
+                        // No game in progress, load directly
+                        log_msg(INFO, "Menu", "Load Game selected (placeholder)");
+                        result = MENU_LOAD_GAME;
+                        menu_active = false;
+                    }
                 } else if (menu_options[selected_index] == EXIT) {
                     result = MENU_EXIT;
                     menu_active = false;

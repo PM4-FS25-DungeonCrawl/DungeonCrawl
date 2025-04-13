@@ -78,6 +78,18 @@ int init_game() {
                         tb_clear(); // Clear screen before map mode
                         current_state = MAP_MODE;
                         break;
+                    case MENU_SAVE_GAME:
+                        // Placeholder for saving game functionality
+                        log_msg(INFO, "Game", "Save game placeholder - returning to map mode");
+                        tb_clear();
+                        current_state = MAP_MODE;
+                        break;
+                    case MENU_LOAD_GAME:
+                        // Placeholder for loading game functionality
+                        log_msg(INFO, "Game", "Load game placeholder - generating new map for now");
+                        tb_clear();
+                        current_state = GENERATE_MAP;
+                        break;
                     case MENU_EXIT:
                         current_state = EXIT;
                         break;

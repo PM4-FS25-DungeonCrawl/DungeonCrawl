@@ -4,6 +4,8 @@
 typedef enum {
     MENU_START_GAME,
     MENU_CONTINUE,
+    MENU_SAVE_GAME,
+    MENU_LOAD_GAME,
     MENU_EXIT
 } menu_result_t;
 
