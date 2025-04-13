@@ -55,7 +55,7 @@ void test_deal_damage_to_armor() {
 
     // damage after armor reduction: 50 - 10 = 40
     deal_damage(&test_character, PHYSICAL, 50);
-    assert(test_character.current_resources.health == 60); // 100 - (50 - 10) = 60
+    assert(test_character.current_resources.health == 60);// 100 - (50 - 10) = 60
 
     printf("test_deal_damage_to_armor passed!\n");
 }
