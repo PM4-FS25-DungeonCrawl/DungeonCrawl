@@ -40,6 +40,7 @@ int init_game() {
     game_state_t current_state = GENERATE_MAP;
 
     init_map_mode();
+    init_local();
 
     ability_table_t* ability_table = init_ability_table();
     character_t* goblin = create_new_goblin();//initialize standard goblin
