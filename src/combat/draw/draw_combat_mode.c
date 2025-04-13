@@ -59,9 +59,13 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
     tb_print(1, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
-            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_WHITE, menu_options[i]);
+            char buffer[MAX_STRING_LENGTH];
+            snprintf(buffer, sizeof(buffer), "> %-254s", menu_options[i]);
+            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         } else {
-            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, menu_options[i]);
+            char buffer[MAX_STRING_LENGTH];
+            snprintf(buffer, sizeof(buffer), "%-256s", menu_options[i]);
+            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         }
     }
     tb_print(1, vec.dy + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
