@@ -27,6 +27,8 @@ src_files = files(
     'src/item/gear.c',
     'src/item/potion.c',
 
+    'src/menu/main_menu.c',
+
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',

@@ -59,6 +59,7 @@ void draw_map(void) {
 void draw_ui(void) {
     tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
     tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    tb_printf(0, HEIGHT + 4, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
 }
 
 int handle_input(const struct tb_event* event) {
@@ -66,6 +67,9 @@ int handle_input(const struct tb_event* event) {
     int new_y = player_pos.dy;
 
     if (event->key == TB_KEY_ESC || event->key == TB_KEY_CTRL_C) return QUIT;
+    
+    // Check for 'M' key press for menu
+    if (event->ch == 'm' || event->ch == 'M') return SHOW_MENU;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;

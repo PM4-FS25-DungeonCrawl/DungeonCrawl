@@ -10,7 +10,8 @@ typedef enum {
     CONTINUE,
     QUIT,
     NEXT_FLOOR,
-    COMBAT
+    COMBAT,
+    SHOW_MENU
 } map_mode_result_t;
 
 

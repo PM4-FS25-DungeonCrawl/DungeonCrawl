@@ -12,6 +12,7 @@
 #include "logging/logger.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
+#include "menu/main_menu.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -36,9 +37,10 @@ int init_game() {
 
 
     bool running = true;//should only be set in the state machine
-    game_state_t current_state = GENERATE_MAP;
+    game_state_t current_state = MAIN_MENU;
 
     init_map_mode();
+    init_main_menu();
 
     ability_table_t* ability_table = init_ability_table();
     character_t* goblin = create_new_goblin();//initialize standard goblin
@@ -64,6 +66,17 @@ int init_game() {
     while (running) {
         switch (current_state) {
             case MAIN_MENU:
+                switch (show_main_menu()) {
+                    case MENU_START_GAME:
+                        current_state = GENERATE_MAP;
+                        break;
+                    case MENU_CONTINUE:
+                        current_state = MAP_MODE;
+                        break;
+                    case MENU_EXIT:
+                        current_state = EXIT;
+                        break;
+                }
                 break;
             case GENERATE_MAP:
                 generate_map();
@@ -82,6 +95,10 @@ int init_game() {
                     case COMBAT:
                         log_msg(INFO, "Game", "Entering combat mode");
                         current_state = COMBAT_MODE;
+                        break;
+                    case SHOW_MENU:
+                        tb_clear(); // Clear the screen before showing menu
+                        current_state = MAIN_MENU;
                         break;
                     default:
                         log_msg(ERROR, "game", "Unknown return value from map_mode_update");
