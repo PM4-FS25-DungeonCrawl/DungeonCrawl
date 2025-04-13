@@ -126,8 +126,8 @@ void draw_light_on_player(const int* arr1, int* arr2, const int height, const in
                         case KEY:
                             arr2[access_idx] = KEY;
                             break;
-                        case SKELETON:
-                            arr2[access_idx] = SKELETON;
+                        case GOBLIN:
+                            arr2[access_idx] = GOBLIN;
                             break;
                         default:
                             //does nothing
