@@ -4,22 +4,19 @@ project('DungeonCrawl', 'c',
   default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
 
 # List of external dependencies
-# termbox = dependency('termbox2')
+notcurses = dependency('notcurses')
 
 
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
   'src/main.c',
-  'src/combat_mode.c',
-  'src/character_stats.c',
-  'src/game.c',
-  'src/items.c',
   'src/game.c',
   'src/map/map.c',
   'src/map/map_mode.c',
   'src/map/map_generator.c',
+  'src/input.c',
   'src/map/map_populator.c',
-  'src/map/drawop/draw_light.c'
+  'src/map/drawop/draw_light.c',
 )
 
 include_files = files(
@@ -27,7 +24,7 @@ include_files = files(
 )
 
 debug_files = files(
-  'debug/debug.c'
+  # 'debug/debug.c'
 )
 
 # List of all database files
@@ -51,5 +48,6 @@ executable(
   include_files,
   debug_files,
   database_files,
-  logging_files
+  logging_files,
+  dependencies : notcurses,
 )

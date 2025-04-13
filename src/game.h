@@ -6,6 +6,6 @@
 
 int init_game();
 
-int add(int a, int b);
+enum game_state { MAIN_MENU, MAP_MODE, COMBAT_MODE, GENERATE_MAP, EXIT };
 
 #endif // GAME_H

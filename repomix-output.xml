@@ -1,0 +1,2912 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: include/sqlite3.c, art/**, include/shell.c, include/sqlite3.h, include/termbox2.h, include/sqlite3ext.h, LICENSE
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+<additional_info>
+
+</additional_info>
+
+</file_summary>
+
+<directory_structure>
+.github/
+  workflows/
+    build.yml
+    compiletest.yml
+    mesontests.yml
+    release.yml
+debug/
+  debug.c
+  debug.h
+include/
+  termbox2.c
+src/
+  database/
+    database.c
+    database.h
+  logging/
+    logger.c
+    logger.h
+    ringbuffer.c
+    ringbuffer.h
+  map/
+    drawop/
+      draw_light.c
+      draw_light.h
+    map_generator.c
+    map_generator.h
+    map_mode.c
+    map_mode.h
+    map_populator.c
+    map_populator.h
+    map.c
+    map.h
+  character_stats.c
+  character_stats.h
+  colors.h
+  combat_mode.c
+  combat_mode.h
+  game.c
+  game.h
+  input.c
+  input.h
+  items.c
+  items.h
+  main.c
+test/
+  map/
+    drawop/
+      test_draw_light.c
+  meson.build
+  test_combat_mode.c
+  test_database.c
+.gitignore
+meson.build
+README.md
+sonar-project.properties
+windows_setup.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".github/workflows/build.yml">
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+</file>
+
+<file path="debug/debug.c">
+#include <stdarg.h>
+
+// void db_printEventStruct(const int x, const int y, const struct tb_event *event) {
+//     tb_printf(x, y, COLOR_FOREGROUND, COLOR_BACKGROUND, "Type: %d", event->type);
+//     tb_printf(x, y+1, COLOR_FOREGROUND, COLOR_BACKGROUND, "Modifier: %d", event->mod);
+//     tb_printf(x, y+2, COLOR_FOREGROUND, COLOR_BACKGROUND, "Key: %d", event->key);
+//     tb_printf(x, y+3, COLOR_FOREGROUND, COLOR_BACKGROUND, "Character: %c", (char) event->ch);
+//     tb_printf(x, y+4, COLOR_FOREGROUND, COLOR_BACKGROUND, "Width: %d", event->w);
+//     tb_printf(x, y+5, COLOR_FOREGROUND, COLOR_BACKGROUND, "Height: %d", event->h);
+//     tb_printf(x, y+6, COLOR_FOREGROUND, COLOR_BACKGROUND, "Mouse x: %d", event->x);
+//     tb_printf(x, y+7, COLOR_FOREGROUND, COLOR_BACKGROUND, "Mouse y: %d", event->y);
+// }
+//
+// void print_text(const int x, const int y, const char *format, ...) {
+//     va_list args;
+//     va_start(args, format);
+//
+//     char buffer[256];
+//     vsnprintf(buffer, sizeof(buffer), format, args);
+//
+//     va_end(args);
+//
+//     // Clear the previous text by printing spaces
+//     tb_printf(x, y, COLOR_FOREGROUND, COLOR_BACKGROUND, "%*s", (int)sizeof(buffer), " ");
+//
+//
+//     tb_printf(x, y, COLOR_FOREGROUND, COLOR_BACKGROUND, "%s", buffer);
+// }
+</file>
+
+<file path="debug/debug.h">
+#ifndef DEBUG_H
+#define DEBUG_H
+
+void db_printEventStruct(int x, int y, const struct tb_event *event);
+
+void print_text(int x, int y, const char *format, ...);
+
+#endif
+</file>
+
+<file path="include/termbox2.c">
+#define TB_IMPL
+#include "termbox2.h"
+</file>
+
+<file path="src/colors.h">
+#ifndef COLORS_H
+#define COLORS_H
+
+
+#endif // !COLORS_H
+</file>
+
+<file path="src/game.h">
+#ifndef GAME_H
+#define GAME_H
+
+#define COLOR_FOREGROUND TB_WHITE
+#define COLOR_BACKGROUND TB_BLACK
+
+int init_game();
+
+enum game_state { MAIN_MENU, MAP_MODE, COMBAT_MODE, GENERATE_MAP, EXIT };
+
+#endif // GAME_H
+</file>
+
+<file path="src/input.c">
+#include "src/game.h"
+#include "src/map/map_mode.h"
+#include <notcurses/notcurses.h>
+
+// enum game_state { MAIN_MENU, MAP_MODE, COMBAT_MODE, GENERATE_MAP, EXIT };
+
+bool handle_input(struct notcurses* nc, struct ncinput* ni, enum game_state current_state) {
+    switch (current_state) {
+        case MAP_MODE:
+            if (ni->id == 'w') move_player(DIR_UP);
+            else if (ni->id == 's') move_player(DIR_DOWN);
+            else if (ni->id == 'a') move_player(DIR_LEFT);
+            else if (ni->id == 'd') move_player(DIR_RIGHT);
+            else if (ni->id == 'q') return false; // Quit
+            break;
+
+        default:
+            break;
+    }
+
+    return true; // continue running
+}
+</file>
+
+<file path="src/input.h">
+#ifndef INPUT_H
+#define INPUT_H
+
+#include <notcurses/notcurses.h>
+#include "game.h"
+
+bool handle_input(struct notcurses* nc,struct ncinput* ni, enum game_state current_state);
+
+#endif // !INPUT_H
+</file>
+
+<file path="src/main.c">
+#include "game.h"
+#include "logging/logger.h"
+#include <locale.h>
+
+int main(void) {
+    log_msg(INFO, "Main", "init game");
+    return init_game();
+}
+</file>
+
+<file path=".gitignore">
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Exclude Idea Directory
+.idea
+
+# Exclude VSCode Directory
+.vscode
+
+# Exclude txt files in log
+log/*.txt
+
+.cache
+</file>
+
+<file path="README.md">
+# DungeonCrawl
+
+we will use then C2X standard with Meson as our build tool and for unit testing
+
+indentation will be 4 spaces
+regular C naming conventions
+
+
+# Scrum people
+Jil & Nino
+
+# manual 
+Lucien
+</file>
+
+<file path="sonar-project.properties">
+sonar.projectKey=dungeon_crawl
+</file>
+
+<file path="windows_setup.md">
+# Setup WSL
+
+Install Ubuntu via Microsoft Store
+
+open Ubuntu
+
+in the Terminal, run:
+
+sudo apt install build-essential
+
+sudo apt install manpages-dev
+
+sudo apt install cmake
+
+sudo apt install gdb
+
+sudo apt install gcc
+
+sudo apt install meson
+
+sudo apt update
+
+sudo apt upgrade
+
+
+# CLion configuration for WSL
+
+in the CLion settings
+
+under "File | Settings | Build, Execution, Deployment | Toolchains"
+
+click on the +, click WSL
+
+
+Toolset: Ubuntu
+
+CMake: WSL CMake
+
+Build Tool: leave empty
+
+C Compiler: /bin/gcc
+
+C++ Compiler: /bin/g++
+
+Debugger: WSL GDB
+
+
+click Apply
+
+if there are already other Toolchains, move WSL to the top of the list
+
+
+in the Run window at the bottom, under … | Modify run configuration
+
+enable "Emulate terminal in the output console"
+
+
+# Before running
+
+navigate into project directory in WSL, then run:
+
+mkdir buildDir
+
+meson setup builddir
+</file>
+
+<file path=".github/workflows/compiletest.yml">
+name: Compile in develop
+
+on:
+  push:
+    branches:
+      - develop  # Trigger in develop
+  pull_request:
+    branches:
+      - develop
+  
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # Multi-OS build
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install dependencies for Linux
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc g++ 
+
+      # Install dependencies for macOS
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install meson ninja
+          
+      # Configure Meson
+      - name: Configure Meson
+        run: meson setup builddir
+
+      # Compile project using Ninja
+      - name: Compile project
+        run: ninja -C builddir
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</file>
+
+<file path="src/database/database.c">
+//
+// Created by jabar on 27.03.2025.
+//
+#include <stdio.h>
+#include "database.h"
+
+int db_open(DBConnection *db_connection, const char *db_name) {
+    int rc = sqlite3_open(db_name, &db_connection->db);
+    if (rc) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
+        return 0;
+    }
+    return 1;
+}
+
+void db_close(DBConnection *db_connection) {
+    sqlite3_close(db_connection->db);
+}
+</file>
+
+<file path="src/database/database.h">
+//
+// Created by jabar on 27.03.2025.
+//
+
+#ifndef DATABASE_H
+#define DATABASE_H
+
+#include "../../include/sqlite3.h"
+
+typedef struct{
+    sqlite3 *db;
+    char *err_msg;
+} DBConnection;
+
+int db_open(DBConnection *db_connection, const char *db_name);
+void db_close(DBConnection *db_connection);
+
+#endif //DATABASE_H
+</file>
+
+<file path="src/map/drawop/draw_light.h">
+#ifndef DRAW_LIGHT_H
+#define DRAW_LIGHT_H
+
+#include "../map.h"
+
+void draw_light_on_player(const int* arr1, int* arr2, int height, int width, Vector2D player, int light_radius);
+
+#endif //DRAW_LIGHT_H
+</file>
+
+<file path="src/map/map_generator.h">
+#ifndef MAP_GENERATOR_H
+#define MAP_GENERATOR_H
+
+void generate_map();
+
+#endif //MAP_GENERATOR_H
+</file>
+
+<file path="src/map/map_populator.c">
+#include <stdlib.h>
+
+#include "map_populator.h"
+#include "map.h"
+
+// Check if a cell is a dead end (is floor and has only one neighboring non-wall cell)
+int is_dead_end(int x, int y) {
+    // Count neighboring non-wall cells
+    int neighbor_count = 0;
+
+    for (int i = 0; i < 4; i++) {
+        int dx = x + directions[i].dx;
+        int dy = y + directions[i].dy;
+
+        if (map[dx][dy] != WALL) {
+            neighbor_count++;
+        }
+    }
+
+    return neighbor_count == 1 && map[x][y] == FLOOR;
+}
+
+// Place a key in a dead end that is not the start or exit edge
+void place_key() {
+    int x, y;
+
+    // check for dead ends in a snake pattern and place the key in the first one found
+    do {
+        x = rand() % (WIDTH - 2) + 1;
+        y = rand() % (HEIGHT - 2) + 1;
+    } while (!is_dead_end(x, y));
+
+    map[x][y] = KEY;
+}
+
+// Check if a cell is close to an enemy (based on ENEMY_MIN_DISTANCE)
+int is_close_to_enemy(int x, int y) {
+    for (int i = -ENEMY_MIN_DISTANCE; i <= ENEMY_MIN_DISTANCE + 1; i++) {
+        for (int j = -ENEMY_MIN_DISTANCE; j <= ENEMY_MIN_DISTANCE + 1; j++) {
+            if (map[x + i][y + j] == SKELETON || map[x + i][y + j] == START_DOOR) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+// Place enemies in random locations
+void place_enemies() {
+    for (int i = 0; i < ENEMY_COUNT; i++) {
+        int x, y;
+
+        // Place enemies in random locations
+        do {
+            x = rand() % (WIDTH - 2) + 1;
+            y = rand() % (HEIGHT - 2) + 1;
+        } while (map[x][y] != FLOOR || is_close_to_enemy(x, y));
+
+        map[x][y] = SKELETON;
+    }
+}
+
+// Populate the map
+void populate_map() {
+    place_key();
+    place_enemies();
+}
+</file>
+
+<file path="src/items.h">
+#ifndef ITEMS_H
+#define ITEMS_H
+
+#include <stdio.h>
+#include <string.h>
+
+typedef enum {
+    ITEM_TYPE_USABLE,
+    ITEM_TYPE_EQUIPPABLE
+} ItemType;
+
+typedef enum {
+    SLOT_HEAD,
+    SLOT_CHEST,
+    SLOT_LEGS,
+    SLOT_FEET,
+    SLOT_HANDS,
+    SLOT_NECK,
+    SLOT_FINGER_RIGHT,
+    SLOT_FINGER_LEFT,
+    SLOT_COUNT
+} GearSlot;
+
+typedef enum {
+    HEALING,
+    ARMOR_INCREASE
+    // more effects can be added
+} UsableItemEffectType;
+
+// Base Item
+typedef struct {
+    char name[50];
+    ItemType type;
+} Item;
+
+// Equippable Item
+typedef struct {
+    Item base;
+    GearSlot slot;
+    int armor_bonus;
+    // Armor Pieces can have other stats, e.g. +might etc. for now only armor
+} EquippableItem;
+
+// Usable Item
+typedef struct {
+    Item base;
+    UsableItemEffectType effectType;
+    int value; // e.g. value = 30, healing potion heals for 30 health
+    // for other item effects more values might be needed
+} UsableItem;
+
+// Function Declarations
+void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType effectType, int value);
+void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot, int armor_bonus);
+
+#endif // ITEMS_H
+</file>
+
+<file path=".github/workflows/mesontests.yml">
+name: C Project CI
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # or another OS if needed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc
+
+      - name: Configure Meson
+        run: meson setup builddir
+
+      - name: Compile project
+        run: ninja -C builddir
+
+      - name: Run tests
+        run: meson test -C builddir --verbose
+</file>
+
+<file path="src/logging/logger.h">
+#ifndef LOGGER_H
+#define LOGGER_H
+
+typedef enum {
+    DEBUG,
+    FINE,
+    INFO,
+    WARNING,
+    ERROR
+} LogLevel;
+
+void close_log_file(int terminate_thread);
+
+void log_msg(LogLevel level, const char *module, const char *format, ...);
+
+#endif //LOGGER_H
+</file>
+
+<file path="src/logging/ringbuffer.h">
+#ifndef RINGBUFFER_H
+#define RINGBUFFER_H
+
+#define BUFFER_SIZE 20
+#define MAX_MSG_LENGTH 1024
+
+#ifdef _WIN32
+    #include <windows.h>
+
+    typedef struct {
+        char messages[BUFFER_SIZE][MAX_MSG_LENGTH];
+        int head;
+        int tail;
+        int count;
+        CRITICAL_SECTION mutex;
+        CONDITION_VARIABLE cond;
+    } RingBuffer;
+#else
+    #include <pthread.h>
+
+    typedef struct {
+        char messages[BUFFER_SIZE][MAX_MSG_LENGTH];
+        int head;
+        int tail;
+        int count;
+        pthread_mutex_t mutex;
+        pthread_cond_t cond;
+    } RingBuffer;
+#endif
+
+void init_ring_buffer(RingBuffer *buffer);
+
+void write_to_ring_buffer(RingBuffer *buffer, const char *message);
+
+int read_from_ring_buffer(RingBuffer *buffer, char *message);
+
+#endif //RINGBUFFER_H
+</file>
+
+<file path="src/map/map_generator.c">
+#include <stdlib.h>
+#include <time.h>
+#include <stdint.h>
+
+#include "map_generator.h"
+#include "map.h"
+#include "map_mode.h"
+#include "map_populator.h"
+
+// map array to store the maze
+int visited[WIDTH][HEIGHT];
+
+
+// Shuffle array using Fisher-Yates algorithm
+void shuffle(Vector2D *dir, int n) {
+    for (int i = n - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        Vector2D tmp = dir[j];
+        dir[j] = dir[i];
+        dir[i] = tmp;
+    }
+}
+
+// Check if cell is within bounds of the map
+int is_in_bounds(int x, int y) {
+    return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+}
+
+// Check if a cell is a valid cell to visit (in bounds and not visited)
+int is_valid_cell(int x, int y) {
+    return is_in_bounds(x, y) && !visited[x][y];
+}
+
+int validate_exit_position(int exit_edge, int x, int y) {
+    switch (exit_edge) {
+        case TOP:
+            return map[x][y + 1] == FLOOR;
+        case BOTTOM:
+            return map[x][y - 1] == FLOOR;
+        case LEFT:
+            return map[x + 1][y] == FLOOR;
+        case RIGHT:
+            return map[x - 1][y] == FLOOR;
+        default:
+            //TODO log error
+            return 0;
+    }
+}
+
+// Recursive backtracking algorithm to generate map (based on dfs)
+void carve_passages(int x, int y) {
+    visited[x][y] = 1;
+    map[x][y] = FLOOR;
+
+    // Create a copy of directions and shuffle them
+    Vector2D shuffled_dirs[4];
+    for (int i = 0; i < 4; i++) {
+        shuffled_dirs[i] = directions[i];
+    }
+    shuffle(shuffled_dirs, 4);
+
+    // Try each direction in random order
+    for (int i = 0; i < 4; i++) {
+        int nx = x + shuffled_dirs[i].dx * 2; // Move two cells in the direction
+        int ny = y + shuffled_dirs[i].dy * 2;
+
+        if (is_valid_cell(nx, ny)) {
+            // Carve passage by setting the cell between current and next to FLOOR
+            int wall_x = x + shuffled_dirs[i].dx;
+            int wall_y = y + shuffled_dirs[i].dy;
+
+            // make the wall a floor and continue the path
+            map[wall_x][wall_y] = FLOOR;
+            carve_passages(nx, ny);
+        }
+    }
+}
+
+// Add loops to the map by knocking down some walls
+void add_loops(int num_loops) {
+    int count = 0;
+    int max_attempts = num_loops * 10; // Limit the number of attempts
+
+    while (count < num_loops && max_attempts > 0) {
+        // Pick a random cell
+        int x = 1 + rand() % (WIDTH - 2);
+        int y = 1 + rand() % (HEIGHT - 2);
+
+        // If the wall has exactly 2 opposing floor neighbors, knock it down to create a loop
+        if (map[x][y] == WALL) {
+            int neighbor_directions[] = {0, 0, 0, 0};
+            // Count neighboring floor cells
+            int floor_count = 0;
+
+            for (int i = 0; i < 4; i++) {
+                int dx = x + directions[i].dx;
+                int dy = y + directions[i].dy;
+
+                if (map[dx][dy] == FLOOR) {
+                    floor_count++;
+                    neighbor_directions[i] = 1;
+                }
+            }
+
+            // check if the wall has exactly 2 opposing floor neighbors
+            if (floor_count == 2) {
+                if ((neighbor_directions[TOP] && neighbor_directions[BOTTOM]) || (
+                        neighbor_directions[LEFT] && neighbor_directions[RIGHT])) {
+                    map[x][y] = FLOOR;
+                    count++;
+                }
+            }
+        }
+
+        max_attempts--;
+    }
+}
+
+// Place the exit on a random edge of the map, ensuring there's a path to it
+void place_exit(int start_edge, int *exit_x, int *exit_y) {
+    // get a random exit edge that is different from the start edge
+    int exit_edge = start_edge;
+    while (exit_edge == start_edge) {
+        exit_edge = rand() % 4;
+    }
+
+    do {
+        switch (exit_edge) {
+            case TOP:
+                *exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
+                *exit_y = 0;
+                break;
+            case BOTTOM:
+                *exit_x = 1 + 2 * (rand() % ((WIDTH - 2) / 2));
+                *exit_y = HEIGHT - 1;
+                break;
+            case LEFT:
+                *exit_x = 0;
+                *exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
+                break;
+            case RIGHT:
+                *exit_x = WIDTH - 1;
+                *exit_y = 1 + 2 * (rand() % ((HEIGHT - 2) / 2));
+                break;
+            default:
+                //TODO log error
+                return;
+        }
+    } while (!validate_exit_position(exit_edge, *exit_x, *exit_y));
+
+    map[*exit_x][*exit_y] = EXIT_DOOR;
+}
+
+
+// Initialize the map with walls
+void initialize_map() {
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            map[x][y] = WALL;
+            visited[x][y] = 0;
+        }
+    }
+}
+
+// Generate a new map
+void generate_maze(int start_x, int start_y) {
+    // Make sure start position is valid for dfs (odd coordinates)
+    // relevant if we want to implement the starting position differently
+    if (start_x % 2 == 0) {
+        start_x++;
+    }
+    if (start_y % 2 == 0) {
+        start_y++;
+    }
+
+    // Generate the map using recursive backtracking
+    carve_passages(start_x, start_y);
+
+    // Add some loops to the map
+    int num_loops = (WIDTH * HEIGHT) / 100 + 1; // Use fewer loops to prevent overflow
+    add_loops(num_loops);
+}
+
+// set the start position on the map
+void set_start_position(int start_edge, int *start_x, int *start_y) {
+    switch (start_edge) {
+        case TOP:
+            *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+            *start_y = 1;
+            map[*start_x][0] = START_DOOR;
+            break;
+        case RIGHT:
+            *start_x = WIDTH - 2;
+            *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+            map[WIDTH - 1][*start_y] = START_DOOR;
+            break;
+        case BOTTOM:
+            *start_x = 3 + 2 * (rand() % ((WIDTH - 5) / 2));
+            *start_y = HEIGHT - 2;
+            map[*start_x][HEIGHT - 1] = START_DOOR;
+            break;
+        case LEFT:
+            *start_x = 1;
+            *start_y = 3 + 2 * (rand() % ((HEIGHT - 5) / 2));
+            map[0][*start_y] = START_DOOR;
+            break;
+        default:
+            // TODO log error
+            return;
+    }
+}
+
+// generate the map and populate it with keys, enemies, and the exit
+void generate_map() {
+    // Better random seed using a combination of time and process info
+    unsigned int seed = (unsigned int) time(NULL);
+    // XOR with address of a stack variable to add more entropy
+    int stack_var;
+    seed ^= (uintptr_t) &stack_var;
+    srand(seed);
+
+    // Initialize the map with walls
+    initialize_map();
+
+    // Generate map with a random start position (at the start_edge)
+    // Start position must be an odd coordinate (for dfs) and should be at least 3 cells away from other edges (not start_edge)
+    int start_x, start_y;
+    int start_edge = rand() % 4;
+    set_start_position(start_edge, &start_x, &start_y);
+
+    generate_maze(start_x, start_y);
+
+    int exit_x, exit_y;
+    place_exit(start_edge, &exit_x, &exit_y);
+
+    populate_map();
+
+    set_start(start_x, start_y);
+}
+</file>
+
+<file path="src/map/map_mode.h">
+#ifndef MAP_MODE_H
+#define MAP_MODE_H
+
+#include "notcurses/notcurses.h"
+#define COLOR_FOREGROUND TB_WHITE
+#define COLOR_BACKGROUND TB_BLACK
+
+#define CONTINUE 0
+#define QUIT 1
+
+#define LIGHT_RADIUS 3
+
+enum directions {DIR_UP,DIR_DOWN,DIR_LEFT,DIR_RIGHT};
+
+int init_map_mode(struct notcurses* nc,struct ncplane* ncplane);
+
+void set_start(int newPlayerX, int newPlayerY);
+
+int map_mode_update(void);
+
+void move_player(enum directions direction);
+
+#endif //MAP_MODE_H
+</file>
+
+<file path="src/map/map_populator.h">
+#ifndef MAP_POPULATOR_H
+#define MAP_POPULATOR_H
+
+void populate_map();
+
+#endif //MAP_POPULATOR_H
+</file>
+
+<file path="src/map/map.h">
+#ifndef MAP_H
+#define MAP_H
+
+#define WIDTH 39 // must be odd
+#define HEIGHT 19 // must be odd
+
+#define ENEMY_COUNT 8
+#define ENEMY_MIN_DISTANCE 3
+
+#define     TOP     0
+#define     BOTTOM  1
+#define     LEFT    2
+#define     RIGHT   3
+
+typedef enum {
+    WALL = 0,
+    FLOOR = 1,
+    START_DOOR = 2,
+    EXIT_DOOR = 3,
+    KEY = 4,
+    SKELETON = 5,
+    HIDDEN = 99
+} map_tile;
+
+/**
+ * @brief 2-dimensional vector struct
+ */
+typedef struct {
+    int dx, dy;
+} Vector2D;
+
+extern Vector2D directions[4];
+
+//map array
+extern map_tile map[WIDTH][HEIGHT];
+#endif //MAP_H
+</file>
+
+<file path="src/items.c">
+#include "items.h"
+
+void init_usable_item(UsableItem *item, const char *name, UsableItemEffectType effectType, int value) {
+    strncpy(item->base.name, name, sizeof(item->base.name) - 1);
+    item->base.name[sizeof(item->base.name) - 1] = '\0';
+    item->base.type = ITEM_TYPE_USABLE;
+    item->effectType = effectType;
+    item->value = value;
+}
+
+void init_equippable_item(EquippableItem *item, const char *name, GearSlot slot, int armor_bonus) {
+    strncpy(item->base.name, name, sizeof(item->base.name) - 1);
+    item->base.name[sizeof(item->base.name) - 1] = '\0';
+    item->base.type = ITEM_TYPE_EQUIPPABLE;
+    item->slot = slot;
+    item->armor_bonus = armor_bonus;
+}
+</file>
+
+<file path="src/map/drawop/draw_light.c">
+#include <stdlib.h>
+
+#include "../map.h"
+#include "draw_light.h"
+
+/**
+ * This is a helper function to check if the loop needs to break with this specific edge case.
+ * @param x current tile x-coordinates
+ * @param y current tile y-coordinates
+ * @param dir the direction to check
+ * @param j loop counter
+ * @param prev_wall_at pointer to variable, which should be written
+ * @return 1 if loops must break, 0 when not
+ */
+int need_loop_break(const int x, const int y, const Vector2D dir, int j, int *prev_wall_at) {
+    if (j == 0) {
+        //gets the x or y value of the calculated coordinates
+        *prev_wall_at = abs(y * dir.dy + x * dir.dx);
+        return 1;
+    }
+    if (*prev_wall_at == abs(y * dir.dy + x * dir.dx)) {
+        //if the previous j-loop had a wall at x or y coordinate, the loop must break
+        //or else diagonals tiles (behind a wall and not visible by the player) are revealed
+        return 1;
+    }
+    return 0;
+}
+
+
+/**
+ * Each array row corresponds to the vector in {@link directions} array.
+ * A row contains:
+ * - the diagonal check vector
+ * - the reverse check vector
+ */
+const Vector2D checks_vector[4][2] = {
+    {{1, 1}, {1, 0}}, // for up
+    {{-1, -1}, {-1, 0}}, // for down
+    {{1, -1}, {0, -1}}, // for left
+    {{-1, 1}, {0, 1}}, // for right
+};
+
+/**
+ * Draws the light around the player in arr2.
+ * The algorithmen reveals the map around the player, based on the arr1, in arr2.
+ * The light radius is the distance from the player, where the map tile is still visible.
+ * A light radius of 3 means 3 tiles are visible in each direction (up, down, left, right) from the player.
+ *
+ * @param arr1 the pointer to the 2D array containing all the map tiles (no Hidden tiles)
+ * @param arr2 the pointer to the 2D array to reveal the arr1,
+ * based on the player's position and light radius
+ * @param height the height of the map
+ * @param width the width of the map
+ * @param player the player's position on the map
+ * @param light_radius the radius of the light around the player
+ */
+void draw_light_on_player(const int* arr1, int* arr2, const int height, const int width,
+                          const Vector2D player, const int light_radius) {
+    if (light_radius <= 0) {
+        //light radius is negative or 0, do nothing
+        return;
+    }
+
+    for (int i = 0; i < 4; i++) {
+        const Vector2D dir = directions[i];
+        const Vector2D diagonal_check = checks_vector[i][0];
+        const Vector2D reverse_check = checks_vector[i][1];
+
+        int correction = 0;
+        int prev_wall_at = -1;
+
+        for (int j = 0; j <= light_radius; j++) {
+
+            const int start_x = player.dx + j * dir.dy;
+            int start_y = player.dy + j * dir.dx;
+
+            if (dir.dx != 0) {
+                //if the direction is vertical negate the subtrahend
+                start_y = player.dy - j * dir.dx;
+            }
+
+            if (start_x < 0 || start_x >= width || start_y < 0 || start_y >= height) {
+                //start position is out of bounds, skip to the next direction
+                break;
+            }
+            for (int k = 1; k <= light_radius - correction; k++) {
+                const int x = start_x + k * dir.dx;
+                const int y = start_y + k * dir.dy;
+                if (x < 0 || x >= width || y < 0 || y >= height) {
+                    //calculated x or y is out of bound
+                    break;
+                }
+
+                //calculated access index
+                const int access_idx = x * height + y;
+
+                if (arr2[access_idx] == HIDDEN) {
+                    //initialize the relative diagonal and reverse tiles based on the y and x values
+                    const int rel_diagonal = arr1[(x + diagonal_check.dx) * height + y + diagonal_check.dy];
+                    const int rel_reverse = arr1[(x + reverse_check.dx) * height + y + reverse_check.dy];
+
+                    if (rel_diagonal == WALL && rel_reverse == WALL && j > 1) {
+                        //if the diagonal and reverse tiles are walls, and the distance from the player is greater than 1
+                        //then the tile must be hidden because reverse tile is blocking the view
+                        break;
+                    }
+
+                    // if set to 1 break loop
+                    int break_loop = 0;
+
+                    switch (arr1[access_idx]) {
+                        case WALL:
+                            arr2[access_idx] = WALL;
+
+                            if (need_loop_break(x, y, dir, j, &prev_wall_at)) {
+                                break_loop = 1;
+                            }
+                            break;
+                        case FLOOR:
+                            arr2[access_idx] = FLOOR;
+                            break;
+                        case START_DOOR:
+                            arr2[access_idx] = START_DOOR;
+                            break;
+                        case EXIT_DOOR:
+                            arr2[access_idx] = EXIT_DOOR;
+                            break;
+                        case KEY:
+                            arr2[access_idx] = KEY;
+                            break;
+                        case SKELETON:
+                            arr2[access_idx] = SKELETON;
+                            break;
+                        default:
+                            //does nothing
+                            break;
+                    }
+                    if (break_loop) {
+                        break;
+                    }
+                } else if (arr2[access_idx] == WALL && need_loop_break(x, y, dir, j, &prev_wall_at)) {
+                    break;
+                }
+            }
+            correction++;
+        }
+    }
+}
+</file>
+
+<file path="src/map/map.c">
+#include "map.h"
+
+map_tile map[WIDTH][HEIGHT];
+
+Vector2D directions[4] = {
+    {0, -1}, // up
+    {0, 1}, // down
+    {-1, 0}, // left
+    {1, 0} // right
+};
+</file>
+
+<file path="src/logging/ringbuffer.c">
+#include <string.h>
+
+#include "ringbuffer.h"
+
+#ifdef _WIN32
+    #define INIT_MUTEX(mutex) InitializeCriticalSection(mutex)
+    #define INIT_COND(cond) InitializeConditionVariable(cond)
+
+    #define MUTEX_LOCK(mutex) EnterCriticalSection(mutex)
+    #define MUTEX_UNLOCK(mutex) LeaveCriticalSection(mutex)
+    #define SIGNAL_COND(cond) WakeConditionVariable(cond)
+    #define SIGNAL_WAIT(cond, mutex) SleepConditionVariableCS(cond, mutex, INFINITE)
+#else
+    #define INIT_MUTEX(mutex) pthread_mutex_init(mutex, NULL)
+    #define INIT_COND(cond) pthread_cond_init(cond, NULL)
+
+    #define MUTEX_LOCK(mutex) pthread_mutex_lock(mutex)
+    #define MUTEX_UNLOCK(mutex) pthread_mutex_unlock(mutex)
+    #define SIGNAL_COND(cond) pthread_cond_signal(cond)
+    #define SIGNAL_WAIT(cond, mutex) pthread_cond_wait(cond, mutex)
+#endif
+
+void init_ring_buffer(RingBuffer *buffer) {
+    buffer->head = 0;
+    buffer->tail = 0;
+    buffer->count = 0;
+    INIT_MUTEX(&buffer->mutex);
+    INIT_COND(&buffer->cond);
+}
+
+void write_to_ring_buffer(RingBuffer *buffer, const char *message) {
+    MUTEX_LOCK(&buffer->mutex);
+    if (buffer->count < BUFFER_SIZE) {
+        strncpy(buffer->messages[buffer->tail], message, MAX_MSG_LENGTH);
+        buffer->tail = (buffer->tail + 1) % BUFFER_SIZE;
+        buffer->count++;
+        SIGNAL_COND(&buffer->cond);
+    }
+    MUTEX_UNLOCK(&buffer->mutex);
+}
+
+
+int read_from_ring_buffer(RingBuffer *buffer, char *message) {
+    MUTEX_LOCK(&buffer->mutex);
+    while (buffer->count == 0) {
+        SIGNAL_WAIT(&buffer->cond, &buffer->mutex);
+    }
+    strncpy(message, buffer->messages[buffer->head], MAX_MSG_LENGTH);
+    buffer->head = (buffer->head + 1) % BUFFER_SIZE;
+    buffer->count--;
+    MUTEX_UNLOCK(&buffer->mutex);
+    return 1;
+}
+</file>
+
+<file path="test/map/drawop/test_draw_light.c">
+#include <assert.h>
+#include <stdio.h>
+
+#include "../src/map/map.h"
+#include "../src/map/drawop/draw_light.h"
+
+const int width = 10;
+const int height = 10;
+
+map_tile test_map[10][10];
+map_tile revealed_test_map[10][10];
+
+void init_test_mazes(void) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            test_map[x][y] = FLOOR;
+            revealed_test_map[x][y] = HIDDEN;
+        }
+    }
+}
+
+void reset_test_mazes(void) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            test_map[x][y] = FLOOR;
+            revealed_test_map[x][y] = HIDDEN;
+        }
+    }
+}
+
+void print_array(const int *array) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            printf("%d ", array[x * height + y]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void test_draw_light_on_player(void) {
+    init_test_mazes();
+
+    const Vector2D player = {5, 5};
+    const int light_radius = 3;
+    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    //print_array((int *)revealed_test_maze, height, width);
+    //player position will not be drawn
+    assert(revealed_test_map[5][5] == HIDDEN);
+    revealed_test_map[5][5] = FLOOR;
+
+    //test: correct light radius is drawn
+    assert(revealed_test_map[2][5] == FLOOR);
+
+    assert(revealed_test_map[3][4] == FLOOR);
+    assert(revealed_test_map[3][5] == FLOOR);
+    assert(revealed_test_map[3][6] == FLOOR);
+
+    assert(revealed_test_map[4][3] == FLOOR);
+    assert(revealed_test_map[4][4] == FLOOR);
+    assert(revealed_test_map[4][5] == FLOOR);
+    assert(revealed_test_map[4][6] == FLOOR);
+    assert(revealed_test_map[4][7] == FLOOR);
+
+    assert(revealed_test_map[5][2] == FLOOR);
+    assert(revealed_test_map[5][3] == FLOOR);
+    assert(revealed_test_map[5][4] == FLOOR);
+    //skip player position
+    assert(revealed_test_map[5][6] == FLOOR);
+    assert(revealed_test_map[5][7] == FLOOR);
+    assert(revealed_test_map[5][8] == FLOOR);
+
+    assert(revealed_test_map[6][3] == FLOOR);
+    assert(revealed_test_map[6][4] == FLOOR);
+    assert(revealed_test_map[6][5] == FLOOR);
+    assert(revealed_test_map[6][6] == FLOOR);
+    assert(revealed_test_map[6][7] == FLOOR);
+
+    assert(revealed_test_map[7][4] == FLOOR);
+    assert(revealed_test_map[7][5] == FLOOR);
+    assert(revealed_test_map[7][6] == FLOOR);
+
+    assert(revealed_test_map[8][5] == FLOOR);
+    printf("Test: \"correct light radius is drawn\" passed\n");
+    //end test
+
+    //new setup
+    reset_test_mazes();
+    test_map[4][4] = WALL;
+    test_map[4][5] = WALL;
+    test_map[4][6] = WALL;
+    test_map[5][4] = WALL;
+    test_map[5][6] = WALL;
+    test_map[6][4] = WALL;
+    test_map[6][5] = WALL;
+    test_map[6][6] = WALL;
+
+    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    //print_array((int *)revealed_test_maze, height, width);
+    //test: completely surrounded by walls, iter = 1
+    assert(revealed_test_map[2][5] == HIDDEN);
+
+    assert(revealed_test_map[3][4] == HIDDEN);
+    assert(revealed_test_map[3][5] == HIDDEN);
+    assert(revealed_test_map[3][6] == HIDDEN);
+
+    assert(revealed_test_map[4][3] == HIDDEN);
+    assert(revealed_test_map[4][4] == WALL);
+    assert(revealed_test_map[4][5] == WALL);
+    assert(revealed_test_map[4][6] == WALL);
+    assert(revealed_test_map[4][7] == HIDDEN);
+
+    assert(revealed_test_map[5][2] == HIDDEN);
+    assert(revealed_test_map[5][3] == HIDDEN);
+    assert(revealed_test_map[5][4] == WALL);
+    //skip player position
+    assert(revealed_test_map[5][6] == WALL);
+    assert(revealed_test_map[5][7] == HIDDEN);
+    assert(revealed_test_map[5][8] == HIDDEN);
+
+    assert(revealed_test_map[6][3] == HIDDEN);
+    assert(revealed_test_map[6][4] == WALL);
+    assert(revealed_test_map[6][5] == WALL);
+    assert(revealed_test_map[6][6] == WALL);
+    assert(revealed_test_map[6][7] == HIDDEN);
+
+    assert(revealed_test_map[7][4] == HIDDEN);
+    assert(revealed_test_map[7][5] == HIDDEN);
+    assert(revealed_test_map[7][6] == HIDDEN);
+
+    assert(revealed_test_map[8][5] == HIDDEN);
+    printf("Test: \"completely surrounded by walls (iter: 1)\" passed\n");
+
+    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    //print_array((int *)revealed_test_maze, height, width);
+    //test: completely surrounded by walls, iter = 2
+    assert(revealed_test_map[2][5] == HIDDEN);
+
+    assert(revealed_test_map[3][4] == HIDDEN);
+    assert(revealed_test_map[3][5] == HIDDEN);
+    assert(revealed_test_map[3][6] == HIDDEN);
+
+    assert(revealed_test_map[4][3] == HIDDEN);
+    assert(revealed_test_map[4][4] == WALL);
+    assert(revealed_test_map[4][5] == WALL);
+    assert(revealed_test_map[4][6] == WALL);
+    assert(revealed_test_map[4][7] == HIDDEN);
+
+    assert(revealed_test_map[5][2] == HIDDEN);
+    assert(revealed_test_map[5][3] == HIDDEN);
+    assert(revealed_test_map[5][4] == WALL);
+    //skip player position
+    assert(revealed_test_map[5][6] == WALL);
+    assert(revealed_test_map[5][7] == HIDDEN);
+    assert(revealed_test_map[5][8] == HIDDEN);
+
+    assert(revealed_test_map[6][3] == HIDDEN);
+    assert(revealed_test_map[6][4] == WALL);
+    assert(revealed_test_map[6][5] == WALL);
+    assert(revealed_test_map[6][6] == WALL);
+    assert(revealed_test_map[6][7] == HIDDEN);
+
+    assert(revealed_test_map[7][4] == HIDDEN);
+    assert(revealed_test_map[7][5] == HIDDEN);
+    assert(revealed_test_map[7][6] == HIDDEN);
+
+    assert(revealed_test_map[8][5] == HIDDEN);
+    printf("Test: \"completely surrounded by walls (iter: 2)\" passed\n");
+    //end test
+
+    //new setup
+    reset_test_mazes();
+    for (int y = 0; y < height; y++) {
+        test_map[y][4] = WALL;
+        test_map[y][6] = WALL;
+    }
+
+    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    //print_array((int *)revealed_test_maze, height, width);
+    //test: hallway with walls top and bottom
+    for (int i = 4; i <= 6; i++) {
+        assert(revealed_test_map[i][3] == HIDDEN);
+        assert(revealed_test_map[i][7] == HIDDEN);
+    }
+    for (int i = 3; i <= 7; i++) {
+        assert(revealed_test_map[i][4] == WALL);
+        assert(revealed_test_map[i][6] == WALL);
+    }
+    for (int i = 2; i <= 8; i++) {
+        if (i != 5) {
+            assert(revealed_test_map[i][5] == FLOOR);
+        }
+    }
+    printf("Test: \"hallway with walls top and bottom\" passed\n");
+    //end test
+
+    //new setup
+    reset_test_mazes();
+    for (int x = 0; x < height; x++) {
+        test_map[4][x] = WALL;
+        test_map[6][x] = WALL;
+    }
+
+    draw_light_on_player((int *)test_map, (int *)revealed_test_map, height, width, player, light_radius);
+    //test: hallway with walls left and right
+    for (int i = 4; i <= 6; i++) {
+        assert(revealed_test_map[3][i] == HIDDEN);
+        assert(revealed_test_map[7][i] == HIDDEN);
+    }
+    for (int i = 3; i <= 7; i++) {
+        assert(revealed_test_map[4][i] == WALL);
+        assert(revealed_test_map[6][i] == WALL);
+    }
+    for (int i = 2; i <= 8; i++) {
+        if (i != 5) {
+            assert(revealed_test_map[5][i] == FLOOR);
+        }
+    }
+    printf("Test: \"hallway with walls left and right\" passed\n");
+
+    printf("test_draw_light_on_player all tests passed\n");
+}
+
+
+int main(void) {
+    test_draw_light_on_player();
+    return 0;
+}
+</file>
+
+<file path="test/test_database.c">
+#include <stdio.h>
+#include "../src/database/database.h"
+#include <assert.h>
+
+
+void test_db_open(){
+    DBConnection db_connection;
+    assert(db_open(&db_connection, "test.db") == 1);
+    db_close(&db_connection);
+    printf("Test_db_open passed\n");
+}
+
+
+int main() {
+    test_db_open();
+    return 0;
+}
+</file>
+
+<file path="src/map/map_mode.c">
+#include <math.h>
+#include <notcurses/notcurses.h>
+#include <stdio.h>
+#include <wchar.h>
+
+#include "../../debug/debug.h"
+
+#include "../input.h"
+#include "drawop/draw_light.h"
+#include "map.h"
+#include "map_mode.h"
+#include "src/game.h"
+
+map_tile revealed_map[WIDTH][HEIGHT];
+
+Vector2D player_pos;
+
+struct ncplane *stdplane;
+struct notcurses *nc;
+
+void set_start(const int newPlayerX, const int newPlayerY) {
+  player_pos.dx = newPlayerX;
+  player_pos.dy = newPlayerY;
+
+  // at the start, tile under the player must be revealed
+  revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
+}
+
+void draw_map() {
+  for (int y = 0; y < HEIGHT; y++) {
+    for (int x = 0; x < WIDTH; x++) {
+      if (x == player_pos.dx && y == player_pos.dy) {
+        ncplane_set_fg_rgb(stdplane, 0xffffff); // white
+        ncplane_set_bg_rgb(stdplane, 0x000000); // black
+        ncplane_putchar_yx(stdplane, y, x, '@');
+      } else {
+        switch (revealed_map[x][y]) {
+        case WALL:
+          ncplane_set_fg_rgb(stdplane, 0xffffff);
+          ncplane_set_bg_rgb(stdplane, 0x000000);
+          ncplane_putchar_yx(stdplane, y, x, '#');
+          break;
+        case FLOOR:
+          ncplane_set_fg_rgb(stdplane, 0xffffff);
+          ncplane_set_bg_rgb(stdplane, 0x000000);
+          ncplane_putchar_yx(stdplane, y, x, ' ');
+          break;
+        case START_DOOR:
+          ncplane_set_fg_rgb(stdplane, 0x00ff00); // green
+          ncplane_set_bg_rgb(stdplane, 0x000000);
+          ncplane_putchar_yx(stdplane, y, x, '#');
+          break;
+        case EXIT_DOOR:
+          ncplane_set_fg_rgb(stdplane, 0xffff00); // yellow
+          ncplane_set_bg_rgb(stdplane, 0x000000);
+          ncplane_putchar_yx(stdplane, y, x, '#');
+          break;
+        case KEY:
+          ncplane_set_fg_rgb(stdplane, 0xffff00);
+          ncplane_set_bg_rgb(stdplane, 0x000000);
+          ncplane_putchar_yx(stdplane, y, x, '$');
+          break;
+        case SKELETON:
+          ncplane_set_fg_rgb(stdplane, 0xffffff);
+          ncplane_set_bg_rgb(stdplane, 0xff0000); // red
+          ncplane_putchar_yx(stdplane, y, x, '!');
+          break;
+        case HIDDEN:
+          ncplane_set_fg_rgb(stdplane, 0xffffff);
+          ncplane_set_bg_rgb(stdplane, 0xffffff);
+          ncplane_putchar_yx(stdplane, y, x, ' ');
+          break;
+        default:
+          // TODO: log error
+          return;
+        }
+      }
+    }
+  }
+}
+
+void draw_ui(void) {
+  ncplane_set_fg_rgb(stdplane, 0xffffff);
+  ncplane_set_bg_rgb(stdplane, 0x000000);
+  ncplane_printf_yx(stdplane, HEIGHT, 0, "HP: 100");
+  ncplane_printf_yx(stdplane, HEIGHT + 2, 0, "Player Position: %d, %d",
+                    player_pos.dx, player_pos.dy);
+}
+
+void move_player(enum directions direction) {
+  int new_x = player_pos.dx;
+  int new_y = player_pos.dy;
+  switch (direction) {
+  case DIR_UP:
+    new_y--;
+    break;
+  case DIR_DOWN:
+    new_y++;
+    break;
+  case DIR_LEFT:
+    new_x--;
+    break;
+  case DIR_RIGHT:
+    new_x++;
+    break;
+  }
+  if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
+    switch (map[new_x][new_y]) {
+    case WALL:
+      // ignore wall
+      break;
+    default:
+      // TODO: extend functionality with different tiles
+      player_pos.dx = new_x;
+      player_pos.dy = new_y;
+
+      draw_light_on_player((int *)map, (int *)revealed_map, HEIGHT, WIDTH,
+                           player_pos, LIGHT_RADIUS);
+      break;
+    }
+  }
+}
+
+/**
+ * Updates the player position based on the player's input and redraws the maze.
+ * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the
+ * exit key.
+ */
+int map_mode_update(void) {
+
+  ncinput *ni;
+  u_int32_t key = notcurses_get(nc, NULL, ni);
+
+  handle_input(nc, ni, MAP_MODE);
+
+  draw_map();
+  draw_ui();
+
+  return CONTINUE;
+}
+
+int init_map_mode(struct notcurses *notcurses, struct ncplane *ncplane) {
+  nc = notcurses;
+  stdplane = ncplane;
+  for (int y = 0; y < HEIGHT; y++) {
+    for (int x = 0; x < WIDTH; x++) {
+      revealed_map[x][y] = HIDDEN;
+    }
+  }
+  return 0;
+}
+</file>
+
+<file path="src/logging/logger.c">
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <time.h>
+
+#include "logger.h"
+#include "ringbuffer.h" //includes pthread.h or windows.h
+
+#define MAX_N_FILES 5
+#define MAX_FILE_SIZE 1048576 // max size = 1 MB
+#define PATH_MAX 4096
+
+// relative directory from main.c
+#define LOG_DIRECTORY "../log"
+#define LOG_FILE_FORMAT "log-%d.txt"
+
+#define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"
+#define MSG_FORMAT "[%s] [%s] [%s] : %s\n"
+
+#define MAX_HEADER_SIZE 256
+
+#define RUNNING 1
+#define TERMINATED 0
+
+const char *log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
+
+//predefines of functions, used in this module
+void start_log_writer_thread(void);
+
+//the used file-pointer to write the log messages in
+FILE *log_file = NULL;
+//the used RingBuffer to write log messages in
+RingBuffer log_buffer;
+
+//states if the file writing thread is still running, if set to 0 the thread terminates or is terminated
+int thread_is_running = TERMINATED;
+//the id of the used file
+int file_id = 0;
+
+/**
+ * ensures that the predefined log directory already exist,
+ * if not create a new one
+ */
+void ensure_log_dir(void) {
+    struct stat st;
+
+    if (stat(LOG_DIRECTORY, &st) == -1) {
+        //Directory doesn't exist -> create a new one
+
+        if (mkdir(LOG_DIRECTORY, 0755) == -1) {
+            //directory konnte nicht erstellt werden
+            //TODO: Errorhandling?
+        }
+    }
+}
+
+
+
+/**
+ * Opens the log file with current saved file id in append modus.
+ * If no file is found creates a new file corresponding to fopen(...).
+ *
+ * If the file could not be open or created, this method will do nothing
+ */
+void open_log_file(void) {
+    char name[15];
+    snprintf(name, 15, LOG_FILE_FORMAT, file_id);
+
+    char filename[256];
+    snprintf(filename, 256, "%s/%s", LOG_DIRECTORY, name);
+
+    //open file in append modus
+    log_file = fopen(filename, "a");
+    if (!log_file) {
+        //file could not be open
+    }
+}
+
+/**
+ * This function should be called, whenever a new log msg must be written.
+ *
+ * Check if the log file is open, if not a new file will be open.
+ * - Either by creating a new file, if no file is in the log directory. Log file will get id = 0.
+ * - Or creating a new file, if the last used file reached the max size.
+ *   The new file will get the current file id + 1 or 0, if the id reached the max number of files.
+ * - Or opening the file that was last used, the current id will be set.
+ */
+void check_log_file(void) {
+    if (log_file) {
+        // Überprüfen, ob die aktuelle Logdatei die maximale Größe erreicht hat
+        fseek(log_file, 0, SEEK_END);
+        const long file_size = ftell(log_file);
+        if (file_size >= MAX_FILE_SIZE) {
+            // the max size is reached
+            close_log_file(0);
+            file_id = (file_id + 1) % MAX_N_FILES;
+            open_log_file();
+        }
+    }
+}
+
+/**
+ * Gets from the file (last used) in the log directory, the id.
+ * @return the latest used file id, in the range 0 (ink.) to MAX_N_FILES (exkl.) or -1 if directory was not found.
+ */
+int get_latest_file_id(void) {
+    ensure_log_dir();
+
+    DIR *dir = opendir(LOG_DIRECTORY);
+    struct dirent *entry;
+    int latest_id = 0;
+    time_t latest_time = 0;
+
+    if (!dir) {
+        return -1;
+    }
+
+    while ((entry = readdir(dir)) != NULL) {
+        int id;
+        struct stat file_stat;
+
+        if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+            char filepath[PATH_MAX];
+            snprintf(filepath, sizeof(filepath), "%s/%s", LOG_DIRECTORY, entry->d_name);
+
+            if (stat(filepath, &file_stat) == 0) {
+                if (file_stat.st_mtime > latest_time) {
+                    latest_time = file_stat.st_mtime;
+                    latest_id = id;
+                }
+            }
+        }
+    }
+
+    closedir(dir);
+
+    return latest_id;
+}
+
+/**
+ * Closes the current log file
+ *
+ * @param terminate_thread if 1 the running thread will also be terminated
+ */
+void close_log_file(const int terminate_thread) {
+    if (log_file) {
+        fclose(log_file);
+        log_file = NULL;
+    }
+    if (terminate_thread && thread_is_running) {
+        thread_is_running = TERMINATED;
+    }
+}
+
+/**
+ * Writes a log message to the log file.
+ *
+ * If it is the first call of the session the ring buffer will be initialized
+ * and the writing thread will be started.
+ *
+ * @param level The log level of the message (DEBUG, FINE, INFO, WARNING, ERROR).
+ * @param module The name of the module writing the log message.
+ * @param format The format of the log message, similar to printf.
+ * @param ... Additional arguments used in the format string.
+ */
+void log_msg(const LogLevel level, const char *module, const char *format, ...) {
+    //starting thread
+    if (log_file == NULL) {
+        init_ring_buffer(&log_buffer); // init ring buffer to write the message in
+
+        start_log_writer_thread(); //start thread
+    }
+
+    //if thread is not running, something went wrong with opening the log dir, log file
+    if (thread_is_running) {
+        //get timestamp
+        const time_t now = time(NULL);
+        const struct tm *tm = localtime(&now);
+        char timestamp[20];
+        strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
+
+        //get log level
+        const char *log_level = log_level_str[level];
+
+        va_list args;
+        va_start(args, format);
+        //temp msg placeholder
+        char msg[MAX_HEADER_SIZE];
+        vsnprintf(msg, sizeof(msg), format, args);
+
+        char log_msg[MAX_MSG_LENGTH];
+        snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
+        va_end(args);
+
+        write_to_ring_buffer(&log_buffer, log_msg);
+    }
+}
+
+#ifdef _WIN32
+    /**
+     * This function will be called from a different thread to read from the ringbuffer
+     * and then write in the log file
+     *
+     * @param arg a pointer for different arguments, set by the thread. Will not be used!
+     * @return 0
+     */
+    DWORD WINAPI log_writer_thread(LPVOID param) {
+        while (thread_is_running) {
+            char log_msg[MAX_MSG_LENGTH];
+            if (read_from_ring_buffer(&log_buffer, log_msg)) {
+                // message successfully read from ringbuffer
+
+                // open log file for the first time this session
+                if (log_file == NULL) {
+                    file_id = get_latest_file_id();
+                    if (file_id != -1) {
+                        //if the file id could be defined, doesn't try to open the file
+                        open_log_file();
+                    }
+                }
+                check_log_file();
+
+
+                if (log_file) {
+                    //writes to the log file
+                    fprintf(log_file, "%s", log_msg);
+                    fflush(log_file);
+                }
+            }
+        }
+        return 0;
+    }
+#else
+    /**
+     * This function will be called from a different thread to read from the ringbuffer
+     * and then write in the log file
+     *
+     * @param arg a pointer for different arguments, set by the thread. Will not be used!
+     * @return NULL
+     */
+    void *log_writer_thread(void *arg) {
+        while (thread_is_running) {
+            char log_msg[MAX_MSG_LENGTH];
+            if (read_from_ring_buffer(&log_buffer, log_msg)) {
+                // message successfully read from ringbuffer
+
+                // open log file for the first time this session
+                // only tries once -> no logs will be created
+                if (log_file == NULL && file_id != -1) {
+                    file_id = get_latest_file_id();
+                    if (file_id != -1) {
+                        //if the file id could be defined, opens the file
+                        open_log_file();
+                    } else {
+                        //stops the thread from running, no logs will be created
+                        //TODO: Errorhandling?
+                        thread_is_running = TERMINATED;
+                    }
+                }
+                check_log_file();
+
+
+                if (log_file) {
+                    //writes to the log file
+                    fprintf(log_file, "%s", log_msg);
+                    fflush(log_file);
+                }
+            }
+        }
+        return NULL;
+    }
+#endif
+
+/**
+ * Starts the logging writing thread
+ */
+void start_log_writer_thread(void) {
+    thread_is_running = RUNNING;
+    #ifdef _WIN32
+        HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
+        if (thread) {
+            CloseHandle(thread);
+        }
+    #else
+        pthread_t thread;
+        pthread_create(&thread, NULL, log_writer_thread, NULL);
+        pthread_detach(thread);
+    #endif
+}
+</file>
+
+<file path="test/test_combat_mode.c">
+#include <assert.h>
+#include <stdio.h>
+#include "../src/combat_mode.h"
+
+// Helper function to initialize a test Character
+character_t create_test_character(character_type_t type, int health, int armor, int might, int deflection, int fortitude, int will) {
+    character_t character = {
+        .type = type,
+        .health = health,
+        .armor = armor,
+        .might = might,
+        .deflection = deflection,
+        .fortitude = fortitude,
+        .will = will,
+        .ability_count = 0
+    };
+    return character;
+}
+
+// Helper function to initialize a test Player
+player_t create_test_player(int health, int armor, int might, int deflection, int fortitude, int will) {
+    player_t player;
+    player.base = create_test_character(PLAYER, health, armor, might, deflection, fortitude, will);
+    return player;
+}
+
+// Helper function to initialize a test Monster
+monster_t create_test_monster(int health, int armor, int might, int deflection, int fortitude, int will, int weaknesses[]) {
+    monster_t monster;
+    monster.base = create_test_character(MONSTER, health, armor, might, deflection, fortitude, will);
+    initWeaknesses(&monster, weaknesses);
+    return monster;
+}
+
+// Helper function to create a test Ability
+ability_t create_test_ability(const char *name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type) {
+    ability_t ability;
+    initAbility(&ability, name, rollCount, accuracy, diceSize, type);
+    return ability;
+}
+
+void test_roll_hit() {
+    monster_t defender = create_test_monster(100, 0, 0, 0, 0, 0, (int[]){0,0});
+    ability_t test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
+
+    // Test with high accuracy ability (should always hit)
+    assert(roll_hit(&test_ability, &defender.base) == true);
+
+    // Test with low accuracy ability (should miss often)
+    test_ability.accuracy = 0;
+    defender.base.deflection = 20;
+    assert(roll_hit(&test_ability, &defender.base) == false);
+
+    printf("test_roll_hit passed!\n");    
+}
+
+void test_roll_damage() {
+    ability_t test_ability = create_test_ability("Test Ability", 3, 100, D6, PHYSICAL);
+    int damage = roll_damage(&test_ability);
+
+    // The result should be between 3 (minimum) and 18 (maximum)
+    assert(damage >= 3 && damage <= 18);
+    printf("test_roll_damage passed!\n");
+}
+
+void test_deal_damage_to_armor() {
+    player_t test_player = create_test_player(100, 10, 0, 0, 0, 0);
+
+    deal_damage(50, PHYSICAL, &test_player.base);
+
+    // Damage after armor reduction: 50 - 10 = 40
+    assert(test_player.base.health == 60);
+    printf("test_deal_damage_to_armor passed!\n");
+}
+
+int main(void){
+    test_roll_hit();
+    test_roll_damage();
+    test_deal_damage_to_armor();
+    return 0;
+}
+</file>
+
+<file path="meson.build">
+# Define project language and version.
+project('DungeonCrawl', 'c',
+  version : '0.1',
+  default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
+
+# List of external dependencies
+notcurses = dependency('notcurses')
+
+
+# List of all source files. Per meson convention all files are listed seperately.
+src_files = files(
+  'src/main.c',
+  'src/game.c',
+  'src/map/map.c',
+  'src/map/map_mode.c',
+  'src/map/map_generator.c',
+  'src/input.c',
+  'src/map/map_populator.c',
+  'src/map/drawop/draw_light.c',
+)
+
+include_files = files(
+  'include/termbox2.c'
+)
+
+debug_files = files(
+  # 'debug/debug.c'
+)
+
+# List of all database files
+database_files = files(
+  'include/sqlite3.c',
+  'src/database/database.c'
+)
+
+logging_files = files(
+  'src/logging/logger.c',
+  'src/logging/ringbuffer.c'
+)
+
+# Include the test directory in the build.
+subdir('test')
+
+# Define the executable
+executable(
+  'DungeonCrawl',
+  src_files,
+  include_files,
+  debug_files,
+  database_files,
+  logging_files,
+  dependencies : notcurses,
+)
+</file>
+
+<file path="src/character_stats.c">
+#include "character_stats.h"
+
+// Function to initialize a Character
+void initCharacter(character_type_t type, character_t *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will) {
+    c->type = type;
+    strncpy(c->name, name, sizeof(c->name) - 1);
+    c->name[sizeof(c->name) - 1] = '\0';
+    c->health = health;
+    c->armor = armor;
+    c->might = might;
+    c->deflection = deflection;
+    c->fortitude = fortitude;
+    c->will = will;
+    c->ability_count = 0;
+}
+
+// Function to initialize an Ability
+void initAbility(ability_t *a, const char *name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type) {
+    strncpy(a->name, name, sizeof(a->name) - 1);
+    a->name[sizeof(a->name) - 1] = '\0';
+    a->rollCount = rollCount;
+    a->accuracy = accuracy;
+    a->diceSize = diceSize;
+    a->damageType = type;
+}
+
+// Function to add an Ability to a Character
+void addAbilityToCharacter(character_t *c, ability_t ability) {
+    if (c->ability_count < MAX_ABILITIES) {
+        c->abilities[c->ability_count++] = ability;
+    } else {
+        printf("Character %s cannot learn more abilities!\n", c->name);
+    }
+}
+
+// Function to initialize the map containing all weaknesses
+void initWeaknesses(monster_t *m, int array[]) {
+    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
+        m->weakness_map[i].type = (damage_type_t)i;
+        m->weakness_map[i].value = array[i];
+    }
+}
+
+// Function to get the value corresponding to a damage type
+int get_weakness_value(monster_t *m, damage_type_t key) {
+    for (int i = 0; i < sizeof(m->weakness_map); i++) {
+        if (m->weakness_map[i].type == key){
+            return m->weakness_map[i].value;
+        }     
+    }
+    return 1;
+}
+
+void add_item_to_player(player_t *p, Item *item) {
+    if (p->item_count < MAX_ITEMS) {
+        p->inventory[p->item_count++] = item;
+    } else {
+        printf("Item Inventory is full!\n");
+    }
+}
+</file>
+
+<file path="src/character_stats.h">
+#ifndef CHARACTER_STATS_H
+#define CHARACTER_STATS_H
+
+#include <stdio.h>
+#include <string.h>
+#include "items.h"
+// === CONSTANTS ===
+#define MAX_ABILITIES 3
+#define MAX_ITEMS 10
+
+// === ENUMS ===
+
+// Enum for Damage Types
+typedef enum {
+    PHYSICAL,
+    MAGICAL,
+    DAMAGE_TYPE_COUNT
+} damage_type_t;
+
+// Enum for Character Types
+typedef enum {
+    PLAYER,
+    MONSTER,
+    BOSS
+} character_type_t;
+
+// ENUM for dice sizes
+typedef enum {
+    D6 = 6,
+    D8 = 8,
+    D10 = 10,
+    D12 = 12,
+    D20 = 20
+} dice_size_t;
+
+// === STRUCTS ===
+
+// Struct for Weakness
+typedef struct {
+    damage_type_t type;
+    int value;
+} weakness_t;
+
+// Struct for Abilities
+typedef struct {
+    char name[50];
+    int rollCount;
+    int accuracy;
+    dice_size_t diceSize;
+    damage_type_t damageType;
+} ability_t;
+
+// Struct for Character
+typedef struct {
+    character_type_t type;
+    char name[20];
+
+    int health;
+    int armor;
+    int might;
+    int deflection;
+    int fortitude;
+    int will;
+
+    ability_t abilities[MAX_ABILITIES];
+    int ability_count;
+} character_t;
+
+// Struct for Player
+typedef struct {
+    character_t base;
+    Item *inventory[MAX_ITEMS];
+    int item_count;
+} player_t;
+
+// Struct for Monster
+typedef struct {
+    character_t base;
+    weakness_t weakness_map[DAMAGE_TYPE_COUNT];
+} monster_t;
+
+// === FUNCTION DECLARATIONS ===
+void initAbility(ability_t *a, const char *name, int rollCount, int accuracy, dice_size_t diceSize, damage_type_t type);
+void addAbilityToCharacter(character_t *c, ability_t ability);
+void initCharacter(character_type_t type, character_t *c, const char *name, int health, int armor, int might, int deflection, int fortitude, int will);
+void initWeaknesses(monster_t *m, int array[]);
+int get_weakness_value(monster_t *m, damage_type_t key);
+void add_item_to_player(player_t *player, Item *item);
+
+
+#endif //CHARACTER_STATS_H
+</file>
+
+<file path="test/meson.build">
+# needed files for each test
+helper_db = files(
+    '../include/sqlite3.c',
+    '../src/database/database.c')
+
+helper_draw_light = files(
+    '../src/map/map.c',
+    '../src/map/drawop/draw_light.c'
+)
+
+helper_combat = files(
+    '../include/termbox2.c',
+    '../src/combat_mode.c',
+    '../src/character_stats.c',
+    '../src/items.c'
+)
+
+test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
+test_draw_light = executable('test_draw_light', 'map/drawop/test_draw_light.c', helper_draw_light, c_args: ['-w'])
+test_combat = executable('test_combat_mode', 'test_combat_mode.c', helper_combat, c_args: ['-w'])
+
+test('test_database', test_database)
+test('test_draw_light', test_draw_light)
+test('test_combat_mode', test_combat)
+</file>
+
+<file path="src/combat_mode.h">
+#ifndef COMBAT_MODE_H
+#define COMBAT_MODE_H
+
+// === INCLUDE ===
+#include <stdio.h>
+#include <stdbool.h>
+#include "character_stats.h"
+
+// === ENUM ===
+typedef enum {
+    MENU_COMBAT,
+    MENU_ABILITY,
+    MENU_ITEM
+} combat_state;
+
+// === FUNCTION DECLARATIONS ===
+bool combat(player_t *player, monster_t *monster);
+combat_state combat_menu(player_t *player, monster_t *monster);
+bool ability_menu(player_t *player, monster_t *monster);
+bool item_menu(player_t *player, monster_t *monster);
+int use_ability(character_t *attacker, character_t *defender, ability_t *ability);
+bool roll_hit(ability_t *ability, character_t *defender);
+int roll_damage(ability_t *ability);
+int roll_dice(dice_size_t dice_size);
+int deal_damage(int damage, damage_type_t damage_type, character_t *character);
+void use_item(player_t *player,monster_t *monster, UsableItem *item);
+int print_combat_view(character_t *player, character_t *monster, bool red_monster_sprite);
+ability_t *get_random_ability(character_t *character);
+void display_enemy_attack_message(player_t *player, monster_t *monster, int damage_dealt);
+void display_item_message(player_t *player, monster_t *monster, UsableItem *item);
+void display_combat_message(player_t *player, monster_t *monster, const char *message);
+
+#endif // COMBAT_MODE_H
+</file>
+
+<file path="src/game.c">
+#include "game.h"
+// #include "character_stats.h"
+// #include "combat_mode.h"
+#include "logging/logger.h"
+#include "map/map_generator.h"
+#include "map/map_mode.h"
+#include <locale.h>
+#include <notcurses/notcurses.h>
+#include <stdbool.h>
+#include <stdio.h>
+
+int init_game() {
+  setlocale(LC_ALL, "");
+  notcurses_options ncopt;
+  memset(&ncopt, 0, sizeof(ncopt));
+  struct notcurses *nc = notcurses_init(&ncopt, stdout);
+  if (nc == NULL) {
+    fprintf(stderr, "Failed to initialize termbox \n");
+    return 1;
+  }
+  struct ncplane *stdplane = notcurses_stdplane(nc);
+
+  init_map_mode(nc, stdplane);
+
+  log_msg(INFO, "Game", "game loop starting");
+  bool doRun = true;
+  enum game_state currentState = GENERATE_MAP;
+
+  while (doRun) {
+    switch (currentState) {
+    case MAIN_MENU:
+      break;
+    case GENERATE_MAP:
+      generate_map();
+      currentState = MAP_MODE;
+      break;
+    case MAP_MODE:
+      if (map_mode_update()) {
+        currentState = EXIT;
+      }
+      break;
+    // case COMBAT_MODE: {
+    //   // Initialize abilities
+    //   ability_t fireball;
+    //   initAbility(&fireball, "Fireball", 4, 10, D10, MAGICAL);
+    //   ability_t swordslash;
+    //   initAbility(&swordslash, "Swordslash", 4, 10, D6, PHYSICAL);
+    //   ability_t bite;
+    //   initAbility(&bite, "Bite", 3, 20, D8, PHYSICAL);
+    //
+    //   // Initialize player
+    //   player_t player;
+    //   initCharacter(PLAYER, &player.base, "Hero", 100, 10, 5, 5, 5, 5);
+    //   player.item_count = 0; // manually initializing player specific values
+    //   for (int i = 0; i < MAX_ITEMS; i++)
+    //     player.inventory[i] = NULL;
+    //   addAbilityToCharacter(&player.base, fireball);
+    //   addAbilityToCharacter(&player.base, swordslash);
+    //   UsableItem healingPotion;
+    //   init_usable_item(&healingPotion, "Healing Potion", HEALING, 20);
+    //   add_item_to_player(&player, (Item *)&healingPotion);
+    //
+    //   // Initialize monster
+    //   monster_t monster;
+    //   initCharacter(MONSTER, &monster.base, "Goblin", 50, 5, 3, 3, 3, 3);
+    //   addAbilityToCharacter(&monster.base, bite);
+    //   initWeaknesses(&monster, (int[]){0, 10});
+    //
+    //   currentState = (combat(&player, &monster)) ? MAP_MODE : EXIT;
+    //   break;
+    // }
+    case EXIT:
+      close_log_file(1);
+      doRun = false;
+      break;
+    default:
+      break;
+    }
+        notcurses_render(nc);
+  }
+
+  notcurses_stop(nc);
+  return 0;
+}
+</file>
+
+<file path="src/combat_mode.c">
+#include "combat_mode.h"
+#include "../include/termbox2.h"
+/* TODO: Print lines for missed attacks and damage dealt
+ * TODO: Critical hits
+ * TODO: Enemy attacks after attacking
+ * TODO: Might and weakness system
+ */
+
+bool combat(player_t *player, monster_t *monster) {
+
+    // Set initial state of combat
+    combat_state current_state = MENU_COMBAT;
+
+    // Select menu state
+    while(player->base.health > 0 && monster->base.health > 0) {
+        switch (current_state) {
+        case MENU_COMBAT:
+            current_state = combat_menu(player, monster);
+            break;
+        case MENU_ABILITY:
+            if(ability_menu(player, monster)){
+                int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+                display_enemy_attack_message(player, monster, damage_dealt);
+            }
+            current_state = MENU_COMBAT;
+            break;
+        case MENU_ITEM:
+            if (item_menu(player, monster)) {  // Only attack if item was used
+                int damage_dealt = use_ability(&monster->base, &player->base, get_random_ability(&monster->base));
+                display_enemy_attack_message(player, monster, damage_dealt);
+            }
+            current_state = MENU_COMBAT;
+            break;
+        default:
+            break;
+        }
+        
+    }
+
+    // Return true if player is alive, false if they died
+    return (player->base.health > 0);
+}
+
+combat_state combat_menu(player_t *player, monster_t *monster) {
+
+    int selected_index = 0;
+    const char *menu_options[] = {"Use Ability", "Use Item"};
+    int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
+
+    while (true) {
+
+        // Prepare screen
+        tb_clear();
+        int y = print_combat_view(&player->base, &monster->base, false);
+
+        // Display menu options
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Menu:");
+
+        for(int i = 0; i < menu_count; i++) {
+            if (i == selected_index) {
+                tb_print(1, y++, TB_BLACK, TB_WHITE, menu_options[i]);
+            } else {
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, menu_options[i]);
+            }
+        }
+
+        // Print to terminal and check for key press
+        tb_present();
+        struct tb_event event;
+        tb_poll_event(&event);
+
+        if (event.type == TB_EVENT_KEY) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                //Move up
+                selected_index = (selected_index - 1 + menu_count) % menu_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                // Move down
+                selected_index = (selected_index + 1) % menu_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                // Return the selected state
+                if (selected_index == 0) {
+                    return MENU_ABILITY;
+                } else if (selected_index == 1) {
+                    return MENU_ITEM;
+                }
+            } else if (event.key == TB_KEY_CTRL_C) {
+                // Exit the game
+                tb_shutdown();
+                exit(0);
+            }
+        }
+    }
+}
+
+bool ability_menu(player_t *player, monster_t *monster) {
+    
+    int selected_index = 0;
+    int ability_count = player->base.ability_count;
+    bool ability_used = false;
+
+    while (true) {
+        
+        // Prepare screen
+        tb_clear();
+        int y = print_combat_view(&player->base, &monster->base, false);
+
+        // Display menu options
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Abilities:");
+        for(int i = 0; i < ability_count; i++){
+            if (i == selected_index) {
+                tb_print(1, y++, TB_WHITE, TB_WHITE, player->base.abilities[i].name);
+            } else {
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, player->base.abilities[i].name);
+            }
+        }
+
+        y++;
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
+
+        // Print to terminal and check for key press
+        tb_present();
+        struct tb_event event;
+        tb_poll_event(&event);
+
+        // Do key press event
+        if (event.type == TB_EVENT_KEY) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                // Move up
+                selected_index = (selected_index - 1 + ability_count) % ability_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                // Move down
+                selected_index = (selected_index + 1) % ability_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                // Use the selected ability
+                int damage_dealt;
+                damage_dealt = use_ability(&player->base, &monster->base, &player->base.abilities[selected_index]);
+
+                // Change monster sprite color to red
+                tb_clear();
+                y = print_combat_view(&player->base, &monster->base, true);
+
+                // Display attack message
+                char message[100];
+                if (damage_dealt <= 0) damage_dealt = 0;
+                // TODO: There is no special message for missed or critical hits
+                snprintf(message, sizeof(message), "Used %s! Dealt %d damage. Press any key to continue...", player->base.abilities[selected_index].name, damage_dealt);
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
+                tb_present();
+                usleep(500000);
+
+                // Restore monster sprite color
+                y = print_combat_view(&player->base, &monster->base, false);
+                tb_present();
+
+                // Wait for any key press to continue
+                tb_poll_event(&event);
+                ability_used = true;
+                break; // Exit the menu after using the ability
+            } else if (event.key == TB_KEY_ESC) {
+                // Go back to the combat menu
+                break;
+            }
+        }
+    }
+    return ability_used;
+}
+
+bool item_menu(player_t *player, monster_t *monster) {
+
+    int selected_index = 0;
+    int usable_item_count = 0;
+    UsableItem *usable_items[MAX_ITEMS];
+    bool item_used = false;
+
+    // Collect all usable items
+    for (int i = 0; i < player->item_count; i++) {
+        if (player->inventory[i]->type == ITEM_TYPE_USABLE) {
+            usable_items[usable_item_count++] = (UsableItem *)player->inventory[i];
+        }
+    }
+
+    while (true) {
+
+        // Prepare screen
+        tb_clear();
+        int y = print_combat_view(&player->base, &monster->base, false);
+
+        // Display menu options
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "Usable Items:");
+        for (int i = 0; i < usable_item_count; i++) {
+            if (i == selected_index) {
+                tb_print(1, y++, TB_BLACK, TB_WHITE, usable_items[i]->base.name);
+            } else {
+                tb_print(1, y++, TB_WHITE, TB_DEFAULT, usable_items[i]->base.name);
+            }
+        }
+
+        y++;
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
+
+        // Print to terminal and check for key press
+        tb_present();
+        struct tb_event event;
+        tb_poll_event(&event);
+
+        // Do key press event
+        if (event.type == TB_EVENT_KEY) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                // Move up
+                selected_index = (selected_index - 1 + usable_item_count) % usable_item_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                // Move down
+                selected_index = (selected_index + 1) % usable_item_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                // Use the selected item
+                use_item(player, monster, usable_items[selected_index]);
+                item_used = true;
+                break; // Exit the menu after using the item
+            } else if (event.key == TB_KEY_ESC) {
+                // Go back to the combat menu
+                break;
+            }
+        }
+    }
+    return item_used;
+}
+
+int use_ability(character_t *attacker, character_t *defender, ability_t *ability) {
+    // Roll to hit
+    if (roll_hit(ability, defender)) {
+        // Roll damage
+        int damage = roll_damage(ability);
+        return deal_damage(damage, ability->damageType, defender);
+    }
+    return 0;
+}
+
+bool roll_hit(ability_t *ability, character_t *defender) {
+    int roll = roll_dice(D20);
+    switch (ability->damageType) {
+        case PHYSICAL:
+            return roll + ability->accuracy > defender->deflection;
+            break;
+        case MAGICAL:
+            return roll + ability->accuracy > defender->fortitude;
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
+int roll_damage(ability_t *ability) {
+    int roll = 0;
+    // Roll the dice several times
+    for (int i = 0; i < ability->rollCount; i++){
+        roll += roll_dice(ability->diceSize);
+    }
+    return roll;
+}
+
+int deal_damage(int damage, damage_type_t damage_type, character_t *character) {
+    /* TODO critical hits are ignored */
+    if (character->type == MONSTER) {
+        monster_t *monster = (monster_t *)character;
+        damage += get_weakness_value(monster, damage_type);
+    }
+    damage -= character->armor;
+    if (damage > 0) character->health -= damage;
+
+    return damage;
+}
+
+void use_item(player_t *player,monster_t *monster, UsableItem *item) {
+    switch (item->effectType) {
+        case HEALING:
+            player->base.health += item->value;
+            display_item_message(player, monster, item);
+            break;
+        case ARMOR_INCREASE:
+            player->base.armor += item->value;
+            display_item_message(player, monster, item);
+            break;
+        default:
+            break;
+    }
+
+    for (int i = 0; i < player->item_count; i++) {
+        if (player->inventory[i] == (Item *)item) {
+            for (int j = i; j < player->item_count - 1; j++) {
+                player->inventory[j] = player->inventory[j + 1];
+            }
+            player->inventory[player->item_count - 1] = NULL;
+            player->item_count--;
+            break;
+        }
+    }
+}
+
+int print_combat_view(character_t *player, character_t *monster, bool red_monster_sprite){
+
+    int y = 1;
+
+    // Display player info
+    char player_info[100];
+    snprintf(player_info, sizeof(player_info), "Player: %s | Health %d", player->name, player->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, player_info);
+
+    // Display monster info
+    char monster_info[100];
+    snprintf(monster_info, sizeof(monster_info), "Monster: %s | Health %d", monster->name, monster->health);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_info);
+
+    y += 2;
+    for (int i = 0; i < 20; i++) {
+        tb_printf(1, y, TB_WHITE, TB_DEFAULT, "");
+    }
+
+    // Display monster sprite
+    char monster_sprite[100];
+    snprintf(monster_sprite, sizeof(monster_sprite), "  (\\_/)\n  (o.o) \n  <( )>  \n");
+
+
+    if (red_monster_sprite) {
+        tb_print(1, y++, TB_RED, TB_DEFAULT, monster_sprite);
+    } else {
+        tb_print(1, y++, TB_WHITE, TB_DEFAULT, monster_sprite);
+    }
+
+    // Add two empty lines after the monster sprite
+    y += 2;
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, "");
+
+    return y;
+}
+
+int roll_dice(dice_size_t dice_size) {
+    /* TODO better randomness? (warning message)*/
+    return rand() % dice_size + 1;
+}
+
+ability_t *get_random_ability(character_t *character){
+    int random_index = rand() % character->ability_count;
+    return &character->abilities[random_index];
+}
+
+void display_enemy_attack_message(player_t *player, monster_t *monster, int damage_dealt) {
+    if (damage_dealt <= 0) damage_dealt = 0;
+    char message[100];
+    snprintf(message, sizeof(message), "Enemy %s attacked! Dealt %d damage. Press any key to continue...", monster->base.name, damage_dealt);
+    display_combat_message(player, monster, message);
+}
+
+void display_item_message(player_t *player, monster_t *monster, UsableItem *item) {
+    tb_clear();
+    char message[100];
+    switch (item->effectType) {
+        case HEALING:
+            snprintf(message, sizeof(message), "Used %s! Healed %d. Press any key to continue...", item->base.name, item->value);
+            display_combat_message(player, monster, message);
+            break;
+        case ARMOR_INCREASE:
+            snprintf(message, sizeof(message), "Used %s! Increased armor by %d. Press any key to continue...", item->base.name, item->value);
+            display_combat_message(player, monster, message);
+            break;
+        default:
+            break;
+    }
+}
+
+void display_combat_message(player_t *player, monster_t *monster, const char *message) {
+    tb_clear();
+    int y = print_combat_view(&player->base, &monster->base, false);
+    tb_print(1, y++, TB_WHITE, TB_DEFAULT, message);
+    tb_present();
+
+    struct tb_event event;
+    tb_poll_event(&event);
+}
+</file>
+
+<file path=".github/workflows/release.yml">
+name: Build & Release Executable
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on main branch
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]  # Multi-OS build
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install dependencies for Linux
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc g++ 
+
+      # Install dependencies for macOS
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install meson ninja
+          
+      # Configure Meson
+      - name: Configure Meson
+        run: meson setup builddir
+
+      # Compile project using Ninja
+      - name: Compile project
+        run: ninja -C builddir
+
+      # Upload the executables as artifacts
+      - name: Upload Executable as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dungeonCrawl-executable-${{ runner.os }}
+          path: builddir/DungeonCrawl
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest  # Push the release from Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Auto Tag Release
+        id: auto_tag
+        uses: anothrNick/github-tag-action@1.67.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch  # Can be 'patch', 'minor', or 'major'
+          WITH_V: true  # Adds 'v' prefix (e.g., v1.0.1)
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts  # Store all artifacts in the 'artifacts/' folder
+
+      - name: Rename Artifacts for Clarity #There will be a conflict due to files having the same name otherwhise
+        run: |
+          mv artifacts/dungeonCrawl-executable-Linux/DungeonCrawl artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+          mv artifacts/dungeonCrawl-executable-macOS/DungeonCrawl artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.auto_tag.outputs.new_tag }}
+          name: Release ${{ steps.auto_tag.outputs.new_tag }}
+          body: "Release: Built from the latest commit."
+          draft: false
+          prerelease: false
+          files: |
+            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux
+            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+</file>
+
+</files>

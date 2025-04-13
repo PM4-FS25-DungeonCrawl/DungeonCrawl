@@ -60,3 +60,4 @@ dkms.conf
 # Exclude txt files in log
 log/*.txt
 
+.cache
