@@ -1,12 +1,12 @@
 #include "combat_mode.h"
 
+#include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
 #include "../include/termbox2.h"
 #include "../item/potion.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
-#include "../asciiart/ascii.h"
 
 #define MAX_COMBAT_MENU_OPTIONS 2
 
@@ -36,9 +36,8 @@ void collect_potion_menu_options(potion_t* potions[], int count);
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
 char* combat_menu_options[MAX_COMBAT_MENU_OPTIONS] = {
-    "Use Ability",
-    "Use Potion"
-};
+        "Use Ability",
+        "Use Potion"};
 char** ability_menu_options;
 char** potion_menu_options;
 

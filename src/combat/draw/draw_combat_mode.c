@@ -1,8 +1,8 @@
 #include "draw_combat_mode.h"
 
-#include "../../logging/logger.h"
 #include "../../../include/termbox2.h"
 #include "../../character/character.h"
+#include "../../logging/logger.h"
 
 // Internal functions
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
@@ -82,7 +82,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 }
 
 // Helper function to draw resource bar
-int draw_resource_bar(vector2d_t anchor,  const character_t* c) {
+int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     const char* str_format = "%s: | Health %d | Mana %d | Stamina %d";
 
     char c_info[MAX_STRING_LENGTH];
