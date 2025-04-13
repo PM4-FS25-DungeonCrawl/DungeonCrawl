@@ -6,10 +6,9 @@
 #include "../item/potion.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
+#include "../asciiart/ascii.h"
 
-#define ABILITY_MENU_STRING "Use Ability"
-#define ITEM_MENU_STRING "Use Potion"
-#define MAX_OPTION_LENGTH 256
+#define MAX_COMBAT_MENU_OPTIONS 2
 
 typedef enum {
     COMBAT_MENU,
@@ -25,17 +24,47 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster);
 internal_combat_state_t potion_menu(character_t* player, character_t* monster);
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_item(character_t* player, const character_t* monster, potion_t* potion);
-bool invoke_potion_effect(character_t* character, potion_t* potion);
+
+//TODO: Should these 2 function not be in to character.c?
+void invoke_potion_effect(character_t* character, potion_t* potion);
 bool consume_ability_resource(character_t* attacker, const ability_t* ability);
+
 ability_t* get_random_ability(const character_t* character);
-char** generate_ability_menu_options(ability_t* abilities[], int count);
-char** generate_potion_menu_options(potion_t* potions[], int count);
+void collect_ability_menu_options(ability_t* abilities[], int count);
+void collect_potion_menu_options(potion_t* potions[], int count);
+
+// === Intern Global Variables ===
+vector2d_t combat_view_anchor = {1, 1};
+char* combat_menu_options[MAX_COMBAT_MENU_OPTIONS] = {
+    "Use Ability",
+    "Use Potion"
+};
+char** ability_menu_options;
+char** potion_menu_options;
+
+void init_combat_mode(void) {
+    ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
+
+    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
+        ability_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+    }
+
+    potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        potion_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+    }
+}
+
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
     bool combat_active = true;
+
+    //collect menu options
+    collect_ability_menu_options(player->abilities, player->ability_count);
+    collect_potion_menu_options(player->potion_inventory, player->potion_count);
 
     while (combat_active) {
         switch (combat_state) {
@@ -76,18 +105,15 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
-    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite", false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
-
-    const char* menu_options[] = {ABILITY_MENU_STRING, ITEM_MENU_STRING};
-    const int menu_option_count = sizeof(menu_options) / sizeof(menu_options[0]);
 
     internal_combat_state_t new_state = COMBAT_MENU;
     bool submenu_selected = false;
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, "Combat Menu:", menu_options, menu_option_count, selected_index);
+        draw_combat_menu(anchor, "Combat Menu:", combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
 
         // check for input
         struct tb_event event;
@@ -96,10 +122,10 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         if (ret == TB_OK) {
             if (event.key == TB_KEY_ARROW_UP) {
                 // Move up
-                selected_index = (selected_index - 1 + menu_option_count) % menu_option_count;
+                selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 // Move down
-                selected_index = (selected_index + 1) % menu_option_count;
+                selected_index = (selected_index + 1) % MAX_COMBAT_MENU_OPTIONS;
             } else if (event.key == TB_KEY_ENTER) {
                 // Return the selected state
                 if (selected_index == 0) {
@@ -120,18 +146,15 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     // draw combat view
-    vector2d_t anchor = draw_combat_view(player, monster, "enemy sprite", false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
-    const int ability_count = player->ability_count;
-    const char** menu_options = generate_ability_menu_options(&player->abilities, ability_count);
-
     internal_combat_state_t new_state = ABILITY_MENU;
-    bool ability_used = false;
+    bool ability_used_or_esc = false;
 
-    while (!ability_used) {
+    while (!ability_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Ability Menu:", menu_options, ability_count, selected_index);
+        draw_combat_menu(anchor, "Ability Menu:", ability_menu_options, player->ability_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -140,20 +163,20 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         if (ret == TB_OK) {
             if (event.key == TB_KEY_ARROW_UP) {
                 // Move up
-                selected_index = (selected_index - 1 + ability_count) % ability_count;
+                selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 // Move down
-                selected_index = (selected_index + 1) % ability_count;
+                selected_index = (selected_index + 1) % player->ability_count;
             } else if (event.key == TB_KEY_ENTER) {
                 use_ability(player, monster, player->abilities[selected_index]);
                 use_ability(monster, player, get_random_ability(monster));
 
                 new_state = EVALUATE_COMBAT;
-                ability_used = true;
+                ability_used_or_esc = true;
             } else if (event.key == TB_KEY_ESC) {
                 // go back to the combat menu
                 new_state = COMBAT_MENU;
-                ability_used = true;
+                ability_used_or_esc = true;
             }
         }
     }
@@ -162,25 +185,22 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
 internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     // draw combat view
-    vector2d_t anchor = draw_combat_view(player, monster, "Enemey Sprite", false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
-    if (player->potion_inventory_count == 0) {
-        char message[256];
+    if (player->potion_count == 0) {
+        char message[MAX_STRING_LENGTH];
         snprintf(message, sizeof(message), "You search your bag... but there are no potions left.");
         draw_combat_log(anchor, message);
         return COMBAT_MENU;
     }
 
-    int potion_count = player->potion_inventory_count;
-    const char** menu_options = generate_potion_menu_options(&player->potion_inventory, potion_count);
-
     internal_combat_state_t new_state = ITEM_MENU;
-    bool item_used = false;
+    bool item_used_or_esc = false;
 
-    while (!item_used) {
+    while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Potion menu:", menu_options, potion_count, selected_index);
+        draw_combat_menu(anchor, "Potion menu:", potion_menu_options, player->potion_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -189,23 +209,27 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         if (ret == TB_OK) {
             if (event.key == TB_KEY_ARROW_UP) {
                 // Move up
-                selected_index = (selected_index - 1 + potion_count) % potion_count;
+                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 // Move down
-                selected_index = (selected_index + 1) % potion_count;
+                selected_index = (selected_index + 1) % player->potion_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected potion
                 use_item(player, monster, player->potion_inventory[selected_index]);
                 use_ability(monster, player, get_random_ability(monster));
                 new_state = EVALUATE_COMBAT;
-                item_used = true;
+
+                collect_potion_menu_options(player->potion_inventory, player->potion_count);
+                item_used_or_esc = true;
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
                 new_state = COMBAT_MENU;
-                item_used = true;
+                item_used_or_esc = true;
             }
         }
     }
+
+
     return new_state;
 }
 
@@ -213,7 +237,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     character_t* player;
     character_t* monster;
     bool sprite;
-    char message[256];
+    char message[MAX_STRING_LENGTH];
     if (attacker->type == PLAYER) {
         player = attacker;
         monster = target;
@@ -224,12 +248,12 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
         sprite = false;
     }
 
-    vector2d_t anchor = draw_combat_view(player, monster, "Enemy Sprite", false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
-            draw_combat_view(player, monster, "Enemy Sprite", sprite);
+            draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, sprite);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), "%s uses %s and deals %d %s damage to %s!",
@@ -240,7 +264,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                      target->name);
             draw_combat_log(anchor, message);
         } else {
-            draw_combat_view(player, monster, "Enemy Sprite", false);
+            draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), "%s uses %s, but it missed!",
@@ -259,17 +283,16 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 }
 
 void use_item(character_t* player, const character_t* monster, potion_t* potion) {
-    vector2d_t anchor = draw_combat_view(player, monster, "Enemy Sprite", false);
-    bool consumed = invoke_potion_effect(player, potion);
-    if (consumed) {
-        char message[256];
-        snprintf(message, sizeof(message), "%s uses a %s potion, restoring %d %s!",
-                 player->name,
-                 potion->name,
-                 potion->value,
-                 potion_type_to_string(potion->effectType));
-        draw_combat_log(anchor, message);
-    }
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    invoke_potion_effect(player, potion);
+
+    char message[MAX_STRING_LENGTH];
+    snprintf(message, sizeof(message), "%s uses a %s potion, restoring %d %s!",
+             player->name,
+             potion->name,
+             potion->value,
+             potion_type_to_string(potion->effectType));
+    draw_combat_log(anchor, message);
 }
 
 ability_t* get_random_ability(const character_t* character) {
@@ -277,7 +300,7 @@ ability_t* get_random_ability(const character_t* character) {
     return character->abilities[random_index];
 }
 
-bool invoke_potion_effect(character_t* character, potion_t* potion) {
+void invoke_potion_effect(character_t* character, potion_t* potion) {
     switch (potion->effectType) {
         case HEALING:
             if (potion->value > (character->max_resources.health - character->current_resources.health)) {
@@ -291,7 +314,6 @@ bool invoke_potion_effect(character_t* character, potion_t* potion) {
             break;
     }
     remove_potion(character, potion);
-    return true;
 }
 
 bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
@@ -314,13 +336,17 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
 }
 
 // Helper function to create ability options array
-char** generate_ability_menu_options(ability_t* abilities[], int count) {
-    char** menu_options = malloc(count * sizeof(char*));
+void collect_ability_menu_options(ability_t* abilities[], const int count) {
+    //clear the ability menu options
+    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
+        memset(ability_menu_options[i], '0', sizeof(char) * MAX_STRING_LENGTH);
+    }
 
-    for (int i = 0; i < count; ++i) {
-        menu_options[i] = malloc(MAX_OPTION_LENGTH);
-        snprintf(menu_options[i], MAX_OPTION_LENGTH,
-                 "%-16s - Rolls: %-2d, Accuracy: %-3d%%, Cost: %-3d, Dice: %-4s, Type: %-10s",
+    for (int i = 0; i < count; i++) {
+        const char* ability_format = "%-16s - Rolls: %-2d, Accuracy: %-3d%%, Cost: %-3d, Dice: %-4s, Type: %-16s";
+
+        snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
+                 ability_format,
                  abilities[i]->name,
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
@@ -328,20 +354,37 @@ char** generate_ability_menu_options(ability_t* abilities[], int count) {
                  dice_size_to_string(abilities[i]->dice_size),
                  damage_type_to_string(abilities[i]->damage_type));
     }
-    return menu_options;
 }
 
 // Helper function to create potion options array
-char** generate_potion_menu_options(potion_t* potions[], int count) {
-    char** menu_options = malloc(count * sizeof(char*));
+void collect_potion_menu_options(potion_t* potions[], const int count) {
+    log_msg(FINE, "Combat Mode", "collect_potion_menu_options");
+    // clear the potion menu options
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        memset(potion_menu_options[i], 0, MAX_STRING_LENGTH);
+    }
+    log_msg(FINE, "Combat Mode", "Potion count: %d", count);
 
-    for (int i = 0; i < count; ++i) {
-        menu_options[i] = malloc(MAX_OPTION_LENGTH);
-        snprintf(menu_options[i], MAX_OPTION_LENGTH,
-                 "%-15s  Type: %-10s  Value: %-3d",
+
+    for (int i = 0; i < count; i++) {
+        const char* potion_format = "%-16s  Type: %-16s  Value: %-3d";
+
+        snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
+                 potion_format,
                  potions[i]->name,
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
     }
-    return menu_options;
+}
+
+void shutdown_combat_mode(void) {
+    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
+        free(ability_menu_options[i]);
+    }
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        free(potion_menu_options[i]);
+    }
+
+    free(ability_menu_options);
+    free(potion_menu_options);
 }

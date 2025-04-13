@@ -12,8 +12,8 @@ character_t* init_character(const character_type_t type, const char* name) {
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);
     character->ability_count = 0;
-    character->gear_inventory_count = 0;
-    character->potion_inventory_count = 0;
+    character->gear_count = 0;
+    character->potion_count = 0;
 
     for (int i = 0; i < MAX_SLOT; i++) {
         character->equipment[i] = NULL;
@@ -63,7 +63,7 @@ void set_character_dmg_modifier(character_t* character, damage_type_t type, int 
 }
 
 void add_ability(character_t* c, ability_t* ability) {
-    if (c->ability_count < ABILITY_LIMIT) {
+    if (c->ability_count < MAX_ABILITY_LIMIT) {
         c->abilities[c->ability_count] = ability;
         c->ability_count++;
     } else {
@@ -85,22 +85,22 @@ void remove_ability(character_t* c, ability_t* ability) {
 }
 
 void add_gear(character_t* c, gear_t* item) {
-    if (c->gear_inventory_count < EQUIPABLE_ITEM_LIMIT) {
-        c->gear_inventory[c->gear_inventory_count] = item;
-        c->gear_inventory_count++;
+    if (c->gear_count < MAX_GEAR_LIMIT) {
+        c->gear_inventory[c->gear_count] = item;
+        c->gear_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more equipable items!", c->name);
     }
 }
 
 void remove_gear(character_t* c, gear_t* item) {
-    for (int i = 0; i < c->gear_inventory_count; i++) {
+    for (int i = 0; i < c->gear_count; i++) {
         if (c->gear_inventory[i] == item) {
-            for (int j = i; j < c->gear_inventory_count - 1; j++) {
+            for (int j = i; j < c->gear_count - 1; j++) {
                 c->gear_inventory[j] = c->gear_inventory[j + 1];
             }
-            c->gear_inventory[c->gear_inventory_count - 1] = NULL;
-            c->gear_inventory_count--;
+            c->gear_inventory[c->gear_count - 1] = NULL;
+            c->gear_count--;
             return;
         }
     }
@@ -108,22 +108,22 @@ void remove_gear(character_t* c, gear_t* item) {
 }
 
 void add_potion(character_t* c, potion_t* item) {
-    if (c->potion_inventory_count < USABLE_ITEM_LIMIT) {
-        c->potion_inventory[c->potion_inventory_count] = item;
-        c->potion_inventory_count++;
+    if (c->potion_count < MAX_POTION_LIMIT) {
+        c->potion_inventory[c->potion_count] = item;
+        c->potion_count++;
     } else {
         log_msg(INFO, "Character", "%s cannot carry more useable items!", c->name);
     }
 }
 
 void remove_potion(character_t* c, potion_t* item) {
-    for (int i = 0; i < c->potion_inventory_count; i++) {
+    for (int i = 0; i < c->potion_count; i++) {
         if (c->potion_inventory[i] == item) {
-            for (int j = i; j < c->potion_inventory_count - 1; j++) {
+            for (int j = i; j < c->potion_count - 1; j++) {
                 c->potion_inventory[j] = c->potion_inventory[j + 1];
             }
-            c->potion_inventory[c->potion_inventory_count - 1] = NULL;
-            c->potion_inventory_count;
+            c->potion_inventory[c->potion_count - 1] = NULL;
+            c->potion_count--;
             return;
         }
     }

@@ -3,6 +3,7 @@
 
 #include "logging/logger.h"
 
+#define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64
 
 #define NULL_PTR_HANDLER(ptr, modul, format, ...)     \
@@ -10,7 +11,6 @@
         log_msg(ERROR, modul, format, ##__VA_ARGS__); \
         return NULL;                                  \
     }
-
 
 /**
  * @brief 2-dimensional vector struct

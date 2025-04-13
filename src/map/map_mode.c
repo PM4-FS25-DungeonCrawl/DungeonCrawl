@@ -71,9 +71,9 @@ map_mode_result_t map_mode_update(void) {
     const int ret = tb_peek_event(&ev, 10);
 
     if (ret == TB_OK) {
-        tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
         next_state = handle_input(&ev);
     }
+    tb_clear();
 
     draw_light_on_player(map, revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode(revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);

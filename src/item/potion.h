@@ -6,6 +6,7 @@
 typedef enum {
     HEALING,
     // more effects can be added
+    MAX_POTION_TYPES
 } potion_type_t;
 
 typedef struct {
