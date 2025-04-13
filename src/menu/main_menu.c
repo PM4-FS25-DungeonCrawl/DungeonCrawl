@@ -100,8 +100,35 @@ menu_result_t show_main_menu(bool game_in_progress) {
             } else if (event.key == TB_KEY_ENTER) {
                 // Handle selection
                 if (menu_options[selected_index] == NEW_GAME) {
-                    result = MENU_START_GAME;
-                    menu_active = false;
+                    if (game_in_progress) {
+                        // Warn user about unsaved progress
+                        tb_clear();
+                        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Warning: All unsaved progress will be lost!");
+                        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, "Do you want to continue? (Y/N)");
+                        tb_present();
+                        
+                        // Wait for Y or N
+                        bool waiting_for_confirmation = true;
+                        while (waiting_for_confirmation) {
+                            struct tb_event confirm_event;
+                            tb_poll_event(&confirm_event);
+                            
+                            if (confirm_event.ch == 'y' || confirm_event.ch == 'Y') {
+                                waiting_for_confirmation = false;
+                                // Note: The game loop will set game_in_progress = true when receiving MENU_START_GAME
+                                result = MENU_START_GAME;
+                                menu_active = false;
+                            } else if (confirm_event.ch == 'n' || confirm_event.ch == 'N') {
+                                waiting_for_confirmation = false;
+                                // Return to main menu
+                                draw_menu(menu_options, menu_count, selected_index);
+                            }
+                        }
+                    } else {
+                        // No game in progress, start directly
+                        result = MENU_START_GAME;
+                        menu_active = false;
+                    }
                 } else if (menu_options[selected_index] == CONTINUE) {
                     result = MENU_CONTINUE;
                     menu_active = false;
@@ -150,8 +177,34 @@ menu_result_t show_main_menu(bool game_in_progress) {
                         menu_active = false;
                     }
                 } else if (menu_options[selected_index] == EXIT) {
-                    result = MENU_EXIT;
-                    menu_active = false;
+                    if (game_in_progress) {
+                        // Warn user about unsaved progress
+                        tb_clear();
+                        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Warning: All unsaved progress will be lost!");
+                        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, "Do you want to exit? (Y/N)");
+                        tb_present();
+                        
+                        // Wait for Y or N
+                        bool waiting_for_confirmation = true;
+                        while (waiting_for_confirmation) {
+                            struct tb_event confirm_event;
+                            tb_poll_event(&confirm_event);
+                            
+                            if (confirm_event.ch == 'y' || confirm_event.ch == 'Y') {
+                                waiting_for_confirmation = false;
+                                result = MENU_EXIT;
+                                menu_active = false;
+                            } else if (confirm_event.ch == 'n' || confirm_event.ch == 'N') {
+                                waiting_for_confirmation = false;
+                                // Return to main menu
+                                draw_menu(menu_options, menu_count, selected_index);
+                            }
+                        }
+                    } else {
+                        // No game in progress, exit directly
+                        result = MENU_EXIT;
+                        menu_active = false;
+                    }
                 }
             } else if (event.key == TB_KEY_CTRL_C || event.key == TB_KEY_ESC) {
                 result = MENU_EXIT;

@@ -70,7 +70,7 @@ int init_game() {
             case MAIN_MENU:
                 switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
-                        game_in_progress = true;
+                        game_in_progress = true; // Mark that a game is now in progress
                         tb_clear(); // Clear screen before generating map
                         current_state = GENERATE_MAP;
                         break;
