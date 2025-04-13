@@ -59,7 +59,7 @@ void draw_map(void) {
 void draw_ui(void) {
     tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
     tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
-    tb_printf(0, HEIGHT + 4, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
+    tb_printf(0, HEIGHT + 4, TB_WHITE, TB_BLACK, "Press 'M' for Main Menu");
 }
 
 int handle_input(const struct tb_event* event) {

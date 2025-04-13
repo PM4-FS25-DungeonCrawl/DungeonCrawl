@@ -71,9 +71,11 @@ int init_game() {
                 switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
                         game_in_progress = true;
+                        tb_clear(); // Clear screen before generating map
                         current_state = GENERATE_MAP;
                         break;
                     case MENU_CONTINUE:
+                        tb_clear(); // Clear screen before map mode
                         current_state = MAP_MODE;
                         break;
                     case MENU_EXIT:
@@ -93,6 +95,7 @@ int init_game() {
                         current_state = EXIT;
                         break;
                     case NEXT_FLOOR:
+                        tb_clear(); // Clear screen before generating new floor
                         current_state = GENERATE_MAP;
                         break;
                     case COMBAT:
