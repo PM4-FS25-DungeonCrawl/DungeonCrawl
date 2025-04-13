@@ -7,6 +7,8 @@
 #include "./display/combat_display.h"
 #include "ability.h"
 
+#include <stdbool.h>
+
 #define ABILITY_MENU_STRING "Use Ability"
 #define ITEM_MENU_STRING "Use Potion"
 

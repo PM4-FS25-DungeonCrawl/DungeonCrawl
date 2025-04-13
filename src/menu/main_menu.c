@@ -2,6 +2,7 @@
 
 #include "../../include/termbox2.h"
 #include "../logging/logger.h"
+#include <stdbool.h>
 
 // Menu options
 #define NEW_GAME_OPTION "New Game"
@@ -15,19 +16,16 @@
 #define MENU_START_X 10
 #define MENU_ITEM_SPACING 2
 
-static const char* menu_options[] = {
-    NEW_GAME_OPTION,
-    CONTINUE_OPTION,
-    EXIT_OPTION
-};
-
-static const int menu_count = sizeof(menu_options) / sizeof(menu_options[0]);
+// We'll create these dynamically based on game_in_progress
+static const char* NEW_GAME = NEW_GAME_OPTION;
+static const char* CONTINUE = CONTINUE_OPTION;
+static const char* EXIT = EXIT_OPTION;
 
 void init_main_menu(void) {
     log_msg(INFO, "Menu", "Initializing main menu");
 }
 
-void draw_menu(int selected_index) {
+void draw_menu(const char** menu_options, int menu_count, int selected_index) {
     tb_clear();
     
     // Calculate center position for title
@@ -56,13 +54,31 @@ void draw_menu(int selected_index) {
     tb_present();
 }
 
-menu_result_t show_main_menu(void) {
+menu_result_t show_main_menu(bool game_in_progress) {
+    // Create dynamic menu options based on game_in_progress flag
+    const char* menu_options[3];
+    int menu_count;
+    
+    // Always include New Game and Exit
+    menu_options[0] = NEW_GAME;
+    
+    if (game_in_progress) {
+        // If game is in progress, show Continue option
+        menu_options[1] = CONTINUE;
+        menu_options[2] = EXIT;
+        menu_count = 3;
+    } else {
+        // If no game in progress, don't show Continue option
+        menu_options[1] = EXIT;
+        menu_count = 2;
+    }
+    
     int selected_index = 0;
     menu_result_t result = MENU_CONTINUE;
     bool menu_active = true;
     
     while (menu_active) {
-        draw_menu(selected_index);
+        draw_menu(menu_options, menu_count, selected_index);
         
         struct tb_event event;
         const int ret = tb_peek_event(&event, 10);
@@ -76,19 +92,15 @@ menu_result_t show_main_menu(void) {
                 selected_index = (selected_index + 1) % menu_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Handle selection
-                switch (selected_index) {
-                    case 0: // New Game
-                        result = MENU_START_GAME;
-                        menu_active = false;
-                        break;
-                    case 1: // Continue
-                        result = MENU_CONTINUE;
-                        menu_active = false;
-                        break;
-                    case 2: // Exit
-                        result = MENU_EXIT;
-                        menu_active = false;
-                        break;
+                if (menu_options[selected_index] == NEW_GAME) {
+                    result = MENU_START_GAME;
+                    menu_active = false;
+                } else if (menu_options[selected_index] == CONTINUE) {
+                    result = MENU_CONTINUE;
+                    menu_active = false;
+                } else if (menu_options[selected_index] == EXIT) {
+                    result = MENU_EXIT;
+                    menu_active = false;
                 }
             } else if (event.key == TB_KEY_CTRL_C || event.key == TB_KEY_ESC) {
                 result = MENU_EXIT;

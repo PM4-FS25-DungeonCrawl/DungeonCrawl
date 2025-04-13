@@ -16,6 +16,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <stdbool.h>
 
 typedef enum {
     MAIN_MENU,
@@ -37,6 +38,7 @@ int init_game() {
 
 
     bool running = true;//should only be set in the state machine
+    bool game_in_progress = false; // Flag to track if a game has been started
     game_state_t current_state = MAIN_MENU;
 
     init_map_mode();
@@ -66,8 +68,9 @@ int init_game() {
     while (running) {
         switch (current_state) {
             case MAIN_MENU:
-                switch (show_main_menu()) {
+                switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
+                        game_in_progress = true;
                         current_state = GENERATE_MAP;
                         break;
                     case MENU_CONTINUE:
