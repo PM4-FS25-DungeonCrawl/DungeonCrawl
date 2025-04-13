@@ -4,6 +4,9 @@
 #define HELMET_WIDTH 29
 #define HELMET_HEIGHT 19
 
+#define GOBLIN_WIDTH 29
+#define GOBLIN_HEIGHT 11
+
 const char ascii_helmet[HELMET_HEIGHT][HELMET_WIDTH] = {
         "                _           ",
         "                ,''/., _    ",
@@ -24,5 +27,21 @@ const char ascii_helmet[HELMET_HEIGHT][HELMET_WIDTH] = {
         "         /  .--.       )    ",
         "        /_.---._`._   /     ",
         "                `.__.'      "};
+
+const char ascii_goblin[GOBLIN_HEIGHT][GOBLIN_WIDTH] = {
+        "             ,      ,       ",
+        "            /(.-""-.)\\      ",
+        "        |\\  \\/      \\/  /|  ",
+        "        | \\ / =.  .= \\ / |  ",
+        "        \\( \\   o\\/o   / )/  ",
+        "         \\_, '-/  \\-' ,_/   ",
+        "           /   \\__/   \\     ",
+        "           \\ \\__/\\__/ /     ",
+        "         ___\\ \\|--|/ /___   ",
+        "       /`    \\      /    `\\ ",
+        "      /       '----'       \\"
+};
+
+
 
 #endif//ASCII_H
