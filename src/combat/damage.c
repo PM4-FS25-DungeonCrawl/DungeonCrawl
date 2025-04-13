@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 
-int roll_dice(const dice_size_t dice_size);
+int roll_dice(dice_size_t dice_size);
 
 int roll_dice(const dice_size_t dice_size) {
     // TODO better randomness? (warning message)
