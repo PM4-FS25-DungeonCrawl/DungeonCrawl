@@ -61,7 +61,7 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
         if (i == selected_index) {
             char buffer[MAX_STRING_LENGTH];
             snprintf(buffer, sizeof(buffer), "> %-254s", menu_options[i]);
-            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
+            tb_print(anchor.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
         } else {
             char buffer[MAX_STRING_LENGTH];
             snprintf(buffer, sizeof(buffer), "  %-254s", menu_options[i]);
