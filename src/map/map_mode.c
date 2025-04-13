@@ -6,9 +6,6 @@
 #include "drawop/draw_light.h"
 #include "map.h"
 
-#include <math.h>
-#include <stdio.h>
-
 
 vector2d_t player_pos;
 int player_has_key = 0;
@@ -45,7 +42,7 @@ void draw_map(void) {
                 case KEY:
                     tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
                     break;
-                case SKELETON:
+                case GOBLIN:
                     tb_printf(x, y, TB_WHITE, TB_RED, "!");
                     break;
                 case HIDDEN:
@@ -97,6 +94,12 @@ int handle_input(const struct tb_event* event) {
                     return NEXT_FLOOR;
                 }
                 break;
+            case GOBLIN:
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
+                map[new_x][new_y] = FLOOR;
+                revealed_map[new_x][new_y] = FLOOR;
+                return COMBAT;
             default:
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;
