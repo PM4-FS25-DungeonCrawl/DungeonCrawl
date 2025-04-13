@@ -14,7 +14,7 @@ int roll_dice(const dice_size_t dice_size) {
     return rand() % dice_size + 1;
 }
 
-bool roll_hit(int attacker_dex, int defender_dex) {
+bool roll_hit(const int attacker_dex, const int defender_dex) {
     const int attacker_roll = roll_dice(D20);
     log_msg(INFO, "Attacker", "rolled %d", attacker_roll);
     const int defender_roll = roll_dice(D20);
@@ -34,7 +34,7 @@ int roll_damage(const ability_t* ability) {
     return roll;
 }
 
-int deal_damage(character_t* character, damage_type_t damage_type, int damage) {
+int deal_damage(character_t* character, damage_type_t damage_type, const int damage) {
     // TODO critical hits are ignored
     // negative damage resistance leads to more damage
     // damage += character->resistance[damage_type].value;
@@ -48,7 +48,7 @@ void reset_current_stats(character_t* character) {
 }
 
 // Helper function to convert dice_size_t to string
-const char* dice_size_to_string(dice_size_t size) {
+const char* dice_size_to_string(const dice_size_t size) {
     switch (size) {
         case D6:
             return "D6";
@@ -65,7 +65,7 @@ const char* dice_size_to_string(dice_size_t size) {
     }
 }
 
-const char* damage_type_to_string(damage_type_t type) {
+const char* damage_type_to_string(const damage_type_t type) {
     switch (type) {
         case PHYSICAL:
             return "Physical";
