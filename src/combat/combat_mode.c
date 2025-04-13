@@ -342,7 +342,7 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
-        const char* ability_format = "%-16s - Rolls: %-2d, Accuracy: %-3d%%, Cost: %-3d, Dice: %-4s, Type: %-16s";
+        const char* ability_format = "%-16s Rolls: %-2d | Accuracy: %-3d%% | Cost: %-3d | Dice: %-4s | Type: %-16s";
 
         snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
                  ability_format,
@@ -366,7 +366,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
 
     for (int i = 0; i < count; i++) {
-        const char* potion_format = "%-16s  Type: %-16s  Value: %-3d";
+        const char* potion_format = "%-16s  Type: %-16s | Value: %-3d";
 
         snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
                  potion_format,

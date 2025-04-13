@@ -64,7 +64,7 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
             tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         } else {
             char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "%-256s", menu_options[i]);
+            snprintf(buffer, sizeof(buffer), "  %-254s", menu_options[i]);
             tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         }
     }
@@ -87,7 +87,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 
 // Helper function to draw resource bar
 int draw_resource_bar(vector2d_t anchor, const character_t* c) {
-    const char* str_format = "%s: | Health %d | Mana %d | Stamina %d";
+    const char* str_format = "%-10s | Health %-4d | Mana %-4d | Stamina %-4d";
 
     char c_info[MAX_STRING_LENGTH];
     snprintf(c_info, sizeof(c_info), str_format, c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
