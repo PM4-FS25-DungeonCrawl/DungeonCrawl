@@ -123,7 +123,7 @@ void remove_potion(character_t* c, potion_t* item) {
                 c->potion_inventory[j] = c->potion_inventory[j + 1];
             }
             c->potion_inventory[c->potion_inventory_count - 1] = NULL;
-            c->potion_inventory_count;
+            c->potion_inventory_count--;
             return;
         }
     }

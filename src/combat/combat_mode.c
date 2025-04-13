@@ -7,27 +7,6 @@
 #include "./display/combat_display.h"
 #include "ability.h"
 
-#define ABILITY_MENU_STRING "Use Ability"
-#define ITEM_MENU_STRING "Use Potion"
-
-typedef enum {
-    COMBAT_MENU,
-    ABILITY_MENU,
-    ITEM_MENU,
-    EVALUATE_COMBAT,//checks if the combat reached an end
-    EXIT            //means exit combat & game
-} internal_combat_state_t;
-
-// === Internal Functions ===
-internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
-internal_combat_state_t ability_menu(character_t* player, character_t* monster);
-internal_combat_state_t item_menu(character_t* player, character_t* monster);
-void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
-void use_item(character_t* player, const character_t* monster, potion_t* item);
-bool use_usable_item(character_t* character, potion_t* item);
-bool consume_ability_resource(character_t* attacker, const ability_t* ability);
-ability_t* get_random_ability(const character_t* character);
-
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
     internal_combat_state_t combat_state = COMBAT_MENU;
@@ -61,7 +40,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                     combat_state = COMBAT_MENU;
                 }
                 break;
-            case EXIT:
+            case COMBAT_EXIT:
                 combat_result = EXIT_GAME;
                 combat_active = false;// exit the combat loop
                 break;
@@ -120,7 +99,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                 submenu_selected = true;
             } else if (event.key == TB_KEY_CTRL_C) {
                 // Exit the game
-                new_state = EXIT;
+                new_state = COMBAT_EXIT;
                 submenu_selected = true;
             }
         }
