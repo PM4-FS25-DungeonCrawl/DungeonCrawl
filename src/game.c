@@ -35,9 +35,9 @@ int init_game() {
       currentState = MAP_MODE;
       break;
     case MAP_MODE:
-      if (map_mode_update()) {
+      notcurses_render(nc);
+      if (!map_mode_update()) {
         currentState = EXIT;
-        notcurses_render(nc);
       }
       break;
     // case COMBAT_MODE: {

@@ -129,20 +129,20 @@ void move_player(enum directions direction) {
 
 /**
  * Updates the player position based on the player's input and redraws the maze.
- * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the
+ * @return 1 if the game continue, 0 if the player pressed the
  * exit key.
  */
 int map_mode_update(void) {
 
-  ncinput *ni = NULL;
-  notcurses_get(nc, NULL, ni);
+  struct ncinput ni;
+  notcurses_get(nc, NULL, &ni);
 
-  handle_input(nc, ni, MAP_MODE);
+  bool input = handle_input(nc, &ni, MAP_MODE);
 
   draw_map();
   draw_ui();
 
-  return CONTINUE;
+  return input;
 }
 
 int init_map_mode(struct notcurses *notcurses, struct ncplane *ncplane) {
