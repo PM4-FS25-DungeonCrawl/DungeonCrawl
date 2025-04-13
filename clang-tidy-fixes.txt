@@ -1,13 +1,6 @@
-../src/combat/damage.c:9:15: warning: parameter 'dice_size' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
-    9 | int roll_dice(const dice_size_t dice_size);
-      |               ^~~~~
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/combat/draw/draw_combat_mode.c:29:48: warning: pointer parameter 'menu_name' can be pointer to const [readability-non-const-parameter]
-   29 | void draw_combat_menu(vector2d_t anchor, char* menu_name, const char* menu_options[], int menu_option_count, int selected_index) {
-      |                                                ^
-      |                                          const 
 ../src/game.c:35:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    35 |     srand(time(NULL));
       |     ^
@@ -22,5 +15,5 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-Suppressed 46506 warnings (46454 in non-user code, 52 with check filters).
+Suppressed 46499 warnings (46454 in non-user code, 45 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
