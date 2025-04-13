@@ -97,6 +97,7 @@ int handle_input(const struct tb_event* event) {
             case GOBLIN:
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;
+                map[new_x][new_y] = FLOOR;
                 revealed_map[new_x][new_y] = FLOOR;
                 return COMBAT;
             default:
