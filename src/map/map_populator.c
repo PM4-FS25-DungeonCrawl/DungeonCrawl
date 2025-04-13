@@ -39,7 +39,7 @@ void place_key() {
 int is_close_to_enemy(int x, int y) {
     for (int i = -ENEMY_MIN_DISTANCE; i <= ENEMY_MIN_DISTANCE + 1; i++) {
         for (int j = -ENEMY_MIN_DISTANCE; j <= ENEMY_MIN_DISTANCE + 1; j++) {
-            if (map[x + i][y + j] == SKELETON || map[x + i][y + j] == START_DOOR) {
+            if (map[x + i][y + j] == GOBLIN || map[x + i][y + j] == START_DOOR) {
                 return 1;
             }
         }
@@ -59,7 +59,7 @@ void place_enemies() {
             y = rand() % (HEIGHT - 2) + 1;
         } while (map[x][y] != FLOOR || is_close_to_enemy(x, y));
 
-        map[x][y] = SKELETON;
+        map[x][y] = GOBLIN;
     }
 }
 

@@ -79,6 +79,10 @@ int init_game() {
                     case NEXT_FLOOR:
                         current_state = GENERATE_MAP;
                         break;
+                    case COMBAT:
+                        log_msg(INFO, "Game", "Entering combat mode");
+                        current_state = COMBAT_MODE;
+                        break;
                     default:
                         log_msg(ERROR, "game", "Unknown return value from map_mode_update");
                 }
