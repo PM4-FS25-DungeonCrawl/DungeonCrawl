@@ -1,9 +1,9 @@
 #ifndef COMBAT_MODE_H
 #define COMBAT_MODE_H
 
-#include "ability_fw.h"
 #include "../character/character_fw.h"
 #include "../item/potion.h"
+#include "ability_fw.h"
 
 #define ABILITY_MENU_STRING "Use Ability"
 #define ITEM_MENU_STRING "Use Potion"
@@ -12,8 +12,8 @@ typedef enum {
     COMBAT_MENU,
     ABILITY_MENU,
     ITEM_MENU,
-    EVALUATE_COMBAT,    // checks if the combat reached an end
-    COMBAT_EXIT         // exit combat & game
+    EVALUATE_COMBAT,// checks if the combat reached an end
+    COMBAT_EXIT     // exit combat & game
 } internal_combat_state_t;
 
 typedef enum {

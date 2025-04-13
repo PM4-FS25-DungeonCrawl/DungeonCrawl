@@ -17,16 +17,15 @@ void test_use_ability() {
     character_t* enemy = create_test_character();
 
     ability_t test_ability = {
-        .name = "Test Ability",
-        .roll_amount = 3,
-        .accuracy = 100,
-        .dice_size = D6,
-        .damage_type = PHYSICAL,
-        .resource_cost = 15
-    };
+            .name = "Test Ability",
+            .roll_amount = 3,
+            .accuracy = 100,
+            .dice_size = D6,
+            .damage_type = PHYSICAL,
+            .resource_cost = 15};
 
     // Test: Ability with sufficient stamina
-    player->current_resources.stamina = 15; // to be removed after implementation of stamina calculation based on strength
+    player->current_resources.stamina = 15;// to be removed after implementation of stamina calculation based on strength
     use_ability(player, enemy, &test_ability);
     assert(player->current_resources.stamina == 0);
 
@@ -37,7 +36,7 @@ void test_use_ability() {
 
     // Test: Ability with sufficient mana
     test_ability.damage_type = MAGICAL;
-    player->current_resources.mana = 15; // to be removed after implementation of mana calculation based on intelligence
+    player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
     use_ability(player, enemy, &test_ability);
     assert(player->current_resources.mana == 0);
 
@@ -54,9 +53,8 @@ void test_use_item() {
     character_t* enemy = create_test_character();
 
     potion_t test_potion = {
-        .effectType = HEALING,
-        .value = 20
-    };
+            .effectType = HEALING,
+            .value = 20};
 
     player->potion_inventory[0] = &test_potion;
     player->potion_inventory[1] = &test_potion;
@@ -81,16 +79,15 @@ void test_get_random_ability() {
     character_t* player = create_test_character();
 
     ability_t test_abilities[2] = {
-        { .name = "Physical Attack", .roll_amount = 2, .accuracy = 80, .resource_cost = 5, .dice_size = D6, .damage_type = PHYSICAL },
-        { .name = "Magical Attack", .roll_amount = 3, .accuracy = 70, .resource_cost = 3, .dice_size = D8, .damage_type = MAGICAL }
-    };
+            {.name = "Physical Attack", .roll_amount = 2, .accuracy = 80, .resource_cost = 5, .dice_size = D6, .damage_type = PHYSICAL},
+            {.name = "Magical Attack", .roll_amount = 3, .accuracy = 70, .resource_cost = 3, .dice_size = D8, .damage_type = MAGICAL}};
 
     for (int i = 0; i < 2; i++) {
         player->abilities[i] = &test_abilities[i];
     }
     player->ability_count = 2;
 
-    bool ability_found[2] = { false, false };
+    bool ability_found[2] = {false, false};
     int found_count = 0;
 
     while (found_count < 2) {
