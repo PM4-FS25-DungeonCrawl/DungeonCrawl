@@ -93,6 +93,7 @@ int init_game() {
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
                         // TODO: delete goblin from map
+                        tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case PLAYER_LOST:
