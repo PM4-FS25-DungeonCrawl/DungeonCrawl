@@ -1,9 +1,9 @@
 #include "local.h"
 
+#include "../common.h"
 #include "../database/database.h"
 #include "../database/local/local_database.h"
 
-#include "../common.h"
 #include <stdlib.h>
 
 //Macros for the Local Database Path
