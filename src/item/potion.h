@@ -6,6 +6,7 @@
 typedef enum {
     HEALING,
     // more effects can be added
+    MAX_POTION_TYPES
 } potion_type_t;
 
 typedef struct {
@@ -16,6 +17,7 @@ typedef struct {
 } potion_t;
 
 potion_t* init_potion(const char* name, potion_type_t type, int value);
+const char* potion_type_to_string(potion_type_t type);
 void free_potion(potion_t* item);
 
 #endif//POTION_H

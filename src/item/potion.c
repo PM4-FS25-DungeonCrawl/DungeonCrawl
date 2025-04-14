@@ -13,6 +13,15 @@ potion_t* init_potion(const char* name, potion_type_t type, int value) {
     return item;
 }
 
+const char* potion_type_to_string(potion_type_t type) {
+    switch (type) {
+        case HEALING:
+            return "Healing";
+        default:
+            return "Unknown";
+    }
+}
+
 void free_potion(potion_t* item) {
     if (item != NULL) {
         free(item);

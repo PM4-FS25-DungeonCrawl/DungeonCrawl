@@ -37,10 +37,12 @@ int init_game() {
 
 
     bool running = true;//should only be set in the state machine
-    game_state_t current_state = GENERATE_MAP;
-
-    init_map_mode();
+    game_state_t current_state = COMBAT_MODE;
+  
     init_local();
+    init_map_mode();
+    init_combat_mode();
+
 
     ability_table_t* ability_table = init_ability_table();
     character_t* goblin = create_new_goblin();//initialize standard goblin
@@ -53,11 +55,8 @@ int init_game() {
     } else {
         // add abilities to player and goblin
         add_ability(goblin, &ability_table->abilities[BITE]);
-        log_msg(INFO, "Game", "Added ability: %s to goblin", goblin->abilities[0]->name);
         add_ability(player, &ability_table->abilities[FIREBALL]);
-        log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[0]->name);
         add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-        log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[1]->name);
         //add healing potion to player
         add_potion(player, healing_potion);
         log_msg(INFO, "Game", "game loop starting");
@@ -81,6 +80,10 @@ int init_game() {
                     case NEXT_FLOOR:
                         current_state = GENERATE_MAP;
                         break;
+                    case COMBAT:
+                        log_msg(INFO, "Game", "Entering combat mode");
+                        current_state = COMBAT_MODE;
+                        break;
                     default:
                         log_msg(ERROR, "game", "Unknown return value from map_mode_update");
                 }
@@ -91,6 +94,7 @@ int init_game() {
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
                         // TODO: delete goblin from map
+                        tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case PLAYER_LOST:
@@ -115,6 +119,7 @@ int init_game() {
 
     shutdown_local();
     shutdown_logger();
+    shutdown_combat_mode();
     tb_shutdown();
     return 0;
 }

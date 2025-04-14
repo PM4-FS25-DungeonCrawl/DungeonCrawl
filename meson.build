@@ -16,7 +16,9 @@ src_files = files(
     'src/map/map_mode.c',
     'src/map/map_generator.c',
     'src/map/map_populator.c',
-    'src/map/drawop/draw_light.c',
+
+    'src/map/draw/draw_light.c',
+    'src/map/draw/draw_map_mode.c',
 
     'src/character/character.c',
     'src/character/player.c',
@@ -29,7 +31,7 @@ src_files = files(
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/display/combat_display.c'
+    'src/combat/draw/draw_combat_mode.c'
 )
 
 include_files = files(
@@ -52,8 +54,13 @@ logging_files = files(
     'src/logging/ringbuffer.c'
 )
 
+
 local_files = files(
     'src/local/local.c'
+)
+
+memory_files = files(
+  'src/memory/memory_management.c'
 )
 
 # Include the test directory in the build.
@@ -67,5 +74,6 @@ executable(
     debug_files,
     database_files,
     logging_files,
-    local_files
+    local_files,
+    memory_files
 )

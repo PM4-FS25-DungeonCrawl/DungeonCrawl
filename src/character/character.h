@@ -8,9 +8,9 @@
 #include "../item/potion.h"
 #include "stats.h"
 
-#define ABILITY_LIMIT 3
-#define EQUIPABLE_ITEM_LIMIT 20
-#define USABLE_ITEM_LIMIT 20
+#define MAX_ABILITY_LIMIT 20
+#define MAX_GEAR_LIMIT 20
+#define MAX_POTION_LIMIT 20
 
 typedef enum {
     PLAYER,
@@ -31,14 +31,14 @@ typedef struct character_t {
     damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
     defenses_t defenses;
 
-    ability_t* abilities[ABILITY_LIMIT];
+    ability_t* abilities[MAX_ABILITY_LIMIT];
     int ability_count;
 
-    potion_t* potion_inventory[USABLE_ITEM_LIMIT];
-    int potion_inventory_count;
+    potion_t* potion_inventory[MAX_POTION_LIMIT];
+    int potion_count;
 
-    gear_t* gear_inventory[EQUIPABLE_ITEM_LIMIT];
-    int gear_inventory_count;
+    gear_t* gear_inventory[MAX_GEAR_LIMIT];
+    int gear_count;
 
     gear_t* equipment[MAX_SLOT];
 
