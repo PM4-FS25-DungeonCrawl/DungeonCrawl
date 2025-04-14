@@ -28,4 +28,8 @@ bool roll_hit(int attacker_dex, int defender_dex);
 int roll_damage(const ability_t* ability);
 int deal_damage(character_t* character, damage_type_t damage_type, int damage);
 
+void reset_current_stats(character_t* character);
+const char* dice_size_to_string(dice_size_t size);
+const char* damage_type_to_string(damage_type_t type);
+
 #endif//DAMAGE_H

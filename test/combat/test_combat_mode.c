@@ -1,7 +1,6 @@
 #include "../../src/character/character.h"
 #include "../../src/combat/ability.h"
 #include "../../src/combat/combat_mode.h"
-#include "../../src/combat/damage.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -58,19 +57,19 @@ void test_use_item() {
 
     player->potion_inventory[0] = &test_potion;
     player->potion_inventory[1] = &test_potion;
-    player->potion_inventory_count = 2;
+    player->potion_count = 2;
     player->current_resources.health = 65;
 
     // Test: Use potion to heal
-    use_item(player, enemy, player->potion_inventory[0]);
+    use_potion(player, enemy, player->potion_inventory[0]);
     assert(player->current_resources.health == 85);
 
     // Test: Use potion to heal to max health
-    use_item(player, enemy, player->potion_inventory[0]);
+    use_potion(player, enemy, player->potion_inventory[0]);
     assert(player->current_resources.health == 100);
 
     // Test: Ensure potion inventory count is updated
-    assert(player->potion_inventory_count == 0);
+    assert(player->potion_count == 0);
 
     printf("test_use_item passed\n");
 }

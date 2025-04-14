@@ -1,5 +1,5 @@
-../src/combat/damage.c:12:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   12 |     return rand() % dice_size + 1;
+../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   14 |     return rand() % dice_size + 1;
       |            ^
 ../src/game.c:35:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    35 |     srand(time(NULL));
@@ -15,5 +15,5 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-Suppressed 72751 warnings (72709 in non-user code, 42 with check filters).
+Suppressed 75423 warnings (75414 in non-user code, 9 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
