@@ -5,7 +5,6 @@
 #include "attribute_database.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define ATTRIBUTE_KEY_STATEMENT "SELECT AT_ID FROM attribute WHERE AT_NAME = ?"

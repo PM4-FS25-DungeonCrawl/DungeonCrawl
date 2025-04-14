@@ -1,7 +1,7 @@
 # Define project language and version.
 project('DungeonCrawl', 'c',
         version : '0.1',
-        default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
+        default_options : ['c_std=gnu2x','warning_level=3','debug=true', 'optimize=2'])
 
 # List of external dependencies
 # termbox = dependency('termbox2')

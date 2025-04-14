@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 //Macros for the Local Database Path
-#define LOCAL_DB_PATH "../resources/database/local/dungeoncrawl_local.db"
+#define LOCAL_DB_PATH "resources/database/local/dungeoncrawl_local.db"
 
 // forward declaration of the observer node structure
 typedef struct observer_node_t observer_node_t;
