@@ -1,14 +1,15 @@
 #include "database.h"
 
+#include <src/logging/logger.h>
 #include <stdio.h>
 
 int db_open(DBConnection* db_connection, const char* db_name) {
     int rc = sqlite3_open(db_name, &db_connection->db);
     if (rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
-        return 0;
+        log_msg(ERROR, "Database", "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
+        return 1;
     }
-    return 1;
+    return 0;
 }
 
 void db_close(DBConnection* db_connection) {
