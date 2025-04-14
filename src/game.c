@@ -20,24 +20,35 @@ typedef enum {
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
-    EXIT
+    EXIT,
+    EXIT_WITH_ERROR
 } game_state_t;
+
+typedef enum {
+    SUCCESS = 0,
+    FAIL_TB_INIT = 1,
+    FAIL_LOCAL_INIT= 2,
+    FAIL_GAME_ENTITY_INIT = 3,
+} exit_code_t;
 
 int init_game() {
     if (tb_init() != 0) {
         log_msg(ERROR, "Game", "Failed to initialize termbox");
-        return 1;
+        return FAIL_TB_INIT;
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
     // seeding random function
     srand(time(NULL));
 
-
     bool running = true;//should only be set in the state machine
+    int exit_code = 0;
     game_state_t current_state = COMBAT_MODE;
 
-    if (init_local() != 0) current_state = EXIT;
+    if (init_local() != 0) {
+        current_state = EXIT_WITH_ERROR;
+        exit_code = FAIL_LOCAL_INIT;
+    }
     init_map_mode();
     init_combat_mode();
 
@@ -49,8 +60,9 @@ int init_game() {
 
     if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
-        current_state = EXIT;
-    } else if (current_state != EXIT) {
+        current_state = EXIT_WITH_ERROR;
+        exit_code = FAIL_GAME_ENTITY_INIT;
+    } else if (current_state != EXIT_WITH_ERROR) {
         // add abilities to player and goblin
         add_ability(goblin, &ability_table->abilities[BITE]);
         add_ability(player, &ability_table->abilities[FIREBALL]);
@@ -106,18 +118,20 @@ int init_game() {
                 }
                 break;
             case EXIT:
-                free_ability_table(ability_table);
-                free_character(goblin);
-                free_character(player);
-                free_potion(healing_potion);
+                running = false;
+                break;
+            case EXIT_WITH_ERROR:
                 running = false;
                 break;
         }
     }
-
+    free_ability_table(ability_table);
+    free_character(goblin);
+    free_character(player);
+    free_potion(healing_potion);
     shutdown_local();
-    shutdown_logger();
     shutdown_combat_mode();
+    shutdown_logger();
     tb_shutdown();
-    return 0;
+    return exit_code;
 }
