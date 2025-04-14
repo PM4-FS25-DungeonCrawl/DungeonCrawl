@@ -4,38 +4,21 @@
 #include "../character/character.h"
 #include "../character/level.h"
 #include "../include/termbox2.h"
-#include "../item/potion.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
 
 #define MAX_COMBAT_MENU_OPTIONS 2
 
-typedef enum {
-    COMBAT_MENU,
-    ABILITY_MENU,
-    ITEM_MENU,
-    EVALUATE_COMBAT,//checks if the combat reached an end
-    EXIT            //means exit combat & game
-} internal_combat_state_t;
-
 // === Internal Functions ===
-internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
-internal_combat_state_t ability_menu(character_t* player, character_t* monster);
-internal_combat_state_t potion_menu(character_t* player, character_t* monster);
-void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
-void use_item(character_t* player, const character_t* monster, potion_t* potion);
-
 //TODO: Should these 2 function not be in to character.c?
 void invoke_potion_effect(character_t* character, potion_t* potion);
-bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 
-ability_t* get_random_ability(const character_t* character);
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
-char* combat_menu_options[MAX_COMBAT_MENU_OPTIONS] = {
+const char* combat_menu_options[MAX_COMBAT_MENU_OPTIONS] = {
         "Use Ability",
         "Use Potion"};
 char** ability_menu_options;
@@ -92,7 +75,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                     combat_state = COMBAT_MENU;
                 }
                 break;
-            case EXIT:
+            case COMBAT_EXIT:
                 combat_result = EXIT_GAME;
                 combat_active = false;// exit the combat loop
                 break;
@@ -135,7 +118,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                 submenu_selected = true;
             } else if (event.key == TB_KEY_CTRL_C) {
                 // Exit the game
-                new_state = EXIT;
+                new_state = COMBAT_EXIT;
                 submenu_selected = true;
             }
         }
@@ -153,7 +136,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
     while (!ability_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Ability Menu:", ability_menu_options, player->ability_count, selected_index);
+        draw_combat_menu(anchor, "Ability Menu:", (const char**) ability_menu_options, player->ability_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -199,7 +182,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
     while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Potion menu:", potion_menu_options, player->potion_count, selected_index);
+        draw_combat_menu(anchor, "Potion menu:", (const char**) potion_menu_options, player->potion_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -214,7 +197,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                 selected_index = (selected_index + 1) % player->potion_count;
             } else if (event.key == TB_KEY_ENTER) {
                 // Use the selected potion
-                use_item(player, monster, player->potion_inventory[selected_index]);
+                use_potion(player, monster, player->potion_inventory[selected_index]);
                 use_ability(monster, player, get_random_ability(monster));
                 new_state = EVALUATE_COMBAT;
 
@@ -281,16 +264,16 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     tb_present();
 }
 
-void use_item(character_t* player, const character_t* monster, potion_t* potion) {
+void use_potion(character_t* player, const character_t* monster, potion_t* item) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    invoke_potion_effect(player, potion);
+    invoke_potion_effect(player, item);
 
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), "%s uses a %s potion, restoring %d %s!",
              player->name,
-             potion->name,
-             potion->value,
-             potion_type_to_string(potion->effectType));
+             item->name,
+             item->value,
+             potion_type_to_string(item->effectType));
     draw_combat_log(anchor, message);
 }
 

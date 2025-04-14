@@ -52,6 +52,12 @@ map_mode_result_t handle_input(const struct tb_event* event) {
                     return NEXT_FLOOR;
                 }
                 break;
+            case GOBLIN:
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
+                map[new_x][new_y] = FLOOR;
+                revealed_map[new_x][new_y] = FLOOR;
+                return COMBAT;
             default:
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;

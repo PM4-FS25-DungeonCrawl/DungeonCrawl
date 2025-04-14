@@ -9,7 +9,8 @@
 typedef enum {
     CONTINUE,
     QUIT,
-    NEXT_FLOOR
+    NEXT_FLOOR,
+    COMBAT
 } map_mode_result_t;
 
 void set_player_start_pos(int player_x, int player_y);

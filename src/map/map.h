@@ -20,7 +20,7 @@ typedef enum {
     START_DOOR = 2,
     EXIT_DOOR = 3,
     KEY = 4,
-    SKELETON = 5,
+    GOBLIN = 5,
     HIDDEN = 99
 } map_tile_t;
 
