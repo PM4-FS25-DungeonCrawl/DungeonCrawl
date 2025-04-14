@@ -18,7 +18,7 @@
 DBConnection db_connection;
 
 void test_db_open() {
-    assert(db_open(&db_connection, "../test/test_data.db") == 1);
+    assert(db_open(&db_connection, "../test/test_data.db") == 0);
     assert(db_is_open(&db_connection) == 1);
     db_close(&db_connection);
     assert(db_is_open(&db_connection) == 0);
@@ -26,7 +26,7 @@ void test_db_open() {
 }
 
 void test_attribute_key() {
-    assert(db_open(&db_connection, "../test/test_data.db") == 1);
+    assert(db_open(&db_connection, "../test/test_data.db") == 0);
     assert(db_is_open(&db_connection) == 1);
 
     // Create a test attribute
@@ -42,7 +42,7 @@ void test_attribute_key() {
 }
 
 void test_localization_string() {
-    assert(db_open(&db_connection, "../test/test_data.db") == 1);
+    assert(db_open(&db_connection, "../test/test_data.db") == 0);
     assert(db_is_open(&db_connection) == 1);
 
     // Create a test localization string
