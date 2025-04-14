@@ -38,7 +38,7 @@ int init_game() {
 
     bool running = true;//should only be set in the state machine
     game_state_t current_state = COMBAT_MODE;
-  
+
     init_local();
     init_map_mode();
     init_combat_mode();
