@@ -16,7 +16,7 @@ character_t* setup_character() {
 void test_init_character() {
     character_t* character = setup_character();
     assert(character != NULL);
-    assert(strcmp(character->name, "Hero") == true);
+    assert(strcmp(character->name, "Hero") == 0);
     assert(character->type == PLAYER);
     free_character(character);
     printf("test_init_character passed\n");
