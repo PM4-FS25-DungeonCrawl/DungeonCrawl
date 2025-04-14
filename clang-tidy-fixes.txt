@@ -1,9 +1,15 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:36:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   36 |     srand(time(NULL));
+../src/game.c:42:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   42 |     srand(time(NULL));
       |     ^
+../src/game.c:120:13: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  120 |             case EXIT:
+      |             ^
+../src/game.c:125:22: note: last of these clones ends here
+  125 |                 break;
+      |                      ^
 ../src/logging/logger.c:135:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   135 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
@@ -15,5 +21,5 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-Suppressed 81060 warnings (81049 in non-user code, 11 with check filters).
+Suppressed 80228 warnings (80215 in non-user code, 13 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
