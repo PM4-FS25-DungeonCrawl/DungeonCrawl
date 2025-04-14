@@ -46,7 +46,7 @@ void test_localization_string() {
     assert(db_is_open(&db_connection) == 1);
 
     // Create a test localization string
-    local_language_t LING_EN = LANGUAGE_EN;
+    const local_language_t LING_EN = LANGUAGE_EN;
     const char* localization_string = get_localization_string(&db_connection,
                                                               TEST_ATTRIBUTE_PATH, &LING_EN);
     assert(localization_string != NULL);
