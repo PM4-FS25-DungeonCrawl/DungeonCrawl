@@ -68,7 +68,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                 case KEY:
                     tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
                     break;
-                case SKELETON:
+                case GOBLIN:
                     tb_printf(x, y, TB_WHITE, TB_RED, "!");
                     break;
                 case HIDDEN:

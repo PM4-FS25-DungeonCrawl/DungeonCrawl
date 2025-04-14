@@ -1,7 +1,6 @@
 #include "map_mode.h"
 
 #include "../../include/termbox2.h"
-#include "../logging/logger.h"
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
@@ -81,8 +80,8 @@ map_mode_result_t map_mode_update(void) {
     }
     tb_clear();
 
-    draw_light_on_player(map, revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
-    draw_map_mode(revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
+    draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
 
     tb_present();
 

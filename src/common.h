@@ -6,6 +6,7 @@
 #define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64
 
+
 #define NULL_PTR_HANDLER(ptr, modul, format, ...)     \
     if (ptr == NULL) {                                \
         log_msg(ERROR, modul, format, ##__VA_ARGS__); \
