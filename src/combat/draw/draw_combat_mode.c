@@ -2,7 +2,6 @@
 
 #include "../../../include/termbox2.h"
 #include "../../character/character.h"
-#include "../../logging/logger.h"
 
 // Internal functions
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
@@ -60,11 +59,11 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
             char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "> %-254s", menu_options[i]);
+            snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i]);
             tb_print(anchor.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
         } else {
             char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "  %-254s", menu_options[i]);
+            snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i]);
             tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         }
     }
@@ -74,8 +73,13 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
 
 // Draw a combat log, showing the current action
 void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
+    if (combat_log_message == NULL) {
+        log_msg(ERROR, "Draw Combat Mode", "given combat log messsage is NULL");
+        return;
+    }
+
     char message[MAX_STRING_LENGTH];
-    snprintf(message, sizeof(message), combat_log_message);
+    snprintf(message, sizeof(message), "%s", combat_log_message);
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, message);
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "Press any key to continue...");
     tb_present();
