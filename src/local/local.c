@@ -3,6 +3,7 @@
 #include "../database/database.h"
 #include "../database/local/local_database.h"
 
+#include <src/common.h>
 #include <stdlib.h>
 
 //Macros for the Local Database Path
@@ -35,23 +36,19 @@ local_language_t current_language = LANGUAGE_EN;
 DBConnection local_db_connection;
 
 /**
- * Initialize the local module.
- * This function should be called before using any other functions in this module.
+ * @brief Initialize the local module.
+ * @return 0 on success, non-zero on failure
+ * @note This function must be called before using any other functions in this module.
  */
-void init_local(void) {
+int init_local(void) {
     // Initialize the observer list
     observer_list = malloc(sizeof(observer_node_t));
-    if (observer_list == NULL) {
-        // Handle memory allocation failure
-        return;
-    }
+    NULL_PTR_HANDLER_RETURN(observer_list, 2, "Local", "Failed to allocate memory for observer_list");
+
     observer_list->update_func = NULL;
     observer_list->next = NULL;
     // Initialize the database connection
-    if (!db_open(&local_db_connection, LOCAL_DB_PATH)) {
-        // Handle database connection failure
-        return;
-    }
+    return db_open(&local_db_connection, LOCAL_DB_PATH);
 }
 
 /**
@@ -70,7 +67,10 @@ char* get_local_string(const char* key) {
  * @return true if the language was set successfully, false otherwise
  */
 bool set_language(const local_language_t local_lang) {
+    NULL_PTR_HANDLER_RETURN(observer_list, false, "Local", "Observer list is not initialized");
+
     if (local_lang.lang >= MAX_LANG) {
+        log_msg(WARNING, "Local", "Failed to set local language with invalid language: %d", local_lang.lang);
         return false;// Invalid language
     }
     current_language = local_lang;
@@ -93,13 +93,14 @@ bool set_language(const local_language_t local_lang) {
  */
 void add_observer(const update_observer_t update_func) {
     if (update_func == NULL || observer_list == NULL) {
-        // TODO: Error handling
+        log_msg(ERROR, "Local", "Observer function is NULL or observer list is not initialized");
         return;
     }
 
     observer_node_t* new_node = malloc(sizeof(observer_node_t));
     if (new_node == NULL) {
         // Handle memory allocation failure
+        log_msg(ERROR, "Local", "Failed to allocate memory for new observer node");
         return;
     }
     new_node->update_func = update_func;

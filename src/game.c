@@ -6,8 +6,6 @@
 #include "character/player.h"
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
-#include "combat/damage.h"
-#include "item/gear.h"
 #include "item/potion.h"
 #include "local/local.h"
 #include "logging/logger.h"
@@ -39,7 +37,7 @@ int init_game() {
     bool running = true;//should only be set in the state machine
     game_state_t current_state = COMBAT_MODE;
 
-    init_local();
+    if (init_local() != 0) current_state = EXIT;
     init_map_mode();
     init_combat_mode();
 
@@ -52,7 +50,7 @@ int init_game() {
     if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         current_state = EXIT;
-    } else {
+    } else if (current_state != EXIT) {
         // add abilities to player and goblin
         add_ability(goblin, &ability_table->abilities[BITE]);
         add_ability(player, &ability_table->abilities[FIREBALL]);

@@ -5,7 +5,7 @@
 
 potion_t* init_potion(const char* name, potion_type_t type, int value) {
     potion_t* item = malloc(sizeof(potion_t));
-    NULL_PTR_HANDLER(item, "Usable Item", "Failed to allocate memory for item: %s", name);
+    NULL_PTR_HANDLER_RETURN(item, NULL, "Usable Item", "Failed to allocate memory for item: %s", name);
 
     snprintf(item->name, sizeof(item->name), "%s", name);
     item->effectType = type;

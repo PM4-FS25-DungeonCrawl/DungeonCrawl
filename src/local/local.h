@@ -19,7 +19,7 @@ typedef struct {
 //function pointer type for update observer
 typedef void (*update_observer_t)(local_language_t lang);
 
-void init_local(void);
+int init_local(void);
 
 char* get_local_string(const char* key);
 bool set_language(const local_language_t local_lang);
