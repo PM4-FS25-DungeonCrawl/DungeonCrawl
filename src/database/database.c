@@ -1,6 +1,6 @@
 #include "database.h"
 
-#include <src/logging/logger.h>
+#include "../logging/logger.h"
 #include <stdio.h>
 
 int db_open(DBConnection* db_connection, const char* db_name) {

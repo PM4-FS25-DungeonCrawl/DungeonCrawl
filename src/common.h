@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <src/logging/logger.h>
+#include "logging/logger.h"
 
 #define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64

@@ -3,7 +3,7 @@
 #include "../database/database.h"
 #include "../database/local/local_database.h"
 
-#include <src/common.h>
+#include "../common.h"
 #include <stdlib.h>
 
 //Macros for the Local Database Path
