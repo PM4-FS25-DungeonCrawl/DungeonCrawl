@@ -9,6 +9,8 @@
 #include <sys/time.h>
 #include <time.h>
 
+#define TIMESTAMP_FORMAT "%Y-%m-%d %H:%M:%S"
+
 #define SQL_INSERT_GAME_STATE "INSERT INTO game_state (GS_SAVEDTIME, GS_NAME) VALUES (?, ?)"
 #define SQL_INSERT_MAP_STATE "INSERT INTO map_state (MS_MAP, MS_REVEALED, MS_HEIGHT,MS_WIDTH, MS_GS_ID) VALUES (?, ?, ?, ?, ?)"
 #define SQL_INSERT_PLAYER_STATE "INSERT INTO player_state (PS_X, PS_Y, PS_GS_ID) VALUES (?, ?, ?)"
@@ -18,6 +20,9 @@
 #define SQL_SELECT_REVEALED_MAP "SELECT value FROM map_state, json_each(map_state.MS_REVEALED) WHERE MS_GS_ID = ?"
 #define SQL_SELECT_PLAYER_STATE "SELECT PS_X, PS_Y FROM player_state WHERE PS_GS_ID = ?"
 #define SQL_SELECT_ALL_GAME_STATES "SELECT GS_ID, GS_SAVEDTIME, GS_NAME FROM game_state ORDER BY GS_SAVEDTIME DESC"
+
+// === Internal Functions ===
+char* get_iso8601_time();
 
 void save_game_state(const DBConnection* dbconnection, const int width, const int height, int map[width][height], int revealed_map[width][height], const vector2d_t player, const char* save_name) {
     //TODO: Check if the database connection is open (can't do i rigt now beacause branch localisatzion is not merged yet)
@@ -49,17 +54,16 @@ void save_game_state(const DBConnection* dbconnection, const int width, const in
         return;
     }
 
+    // We can free current_time after binding
+    free(current_time);
+
     // Bind the save name to the statement
     rc = sqlite3_bind_text(stmt, 2, save_name, -1, SQLITE_TRANSIENT);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind save name: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt);
-        free(current_time);
         return;
     }
-
-    // We can free current_time after binding
-    free(current_time);
 
     // Execute the statement
     rc = sqlite3_step(stmt);
@@ -178,24 +182,12 @@ void save_game_state(const DBConnection* dbconnection, const int width, const in
 }
 
 char* get_iso8601_time() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
+    const time_t now = time(NULL);
+    const struct tm* tm = localtime(&now);
+    char timestamp[20];
+    strftime(timestamp, sizeof(timestamp), TIMESTAMP_FORMAT, tm);
 
-    const struct tm* tm_info = localtime(&tv.tv_sec);
-
-    const int buffer_size = 32;
-    char* result = malloc(buffer_size);
-    if (result == NULL) {
-        log_msg(ERROR, "GameState", "Failed to allocate memory for timestamp");
-        return NULL;
-    }
-
-    strftime(result, buffer_size, "%Y-%m-%d %H:%M:%S", tm_info);
-
-    const long millis = tv.tv_usec / 1000;
-    snprintf(result + strlen(result), buffer_size - strlen(result), ".%03ld", millis);
-
-    return result;
+    return strdup(timestamp);
 }
 
 char* map_to_json_flattend(const int width, const int height, int map[width][height]) {
