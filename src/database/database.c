@@ -1,6 +1,7 @@
 #include "database.h"
 
 #include <stdio.h>
+#include "../logging/logger.h"
 
 static int check_column_exists(sqlite3* db, const char* table, const char* column) {
     char sql[256];
@@ -12,7 +13,7 @@ static int check_column_exists(sqlite3* db, const char* table, const char* colum
     
     int rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        log_msg(ERROR, "Database", "Failed to prepare statement: %s", sqlite3_errmsg(db));
         return 0;
     }
     
@@ -32,10 +33,10 @@ static int check_column_exists(sqlite3* db, const char* table, const char* colum
 int db_open(DBConnection* db_connection, const char* db_name) {
     int rc = sqlite3_open(db_name, &db_connection->db);
     if (rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
+        log_msg(ERROR, "Database", "Can't open database: %s", sqlite3_errmsg(db_connection->db));
         return 0;
     }
-    fprintf(stderr, "Opened database successfully\n");
+    log_msg(INFO, "Database", "Opened database successfully");
     
     // Create tables if they don't exist
     char* err_msg = NULL;
@@ -65,20 +66,20 @@ int db_open(DBConnection* db_connection, const char* db_name) {
     
     rc = sqlite3_exec(db_connection->db, create_tables_sql, 0, 0, &err_msg);
     if (rc != SQLITE_OK) {
-        fprintf(stderr, "SQL error: %s\n", err_msg);
+        log_msg(ERROR, "Database", "SQL error: %s", err_msg);
         sqlite3_free(err_msg);
         return 0;
     }
     
     // Check if GS_NAME column exists in game_state table
     if (!check_column_exists(db_connection->db, "game_state", "GS_NAME")) {
-        fprintf(stderr, "Adding GS_NAME column to game_state table\n");
+        log_msg(INFO, "Database", "Adding GS_NAME column to game_state table");
         
         // Add the GS_NAME column if it doesn't exist
         const char* alter_table_sql = "ALTER TABLE game_state ADD COLUMN GS_NAME TEXT;";
         rc = sqlite3_exec(db_connection->db, alter_table_sql, 0, 0, &err_msg);
         if (rc != SQLITE_OK) {
-            fprintf(stderr, "SQL error when adding GS_NAME column: %s\n", err_msg);
+            log_msg(ERROR, "Database", "SQL error when adding GS_NAME column: %s", err_msg);
             sqlite3_free(err_msg);
             return 0;
         }
