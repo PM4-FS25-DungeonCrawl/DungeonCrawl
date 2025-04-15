@@ -8,6 +8,7 @@ int db_open(DBConnection* db_connection, const char* db_name) {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_connection->db));
         return 0;
     }
+    fprintf(stderr, "Opened database successfully\n");
     return 1;
 }
 

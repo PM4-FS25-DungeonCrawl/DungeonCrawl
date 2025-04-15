@@ -40,8 +40,9 @@ int init_game() {
     srand(time(NULL));
 
     // Initialize database connection
+    
     DBConnection db_connection;
-    if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != 0) {
+    if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }
@@ -80,13 +81,6 @@ int init_game() {
                 switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
                         log_msg(INFO, "Game", "Starting new game");
-                        // Reset the map to prepare for generation
-                        for (int y = 0; y < HEIGHT; y++) {
-                            for (int x = 0; x < WIDTH; x++) {
-                                map[x][y] = WALL;
-                                revealed_map[x][y] = HIDDEN;
-                            }
-                        }
                         game_in_progress = true; // Mark that a game is now in progress
                         tb_clear(); // Clear screen before generating map
                         current_state = GENERATE_MAP;
@@ -97,15 +91,18 @@ int init_game() {
                         break;
                     case MENU_SAVE_GAME:
                         log_msg(INFO, "Game", "Saving game state to database");
+
                         int player_x, player_y;
                         get_player_pos(&player_x, &player_y);
                         save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y);
                         log_msg(INFO, "Game", "Game state saved successfully");
+                        
                         tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case MENU_LOAD_GAME:
                         log_msg(INFO, "Game", "Loading game state from database");
+                        
                         int width, height;
                         int load_player_x, load_player_y;
                         int* loaded_map;
