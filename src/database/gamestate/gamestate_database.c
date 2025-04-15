@@ -335,7 +335,7 @@ void free_save_files(SaveFileInfo* save_files, const int count) {
     free(save_files);
 }
 
-int get_game_state(DBConnection* dbconnection, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y) {
+int get_game_state(const DBConnection* dbconnection, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
     // Get the last game state ID
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_LAST_GAME_STATE, -1, &stmt, NULL);
@@ -351,14 +351,14 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
         return 0;
     }
 
-    int game_state_id = sqlite3_column_int(stmt, 0);
+    const int game_state_id = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
 
     // Call get_game_state_by_id to load the game state
-    return get_game_state_by_id(dbconnection, game_state_id, width, height, map, revealed_map, player_x, player_y);
+    return get_game_state_by_id(dbconnection, game_state_id, map, revealed_map, width, height, setter);
 }
 
-int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_id, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y) {
+int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_id, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
     // Get the height and width from the database
     sqlite3_stmt* stmt_map;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP_STATE, -1, &stmt_map, NULL);
@@ -381,33 +381,13 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
         return 0;
     }
 
-    // Get the height and width from the result
-    *height = sqlite3_column_int(stmt_map, 0);
-    *width = sqlite3_column_int(stmt_map, 1);
     sqlite3_finalize(stmt_map);
-
-    // Allocate memory for the map and revealed map
-    int* map_data = malloc((*width) * (*height) * sizeof(int));
-    int* revealed_map_data = malloc((*width) * (*height) * sizeof(int));
-
-    if (map_data == NULL || revealed_map_data == NULL) {
-        log_msg(ERROR, "GameState", "Failed to allocate memory for map data");
-        free(map_data);// Safe to call on NULL
-        free(revealed_map_data);
-        return 0;
-    }
-
-    // Set the output pointers to the allocated memory
-    *map = map_data;
-    *revealed_map = revealed_map_data;
 
     //Get the map from the database
     sqlite3_stmt* stmt_map_data;
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP, -1, &stmt_map_data, NULL);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(dbconnection->db));
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -415,8 +395,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind game state ID: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -424,17 +402,13 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_ROW) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
 
-    // Build the map from the result - using a 1D array indexed as y*width + x
     int index = 0;
-    int total_cells = (*width) * (*height);
-
+    const int total_cells = width * height;
     while (index < total_cells && rc == SQLITE_ROW) {
-        map_data[index] = sqlite3_column_int(stmt_map_data, 0);
+        map[index] = sqlite3_column_int(stmt_map_data, 0);
         index++;
         rc = sqlite3_step(stmt_map_data);
     }
@@ -442,8 +416,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (index != total_cells) {
         log_msg(ERROR, "GameState", "Didn't get all map data. Expected %d, got %d", total_cells, index);
         sqlite3_finalize(stmt_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
 
@@ -454,8 +426,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_REVEALED_MAP, -1, &stmt_revealed_map_data, NULL);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(dbconnection->db));
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -463,8 +433,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind game state ID: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_revealed_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -472,15 +440,13 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_ROW) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_revealed_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
 
     // Build the revealed map from the result
     index = 0;
     while (index < total_cells && rc == SQLITE_ROW) {
-        revealed_map_data[index] = sqlite3_column_int(stmt_revealed_map_data, 0);
+        revealed_map[index] = sqlite3_column_int(stmt_revealed_map_data, 0);
         index++;
         rc = sqlite3_step(stmt_revealed_map_data);
     }
@@ -488,8 +454,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (index != total_cells) {
         log_msg(ERROR, "GameState", "Didn't get all revealed map data. Expected %d, got %d", total_cells, index);
         sqlite3_finalize(stmt_revealed_map_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
 
@@ -500,8 +464,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_PLAYER_STATE, -1, &stmt_player_data, NULL);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(dbconnection->db));
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -509,8 +471,6 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind game state ID: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -518,13 +478,12 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     if (rc != SQLITE_ROW) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player_data);
-        free(map_data);
-        free(revealed_map_data);
         return 0;
     }
     // Get the player position from the result
-    *player_x = sqlite3_column_int(stmt_player_data, 0);
-    *player_y = sqlite3_column_int(stmt_player_data, 1);
+    const int player_x = sqlite3_column_int(stmt_player_data, 0);
+    const int player_y = sqlite3_column_int(stmt_player_data, 1);
+    setter(player_x, player_y);
     sqlite3_finalize(stmt_player_data);
     return 1;
 }
