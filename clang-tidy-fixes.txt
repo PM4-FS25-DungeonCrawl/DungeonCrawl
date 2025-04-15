@@ -21,5 +21,5 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-Suppressed 80228 warnings (80215 in non-user code, 13 with check filters).
+Suppressed 86102 warnings (86090 in non-user code, 12 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
