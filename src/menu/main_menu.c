@@ -190,7 +190,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
                     }
 
                     // Get available save files
-                    SaveFileInfo* save_files = NULL;
+                    save_file_info_t* save_files = NULL;
                     int save_count = 0;
 
                     // Create a database connection for the menu to use

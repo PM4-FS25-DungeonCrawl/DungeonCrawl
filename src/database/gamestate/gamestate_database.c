@@ -368,7 +368,7 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     return 1;
 }
 
-int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count) {
+int get_save_files(const DBConnection* dbconnection, save_file_info_t** save_files, int* count) {
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_ALL_GAME_STATES, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
@@ -393,7 +393,7 @@ int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, 
     }
 
     // Allocate memory for the save files
-    SaveFileInfo* files = malloc(save_count * sizeof(SaveFileInfo));
+    save_file_info_t* files = malloc(save_count * sizeof(save_file_info_t));
     if (files == NULL) {
         log_msg(ERROR, "GameState", "Failed to allocate memory for save files");
         sqlite3_finalize(stmt);
@@ -475,7 +475,7 @@ int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, 
     return 1;
 }
 
-void free_save_files(SaveFileInfo* save_files, const int count) {
+void free_save_files(save_file_info_t* save_files, const int count) {
     if (save_files == NULL) {
         return;
     }

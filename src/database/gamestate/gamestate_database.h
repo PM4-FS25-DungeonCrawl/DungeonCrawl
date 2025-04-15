@@ -10,13 +10,13 @@ typedef struct {
     int id;
     char* timestamp;
     char* name;
-} SaveFileInfo;
+} save_file_info_t;
 
 void save_game_state(const DBConnection* dbconnection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(const DBConnection* dbconnection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 int get_game_state_by_id(const DBConnection* dbconnection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
-int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count);
-void free_save_files(SaveFileInfo* save_files, int count);
+int get_save_files(const DBConnection* dbconnection, save_file_info_t** save_files, int* count);
+void free_save_files(save_file_info_t* save_files, int count);
 
 
 /**
