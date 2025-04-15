@@ -7,7 +7,7 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define SQL_INSERT_GAME_STATE "INSERT INTO game_state (GS_SAVEDTIME) VALUES (?)"
+#define SQL_INSERT_GAME_STATE "INSERT INTO game_state (GS_SAVEDTIME, GS_NAME) VALUES (?, ?)"
 #define SQL_INSERT_MAP_STATE "INSERT INTO map_state (MS_MAP, MS_REVEALED, MS_HEIGHT,MS_WIDTH, MS_GS_ID) VALUES (?, ?, ?, ?, ?)"
 #define SQL_INSERT_PLAYER_STATE "INSERT INTO player_state (PS_X, PS_Y, PS_GS_ID) VALUES (?, ?, ?)"
 #define SQL_SELECT_LAST_GAME_STATE "SELECT GS_ID FROM game_state ORDER BY GS_SAVEDTIME DESC LIMIT 1"
@@ -15,8 +15,9 @@
 #define SQL_SELECT_MAP "SELECT value FROM map_state, json_each(map_state.MS_MAP) WHERE MS_GS_ID = ?"
 #define SQL_SELECT_REVEALED_MAP "SELECT value FROM map_state, json_each(map_state.MS_REVEALED) WHERE MS_GS_ID = ?"
 #define SQL_SELECT_PLAYER_STATE "SELECT PS_X, PS_Y FROM player_state WHERE PS_GS_ID = ?"
+#define SQL_SELECT_ALL_GAME_STATES "SELECT GS_ID, GS_SAVEDTIME, GS_NAME FROM game_state ORDER BY GS_SAVEDTIME DESC"
 
-void save_game_state(DBConnection* db_connection, int width, int height, int map[width][height], int revealed_map[width][height], int player_x, int player_y) {
+void save_game_state(DBConnection* db_connection, int width, int height, int map[width][height], int revealed_map[width][height], int player_x, int player_y, const char* save_name) {
     //TODO: Check if the database connection is open (can't do i rigt now beacause branch localisatzion is not merged yet)
 
    // Save the game state to the database into table game_state
@@ -36,10 +37,20 @@ void save_game_state(DBConnection* db_connection, int width, int height, int map
         free(current_time);
         return;
     }
+    
     // Bind the current time to the statement
     rc = sqlite3_bind_text(stmt, 1, current_time, -1, SQLITE_TRANSIENT);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind time: %s\n", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        free(current_time);
+        return;
+    }
+    
+    // Bind the save name to the statement
+    rc = sqlite3_bind_text(stmt, 2, save_name, -1, SQLITE_TRANSIENT);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to bind save name: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt);
         free(current_time);
         return;
@@ -219,8 +230,128 @@ char* map_to_json_flattend(int width, int height, int map[width][height]) {
     return buffer;
 }
 
-int get_game_state(DBConnection* dbconnection, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y){
-    //Get the last game state ID
+int get_save_files(DBConnection* dbconnection, SaveFileInfo** save_files, int* count) {
+    sqlite3_stmt* stmt;
+    int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_ALL_GAME_STATES, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(dbconnection->db));
+        return 0;
+    }
+    
+    // First, count the number of saves
+    int save_count = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        save_count++;
+    }
+    
+    // Reset the statement to start from the beginning
+    sqlite3_reset(stmt);
+    
+    if (save_count == 0) {
+        sqlite3_finalize(stmt);
+        *count = 0;
+        *save_files = NULL;
+        return 1; // Success, but no saves found
+    }
+    
+    // Allocate memory for the save files
+    SaveFileInfo* files = malloc(save_count * sizeof(SaveFileInfo));
+    if (files == NULL) {
+        fprintf(stderr, "Failed to allocate memory for save files\n");
+        sqlite3_finalize(stmt);
+        return 0;
+    }
+    
+    // Retrieve save information
+    int index = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        files[index].id = sqlite3_column_int(stmt, 0);
+        
+        const char* timestamp = (const char*)sqlite3_column_text(stmt, 1);
+        if (timestamp) {
+            size_t len = strlen(timestamp);
+            files[index].timestamp = malloc(len + 1);
+            if (files[index].timestamp) {
+                strcpy(files[index].timestamp, timestamp);
+            } else {
+                fprintf(stderr, "Failed to allocate memory for timestamp\n");
+                // Clean up allocated memory so far
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        } else {
+            files[index].timestamp = NULL;
+        }
+        
+        const char* name = (const char*)sqlite3_column_text(stmt, 2);
+        if (name) {
+            size_t len = strlen(name);
+            files[index].name = malloc(len + 1);
+            if (files[index].name) {
+                strcpy(files[index].name, name);
+            } else {
+                fprintf(stderr, "Failed to allocate memory for save name\n");
+                // Clean up allocated memory so far
+                free(files[index].timestamp); // Free the timestamp we just allocated
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        } else {
+            // If no name is specified, use "Unnamed Save"
+            const char* unnamed = "Unnamed Save";
+            size_t len = strlen(unnamed);
+            files[index].name = malloc(len + 1);
+            if (files[index].name) {
+                strcpy(files[index].name, unnamed);
+            } else {
+                fprintf(stderr, "Failed to allocate memory for default save name\n");
+                free(files[index].timestamp);
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        }
+        
+        index++;
+    }
+    
+    sqlite3_finalize(stmt);
+    
+    *save_files = files;
+    *count = save_count;
+    
+    return 1;
+}
+
+void free_save_files(SaveFileInfo* save_files, int count) {
+    if (save_files == NULL) {
+        return;
+    }
+    
+    for (int i = 0; i < count; i++) {
+        free(save_files[i].timestamp);
+        free(save_files[i].name);
+    }
+    
+    free(save_files);
+}
+
+int get_game_state(DBConnection* dbconnection, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y) {
+    // Get the last game state ID
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_LAST_GAME_STATE, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
@@ -234,12 +365,18 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
         sqlite3_finalize(stmt);
         return 0;
     }
-    sqlite3_int64 game_state_id = sqlite3_column_int64(stmt, 0);
+    
+    int game_state_id = sqlite3_column_int(stmt, 0);
     sqlite3_finalize(stmt);
+    
+    // Call get_game_state_by_id to load the game state
+    return get_game_state_by_id(dbconnection, game_state_id, width, height, map, revealed_map, player_x, player_y);
+}
 
-    //Get the height and width from the database
+int get_game_state_by_id(DBConnection* dbconnection, int game_state_id, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y) {
+    // Get the height and width from the database
     sqlite3_stmt* stmt_map;
-    rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP_STATE, -1, &stmt_map, NULL);
+    int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP_STATE, -1, &stmt_map, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(dbconnection->db));
         return 0;

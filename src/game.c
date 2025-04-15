@@ -93,9 +93,16 @@ int init_game() {
 
                         int player_x, player_y;
                         get_player_pos(&player_x, &player_y);
-                        //the DB doesn't fucking work
-                        save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y);
-                        log_msg(INFO, "Game", "Game state saved successfully");
+                        
+                        // Get the save name from the menu
+                        const char* save_name = get_save_name();
+                        if (save_name == NULL) {
+                            save_name = "Unnamed Save"; // Default name if none provided
+                        }
+                        
+                        // Save the game with the provided name
+                        save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y, save_name);
+                        log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
                         
                         tb_clear();
                         current_state = MAP_MODE;
@@ -107,8 +114,20 @@ int init_game() {
                         int load_player_x, load_player_y;
                         int* loaded_map = NULL;
                         int* loaded_revealed_map = NULL;
+                        int save_id = get_selected_save_file_id();
+                        bool load_success = false;
                         
-                        if (get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y)) {
+                        if (save_id != -1) {
+                            // Load the selected save file
+                            log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
+                            load_success = get_game_state_by_id(&db_connection, save_id, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y);
+                        } else {
+                            // No save file was selected, try loading the latest save
+                            log_msg(INFO, "Game", "No save ID provided, loading most recent save");
+                            load_success = get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y);
+                        }
+                        
+                        if (load_success) {
                             // Copy loaded data to the game's map arrays
                             for (int y = 0; y < height; y++) {
                                 for (int x = 0; x < width; x++) {
