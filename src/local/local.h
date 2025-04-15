@@ -17,7 +17,7 @@ typedef struct {
 
 
 //function pointer type for update observer
-typedef void (*update_observer_t)(local_language_t lang);
+typedef void (*update_observer_t)(void);
 
 int init_local(void);
 

@@ -79,7 +79,7 @@ bool set_language(const local_language_t local_lang) {
     const observer_node_t* current = observer_list;
     while (current != NULL) {
         if (current->update_func != NULL) {
-            current->update_func(current_language);// call the observer function
+            current->update_func();// call the observer function
         }
         current = current->next;
     }

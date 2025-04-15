@@ -1,1 +1,6 @@
 attribute1;attribute2;attribute3;attribute4;text_de;text_en
+combat;main;menu;head;Kampfmenü:;Combat Menu:
+combat;main;menu;option1;Nutze Fähigkeit;Use Ability
+combat;main;menu;option2;Nutze Trank;Use Potion
+combat;ability;menu;head;Fähigkeiten:;Abilities:
+combat;item;menu;head;Gegenstände:;Items:
