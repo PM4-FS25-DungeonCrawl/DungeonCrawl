@@ -4,6 +4,7 @@
 #include "../logging/logger.h"
 #include <stdbool.h>
 #include <string.h>
+#include <time.h> // For nanosleep
 
 // Menu options
 #define NEW_GAME_OPTION "New Game"
@@ -166,12 +167,15 @@ menu_result_t show_main_menu(bool game_in_progress) {
                         continue;
                     }
 
+                    // For now we'll just use the most recent save
                     tb_clear();
-                    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Currently no files to load... Press any Key to continue.");
+                    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Loading most recent save...");
                     tb_present();
-                    struct tb_event event;
-                    tb_poll_event(&event);
-
+                    
+                    // Small delay to make the message visible
+                    struct timespec ts = {0, 500000000}; // 500ms
+                    nanosleep(&ts, NULL);
+                    
                     result = MENU_LOAD_GAME;
                     menu_active = false;
                 } 

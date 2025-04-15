@@ -33,15 +33,21 @@ void save_game_state(DBConnection* db_connection, int width, int height, int map
     int rc = sqlite3_prepare_v2(db_connection->db, SQL_INSERT_GAME_STATE, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db_connection->db));
+        free(current_time);
         return;
     }
     // Bind the current time to the statement
-    rc = sqlite3_bind_text(stmt, 1, current_time, -1, SQLITE_STATIC);
+    rc = sqlite3_bind_text(stmt, 1, current_time, -1, SQLITE_TRANSIENT);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind time: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt);
+        free(current_time);
         return;
     }
+    
+    // We can free current_time after binding
+    free(current_time);
+    
     // Execute the statement
     rc = sqlite3_step(stmt);
     if (rc != SQLITE_DONE) {
@@ -53,47 +59,67 @@ void save_game_state(DBConnection* db_connection, int width, int height, int map
     // Finalize the statement
     sqlite3_finalize(stmt);
 
-
     // Save the map and revealed map to the database
-	char* map_json = map_to_json_flattend(width, height, map);
+    char* map_json = map_to_json_flattend(width, height, map);
     char* revealed_map_json = map_to_json_flattend(width, height, revealed_map);
+    
+    if (map_json == NULL || revealed_map_json == NULL) {
+        fprintf(stderr, "Failed to convert map to JSON\n");
+        free(map_json); // Safe to call on NULL
+        free(revealed_map_json);
+        return;
+    }
 
     // Prepare the SQL statement
     sqlite3_stmt* stmt_map;
     rc = sqlite3_prepare_v2(db_connection->db, SQL_INSERT_MAP_STATE, -1, &stmt_map, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db_connection->db));
-//        free(map_json);
-//        free(revealed_map_json);
+        free(map_json);
+        free(revealed_map_json);
         return;
     }
 
     // Bind the map and revealed map to the statement
-    rc = sqlite3_bind_text(stmt_map, 1, map_json, -1, SQLITE_STATIC);
+    rc = sqlite3_bind_text(stmt_map, 1, map_json, -1, SQLITE_TRANSIENT);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind map: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt_map);
+        free(map_json);
+        free(revealed_map_json);
+        return;
     }
 
-    rc = sqlite3_bind_text(stmt_map, 2, revealed_map_json, -1, SQLITE_STATIC);
+    rc = sqlite3_bind_text(stmt_map, 2, revealed_map_json, -1, SQLITE_TRANSIENT);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind revealed map: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt_map);
+        free(map_json);
+        free(revealed_map_json);
+        return;
     }
+    
+    // We can free JSON strings after binding
+    free(map_json);
+    free(revealed_map_json);
+    
     rc = sqlite3_bind_int(stmt_map, 3, height);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind height: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt_map);
+        return;
     }
     rc = sqlite3_bind_int(stmt_map, 4, width);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind width: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt_map);
+        return;
     }
     rc = sqlite3_bind_int64(stmt_map, 5, game_state_id);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind game state ID: %s\n", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt_map);
+        return;
     }
     // Execute the statement
     rc = sqlite3_step(stmt_map);
@@ -145,20 +171,30 @@ char* get_iso8601_time() {
     struct tm *tm_info = localtime(&tv.tv_sec);
 
     int buffer_size = 32;
-    char buffer[buffer_size];
+    char* result = malloc(buffer_size);
+    if (result == NULL) {
+        fprintf(stderr, "Failed to allocate memory for timestamp\n");
+        return NULL;
+    }
 
-
-    strftime(buffer, buffer_size, "%Y-%m-%d %H:%M:%S", tm_info);
+    strftime(result, buffer_size, "%Y-%m-%d %H:%M:%S", tm_info);
 
     int millis = tv.tv_usec / 1000;
-    snprintf(buffer + strlen(buffer), buffer_size - strlen(buffer), ".%03d", millis);
+    snprintf(result + strlen(result), buffer_size - strlen(result), ".%03d", millis);
 
-    return buffer;
+    return result;
 }
 
 char* map_to_json_flattend(int width, int height, int map[width][height]) {
-    char buffer[width * height * 4]; // Rough estimate for the size of the JSON string
-	int pos = 0;
+    // Calculate buffer size (each int could be multiple digits plus comma and space)
+    int buffer_size = width * height * 10 + 10; // Generous estimate
+    char* buffer = malloc(buffer_size);
+    if (buffer == NULL) {
+        fprintf(stderr, "Failed to allocate memory for map JSON\n");
+        return NULL;
+    }
+    
+    int pos = 0;
     int total_elements = width * height;
 
     // Start the JSON array
@@ -228,14 +264,28 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     *width = sqlite3_column_int(stmt_map, 1);
     sqlite3_finalize(stmt_map);
 
-    map[*width][*height];
-    revealed_map[*width][*height];
+    // Allocate memory for the map and revealed map
+    int* map_data = malloc((*width) * (*height) * sizeof(int));
+    int* revealed_map_data = malloc((*width) * (*height) * sizeof(int));
+    
+    if (map_data == NULL || revealed_map_data == NULL) {
+        fprintf(stderr, "Failed to allocate memory for map data\n");
+        free(map_data); // Safe to call on NULL
+        free(revealed_map_data);
+        return 0;
+    }
+    
+    // Set the output pointers to the allocated memory
+    *map = map_data;
+    *revealed_map = revealed_map_data;
 
     //Get the map from the database
     sqlite3_stmt* stmt_map_data;
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP, -1, &stmt_map_data, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(dbconnection->db));
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -243,6 +293,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind game state ID: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_map_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -250,20 +302,29 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_ROW) {
         fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_map_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
-    // Build the map from the result
-    for (int i = 0; i < *height; i++) {
-        for (int j = 0; j < *width; j++) {
-            map[i][j] = sqlite3_column_int(stmt_map_data, 0);
-            rc = sqlite3_step(stmt_map_data);
-            if (rc != SQLITE_ROW) {
-                fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(dbconnection->db));
-                sqlite3_finalize(stmt_map_data);
-                return 0;
-            }
-        }
+    
+    // Build the map from the result - using a 1D array indexed as y*width + x
+    int index = 0;
+    int total_cells = (*width) * (*height);
+    
+    while (index < total_cells && rc == SQLITE_ROW) {
+        map_data[index] = sqlite3_column_int(stmt_map_data, 0);
+        index++;
+        rc = sqlite3_step(stmt_map_data);
     }
+    
+    if (index != total_cells) {
+        fprintf(stderr, "Didn't get all map data. Expected %d, got %d\n", total_cells, index);
+        sqlite3_finalize(stmt_map_data);
+        free(map_data);
+        free(revealed_map_data);
+        return 0;
+    }
+    
     sqlite3_finalize(stmt_map_data);
 
     //Get the revealed map from the database
@@ -271,6 +332,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_REVEALED_MAP, -1, &stmt_revealed_map_data, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(dbconnection->db));
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -278,6 +341,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind game state ID: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_revealed_map_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -285,20 +350,27 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_ROW) {
         fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_revealed_map_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
+    
     // Build the revealed map from the result
-    for (int i = 0; i < *height; i++) {
-        for (int j = 0; j < *width; j++) {
-            revealed_map[i][j] = sqlite3_column_int(stmt_revealed_map_data, 0);
-            rc = sqlite3_step(stmt_revealed_map_data);
-            if (rc != SQLITE_ROW) {
-                fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(dbconnection->db));
-                sqlite3_finalize(stmt_revealed_map_data);
-                return 0;
-            }
-        }
+    index = 0;
+    while (index < total_cells && rc == SQLITE_ROW) {
+        revealed_map_data[index] = sqlite3_column_int(stmt_revealed_map_data, 0);
+        index++;
+        rc = sqlite3_step(stmt_revealed_map_data);
     }
+    
+    if (index != total_cells) {
+        fprintf(stderr, "Didn't get all revealed map data. Expected %d, got %d\n", total_cells, index);
+        sqlite3_finalize(stmt_revealed_map_data);
+        free(map_data);
+        free(revealed_map_data);
+        return 0;
+    }
+    
     sqlite3_finalize(stmt_revealed_map_data);
 
     //Get the player position from the database
@@ -306,6 +378,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_PLAYER_STATE, -1, &stmt_player_data, NULL);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(dbconnection->db));
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Bind the game state ID to the statement
@@ -313,6 +387,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_OK) {
         fprintf(stderr, "Failed to bind game state ID: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Execute the statement
@@ -320,6 +396,8 @@ int get_game_state(DBConnection* dbconnection, int* width, int* height, int** ma
     if (rc != SQLITE_ROW) {
         fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player_data);
+        free(map_data);
+        free(revealed_map_data);
         return 0;
     }
     // Get the player position from the result

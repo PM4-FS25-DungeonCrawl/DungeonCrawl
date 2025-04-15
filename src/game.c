@@ -102,11 +102,11 @@ int init_game() {
                         break;
                     case MENU_LOAD_GAME:
                         log_msg(INFO, "Game", "Loading game state from database");
-                        /*
+                        
                         int width, height;
                         int load_player_x, load_player_y;
-                        int* loaded_map;
-                        int* loaded_revealed_map;
+                        int* loaded_map = NULL;
+                        int* loaded_revealed_map = NULL;
                         
                         if (get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y)) {
                             // Copy loaded data to the game's map arrays
@@ -123,6 +123,10 @@ int init_game() {
                             // Set game_in_progress flag
                             game_in_progress = true;
                             
+                            // Free allocated memory
+                            free(loaded_map);
+                            free(loaded_revealed_map);
+                            
                             log_msg(INFO, "Game", "Game state loaded successfully");
                             tb_clear();
                             current_state = MAP_MODE;
@@ -130,8 +134,7 @@ int init_game() {
                             log_msg(ERROR, "Game", "Failed to load game state - generating new map");
                             tb_clear();
                             current_state = GENERATE_MAP;
-                        }*/
-                        current_state = MAP_MODE;
+                        }
                         break;
                     case MENU_EXIT:
                         current_state = EXIT;
