@@ -46,7 +46,8 @@ debug_files = files(
 # List of all database files
 database_files = files(
     'include/sqlite3.c',
-    'src/database/database.c'
+    'src/database/database.c',
+    'src/database/gamestate/gamestate_database.c'
 )
 
 logging_files = files(
