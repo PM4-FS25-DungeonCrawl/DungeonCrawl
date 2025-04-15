@@ -1,12 +1,11 @@
 #include "map_mode.h"
 
-#include "../../debug/debug.h"
 #include "../../include/termbox2.h"
-#include "../logging/logger.h"
-#include "drawop/draw_light.h"
+#include "draw/draw_light.h"
+#include "draw/draw_map_mode.h"
 #include "map.h"
 
-
+vector2d_t map_anchor = {0, 0};
 vector2d_t player_pos;
 int player_has_key = 0;
 
@@ -18,56 +17,14 @@ void set_player_start_pos(const int player_x, const int player_y) {
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
+
 void get_player_pos(int* x, int* y) {
     if (x != NULL) *x = player_pos.dx;
     if (y != NULL) *y = player_pos.dy;
 }
 
-void draw_map(void) {
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            if (x == player_pos.dx && y == player_pos.dy) {
-                tb_printf(x, y, TB_RED, TB_BLACK, "@");
-                continue;
-            }
 
-            switch (revealed_map[x][y]) {
-                case WALL:
-                    tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
-                    break;
-                case FLOOR:
-                    tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
-                    break;
-                case START_DOOR:
-                    tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
-                    break;
-                case EXIT_DOOR:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
-                    break;
-                case KEY:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
-                    break;
-                case GOBLIN:
-                    tb_printf(x, y, TB_WHITE, TB_RED, "!");
-                    break;
-                case HIDDEN:
-                    tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
-                    break;
-                default:
-                    log_msg(ERROR, "map_mode", "Unknown tile type: %d", revealed_map[x][y]);
-                    return;
-            }
-        }
-    }
-}
-
-void draw_ui(void) {
-    tb_printf(0, HEIGHT, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(0, HEIGHT + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
-    tb_printf(0, HEIGHT + 4, TB_WHITE, TB_BLACK, "Press 'M' for Main Menu");
-}
-
-int handle_input(const struct tb_event* event) {
+map_mode_result_t handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
@@ -85,7 +42,8 @@ int handle_input(const struct tb_event* event) {
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
         switch (map[new_x][new_y]) {
             case WALL:
-                //ignore wall
+                // ignore wall
+                // break;
             case START_DOOR:
                 // ignore start door
                 break;
@@ -123,22 +81,21 @@ int handle_input(const struct tb_event* event) {
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
 map_mode_result_t map_mode_update(void) {
-    map_mode_result_t do_quit = CONTINUE;
+    map_mode_result_t next_state = CONTINUE;
     struct tb_event ev;
     const int ret = tb_peek_event(&ev, 10);
-    db_printEventStruct(3, 20, &ev);
 
     if (ret == TB_OK) {
-        tb_printf(50, 50, TB_WHITE, TB_BLACK, "%d", ev.type);
-        do_quit = handle_input(&ev);
+        next_state = handle_input(&ev);
     }
+    tb_clear();
 
-    draw_light_on_player((int*) map, (int*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
-    draw_map();
-    draw_ui();
+    draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
+
     tb_present();
 
-    return do_quit;
+    return next_state;
 }
 
 int init_map_mode(void) {

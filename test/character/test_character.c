@@ -3,7 +3,6 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 // initialize a character for testing
@@ -16,7 +15,7 @@ character_t* setup_character() {
 void test_init_character() {
     character_t* character = setup_character();
     assert(character != NULL);
-    assert(strcmp(character->name, "Hero") == true);
+    assert(strcmp(character->name, "Hero") == 0);
     assert(character->type == PLAYER);
     free_character(character);
     printf("test_init_character passed\n");
@@ -47,7 +46,7 @@ void test_add_gear() {
     gear_t test_gear = {.name = "Test Gear", .slot = SLOT_HEAD};
     add_gear(character, &test_gear);
     assert(character->gear_inventory[0] == &test_gear);
-    assert(character->gear_inventory_count == 1);
+    assert(character->gear_count == 1);
     free_character(character);
     printf("test_add_gear passed\n");
 }
@@ -57,7 +56,7 @@ void test_add_potion() {
     potion_t test_potion = {.name = "Healing Potion", .effectType = HEALING, .value = 20};
     add_potion(character, &test_potion);
     assert(character->potion_inventory[0] == &test_potion);
-    assert(character->potion_inventory_count == 1);
+    assert(character->potion_count == 1);
     free_character(character);
     printf("test_add_potion passed\n");
 }

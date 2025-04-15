@@ -52,6 +52,8 @@ int init_game() {
 
     init_map_mode();
     init_main_menu();
+    init_combat_mode();
+
 
     ability_table_t* ability_table = init_ability_table();
     character_t* goblin = create_new_goblin();//initialize standard goblin
@@ -64,11 +66,8 @@ int init_game() {
     } else {
         // add abilities to player and goblin
         add_ability(goblin, &ability_table->abilities[BITE]);
-        log_msg(INFO, "Game", "Added ability: %s to goblin", goblin->abilities[0]->name);
         add_ability(player, &ability_table->abilities[FIREBALL]);
-        log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[0]->name);
         add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-        log_msg(INFO, "Game", "Added ability: %s to player", player->abilities[1]->name);
         //add healing potion to player
         add_potion(player, healing_potion);
         log_msg(INFO, "Game", "game loop starting");
@@ -220,6 +219,7 @@ int init_game() {
     db_close(&db_connection);
     
     shutdown_logger();
+    shutdown_combat_mode();
     tb_shutdown();
     return 0;
 }

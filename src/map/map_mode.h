@@ -14,10 +14,8 @@ typedef enum {
     SHOW_MENU
 } map_mode_result_t;
 
-
-int init_map_mode(void);
-
 void set_player_start_pos(int player_x, int player_y);
+
 
 /**
  * Get the current player position
@@ -27,5 +25,6 @@ void set_player_start_pos(int player_x, int player_y);
 void get_player_pos(int* x, int* y);
 
 map_mode_result_t map_mode_update(void);
+int init_map_mode(void);
 
 #endif//MAP_MODE_H
