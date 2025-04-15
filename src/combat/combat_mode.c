@@ -38,7 +38,7 @@ char** potion_menu_options;
  * @note This function must be called before using any other functions in this module.
  */
 void init_combat_mode(void) {
-    combat_menu_options = malloc(sizeof(char*) * MAX_COMBAT_MENU_OPTIONS);
+    combat_menu_options = (char**) malloc(sizeof(char*) * MAX_COMBAT_MENU_OPTIONS);
     if (combat_menu_options == NULL) {
         log_msg(ERROR, "Combat Mode", "Failed to allocate memory for combat menu options");
         return;
@@ -374,7 +374,7 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
 void collect_ability_menu_options(ability_t* abilities[], const int count) {
     //clear the ability menu options
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
-        memset(ability_menu_options[i], '0', sizeof(char) * MAX_STRING_LENGTH);
+        memset(ability_menu_options[i], '\0', sizeof(char) * MAX_STRING_LENGTH);
     }
 
     for (int i = 0; i < count; i++) {
@@ -393,13 +393,10 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
 
 // Helper function to create potion options array
 void collect_potion_menu_options(potion_t* potions[], const int count) {
-    log_msg(FINE, "Combat Mode", "collect_potion_menu_options");
     // clear the potion menu options
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        memset(potion_menu_options[i], 0, MAX_STRING_LENGTH);
+        memset(potion_menu_options[i], '\0', MAX_STRING_LENGTH);
     }
-    log_msg(FINE, "Combat Mode", "Potion count: %d", count);
-
 
     for (int i = 0; i < count; i++) {
         const char* potion_format = "%-16s  Type: %-16s | Value: %-3d";
@@ -413,6 +410,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 }
 
 void update_local(void) {
+    //TODO: For now only the main combat menu options are localized
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
 }
