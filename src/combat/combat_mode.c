@@ -4,9 +4,9 @@
 #include "../character/character.h"
 #include "../character/level.h"
 #include "../include/termbox2.h"
+#include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
-#include "../local/local.h"
 
 #define MAX_COMBAT_MENU_OPTIONS 2
 
@@ -31,7 +31,6 @@ vector2d_t combat_view_anchor = {1, 1};
 char** combat_menu_options;
 char** ability_menu_options;
 char** potion_menu_options;
-
 
 
 /**
