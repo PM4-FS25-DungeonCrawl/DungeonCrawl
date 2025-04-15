@@ -215,126 +215,6 @@ char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
     return json;
 }
 
-int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count) {
-    sqlite3_stmt* stmt;
-    int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_ALL_GAME_STATES, -1, &stmt, NULL);
-    if (rc != SQLITE_OK) {
-        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(dbconnection->db));
-        return 0;
-    }
-
-    // First, count the number of saves
-    int save_count = 0;
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        save_count++;
-    }
-
-    // Reset the statement to start from the beginning
-    sqlite3_reset(stmt);
-
-    if (save_count == 0) {
-        sqlite3_finalize(stmt);
-        *count = 0;
-        *save_files = NULL;
-        return 1;// Success, but no saves found
-    }
-
-    // Allocate memory for the save files
-    SaveFileInfo* files = malloc(save_count * sizeof(SaveFileInfo));
-    if (files == NULL) {
-        log_msg(ERROR, "GameState", "Failed to allocate memory for save files");
-        sqlite3_finalize(stmt);
-        return 0;
-    }
-
-    // Retrieve save information
-    int index = 0;
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        files[index].id = sqlite3_column_int(stmt, 0);
-
-        const char* timestamp = (const char*) sqlite3_column_text(stmt, 1);
-        if (timestamp) {
-            size_t len = strlen(timestamp);
-            files[index].timestamp = malloc(len + 1);
-            if (files[index].timestamp) {
-                strcpy(files[index].timestamp, timestamp);
-            } else {
-                log_msg(ERROR, "GameState", "Failed to allocate memory for timestamp");
-                // Clean up allocated memory so far
-                for (int i = 0; i < index; i++) {
-                    free(files[i].timestamp);
-                    free(files[i].name);
-                }
-                free(files);
-                sqlite3_finalize(stmt);
-                return 0;
-            }
-        } else {
-            files[index].timestamp = NULL;
-        }
-
-        const char* name = (const char*) sqlite3_column_text(stmt, 2);
-        if (name) {
-            size_t len = strlen(name);
-            files[index].name = malloc(len + 1);
-            if (files[index].name) {
-                strcpy(files[index].name, name);
-            } else {
-                log_msg(ERROR, "GameState", "Failed to allocate memory for save name");
-                // Clean up allocated memory so far
-                free(files[index].timestamp);// Free the timestamp we just allocated
-                for (int i = 0; i < index; i++) {
-                    free(files[i].timestamp);
-                    free(files[i].name);
-                }
-                free(files);
-                sqlite3_finalize(stmt);
-                return 0;
-            }
-        } else {
-            // If no name is specified, use "Unnamed Save"
-            const char* unnamed = "Unnamed Save";
-            size_t len = strlen(unnamed);
-            files[index].name = malloc(len + 1);
-            if (files[index].name) {
-                strcpy(files[index].name, unnamed);
-            } else {
-                log_msg(ERROR, "GameState", "Failed to allocate memory for default save name");
-                free(files[index].timestamp);
-                for (int i = 0; i < index; i++) {
-                    free(files[i].timestamp);
-                    free(files[i].name);
-                }
-                free(files);
-                sqlite3_finalize(stmt);
-                return 0;
-            }
-        }
-
-        index++;
-    }
-
-    sqlite3_finalize(stmt);
-
-    *save_files = files;
-    *count = save_count;
-
-    return 1;
-}
-
-void free_save_files(SaveFileInfo* save_files, const int count) {
-    if (save_files == NULL) {
-        return;
-    }
-
-    for (int i = 0; i < count; i++) {
-        free(save_files[i].timestamp);
-        free(save_files[i].name);
-    }
-
-    free(save_files);
-}
-
 int get_game_state(const DBConnection* dbconnection, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
     // Get the last game state ID
     sqlite3_stmt* stmt;
@@ -486,4 +366,124 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     setter(player_x, player_y);
     sqlite3_finalize(stmt_player_data);
     return 1;
+}
+
+int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count) {
+    sqlite3_stmt* stmt;
+    int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_ALL_GAME_STATES, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(dbconnection->db));
+        return 0;
+    }
+
+    // First, count the number of saves
+    int save_count = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        save_count++;
+    }
+
+    // Reset the statement to start from the beginning
+    sqlite3_reset(stmt);
+
+    if (save_count == 0) {
+        sqlite3_finalize(stmt);
+        *count = 0;
+        *save_files = NULL;
+        return 1;// Success, but no saves found
+    }
+
+    // Allocate memory for the save files
+    SaveFileInfo* files = malloc(save_count * sizeof(SaveFileInfo));
+    if (files == NULL) {
+        log_msg(ERROR, "GameState", "Failed to allocate memory for save files");
+        sqlite3_finalize(stmt);
+        return 0;
+    }
+
+    // Retrieve save information
+    int index = 0;
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        files[index].id = sqlite3_column_int(stmt, 0);
+
+        const char* timestamp = (const char*) sqlite3_column_text(stmt, 1);
+        if (timestamp) {
+            size_t len = strlen(timestamp);
+            files[index].timestamp = malloc(len + 1);
+            if (files[index].timestamp) {
+                strcpy(files[index].timestamp, timestamp);
+            } else {
+                log_msg(ERROR, "GameState", "Failed to allocate memory for timestamp");
+                // Clean up allocated memory so far
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        } else {
+            files[index].timestamp = NULL;
+        }
+
+        const char* name = (const char*) sqlite3_column_text(stmt, 2);
+        if (name) {
+            size_t len = strlen(name);
+            files[index].name = malloc(len + 1);
+            if (files[index].name) {
+                strcpy(files[index].name, name);
+            } else {
+                log_msg(ERROR, "GameState", "Failed to allocate memory for save name");
+                // Clean up allocated memory so far
+                free(files[index].timestamp);// Free the timestamp we just allocated
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        } else {
+            // If no name is specified, use "Unnamed Save"
+            const char* unnamed = "Unnamed Save";
+            size_t len = strlen(unnamed);
+            files[index].name = malloc(len + 1);
+            if (files[index].name) {
+                strcpy(files[index].name, unnamed);
+            } else {
+                log_msg(ERROR, "GameState", "Failed to allocate memory for default save name");
+                free(files[index].timestamp);
+                for (int i = 0; i < index; i++) {
+                    free(files[i].timestamp);
+                    free(files[i].name);
+                }
+                free(files);
+                sqlite3_finalize(stmt);
+                return 0;
+            }
+        }
+
+        index++;
+    }
+
+    sqlite3_finalize(stmt);
+
+    *save_files = files;
+    *count = save_count;
+
+    return 1;
+}
+
+void free_save_files(SaveFileInfo* save_files, const int count) {
+    if (save_files == NULL) {
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        free(save_files[i].timestamp);
+        free(save_files[i].name);
+    }
+
+    free(save_files);
 }
