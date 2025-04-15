@@ -77,11 +77,9 @@ void save_game_state(const DBConnection* dbconnection, const int width, const in
     sqlite3_finalize(stmt);
 
     // Save the map and revealed map to the database
-    char* map_json = map_to_json_flattend(width, height, map);
-    char* revealed_map_json = map_to_json_flattend(width, height, revealed_map);
-
+    char* map_json = arr2D_to_flat_json(map, width, height);
+    char* revealed_map_json = arr2D_to_flat_json(revealed_map, width, height);
     if (map_json == NULL || revealed_map_json == NULL) {
-        log_msg(ERROR, "GameState", "Failed to convert map to JSON");
         free(map_json);// Safe to call on NULL
         free(revealed_map_json);
         return;
@@ -190,38 +188,32 @@ char* get_iso8601_time() {
     return strdup(timestamp);
 }
 
-char* map_to_json_flattend(const int width, const int height, int map[width][height]) {
-    // Calculate buffer size (each int could be multiple digits plus comma and space)
-    int buffer_size = width * height * 10 + 10;// Generous estimate
-    char* buffer = malloc(buffer_size);
-    if (buffer == NULL) {
-        log_msg(ERROR, "GameState", "Failed to allocate memory for map JSON");
+char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
+    const size_t buffer_size = width * height * 12 + 2; // 16 is a safe estimate for int size + comma + space
+    char* json = malloc(buffer_size);
+    if (json == NULL) {
+        log_msg(ERROR, "GameState", "Failed to allocate memory for JSON string");
         return NULL;
     }
 
-    int pos = 0;
-    int total_elements = width * height;
+    strcpy(json, "[");
 
-    // Start the JSON array
-    pos += sprintf(buffer + pos, "[");
-
+    const int total_elements = width * height;
     // Loop over the 2D map and append each element in a 1D fashion
     for (int i = 0; i < total_elements; i++) {
+        char number[10]; // Buffer to hold the number as a string
         // Write the value into the buffer
-        pos += sprintf(buffer + pos, "%d", map[i / width][i % width]);
+        snprintf(number, sizeof(number), "%d", arr[i]);
+        strcat(json, number); // Append the number to the JSON string
 
         // If it's not the last element, append a comma
         if (i < total_elements - 1) {
-            pos += sprintf(buffer + pos, ", ");
+            strcat(json, ",");
         }
     }
 
-    // Close the JSON array
-    pos += sprintf(buffer + pos, "]");
-
-    // Ensure the buffer is null-terminated
-    buffer[pos] = '\0';
-    return buffer;
+    strcat(json, "]"); //strcat always ensures that the string is null-terminated
+    return json;
 }
 
 int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count) {
