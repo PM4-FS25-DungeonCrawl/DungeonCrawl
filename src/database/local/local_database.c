@@ -82,7 +82,7 @@ char* get_localization_string(const DBConnection* db_connection, const char* att
         return "NULL";
     }
     // Get the localization string
-    const char* localization_string = (const char*) sqlite3_column_text(statement, 0);
+    char* localization_string = (char*) sqlite3_column_text(statement, 0);
 
     return localization_string;
 }

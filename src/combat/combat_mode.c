@@ -149,7 +149,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, "Combat Menu:", combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
+        draw_combat_menu(anchor, "Combat Menu:", (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
 
         // check for input
         struct tb_event event;
