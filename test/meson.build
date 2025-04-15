@@ -30,7 +30,12 @@ helper_combat = files(
 
     '../include/termbox2.c',
     '../src/logging/logger.c',
-    '../src/logging/ringbuffer.c'
+    '../src/logging/ringbuffer.c',
+
+    '../src/local/local.c',
+    '../include/sqlite3.c',
+    '../src/database/database.c',
+    '../src/database/local/local_database.c'
 )
 
 

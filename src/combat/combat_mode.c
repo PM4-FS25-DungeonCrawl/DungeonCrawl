@@ -3,7 +3,7 @@
 #include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
-#include "../include/termbox2.h"
+#include "../../include/termbox2.h"
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
