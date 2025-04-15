@@ -7,9 +7,12 @@
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
 #include "combat/damage.h"
+#include "database/database.h"
+#include "database/gamestate/gamestate_database.h"
 #include "item/gear.h"
 #include "item/potion.h"
 #include "logging/logger.h"
+#include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
@@ -36,6 +39,12 @@ int init_game() {
     // seeding random function
     srand(time(NULL));
 
+    // Initialize database connection
+    DBConnection db_connection;
+    if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != 0) {
+        log_msg(ERROR, "Game", "Failed to open database");
+        return 1;
+    }
 
     bool running = true;//should only be set in the state machine
     bool game_in_progress = false; // Flag to track if a game has been started
@@ -70,6 +79,14 @@ int init_game() {
             case MAIN_MENU:
                 switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
+                        log_msg(INFO, "Game", "Starting new game");
+                        // Reset the map to prepare for generation
+                        for (int y = 0; y < HEIGHT; y++) {
+                            for (int x = 0; x < WIDTH; x++) {
+                                map[x][y] = WALL;
+                                revealed_map[x][y] = HIDDEN;
+                            }
+                        }
                         game_in_progress = true; // Mark that a game is now in progress
                         tb_clear(); // Clear screen before generating map
                         current_state = GENERATE_MAP;
@@ -79,16 +96,44 @@ int init_game() {
                         current_state = MAP_MODE;
                         break;
                     case MENU_SAVE_GAME:
-                        // Placeholder for saving game functionality
-                        log_msg(INFO, "Game", "Save game placeholder - returning to map mode");
+                        log_msg(INFO, "Game", "Saving game state to database");
+                        int player_x, player_y;
+                        get_player_pos(&player_x, &player_y);
+                        save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y);
+                        log_msg(INFO, "Game", "Game state saved successfully");
                         tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case MENU_LOAD_GAME:
-                        // Placeholder for loading game functionality
-                        log_msg(INFO, "Game", "Load game placeholder - generating new map for now");
-                        tb_clear();
-                        current_state = GENERATE_MAP;
+                        log_msg(INFO, "Game", "Loading game state from database");
+                        int width, height;
+                        int load_player_x, load_player_y;
+                        int* loaded_map;
+                        int* loaded_revealed_map;
+                        
+                        if (get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y)) {
+                            // Copy loaded data to the game's map arrays
+                            for (int y = 0; y < height; y++) {
+                                for (int x = 0; x < width; x++) {
+                                    map[x][y] = loaded_map[y * width + x];
+                                    revealed_map[x][y] = loaded_revealed_map[y * width + x];
+                                }
+                            }
+                            
+                            // Set player position
+                            set_player_start_pos(load_player_x, load_player_y);
+                            
+                            // Set game_in_progress flag
+                            game_in_progress = true;
+                            
+                            log_msg(INFO, "Game", "Game state loaded successfully");
+                            tb_clear();
+                            current_state = MAP_MODE;
+                        } else {
+                            log_msg(ERROR, "Game", "Failed to load game state - generating new map");
+                            tb_clear();
+                            current_state = GENERATE_MAP;
+                        }
                         break;
                     case MENU_EXIT:
                         current_state = EXIT;
@@ -151,6 +196,9 @@ int init_game() {
         }
     }
 
+    // Close database connection
+    db_close(&db_connection);
+    
     shutdown_logger();
     tb_shutdown();
     return 0;

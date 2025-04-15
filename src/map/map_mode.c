@@ -18,6 +18,11 @@ void set_player_start_pos(const int player_x, const int player_y) {
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
+void get_player_pos(int* x, int* y) {
+    if (x != NULL) *x = player_pos.dx;
+    if (y != NULL) *y = player_pos.dy;
+}
+
 void draw_map(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
