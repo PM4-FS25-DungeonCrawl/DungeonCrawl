@@ -114,26 +114,64 @@ menu_result_t show_main_menu(bool game_in_progress) {
                     menu_active = false;
                 } 
                 else if (strcmp(menu_options[selected_index], SAVE_GAME_OPTION) == 0) {
-                    // Placeholder for save functionality
-                    tb_clear();
-                    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Enter name for save file (placeholder):");
-                    tb_present();
+                    char save_name[50] = {0};
+                    int name_length = 0;
+                    bool input_active = true;
                     
-                    // Wait for any key press
-                    struct tb_event save_event;
-                    tb_poll_event(&save_event);
+                    // Get save name from user
+                    while (input_active && name_length < 49) {
+                        tb_clear();
+                        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Enter name for save file:");
+                        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, save_name);
+                        tb_print(MENU_START_X, MENU_START_Y + 4, TB_WHITE, TB_DEFAULT, "Press Enter when done");
+                        tb_present();
+                        
+                        struct tb_event input_event;
+                        tb_poll_event(&input_event);
+                        
+                        if (input_event.key == TB_KEY_ENTER && name_length > 0) {
+                            input_active = false;
+                        } else if (input_event.key == TB_KEY_BACKSPACE && name_length > 0) {
+                            save_name[--name_length] = '\0';
+                        } else if (input_event.key == TB_KEY_ESC) {
+                            // Cancel save
+                            input_active = false;
+                            continue;
+                        } else if (input_event.ch != 0 && name_length < 49) {
+                            save_name[name_length++] = input_event.ch;
+                            save_name[name_length] = '\0';
+                        }
+                    }
                     
-                    log_msg(INFO, "Menu", "Save Game selected (placeholder)");
-                    result = MENU_SAVE_GAME;
-                    menu_active = false;
+                    if (name_length > 0) {
+                        // Show saving message
+                        tb_clear();
+                        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Saving game...");
+                        tb_present();
+                        
+                        log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
+                        // TODO: Pass save_name to save_game_state function when it's implemented
+                        // Currently the save_game_state doesn't consider the save name but will in the future
+                        
+                        result = MENU_SAVE_GAME;
+                        menu_active = false;
+                    } else {
+                        // If user pressed ESC, just stay in the menu
+                        continue;
+                    }
                 } 
                 else if (strcmp(menu_options[selected_index], LOAD_GAME_OPTION) == 0) {
                     if (game_in_progress && !show_confirmation("Do you want to continue?")) {
                         // User declined, continue menu loop
                         continue;
                     }
-                    
-                    log_msg(INFO, "Menu", "Load Game selected (placeholder)");
+
+                    tb_clear();
+                    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Currently no files to load... Press any Key to continue.");
+                    tb_present();
+                    struct tb_event event;
+                    tb_poll_event(&event);
+
                     result = MENU_LOAD_GAME;
                     menu_active = false;
                 } 

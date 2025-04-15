@@ -40,7 +40,6 @@ int init_game() {
     srand(time(NULL));
 
     // Initialize database connection
-    
     DBConnection db_connection;
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
@@ -94,6 +93,7 @@ int init_game() {
 
                         int player_x, player_y;
                         get_player_pos(&player_x, &player_y);
+                        //the DB doesn't fucking work
                         save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y);
                         log_msg(INFO, "Game", "Game state saved successfully");
                         
@@ -102,7 +102,7 @@ int init_game() {
                         break;
                     case MENU_LOAD_GAME:
                         log_msg(INFO, "Game", "Loading game state from database");
-                        
+                        /*
                         int width, height;
                         int load_player_x, load_player_y;
                         int* loaded_map;
@@ -130,7 +130,8 @@ int init_game() {
                             log_msg(ERROR, "Game", "Failed to load game state - generating new map");
                             tb_clear();
                             current_state = GENERATE_MAP;
-                        }
+                        }*/
+                        current_state = MAP_MODE;
                         break;
                     case MENU_EXIT:
                         current_state = EXIT;
