@@ -194,7 +194,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
                     int save_count = 0;
 
                     // Create a database connection for the menu to use
-                    DBConnection menu_db_connection;
+                    db_connection_t menu_db_connection;
                     if (!db_open(&menu_db_connection, "resources/database/game/dungeoncrawl_game.db")) {
                         log_msg(ERROR, "Menu", "Failed to open database for save file listing");
                         continue;

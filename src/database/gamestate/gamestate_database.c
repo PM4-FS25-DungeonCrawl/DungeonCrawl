@@ -24,7 +24,7 @@
 // === Internal Functions ===
 char* get_iso8601_time();
 
-void save_game_state(const DBConnection* dbconnection, const int* map, const int* revealed_map, const int width, const int height, const vector2d_t player, const char* save_name) {
+void save_game_state(const db_connection_t* dbconnection, const int* map, const int* revealed_map, const int width, const int height, const vector2d_t player, const char* save_name) {
     //TODO: Check if the database connection is open (can't do i right now because branch localization is not merged yet)
 
     // Save the game state to the database into table game_state
@@ -215,7 +215,7 @@ char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
     return json;
 }
 
-int get_game_state(const DBConnection* dbconnection, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
+int get_game_state(const db_connection_t* dbconnection, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
     // Get the last game state ID
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_LAST_GAME_STATE, -1, &stmt, NULL);
@@ -238,7 +238,7 @@ int get_game_state(const DBConnection* dbconnection, int* map, int* revealed_map
     return get_game_state_by_id(dbconnection, game_state_id, map, revealed_map, width, height, setter);
 }
 
-int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_id, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
+int get_game_state_by_id(const db_connection_t* dbconnection, const int game_state_id, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
     // Get the height and width from the database
     sqlite3_stmt* stmt_map;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_MAP_STATE, -1, &stmt_map, NULL);
@@ -368,7 +368,7 @@ int get_game_state_by_id(const DBConnection* dbconnection, const int game_state_
     return 1;
 }
 
-int get_save_files(const DBConnection* dbconnection, save_file_info_t** save_files, int* count) {
+int get_save_files(const db_connection_t* dbconnection, save_file_info_t** save_files, int* count) {
     sqlite3_stmt* stmt;
     int rc = sqlite3_prepare_v2(dbconnection->db, SQL_SELECT_ALL_GAME_STATES, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {

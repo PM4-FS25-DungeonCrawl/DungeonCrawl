@@ -38,7 +38,7 @@ int init_game() {
     srand(time(NULL));
 
     // Initialize database connection
-    DBConnection db_connection;
+    db_connection_t db_connection;
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
