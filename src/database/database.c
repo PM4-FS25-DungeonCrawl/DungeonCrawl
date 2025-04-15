@@ -2,6 +2,7 @@
 
 #include "../logging/logger.h"
 
+#include <string.h>
 #include <stdio.h>
 
 static int check_column_exists(sqlite3* db, const char* table, const char* column) {
