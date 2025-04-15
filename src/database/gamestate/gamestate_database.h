@@ -10,7 +10,7 @@ typedef struct {
     char* name;
 } SaveFileInfo;
 
-void save_game_state(const DBConnection* dbconnection, int width, int height, int map[width][height], int revealed_map[width][height], vector2d_t player, const char* save_name);
+void save_game_state(const DBConnection* dbconnection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(DBConnection* dbconnection, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y);
 int get_game_state_by_id(const DBConnection* dbconnection, int game_state_id, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y);
 int get_save_files(const DBConnection* dbconnection, SaveFileInfo** save_files, int* count);

@@ -24,9 +24,8 @@
 // === Internal Functions ===
 char* get_iso8601_time();
 
-void save_game_state(const DBConnection* dbconnection, const int width, const int height, int map[width][height], int revealed_map[width][height], const vector2d_t player, const char* save_name) {
-    //TODO: Check if the database connection is open (can't do i rigt now beacause branch localisatzion is not merged yet)
-    //Comment by Jil for Nino: Reason for 2D Array here is that we have a 2D array in the game, but we need to save it as a 1D array in the database. Thus we need to flatten it.
+void save_game_state(const DBConnection* dbconnection, const int* map, const int* revealed_map, const int width, const int height, const vector2d_t player, const char* save_name) {
+    //TODO: Check if the database connection is open (can't do i right now because branch localization is not merged yet)
 
     // Save the game state to the database into table game_state
     // Get the current time

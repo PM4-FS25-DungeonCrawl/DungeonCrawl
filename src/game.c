@@ -6,10 +6,8 @@
 #include "character/player.h"
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
-#include "combat/damage.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
-#include "item/gear.h"
 #include "item/potion.h"
 #include "logging/logger.h"
 #include "map/map.h"
@@ -97,7 +95,7 @@ int init_game() {
                         }
 
                         // Save the game with the provided name
-                        save_game_state(&db_connection, WIDTH, HEIGHT, (int(*)[HEIGHT]) map, (int(*)[HEIGHT]) revealed_map, get_player_pos(), save_name);
+                        save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
                         log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
                         tb_clear();
