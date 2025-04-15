@@ -20,8 +20,9 @@
 
 void save_game_state(DBConnection* db_connection, int width, int height, int map[width][height], int revealed_map[width][height], int player_x, int player_y, const char* save_name) {
     //TODO: Check if the database connection is open (can't do i rigt now beacause branch localisatzion is not merged yet)
-
-   // Save the game state to the database into table game_state
+    //Comment by Jil for Nino: Reason for 2D Array here is that we have a 2D array in the game, but we need to save it as a 1D array in the database. Thus we need to flatten it.
+    
+    // Save the game state to the database into table game_state
     // Get the current time
     char* current_time = get_iso8601_time();
     if (current_time == NULL) {
