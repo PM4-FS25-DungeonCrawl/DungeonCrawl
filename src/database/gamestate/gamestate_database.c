@@ -19,7 +19,7 @@
 #define SQL_SELECT_PLAYER_STATE "SELECT PS_X, PS_Y FROM player_state WHERE PS_GS_ID = ?"
 #define SQL_SELECT_ALL_GAME_STATES "SELECT GS_ID, GS_SAVEDTIME, GS_NAME FROM game_state ORDER BY GS_SAVEDTIME DESC"
 
-void save_game_state(const DBConnection* dbconnection, const int width, const int height, int map[width][height], int revealed_map[width][height], const int player_x, const int player_y, const char* save_name) {
+void save_game_state(const DBConnection* dbconnection, const int width, const int height, int map[width][height], int revealed_map[width][height], const vector2d_t player, const char* save_name) {
     //TODO: Check if the database connection is open (can't do i rigt now beacause branch localisatzion is not merged yet)
     //Comment by Jil for Nino: Reason for 2D Array here is that we have a 2D array in the game, but we need to save it as a 1D array in the database. Thus we need to flatten it.
 
@@ -150,13 +150,13 @@ void save_game_state(const DBConnection* dbconnection, const int width, const in
         return;
     }
     // Bind the player position to the statement
-    rc = sqlite3_bind_int(stmt_player, 1, player_x);
+    rc = sqlite3_bind_int(stmt_player, 1, player.dx);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind player x: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player);
         return;
     }
-    rc = sqlite3_bind_int(stmt_player, 2, player_y);
+    rc = sqlite3_bind_int(stmt_player, 2, player.dy);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "GameState", "Failed to bind player y: %s", sqlite3_errmsg(dbconnection->db));
         sqlite3_finalize(stmt_player);

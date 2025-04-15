@@ -18,9 +18,8 @@ void set_player_start_pos(const int player_x, const int player_y) {
 }
 
 
-void get_player_pos(int* x, int* y) {
-    if (x != NULL) *x = player_pos.dx;
-    if (y != NULL) *y = player_pos.dy;
+vector2d_t get_player_pos() {
+    return player_pos;
 }
 
 

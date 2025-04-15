@@ -90,9 +90,6 @@ int init_game() {
                     case MENU_SAVE_GAME:
                         log_msg(INFO, "Game", "Saving game state to database");
 
-                        int player_x, player_y;
-                        get_player_pos(&player_x, &player_y);
-
                         // Get the save name from the menu
                         const char* save_name = get_save_name();
                         if (save_name == NULL) {
@@ -100,7 +97,7 @@ int init_game() {
                         }
 
                         // Save the game with the provided name
-                        save_game_state(&db_connection, WIDTH, HEIGHT, (int(*)[HEIGHT]) map, (int(*)[HEIGHT]) revealed_map, player_x, player_y, save_name);
+                        save_game_state(&db_connection, WIDTH, HEIGHT, (int(*)[HEIGHT]) map, (int(*)[HEIGHT]) revealed_map, get_player_pos(), save_name);
                         log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
                         tb_clear();
