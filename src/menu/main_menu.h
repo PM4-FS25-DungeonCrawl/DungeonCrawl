@@ -1,8 +1,9 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
-#include <stdbool.h>
 #include "../database/gamestate/gamestate_database.h"
+
+#include <stdbool.h>
 
 typedef enum {
     MENU_START_GAME,
@@ -37,4 +38,4 @@ int get_selected_save_file_id(void);
  */
 const char* get_save_name(void);
 
-#endif // MAIN_MENU_H
+#endif// MAIN_MENU_H

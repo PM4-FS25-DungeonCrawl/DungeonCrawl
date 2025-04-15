@@ -17,9 +17,9 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
-#include <stdbool.h>
 
 typedef enum {
     MAIN_MENU,
@@ -46,8 +46,8 @@ int init_game() {
         return 1;
     }
 
-    bool running = true;//should only be set in the state machine
-    bool game_in_progress = false; // Flag to track if a game has been started
+    bool running = true;          //should only be set in the state machine
+    bool game_in_progress = false;// Flag to track if a game has been started
     game_state_t current_state = MAIN_MENU;
 
     init_map_mode();
@@ -79,12 +79,12 @@ int init_game() {
                 switch (show_main_menu(game_in_progress)) {
                     case MENU_START_GAME:
                         log_msg(INFO, "Game", "Starting new game");
-                        game_in_progress = true; // Mark that a game is now in progress
-                        tb_clear(); // Clear screen before generating map
+                        game_in_progress = true;// Mark that a game is now in progress
+                        tb_clear();             // Clear screen before generating map
                         current_state = GENERATE_MAP;
                         break;
                     case MENU_CONTINUE:
-                        tb_clear(); // Clear screen before map mode
+                        tb_clear();// Clear screen before map mode
                         current_state = MAP_MODE;
                         break;
                     case MENU_SAVE_GAME:
@@ -92,30 +92,30 @@ int init_game() {
 
                         int player_x, player_y;
                         get_player_pos(&player_x, &player_y);
-                        
+
                         // Get the save name from the menu
                         const char* save_name = get_save_name();
                         if (save_name == NULL) {
-                            save_name = "Unnamed Save"; // Default name if none provided
+                            save_name = "Unnamed Save";// Default name if none provided
                         }
-                        
+
                         // Save the game with the provided name
-                        save_game_state(&db_connection, WIDTH, HEIGHT, (int (*)[HEIGHT])map, (int (*)[HEIGHT])revealed_map, player_x, player_y, save_name);
+                        save_game_state(&db_connection, WIDTH, HEIGHT, (int(*)[HEIGHT]) map, (int(*)[HEIGHT]) revealed_map, player_x, player_y, save_name);
                         log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
-                        
+
                         tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case MENU_LOAD_GAME:
                         log_msg(INFO, "Game", "Loading game state from database");
-                        
+
                         int width, height;
                         int load_player_x, load_player_y;
                         int* loaded_map = NULL;
                         int* loaded_revealed_map = NULL;
                         int save_id = get_selected_save_file_id();
                         bool load_success = false;
-                        
+
                         if (save_id != -1) {
                             // Load the selected save file
                             log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
@@ -125,7 +125,7 @@ int init_game() {
                             log_msg(INFO, "Game", "No save ID provided, loading most recent save");
                             load_success = get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y);
                         }
-                        
+
                         if (load_success) {
                             // Copy loaded data to the game's map arrays
                             for (int y = 0; y < height; y++) {
@@ -134,17 +134,17 @@ int init_game() {
                                     revealed_map[x][y] = loaded_revealed_map[y * width + x];
                                 }
                             }
-                            
+
                             // Set player position
                             set_player_start_pos(load_player_x, load_player_y);
-                            
+
                             // Set game_in_progress flag
                             game_in_progress = true;
-                            
+
                             // Free allocated memory
                             free(loaded_map);
                             free(loaded_revealed_map);
-                            
+
                             log_msg(INFO, "Game", "Game state loaded successfully");
                             tb_clear();
                             current_state = MAP_MODE;
@@ -171,7 +171,7 @@ int init_game() {
                         current_state = EXIT;
                         break;
                     case NEXT_FLOOR:
-                        tb_clear(); // Clear screen before generating new floor
+                        tb_clear();// Clear screen before generating new floor
                         current_state = GENERATE_MAP;
                         break;
                     case COMBAT:
@@ -179,7 +179,7 @@ int init_game() {
                         current_state = COMBAT_MODE;
                         break;
                     case SHOW_MENU:
-                        tb_clear(); // Clear the screen before showing menu
+                        tb_clear();// Clear the screen before showing menu
                         current_state = MAIN_MENU;
                         break;
                     default:
@@ -217,7 +217,7 @@ int init_game() {
 
     // Close database connection
     db_close(&db_connection);
-    
+
     shutdown_logger();
     shutdown_combat_mode();
     tb_shutdown();

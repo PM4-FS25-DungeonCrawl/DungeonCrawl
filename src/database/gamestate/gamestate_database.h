@@ -15,4 +15,4 @@ int get_save_files(DBConnection* dbconnection, SaveFileInfo** save_files, int* c
 void free_save_files(SaveFileInfo* save_files, int count);
 char* get_iso8601_time();
 char* map_to_json_flattend(int width, int height, int map[width][height]);
-#endif //GAMESTATE_DATABASE_H
+#endif//GAMESTATE_DATABASE_H

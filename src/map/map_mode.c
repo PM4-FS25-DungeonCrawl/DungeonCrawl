@@ -29,7 +29,7 @@ map_mode_result_t handle_input(const struct tb_event* event) {
     int new_y = player_pos.dy;
 
     if (event->key == TB_KEY_ESC || event->key == TB_KEY_CTRL_C) return QUIT;
-    
+
     // Check for 'M' key press for menu
     if (event->ch == 'm' || event->ch == 'M') return SHOW_MENU;
 
