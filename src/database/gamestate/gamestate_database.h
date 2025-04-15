@@ -4,19 +4,27 @@
 #include "../../common.h"
 #include "../database.h"
 
+#define MAX_NUMBER_SAVES 20
+#define TIMESTAMP_LENGTH 20
+
 typedef void (* player_pos_setter_t)(int player_x, int player_y);
 
 typedef struct {
     int id;
-    char* timestamp;
-    char* name;
-} save_file_info_t;
+    char timestamp[TIMESTAMP_LENGTH];
+    char name[MAX_STRING_LENGTH];
+} save_info_t;
+
+typedef struct {
+    int count;
+    save_info_t* infos;
+} save_info_container_t;
 
 void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
-int get_save_files(const db_connection_t* db_connection, save_file_info_t** save_files, int* count);
-void free_save_files(save_file_info_t* save_files, int count);
+save_info_container_t* get_save_infos(const db_connection_t* db_connection);
+void free_save_infos(save_info_container_t* save_infos);
 
 
 /**
