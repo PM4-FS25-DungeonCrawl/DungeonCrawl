@@ -5,8 +5,7 @@
 #include "../../common.h"
 #include "../../logging/logger.h"
 
-
-void draw_player_info(int x, int y, vector2d_t player_pos);
+void draw_player_info(vector2d_t ui_anchor, vector2d_t player_pos);
 
 /**
  * @brief Draws the map mode ui based on the given parameters.
@@ -76,23 +75,23 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
         }
     }
 
-    draw_player_info(anchor.dx, map_anchor.dy + height + 1, player_pos);
+    map_anchor.dy += height + 1;
+
+    draw_player_info(map_anchor, player_pos);
 }
 
 /**
  * @brief Draws the player information of the map mode.
- *
- * @param x the x position of the player info to be drawn
- * @param y the y position of the player info to be drawn
- * @param player_pos the current player position
+ * @param ui_anchor The anchor position of the ui, defined as the top left corner
+ * @param player_pos The current player position
  */
-void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
-    tb_printf(x, y, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(x, y + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
-    tb_printf(x, y + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+void draw_player_info(const vector2d_t ui_anchor, const vector2d_t player_pos) {
+    tb_printf(ui_anchor.dx, ui_anchor.dy, TB_WHITE, TB_BLACK, "HP: 100");
+    tb_printf(ui_anchor.dx, ui_anchor.dy + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
+    tb_printf(ui_anchor.dx, ui_anchor.dy + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
-    for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {
-        tb_printf(x, i, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i - y - 3]);
+    for (int i = 0; i < HELMET_HEIGHT; i++) {
+        tb_printf(ui_anchor.dx, ui_anchor.dy + i + 3, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i]);
     }
 }
