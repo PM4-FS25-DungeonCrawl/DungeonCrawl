@@ -1,18 +1,39 @@
 #ifndef GAMESTATE_DATABASE_H
 #define GAMESTATE_DATABASE_H
+
+#include "../../common.h"
 #include "../database.h"
+
+#define MAX_NUMBER_SAVES 20
+#define TIMESTAMP_LENGTH 20
+
+typedef void (* player_pos_setter_t)(int player_x, int player_y);
 
 typedef struct {
     int id;
-    char* timestamp;
-    char* name;
-} SaveFileInfo;
+    char timestamp[TIMESTAMP_LENGTH];
+    char name[MAX_STRING_LENGTH];
+} save_info_t;
 
-void save_game_state(DBConnection* dbconnection, int width, int heigth, int map[width][heigth], int revealed_map[width][heigth], int player_x, int player_y, const char* save_name);
-int get_game_state(DBConnection* dbconnection, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y);
-int get_game_state_by_id(DBConnection* dbconnection, int game_state_id, int* width, int* height, int** map, int** revealed_map, int* player_x, int* player_y);
-int get_save_files(DBConnection* dbconnection, SaveFileInfo** save_files, int* count);
-void free_save_files(SaveFileInfo* save_files, int count);
-char* get_iso8601_time();
-char* map_to_json_flattend(int width, int height, int map[width][height]);
+typedef struct {
+    int count;
+    save_info_t* infos;
+} save_info_container_t;
+
+void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
+int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+save_info_container_t* get_save_infos(const db_connection_t* db_connection);
+void free_save_infos(save_info_container_t* save_infos);
+
+
+/**
+ * @brief Convert a 2D array to a Json-Array
+ * @param arr The given array to convert to a Json-Array
+ * @param width The width of the array
+ * @param height The height of the array
+ * @return The Json-Array as a string (must be freed by the caller), NULL if a malloc error occurred
+ * @note The returned string is a flattened JSON Array (e.g. [[1,2],[3,4]] -> [1,2,3,4])
+ */
+char* arr2D_to_flat_json(const int* arr, int width, int height);
 #endif//GAMESTATE_DATABASE_H

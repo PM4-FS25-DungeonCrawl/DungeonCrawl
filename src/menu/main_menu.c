@@ -189,35 +189,32 @@ menu_result_t show_main_menu(bool game_in_progress) {
                         continue;
                     }
 
-                    // Get available save files
-                    SaveFileInfo* save_files = NULL;
-                    int save_count = 0;
-
                     // Create a database connection for the menu to use
-                    DBConnection menu_db_connection;
+                    db_connection_t menu_db_connection;
                     if (!db_open(&menu_db_connection, "resources/database/game/dungeoncrawl_game.db")) {
                         log_msg(ERROR, "Menu", "Failed to open database for save file listing");
                         continue;
                     }
 
-                    if (!get_save_files(&menu_db_connection, &save_files, &save_count)) {
+                    save_info_container_t* save_infos = get_save_infos(&menu_db_connection);
+                    if (save_infos == NULL) {
                         log_msg(ERROR, "Menu", "Failed to get save files");
                         db_close(&menu_db_connection);
                         continue;
                     }
 
-                    if (save_count == 0) {
+                    if (save_infos->count == 0) {
                         // No saves available
                         tb_clear();
                         tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "No saved games found.");
                         tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, "Press any key to return to the menu.");
                         tb_present();
 
-                        struct tb_event event;
-                        tb_poll_event(&event);
+                        struct tb_event tb_event;
+                        tb_poll_event(&tb_event);
 
                         db_close(&menu_db_connection);
-                        free_save_files(save_files, save_count);
+                        free_save_infos(save_infos);
                         continue;
                     }
 
@@ -230,23 +227,9 @@ menu_result_t show_main_menu(bool game_in_progress) {
                         tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Select a save file:");
 
                         int y = MENU_START_Y + 2;
-                        for (int i = 0; i < save_count; i++) {
-                            char save_info[100];
-                            // Format the save info display
-                            const char* name = save_files[i].name;
-                            const char* timestamp = save_files[i].timestamp;
-
-                            // Handle null or empty name
-                            if (name == NULL || name[0] == '\0') {
-                                name = "Unnamed Save";
-                            }
-
-                            // Format timestamp nicely
-                            if (timestamp == NULL) {
-                                timestamp = "Unknown date";
-                            }
-
-                            snprintf(save_info, sizeof(save_info), "%s (%s)", name, timestamp);
+                        for (int i = 0; i < save_infos->count; i++) {
+                            char save_info[MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 3];
+                            snprintf(save_info, sizeof(save_info), "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
 
                             if (i == selected_save_index) {
                                 tb_print(MENU_START_X, y, TB_BLACK, TB_WHITE, save_info);
@@ -259,26 +242,26 @@ menu_result_t show_main_menu(bool game_in_progress) {
                         tb_print(MENU_START_X, y + 2, TB_WHITE, TB_DEFAULT, "Arrow keys: Navigate | Enter: Select | Esc: Back");
                         tb_present();
 
-                        struct tb_event event;
-                        tb_poll_event(&event);
+                        struct tb_event tb_event;
+                        tb_poll_event(&tb_event);
 
-                        if (event.key == TB_KEY_ARROW_UP) {
-                            selected_save_index = (selected_save_index - 1 + save_count) % save_count;
-                        } else if (event.key == TB_KEY_ARROW_DOWN) {
-                            selected_save_index = (selected_save_index + 1) % save_count;
-                        } else if (event.key == TB_KEY_ENTER) {
+                        if (tb_event.key == TB_KEY_ARROW_UP) {
+                            selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
+                        } else if (tb_event.key == TB_KEY_ARROW_DOWN) {
+                            selected_save_index = (selected_save_index + 1) % save_infos->count;
+                        } else if (tb_event.key == TB_KEY_ENTER) {
                             // Set the selected save file ID for loading
                             result = MENU_LOAD_GAME;
-                            selected_save_file_id = save_files[selected_save_index].id;
+                            selected_save_file_id = save_infos->infos[selected_save_index].id;
                             selection_active = false;
                             menu_active = false;
-                        } else if (event.key == TB_KEY_ESC) {
+                        } else if (tb_event.key == TB_KEY_ESC) {
                             selection_active = false;
                         }
                     }
 
                     // Clean up the save files
-                    free_save_files(save_files, save_count);
+                    free_save_infos(save_infos);
                     db_close(&menu_db_connection);
                 } else if (strcmp(menu_options[selected_index], EXIT_OPTION) == 0) {
                     if (game_in_progress && !show_confirmation("Do you want to exit?")) {

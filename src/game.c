@@ -6,10 +6,8 @@
 #include "character/player.h"
 #include "combat/ability.h"
 #include "combat/combat_mode.h"
-#include "combat/damage.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
-#include "item/gear.h"
 #include "item/potion.h"
 #include "logging/logger.h"
 #include "map/map.h"
@@ -40,7 +38,7 @@ int init_game() {
     srand(time(NULL));
 
     // Initialize database connection
-    DBConnection db_connection;
+    db_connection_t db_connection;
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
@@ -90,9 +88,6 @@ int init_game() {
                     case MENU_SAVE_GAME:
                         log_msg(INFO, "Game", "Saving game state to database");
 
-                        int player_x, player_y;
-                        get_player_pos(&player_x, &player_y);
-
                         // Get the save name from the menu
                         const char* save_name = get_save_name();
                         if (save_name == NULL) {
@@ -100,7 +95,7 @@ int init_game() {
                         }
 
                         // Save the game with the provided name
-                        save_game_state(&db_connection, WIDTH, HEIGHT, (int(*)[HEIGHT]) map, (int(*)[HEIGHT]) revealed_map, player_x, player_y, save_name);
+                        save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
                         log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
                         tb_clear();
@@ -109,41 +104,22 @@ int init_game() {
                     case MENU_LOAD_GAME:
                         log_msg(INFO, "Game", "Loading game state from database");
 
-                        int width, height;
-                        int load_player_x, load_player_y;
-                        int* loaded_map = NULL;
-                        int* loaded_revealed_map = NULL;
-                        int save_id = get_selected_save_file_id();
+                        const int save_id = get_selected_save_file_id();
                         bool load_success = false;
 
                         if (save_id != -1) {
                             // Load the selected save file
                             log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
-                            load_success = get_game_state_by_id(&db_connection, save_id, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y);
+                            load_success = get_game_state_by_id(&db_connection, save_id, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
                         } else {
                             // No save file was selected, try loading the latest save
                             log_msg(INFO, "Game", "No save ID provided, loading most recent save");
-                            load_success = get_game_state(&db_connection, &width, &height, &loaded_map, &loaded_revealed_map, &load_player_x, &load_player_y);
+                            load_success = get_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
                         }
 
                         if (load_success) {
-                            // Copy loaded data to the game's map arrays
-                            for (int y = 0; y < height; y++) {
-                                for (int x = 0; x < width; x++) {
-                                    map[x][y] = loaded_map[y * width + x];
-                                    revealed_map[x][y] = loaded_revealed_map[y * width + x];
-                                }
-                            }
-
-                            // Set player position
-                            set_player_start_pos(load_player_x, load_player_y);
-
                             // Set game_in_progress flag
                             game_in_progress = true;
-
-                            // Free allocated memory
-                            free(loaded_map);
-                            free(loaded_revealed_map);
 
                             log_msg(INFO, "Game", "Game state loaded successfully");
                             tb_clear();

@@ -5,7 +5,7 @@
 
 
 void test_db_open() {
-    DBConnection db_connection;
+    db_connection_t db_connection;
     assert(db_open(&db_connection, "test.db") == 1);
     db_close(&db_connection);
     printf("Test_db_open passed\n");

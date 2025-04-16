@@ -1,6 +1,8 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
+#include "../common.h"
+
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
 
@@ -16,13 +18,11 @@ typedef enum {
 
 void set_player_start_pos(int player_x, int player_y);
 
-
 /**
- * Get the current player position
- * @param x pointer to store the x coordinate
- * @param y pointer to store the y coordinate
+ * @brief Get the current player position
+ * @return the player position as a vector2d_t structure
  */
-void get_player_pos(int* x, int* y);
+vector2d_t get_player_pos();
 
 map_mode_result_t map_mode_update(void);
 int init_map_mode(void);

@@ -18,9 +18,8 @@ void set_player_start_pos(const int player_x, const int player_y) {
 }
 
 
-void get_player_pos(int* x, int* y) {
-    if (x != NULL) *x = player_pos.dx;
-    if (y != NULL) *y = player_pos.dy;
+vector2d_t get_player_pos() {
+    return player_pos;
 }
 
 
@@ -28,10 +27,10 @@ map_mode_result_t handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
-    if (event->key == TB_KEY_ESC || event->key == TB_KEY_CTRL_C) return QUIT;
+    if (event->key == TB_KEY_CTRL_C) return QUIT;
 
     // Check for 'M' key press for menu
-    if (event->ch == 'm' || event->ch == 'M') return SHOW_MENU;
+    if (event->ch == 'm' || event->ch == 'M' || event->key == TB_KEY_ESC) return SHOW_MENU;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
