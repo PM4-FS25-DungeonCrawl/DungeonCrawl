@@ -6,12 +6,10 @@ helper_db = files(
     # actual needed files
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c'
-
+    '../src/database/local/local_database.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
-
 )
 
 helper_draw_light = files(

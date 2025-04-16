@@ -59,7 +59,7 @@ int init_game() {
     game_state_t current_state = MAIN_MENU;
 
 
-    if (init_local() != 0) {
+    if (init_local() == 0) {
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
     }

@@ -2,7 +2,6 @@
 
 #include "../../logging/logger.h"
 #include "../database.h"
-#include "attribute_database.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -15,7 +14,7 @@
  * @param db_connection (DBConnection)
  * @param attribute_name (AT_NAME)
  */
-int attribute_key(const DBConnection* db_connection, const char* attribute_name) {
+int attribute_key(const db_connection_t* db_connection, const char* attribute_name) {
     //Check if the database is open
     if (!db_is_open(db_connection)) {
         log_msg(ERROR, "Localization Database", "Database is not open");
@@ -50,7 +49,7 @@ int attribute_key(const DBConnection* db_connection, const char* attribute_name)
  * @param attribute_path (the chain of LC_AT_X where X is the attribute key (AT_ID), separated by dots, e.g. LC_AT_1.LC_AT_2.LC_AT_3.LC_AT_4 (4 is max))
  * @param language enum language_t where the value define the database column to use
  */
-char* get_localization_string(const DBConnection* db_connection, const char* attribute_path,
+char* get_localization_string(const db_connection_t* db_connection, const char* attribute_path,
                               const local_language_t* language) {
     //Check if the database is open
     if (!db_is_open(db_connection)) {

@@ -33,7 +33,7 @@ local_language_t current_language = LANGUAGE_EN;
 /**
  * The database connection
  */
-DBConnection local_db_connection;
+db_connection_t local_db_connection;
 
 /**
  * @brief Initialize the local module.
