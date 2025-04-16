@@ -7,6 +7,8 @@
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
 
+#include <stdbool.h>
+
 #define MAX_COMBAT_MENU_OPTIONS 2
 
 // === Internal Functions ===

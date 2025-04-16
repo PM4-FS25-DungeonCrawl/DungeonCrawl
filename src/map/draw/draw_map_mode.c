@@ -93,7 +93,8 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  */
 void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     tb_printf(x, y, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(x, y + 1, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    tb_printf(x, y + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
+    tb_printf(x, y + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
     for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {

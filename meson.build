@@ -29,6 +29,8 @@ src_files = files(
     'src/item/gear.c',
     'src/item/potion.c',
 
+    'src/menu/main_menu.c',
+
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
@@ -46,7 +48,8 @@ debug_files = files(
 # List of all database files
 database_files = files(
     'include/sqlite3.c',
-    'src/database/database.c'
+    'src/database/database.c',
+    'src/database/gamestate/gamestate_database.c'
 )
 
 logging_files = files(
