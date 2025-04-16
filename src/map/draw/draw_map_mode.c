@@ -30,7 +30,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     CHECK_ARG_VOID(anchor.dx < 0 || anchor.dy < 0, "Draw Map Mode", "In draw_map_mode given anchor is negative");
     CHECK_ARG_VOID(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
-    tb_printf(anchor.dx + width/2 - 7, anchor.dy, TB_RED, TB_BLACK, "Dungeon Crawl");
+    tb_printf(anchor.dx + width / 2 - 7, anchor.dy, TB_RED, TB_BLACK, "Dungeon Crawl");
     vector2d_t map_anchor = {anchor.dx, anchor.dy + 2};
 
     for (int y = 0; y < height; y++) {
