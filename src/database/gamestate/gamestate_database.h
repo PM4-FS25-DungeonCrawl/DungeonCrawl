@@ -7,7 +7,7 @@
 #define MAX_NUMBER_SAVES 20
 #define TIMESTAMP_LENGTH 20
 
-typedef void (* player_pos_setter_t)(int player_x, int player_y);
+typedef void (*player_pos_setter_t)(int player_x, int player_y);
 
 typedef struct {
     int id;

@@ -188,7 +188,7 @@ char* get_iso8601_time() {
 }
 
 char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
-    const size_t buffer_size = width * height * 12 + 2; // 16 is a safe estimate for int size + comma + space
+    const size_t buffer_size = width * height * 12 + 2;// 16 is a safe estimate for int size + comma + space
     char* json = malloc(buffer_size);
     if (json == NULL) {
         log_msg(ERROR, "GameState", "Failed to allocate memory for JSON string");
@@ -200,10 +200,10 @@ char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
     const int total_elements = width * height;
     // Loop over the 2D map and append each element in a 1D fashion
     for (int i = 0; i < total_elements; i++) {
-        char number[10]; // Buffer to hold the number as a string
+        char number[10];// Buffer to hold the number as a string
         // Write the value into the buffer
         snprintf(number, sizeof(number), "%d", arr[i]);
-        strcat(json, number); // Append the number to the JSON string
+        strcat(json, number);// Append the number to the JSON string
 
         // If it's not the last element, append a comma
         if (i < total_elements - 1) {
@@ -211,7 +211,7 @@ char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
         }
     }
 
-    strcat(json, "]"); //strcat always ensures that the string is null-terminated
+    strcat(json, "]");//strcat always ensures that the string is null-terminated
     return json;
 }
 
