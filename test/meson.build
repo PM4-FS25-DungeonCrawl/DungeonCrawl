@@ -7,11 +7,19 @@ helper_db = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c'
+
+
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c',
+
 )
 
 helper_draw_light = files(
     '../src/map/map.c',
-    '../src/map/draw/draw_light.c'
+    '../src/map/draw/draw_light.c',
+
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c',
 )
 
 helper_combat = files(

@@ -3,6 +3,8 @@
       |            ^
 ../src/game.c:42:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    42 |     srand(time(NULL));
+../src/game.c:38:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   38 |     srand(time(NULL));
       |     ^
 ../src/game.c:120:13: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
   120 |             case EXIT:
@@ -22,4 +24,8 @@
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
 Suppressed 86102 warnings (86090 in non-user code, 12 with check filters).
+../src/menu/main_menu.c:163:56: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  163 |                             save_name[name_length++] = input_event.ch;
+      |                                                        ^
+Suppressed 85069 warnings (85051 in non-user code, 18 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
