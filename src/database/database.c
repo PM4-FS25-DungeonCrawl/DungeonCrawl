@@ -90,6 +90,15 @@ int db_open(db_connection_t* db_connection, const char* db_name) {
     return 1;
 }
 
+
 void db_close(db_connection_t* db_connection) {
     sqlite3_close(db_connection->db);
+    db_connection->db = NULL;
+}
+
+int db_is_open(const db_connection_t* db_connection) {
+    if (db_connection->db == NULL) {
+        return 0;
+    }
+    return 1;
 }

@@ -7,7 +7,7 @@
 
 character_t* init_character(const character_type_t type, const char* name) {
     character_t* character = malloc(sizeof(character_t));
-    NULL_PTR_HANDLER(character, "Character", "Failed to allocate memory for character: %s", name);
+    NULL_PTR_HANDLER_RETURN(character, NULL, "Character", "Failed to allocate memory for character: %s", name);
 
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);

@@ -8,7 +8,7 @@
  */
 character_t* create_new_goblin(void) {
     character_t* goblin = init_character(MONSTER, "Goblin");
-    NULL_PTR_HANDLER(goblin, "Goblin", "Failed to allocate memory for goblin");
+    NULL_PTR_HANDLER_RETURN(goblin, NULL, "Goblin", "Failed to allocate memory for goblin");
 
 
     set_character_stats(goblin, 5, 5, 5, 5);

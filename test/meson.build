@@ -1,7 +1,12 @@
 # needed files for each test
 helper_db = files(
+    # used to resolve compile errors with log_msg
+    '../src/logging/logger.c',
+    '../src/logging/ringbuffer.c',
+    # actual needed files
     '../include/sqlite3.c',
     '../src/database/database.c',
+    '../src/database/local/local_database.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -31,13 +36,25 @@ helper_combat = files(
 
     '../include/termbox2.c',
     '../src/logging/logger.c',
-    '../src/logging/ringbuffer.c'
+    '../src/logging/ringbuffer.c',
+
+    '../src/local/local.c',
+    '../include/sqlite3.c',
+    '../src/database/database.c',
+    '../src/database/local/local_database.c'
 )
+
+
+# needed directories for each test
+#incdir_database = include_directories(
+#    '../test/'
+#)
 
 helper_ringbuffer = files(
     '../src/logging/ringbuffer.c'
 )
 
+# executables
 helper_memory = files(
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -52,6 +69,8 @@ test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c
 test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'])
 test_memory_management = executable('test_memory_management', 'memory/test_memory_management.c', helper_memory, c_args: ['-w'])
 
+
+# test
 test('test_combat_mode', test_combat_mode)
 test('test_character', test_character)
 test('test_database', test_database)

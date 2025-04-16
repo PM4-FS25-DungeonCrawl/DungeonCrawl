@@ -6,7 +6,7 @@
 
 gear_t* init_gear(const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses) {
     gear_t* gear = malloc(sizeof(gear_t));
-    NULL_PTR_HANDLER(gear, "Gear", "Failed to allocate memory for gear: %s", name);
+    NULL_PTR_HANDLER_RETURN(gear, NULL, "Gear", "Failed to allocate memory for gear: %s", name);
 
     snprintf(gear->name, sizeof(gear->name), "%s", name);
     gear->slot = slot;
