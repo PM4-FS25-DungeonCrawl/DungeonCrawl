@@ -6,6 +6,4 @@
 
 int init_game();
 
-int add(int a, int b);
-
-#endif // GAME_H
+#endif// GAME_H
