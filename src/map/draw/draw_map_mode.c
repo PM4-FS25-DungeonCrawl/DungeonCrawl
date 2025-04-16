@@ -2,6 +2,7 @@
 
 #include "../../../include/termbox2.h"
 #include "../../asciiart/ascii.h"
+#include "../../common.h"
 #include "../../logging/logger.h"
 
 
@@ -25,27 +26,21 @@ void draw_player_info(int x, int y, vector2d_t player_pos);
  * If any of the checks fail, an error message is logged and the function returns.
  */
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
-    if (arr == NULL) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given array is NULL");
-        return;
-    }
-    if (height <= 0 || width <= 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
-        return;
-    }
-    if (anchor.dx < 0 || anchor.dy < 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given anchor is negative");
-        return;
-    }
-    if (player_pos.dx < anchor.dx || player_pos.dy < anchor.dy || player_pos.dx >= anchor.dx + width || player_pos.dy >= anchor.dy + height) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given player position out of bounds");
-        return;
-    }
+    NULL_PTR_HANDLER_VOID(arr, "Draw Map Mode", "In draw_map_mode given array is NULL");
+    CHECK_ARG_VOID(height <= 0 || width <= 0, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
+    CHECK_ARG_VOID(anchor.dx < 0 || anchor.dy < 0, "Draw Map Mode", "In draw_map_mode given anchor is negative");
+    CHECK_ARG_VOID(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
-    for (int y = anchor.dx; y < height + anchor.dx; y++) {
-        for (int x = anchor.dy; x < width + anchor.dy; x++) {
+    tb_printf(anchor.dx + width/2 - 7, anchor.dy, TB_RED, TB_BLACK, "Dungeon Crawl");
+    vector2d_t map_anchor = {anchor.dx, anchor.dy + 2};
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            const int draw_x = x + map_anchor.dx;
+            const int draw_y = y + map_anchor.dy;
+
             if (x == player_pos.dx && y == player_pos.dy) {
-                tb_printf(x, y, TB_RED, TB_BLACK, "@");
+                tb_printf(draw_x, draw_y, TB_RED, TB_BLACK, "@");
                 continue;
             }
 
@@ -54,25 +49,25 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             switch (arr[access_idx]) {
                 case WALL:
-                    tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                    tb_printf(draw_x, draw_y, TB_BLUE, TB_BLUE, "#");
                     break;
                 case FLOOR:
-                    tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                    tb_printf(draw_x, draw_y, TB_WHITE, TB_BLACK, " ");
                     break;
                 case START_DOOR:
-                    tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                    tb_printf(draw_x, draw_y, TB_GREEN, TB_BLACK, "#");
                     break;
                 case EXIT_DOOR:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                    tb_printf(draw_x, draw_y, TB_YELLOW, TB_BLACK, "#");
                     break;
                 case KEY:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                    tb_printf(draw_x, draw_y, TB_YELLOW, TB_BLACK, "$");
                     break;
                 case GOBLIN:
-                    tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                    tb_printf(draw_x, draw_y, TB_WHITE, TB_RED, "!");
                     break;
                 case HIDDEN:
-                    tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
+                    tb_printf(draw_x, draw_y, TB_WHITE, TB_WHITE, " ");
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
@@ -81,7 +76,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
         }
     }
 
-    draw_player_info(anchor.dx, anchor.dy + height + 1, player_pos);
+    draw_player_info(anchor.dx, map_anchor.dy + height + 1, player_pos);
 }
 
 /**
