@@ -1,4 +1,5 @@
 #include "draw_light.h"
+
 #include "../map.h"
 
 #include <stdlib.h>
@@ -11,10 +12,10 @@
  * - the reverse check vector
  */
 const vector2d_t checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
+        {{1, 1}, {1, 0}},   // for up
+        {{-1, -1}, {-1, 0}},// for down
+        {{1, -1}, {0, -1}}, // for left
+        {{-1, 1}, {0, 1}},  // for right
 };
 
 
@@ -27,7 +28,7 @@ const vector2d_t checks_vector[4][2] = {
  * @param prev_wall_at pointer to variable, which should be written
  * @return 1 if loops must break, 0 when not
  */
-int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *prev_wall_at) {
+int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int* prev_wall_at) {
     if (j == 0) {
         //gets the x or y value of the calculated coordinates
         *prev_wall_at = abs(y * dir.dy + x * dir.dx);
@@ -51,7 +52,7 @@ int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *
  * @param j loop counter
  * @return
  */
-int process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j) {
+int process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j) {
     int break_loop = 0;
 
     switch (map[x][y]) {
@@ -91,7 +92,7 @@ int process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j) {
  * @param j loop counter
  * @return 1 if loops must break, 0 when not
  */
-int check_and_process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j,
+int check_and_process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j,
                            const vector2d_t diagonal_check, const vector2d_t reverse_check) {
     int quit = 0;
 
