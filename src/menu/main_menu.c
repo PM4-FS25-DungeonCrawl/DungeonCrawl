@@ -272,8 +272,11 @@ menu_result_t show_main_menu(bool game_in_progress) {
                     result = MENU_EXIT;
                     menu_active = false;
                 }
-            } else if (event.key == TB_KEY_CTRL_C || event.key == TB_KEY_ESC) {
+            } else if (event.key == TB_KEY_CTRL_C) {
                 result = MENU_EXIT;
+                menu_active = false;
+            } else if (event.key == TB_KEY_ESC) {
+                result = MENU_CONTINUE;
                 menu_active = false;
             }
         }
