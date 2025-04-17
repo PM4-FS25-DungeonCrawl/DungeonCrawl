@@ -59,36 +59,39 @@ int init_game() {
     int exit_code = 0;
     game_state_t current_state = MAIN_MENU;
 
+    ability_table_t* ability_table = NULL;
+    character_t* goblin = NULL;
+    character_t* player = NULL;
+    potion_t* healing_potion = NULL;
+
     // TODO: Check function return values!!
     if (init_local() == 0) {
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
-    }
-    if (init_combat_mode() != 0) {
+    } else if (init_combat_mode() != 0) {
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_GAME_MODE_INIT;
-    }
-    init_map_mode();
-    init_main_menu();
+    } else {
+        init_map_mode();
+        init_main_menu();
+        ability_table = init_ability_table();
+        goblin = create_new_goblin();//initialize standard goblin
+        player = create_new_player();//initialize blank player
+        healing_potion = init_potion("Healing Potion", HEALING, 20);
 
-
-    ability_table_t* ability_table = init_ability_table();
-    character_t* goblin = create_new_goblin();//initialize standard goblin
-    character_t* player = create_new_player();//initialize blank player
-    potion_t* healing_potion = init_potion("Healing Potion", HEALING, 20);
-
-    if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
-        log_msg(ERROR, "Game", "Failed to initialize game components");
-        current_state = EXIT_WITH_ERROR;
-        exit_code = FAIL_GAME_ENTITY_INIT;
-    } else if (current_state != EXIT_WITH_ERROR) {
-        // add abilities to player and goblin
-        add_ability(goblin, &ability_table->abilities[BITE]);
-        add_ability(player, &ability_table->abilities[FIREBALL]);
-        add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-        //add healing potion to player
-        add_potion(player, healing_potion);
-        log_msg(INFO, "Game", "game loop starting");
+        if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
+            log_msg(ERROR, "Game", "Failed to initialize game components");
+            current_state = EXIT_WITH_ERROR;
+            exit_code = FAIL_GAME_ENTITY_INIT;
+        } else {
+            // add abilities to player and goblin
+            add_ability(goblin, &ability_table->abilities[BITE]);
+            add_ability(player, &ability_table->abilities[FIREBALL]);
+            add_ability(player, &ability_table->abilities[SWORD_SLASH]);
+            //add healing potion to player
+            add_potion(player, healing_potion);
+            log_msg(INFO, "Game", "game loop starting");
+        }
     }
 
     while (running) {
