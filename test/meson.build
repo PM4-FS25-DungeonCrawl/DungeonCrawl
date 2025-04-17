@@ -27,8 +27,6 @@ helper_combat = files(
 
     '../src/combat/draw/draw_combat_mode.c',
 
-    '../src/combat/local/combat_mode_local.c',
-
     '../src/character/character.c',
     '../src/character/level.c',
     '../src/character/player.c',
