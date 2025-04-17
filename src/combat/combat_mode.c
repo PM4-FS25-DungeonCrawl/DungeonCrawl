@@ -7,6 +7,7 @@
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
+#include "../common.h"
 
 #include <stdbool.h>
 
@@ -30,6 +31,7 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
+char** menu_titles;
 char** combat_menu_options;
 char** ability_menu_options;
 char** potion_menu_options;
@@ -37,59 +39,38 @@ char** potion_menu_options;
 
 /**
  * @brief Initialize the combat mode
+ * @return int 0 on success, -1 on failure
  * @note This function must be called before using any other functions in this module.
  */
-void init_combat_mode(void) {
+int init_combat_mode(void) {
     combat_menu_options = (char**) malloc(sizeof(char*) * MAX_COMBAT_MENU_OPTIONS);
-    if (combat_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for combat menu options");
-        return;
-    }
-
+    NULL_PTR_HANDLER_RETURN(combat_menu_options, -1, "Combat Mode", "Failed to allocate memory for combat menu options");
     for (int i = 0; i < MAX_COMBAT_MENU_OPTIONS; i++) {
         combat_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (combat_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for combat menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
+        NULL_PTR_HANDLER_RETURN(combat_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for combat menu options");
     }
 
     ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
-    if (ability_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu options");
-        shutdown_combat_mode();
-        return;
-    }
+    NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Failed to allocate memory for ability menu options");
 
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
         ability_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (ability_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
+        NULL_PTR_HANDLER_RETURN(ability_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for ability menu options");
     }
 
     potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
-    if (potion_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu options");
-        shutdown_combat_mode();
-        return;
-    }
+    NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Failed to allocate memory for potion menu options");
 
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
         potion_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (potion_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
+        NULL_PTR_HANDLER_RETURN(potion_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for potion menu options");
     }
 
+    //update local function once, so the string are initialized
     update_local();
     //add update local function to the observer list
     add_local_observer(update_local);
+    return 0;
 }
 
 
@@ -413,6 +394,8 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
 void update_local(void) {
     //TODO: For now only the main combat menu options are localized
+
+
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
 }

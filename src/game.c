@@ -31,9 +31,10 @@ typedef enum {
 
 typedef enum {
     SUCCESS = 0,
-    FAIL_TB_INIT = 1,
-    FAIL_LOCAL_INIT = 2,
-    FAIL_GAME_ENTITY_INIT = 3,
+    FAIL_TB_INIT,
+    FAIL_LOCAL_INIT,
+    FAIL_GAME_MODE_INIT,
+    FAIL_GAME_ENTITY_INIT,
 } exit_code_t;
 
 int init_game() {
@@ -58,14 +59,17 @@ int init_game() {
     int exit_code = 0;
     game_state_t current_state = MAIN_MENU;
 
-
+    // TODO: Check function return values!!
     if (init_local() == 0) {
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
     }
+    if (init_combat_mode() != 0) {
+        current_state = EXIT_WITH_ERROR;
+        exit_code = FAIL_GAME_MODE_INIT;
+    }
     init_map_mode();
     init_main_menu();
-    init_combat_mode();
 
 
     ability_table_t* ability_table = init_ability_table();
@@ -209,9 +213,10 @@ int init_game() {
     free_character(goblin);
     free_character(player);
     free_potion(healing_potion);
-    shutdown_local();
     // Close database connection
     db_close(&db_connection);
+    // Shutdown all modules
+    shutdown_local();
     shutdown_combat_mode();
     shutdown_logger();
     tb_shutdown();
