@@ -39,4 +39,8 @@ typedef struct vector2d_t {
     int dy;
 } vector2d_t;
 
+typedef struct {
+    char characters[MAX_STRING_LENGTH];
+} string_max_t;
+
 #endif//COMMON_H

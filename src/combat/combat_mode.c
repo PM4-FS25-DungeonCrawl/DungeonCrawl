@@ -4,20 +4,13 @@
 #include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
+#include "../common.h"
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
+#include "local/combat_mode_local.h"
 
 #include <stdbool.h>
-
-#define MAX_COMBAT_MENU_OPTIONS 2
-
-//key define for localization
-#define MAIN_MENU_TITLE_KEY "COMBAT.MAIN.MENU.HEAD"
-#define MAIN_MENU_OPTION1_KEY "COMBAT.MAIN.MENU.OPTION1"
-#define MAIN_MENU_OPTION2_KEY "COMBAT.MAIN.MENU.OPTION2"
-#define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
-#define ITEM_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -30,66 +23,37 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
-char** combat_menu_options;
-char** ability_menu_options;
-char** potion_menu_options;
+memory_pool_t* pool;
+string_max_t* local_strings;
+
+string_max_t* ability_menu_options;// holds the ability menu options
+string_max_t* potion_menu_options; // holds the potion menu options
 
 
 /**
  * @brief Initialize the combat mode
+ * @param mem_pool the memory pool to use for allocating memory
+ * @return int 0 on success, -1 on failure
  * @note This function must be called before using any other functions in this module.
  */
-void init_combat_mode(void) {
-    combat_menu_options = (char**) malloc(sizeof(char*) * MAX_COMBAT_MENU_OPTIONS);
-    if (combat_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for combat menu options");
-        return;
-    }
+int init_combat_mode(memory_pool_t* mem_pool) {
+    NULL_PTR_HANDLER_RETURN(mem_pool, -1, "Combat Mode", "Memory pool is NULL");
+    pool = mem_pool;
 
-    for (int i = 0; i < MAX_COMBAT_MENU_OPTIONS; i++) {
-        combat_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (combat_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for combat menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
-    }
+    local_strings = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_STRINGS);
+    NULL_PTR_HANDLER_RETURN(pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
-    ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
-    if (ability_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu options");
-        shutdown_combat_mode();
-        return;
-    }
+    ability_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
+    NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Allocated memory for ability menu options in memory pool is NULL");
 
-    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
-        ability_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (ability_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
-    }
+    potion_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
+    NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Allocated memory for potion menu options in memory pool is NULL");
 
-    potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
-    if (potion_menu_options == NULL) {
-        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu options");
-        shutdown_combat_mode();
-        return;
-    }
-
-    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        potion_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
-        if (potion_menu_options[i] == NULL) {
-            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu option %d", i);
-            shutdown_combat_mode();
-            return;
-        }
-    }
-
+    //update local function once, so the string are initialized
     update_local();
     //add update local function to the observer list
-    add_observer(update_local);
+    add_local_observer(update_local);
+    return 0;
 }
 
 
@@ -150,7 +114,12 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, "Combat Menu:", (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
+        draw_combat_menu(anchor,
+                         local_strings[main_menu_title.idx].characters,
+                         &local_strings[main_menu_option1.idx],
+                         MAX_COMBAT_MENU_OPTIONS,
+                         selected_index,
+                         NULL);
 
         // check for input
         struct tb_event event;
@@ -191,7 +160,12 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
     while (!ability_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Ability Menu:", (const char**) ability_menu_options, player->ability_count, selected_index);
+        draw_combat_menu(anchor,
+                         local_strings[ability_menu_title.idx].characters,
+                         ability_menu_options,
+                         player->ability_count,
+                         selected_index,
+                         local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
@@ -237,7 +211,12 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
     while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Potion menu:", (const char**) potion_menu_options, player->potion_count, selected_index);
+        draw_combat_menu(anchor,
+                         local_strings[potion_menu_title.idx].characters,
+                         potion_menu_options,
+                         player->potion_count,
+                         selected_index,
+                         local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
@@ -376,14 +355,12 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
 void collect_ability_menu_options(ability_t* abilities[], const int count) {
     //clear the ability menu options
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
-        memset(ability_menu_options[i], '\0', sizeof(char) * MAX_STRING_LENGTH);
+        memset(ability_menu_options[i].characters, '\0', sizeof(char) * MAX_STRING_LENGTH);
     }
 
     for (int i = 0; i < count; i++) {
-        const char* ability_format = "%-16s Rolls: %-2d | Accuracy: %-3d%% | Cost: %-3d | Dice: %-4s | Type: %-16s";
-
-        snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
-                 ability_format,
+        snprintf(ability_menu_options[i].characters, MAX_STRING_LENGTH,
+                 local_strings[ability_menu_option_format.idx].characters,
                  abilities[i]->name,
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
@@ -397,14 +374,12 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
 void collect_potion_menu_options(potion_t* potions[], const int count) {
     // clear the potion menu options
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        memset(potion_menu_options[i], '\0', MAX_STRING_LENGTH);
+        memset(potion_menu_options[i].characters, '\0', MAX_STRING_LENGTH);
     }
 
     for (int i = 0; i < count; i++) {
-        const char* potion_format = "%-16s  Type: %-16s | Value: %-3d";
-
-        snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
-                 potion_format,
+        snprintf(potion_menu_options[i].characters, MAX_STRING_LENGTH,
+                 local_strings[potion_menu_option_format.idx].characters,
                  potions[i]->name,
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
@@ -412,30 +387,25 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 }
 
 void update_local(void) {
-    //TODO: For now only the main combat menu options are localized
-    snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
-    snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
+    //main menu
+    snprintf(local_strings[main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_title.key));
+    snprintf(local_strings[main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option1.key));
+    snprintf(local_strings[main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option2.key));
+
+    //ability menu
+    snprintf(local_strings[ability_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_title.key));
+    snprintf(local_strings[ability_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_option_format.key));
+
+    //potion menu
+    snprintf(local_strings[potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_title.key));
+    snprintf(local_strings[potion_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_option_format.key));
+
+    //tail message
+    snprintf(local_strings[menu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(menu_tail_message.key));
 }
 
 void shutdown_combat_mode(void) {
-    if (combat_menu_options != NULL) {
-        for (int i = 0; i < MAX_COMBAT_MENU_OPTIONS; i++) {
-            if (combat_menu_options[i] != NULL) free(combat_menu_options[i]);
-        }
-        free(combat_menu_options);
-    }
-
-    if (ability_menu_options != NULL) {
-        for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
-            if (ability_menu_options[i] != NULL) free(ability_menu_options[i]);
-        }
-        free(ability_menu_options);
-    }
-
-    if (potion_menu_options != NULL) {
-        for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-            if (potion_menu_options[i] != NULL) free(potion_menu_options[i]);
-        }
-        free(potion_menu_options);
-    }
+    memory_pool_free(pool, local_strings);
+    memory_pool_free(pool, ability_menu_options);
+    memory_pool_free(pool, potion_menu_options);
 }

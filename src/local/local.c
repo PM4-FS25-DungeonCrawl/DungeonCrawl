@@ -91,7 +91,7 @@ bool set_language(const local_language_t local_lang) {
  * Add an observer to the list.
  * @param update_func the function to be called when the language is updated
  */
-void add_observer(const update_observer_t update_func) {
+void add_local_observer(const update_observer_t update_func) {
     if (update_func == NULL || observer_list == NULL) {
         log_msg(ERROR, "Local", "Observer function is NULL or observer list is not initialized");
         return;

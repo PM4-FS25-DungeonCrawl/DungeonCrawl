@@ -14,6 +14,7 @@
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
+#include "memory/memory_management.h"
 #include "menu/main_menu.h"
 
 #include <stdbool.h>
@@ -31,9 +32,11 @@ typedef enum {
 
 typedef enum {
     SUCCESS = 0,
-    FAIL_TB_INIT = 1,
-    FAIL_LOCAL_INIT = 2,
-    FAIL_GAME_ENTITY_INIT = 3,
+    FAIL_TB_INIT,
+    FAIL_MEM_POOL_INIT,
+    FAIL_LOCAL_INIT,
+    FAIL_GAME_MODE_INIT,
+    FAIL_GAME_ENTITY_INIT,
 } exit_code_t;
 
 int init_game() {
@@ -50,7 +53,7 @@ int init_game() {
     db_connection_t db_connection;
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
-        return 1;
+        return -1;
     }
 
     bool running = true;          //should only be set in the state machine
@@ -58,33 +61,43 @@ int init_game() {
     int exit_code = 0;
     game_state_t current_state = MAIN_MENU;
 
+    ability_table_t* ability_table = NULL;
+    character_t* goblin = NULL;
+    character_t* player = NULL;
+    potion_t* healing_potion = NULL;
+    memory_pool_t* memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
 
-    if (init_local() == 0) {
+    if (memory_pool == NULL) {
+        log_msg(ERROR, "Game", "Failed to initialize memory pool");
+        current_state = EXIT_WITH_ERROR;
+        exit_code = FAIL_MEM_POOL_INIT;
+    } else if (init_local() == 0) {// TODO: Check function return values!!
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
-    }
-    init_map_mode();
-    init_main_menu();
-    init_combat_mode();
-
-
-    ability_table_t* ability_table = init_ability_table();
-    character_t* goblin = create_new_goblin();//initialize standard goblin
-    character_t* player = create_new_player();//initialize blank player
-    potion_t* healing_potion = init_potion("Healing Potion", HEALING, 20);
-
-    if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
-        log_msg(ERROR, "Game", "Failed to initialize game components");
+    } else if (init_combat_mode(memory_pool) != 0) {
         current_state = EXIT_WITH_ERROR;
-        exit_code = FAIL_GAME_ENTITY_INIT;
-    } else if (current_state != EXIT_WITH_ERROR) {
-        // add abilities to player and goblin
-        add_ability(goblin, &ability_table->abilities[BITE]);
-        add_ability(player, &ability_table->abilities[FIREBALL]);
-        add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-        //add healing potion to player
-        add_potion(player, healing_potion);
-        log_msg(INFO, "Game", "game loop starting");
+        exit_code = FAIL_GAME_MODE_INIT;
+    } else {
+        init_map_mode();
+        init_main_menu();
+        ability_table = init_ability_table();
+        goblin = create_new_goblin();//initialize standard goblin
+        player = create_new_player();//initialize blank player
+        healing_potion = init_potion("Healing Potion", HEALING, 20);
+
+        if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
+            log_msg(ERROR, "Game", "Failed to initialize game components");
+            current_state = EXIT_WITH_ERROR;
+            exit_code = FAIL_GAME_ENTITY_INIT;
+        } else {
+            // add abilities to player and goblin
+            add_ability(goblin, &ability_table->abilities[BITE]);
+            add_ability(player, &ability_table->abilities[FIREBALL]);
+            add_ability(player, &ability_table->abilities[SWORD_SLASH]);
+            //add healing potion to player
+            add_potion(player, healing_potion);
+            log_msg(INFO, "Game", "game loop starting");
+        }
     }
 
     while (running) {
@@ -183,7 +196,6 @@ int init_game() {
                     case PLAYER_WON:
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
-                        // TODO: delete goblin from map
                         tb_clear();
                         current_state = MAP_MODE;
                         break;
@@ -209,10 +221,12 @@ int init_game() {
     free_character(goblin);
     free_character(player);
     free_potion(healing_potion);
-    shutdown_local();
     // Close database connection
     db_close(&db_connection);
+    // Shutdown all modules
+    shutdown_local();
     shutdown_combat_mode();
+    shutdown_memory_pool(memory_pool);
     shutdown_logger();
     tb_shutdown();
     return exit_code;

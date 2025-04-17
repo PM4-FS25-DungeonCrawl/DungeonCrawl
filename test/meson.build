@@ -24,6 +24,7 @@ helper_combat = files(
     '../src/combat/combat_mode.c',
     '../src/combat/ability.c',
     '../src/combat/damage.c',
+
     '../src/combat/draw/draw_combat_mode.c',
 
     '../src/character/character.c',
@@ -41,7 +42,9 @@ helper_combat = files(
     '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c'
+    '../src/database/local/local_database.c',
+
+    '../src/memory/memory_management.c'
 )
 
 
