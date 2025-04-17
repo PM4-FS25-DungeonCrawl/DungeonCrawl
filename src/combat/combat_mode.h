@@ -3,8 +3,8 @@
 
 #include "../character/character_fw.h"
 #include "../item/potion.h"
-#include "ability_fw.h"
 #include "../memory/memory_management.h"
+#include "ability_fw.h"
 
 typedef enum {
     COMBAT_MENU,

@@ -1,8 +1,8 @@
 #ifndef COMBAT_MODE_LOCAL_H
 #define COMBAT_MODE_LOCAL_H
 
-#include "../../memory/memory_management.h"
 #include "../../common.h"
+#include "../../memory/memory_management.h"
 
 #define MAX_MENU_TITLES 3
 #define MAX_OPTION_FORMATS 2
@@ -44,4 +44,4 @@ static const local_key_t potion_menu_title = {POTION_MENU_INDEX, "COMBAT.POTION.
 static const local_key_t potion_menu_option_format = {POTION_FORMAT_INDEX, "COMBAT.POTION.MENU.OPTION_FORMAT"};
 
 static const local_key_t menu_tail_message = {TAIL_MSG_INDEX, "COMBAT.ALL.MENU.TAIL"};
-#endif //COMBAT_MODE_LOCAL_H
+#endif//COMBAT_MODE_LOCAL_H

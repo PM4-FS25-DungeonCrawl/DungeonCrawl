@@ -14,8 +14,8 @@
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
-#include "menu/main_menu.h"
 #include "memory/memory_management.h"
+#include "menu/main_menu.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -71,7 +71,7 @@ int init_game() {
         log_msg(ERROR, "Game", "Failed to initialize memory pool");
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_MEM_POOL_INIT;
-    } else if (init_local() == 0) { // TODO: Check function return values!!
+    } else if (init_local() == 0) {// TODO: Check function return values!!
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
     } else if (init_combat_mode(memory_pool) != 0) {

@@ -1,5 +1,4 @@
 #include "combat_mode.h"
-#include "local/combat_mode_local.h"
 
 #include "../../include/termbox2.h"
 #include "../asciiart/ascii.h"
@@ -9,6 +8,7 @@
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
+#include "local/combat_mode_local.h"
 
 #include <stdbool.h>
 
@@ -26,7 +26,7 @@ vector2d_t combat_view_anchor = {1, 1};
 memory_pool_t* pool;
 string_max_t* local_strings;
 
-string_max_t* ability_menu_options; // holds the ability menu options
+string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
 
 
@@ -115,11 +115,11 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
     while (!submenu_selected) {
         // draw menu options
         draw_combat_menu(anchor,
-            local_strings[main_menu_title.idx].characters,
-            &local_strings[main_menu_option1.idx],
-            MAX_COMBAT_MENU_OPTIONS,
-            selected_index,
-            NULL);
+                         local_strings[main_menu_title.idx].characters,
+                         &local_strings[main_menu_option1.idx],
+                         MAX_COMBAT_MENU_OPTIONS,
+                         selected_index,
+                         NULL);
 
         // check for input
         struct tb_event event;
@@ -161,11 +161,11 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
     while (!ability_used_or_esc) {
         // draw menu options
         draw_combat_menu(anchor,
-            local_strings[ability_menu_title.idx].characters,
-            ability_menu_options,
-            player->ability_count,
-            selected_index,
-            local_strings[menu_tail_message.idx].characters);
+                         local_strings[ability_menu_title.idx].characters,
+                         ability_menu_options,
+                         player->ability_count,
+                         selected_index,
+                         local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
@@ -212,11 +212,11 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     while (!item_used_or_esc) {
         // draw menu options
         draw_combat_menu(anchor,
-            local_strings[potion_menu_title.idx].characters,
-            potion_menu_options,
-            player->potion_count,
-            selected_index,
-            local_strings[menu_tail_message.idx].characters);
+                         local_strings[potion_menu_title.idx].characters,
+                         potion_menu_options,
+                         player->potion_count,
+                         selected_index,
+                         local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
