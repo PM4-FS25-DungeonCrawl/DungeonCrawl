@@ -11,6 +11,11 @@
 
 #include <stdbool.h>
 
+#define MAIN_MENU_INDEX 0
+#define ABILITY_MENU_INDEX 1
+#define POTION_MENU_INDEX 2
+
+#define MAX_MENU_TITLES 3
 #define MAX_COMBAT_MENU_OPTIONS 2
 
 //key define for localization
@@ -18,7 +23,7 @@
 #define MAIN_MENU_OPTION1_KEY "COMBAT.MAIN.MENU.OPTION1"
 #define MAIN_MENU_OPTION2_KEY "COMBAT.MAIN.MENU.OPTION2"
 #define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
-#define ITEM_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
+#define POTION_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -31,6 +36,7 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
+// === Arrays of Strings for Local ===
 char** menu_titles;
 char** combat_menu_options;
 char** ability_menu_options;
@@ -43,6 +49,15 @@ char** potion_menu_options;
  * @note This function must be called before using any other functions in this module.
  */
 int init_combat_mode(void) {
+    //malloc the strings for the menu titles
+    menu_titles = (char**) malloc(sizeof(char*) * MAX_MENU_TITLES);
+    NULL_PTR_HANDLER_RETURN(menu_titles, -1, "Combat Mode", "Failed to allocate memory for menu titles");
+    for (int i = 0; i < MAX_MENU_TITLES; i++) {
+        menu_titles[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+        NULL_PTR_HANDLER_RETURN(menu_titles[i], -1, "Combat Mode", "Failed to allocate memory for menu titles");
+    }
+
+    // malloc the strings for the menu options
     combat_menu_options = (char**) malloc(sizeof(char*) * MAX_COMBAT_MENU_OPTIONS);
     NULL_PTR_HANDLER_RETURN(combat_menu_options, -1, "Combat Mode", "Failed to allocate memory for combat menu options");
     for (int i = 0; i < MAX_COMBAT_MENU_OPTIONS; i++) {
@@ -50,17 +65,17 @@ int init_combat_mode(void) {
         NULL_PTR_HANDLER_RETURN(combat_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for combat menu options");
     }
 
+    // malloc the strings for the ability menu options
     ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
     NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Failed to allocate memory for ability menu options");
-
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
         ability_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
         NULL_PTR_HANDLER_RETURN(ability_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for ability menu options");
     }
 
+    // malloc the strings for the potion menu options
     potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
     NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Failed to allocate memory for potion menu options");
-
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
         potion_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
         NULL_PTR_HANDLER_RETURN(potion_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for potion menu options");
@@ -131,7 +146,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, "Combat Menu:", (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
+        draw_combat_menu(anchor, menu_titles[MAIN_MENU_INDEX], (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
 
         // check for input
         struct tb_event event;
@@ -172,7 +187,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
     while (!ability_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Ability Menu:", (const char**) ability_menu_options, player->ability_count, selected_index);
+        draw_combat_menu(anchor, menu_titles[ABILITY_MENU_INDEX], (const char**) ability_menu_options, player->ability_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -218,7 +233,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
     while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Potion menu:", (const char**) potion_menu_options, player->potion_count, selected_index);
+        draw_combat_menu(anchor, menu_titles[POTION_MENU_INDEX], (const char**) potion_menu_options, player->potion_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -394,8 +409,9 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
 void update_local(void) {
     //TODO: For now only the main combat menu options are localized
-
-
+    snprintf(menu_titles[MAIN_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_TITLE_KEY));
+    snprintf(menu_titles[ABILITY_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(ABILITY_MENU_TITLE_KEY));
+    snprintf(menu_titles[POTION_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(POTION_MENU_TITLE_KEY));
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
 }
