@@ -4,10 +4,10 @@
 #include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
+#include "../common.h"
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
-#include "../common.h"
 
 #include <stdbool.h>
 
