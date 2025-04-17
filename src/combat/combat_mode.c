@@ -11,19 +11,28 @@
 
 #include <stdbool.h>
 
+
+#define MAX_COMBAT_MENU_OPTIONS 2
+
+//indexes for the menu titles
 #define MAIN_MENU_INDEX 0
 #define ABILITY_MENU_INDEX 1
 #define POTION_MENU_INDEX 2
-
 #define MAX_MENU_TITLES 3
-#define MAX_COMBAT_MENU_OPTIONS 2
+
+//indexes for the options format
+#define ABILITY_FORMAT_INDEX 0
+#define POTION_FORMAT_INDEX 1
+#define MAX_FORMATS 2
 
 //key define for localization
 #define MAIN_MENU_TITLE_KEY "COMBAT.MAIN.MENU.HEAD"
 #define MAIN_MENU_OPTION1_KEY "COMBAT.MAIN.MENU.OPTION1"
 #define MAIN_MENU_OPTION2_KEY "COMBAT.MAIN.MENU.OPTION2"
 #define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
-#define POTION_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
+#define POTION_MENU_TITLE_KEY "COMBAT.POTION.MENU.HEAD"
+#define ABILITY_OPTION_FORMAT_KEY "COMBAT.ABILITY.MENU.OPTION_FORMAT"
+#define POTION_OPTION_FORMAT_KEY "COMBAT.POTION.MENU.OPTION_FORMAT"
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -37,10 +46,11 @@ void update_local(void);
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
 // === Arrays of Strings for Local ===
-char** menu_titles;
-char** combat_menu_options;
-char** ability_menu_options;
-char** potion_menu_options;
+char** menu_titles; // holds all the menu titles
+char** option_formats;// holds the format for the ability and potion menu options
+char** combat_menu_options; // holds the combat menu options
+char** ability_menu_options; // holds the ability menu options
+char** potion_menu_options; // holds the potion menu options
 
 
 /**
@@ -55,6 +65,14 @@ int init_combat_mode(void) {
     for (int i = 0; i < MAX_MENU_TITLES; i++) {
         menu_titles[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
         NULL_PTR_HANDLER_RETURN(menu_titles[i], -1, "Combat Mode", "Failed to allocate memory for menu titles");
+    }
+
+    //malloc the strings for the option formats
+    option_formats = (char**) malloc(sizeof(char*) * MAX_FORMATS);
+    NULL_PTR_HANDLER_RETURN(option_formats, -1, "Combat Mode", "Failed to allocate memory for option formats");
+    for (int i = 0; i < MAX_FORMATS; i++) {
+        option_formats[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+        NULL_PTR_HANDLER_RETURN(option_formats[i], -1, "Combat Mode", "Failed to allocate memory for option formats");
     }
 
     // malloc the strings for the menu options
@@ -376,10 +394,8 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
-        const char* ability_format = "%-16s Rolls: %-2d | Accuracy: %-3d%% | Cost: %-3d | Dice: %-4s | Type: %-16s";
-
         snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
-                 ability_format,
+                 option_formats[ABILITY_FORMAT_INDEX],
                  abilities[i]->name,
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
@@ -397,10 +413,8 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
-        const char* potion_format = "%-16s  Type: %-16s | Value: %-3d";
-
         snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
-                 potion_format,
+                 option_formats[POTION_FORMAT_INDEX],
                  potions[i]->name,
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
@@ -412,6 +426,8 @@ void update_local(void) {
     snprintf(menu_titles[MAIN_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_TITLE_KEY));
     snprintf(menu_titles[ABILITY_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(ABILITY_MENU_TITLE_KEY));
     snprintf(menu_titles[POTION_MENU_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(POTION_MENU_TITLE_KEY));
+    snprintf(option_formats[ABILITY_FORMAT_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(ABILITY_OPTION_FORMAT_KEY));
+    snprintf(option_formats[POTION_FORMAT_INDEX], MAX_STRING_LENGTH, "%s", get_local_string(POTION_OPTION_FORMAT_KEY));
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
 }
