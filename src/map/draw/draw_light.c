@@ -3,6 +3,21 @@
 
 #include <stdlib.h>
 
+
+/**
+ * Each array row corresponds to the vector in {@link directions} array.
+ * A row contains:
+ * - the diagonal check vector
+ * - the reverse check vector
+ */
+const vector2d_t checks_vector[4][2] = {
+    {{1, 1}, {1, 0}}, // for up
+    {{-1, -1}, {-1, 0}}, // for down
+    {{1, -1}, {0, -1}}, // for left
+    {{-1, 1}, {0, 1}}, // for right
+};
+
+
 /**
  * This is a helper function to check if the loop needs to break with this specific edge case.
  * @param x current tile x-coordinates
@@ -28,26 +43,9 @@ int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *
 
 
 /**
- * Each array row corresponds to the vector in {@link directions} array.
- * A row contains:
- * - the diagonal check vector
- * - the reverse check vector
- */
-const vector2d_t checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
-};
-
-
-/**
  * This function processes the tile at the given coordinates and updates the revealed_map array.
- * @param map original map tile array
- * @param revealed_map the array to be updated
  * @param x current tile x-coordinates
  * @param y current tile y-coordinates
- * @param HEIGHT the HEIGHT of the map
  * @param prev_wall_at index of the previous wall tile
  * @param dir the direction to check
  * @param j loop counter
@@ -83,6 +81,16 @@ int process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j) {
     return break_loop;
 }
 
+
+/**
+ * This function checks if the tile at the given coordinates is valid and processes it.
+ * @param x current tile x-coordinates
+ * @param y current tile y-coordinates
+ * @param prev_wall_at index of the previous wall tile
+ * @param dir the direction to check
+ * @param j loop counter
+ * @return 1 if loops must break, 0 when not
+ */
 int check_and_process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j,
                            const vector2d_t diagonal_check, const vector2d_t reverse_check) {
     int quit = 0;
