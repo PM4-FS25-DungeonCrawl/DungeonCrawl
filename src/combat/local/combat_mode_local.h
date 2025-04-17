@@ -39,5 +39,7 @@ const local_key_t ability_menu_option_format = {ABILITY_FORMAT_INDEX, "COMBAT.AB
 const local_key_t potion_menu_title = {POTION_MENU_INDEX, "COMBAT.POTION.MENU.HEAD"};
 const local_key_t potion_menu_option_format = {POTION_FORMAT_INDEX, "COMBAT.POTION.MENU.OPTION_FORMAT"};
 
+const local_key_t tail_message = {0, "COMBAT.ALL.MENU.TAIL"};
+
 
 #endif //COMBAT_MODE_LOCAL_H

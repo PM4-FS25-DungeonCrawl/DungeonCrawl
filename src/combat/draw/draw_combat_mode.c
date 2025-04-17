@@ -46,28 +46,31 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
  * @param menu_options the options of the menu
  * @param menu_option_count the number of options in the menu
  * @param selected_index the index of the selected option
+ * @param tail_msg the message to be displayed at the bottom of the menu. If the msg is NULL, it will not be displayed.
  * @note this function only presents the drawn menu (without clearing the screen)
  */
-void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char* menu_options[], const int menu_option_count, const int selected_index) {
+void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char* menu_options[], const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Draw Combat Menu", "Menu options are NULL");
         return;
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
 
-    tb_print(1, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
+    tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
             char buffer[MAX_STRING_LENGTH];
             snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i]);
-            tb_print(anchor.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
+            tb_print(vec.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
         } else {
             char buffer[MAX_STRING_LENGTH];
             snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i]);
-            tb_print(anchor.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
+            tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
         }
     }
-    tb_print(1, vec.dy + 2, TB_WHITE, TB_DEFAULT, "[ESC] Return to menu");
+    if (tail_msg != NULL) {
+        tb_print(vec.dx, vec.dy + 2, TB_WHITE, TB_DEFAULT, tail_msg);
+    }
     tb_present();
 }
 

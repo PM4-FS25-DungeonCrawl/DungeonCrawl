@@ -31,6 +31,8 @@ char** combat_menu_options; // holds the combat menu options
 char** ability_menu_options; // holds the ability menu options
 char** potion_menu_options; // holds the potion menu options
 
+char* tail_msg; // used to display the last message in the menu
+
 
 /**
  * @brief Initialize the combat mode
@@ -77,6 +79,9 @@ int init_combat_mode(void) {
         potion_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
         NULL_PTR_HANDLER_RETURN(potion_menu_options[i], -1, "Combat Mode", "Failed to allocate memory for potion menu options");
     }
+
+    tail_msg = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+    NULL_PTR_HANDLER_RETURN(tail_msg, -1, "Combat Mode", "Failed to allocate memory for tail message");
 
     //update local function once, so the string are initialized
     update_local();
@@ -143,7 +148,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
     while (!submenu_selected) {
         // draw menu options
-        draw_combat_menu(anchor, menu_titles[main_menu_title.idx], (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index);
+        draw_combat_menu(anchor, menu_titles[main_menu_title.idx], (const char**) combat_menu_options, MAX_COMBAT_MENU_OPTIONS, selected_index, NULL);
 
         // check for input
         struct tb_event event;
@@ -184,7 +189,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
     while (!ability_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, menu_titles[ability_menu_title.idx], (const char**) ability_menu_options, player->ability_count, selected_index);
+        draw_combat_menu(anchor, menu_titles[ability_menu_title.idx], (const char**) ability_menu_options, player->ability_count, selected_index, tail_msg);
 
         // check for input
         struct tb_event event;
@@ -230,7 +235,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
     while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, menu_titles[potion_menu_title.idx], (const char**) potion_menu_options, player->potion_count, selected_index);
+        draw_combat_menu(anchor, menu_titles[potion_menu_title.idx], (const char**) potion_menu_options, player->potion_count, selected_index, tail_msg);
 
         // check for input
         struct tb_event event;
@@ -413,6 +418,9 @@ void update_local(void) {
     //potion menu
     snprintf(menu_titles[potion_menu_title.idx], MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_title.key));
     snprintf(option_formats[potion_menu_option_format.idx], MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_option_format.key));
+
+    //tail message
+    snprintf(tail_msg, MAX_STRING_LENGTH, "%s", get_local_string(tail_message.key));
 }
 
 void shutdown_combat_mode(void) {
@@ -449,5 +457,9 @@ void shutdown_combat_mode(void) {
             if (potion_menu_options[i] != NULL) free(potion_menu_options[i]);
         }
         free(potion_menu_options);
+    }
+
+    if (tail_msg != NULL) {
+        free(tail_msg);
     }
 }
