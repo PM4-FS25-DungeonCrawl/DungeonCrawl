@@ -15,6 +15,7 @@
 #include "map/map_generator.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "memory/memory_management.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,6 +33,7 @@ typedef enum {
 typedef enum {
     SUCCESS = 0,
     FAIL_TB_INIT,
+    FAIL_MEM_POOL_INIT,
     FAIL_LOCAL_INIT,
     FAIL_GAME_MODE_INIT,
     FAIL_GAME_ENTITY_INIT,
@@ -51,7 +53,7 @@ int init_game() {
     db_connection_t db_connection;
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
-        return 1;
+        return -1;
     }
 
     bool running = true;          //should only be set in the state machine
@@ -63,12 +65,16 @@ int init_game() {
     character_t* goblin = NULL;
     character_t* player = NULL;
     potion_t* healing_potion = NULL;
+    memory_pool_t* memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
 
-    // TODO: Check function return values!!
-    if (init_local() == 0) {
+    if (memory_pool == NULL) {
+        log_msg(ERROR, "Game", "Failed to initialize memory pool");
+        current_state = EXIT_WITH_ERROR;
+        exit_code = FAIL_MEM_POOL_INIT;
+    } else if (init_local() == 0) { // TODO: Check function return values!!
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_LOCAL_INIT;
-    } else if (init_combat_mode() != 0) {
+    } else if (init_combat_mode(memory_pool) != 0) {
         current_state = EXIT_WITH_ERROR;
         exit_code = FAIL_GAME_MODE_INIT;
     } else {
@@ -190,7 +196,6 @@ int init_game() {
                     case PLAYER_WON:
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
-                        // TODO: delete goblin from map
                         tb_clear();
                         current_state = MAP_MODE;
                         break;
@@ -221,6 +226,7 @@ int init_game() {
     // Shutdown all modules
     shutdown_local();
     shutdown_combat_mode();
+    shutdown_memory_pool(memory_pool);
     shutdown_logger();
     tb_shutdown();
     return exit_code;

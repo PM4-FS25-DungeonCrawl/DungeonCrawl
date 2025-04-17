@@ -23,6 +23,9 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
+memory_pool_t* pool;
+char** local_strings;
+
 // === Arrays of Strings for Local ===
 char** menu_titles; // holds all the menu titles
 char** option_formats;// holds the format for the ability and potion menu options
@@ -36,10 +39,14 @@ char* menu_tail_msg; // used to display the last message in the menu
 
 /**
  * @brief Initialize the combat mode
+ * @param mem_pool The memory pool to use for allocating memory
  * @return int 0 on success, -1 on failure
  * @note This function must be called before using any other functions in this module.
  */
-int init_combat_mode(void) {
+int init_combat_mode(memory_pool_t* mem_pool) {
+    NULL_PTR_HANDLER_RETURN(mem_pool, -1, "Combat Mode", "Memory pool is NULL");
+    pool = mem_pool;
+
     //malloc the strings for the menu titles
     menu_titles = (char**) malloc(sizeof(char*) * MAX_MENU_TITLES);
     NULL_PTR_HANDLER_RETURN(menu_titles, -1, "Combat Mode", "Failed to allocate memory for menu titles");

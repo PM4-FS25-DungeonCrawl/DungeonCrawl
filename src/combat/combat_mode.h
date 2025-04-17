@@ -4,6 +4,7 @@
 #include "../character/character_fw.h"
 #include "../item/potion.h"
 #include "ability_fw.h"
+#include "../memory/memory_management.h"
 
 typedef enum {
     COMBAT_MENU,
@@ -19,7 +20,7 @@ typedef enum {
     EXIT_GAME
 } combat_result_t;
 
-int init_combat_mode(void);
+int init_combat_mode(memory_pool_t* mem_pool);
 combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
