@@ -89,7 +89,7 @@ void init_combat_mode(void) {
 
     update_local();
     //add update local function to the observer list
-    add_observer(update_local);
+    add_local_observer(update_local);
 }
 
 
