@@ -24,6 +24,7 @@ void level_up(character_t* player) {
     player->level++;
     player->xp -= calculate_xp_for_next_level(player->level - 1);
     player->skill_points += 1;
+
     log_msg(INFO, "Level", "Player leveled up to level %d!", player->level);
     log_msg(INFO, "Level", "Player has %d XP remaining.", player->xp);
     log_msg(INFO, "Level", "Player has %d skill points to spend.", player->skill_points);

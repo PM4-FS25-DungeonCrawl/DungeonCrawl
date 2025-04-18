@@ -25,6 +25,7 @@ typedef enum {
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
+    STATS_MENU,
     EXIT,
     EXIT_WITH_ERROR
 } game_state_t;
@@ -173,6 +174,10 @@ int init_game() {
                     case SHOW_MENU:
                         tb_clear();// Clear the screen before showing menu
                         current_state = MAIN_MENU;
+                        break;
+                    case SHOW_STATS:
+                        tb_clear();
+                        current_state = STATS_MENU;
                         break;
                     default:
                         log_msg(ERROR, "game", "Unknown return value from map_mode_update");
