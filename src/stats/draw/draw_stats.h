@@ -7,5 +7,4 @@ typedef enum {
 } stats_result_t;
 
 
-
-#endif //STATS_WINDOW_H
+#endif//STATS_WINDOW_H
