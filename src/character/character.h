@@ -6,7 +6,7 @@
 #include "../common.h"
 #include "../item/gear.h"
 #include "../item/potion.h"
-#include "stats.h"
+#include "../stats/stats.h"
 
 #define MAX_ABILITY_LIMIT 20
 #define MAX_GEAR_LIMIT 20

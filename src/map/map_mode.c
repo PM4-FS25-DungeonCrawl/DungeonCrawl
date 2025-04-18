@@ -32,6 +32,9 @@ map_mode_result_t handle_input(const struct tb_event* event) {
     // Check for 'M' key press for menu
     if (event->ch == 'm' || event->ch == 'M' || event->key == TB_KEY_ESC) return SHOW_MENU;
 
+    // Check for 'L' key press for stats
+    if (event->ch == 'l' || event->ch == 'L') return SHOW_STATS;
+
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;
     if (event->key == TB_KEY_ARROW_LEFT) new_x--;

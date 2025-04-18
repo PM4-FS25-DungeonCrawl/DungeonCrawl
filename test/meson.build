@@ -61,6 +61,11 @@ helper_memory = files(
     '../src/memory/memory_management.c'
 )
 
+helper_stats = files(
+    '../src/stats/stats.c',
+    '../src/stats/draw/draw_stats.c'
+)
+
 test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'])
 test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'])
 test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
