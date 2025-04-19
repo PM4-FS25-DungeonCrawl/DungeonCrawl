@@ -34,14 +34,15 @@ helper_combat = files(
     '../src/item/gear.c',
     '../src/item/potion.c',
 
-    '../include/termbox2.c',
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
 
     '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c'
+    '../src/database/local/local_database.c',
+    
+    'test_helper.c'
 )
 
 
@@ -61,13 +62,15 @@ helper_memory = files(
     '../src/memory/memory_management.c'
 )
 
-test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'])
-test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'])
-test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
-test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'])
-test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c_args: ['-w'])
-test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'])
-test_memory_management = executable('test_memory_management', 'memory/test_memory_management.c', helper_memory, c_args: ['-w'])
+notcurses = dependency('notcurses')
+
+test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
+test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
+test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'],dependencies: notcurses)
+test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'],dependencies: notcurses)
+test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
+test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'],dependencies: notcurses)
+test_memory_management = executable('test_memory_management', 'memory/test_memory_management.c', helper_memory, c_args: ['-w'],dependencies: notcurses)
 
 
 # test

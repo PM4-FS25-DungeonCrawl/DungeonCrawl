@@ -1,6 +1,5 @@
 #include "game.h"
 
-#include "../include/termbox2.h"
 #include "character/character.h"
 #include "character/monster.h"
 #include "character/player.h"
@@ -16,9 +15,16 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 
+#include <locale.h>
+#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <time.h>
+
+// Global notcurses instance and standard plane
+struct notcurses* nc = NULL;
+struct ncplane* stdplane = NULL;
+
 
 typedef enum {
     MAIN_MENU,
@@ -31,26 +37,32 @@ typedef enum {
 
 typedef enum {
     SUCCESS = 0,
-    FAIL_TB_INIT = 1,
+    FAIL_NC_INIT = 1,
     FAIL_LOCAL_INIT = 2,
     FAIL_GAME_ENTITY_INIT = 3,
 } exit_code_t;
 
 int init_game() {
-    if (tb_init() != 0) {
-        log_msg(ERROR, "Game", "Failed to initialize termbox");
-        return FAIL_TB_INIT;
+    setlocale(LC_ALL, "");
+    
+    // Initialize notcurses
+    notcurses_options ncopt;
+    memset(&ncopt, 0, sizeof(ncopt));
+    nc = notcurses_init(&ncopt, stdout);
+    if (nc == NULL) {
+        log_msg(ERROR, "game", "failed to initialize notcurses");
+        return FAIL_NC_INIT;
     }
-    tb_set_output_mode(TB_OUTPUT_NORMAL);
+    stdplane = notcurses_stdplane(nc);
 
     // seeding random function
     srand(time(NULL));
 
     // Initialize database connection
     db_connection_t db_connection;
-    if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
+    if (!db_open(&db_connection, "../resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
-        return 1;
+        return FAIL_NC_INIT;
     }
 
     bool running = true;          //should only be set in the state machine
@@ -94,11 +106,9 @@ int init_game() {
                     case MENU_START_GAME:
                         log_msg(INFO, "Game", "Starting new game");
                         game_in_progress = true;// Mark that a game is now in progress
-                        tb_clear();             // Clear screen before generating map
                         current_state = GENERATE_MAP;
                         break;
                     case MENU_CONTINUE:
-                        tb_clear();// Clear screen before map mode
                         current_state = MAP_MODE;
                         break;
                     case MENU_SAVE_GAME:
@@ -114,7 +124,6 @@ int init_game() {
                         save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
                         log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
-                        tb_clear();
                         current_state = MAP_MODE;
                         break;
                     case MENU_LOAD_GAME:
@@ -138,11 +147,9 @@ int init_game() {
                             game_in_progress = true;
 
                             log_msg(INFO, "Game", "Game state loaded successfully");
-                            tb_clear();
                             current_state = MAP_MODE;
                         } else {
                             log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                            tb_clear();
                             current_state = GENERATE_MAP;
                         }
                         break;
@@ -163,15 +170,19 @@ int init_game() {
                         current_state = EXIT;
                         break;
                     case NEXT_FLOOR:
-                        tb_clear();// Clear screen before generating new floor
                         current_state = GENERATE_MAP;
                         break;
                     case COMBAT:
                         log_msg(INFO, "Game", "Entering combat mode");
+                        // Clear screen before switching to combat mode
+                        ncplane_erase(stdplane);
+                        notcurses_render(nc);
                         current_state = COMBAT_MODE;
                         break;
                     case SHOW_MENU:
-                        tb_clear();// Clear the screen before showing menu
+                        // Clear screen before showing menu
+                        ncplane_erase(stdplane);
+                        notcurses_render(nc);
                         current_state = MAIN_MENU;
                         break;
                     default:
@@ -184,7 +195,9 @@ int init_game() {
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
                         // TODO: delete goblin from map
-                        tb_clear();
+                        // Clear screen before switching back to map mode
+                        ncplane_erase(stdplane);
+                        notcurses_render(nc);
                         current_state = MAP_MODE;
                         break;
                     case PLAYER_LOST:
@@ -214,6 +227,13 @@ int init_game() {
     db_close(&db_connection);
     shutdown_combat_mode();
     shutdown_logger();
-    tb_shutdown();
+    
+    // Shutdown notcurses
+    if (nc) {
+        notcurses_stop(nc);
+        nc = NULL;
+        stdplane = NULL;
+    }
+    
     return exit_code;
 }
