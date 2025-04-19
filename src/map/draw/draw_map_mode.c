@@ -1,9 +1,13 @@
 #include "draw_map_mode.h"
 
-#include "../../../include/termbox2.h"
+#include <notcurses/notcurses.h>
 #include "../../asciiart/ascii.h"
 #include "../../common.h"
 #include "../../logging/logger.h"
+
+// External reference to notcurses context
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 void draw_player_info(vector2d_t ui_anchor, vector2d_t player_pos);
 
@@ -30,7 +34,19 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     CHECK_ARG_VOID(anchor.dx < 0 || anchor.dy < 0, "Draw Map Mode", "In draw_map_mode given anchor is negative");
     CHECK_ARG_VOID(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
-    tb_printf(anchor.dx + width / 2 - 7, anchor.dy, TB_RED, TB_BLACK, "Dungeon Crawl");
+    // Define color channels
+    uint64_t red_on_black = NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0);
+    uint64_t blue_on_blue = NCCHANNELS_INITIALIZER(0, 0, 255, 0, 0, 255);
+    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
+    uint64_t green_on_black = NCCHANNELS_INITIALIZER(0, 255, 0, 0, 0, 0);
+    uint64_t yellow_on_black = NCCHANNELS_INITIALIZER(255, 255, 0, 0, 0, 0);
+    uint64_t white_on_red = NCCHANNELS_INITIALIZER(255, 255, 255, 255, 0, 0);
+    uint64_t white_on_white = NCCHANNELS_INITIALIZER(255, 255, 255, 255, 255, 255);
+    
+    // Draw title
+    ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
+    ncplane_set_channels(stdplane, red_on_black);
+    
     vector2d_t map_anchor = {anchor.dx, anchor.dy + 2};
 
     for (int y = 0; y < height; y++) {
@@ -39,7 +55,8 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
             const int draw_y = y + map_anchor.dy;
 
             if (x == player_pos.dx && y == player_pos.dy) {
-                tb_printf(draw_x, draw_y, TB_RED, TB_BLACK, "@");
+                ncplane_set_channels(stdplane, red_on_black);
+                ncplane_putstr_yx(stdplane, draw_y, draw_x, "@");
                 continue;
             }
 
@@ -48,25 +65,32 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             switch (arr[access_idx]) {
                 case WALL:
-                    tb_printf(draw_x, draw_y, TB_BLUE, TB_BLUE, "#");
+                    ncplane_set_channels(stdplane, blue_on_blue);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, "#");
                     break;
                 case FLOOR:
-                    tb_printf(draw_x, draw_y, TB_WHITE, TB_BLACK, " ");
+                    ncplane_set_channels(stdplane, white_on_black);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, " ");
                     break;
                 case START_DOOR:
-                    tb_printf(draw_x, draw_y, TB_GREEN, TB_BLACK, "#");
+                    ncplane_set_channels(stdplane, green_on_black);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, "#");
                     break;
                 case EXIT_DOOR:
-                    tb_printf(draw_x, draw_y, TB_YELLOW, TB_BLACK, "#");
+                    ncplane_set_channels(stdplane, yellow_on_black);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, "#");
                     break;
                 case KEY:
-                    tb_printf(draw_x, draw_y, TB_YELLOW, TB_BLACK, "$");
+                    ncplane_set_channels(stdplane, yellow_on_black);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, "$");
                     break;
                 case GOBLIN:
-                    tb_printf(draw_x, draw_y, TB_WHITE, TB_RED, "!");
+                    ncplane_set_channels(stdplane, white_on_red);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, "!");
                     break;
                 case HIDDEN:
-                    tb_printf(draw_x, draw_y, TB_WHITE, TB_WHITE, " ");
+                    ncplane_set_channels(stdplane, white_on_white);
+                    ncplane_putstr_yx(stdplane, draw_y, draw_x, " ");
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
@@ -86,12 +110,18 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  * @param player_pos The current player position
  */
 void draw_player_info(const vector2d_t ui_anchor, const vector2d_t player_pos) {
-    tb_printf(ui_anchor.dx, ui_anchor.dy, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(ui_anchor.dx, ui_anchor.dy + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
-    tb_printf(ui_anchor.dx, ui_anchor.dy + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
+    ncplane_set_channels(stdplane, white_on_black);
+    
+    ncplane_printf_yx(stdplane, ui_anchor.dy, ui_anchor.dx, "HP: 100");
+    ncplane_printf_yx(stdplane, ui_anchor.dy + 1, ui_anchor.dx, "Press 'M' for Menu");
+    ncplane_printf_yx(stdplane, ui_anchor.dy + 2, ui_anchor.dx, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
     for (int i = 0; i < HELMET_HEIGHT; i++) {
-        tb_printf(ui_anchor.dx, ui_anchor.dy + i + 3, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i]);
+        ncplane_printf_yx(stdplane, ui_anchor.dy + i + 3, ui_anchor.dx, "%s", ascii_helmet[i]);
     }
+    
+    // Render the updated screen
+    notcurses_render(nc);
 }

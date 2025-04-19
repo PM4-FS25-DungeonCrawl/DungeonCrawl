@@ -4,7 +4,7 @@ project('DungeonCrawl', 'c',
         default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
 
 # List of external dependencies
-# termbox = dependency('termbox2')
+notcurses = dependency('notcurses')
 
 
 # List of all source files. Per meson convention all files are listed seperately.
@@ -36,14 +36,6 @@ src_files = files(
     'src/combat/draw/draw_combat_mode.c'
 )
 
-include_files = files(
-    'include/termbox2.c'
-)
-
-debug_files = files(
-    'debug/debug.c'
-)
-
 # List of all database files
 database_files = files(
     'include/sqlite3.c',
@@ -73,10 +65,9 @@ subdir('test')
 executable(
     'DungeonCrawl',
     src_files,
-    include_files,
-    debug_files,
     database_files,
     logging_files,
     local_files,
-    memory_files
+    memory_files,
+    dependencies: notcurses
 )

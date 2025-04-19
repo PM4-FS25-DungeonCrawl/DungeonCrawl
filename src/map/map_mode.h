@@ -1,10 +1,12 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
+#include <notcurses/notcurses.h>
 #include "../common.h"
 
-#define COLOR_FOREGROUND TB_WHITE
-#define COLOR_BACKGROUND TB_BLACK
+// These are now defined in game.h
+// #define COLOR_FG_RGB 255, 255, 255  // White
+// #define COLOR_BG_RGB 0, 0, 0        // Black
 
 #define LIGHT_RADIUS 3
 
