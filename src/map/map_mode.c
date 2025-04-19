@@ -1,11 +1,12 @@
 #include "map_mode.h"
 
-#include <notcurses/notcurses.h>
-#include <stdint.h>
 #include "../game.h"
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
+
+#include <notcurses/notcurses.h>
+#include <stdint.h>
 
 vector2d_t map_anchor = {5, 1};
 vector2d_t player_pos;
@@ -90,13 +91,13 @@ map_mode_result_t map_mode_update(void) {
     memset(&ev, 0, sizeof(ev));
 
     uint32_t ret = notcurses_get_blocking(nc, &ev);
-    
-    if (ret > 0){
+
+    if (ret > 0) {
         // Only process the event if it's a key press (not release or repeat)
         if (ev.evtype == NCTYPE_PRESS) {
             next_state = handle_input(&ev);
         }
-        
+
         // Drain any additional queued events
         ncinput discard;
         while (notcurses_get_nblock(nc, &discard) > 0) {
@@ -106,7 +107,7 @@ map_mode_result_t map_mode_update(void) {
 
     draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-    
+
     notcurses_render(nc);
 
     return next_state;

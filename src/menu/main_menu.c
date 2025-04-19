@@ -314,7 +314,6 @@ menu_result_t show_main_menu(bool game_in_progress) {
                 }
             }
         }
-
     }
     return result;
 }

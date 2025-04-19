@@ -44,7 +44,7 @@ typedef enum {
 
 int init_game() {
     setlocale(LC_ALL, "");
-    
+
     // Initialize notcurses
     notcurses_options ncopt;
     memset(&ncopt, 0, sizeof(ncopt));
@@ -227,13 +227,13 @@ int init_game() {
     db_close(&db_connection);
     shutdown_combat_mode();
     shutdown_logger();
-    
+
     // Shutdown notcurses
     if (nc) {
         notcurses_stop(nc);
         nc = NULL;
         stdplane = NULL;
     }
-    
+
     return exit_code;
 }

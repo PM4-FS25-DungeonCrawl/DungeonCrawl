@@ -1,9 +1,10 @@
 #include "draw_map_mode.h"
 
-#include <notcurses/notcurses.h>
 #include "../../asciiart/ascii.h"
 #include "../../common.h"
 #include "../../logging/logger.h"
+
+#include <notcurses/notcurses.h>
 
 // External reference to notcurses context
 extern struct notcurses* nc;
@@ -42,11 +43,11 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     uint64_t yellow_on_black = NCCHANNELS_INITIALIZER(255, 255, 0, 0, 0, 0);
     uint64_t white_on_red = NCCHANNELS_INITIALIZER(255, 255, 255, 255, 0, 0);
     uint64_t white_on_white = NCCHANNELS_INITIALIZER(255, 255, 255, 255, 255, 255);
-    
+
     // Draw title
     ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
     ncplane_set_channels(stdplane, red_on_black);
-    
+
     vector2d_t map_anchor = {anchor.dx, anchor.dy + 2};
 
     for (int y = 0; y < height; y++) {
@@ -112,7 +113,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 void draw_player_info(const vector2d_t ui_anchor, const vector2d_t player_pos) {
     uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
     ncplane_set_channels(stdplane, white_on_black);
-    
+
     ncplane_printf_yx(stdplane, ui_anchor.dy, ui_anchor.dx, "HP: 100");
     ncplane_printf_yx(stdplane, ui_anchor.dy + 1, ui_anchor.dx, "Press 'M' for Menu");
     ncplane_printf_yx(stdplane, ui_anchor.dy + 2, ui_anchor.dx, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
@@ -121,7 +122,7 @@ void draw_player_info(const vector2d_t ui_anchor, const vector2d_t player_pos) {
     for (int i = 0; i < HELMET_HEIGHT; i++) {
         ncplane_printf_yx(stdplane, ui_anchor.dy + i + 3, ui_anchor.dx, "%s", ascii_helmet[i]);
     }
-    
+
     // Render the updated screen
     notcurses_render(nc);
 }

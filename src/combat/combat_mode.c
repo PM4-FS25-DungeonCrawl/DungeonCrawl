@@ -297,8 +297,6 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                 }
             }
         }
-
-
     }
     return new_state;
 }

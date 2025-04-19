@@ -1,8 +1,9 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
-#include <notcurses/notcurses.h>
 #include "../common.h"
+
+#include <notcurses/notcurses.h>
 
 // These are now defined in game.h
 // #define COLOR_FG_RGB 255, 255, 255  // White
