@@ -48,8 +48,7 @@ int init_local(void) {
     observer_list->update_func = NULL;
     observer_list->next = NULL;
     // Initialize the database connection
-    // TODO: Will work with ERROR Code (db_open)
-    return db_open(&local_db_connection, LOCAL_DB_PATH);
+    return db_open(&local_db_connection, LOCAL_DB_PATH) == DB_OPEN_STATUS_SUCCESS;
 }
 
 /**

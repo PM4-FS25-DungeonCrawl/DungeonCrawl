@@ -9,10 +9,10 @@ int db_open(db_connection_t* db_connection, const char* db_name) {
     int rc = sqlite3_open(db_name, &db_connection->db);
     if (rc) {
         log_msg(ERROR, "Database", "Can't open database: %s", sqlite3_errmsg(db_connection->db));
-        return 0;
+        return DB_OPEN_STATUS_FAILURE;
     }
     log_msg(INFO, "Database", "Opened database successfully");
-    return 1;
+    return DB_OPEN_STATUS_SUCCESS;
 }
 
 

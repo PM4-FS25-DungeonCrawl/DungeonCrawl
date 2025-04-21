@@ -1,3 +1,4 @@
+#include "../../src/database/database.h"
 #include "../src/database/database.h"
 #include "../src/database/gamestate/gamestate_database.h"
 #include "../include/sqlite3.h"
@@ -16,7 +17,7 @@ db_connection_t db_connection;
 
 void test_create_gamestate_tables() {
     // Open the database
-    assert(db_open(&db_connection, "../test/database/test_data.db") == 1);
+    assert(db_open(&db_connection, "../test/database/test_data.db") == DB_OPEN_STATUS_SUCCESS);
     assert(db_is_open(&db_connection) == 1);
 
     // Create the tables
@@ -53,7 +54,7 @@ void* setter(int x, int y) {
 }
 
 void test_save_game_state() {
-    assert(db_open(&db_connection, "../test/database/test_data.db") == 1);
+    assert(db_open(&db_connection, "../test/database/test_data.db") == DB_OPEN_STATUS_SUCCESS);
     assert(db_is_open(&db_connection) == 1);
 
     // Create a test game state
@@ -135,7 +136,7 @@ void test_save_game_state() {
 // maybe replace with sqlite3_exec() in the future
 // void drop_tables() {
 //     // Open the database
-//     assert(db_open(&db_connection, "../test/database/test_data.db") == 1);
+//     assert(db_open(&db_connection, "../test/database/test_data.db") == DB_OPEN_STATUS_SUCCESS);
 //     assert(db_is_open(&db_connection) == 1);
 //
 //     // Drop the tables

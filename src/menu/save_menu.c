@@ -97,8 +97,8 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     // Create a database connection for the menu to use
     db_connection_t menu_db_connection;
-    // TODO: Will work with ERROR Code (db_open) & we need to discuss (this is probably reason why the database opens 3 times)
-    if (!db_open(&menu_db_connection, "resources/database/game/dungeoncrawl_game.db")) {
+    // TODO: we need to discuss (this is probably reason why the database opens 3 times)
+    if (db_open(&menu_db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
         log_msg(ERROR, "Menu", "Failed to open database for save file listing");
         return MENU_CONTINUE;
     }

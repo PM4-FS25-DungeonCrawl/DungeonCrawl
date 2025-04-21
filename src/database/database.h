@@ -3,6 +3,9 @@
 
 #include "../../include/sqlite3.h"
 
+#define DB_OPEN_STATUS_SUCCESS 0
+#define DB_OPEN_STATUS_FAILURE 1
+
 typedef struct {
     sqlite3* db;
     char* err_msg;
