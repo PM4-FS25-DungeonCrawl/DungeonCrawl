@@ -8,12 +8,12 @@
     #include <windows.h>
 
 typedef struct {
-        char **messages;
-        int head;
-        int tail;
-        int count;
-        CRITICAL_SECTION mutex;
-        CONDITION_VARIABLE cond;
+    char** messages;
+    int head;
+    int tail;
+    int count;
+    CRITICAL_SECTION mutex;
+    CONDITION_VARIABLE cond;
 } ring_buffer_t;
 #else
     #include <pthread.h>

@@ -1,4 +1,5 @@
 #include "logger.h"
+
 #include "ringbuffer.h"
 
 #include <stdarg.h>
@@ -7,9 +8,9 @@
 #include <time.h>
 
 #ifdef _WIN32
-    #include <windows.h>
     #include <direct.h>
-    #include <sys/stat.h>  // For _stat
+    #include <sys/stat.h>// For _stat
+    #include <windows.h>
     #define STAT_STRUCT struct _stat
     #define STAT_FUNC _stat
     #define MKDIR(path) _mkdir(path)
@@ -24,7 +25,7 @@
 #endif
 
 #define MAX_N_FILES 5
-#define MAX_FILE_SIZE 1048576 // max size = 1 MB
+#define MAX_FILE_SIZE 1048576// max size = 1 MB
 #define PATH_MAX 4096
 
 #define LOG_DIRECTORY "log"
