@@ -24,11 +24,33 @@ sudo apt upgrade
 
 # Setup Notcurses
 
+## Ubuntu
+
  sudo apt install libnotcurses-dev libnotcurses3
 
  if that doesn't work:
 
  apt-get install build-essential cmake doctest-dev libavdevice-dev libdeflate-dev libgpm-dev libncurses-dev libqrcodegen-dev libswscale-dev libunistring-dev pandoc pkg-config
+
+## Windows
+
+Install msys2 from https://www.msys2.org/
+
+open msys2 mingw edition, probably under "C:\tools\msys64\mingw64.exe"
+
+run:
+pacman -S mingw-w64-x86_64-notcurses
+pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-meson
+
+restart the shell.
+
+compile the project from within the msys2 mingw shell.
+
+## OSX
+
+run brew install notcurses.
+
+restart the shell.
 
 
 # CLion configuration for WSL
@@ -70,3 +92,6 @@ navigate into project directory in WSL, then run:
 mkdir buildDir
 
 meson setup builddir
+
+
+
