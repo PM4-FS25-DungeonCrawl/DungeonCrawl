@@ -43,15 +43,16 @@ menu_result_t show_main_menu(bool game_in_progress) {
 
         struct tb_event event;
         int ret = tb_peek_event(&event, 10);
+        log_msg(INFO, "Save Menu", "Polled event: %d, key: %d, ch: %c", ret, event.key, event.ch ? event.ch : ' ');
 
-        if (ret == TB_OK) {
-            if (event.key == TB_KEY_ARROW_UP) {
-                // Move up
+        switch(event.key) {
+            case TB_KEY_ARROW_UP: 
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
-            } else if (event.key == TB_KEY_ARROW_DOWN) {
-                // Move down
+                break;
+            case TB_KEY_ARROW_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
-            } else if (event.key == TB_KEY_ENTER) {
+                break;
+            case TB_KEY_ENTER:
                 if (strcmp(menu_options[selected_index], NEW_GAME_OPTION) == 0) {
                     if (game_in_progress && !show_confirmation("Do you want to continue?")) {
                         // User declined, continue menu loop
@@ -83,14 +84,19 @@ menu_result_t show_main_menu(bool game_in_progress) {
                     result = MENU_EXIT;
                     menu_active = false;
                 }
-            } else if (event.key == TB_KEY_CTRL_C) {
+                break;
+            case TB_KEY_CTRL_C:
                 result = MENU_EXIT;
                 menu_active = false;
-            } else if (event.key == TB_KEY_ESC) {
+            break;
+                case TB_KEY_ESC:
                 result = MENU_CONTINUE;
-                menu_active = false;
-            }
-        }
+            menu_active = false;
+            break;
+            default:
+            // do nothing for other keys
+            break;
+        }        
     }
 
     return result;
