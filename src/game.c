@@ -109,10 +109,10 @@ int init_game() {
                         break;
                 }
                 break;
-            case EXIT:
+            case EXIT: //TODO: shouldn't exit code be set here?
                 running = false;
                 break;
-            case EXIT_WITH_ERROR:
+            case EXIT_WITH_ERROR: //TODO: shouldn't exit code be set here?
                 running = false;
                 break;
         }
