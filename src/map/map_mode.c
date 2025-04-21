@@ -89,7 +89,7 @@ map_mode_result_t map_mode_update(void) {
     }
     tb_clear();
 
-    draw_light_on_player(player_pos, LIGHT_RADIUS);
+    draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
 
     tb_present();

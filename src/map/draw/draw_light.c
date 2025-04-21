@@ -165,7 +165,7 @@ void process_light_in_direction(const vector2d_t player, const vector2d_t dir, c
  *
  * @param player the player's position on the map
  */
-void draw_light_on_player(const vector2d_t player, const int light_radius) {
+void draw_light_on_player(const map_tile_t* arr1, map_tile_t* arr2, int height, int width, vector2d_t player, const int light_radius) {
     if (light_radius <= 0) {
         //light radius is negative or 0, do nothing
         return;
