@@ -8,7 +8,7 @@
     #include <windows.h>
 
 typedef struct {
-        char **messages[;
+        char **messages;
         int head;
         int tail;
         int count;

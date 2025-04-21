@@ -2,7 +2,7 @@
 project('DungeonCrawl', 'c',
         version : '0.1',
         default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
-
+add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
 # List of external dependencies
 notcurses = dependency('notcurses')
 

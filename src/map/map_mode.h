@@ -2,12 +2,11 @@
 #define MAP_MODE_H
 
 #include "../common.h"
-
 #include <notcurses/notcurses.h>
 
-// These are now defined in game.h
-// #define COLOR_FG_RGB 255, 255, 255  // White
-// #define COLOR_BG_RGB 0, 0, 0        // Black
+// Notcurses uses RGB channels directly, but we can define our colors for consistency
+#define COLOR_FOREGROUND 0xffffff // White
+#define COLOR_BACKGROUND 0x000000 // Black
 
 #define LIGHT_RADIUS 3
 
