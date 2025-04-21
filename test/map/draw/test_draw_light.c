@@ -27,7 +27,7 @@ void reset_test_mazes(void) {
     }
 }
 
-void print_array(const int* array) {
+void print_array(const int *array) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             printf("%d ", array[x * height + y]);
@@ -42,7 +42,6 @@ void test_draw_light_on_player(void) {
 
     const vector2d_t player = {5, 5};
     const int light_radius = 3;
-
     draw_light_on_player(test_map, revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //player position will not be drawn
