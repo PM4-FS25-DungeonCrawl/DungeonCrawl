@@ -15,6 +15,7 @@
 #include "map/map_generator.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "menu/save_menu.h"
 
 #include <stdbool.h>
 #include <stdio.h>

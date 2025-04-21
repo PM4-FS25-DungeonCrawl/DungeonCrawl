@@ -29,6 +29,8 @@ src_files = files(
     'src/item/potion.c',
 
     'src/menu/main_menu.c',
+    'src/menu/save_menu.c',
+    'src/menu/menu.c',
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
