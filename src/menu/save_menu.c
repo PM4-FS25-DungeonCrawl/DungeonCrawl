@@ -7,7 +7,6 @@
 #include <string.h>
 
 // Global variables to store menu state
-// Using extern variables to match the original implementation
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
 
@@ -43,19 +42,30 @@ menu_result_t show_save_game_menu(void) {
         int ret = tb_poll_event(&input_event);
         log_msg(INFO, "Save Menu", "Polled event: %d, key: %d, ch: %c", ret, input_event.key, input_event.ch ? input_event.ch : ' ');
 
-        if (input_event.key == TB_KEY_ENTER && name_length > 0) {
-            input_active = false;
-        } else if ((input_event.key == TB_KEY_BACKSPACE2 || input_event.key == TB_KEY_BACKSPACE) && name_length > 0) {
-            // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
-            save_name[--name_length] = '\0';
-        } else if (input_event.key == TB_KEY_ESC) {
-            // Cancel save
-            input_active = false;
-            name_length = 0;// Set length to 0 to indicate cancellation
+        switch(input_event.key) {
+            case TB_KEY_ENTER:
+            if (name_length > 0) {
+                input_active = false;
+            }
             break;
-        } else if (input_event.ch != 0 && name_length < 49) {
-            save_name[name_length++] = input_event.ch;
-            save_name[name_length] = '\0';
+            case TB_KEY_BACKSPACE2:
+            case TB_KEY_BACKSPACE:
+                // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
+                if (name_length > 0) {
+                    save_name[--name_length] = '\0';
+                }
+                break;
+            case TB_KEY_ESC:
+                // Cancel save
+                input_active = false;
+                name_length = 0; // Set length to 0 to indicate cancellation
+                break;
+            default:
+                if (input_event.ch != 0 && name_length < 49) {
+                    save_name[name_length++] = input_event.ch;
+                    save_name[name_length] = '\0';
+                }
+                break;
         }
     }
 
@@ -141,17 +151,22 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         struct tb_event tb_event;
         tb_poll_event(&tb_event);
 
-        if (tb_event.key == TB_KEY_ARROW_UP) {
-            selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
-        } else if (tb_event.key == TB_KEY_ARROW_DOWN) {
-            selected_save_index = (selected_save_index + 1) % save_infos->count;
-        } else if (tb_event.key == TB_KEY_ENTER) {
-            // Set the selected save file ID for loading
-            result = MENU_LOAD_GAME;
-            selected_save_file_id = save_infos->infos[selected_save_index].id;
-            selection_active = false;
-        } else if (tb_event.key == TB_KEY_ESC) {
-            selection_active = false;
+        switch(tb_event.key) {
+            case TB_KEY_ARROW_UP:
+                selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
+                break;
+            case TB_KEY_ARROW_DOWN:
+                selected_save_index = (selected_save_index + 1) % save_infos->count;
+                break;
+            case TB_KEY_ENTER:
+                // Set the selected save file ID for loading
+                result = MENU_LOAD_GAME;
+                selected_save_file_id = save_infos->infos[selected_save_index].id;
+                selection_active = false;
+                break;
+            case TB_KEY_ESC:
+                selection_active = false;
+                break;
         }
     }
 
