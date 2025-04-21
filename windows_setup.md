@@ -22,6 +22,14 @@ sudo apt update
 
 sudo apt upgrade
 
+# Setup Notcurses
+
+ sudo apt install libnotcurses-dev libnotcurses3
+
+ if that doesn't work:
+
+ apt-get install build-essential cmake doctest-dev libavdevice-dev libdeflate-dev libgpm-dev libncurses-dev libqrcodegen-dev libswscale-dev libunistring-dev pandoc pkg-config
+
 
 # CLion configuration for WSL
 
