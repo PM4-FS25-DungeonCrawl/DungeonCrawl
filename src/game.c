@@ -36,10 +36,12 @@ int init_game() {
     srand(time(NULL));
 
     // Initialize database connection
+    // TODO: will work with ERROR Code (db_open)
     if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }
+    create_tables_game_state(&db_connection); // only for dungeoncrawl_game.db
 
     bool running = true;          //should only be set in the state machine
     int exit_code = 0;
