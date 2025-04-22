@@ -97,11 +97,10 @@ map_mode_result_t map_mode_update(void) {
     return next_state;
 }
 
-int init_map_mode(void) {
+void init_map_mode(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             revealed_map[x][y] = HIDDEN;
         }
     }
-    return 0;
 }

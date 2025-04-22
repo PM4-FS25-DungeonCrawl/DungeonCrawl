@@ -3,6 +3,7 @@
 
 #define COLOR_FOREGROUND TB_WHITE
 #define COLOR_BACKGROUND TB_BLACK
+#include "database/database.h"
 
 typedef enum {
     MAIN_MENU,
@@ -20,7 +21,9 @@ typedef enum {
     FAIL_GAME_ENTITY_INIT = 3,
 } exit_code_t;
 
-int init_game();
+extern db_connection_t db_connection;
+
+int run_game();
 
 void main_menu_state();
 
