@@ -1,4 +1,5 @@
 #include "game.h"
+#include "main.h"
 
 #include "../include/termbox2.h"
 #include "character/character.h"

@@ -20,8 +20,7 @@ menu_result_t show_main_menu(bool game_in_progress);
  * Process a selected menu option
  * @param selected_option The selected menu option string
  * @param game_in_progress indicates whether there's an active game that can be continued
- * @return Result of the menu option selection
  */
-menu_result_t select_menu_option(const char* selected_option, bool game_in_progress);
+void select_menu_option(const char* selected_option, bool game_in_progress);
 
 #endif// MAIN_MENU_H
