@@ -21,12 +21,10 @@ int init() {
     }
     create_tables_game_state(&db_connection); // only for dungeoncrawl_game.db
 
-    // TODO: get init_local to work
-    /*
     if (init_local() != 0) {
         log_msg(ERROR, "Main", "Failed to initialize local");
         return FAIL_LOCAL_INIT;
-    } */
+    }
 
     init_map_mode();
     init_main_menu();
