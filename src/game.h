@@ -15,8 +15,6 @@ typedef enum {
 
 int init_game();
 
-void game_state(void);
-
 void main_menu_state();
 
 void map_mode_state();

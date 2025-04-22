@@ -11,7 +11,6 @@ project('DungeonCrawl', 'c',
 src_files = files(
     'src/main.c',
     'src/game.c',
-    'src/game_content.c',
 
     'src/map/map.c',
     'src/map/map_mode.c',

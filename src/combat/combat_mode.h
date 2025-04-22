@@ -20,7 +20,7 @@ typedef enum {
 } combat_result_t;
 
 void init_combat_mode(void);
-combat_result_t start_combat(void);
+combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
 internal_combat_state_t potion_menu(character_t* player, character_t* monster);
