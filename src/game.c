@@ -24,6 +24,7 @@
 db_connection_t db_connection;
 bool game_in_progress;
 game_state_t current_state;
+int exit_code;
 
 int run_game() {
     // TODO: remove after notcurses switch
@@ -33,13 +34,28 @@ int run_game() {
     }
     tb_set_output_mode(TB_OUTPUT_NORMAL);
 
-    bool running = true; //should only be set in the state machine
-    int exit_code = 0;
+    exit_code = 0;
 
     game_in_progress = false; // Flag to track if a game has been started
     current_state = MAIN_MENU;
 
-    //TODO: this needs to be refactored!!!!!
+    game_loop();
+    
+    free_ability_table(ability_table);
+    free_character(goblin);
+    free_character(player);
+    free_potion(healing_potion);
+    shutdown_local();
+    // Close database connection
+    db_close(&db_connection);
+    shutdown_combat_mode();
+    shutdown_logger();
+    tb_shutdown();
+    return exit_code;
+}
+
+void game_loop() {
+    bool running = true; //should only be set in the state machine
 
     while (running) {
         switch (current_state) {
@@ -55,43 +71,17 @@ int run_game() {
                 break;
             case COMBAT_MODE:
                 reset_goblin();
-                switch (start_combat(player, goblin)) {
-                    case PLAYER_WON:
-                        log_msg(FINE, "Game", "Player won the combat");
-                    // TODO: add loot to player
-                    // TODO: delete goblin from map
-                        tb_clear();
-                        current_state = MAP_MODE;
-                        break;
-                    case PLAYER_LOST:
-                        log_msg(FINE, "Game", "Player lost the combat");
-                    //TODO: instead of exiting the game, a death screen should be shown
-                        current_state = EXIT;
-                        break;
-                    case EXIT_GAME:
-                        current_state = EXIT;
-                        break;
-                }
+                combat_mode_state();
                 break;
-            case EXIT: //TODO: shouldn't exit code be set here?
+            case EXIT: 
                 running = false;
                 break;
-            case EXIT_WITH_ERROR: //TODO: shouldn't exit code be set here?
+            case EXIT_WITH_ERROR: 
+                exit_code = 4;
                 running = false;
                 break;
         }
     }
-    free_ability_table(ability_table);
-    free_character(goblin);
-    free_character(player);
-    free_potion(healing_potion);
-    shutdown_local();
-    // Close database connection
-    db_close(&db_connection);
-    shutdown_combat_mode();
-    shutdown_logger();
-    tb_shutdown();
-    return exit_code;
 }
 
 void main_menu_state() {
@@ -179,5 +169,25 @@ void map_mode_state() {
             break;
         default:
             log_msg(ERROR, "game", "Unknown return value from map_mode_update");
+    }
+}
+
+void combat_mode_state() {
+    switch (start_combat(player, goblin)) {
+        case PLAYER_WON:
+            log_msg(FINE, "Game", "Player won the combat");
+        // TODO: add loot to player
+        // TODO: delete goblin from map
+            tb_clear();
+            current_state = MAP_MODE;
+            break;
+        case PLAYER_LOST:
+            log_msg(FINE, "Game", "Player lost the combat");
+        //TODO: instead of exiting the game, a death screen should be shown
+            current_state = EXIT;
+            break;
+        case EXIT_GAME:
+            current_state = EXIT;
+            break;
     }
 }
