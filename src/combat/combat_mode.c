@@ -18,7 +18,18 @@ void invoke_potion_effect(character_t* character, potion_t* potion);
 
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
-
+/**
+ * @brief Updates the localized strings used in the combat mode menus.
+ *
+ * This function populates the localized string buffers with values retrieved
+ * from the localization system. These strings are used in various menus within
+ * the combat mode, such as the main menu, ability menu, and potion menu. It also
+ * updates messages like the tail message and combat-specific messages.
+ *
+ * @note This function is automatically called during initialization of combat
+ * mode to ensure that all strings are properly localized before use. It is
+ * also registered as an observer to keep menu strings updated whenever the locale changes.
+ */
 void update_local(void);
 
 // === Intern Global Variables ===
@@ -30,17 +41,11 @@ string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
 
 
-/**
- * @brief Initialize the combat mode
- * @param mem_pool the memory pool to use for allocating memory
- * @return int 0 on success, -1 on failure
- * @note This function must be called before using any other functions in this module.
- */
 int init_combat_mode(memory_pool_t* mem_pool) {
     NULL_PTR_HANDLER_RETURN(mem_pool, -1, "Combat Mode", "Memory pool is NULL");
     pool = mem_pool;
 
-    local_strings = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_STRINGS);
+    local_strings = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
     NULL_PTR_HANDLER_RETURN(pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
     ability_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
@@ -49,7 +54,7 @@ int init_combat_mode(memory_pool_t* mem_pool) {
     potion_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
     NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Allocated memory for potion menu options in memory pool is NULL");
 
-    //update local function once, so the string are initialized
+    //update local once, so the strings are initialized
     update_local();
     //add update local function to the observer list
     add_local_observer(update_local);
@@ -200,9 +205,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     int selected_index = 0;
 
     if (player->potion_count == 0) {
-        char message[MAX_STRING_LENGTH];
-        snprintf(message, sizeof(message), "You search your bag... but there are no potions left.");
-        draw_combat_log(anchor, message);
+        draw_combat_log(anchor, local_strings[empty_potion_inventory.idx].characters);
         return COMBAT_MENU;
     }
 
@@ -267,12 +270,13 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
-            int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
+            const int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
             draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, sprite);
 
+
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), "%s uses %s and deals %d %s damage to %s!",
+            snprintf(message, sizeof(message), local_strings[attack_success.idx].characters,
                      attacker->name,
                      ability->name,
                      damage_dealt,
@@ -283,14 +287,14 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), "%s uses %s, but it missed!",
+            snprintf(message, sizeof(message), local_strings[attack_miss.idx].characters,
                      attacker->name,
                      ability->name);
             draw_combat_log(anchor, message);
         }
     } else {
         memset(message, 0, sizeof(message));
-        snprintf(message, sizeof(message), "%s tries to cast %s, but doesn't have enough resources!",
+        snprintf(message, sizeof(message), local_strings[attack_fail.idx].characters,
                  attacker->name,
                  ability->name);
         draw_combat_log(anchor, message);
@@ -303,7 +307,7 @@ void use_potion(character_t* player, const character_t* monster, potion_t* item)
     invoke_potion_effect(player, item);
 
     char message[MAX_STRING_LENGTH];
-    snprintf(message, sizeof(message), "%s uses a %s potion, restoring %d %s!",
+    snprintf(message, sizeof(message), local_strings[potion_use.idx].characters,
              player->name,
              item->name,
              item->value,
@@ -326,7 +330,7 @@ void invoke_potion_effect(character_t* character, potion_t* potion) {
             }
             break;
         default:
-            log_msg(ERROR, "Character", "Unknown usable_item effect type: %d", potion->effectType);
+            log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
             break;
     }
     remove_potion(character, potion);
@@ -402,6 +406,13 @@ void update_local(void) {
 
     //tail message
     snprintf(local_strings[menu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(menu_tail_message.key));
+
+    //combat messages
+    snprintf(local_strings[empty_potion_inventory.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(empty_potion_inventory.key));
+    snprintf(local_strings[attack_success.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_success.key));
+    snprintf(local_strings[attack_miss.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_miss.key));
+    snprintf(local_strings[attack_fail.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_fail.key));
+    snprintf(local_strings[potion_use.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_use.key));
 }
 
 void shutdown_combat_mode(void) {

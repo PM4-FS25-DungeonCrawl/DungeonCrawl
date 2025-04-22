@@ -20,6 +20,12 @@ typedef enum {
     EXIT_GAME
 } combat_result_t;
 
+/**
+ * @brief Initialize the combat mode
+ * @param mem_pool the memory pool to use for allocating memory
+ * @return int 0 on success, -1 on failure
+ * @note This function must be called before using any other functions in this module.
+ */
 int init_combat_mode(memory_pool_t* mem_pool);
 combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
