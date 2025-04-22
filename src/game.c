@@ -53,6 +53,7 @@ int run_game() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
+                reset_goblin();
                 switch (start_combat(player, goblin)) {
                     case PLAYER_WON:
                         log_msg(FINE, "Game", "Player won the combat");
