@@ -7,6 +7,7 @@
 #include "../local/local.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
+#include "../game_content.h"
 
 #include <stdbool.h>
 
@@ -93,7 +94,9 @@ void init_combat_mode(void) {
 }
 
 
-combat_result_t start_combat(character_t* player, character_t* monster) {
+combat_result_t start_combat(void) {
+    // All game entities are available through game_content.h
+    
     // initial combat state
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
@@ -106,23 +109,23 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     while (combat_active) {
         switch (combat_state) {
             case COMBAT_MENU:
-                combat_state = combat_menu(player, monster);
+                combat_state = combat_menu(player, goblin);
                 break;
             case ABILITY_MENU:
-                combat_state = ability_menu(player, monster);
+                combat_state = ability_menu(player, goblin);
                 break;
             case ITEM_MENU:
-                combat_state = potion_menu(player, monster);
+                combat_state = potion_menu(player, goblin);
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
                 if (player->current_resources.health <= 0) {
                     combat_result = PLAYER_LOST;
                     combat_active = false;// exit the combat loop
-                } else if (monster->current_resources.health <= 0) {
+                } else if (goblin->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
                     combat_active = false;// exit the combat loop
-                    player->xp += monster->xp_reward;
+                    player->xp += goblin->xp_reward;
                     if (player->xp >= calculate_xp_for_next_level(player->level)) {
                         level_up(player);
                     }

@@ -1,15 +1,11 @@
 #include "game.h"
 #include "main.h"
+#include "game_content.h"
 
 #include "../include/termbox2.h"
-#include "character/character.h"
-#include "character/monster.h"
-#include "character/player.h"
-#include "combat/ability.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
-#include "item/potion.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map.h"
@@ -43,42 +39,35 @@ int init_game() {
     }
     create_tables_game_state(&db_connection); // only for dungeoncrawl_game.db
 
-    bool running = true;          //should only be set in the state machine
     int exit_code = 0;
 
     game_in_progress = false;// Flag to track if a game has been started
     current_state = MAIN_MENU;
 
-
-    if (init_local() == 0) {
-        current_state = EXIT_WITH_ERROR;
-        exit_code = FAIL_LOCAL_INIT;
-    }
+    // Initialize game systems
     init_map_mode();
     init_main_menu();
     init_combat_mode();
+    
+    // Initialize game content (player, monsters, abilities, items)
+    init_game_content();
+    log_msg(INFO, "Game", "game loop starting");
+    
+    // Game state machine runs here
+    game_state();
+    
+    // Cleanup
+    free_game_content();
+    shutdown_local();
+    db_close(&db_connection);
+    shutdown_combat_mode();
+    shutdown_logger();
+    tb_shutdown();
+    return exit_code;
+}
 
-
-    ability_table_t* ability_table = init_ability_table();
-    character_t* goblin = create_new_goblin();//initialize standard goblin
-    character_t* player = create_new_player();//initialize blank player
-    potion_t* healing_potion = init_potion("Healing Potion", HEALING, 20);
-
-    //TODO: this needs to be refactored!!!!!
-
-    if (ability_table == NULL || goblin == NULL || player == NULL || healing_potion == NULL) {
-        log_msg(ERROR, "Game", "Failed to initialize game components");
-        current_state = EXIT_WITH_ERROR;
-        exit_code = FAIL_GAME_ENTITY_INIT;
-    } else if (current_state != EXIT_WITH_ERROR) {
-        // add abilities to player and goblin
-        add_ability(goblin, &ability_table->abilities[BITE]);
-        add_ability(player, &ability_table->abilities[FIREBALL]);
-        add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-        //add healing potion to player
-        add_potion(player, healing_potion);
-        log_msg(INFO, "Game", "game loop starting");
-    }
+void game_state() {
+    bool running = true;          //should only be set in the state machine
 
     while (running) {
         switch (current_state) {
@@ -93,7 +82,7 @@ int init_game() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                switch (start_combat(player, goblin)) {
+                switch (start_combat()) {
                     case PLAYER_WON:
                         log_msg(FINE, "Game", "Player won the combat");
                         // TODO: add loot to player
@@ -119,17 +108,6 @@ int init_game() {
                 break;
         }
     }
-    free_ability_table(ability_table);
-    free_character(goblin);
-    free_character(player);
-    free_potion(healing_potion);
-    shutdown_local();
-    // Close database connection
-    db_close(&db_connection);
-    shutdown_combat_mode();
-    shutdown_logger();
-    tb_shutdown();
-    return exit_code;
 }
 
 void main_menu_state() {

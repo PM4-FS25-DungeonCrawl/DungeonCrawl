@@ -35,6 +35,8 @@ helper_combat = files(
     '../src/item/gear.c',
     '../src/item/potion.c',
 
+    '../src/game_content.c',
+
     '../include/termbox2.c',
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
