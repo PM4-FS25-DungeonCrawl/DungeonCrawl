@@ -11,6 +11,13 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 
+
+#ifdef __APPLE__
+    #define KEY_EVENT NCTYPE_PRESS
+#else
+    #define KEY_EVENT NCTYPE_UNKNOWN
+#endif /* ifdef __APPLE__ */
+
 #define MAX_COMBAT_MENU_OPTIONS 2
 
 //key define for localization
@@ -158,15 +165,16 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         memset(&event, 0, sizeof(event));
         int ret = notcurses_get_nblock(nc, &event);
 
-        // Drain any additional queued events
-        ncinput discard;
-        while (notcurses_get_nblock(nc, &discard) > 0) {
-            // Discard extra events
-        }
+        //commented out for testing if you find this, yeet it
+        // // Drain any additional queued events
+        // ncinput discard;
+        // while (notcurses_get_nblock(nc, &discard) > 0) {
+        //     // Discard extra events
+        // }
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == NCTYPE_PRESS) {
+            if (event.evtype == KEY_EVENT) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
@@ -211,15 +219,16 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         memset(&event, 0, sizeof(event));
         int ret = notcurses_get_nblock(nc, &event);
 
-        // Drain any additional queued events
-        ncinput discard;
-        while (notcurses_get_nblock(nc, &discard) > 0) {
-            // Discard extra events
-        }
+        //commented out for testing if you find this, yeet it
+        // // Drain any additional queued events
+        // ncinput discard;
+        // while (notcurses_get_nblock(nc, &discard) > 0) {
+        //     // Discard extra events
+        // }
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == NCTYPE_PRESS) {
+            if (event.evtype == KEY_EVENT) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
@@ -267,15 +276,16 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         memset(&event, 0, sizeof(event));
         int ret = notcurses_get_nblock(nc, &event);
 
-        // Drain any additional queued events
-        ncinput discard;
-        while (notcurses_get_nblock(nc, &discard) > 0) {
-            // Discard extra events
-        }
+                            //commented out for testing if you find this, yeet it
+        // // Drain any additional queued events
+        // ncinput discard;
+        // while (notcurses_get_nblock(nc, &discard) > 0) {
+        //     // Discard extra events
+        // }
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == NCTYPE_PRESS) {
+            if (event.evtype == KEY_EVENT) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;

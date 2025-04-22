@@ -5,9 +5,17 @@
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>// For nanosleep
+//
+#ifdef __APPLE__
+#define KEY_EVENT NCTYPE_PRESS
+#else
+#define KEY_EVENT NCTYPE_UNKNOWN
+#endif /* ifdef __APPLE__ */
+
 
 // External reference to notcurses context
 extern struct notcurses* nc;
@@ -71,7 +79,7 @@ static bool show_confirmation(const char* message) {
         notcurses_get_blocking(nc, &input);
 
         // Only process press events
-        if (input.evtype == NCTYPE_PRESS) {
+        if (input.evtype == KEY_EVENT) {
             if (input.id == 'y' || input.id == 'Y') {
                 return true;
             } else if (input.id == 'n' || input.id == 'N') {
@@ -125,11 +133,11 @@ menu_result_t show_main_menu(bool game_in_progress) {
 
         ncinput input;
         memset(&input, 0, sizeof(input));
-        int ret = notcurses_get_nblock(nc, &input);
+        uint32_t ret = notcurses_get_nblock(nc, &input);
 
         if (ret > 0) {
             // Only process press events
-            if (input.evtype == NCTYPE_PRESS) {
+            if (input.evtype == KEY_EVENT) {
                 if (input.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + menu_count) % menu_count;
@@ -164,7 +172,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
                             notcurses_get_blocking(nc, &input_event);
 
                             // Only process press events
-                            if (input_event.evtype == NCTYPE_PRESS) {
+                            if (input_event.evtype == KEY_EVENT) {
                                 if (input_event.id == NCKEY_ENTER && name_length > 0) {
                                     input_active = false;
                                 } else if (input_event.id == NCKEY_BACKSPACE && name_length > 0) {
@@ -231,11 +239,12 @@ menu_result_t show_main_menu(bool game_in_progress) {
                             ncinput input;
                             notcurses_get_blocking(nc, &input);
 
-                            // Drain any additional queued events
-                            ncinput discard;
-                            while (notcurses_get_nblock(nc, &discard) > 0) {
-                                // Discard extra events
-                            }
+                            //commented out for testing if you find this, yeet it
+                            // // Drain any additional queued events
+                            // ncinput discard;
+                            // while (notcurses_get_nblock(nc, &discard) > 0) {
+                            //     // Discard extra events
+                            // }
 
                             db_close(&menu_db_connection);
                             free_save_infos(save_infos);
@@ -272,14 +281,15 @@ menu_result_t show_main_menu(bool game_in_progress) {
                             ncinput nc_event;
                             notcurses_get_blocking(nc, &nc_event);
 
-                            // Drain any additional queued events
-                            ncinput discard;
-                            while (notcurses_get_nblock(nc, &discard) > 0) {
-                                // Discard extra events
-                            }
+                            //commented out for testing if you find this, yeet it
+                            // // Drain any additional queued events
+                            // ncinput discard;
+                            // while (notcurses_get_nblock(nc, &discard) > 0) {
+                            //     // Discard extra events
+                            // }
 
                             // Only process press events
-                            if (nc_event.evtype == NCTYPE_PRESS) {
+                            if (nc_event.evtype == KEY_EVENT) {
                                 if (nc_event.id == NCKEY_UP) {
                                     selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                                 } else if (nc_event.id == NCKEY_DOWN) {
