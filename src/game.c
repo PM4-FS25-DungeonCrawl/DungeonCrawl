@@ -82,7 +82,23 @@ void game_state() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                combat_mode_state();
+                switch (start_combat()) {
+                    case PLAYER_WON:
+                        log_msg(FINE, "Game", "Player won the combat");
+                        // TODO: add loot to player
+                        // TODO: delete goblin from map
+                        tb_clear();
+                        current_state = MAP_MODE;
+                        break;
+                    case PLAYER_LOST:
+                        log_msg(FINE, "Game", "Player lost the combat");
+                        //TODO: instead of exiting the game, a death screen should be shown
+                        current_state = EXIT;
+                        break;
+                    case EXIT_GAME:
+                        current_state = EXIT;
+                        break;
+                }
                 break;
             case EXIT: //TODO: shouldn't exit code be set here?
                 running = false;
@@ -178,26 +194,6 @@ void map_mode_state() {
             break;
         default:
             log_msg(ERROR, "game", "Unknown return value from map_mode_update");
-    }
-}
-
-void combat_mode_state() {
-    switch (start_combat()) {
-        case PLAYER_WON:
-            log_msg(FINE, "Game", "Player won the combat");
-            // TODO: add loot to player
-            // TODO: delete goblin from map
-            tb_clear();
-            current_state = MAP_MODE;
-            break;
-        case PLAYER_LOST:
-            log_msg(FINE, "Game", "Player lost the combat");
-            //TODO: instead of exiting the game, a death screen should be shown
-            current_state = EXIT;
-            break;
-        case EXIT_GAME:
-            current_state = EXIT;
-            break;
     }
 }
 
