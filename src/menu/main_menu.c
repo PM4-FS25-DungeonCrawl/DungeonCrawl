@@ -10,6 +10,7 @@
 #include <time.h>// For nanosleep
 
 bool menu_active;
+menu_result_t active_menu_state;
 
 void init_main_menu(void) {
     log_msg(INFO, "Menu", "Initializing main menu");
@@ -37,7 +38,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
     }
 
     int selected_index = 0;
-    menu_result_t result = MENU_CONTINUE;
+    active_menu_state = MENU_CONTINUE;
     menu_active = true;
 
     while (menu_active) {
@@ -57,14 +58,14 @@ menu_result_t show_main_menu(bool game_in_progress) {
             case TB_KEY_ENTER:
                 // Get the selected menu option
                 const char* selected_option = menu_options[selected_index];
-                result = select_menu_option(selected_option, game_in_progress);
+                select_menu_option(selected_option, game_in_progress);
                 break;
             case TB_KEY_CTRL_C:
-                result = MENU_EXIT;
+                active_menu_state = MENU_EXIT;
                 menu_active = false;
             break;
                 case TB_KEY_ESC:
-                result = MENU_CONTINUE;
+                active_menu_state = MENU_CONTINUE;
             menu_active = false;
             break;
             default:
@@ -73,44 +74,42 @@ menu_result_t show_main_menu(bool game_in_progress) {
         }        
     }
 
-    return result;
+    return active_menu_state;
 }
 
-menu_result_t select_menu_option(const char* selected_option, bool game_in_progress) {
-    menu_result_t result = MENU_CONTINUE;
+void select_menu_option(const char* selected_option, bool game_in_progress) {
     log_msg(INFO, "Main Menu", "Selected option: %s", selected_option);
 
     switch(selected_option[0]) {
         case 'N': // New Game (first letter 'N')
             if (!game_in_progress || show_confirmation("Do you want to continue?")) {
-                result = MENU_START_GAME;
+                active_menu_state = MENU_START_GAME;
                 menu_active = false;
             } 
             break;
         case 'C': // Continue (first letter 'C')
-            result = MENU_CONTINUE;
+            active_menu_state = MENU_CONTINUE;
             menu_active = false;
             break;
         case 'S': // Save Game (first letter 'S')
             log_msg(INFO, "Main Menu", "Calling show_save_game_menu");
-            result = show_save_game_menu();
-            log_msg(INFO, "Main Menu", "Returned from show_save_game_menu with result: %d", result);
-            if (result == MENU_SAVE_GAME) {
+            active_menu_state = show_save_game_menu();
+            log_msg(INFO, "Main Menu", "Returned from show_save_game_menu with result: %d", active_menu_state);
+            if (active_menu_state == MENU_SAVE_GAME) {
                 menu_active = false;
             }
             break;
         case 'L': // Load Game (first letter 'L')
-            result = show_load_game_menu(game_in_progress);
-            if (result == MENU_LOAD_GAME) {
+            active_menu_state = show_load_game_menu(game_in_progress);
+            if (active_menu_state == MENU_LOAD_GAME) {
                 menu_active = false;
             }
             break;
         case 'E': // Exit (first letter 'E')
             if (!game_in_progress || show_confirmation("Do you want to exit?")) {
-                result = MENU_EXIT;
+                active_menu_state = MENU_EXIT;
                 menu_active = false;
             }
             break;
     }
-    return result;
 }
