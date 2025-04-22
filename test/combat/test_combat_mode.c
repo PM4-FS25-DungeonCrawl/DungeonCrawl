@@ -5,6 +5,16 @@
 #include <assert.h>
 #include <stdio.h>
 
+void setup() {
+    memory_pool_t* mem_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (mem_pool == NULL) {
+        fprintf(stderr, "Failed to initialize memory pool\n");
+        exit(EXIT_FAILURE);
+    }
+    init_combat_mode(mem_pool);
+}
+
+
 character_t* create_test_character() {
     character_t* character = init_character(PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
@@ -108,6 +118,7 @@ void test_get_random_ability() {
 }
 
 int main(void) {
+    setup();
     test_use_ability();
     test_use_item();
     test_get_random_ability();

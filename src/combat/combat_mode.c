@@ -276,7 +276,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 
 
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), local_strings[attack_success.idx].characters,
+            snprintf(message, sizeof(message), local_strings[attack_success.idx].characters, //TODO: This Method of using formats is not safe!!
                      attacker->name,
                      ability->name,
                      damage_dealt,
@@ -287,14 +287,14 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), local_strings[attack_miss.idx].characters,
+            snprintf(message, sizeof(message), local_strings[attack_miss.idx].characters, //TODO: This Method of using formats is not safe!!
                      attacker->name,
                      ability->name);
             draw_combat_log(anchor, message);
         }
     } else {
         memset(message, 0, sizeof(message));
-        snprintf(message, sizeof(message), local_strings[attack_fail.idx].characters,
+        snprintf(message, sizeof(message), local_strings[attack_fail.idx].characters, //TODO: This Method of using formats is not safe!!
                  attacker->name,
                  ability->name);
         draw_combat_log(anchor, message);
@@ -307,7 +307,7 @@ void use_potion(character_t* player, const character_t* monster, potion_t* item)
     invoke_potion_effect(player, item);
 
     char message[MAX_STRING_LENGTH];
-    snprintf(message, sizeof(message), local_strings[potion_use.idx].characters,
+    snprintf(message, sizeof(message), local_strings[potion_use.idx].characters, //TODO: This Method of using formats is not safe!!
              player->name,
              item->name,
              item->value,
@@ -364,7 +364,7 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(ability_menu_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[ability_menu_option_format.idx].characters,
+                 local_strings[ability_menu_option_format.idx].characters, //TODO: This Method of using formats is not safe!!
                  abilities[i]->name,
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
@@ -383,7 +383,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(potion_menu_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[potion_menu_option_format.idx].characters,
+                 local_strings[potion_menu_option_format.idx].characters, //TODO: This Method of using formats is not safe!!
                  potions[i]->name,
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
