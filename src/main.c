@@ -1,5 +1,6 @@
 #include <time.h>
 
+#include "main.h"
 #include "game.h"
 #include "combat/combat_mode.h"
 #include "local/local.h"
