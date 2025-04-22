@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <time.h>
 
+db_connection_t db_connection;
 bool game_in_progress;
 game_state_t current_state;
 
