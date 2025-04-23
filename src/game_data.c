@@ -1,14 +1,14 @@
 #include "game_data.h"
 
-#include <stddef.h>
-
 #include "character/monster.h"
 #include "character/player.h"
 
-ability_table_t *ability_table;
-character_t *goblin;
-character_t *player;
-potion_t *healing_potion;
+#include <stddef.h>
+
+ability_table_t* ability_table;
+character_t* goblin;
+character_t* player;
+potion_t* healing_potion;
 
 /**
  * Reset the goblin's state
@@ -31,7 +31,7 @@ int reset_goblin() {
  */
 int init_game_data() {
     ability_table = init_ability_table();
-    player = create_new_player(); //initialize blank player
+    player = create_new_player();//initialize blank player
     healing_potion = init_potion("Healing Potion", HEALING, 20);
 
     reset_goblin();
@@ -47,4 +47,3 @@ int init_game_data() {
     }
     return 0;
 }
-

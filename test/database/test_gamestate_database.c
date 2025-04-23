@@ -1,8 +1,8 @@
 #include "../../src/database/database.h"
-#include "../src/database/database.h"
-#include "../src/database/gamestate/gamestate_database.h"
 #include "../include/sqlite3.h"
 #include "../src/common.h"
+#include "../src/database/database.h"
+#include "../src/database/gamestate/gamestate_database.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -62,7 +62,7 @@ void test_save_game_state() {
     const int revealed_map[WIDTH][HEIGHT] = {{1, 0}, {0, 1}};
     const vector2d_t player_pos = {1, 6};
     const char* save_name = "Test Save";
-    save_game_state(&db_connection, (int*)map, (int*)revealed_map, WIDTH, HEIGHT, player_pos, save_name);
+    save_game_state(&db_connection, (int*) map, (int*) revealed_map, WIDTH, HEIGHT, player_pos, save_name);
 
     // Check if the game state was saved successfully
     sqlite3_stmt* stmt;
@@ -81,7 +81,7 @@ void test_save_game_state() {
     // Check get_game_state_by_id
     int return_map[WIDTH][HEIGHT];
     int return_revealed_map[WIDTH][HEIGHT];
-    rc = get_game_state(&db_connection, return_map, return_revealed_map, WIDTH,HEIGHT , setter);
+    rc = get_game_state(&db_connection, return_map, return_revealed_map, WIDTH, HEIGHT, setter);
     assert(rc == 1);
     assert(return_map[0][0] == map[0][0]);
     assert(return_map[0][1] == map[0][1]);
@@ -93,7 +93,6 @@ void test_save_game_state() {
     assert(return_revealed_map[1][1] == revealed_map[1][1]);
 
 
-
     // Check if the revealed map was saved correctly
     rc = sqlite3_prepare_v2(db_connection.db, "SELECT MS_REVEALED FROM map_state WHERE MS_GS_ID = ? LIMIT 1;", -1, &stmt, NULL);
     assert(rc == SQLITE_OK);
@@ -101,7 +100,7 @@ void test_save_game_state() {
     assert(rc == SQLITE_OK);
     rc = sqlite3_step(stmt);
     assert(rc == SQLITE_ROW);
-    const char* revealed_map_json = (const char*)sqlite3_column_text(stmt, 0);
+    const char* revealed_map_json = (const char*) sqlite3_column_text(stmt, 0);
     assert(revealed_map_json != arr2D_to_flat_json(revealed_map, WIDTH, HEIGHT));
     sqlite3_finalize(stmt);
 

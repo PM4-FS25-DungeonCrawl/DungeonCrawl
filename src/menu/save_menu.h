@@ -1,8 +1,8 @@
 #ifndef SAVE_MENU_H
 #define SAVE_MENU_H
 
-#include "menu.h"
 #include "../database/database.h"
+#include "menu.h"
 
 // Global variables to store menu state
 extern int selected_save_file_id;

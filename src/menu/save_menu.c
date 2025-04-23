@@ -39,14 +39,14 @@ menu_result_t show_save_game_menu(void) {
 
         struct tb_event input_event;
         int ret = tb_poll_event(&input_event);
-        
 
-        switch(input_event.key) {
+
+        switch (input_event.key) {
             case TB_KEY_ENTER:
-            if (name_length > 0) {
-                input_active = false;
-            }
-            break;
+                if (name_length > 0) {
+                    input_active = false;
+                }
+                break;
             case TB_KEY_BACKSPACE2:
             case TB_KEY_BACKSPACE:
                 // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
@@ -57,7 +57,7 @@ menu_result_t show_save_game_menu(void) {
             case TB_KEY_ESC:
                 // Cancel save
                 input_active = false;
-                name_length = 0; // Set length to 0 to indicate cancellation
+                name_length = 0;// Set length to 0 to indicate cancellation
                 break;
             default:
                 if (input_event.ch != 0 && name_length < 49) {
@@ -151,7 +151,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         struct tb_event tb_event;
         tb_poll_event(&tb_event);
 
-        switch(tb_event.key) {
+        switch (tb_event.key) {
             case TB_KEY_ARROW_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                 break;
@@ -173,6 +173,6 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     // Clean up the save files
     free_save_infos(save_infos);
     db_close(&menu_db_connection);
-    
+
     return result;
 }

@@ -1,13 +1,14 @@
-#include <time.h>
-
 #include "main.h"
-#include "game.h"
+
 #include "combat/combat_mode.h"
+#include "game.h"
+#include "game_data.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
-#include "game_data.h"
+
+#include <time.h>
 
 int init() {
     // seeding random function
@@ -20,7 +21,7 @@ int init() {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }
-    create_tables_game_state(&db_connection); // only for dungeoncrawl_game.db
+    create_tables_game_state(&db_connection);// only for dungeoncrawl_game.db
 
     if (init_local() != 0) {
         log_msg(ERROR, "Main", "Failed to initialize local");

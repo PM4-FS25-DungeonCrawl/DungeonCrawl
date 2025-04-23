@@ -1,8 +1,9 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "../database/gamestate/gamestate_database.h"
 #include "../../include/termbox2.h"
+#include "../database/gamestate/gamestate_database.h"
+
 #include <stdbool.h>
 
 // Menu options strings
@@ -42,4 +43,4 @@ bool show_confirmation(const char* message);
  */
 void draw_menu(const char** menu_options, int menu_count, int selected_index);
 
-#endif // MENU_H
+#endif// MENU_H

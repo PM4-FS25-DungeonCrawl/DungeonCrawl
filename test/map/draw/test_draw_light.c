@@ -27,7 +27,7 @@ void reset_test_mazes(void) {
     }
 }
 
-void print_array(const int *array) {
+void print_array(const int* array) {
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
             printf("%d ", array[x * height + y]);

@@ -7,33 +7,33 @@
 #define MAX_NUMBER_SAVES 20
 #define TIMESTAMP_LENGTH 20
 
-#define SQL_CREATE_TABLES_GAMESTATE_GS \
-            "CREATE TABLE IF NOT EXISTS \"game_state\" ("\
-            "\"GS_ID\"	INTEGER NOT NULL UNIQUE,"\
-            "\"GS_SAVEDTIME\"	TEXT,"\
-            "\"GS_NAME\"	TEXT,"\
-            "PRIMARY KEY(\"GS_ID\" AUTOINCREMENT)"\
-            ");"
-#define SQL_CREATE_TABLES_GAMESTATE_MS \
-            "CREATE TABLE IF NOT EXISTS \"map_state\" ("\
-            "\"MS_ID\"	INTEGER NOT NULL UNIQUE,"\
-            "\"MS_MAP\"	TEXT,"\
-            "\"MS_REVEALED\"	TEXT,"\
-            "\"MS_HEIGHT\"	INTEGER,"\
-            "\"MS_WIDTH\"	INTEGER,"\
-            "\"MS_GS_ID\"	INTEGER NOT NULL UNIQUE,"\
-            "PRIMARY KEY(\"MS_ID\" AUTOINCREMENT),"\
-            "FOREIGN KEY(\"MS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")"\
-            ");"
-#define SQL_CREATE_TABLES_GAMESTATE_PS \
-            "CREATE TABLE IF NOT EXISTS \"player_state\" ("\
-            "\"PS_ID\"	INTEGER NOT NULL UNIQUE,"\
-            "\"PS_X\"	INTEGER,"\
-            "\"PS_Y\"	INTEGER,"\
-            "\"PS_GS_ID\"	INTEGER NOT NULL UNIQUE,"\
-            "PRIMARY KEY(\"PS_ID\" AUTOINCREMENT),"\
-            "FOREIGN KEY(\"PS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")"\
-            ");"
+#define SQL_CREATE_TABLES_GAMESTATE_GS            \
+    "CREATE TABLE IF NOT EXISTS \"game_state\" (" \
+    "\"GS_ID\"	INTEGER NOT NULL UNIQUE,"          \
+    "\"GS_SAVEDTIME\"	TEXT,"                      \
+    "\"GS_NAME\"	TEXT,"                           \
+    "PRIMARY KEY(\"GS_ID\" AUTOINCREMENT)"        \
+    ");"
+#define SQL_CREATE_TABLES_GAMESTATE_MS                               \
+    "CREATE TABLE IF NOT EXISTS \"map_state\" ("                     \
+    "\"MS_ID\"	INTEGER NOT NULL UNIQUE,"                             \
+    "\"MS_MAP\"	TEXT,"                                               \
+    "\"MS_REVEALED\"	TEXT,"                                          \
+    "\"MS_HEIGHT\"	INTEGER,"                                         \
+    "\"MS_WIDTH\"	INTEGER,"                                          \
+    "\"MS_GS_ID\"	INTEGER NOT NULL UNIQUE,"                          \
+    "PRIMARY KEY(\"MS_ID\" AUTOINCREMENT),"                          \
+    "FOREIGN KEY(\"MS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")" \
+    ");"
+#define SQL_CREATE_TABLES_GAMESTATE_PS                               \
+    "CREATE TABLE IF NOT EXISTS \"player_state\" ("                  \
+    "\"PS_ID\"	INTEGER NOT NULL UNIQUE,"                             \
+    "\"PS_X\"	INTEGER,"                                              \
+    "\"PS_Y\"	INTEGER,"                                              \
+    "\"PS_GS_ID\"	INTEGER NOT NULL UNIQUE,"                          \
+    "PRIMARY KEY(\"PS_ID\" AUTOINCREMENT),"                          \
+    "FOREIGN KEY(\"PS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")" \
+    ");"
 
 typedef void (*player_pos_setter_t)(int player_x, int player_y);
 

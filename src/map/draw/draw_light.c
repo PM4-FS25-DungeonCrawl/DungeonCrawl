@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 
-map_tile_t *map_arr;
-map_tile_t *revealed_map_arr;
+map_tile_t* map_arr;
+map_tile_t* revealed_map_arr;
 int map_height;
 int map_width;
 vector2d_t player_position;
@@ -16,10 +16,10 @@ int radius;
  * - the reverse check vector
  */
 const vector2d_t checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
+        {{1, 1}, {1, 0}},   // for up
+        {{-1, -1}, {-1, 0}},// for down
+        {{1, -1}, {0, -1}}, // for left
+        {{-1, 1}, {0, 1}},  // for right
 };
 
 
@@ -32,7 +32,7 @@ const vector2d_t checks_vector[4][2] = {
  * @param prev_wall_at pointer to variable, which should be written
  * @return 1 if loops must break, 0 when not
  */
-int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *prev_wall_at) {
+int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int* prev_wall_at) {
     if (j == 0) {
         //gets the x or y value of the calculated coordinates
         *prev_wall_at = abs(y * dir.dy + x * dir.dx);
@@ -56,7 +56,7 @@ int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int *
  * @param j loop counter
  * @return
  */
-int process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j) {
+int process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j) {
     int break_loop = 0;
     //calculated access index
     const int access_idx = x * map_height + y;
@@ -100,7 +100,7 @@ int process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j) {
  * @param reverse_check the reverse check vector
  * @return 1 if loops must break, 0 when not
  */
-int check_and_process_tile(int x, int y, int *prev_wall_at, const vector2d_t dir, int j,
+int check_and_process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j,
                            const vector2d_t diagonal_check, const vector2d_t reverse_check) {
     int quit = 0;
     //calculated access index
@@ -182,7 +182,7 @@ void process_light_in_direction(const vector2d_t player, const vector2d_t dir, c
  * @param player the player's position on the map
  * @param light_radius the radius of the light around the player
  */
-void draw_light_on_player(map_tile_t *arr1, map_tile_t *arr2, int height, int width, vector2d_t player,
+void draw_light_on_player(map_tile_t* arr1, map_tile_t* arr2, int height, int width, vector2d_t player,
                           const int light_radius) {
     map_arr = arr1;
     revealed_map_arr = arr2;
