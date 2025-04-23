@@ -40,11 +40,22 @@ open msys2 mingw edition, probably under "C:\tools\msys64\mingw64.exe"
 
 run:
 pacman -S mingw-w64-x86_64-notcurses
+
 pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-meson
 
 restart the shell.
 
-compile the project from within the msys2 mingw shell.
+The path conversion between windows and msys is:
+
+Example project location:
+
+C:\User\Username\ProjectRoot
+
+The path in msys would be:
+
+/c/User/Username/ProjectRoot
+
+compile the project from within the msys2 mingw shell using normal mason commands.
 
 ## OSX
 
