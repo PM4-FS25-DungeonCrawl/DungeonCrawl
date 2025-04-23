@@ -26,6 +26,9 @@ bool game_in_progress;
 game_state_t current_state;
 int exit_code;
 
+void game_loop();
+void combat_mode_state();
+
 int run_game() {
     // TODO: remove after notcurses switch
     if (tb_init() != 0) {
