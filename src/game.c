@@ -45,7 +45,7 @@ int run_game() {
     game_loop();
 
     free_game_data();
-    
+
     shutdown_local();
     // Close database connection
     db_close(&db_connection);
