@@ -54,11 +54,12 @@ menu_result_t show_main_menu(bool game_in_progress) {
             case TB_KEY_ARROW_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case TB_KEY_ENTER:
+            case TB_KEY_ENTER: {
                 // Get the selected menu option
                 const char* selected_option = menu_options[selected_index];
                 select_menu_option(selected_option, game_in_progress);
                 break;
+            }
             case TB_KEY_CTRL_C:
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
