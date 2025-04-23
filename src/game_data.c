@@ -47,3 +47,15 @@ int init_game_data() {
     }
     return 0;
 }
+
+/**
+ * Free game data
+ */
+int free_game_data() {
+    free_ability_table(ability_table);
+    free_character(player);
+    free_character(goblin);
+    free_potion(healing_potion);
+
+    return 0;
+}

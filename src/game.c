@@ -44,10 +44,8 @@ int run_game() {
 
     game_loop();
 
-    free_ability_table(ability_table);
-    free_character(goblin);
-    free_character(player);
-    free_potion(healing_potion);
+    free_game_data();
+    
     shutdown_local();
     // Close database connection
     db_close(&db_connection);

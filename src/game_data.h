@@ -10,6 +10,8 @@ extern potion_t* healing_potion;
 
 int init_game_data();
 
+int free_game_data();
+
 int reset_goblin();
 
 #endif//GAME_DATA_H
