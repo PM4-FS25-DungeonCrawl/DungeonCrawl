@@ -47,10 +47,9 @@ void test_create_gamestate_tables() {
     db_close(&db_connection);
 }
 
-void* setter(int x, int y) {
+void setter(int x, int y) {
     // This function is a placeholder for the setter function
     // In a real implementation, this would set the player position
-    return NULL;
 }
 
 void test_save_game_state() {
