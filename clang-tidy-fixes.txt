@@ -4,8 +4,8 @@
 ../src/logging/logger.c:135:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   135 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:15:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   15 |     srand(time(NULL));
+../src/main.c:23:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   23 |     srand(time(NULL));
       |     ^
 ../src/map/map_generator.c:82:6: warning: function 'carve_passages' is within a recursive call chain [misc-no-recursion]
    82 | void carve_passages(int x, int y) {
@@ -18,5 +18,5 @@
 ../src/menu/save_menu.c:64:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    64 |                     save_name[name_length++] = input_event.ch;
       |                                                ^
-Suppressed 108177 warnings (108153 in non-user code, 24 with check filters).
+Suppressed 108107 warnings (108083 in non-user code, 24 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
