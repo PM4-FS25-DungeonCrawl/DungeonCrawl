@@ -276,7 +276,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         memset(&event, 0, sizeof(event));
         int ret = notcurses_get_nblock(nc, &event);
 
-                            //commented out for testing if you find this, yeet it
+        //commented out for testing if you find this, yeet it
         // // Drain any additional queued events
         // ncinput discard;
         // while (notcurses_get_nblock(nc, &discard) > 0) {

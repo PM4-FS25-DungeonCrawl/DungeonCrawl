@@ -39,4 +39,3 @@ int get_selected_save_file_id(void);
 const char* get_save_name(void);
 
 #endif// MAIN_MENU_H
-

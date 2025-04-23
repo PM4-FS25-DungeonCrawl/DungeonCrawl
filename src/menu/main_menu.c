@@ -11,9 +11,9 @@
 #include <time.h>// For nanosleep
 //
 #ifdef __APPLE__
-#define KEY_EVENT NCTYPE_PRESS
+    #define KEY_EVENT NCTYPE_PRESS
 #else
-#define KEY_EVENT NCTYPE_UNKNOWN
+    #define KEY_EVENT NCTYPE_UNKNOWN
 #endif /* ifdef __APPLE__ */
 
 
