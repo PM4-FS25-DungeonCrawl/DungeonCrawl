@@ -1,17 +1,7 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
-#include "../database/gamestate/gamestate_database.h"
-
-#include <stdbool.h>
-
-typedef enum {
-    MENU_START_GAME,
-    MENU_CONTINUE,
-    MENU_SAVE_GAME,
-    MENU_LOAD_GAME,
-    MENU_EXIT
-} menu_result_t;
+#include "menu.h"
 
 /**
  * Initialize the main menu
@@ -27,15 +17,10 @@ void init_main_menu(void);
 menu_result_t show_main_menu(bool game_in_progress);
 
 /**
- * Get the ID of the save file selected by the user
- * @return The ID of the selected save file, or -1 if no file was selected
+ * Process a selected menu option
+ * @param selected_option The selected menu option string
+ * @param game_in_progress indicates whether there's an active game that can be continued
  */
-int get_selected_save_file_id(void);
-
-/**
- * Get the name of the latest save entered by the user
- * @return The name of the latest save, or NULL if no save name was entered
- */
-const char* get_save_name(void);
+void select_menu_option(const char* selected_option, bool game_in_progress);
 
 #endif// MAIN_MENU_H
