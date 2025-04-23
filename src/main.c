@@ -7,8 +7,16 @@
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "../include/termbox2.h"
 
 #include <time.h>
+
+/**
+ * Frees all allocated resources and performs cleanup tasks for the game.
+ * This function should be called before the program exits to ensure proper
+ * shutdown of all modules, including logging, local settings, and game data.
+ */
+void shutdown(void);
 
 int init() {
     // seeding random function
@@ -41,10 +49,24 @@ int init() {
     return 0;
 }
 
+void shutdown() {
+    free_game_data();
+    shutdown_local();
+    // close database connection in game.c
+    db_close(&db_connection);
+
+    shutdown_combat_mode();
+    shutdown_logger();
+    tb_shutdown();
+}
+
 int main(void) {
     int exit_code = init();
     if (exit_code != 0) {
+        shutdown();
         return exit_code;
     }
-    return run_game();
+    run_game();
+    shutdown();
+    return exit_code;
 }

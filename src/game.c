@@ -2,13 +2,10 @@
 
 #include "../include/termbox2.h"
 #include "character/character.h"
-#include "combat/ability.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
-#include "item/potion.h"
-#include "local/local.h"
 #include "logging/logger.h"
 #include "main.h"
 #include "map/map.h"
@@ -19,7 +16,6 @@
 
 #include <stdbool.h>
 #include <stdio.h>
-#include <time.h>
 
 db_connection_t db_connection;
 bool game_in_progress;
@@ -41,17 +37,8 @@ int run_game() {
 
     game_in_progress = false;// Flag to track if a game has been started
     current_state = MAIN_MENU;
-
+    //start the game loop
     game_loop();
-
-    free_game_data();
-
-    shutdown_local();
-    // Close database connection
-    db_close(&db_connection);
-    shutdown_combat_mode();
-    shutdown_logger();
-    tb_shutdown();
     return exit_code;
 }
 
