@@ -5,7 +5,7 @@
 #include "draw/draw_map_mode.h"
 #include "map.h"
 
-vector2d_t map_anchor = {0, 0};
+vector2d_t map_anchor = {5, 1};
 vector2d_t player_pos;
 int player_has_key = 0;
 
