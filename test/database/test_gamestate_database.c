@@ -146,10 +146,25 @@ void test_save_game_state() {
 //     db_close(&db_connection);
 // }
 
+void clean_up_sqlite_sequences() {
+    // Open the database
+    assert(db_open(&db_connection, "../test/database/test_data.db") == DB_OPEN_STATUS_SUCCESS);
+    assert(db_is_open(&db_connection) == 1);
+
+    // Set the sequence values to 6
+    sqlite3_exec(db_connection.db, "UPDATE sqlite_sequence SET seq = 6 WHERE name = 'game_state';", NULL, NULL, NULL);
+    sqlite3_exec(db_connection.db, "UPDATE sqlite_sequence SET seq = 6 WHERE name = 'map_state';", NULL, NULL, NULL);
+    sqlite3_exec(db_connection.db, "UPDATE sqlite_sequence SET seq = 6 WHERE name = 'player_state';", NULL, NULL, NULL);
+
+    // Close the database
+    db_close(&db_connection);
+}
+
 int main() {
     // Run the test
     test_create_gamestate_tables();
     test_save_game_state();
+    clean_up_sqlite_sequences();
     // drop_tables(); // Only manually
     return 0;
 }
