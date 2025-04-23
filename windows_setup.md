@@ -48,16 +48,25 @@ Double click on the .exe file you just downloaded.
 
 Follow the instructions of the installer.
 
-open msys2 mingw edition, probably under "C:\tools\msys64\mingw64.exe"
+Close the UCRT64 terminal.
+
+open msys2 mingw edition, probably under "C:\tools\msys64\mingw64.exe" 
+
+-> MSYS2 MINGW64 terminal
+
+Install meson: (and other compiler shit)
+pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-meson
+pacman -S gcc 
+pacman -S clang
+
+synchronize package stuff:
+pacman -Syu
 
 run:
 pacman -S mingw-w64-x86_64-notcurses
 
-if you wan't to use git from within msys and not your normal windows shell run:
+if you wan't to use git from within msys and not your normal windows shell run: (just do this pls)
 pacman -S git
-
-Install meson:
-pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-meson
 
 restart the shell.
 
@@ -72,6 +81,16 @@ The path in msys would be:
 /c/User/Username/ProjectRoot
 
 compile the project from within the msys2 mingw shell using normal meson commands.
+
+mkdir builddir
+
+meson setup builddir
+
+meson compile -C builddir
+
+cd builddir
+
+./DungeonCrawl
 
 ## OSX
 
@@ -116,7 +135,7 @@ enable "Emulate terminal in the output console"
 
 navigate into project directory in WSL, then run:
 
-mkdir buildDir
+mkdir builddir
 
 meson setup builddir
 
