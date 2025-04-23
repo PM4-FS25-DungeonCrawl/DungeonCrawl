@@ -1,5 +1,6 @@
 #include "main.h"
 
+#include "../include/termbox2.h"
 #include "combat/combat_mode.h"
 #include "game.h"
 #include "game_data.h"
@@ -7,7 +8,6 @@
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
-#include "../include/termbox2.h"
 
 #include <time.h>
 
