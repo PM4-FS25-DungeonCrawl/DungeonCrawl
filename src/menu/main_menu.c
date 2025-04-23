@@ -46,7 +46,6 @@ menu_result_t show_main_menu(bool game_in_progress) {
 
         struct tb_event event;
         int ret = tb_peek_event(&event, 10);
-        log_msg(INFO, "Save Menu", "Polled event: %d, key: %d, ch: %c", ret, event.key, event.ch ? event.ch : ' ');
 
         switch(event.key) {
             case TB_KEY_ARROW_UP: 

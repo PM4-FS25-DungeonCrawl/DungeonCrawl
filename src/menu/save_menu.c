@@ -38,9 +38,8 @@ menu_result_t show_save_game_menu(void) {
         tb_present();
 
         struct tb_event input_event;
-        log_msg(INFO, "Save Menu", "About to poll event");
         int ret = tb_poll_event(&input_event);
-        log_msg(INFO, "Save Menu", "Polled event: %d, key: %d, ch: %c", ret, input_event.key, input_event.ch ? input_event.ch : ' ');
+        
 
         switch(input_event.key) {
             case TB_KEY_ENTER:
