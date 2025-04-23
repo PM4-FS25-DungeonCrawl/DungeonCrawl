@@ -34,13 +34,29 @@ sudo apt upgrade
 
 ## Windows
 
+Read these instructions thoroughly.
+
+Turn on your pc.
+
+Open your browser of choice.
+
 Install msys2 from https://www.msys2.org/
+
+Navigate to your downloads folder.
+
+Double click on the .exe file you just downloaded.
+
+Follow the instructions of the installer.
 
 open msys2 mingw edition, probably under "C:\tools\msys64\mingw64.exe"
 
 run:
 pacman -S mingw-w64-x86_64-notcurses
 
+if you wan't to use git from within msys and not your normal windows shell run:
+pacman -S git
+
+Install meson:
 pacman -S mingw-w64-x86_64-python mingw-w64-x86_64-meson
 
 restart the shell.
@@ -55,7 +71,7 @@ The path in msys would be:
 
 /c/User/Username/ProjectRoot
 
-compile the project from within the msys2 mingw shell using normal mason commands.
+compile the project from within the msys2 mingw shell using normal meson commands.
 
 ## OSX
 
