@@ -160,6 +160,5 @@ void combat_mode_state() {
         case EXIT_GAME:
             current_state = EXIT;
             break;
-
     }
 }
