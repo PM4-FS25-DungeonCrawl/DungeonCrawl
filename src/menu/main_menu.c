@@ -1,23 +1,28 @@
 #include "main_menu.h"
 
 #include "../../include/termbox2.h"
-#include "../logging/logger.h"
 #include "save_menu.h"
+#include "../common.h"
+#include "../local/local.h"
+#include "../local/local_strings.h"
 
 #include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>// For nanosleep
+
+void update_main_menu_local(void);
 
 bool menu_active;
 menu_result_t active_menu_state;
 
-void init_main_menu(void) {
-    log_msg(INFO, "Menu", "Initializing main menu");
+int init_main_menu() {
+    // update local once, so the strings are initialized
+    update_main_menu_local();
+    // add update local function to the observer list
+    add_local_observer(update_main_menu_local);
+    return 0;
 }
 
 menu_result_t show_main_menu(bool game_in_progress) {
-    const char* menu_options[5];
+    const char* menu_options[6];
     int menu_count;
 
     // Always include New Game
@@ -28,13 +33,15 @@ menu_result_t show_main_menu(bool game_in_progress) {
         menu_options[1] = CONTINUE_OPTION;
         menu_options[2] = SAVE_GAME_OPTION;
         menu_options[3] = LOAD_GAME_OPTION;
-        menu_options[4] = EXIT_OPTION;
-        menu_count = 5;
+        menu_options[4] = CHANGE_LANGUAGE_OPTION;
+        menu_options[5] = EXIT_OPTION;
+        menu_count = 6;
     } else {
         // If no game in progress, only show New Game, Load Game and Exit
         menu_options[1] = LOAD_GAME_OPTION;
-        menu_options[2] = EXIT_OPTION;
-        menu_count = 3;
+        menu_options[2] = CHANGE_LANGUAGE_OPTION;
+        menu_options[3] = EXIT_OPTION;
+        menu_count = 4;
     }
 
     int selected_index = 0;
@@ -112,4 +119,8 @@ void select_menu_option(const char* selected_option, bool game_in_progress) {
             }
             break;
     }
+}
+
+void update_main_menu_local(void) {
+
 }

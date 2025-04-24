@@ -3,10 +3,15 @@
 
 #include "menu.h"
 
+
 /**
- * Initialize the main menu
+ * Initializes resources for the main menu, including memory allocation
+ * and observer registration for localized menu strings.
+ *
+ * @return 0 if the main menu initializes successfully,
+ *         non-zero value otherwise in case of failure.
  */
-void init_main_menu(void);
+int init_main_menu(void);
 
 /**
  * Display and handle the main menu

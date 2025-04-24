@@ -10,6 +10,7 @@ project('DungeonCrawl', 'c',
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
     'src/main.c',
+    'src/common.c',
     'src/game.c',
     'src/game_data.c',
 
