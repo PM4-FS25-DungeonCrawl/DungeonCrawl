@@ -6,7 +6,6 @@
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
 #include "logging/logger.h"
-#include "main.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
@@ -47,7 +46,7 @@ void game_loop() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                reset_goblin(main_memory_pool);
+                reset_goblin();
                 combat_mode_state();
                 break;
             case EXIT:
