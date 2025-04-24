@@ -9,12 +9,19 @@
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "database/gamestate/gamestate_database.h"
 
 #include <time.h>
 
-// === Global Variables ===
-memory_pool_t* main_memory_pool;
-
+/**
+ * Initializes all necessary parts and subsystems for the game.
+ * This function sets up the logger, memory pool, database connection,
+ * game modes, and other required modules. It also performs any necessary
+ * seeding or initialization tasks needed for the game to run correctly.
+ *
+ * @return An exit code indicating success or the specific failure that occurred.
+ */
+int init(void);
 /**
  * Frees all allocated resources and performs cleanup tasks for the game.
  * This function should be called before the program exits to ensure proper
@@ -23,6 +30,9 @@ memory_pool_t* main_memory_pool;
 void shutdown(void);
 
 int init() {
+    // check if the main memory pool is successfully initialized
+    NULL_PTR_HANDLER_RETURN(main_memory_pool, FAIL_MEM_POOL_INIT, "Main", "Main memory pool is NULL");
+
     // TODO: remove after notcurses switch
     if (tb_init() != 0) {
         log_msg(ERROR, "Game", "Failed to initialize termbox");
@@ -42,23 +52,21 @@ int init() {
     }
     create_tables_game_state(&db_connection);// only for dungeoncrawl_game.db
 
-    main_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
-    if (main_memory_pool == NULL) {
-        log_msg(ERROR, "Main", "Failed to initialize memory pool");
-        return FAIL_MEM_POOL_INIT;
-    }
     if (init_local() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize local");
         return FAIL_LOCAL_INIT;
     }
 
     init_map_mode();
-    init_main_menu();
-    if (init_combat_mode(main_memory_pool) != COMMON_SUCCESS) {
+    if (init_main_menu() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize main menu");
+        return FAIL_MAIN_MENU_INIT;
+    }
+    if (init_combat_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
     }
-    if (init_game_data(main_memory_pool) != COMMON_SUCCESS) {
+    if (init_game_data() != COMMON_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
     }
@@ -69,14 +77,16 @@ int init() {
 }
 
 void shutdown() {
-    free_game_data(main_memory_pool);
+    free_game_data();
     shutdown_local();
     // close database connection in game.c
     db_close(&db_connection);
 
-    shutdown_combat_mode(main_memory_pool);
-    shutdown_memory_pool(main_memory_pool);
+    shutdown_main_menu();
+    shutdown_combat_mode();
 
+    //shutdown the main memory pool
+    shutdown_memory_pool(main_memory_pool);
     shutdown_logger();
     tb_shutdown();
 }
