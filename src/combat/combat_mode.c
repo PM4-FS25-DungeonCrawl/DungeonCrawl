@@ -34,7 +34,7 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
-string_max_t* local_strings;
+string_max_t* combat_local_strings;
 
 string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
@@ -43,7 +43,7 @@ string_max_t* potion_menu_options; // holds the potion menu options
 int init_combat_mode(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Memory pool is NULL");
 
-    local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
+    combat_local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
     NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
     ability_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
@@ -118,8 +118,8 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
     while (!submenu_selected) {
         // draw menu options
         draw_combat_menu(anchor,
-                         local_strings[main_menu_title.idx].characters,
-                         &local_strings[main_menu_option1.idx],
+                         combat_local_strings[main_menu_title.idx].characters,
+                         &combat_local_strings[main_menu_option1.idx],
                          MAX_COMBAT_MENU_OPTIONS,
                          selected_index,
                          NULL);
@@ -164,11 +164,11 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
     while (!ability_used_or_esc) {
         // draw menu options
         draw_combat_menu(anchor,
-                         local_strings[ability_menu_title.idx].characters,
+                         combat_local_strings[ability_menu_title.idx].characters,
                          ability_menu_options,
                          player->ability_count,
                          selected_index,
-                         local_strings[menu_tail_message.idx].characters);
+                         combat_local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
@@ -203,7 +203,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     int selected_index = 0;
 
     if (player->potion_count == 0) {
-        draw_combat_log(anchor, local_strings[empty_potion_inventory.idx].characters);
+        draw_combat_log(anchor, combat_local_strings[empty_potion_inventory.idx].characters);
         return COMBAT_MENU;
     }
 
@@ -213,11 +213,11 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     while (!item_used_or_esc) {
         // draw menu options
         draw_combat_menu(anchor,
-                         local_strings[potion_menu_title.idx].characters,
+                         combat_local_strings[potion_menu_title.idx].characters,
                          potion_menu_options,
                          player->potion_count,
                          selected_index,
-                         local_strings[menu_tail_message.idx].characters);
+                         combat_local_strings[menu_tail_message.idx].characters);
 
         // check for input
         struct tb_event event;
@@ -274,7 +274,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 
 
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), local_strings[attack_success.idx].characters,//TODO: This Method of using formats is not safe!!
+            snprintf(message, sizeof(message), combat_local_strings[attack_success.idx].characters,//TODO: This Method of using formats is not safe!!
                      attacker->name,
                      ability->name,
                      damage_dealt,
@@ -285,14 +285,14 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
             memset(message, 0, sizeof(message));
-            snprintf(message, sizeof(message), local_strings[attack_miss.idx].characters,//TODO: This Method of using formats is not safe!!
+            snprintf(message, sizeof(message), combat_local_strings[attack_miss.idx].characters,//TODO: This Method of using formats is not safe!!
                      attacker->name,
                      ability->name);
             draw_combat_log(anchor, message);
         }
     } else {
         memset(message, 0, sizeof(message));
-        snprintf(message, sizeof(message), local_strings[attack_fail.idx].characters,//TODO: This Method of using formats is not safe!!
+        snprintf(message, sizeof(message), combat_local_strings[attack_fail.idx].characters,//TODO: This Method of using formats is not safe!!
                  attacker->name,
                  ability->name);
         draw_combat_log(anchor, message);
@@ -305,7 +305,7 @@ void use_potion(character_t* player, const character_t* monster, potion_t* item)
     invoke_potion_effect(player, item);
 
     char message[MAX_STRING_LENGTH];
-    snprintf(message, sizeof(message), local_strings[potion_use.idx].characters,//TODO: This Method of using formats is not safe!!
+    snprintf(message, sizeof(message), combat_local_strings[potion_use.idx].characters,//TODO: This Method of using formats is not safe!!
              player->name,
              item->name,
              item->value,
@@ -362,7 +362,7 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(ability_menu_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[ability_menu_option_format.idx].characters,//TODO: This Method of using formats is not safe!!
+                 combat_local_strings[ability_menu_option_format.idx].characters,//TODO: This Method of using formats is not safe!!
                  abilities[i]->name,
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
@@ -381,7 +381,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(potion_menu_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[potion_menu_option_format.idx].characters,//TODO: This Method of using formats is not safe!!
+                 combat_local_strings[potion_menu_option_format.idx].characters,//TODO: This Method of using formats is not safe!!
                  potions[i]->name,
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
@@ -390,33 +390,33 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
 void update_local(void) {
     //main menu
-    snprintf(local_strings[main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_title.key));
-    snprintf(local_strings[main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option1.key));
-    snprintf(local_strings[main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option2.key));
+    snprintf(combat_local_strings[main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_title.key));
+    snprintf(combat_local_strings[main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option1.key));
+    snprintf(combat_local_strings[main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option2.key));
 
     //ability menu
-    snprintf(local_strings[ability_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_title.key));
-    snprintf(local_strings[ability_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_option_format.key));
+    snprintf(combat_local_strings[ability_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_title.key));
+    snprintf(combat_local_strings[ability_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(ability_menu_option_format.key));
 
     //potion menu
-    snprintf(local_strings[potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_title.key));
-    snprintf(local_strings[potion_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_option_format.key));
+    snprintf(combat_local_strings[potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_title.key));
+    snprintf(combat_local_strings[potion_menu_option_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_menu_option_format.key));
 
     //tail message
-    snprintf(local_strings[menu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(menu_tail_message.key));
+    snprintf(combat_local_strings[menu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(menu_tail_message.key));
 
     //combat messages
-    snprintf(local_strings[empty_potion_inventory.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(empty_potion_inventory.key));
-    snprintf(local_strings[attack_success.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_success.key));
-    snprintf(local_strings[attack_miss.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_miss.key));
-    snprintf(local_strings[attack_fail.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_fail.key));
-    snprintf(local_strings[potion_use.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_use.key));
+    snprintf(combat_local_strings[empty_potion_inventory.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(empty_potion_inventory.key));
+    snprintf(combat_local_strings[attack_success.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_success.key));
+    snprintf(combat_local_strings[attack_miss.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_miss.key));
+    snprintf(combat_local_strings[attack_fail.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(attack_fail.key));
+    snprintf(combat_local_strings[potion_use.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_use.key));
 }
 
 void shutdown_combat_mode(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, , "Combat Mode", "In shutdown_combat_mode memory pool is NULL");
 
-    memory_pool_free(memory_pool, local_strings);
+    memory_pool_free(memory_pool, combat_local_strings);
     memory_pool_free(memory_pool, ability_menu_options);
     memory_pool_free(memory_pool, potion_menu_options);
 }
