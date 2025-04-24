@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]  # Multi-OS build
+        os: [ubuntu-latest, macos-latest,windows-latest]  # Multi-OS build
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -21,14 +21,37 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y meson ninja-build gcc g++ 
+          sudo apt install -y meson ninja-build gcc python3-pip libnotcurses-dev
+          pip3 install gcovr
 
       # Install dependencies for macOS
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install meson ninja
+            brew install meson ninja notcurses
           
+      - name: Build on Windows (MSYS2 MinGW64)
+        runs-on: windows-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+
+          - name: Setup MSYS2
+            uses: msys2/setup-msys2@v2
+            with:
+              msystem: MINGW64
+              update: true
+              install: >-
+                mingw-w64-x86_64-toolchain
+                mingw-w64-x86_64-meson
+                mingw-w64-x86_64-ninja
+                mingw-w64-x86_64-notcurses
+
+          - name: Build with Meson and Ninja
+            shell: msys2 {0}
+            run: |
+              meson setup builddir --buildtype=release
+              ninja -C builddir
       # Configure Meson
       - name: Configure Meson
         run: meson setup builddir
