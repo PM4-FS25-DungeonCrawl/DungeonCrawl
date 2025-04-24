@@ -173,3 +173,14 @@ void set_level(character_t* character, int level) {
 void set_xp_reward(character_t* character, int xp_reward) {
     character->xp_reward = xp_reward;
 }
+
+void reset_player_stats(character_t* player) {
+    if (player == NULL) return;
+
+    // reset current stats to their starting values
+    player->current_resources.health = player->max_resources.health;
+    player->current_resources.mana = player->max_resources.mana;
+    player->current_resources.stamina = player->max_resources.stamina;
+
+    log_msg(INFO, "Character", "Player stats reset to base values.");
+}
