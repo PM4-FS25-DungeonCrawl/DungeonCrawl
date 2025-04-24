@@ -12,9 +12,13 @@ typedef struct {
     char* column_name;// from database
 } local_language_t;
 
+typedef struct {
+    int idx;
+    char* key;
+} local_key_t;
+
 #define LANGUAGE_EN {LANG_EN, "LC_TEXT_EN"}
 #define LANGUAGE_DE {LANG_DE, "LC_TEXT_DE"}
-
 
 //function pointer type for update observer
 typedef void (*update_observer_t)(void);

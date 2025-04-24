@@ -1,11 +1,13 @@
 #ifndef COMBAT_MODE_LOCAL_H
 #define COMBAT_MODE_LOCAL_H
 
+#include "../../local/local.h"
+
 #define MAX_MENU_TITLES 3
 #define MAX_OPTION_FORMATS 2
 #define MAX_COMBAT_MENU_OPTIONS 2
 
-enum string_index {
+enum combat_string_index {
     //titles
     MAIN_MENU_INDEX,
     ABILITY_MENU_INDEX,
@@ -24,13 +26,9 @@ enum string_index {
     ATTACK_MISS_INDEX,
     ATTACK_FAIL_INDEX,
     POTION_USE_INDEX,
-    MAX_LOCAL_STRINGS
-};
 
-typedef struct {
-    int idx;
-    char* key;
-} local_key_t;
+    MAX_COMBAT_LOCAL_STRINGS
+};
 
 //main menu
 static const local_key_t main_menu_title = {MAIN_MENU_INDEX, "COMBAT.MAIN.MENU.HEAD"};

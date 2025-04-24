@@ -43,7 +43,7 @@ string_max_t* potion_menu_options; // holds the potion menu options
 int init_combat_mode(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Memory pool is NULL");
 
-    combat_local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
+    combat_local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_COMBAT_LOCAL_STRINGS);
     NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
     ability_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
