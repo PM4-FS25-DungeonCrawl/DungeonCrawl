@@ -98,6 +98,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
     bool combat_active = true;
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
@@ -118,9 +119,15 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 // evaluate the combat result
                 if (player->current_resources.health <= 0) {
                     combat_result = PLAYER_LOST;
+                    draw_game_over();
                     combat_active = false;// exit the combat loop
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
+
+                    tb_clear();
+                    char message[MAX_STRING_LENGTH];
+                    snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
+                    draw_combat_log(anchor, message);
                     combat_active = false;// exit the combat loop
                     player->xp += monster->xp_reward;
                     if (player->xp >= calculate_xp_for_next_level(player->level)) {
@@ -216,6 +223,10 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                 // go back to the combat menu
                 new_state = COMBAT_MENU;
                 ability_used_or_esc = true;
+            } else if (event.key == TB_KEY_CTRL_C) {
+                // exit the game
+                new_state = COMBAT_EXIT;
+                ability_used_or_esc = true;
             }
         }
     }
@@ -263,6 +274,10 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
             } else if (event.key == TB_KEY_ESC) {
                 // Go back to the combat menu
                 new_state = COMBAT_MENU;
+                item_used_or_esc = true;
+            } else if (event.key == TB_KEY_CTRL_C) {
+                // Exit the game
+                new_state = COMBAT_EXIT;
                 item_used_or_esc = true;
             }
         }

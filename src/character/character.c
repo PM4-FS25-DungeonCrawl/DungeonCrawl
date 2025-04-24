@@ -49,7 +49,7 @@ void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, in
 void update_character_resources(resources_t* max_resources, stats_t* base_stats) {
     max_resources->health = (5 * base_stats->constitution);
     max_resources->mana = (1 * base_stats->intelligence);
-    max_resources->stamina = (1 * base_stats->strength);
+    max_resources->stamina = (2 * base_stats->strength);
 }
 
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {

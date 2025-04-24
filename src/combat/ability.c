@@ -14,8 +14,8 @@ ability_table_t* init_ability_table(void) {
     ability_table_t* table = malloc(sizeof(ability_table_t));
     NULL_PTR_HANDLER_RETURN(table, NULL, "Ability", "Failed to allocate memory for ability table");
 
-    init_ability(&table->abilities[FIREBALL], "Fireball", 4, 10, 1, D10, MAGICAL);
-    init_ability(&table->abilities[SWORD_SLASH], "Sword Slash", 4, 10, 1, D6, PHYSICAL);
+    init_ability(&table->abilities[FIREBALL], "Fireball", 4, 15, 1, D10, MAGICAL);
+    init_ability(&table->abilities[SWORD_SLASH], "Sword Slash", 4, 15, 1, D6, PHYSICAL);
     init_ability(&table->abilities[BITE], "Bite", 3, 20, 2, D8, PHYSICAL);
     return table;
 }
