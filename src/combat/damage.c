@@ -41,7 +41,7 @@ int deal_damage(character_t* character, damage_type_t damage_type, const int dam
     // damage -= character->current_stats.armor;
 
     if (damage < character->current_resources.health) {
-        character->current_resources.health -=damage;
+        character->current_resources.health -= damage;
     } else {
         character->current_resources.health = 0;
     }
