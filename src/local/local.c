@@ -29,7 +29,7 @@ string_max_t* local_strings;
 
 // === Internal Global Variables ===
 observer_node_t* observer_list = NULL;
-local_language_t current_language = language_en;
+local_language_t current_language = LANGUAGE_EN;
 db_connection_t local_db_connection;
 
 int init_local(void) {
