@@ -206,8 +206,10 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                 selected_index = (selected_index + 1) % player->ability_count;
             } else if (event.key == TB_KEY_ENTER) {
                 use_ability(player, monster, player->abilities[selected_index]);
-                use_ability(monster, player, get_random_ability(monster));
-
+                if (monster->current_resources.health > 0) {
+                    // monster attacks back
+                    use_ability(monster, player, get_random_ability(monster));
+                }
                 new_state = EVALUATE_COMBAT;
                 ability_used_or_esc = true;
             } else if (event.key == TB_KEY_ESC) {
