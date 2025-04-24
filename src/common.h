@@ -6,6 +6,8 @@
 #define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64
 
+#define COMMON_SUCCESS 0
+
 
 #define NULL_PTR_HANDLER_RETURN(ptr, return_value, modul, format, ...) \
     if (ptr == NULL) {                                                 \

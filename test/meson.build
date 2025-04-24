@@ -7,6 +7,7 @@ helper_db = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c',
+    '../src/database/gamestate/gamestate_database.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -66,7 +67,8 @@ helper_memory = files(
 
 test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'])
 test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'])
-test_database = executable('test_database', 'test_database.c', helper_db, c_args: ['-w'])
+test_database = executable('test_database', 'database/test_database.c', helper_db, c_args: ['-w'])
+test_gamestate_database = executable('test_gamestate_database', 'database/test_gamestate_database.c', helper_db, c_args: ['-w'])
 test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'])
 test_damage = executable('test_damage', 'combat/test_damage.c', helper_combat, c_args: ['-w'])
 test_ringbuffer = executable('test_ringbuffer', 'logging/test_ringbuffer.c', helper_ringbuffer, c_args: ['-w'])
@@ -77,6 +79,7 @@ test_memory_management = executable('test_memory_management', 'memory/test_memor
 test('test_combat_mode', test_combat_mode)
 test('test_character', test_character)
 test('test_database', test_database)
+test('test_gamestate_database', test_gamestate_database)
 test('test_draw_light', test_draw_light)
 test('test_damage', test_damage)
 test('test_ringbuffer', test_ringbuffer)
