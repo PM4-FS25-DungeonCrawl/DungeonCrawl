@@ -12,10 +12,27 @@ typedef struct {
  * Every Enum Starts with four different starting characters, based on the module they are used in.
  * 'MAME' = main menu
  * 'SAME' = save menu
+ * 'LAME' = language menu
  * 'MAMO' = map mode
  * 'COMO' = combat mode
  */
 enum local_string_index {
+    //main menu index
+    MAME_NEW_GAME_OPTION,
+    MAME_CONTINUE_OPTION,
+    MAME_SAVE_GAME_OPTION,
+    MAME_LOAD_GAME_OPTION,
+    MAME_CHANGE_LANGUAGE_OPTION,
+    MAME_EXIT_OPTION,
+    MAME_CONFIRMATION_CONTINUE,
+    MAME_CONFIRMATION_EXIT,
+
+    //save menu index
+
+    //language menu index
+    LAME_LANGUAGE_ENGLISH,
+    LAME_LANGUAGE_GERMAN,
+
     //combat mode index
     COMO_MAIN_MENU_TITLE,
     COMO_ABILITY_MENU_TITLE,
@@ -33,6 +50,20 @@ enum local_string_index {
 
     MAX_LOCAL_STRINGS
 };
+
+//main menu strings
+static const local_key_t mame_new_game_option = {MAME_NEW_GAME_OPTION, "MAIN.MENU.OPTION.NEW_GAME"};
+static const local_key_t mame_continue_option = {MAME_CONTINUE_OPTION, "MAIN.MENU.OPTION.CONTINUE"};
+static const local_key_t mame_save_game_option = {MAME_SAVE_GAME_OPTION, "MAIN.MENU.OPTION.SAVE_GAME"};
+static const local_key_t mame_load_game_option = {MAME_LOAD_GAME_OPTION, "MAIN.MENU.OPTION.LOAD_GAME"};
+static const local_key_t mame_change_language_option = {MAME_CHANGE_LANGUAGE_OPTION, "MAIN.MENU.OPTION.CHANGE_LANGUAGE"};
+static const local_key_t mame_exit_option = {MAME_EXIT_OPTION, "MAIN.MENU.OPTION.EXIT"};
+static const local_key_t mame_confirm_continue = {MAME_CONFIRMATION_CONTINUE, "MAIN.MENU.CONFIRMATION.CONTINUE"};
+static const local_key_t mame_confirm_exit = {MAME_CONFIRMATION_EXIT, "MAIN.MENU.CONFIRMATION.EXIT"};
+
+//language menu strings
+static const local_key_t lame_language_english = {LAME_LANGUAGE_ENGLISH, "LANGUAGE.MENU.OPTION.ENGLISH"};
+static const local_key_t lame_language_german = {LAME_LANGUAGE_GERMAN, "LANGUAGE.MENU.OPTION.GERMAN"};
 
 //combat mode strings
 static const local_key_t como_main_menu_title = {COMO_MAIN_MENU_TITLE, "COMBAT.MAIN.MENU.HEAD"};

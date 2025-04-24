@@ -14,8 +14,8 @@ typedef struct {
     char* column_name;// from database
 } local_language_t;
 
-#define LANGUAGE_EN {LANG_EN, "LC_TEXT_EN"}
-#define LANGUAGE_DE {LANG_DE, "LC_TEXT_DE"}
+static const local_language_t language_en = {LANG_EN, "LC_TEXT_EN"};
+static const local_language_t language_de = {LANG_DE, "LC_TEXT_DE"};
 
 //function pointer type for update observer
 typedef void (*update_observer_t)(void);
