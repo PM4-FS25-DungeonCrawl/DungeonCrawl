@@ -25,10 +25,10 @@ void draw_player_info(vector2d_t ui_anchor, vector2d_t player_pos);
  * If any of the checks fail, an error message is logged and the function returns.
  */
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
-    NULL_PTR_HANDLER_RETURN(arr,, "Draw Map Mode", "In draw_map_mode given array is NULL");
-    CHECK_ARG_RETURN(height <= 0 || width <= 0,, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
-    CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0,, "Draw Map Mode", "In draw_map_mode given anchor is negative");
-    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height,, "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
+    NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
+    CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
+    CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0, , "Draw Map Mode", "In draw_map_mode given anchor is negative");
+    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, , "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     tb_printf(anchor.dx + width / 2 - 7, anchor.dy, TB_RED, TB_BLACK, "Dungeon Crawl");
     vector2d_t map_anchor = {anchor.dx, anchor.dy + 2};

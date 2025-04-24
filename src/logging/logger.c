@@ -25,7 +25,8 @@
 #define FAILED (-1)
 #define SUCCESS 0
 
-#define logger_not_init_return(ret) if (logger_is_running == false) { return ret; }
+#define logger_not_init_return(ret) \
+    if (logger_is_running == false) { return ret; }
 
 const char* log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 
