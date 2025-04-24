@@ -13,7 +13,8 @@
 
 #include <time.h>
 
-memory_pool_t* memory_pool;
+// === internal global variables ===
+memory_pool_t* memory_pool; // the used game memory pool
 
 /**
  * Frees all allocated resources and performs cleanup tasks for the game.
