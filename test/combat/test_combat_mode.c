@@ -1,24 +1,27 @@
 #include "../../src/character/character.h"
 #include "../../src/combat/ability.h"
 #include "../../src/combat/combat_mode.h"
+#include "../../src/common.h"
+#include "../../src/local/local.h"
 
 #include <assert.h>
 #include <stdio.h>
 
-memory_pool_t* test_combat_mode_memory_pool;
 
 void setup() {
-    test_combat_mode_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (test_combat_mode_memory_pool == NULL) {
-        fprintf(stderr, "Failed to initialize memory pool\n");
+    init_local();
+    printf("Test");
+    main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (main_memory_pool == NULL) {
+        printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
-    init_combat_mode(test_combat_mode_memory_pool);
+    init_combat_mode();
 }
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(test_combat_mode_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
@@ -40,21 +43,21 @@ void test_use_ability() {
     use_ability(player, enemy, &test_ability);
     assert(player->current_resources.stamina == 0);
 
-    // Test: Ability with insufficient stamina
-    player->current_resources.stamina = 14;
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.stamina == 14);
+     // Test: Ability with insufficient stamina
+     player->current_resources.stamina = 14;
+     use_ability(player, enemy, &test_ability);
+     assert(player->current_resources.stamina == 14);
 
-    // Test: Ability with sufficient mana
-    test_ability.damage_type = MAGICAL;
-    player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.mana == 0);
+     // Test: Ability with sufficient mana
+     test_ability.damage_type = MAGICAL;
+     player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
+     use_ability(player, enemy, &test_ability);
+     assert(player->current_resources.mana == 0);
 
-    // Test: Ability with insufficient mana
-    player->current_resources.mana = 14;
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.mana == 14);
+     // Test: Ability with insufficient mana
+     player->current_resources.mana = 14;
+     use_ability(player, enemy, &test_ability);
+     assert(player->current_resources.mana == 14);
 
     printf("test_use_ability passed\n");
 }
@@ -124,5 +127,6 @@ int main(void) {
     test_use_ability();
     test_use_item();
     test_get_random_ability();
+    shutdown_memory_pool(main_memory_pool);
     return 0;
 }

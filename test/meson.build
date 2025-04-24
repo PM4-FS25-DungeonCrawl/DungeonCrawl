@@ -22,6 +22,8 @@ helper_draw_light = files(
 )
 
 helper_combat = files(
+    '../src/common.c',
+
     '../src/combat/combat_mode.c',
     '../src/combat/ability.c',
     '../src/combat/damage.c',
