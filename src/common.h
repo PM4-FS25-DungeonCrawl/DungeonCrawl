@@ -15,22 +15,10 @@
         return return_value;                                           \
     }
 
-#define NULL_PTR_HANDLER_VOID(ptr, modul, format, ...) \
-    if (ptr == NULL) {                                 \
-        log_msg(ERROR, modul, format, ##__VA_ARGS__);  \
-        return;                                        \
-    }
-
 #define CHECK_ARG_RETURN(bool_expr, return_value, modul, format, ...) \
     if (bool_expr) {                                                  \
         log_msg(ERROR, modul, format, ##__VA_ARGS__);                 \
         return return_value;                                          \
-    }
-
-#define CHECK_ARG_VOID(bool_expr, modul, format, ...) \
-    if (bool_expr) {                                  \
-        log_msg(ERROR, modul, format, ##__VA_ARGS__); \
-        return;                                       \
     }
 
 /**
