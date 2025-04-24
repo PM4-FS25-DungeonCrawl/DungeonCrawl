@@ -114,6 +114,9 @@ void main_menu_state() {
                 current_state = GENERATE_MAP;
             }
             break;
+        case MENU_CHANGE_LANGUAGE:
+            current_state = MAIN_MENU;
+            break;
         case MENU_EXIT:
             current_state = EXIT;
             break;

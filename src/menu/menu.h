@@ -25,6 +25,7 @@ typedef enum {
     MENU_CONTINUE,
     MENU_SAVE_GAME,
     MENU_LOAD_GAME,
+    MENU_CHANGE_LANGUAGE,
     MENU_EXIT
 } menu_result_t;
 
