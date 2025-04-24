@@ -82,7 +82,6 @@ void shutdown() {
     // close database connection in game.c
     db_close(&db_connection);
 
-    shutdown_main_menu();
     shutdown_combat_mode();
 
     //shutdown the main memory pool
