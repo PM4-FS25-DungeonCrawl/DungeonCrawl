@@ -6,12 +6,12 @@
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
 #include "logging/logger.h"
+#include "main.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
-#include "main.h"
 
 #include <stdbool.h>
 #include <stdio.h>
