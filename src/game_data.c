@@ -6,9 +6,6 @@
 
 #include <stddef.h>
 
-// === Internal Global Variables ===
-memory_pool_t* mem_pool;
-
 // === External Global Variables ===
 ability_table_t* ability_table;
 character_t* goblin;
@@ -17,13 +14,12 @@ potion_t* healing_potion;
 
 int init_game_data(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, 1, "Game Data", "Memory pool is NULL");
-    mem_pool = memory_pool;
 
-    ability_table = init_ability_table(mem_pool);
-    player = create_new_player(mem_pool);//initialize blank player
-    healing_potion = init_potion(mem_pool, "Healing Potion", HEALING, 20);
+    ability_table = init_ability_table(memory_pool);
+    player = create_new_player(memory_pool);//initialize blank player
+    healing_potion = init_potion(memory_pool, "Healing Potion", HEALING, 20);
 
-    reset_goblin();
+    reset_goblin(memory_pool);
 
     if (ability_table == NULL || player == NULL || healing_potion == NULL) return 1;
     // add abilities to player
@@ -34,18 +30,18 @@ int init_game_data(memory_pool_t* memory_pool) {
     return 0;
 }
 
-int free_game_data() {
-    free_ability_table(mem_pool, ability_table);
-    free_character(mem_pool, player);
-    free_character(mem_pool, goblin);
-    free_potion(mem_pool, healing_potion);
+int free_game_data(memory_pool_t* memory_pool) {
+    free_ability_table(memory_pool, ability_table);
+    free_character(memory_pool, player);
+    free_character(memory_pool, goblin);
+    free_potion(memory_pool, healing_potion);
     return 0;
 }
 
-int reset_goblin() {
-    NULL_PTR_HANDLER_RETURN(mem_pool, 1, "Game Data", "Game Data was not initialized");
-    memory_pool_free(mem_pool, goblin);
-    goblin = create_new_goblin(mem_pool);
+int reset_goblin(memory_pool_t* memory_pool) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, 1, "Game Data", "Game Data was not initialized");
+    memory_pool_free(memory_pool, goblin);
+    goblin = create_new_goblin(memory_pool);
     if (goblin == NULL) {
         return 1;
     }

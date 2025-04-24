@@ -11,6 +11,7 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "main.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -46,7 +47,7 @@ void game_loop() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                reset_goblin();
+                reset_goblin(main_memory_pool);
                 combat_mode_state();
                 break;
             case EXIT:

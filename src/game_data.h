@@ -15,13 +15,23 @@ extern potion_t* healing_potion;
  */
 int init_game_data(memory_pool_t* memory_pool);
 /**
- * Free game data
+ * Frees game-related data structures and resources, such as ability tables,
+ * characters, and potions, by using the provided memory pool.
+ *
+ * @param memory_pool Pointer to the memory pool managing the allocated resources.
+ * @return 0 if all resources are successfully freed.
  */
-int free_game_data();
+int free_game_data(memory_pool_t* memory_pool);
 /**
- * Reset the goblin's state
- * @return 0 if successful, 1 if failed
+ * Resets the goblin character data by deallocating the current goblin instance
+ * and creating a new one. The new goblin is initialized and assigned with the
+ * "BITE" ability.
+ *
+ * @param memory_pool Pointer to the memory pool used for memory management.
+ *                     Must not be NULL.
+ * @return 0 if the operation is successful, 1 if it fails due to invalid input
+ *         or memory allocation issues.
  */
-int reset_goblin();
+int reset_goblin(memory_pool_t* memory_pool);
 
 #endif//GAME_DATA_H

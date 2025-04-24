@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "memory/memory_management.h"
+
 typedef enum {
     SUCCESS,
     FAIL_TB_INIT,
@@ -12,5 +14,7 @@ typedef enum {
 } exit_code_t;
 
 int main(void);
+
+extern memory_pool_t* main_memory_pool;
 
 #endif// MAIN_H
