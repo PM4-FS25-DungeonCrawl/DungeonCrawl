@@ -34,24 +34,22 @@ void update_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
-memory_pool_t* pool;
 string_max_t* local_strings;
 
 string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
 
 
-int init_combat_mode(memory_pool_t* mem_pool) {
-    NULL_PTR_HANDLER_RETURN(mem_pool, -1, "Combat Mode", "Memory pool is NULL");
-    pool = mem_pool;
+int init_combat_mode(memory_pool_t* memory_pool) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Memory pool is NULL");
 
-    local_strings = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
-    NULL_PTR_HANDLER_RETURN(pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
+    local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_LOCAL_STRINGS);
+    NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
-    ability_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
+    ability_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Allocated memory for ability menu options in memory pool is NULL");
 
-    potion_menu_options = memory_pool_alloc(mem_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
+    potion_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
     NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Allocated memory for potion menu options in memory pool is NULL");
 
     //update local once, so the strings are initialized
@@ -415,8 +413,10 @@ void update_local(void) {
     snprintf(local_strings[potion_use.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_use.key));
 }
 
-void shutdown_combat_mode(void) {
-    memory_pool_free(pool, local_strings);
-    memory_pool_free(pool, ability_menu_options);
-    memory_pool_free(pool, potion_menu_options);
+void shutdown_combat_mode(memory_pool_t* memory_pool) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, , "Combat Mode", "In shutdown_combat_mode memory pool is NULL");
+
+    memory_pool_free(memory_pool, local_strings);
+    memory_pool_free(memory_pool, ability_menu_options);
+    memory_pool_free(memory_pool, potion_menu_options);
 }
