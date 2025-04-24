@@ -7,6 +7,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+memory_pool_t* test_damage_memory_pool;
+
+void setup() {
+    test_damage_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (test_damage_memory_pool == NULL) {
+        fprintf(stderr, "Failed to initialize memory pool\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 ability_t test_ability = {
         .name = "Test Ability",
         .roll_amount = 3,
@@ -16,7 +26,7 @@ ability_t test_ability = {
 
 // allocate in data segment
 character_t* create_test_character() {
-    character_t* player = init_character(PLAYER, "Hero");
+    character_t* player = init_character(test_damage_memory_pool, PLAYER, "Hero");
     set_character_stats(player, 5, 5, 5, 20);
     return player;
 }
@@ -82,6 +92,7 @@ void test_reset_current_stats() {
 }
 
 int main(void) {
+    setup();
     test_roll_hit();
     test_roll_damage();
     //test_deal_damage_to_armor();

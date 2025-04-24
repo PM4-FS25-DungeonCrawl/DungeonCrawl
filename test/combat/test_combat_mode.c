@@ -5,18 +5,20 @@
 #include <assert.h>
 #include <stdio.h>
 
+memory_pool_t* test_combat_mode_memory_pool;
+
 void setup() {
-    memory_pool_t* mem_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (mem_pool == NULL) {
+    test_combat_mode_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (test_combat_mode_memory_pool == NULL) {
         fprintf(stderr, "Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
-    init_combat_mode(mem_pool);
+    init_combat_mode(test_combat_mode_memory_pool);
 }
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(PLAYER, "Hero");
+    character_t* character = init_character(test_combat_mode_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
