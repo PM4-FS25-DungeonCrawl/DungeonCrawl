@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include "logging/logger.h"
+#include "memory/memory_management.h"
 
 #define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64
@@ -29,8 +30,16 @@ typedef struct vector2d_t {
     int dy;
 } vector2d_t;
 
-typedef struct {
+/**
+ * @brief String struct with a fixed maximum length, it is directly linked to the macro MAX_STRING_LENGTH
+ */
+typedef struct string_max_t{
     char characters[MAX_STRING_LENGTH];
 } string_max_t;
+
+/**
+ * The main memory pool for the game, used for dynamic memory allocation.
+ */
+extern memory_pool_t* main_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
 
 #endif//COMMON_H
