@@ -7,6 +7,7 @@
 #include "../item/gear.h"
 #include "../item/potion.h"
 #include "stats.h"
+#include "../memory/memory_management.h"
 
 #define MAX_ABILITY_LIMIT 20
 #define MAX_GEAR_LIMIT 20
@@ -48,8 +49,8 @@ typedef struct character_t {
     int skill_points;
 } character_t;
 
-character_t* init_character(character_type_t type, const char* name);
-void free_character(character_t* character);
+character_t* init_character(memory_pool_t* memory_pool, character_type_t type, const char* name);
+void free_character(memory_pool_t* memory_pool, character_t* character);
 
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
