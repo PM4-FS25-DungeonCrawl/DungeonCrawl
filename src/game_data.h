@@ -1,8 +1,8 @@
 #ifndef GAME_DATA_H
 #define GAME_DATA_H
+
 #include "combat/ability.h"
 #include "item/potion.h"
-#include "memory/memory_management.h"
 
 extern ability_table_t* ability_table;
 extern character_t* goblin;
@@ -13,25 +13,22 @@ extern potion_t* healing_potion;
  * Initialize game data
  * @return 0 if successful, 1 if failed
  */
-int init_game_data(memory_pool_t* memory_pool);
+int init_game_data(void);
 /**
  * Frees game-related data structures and resources, such as ability tables,
  * characters, and potions, by using the provided memory pool.
  *
- * @param memory_pool Pointer to the memory pool managing the allocated resources.
  * @return 0 if all resources are successfully freed.
  */
-int free_game_data(memory_pool_t* memory_pool);
+int free_game_data(void);
 /**
  * Resets the goblin character data by deallocating the current goblin instance
  * and creating a new one. The new goblin is initialized and assigned with the
  * "BITE" ability.
  *
- * @param memory_pool Pointer to the memory pool used for memory management.
- *                     Must not be NULL.
  * @return 0 if the operation is successful, 1 if it fails due to invalid input
  *         or memory allocation issues.
  */
-int reset_goblin(memory_pool_t* memory_pool);
+int reset_goblin(void);
 
 #endif//GAME_DATA_H

@@ -12,14 +12,12 @@ character_t* goblin;
 character_t* player;
 potion_t* healing_potion;
 
-int init_game_data(memory_pool_t* memory_pool) {
-    NULL_PTR_HANDLER_RETURN(memory_pool, 1, "Game Data", "Memory pool is NULL");
+int init_game_data() {
+    ability_table = init_ability_table(main_memory_pool);
+    player = create_new_player(main_memory_pool);//initialize blank player
+    healing_potion = init_potion(main_memory_pool, "Healing Potion", HEALING, 20);
 
-    ability_table = init_ability_table(memory_pool);
-    player = create_new_player(memory_pool);//initialize blank player
-    healing_potion = init_potion(memory_pool, "Healing Potion", HEALING, 20);
-
-    reset_goblin(memory_pool);
+    reset_goblin();
 
     if (ability_table == NULL || player == NULL || healing_potion == NULL) return 1;
     // add abilities to player
@@ -30,18 +28,17 @@ int init_game_data(memory_pool_t* memory_pool) {
     return 0;
 }
 
-int free_game_data(memory_pool_t* memory_pool) {
-    free_ability_table(memory_pool, ability_table);
-    free_character(memory_pool, player);
-    free_character(memory_pool, goblin);
-    free_potion(memory_pool, healing_potion);
+int free_game_data() {
+    free_ability_table(main_memory_pool, ability_table);
+    free_character(main_memory_pool, player);
+    free_character(main_memory_pool, goblin);
+    free_potion(main_memory_pool, healing_potion);
     return 0;
 }
 
-int reset_goblin(memory_pool_t* memory_pool) {
-    NULL_PTR_HANDLER_RETURN(memory_pool, 1, "Game Data", "Game Data was not initialized");
-    memory_pool_free(memory_pool, goblin);
-    goblin = create_new_goblin(memory_pool);
+int reset_goblin() {
+    memory_pool_free(main_memory_pool, goblin);
+    goblin = create_new_goblin(main_memory_pool);
     if (goblin == NULL) {
         return 1;
     }
