@@ -3,6 +3,7 @@
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/local/local_database.h"
+#include "local_strings.h"
 
 #include <stdlib.h>
 
@@ -23,32 +24,20 @@ typedef struct observer_node_t {
     observer_node_t* next;
 } observer_node_t;
 
+// === External Global Variables ===
+string_max_t* local_strings;
 
-// === internal global variables ===
-/**
- * The pointer to the head of the observer list
- */
+// === Internal Global Variables ===
 observer_node_t* observer_list = NULL;
-
-/**
- * The current language setting
- */
 local_language_t current_language = LANGUAGE_EN;
-
-/**
- * The database connection
- */
 db_connection_t local_db_connection;
 
-/**
- * @brief Initialize the local module.
- * @return 0 on success, non-zero on failure
- * @note This function must be called before using any other functions in this module.
- */
 int init_local(void) {
     // Initialize the observer list
     observer_list = malloc(sizeof(observer_node_t));
     NULL_PTR_HANDLER_RETURN(observer_list, 1, "Local", "Failed to allocate memory for observer_list");
+
+    local_strings = malloc(sizeof(string_max_t) * MAX_LOCAL_STRINGS);
 
     observer_list->update_func = NULL;
     observer_list->next = NULL;
@@ -114,13 +103,11 @@ void add_local_observer(const update_observer_t update_func) {
     current->next = new_node;
 }
 
-
-/**
- * Shutdown the local module and frees any allocated resources.
- * This function should be called when the module is no longer needed.
- */
 void shutdown_local(void) {
     local_not_init_return();
+    //free the local strings
+    free(local_strings);
+
     // free the observer list
     observer_node_t* current = observer_list;
     while (current != NULL) {
