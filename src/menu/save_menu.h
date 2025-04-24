@@ -7,6 +7,8 @@
 extern int selected_save_file_id;
 extern char last_save_name[50];
 
+void init_save_menu(void);
+
 /**
  * Get the ID of the save file selected by the user
  * @return The ID of the selected save file, or -1 if no file was selected
