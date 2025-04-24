@@ -1,11 +1,11 @@
 #include "main_menu.h"
 
 #include "../../include/termbox2.h"
-#include "save_menu.h"
-#include "language_menu.h"
 #include "../common.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
+#include "language_menu.h"
+#include "save_menu.h"
 
 #include <stdbool.h>
 
@@ -101,17 +101,17 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
     const int true_index = selected_index > 0 && !game_in_progress ? selected_index + 2 : selected_index;
 
     switch (true_index) {
-        case 0: // New Game
+        case 0:// New Game
             if (!game_in_progress || show_confirmation(local_strings[mame_confirm_continue.idx].characters)) {
                 active_menu_state = MENU_START_GAME;
                 menu_active = false;
             }
             break;
-        case 1: // Continue
+        case 1:// Continue
             active_menu_state = MENU_CONTINUE;
             menu_active = false;
             break;
-        case 2: // Save Game
+        case 2:// Save Game
             log_msg(INFO, "Main Menu", "Calling show_save_game_menu");
             active_menu_state = show_save_game_menu();
             log_msg(INFO, "Main Menu", "Returned from show_save_game_menu with result: %d", active_menu_state);
@@ -119,19 +119,19 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
                 menu_active = false;
             }
             break;
-        case 3: // Load Game
+        case 3:// Load Game
             active_menu_state = show_load_game_menu(game_in_progress);
             if (active_menu_state == MENU_LOAD_GAME) {
                 menu_active = false;
             }
             break;
-        case 4: // Change Language
+        case 4:// Change Language
             active_menu_state = show_language_menu();
             if (active_menu_state == MENU_CHANGE_LANGUAGE) {
                 menu_active = false;
             }
             break;
-        case 5: // Exit
+        case 5:// Exit
             if (!game_in_progress || show_confirmation(local_strings[mame_confirm_exit.idx].characters)) {
                 active_menu_state = MENU_EXIT;
                 menu_active = false;

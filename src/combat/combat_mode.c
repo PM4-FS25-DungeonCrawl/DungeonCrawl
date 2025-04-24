@@ -6,9 +6,9 @@
 #include "../character/level.h"
 #include "../common.h"
 #include "../local/local.h"
+#include "../local/local_strings.h"
 #include "./draw/draw_combat_mode.h"
 #include "ability.h"
-#include "../local/local_strings.h"
 
 #include <stdbool.h>
 

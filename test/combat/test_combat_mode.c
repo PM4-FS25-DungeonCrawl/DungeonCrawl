@@ -43,21 +43,21 @@ void test_use_ability() {
     use_ability(player, enemy, &test_ability);
     assert(player->current_resources.stamina == 0);
 
-     // Test: Ability with insufficient stamina
-     player->current_resources.stamina = 14;
-     use_ability(player, enemy, &test_ability);
-     assert(player->current_resources.stamina == 14);
+    // Test: Ability with insufficient stamina
+    player->current_resources.stamina = 14;
+    use_ability(player, enemy, &test_ability);
+    assert(player->current_resources.stamina == 14);
 
-     // Test: Ability with sufficient mana
-     test_ability.damage_type = MAGICAL;
-     player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
-     use_ability(player, enemy, &test_ability);
-     assert(player->current_resources.mana == 0);
+    // Test: Ability with sufficient mana
+    test_ability.damage_type = MAGICAL;
+    player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
+    use_ability(player, enemy, &test_ability);
+    assert(player->current_resources.mana == 0);
 
-     // Test: Ability with insufficient mana
-     player->current_resources.mana = 14;
-     use_ability(player, enemy, &test_ability);
-     assert(player->current_resources.mana == 14);
+    // Test: Ability with insufficient mana
+    player->current_resources.mana = 14;
+    use_ability(player, enemy, &test_ability);
+    assert(player->current_resources.mana == 14);
 
     printf("test_use_ability passed\n");
 }

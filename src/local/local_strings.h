@@ -80,4 +80,4 @@ static const local_key_t como_attack_miss = {COMO_ATTACK_MISS, "COMBAT.ATTACK.MI
 static const local_key_t como_attack_fail = {COMO_ATTACK_FAIL, "COMBAT.ATTACK.FAIL.FORMAT"};
 static const local_key_t como_potion_use = {COMO_POTION_USE, "COMBAT.POTION.USE.FORMAT"};
 
-#endif //LOCAL_STRINGS_H
+#endif//LOCAL_STRINGS_H

@@ -4,10 +4,9 @@
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/gamestate/gamestate_database.h"
-#include "main_menu.h"
-#include "../common.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
+#include "main_menu.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -195,5 +194,4 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 }
 
 void update_save_menu_local(void) {
-
 }

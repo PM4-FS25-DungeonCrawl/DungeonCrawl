@@ -33,7 +33,7 @@ typedef struct vector2d_t {
 /**
  * @brief String struct with a fixed maximum length, it is directly linked to the macro MAX_STRING_LENGTH
  */
-typedef struct string_max_t{
+typedef struct string_max_t {
     char characters[MAX_STRING_LENGTH];
 } string_max_t;
 
