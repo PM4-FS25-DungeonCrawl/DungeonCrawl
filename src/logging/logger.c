@@ -10,10 +10,10 @@
 #include <time.h>
 
 #define MAX_N_FILES 5
-#define MAX_FILE_SIZE 1048576// max size = 1 MB
+#define MAX_FILE_SIZE (100 * 1024)// max size = 100 kB
 #define PATH_MAX 4096
 
-// relative directory from project root
+// relative directory from the project root
 #define LOG_DIRECTORY "log"
 #define LOG_FILE_FORMAT "log-%d.txt"
 
@@ -25,9 +25,11 @@
 #define FAILED (-1)
 #define SUCCESS 0
 
+#define logger_not_init_return(ret) if (logger_is_running == false) { return ret; }
+
 const char* log_level_str[] = {"DEBUG", "FINE", "INFO", "WARNING", "ERROR"};
 
-//predefines of functions, used in this module
+// === internal functions ===
 void start_log_writer_thread(void);
 void close_log_file(bool terminate_thread);
 
@@ -36,13 +38,13 @@ FILE* log_file = NULL;
 //the used RingBuffer to write log messages in
 ring_buffer_t log_buffer;
 
-//states if the file writing thread is still running, if set to false the thread terminates or is terminated
-bool thread_is_running = false;
+//states if the file writing thread is still running, if set to false, the thread terminates or is terminated
+bool logger_is_running = false;
 //the id of the used file
 int file_id = 0;
 
 /**
- * ensures that the predefined log directory already exist,
+ * Ensures that the predefined log directory already exists,
  * if not create a new one.
  *
  * @return -1 if the directory could not be created, 0 if the directory already exists or was created successfully
@@ -62,8 +64,8 @@ int ensure_log_dir(void) {
 
 
 /**
- * Opens the log file with current saved file id in append modus.
- * If no file is found creates a new file corresponding to fopen(...).
+ * Opens the log file with the current saved file id in appended modus.
+ * If no file is found, creates a new file corresponding to fopen(...).
  *
  * @return -1 if the file could not be open, 0 when successfully
  */
@@ -84,11 +86,11 @@ int open_log_file(void) {
 }
 
 /**
- * This function should be called, whenever a new log msg must be written.
+ * This function should be called whenever a new log msg must be written.
  *
- * Check if the log file is open, if not a new file will be open.
- * - Either by creating a new file, if no file is in the log directory. Log file will get id = 0.
- * - Or creating a new file, if the last used file reached the max size.
+ * Check if the log file is open, if not, a new file will be open.
+ * - Either by creating a new file if no file is in the log directory.
+ * - Or creating a new file if the last used file reaches the max size.
  *   The new file will get the current file id + 1 or 0, if the id reached the max number of files.
  * - Or opening the file that was last used, the current id will be set.
  */
@@ -161,7 +163,7 @@ void close_log_file(const bool terminate_thread) {
         log_file = NULL;
     }
     if (terminate_thread) {
-        thread_is_running = false;
+        logger_is_running = false;
         free_ringbuffer(&log_buffer);
     }
 }
@@ -182,8 +184,7 @@ void init_logger(void) {
 }
 
 /**
- * Writes a log message to the log file. If the log file isn't open or the log writer thread is not running,
- * prints the log message to stdout.
+ * Writes a log message to the log file. If the logger was not initialized, it will return immediately.
  *
  * @param level The log level of the message (DEBUG, FINE, INFO, WARNING, ERROR).
  * @param module The name of the module writing the log message.
@@ -191,6 +192,8 @@ void init_logger(void) {
  * @param ... Additional arguments used in the format string.
  */
 void log_msg(const log_level_t level, const char* module, const char* format, ...) {
+    logger_not_init_return();
+
     //get timestamp
     const time_t now = time(NULL);
     const struct tm* tm = localtime(&now);
@@ -215,13 +218,9 @@ void log_msg(const log_level_t level, const char* module, const char* format, ..
     snprintf(log_msg, MAX_MSG_LENGTH, MSG_FORMAT, timestamp, log_level, module, msg);
     va_end(args);
 
-    if (log_file != NULL && thread_is_running) {
+    if (log_file != NULL && logger_is_running) {
         //if the log file is open and the thread is running
         write_to_ringbuffer(&log_buffer, log_msg);
-    } else {
-        //if the log file is not open or the thread is not running
-        //print to stdout
-        printf("%s", log_msg);
     }
 }
 
@@ -239,10 +238,11 @@ void shutdown_logger(void) {
  * @return 0
  */
 DWORD WINAPI log_writer_thread(LPVOID param) {
-    while (thread_is_running) {
+    bool running = true;
+    while (running) {
         char log_msg[MAX_MSG_LENGTH];
         if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
-            // message successfully read from ringbuffer
+            // message successfully read from the ringbuffer
 
             check_log_file();
 
@@ -251,6 +251,9 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
                 fprintf(log_file, "%s", log_msg);
                 fflush(log_file);
             }
+        } else if (!logger_is_running) {
+            // thread is not running anymore and the ringbuffer is empty
+            running = false;
         }
     }
     return 0;
@@ -260,14 +263,15 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
  * This function will be called from a different thread to read from the ringbuffer
  * and then write in the log file
  *
- * @param arg a pointer for different arguments, set by the thread. Will not be used!
+ * @param arg A pointer for different arguments, set by the thread. Will not be used!
  * @return NULL
  */
 void* log_writer_thread(void* arg) {
-    while (thread_is_running) {
+    bool running = true;
+    while (running) {
         char log_msg[MAX_MSG_LENGTH];
         if (read_from_ringbuffer(&log_buffer, log_msg) == 0) {
-            // message successfully read from ringbuffer
+            // message successfully read from the ringbuffer
 
             check_log_file();
 
@@ -276,6 +280,9 @@ void* log_writer_thread(void* arg) {
                 fprintf(log_file, "%s", log_msg);
                 fflush(log_file);
             }
+        } else if (!logger_is_running) {
+            // thread is not running anymore and the ringbuffer is empty
+            running = false;
         }
     }
     return NULL;
@@ -286,7 +293,7 @@ void* log_writer_thread(void* arg) {
  * Starts the logging writing thread
  */
 void start_log_writer_thread(void) {
-    thread_is_running = true;
+    logger_is_running = true;
 #ifdef _WIN32
     HANDLE thread = CreateThread(NULL, 0, log_writer_thread, NULL, 0, NULL);
     if (thread) {
