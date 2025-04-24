@@ -9,6 +9,8 @@ ability_table_t* ability_table;
 character_t* goblin;
 character_t* player;
 potion_t* healing_potion;
+potion_t* mana_potion;
+potion_t* stamina_potion;
 
 /**
  * Reset the goblin's state
@@ -33,6 +35,8 @@ int init_game_data() {
     ability_table = init_ability_table();
     player = create_new_player();//initialize blank player
     healing_potion = init_potion("Healing Potion", HEALING, 20);
+    mana_potion = init_potion("Mana Potion", MANA, 3);
+    stamina_potion = init_potion("Stamina Potion", STAMINA, 3);
 
     reset_goblin();
 
@@ -44,6 +48,8 @@ int init_game_data() {
         add_ability(player, &ability_table->abilities[SWORD_SLASH]);
         //add healing potion to player
         add_potion(player, healing_potion);
+        add_potion(player, mana_potion);
+        add_potion(player, stamina_potion);
     }
     return 0;
 }
