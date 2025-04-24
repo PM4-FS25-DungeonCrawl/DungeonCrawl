@@ -3,7 +3,6 @@
 
 #include "../character/character_fw.h"
 #include "../item/potion.h"
-#include "../memory/memory_management.h"
 #include "ability_fw.h"
 
 typedef enum {
@@ -22,11 +21,10 @@ typedef enum {
 
 /**
  * @brief Initialize the combat mode
- * @param memory_pool the memory pool to use for allocating memory
- * @return int 0 on success, -1 on failure
+ * @return int 0 on success, 1 on failure
  * @note This function must be called before using any other functions in this module.
  */
-int init_combat_mode(memory_pool_t* memory_pool);
+int init_combat_mode();
 combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
@@ -39,12 +37,9 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);
 /**
  * @brief Shuts down the combat mode and frees allocated memory resources.
- * @param memory_pool The memory pool used for allocating combat mode resources.
- *                    This cannot be NULL.
- * @return void
  * @note This function deallocates memory associated with combat mode and
  *       must be called before exiting the module to prevent memory leaks.
  */
-void shutdown_combat_mode(memory_pool_t* memory_pool);
+void shutdown_combat_mode(void);
 
 #endif//COMBAT_MODE_H

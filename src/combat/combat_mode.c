@@ -30,7 +30,7 @@ void collect_potion_menu_options(potion_t* potions[], int count);
  * mode to ensure that all strings are properly localized before use. It is
  * also registered as an observer to keep menu strings updated whenever the locale changes.
  */
-void update_local(void);
+void update_combat_local(void);
 
 // === Intern Global Variables ===
 vector2d_t combat_view_anchor = {1, 1};
@@ -40,22 +40,20 @@ string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
 
 
-int init_combat_mode(memory_pool_t* memory_pool) {
-    NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Memory pool is NULL");
+int init_combat_mode() {
+    combat_local_strings = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_COMBAT_LOCAL_STRINGS);
+    NULL_PTR_HANDLER_RETURN(combat_local_strings, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
 
-    combat_local_strings = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_COMBAT_LOCAL_STRINGS);
-    NULL_PTR_HANDLER_RETURN(memory_pool, -1, "Combat Mode", "Allocated memory for strings in memory pool is NULL");
-
-    ability_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
+    ability_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Allocated memory for ability menu options in memory pool is NULL");
 
-    potion_menu_options = memory_pool_alloc(memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
+    potion_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
     NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Allocated memory for potion menu options in memory pool is NULL");
 
     //update local once, so the strings are initialized
-    update_local();
+    update_combat_local();
     //add update local function to the observer list
-    add_local_observer(update_local);
+    add_local_observer(update_combat_local);
     return 0;
 }
 
@@ -388,7 +386,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     }
 }
 
-void update_local(void) {
+void update_combat_local(void) {
     //main menu
     snprintf(combat_local_strings[main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_title.key));
     snprintf(combat_local_strings[main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(main_menu_option1.key));
@@ -413,10 +411,8 @@ void update_local(void) {
     snprintf(combat_local_strings[potion_use.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(potion_use.key));
 }
 
-void shutdown_combat_mode(memory_pool_t* memory_pool) {
-    NULL_PTR_HANDLER_RETURN(memory_pool, , "Combat Mode", "In shutdown_combat_mode memory pool is NULL");
-
-    memory_pool_free(memory_pool, combat_local_strings);
-    memory_pool_free(memory_pool, ability_menu_options);
-    memory_pool_free(memory_pool, potion_menu_options);
+void shutdown_combat_mode() {
+    memory_pool_free(main_memory_pool, combat_local_strings);
+    memory_pool_free(main_memory_pool, ability_menu_options);
+    memory_pool_free(main_memory_pool, potion_menu_options);
 }
