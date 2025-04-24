@@ -2,14 +2,14 @@
 
 #include "../include/termbox2.h"
 #include "combat/combat_mode.h"
+#include "common.h"
 #include "game.h"
 #include "game_data.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
-#include "menu/main_menu.h"
 #include "memory/memory_management.h"
-#include "common.h"
+#include "menu/main_menu.h"
 
 #include <time.h>
 
