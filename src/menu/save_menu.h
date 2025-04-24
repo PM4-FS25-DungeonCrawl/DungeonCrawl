@@ -1,7 +1,6 @@
 #ifndef SAVE_MENU_H
 #define SAVE_MENU_H
 
-#include "../database/database.h"
 #include "menu.h"
 
 // Global variables to store menu state

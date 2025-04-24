@@ -1,7 +1,10 @@
 #include "save_menu.h"
 
 #include "../../include/termbox2.h"
-#include "../logging/logger.h"
+#include "../common.h"
+#include "../database/database.h"
+#include "../database/gamestate/gamestate_database.h"
+#include "main_menu.h"
 
 #include <stdio.h>
 #include <string.h>

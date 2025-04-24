@@ -57,7 +57,6 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize local");
         return FAIL_LOCAL_INIT;
     }
-
     init_map_mode();
     if (init_main_menu() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize main menu");
