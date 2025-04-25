@@ -27,7 +27,7 @@ jobs:
 
       - name: Copy to output
         run: |
-          mkdir -p output
+          mkdir -p output/linux
           cp builddir/DungeonCrawl output/linux/dungeonCrawl-Linux
           cp /usr/lib/x86_64-linux-gnu/libnotcurses*.so.* output/linux/ 
 
@@ -53,7 +53,7 @@ jobs:
 
       - name: Copy to output
         run: |
-          mkdir -p output
+          mkdir -p output/mac
           cp builddir/DungeonCrawl output/mac/dungeonCrawl-macOS
           cp /opt/homebrew/lib/libnotcurses*.dylib output/mac/ || cp /usr/local/lib/libnotcurses*.dylib output/mac/
 
@@ -88,7 +88,7 @@ jobs:
 
       - name: Copy to output
         run: |
-          mkdir output
+          mkdir output/windows
           cp builddir/DungeonCrawl.exe output/windows/dungeonCrawl-Windows.exe
           cp /a/_temp/msys64/mingw64/bin/libnotcurses*.dll output/windows/
 
