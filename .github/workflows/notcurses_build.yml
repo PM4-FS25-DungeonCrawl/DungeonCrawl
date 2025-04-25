@@ -90,7 +90,7 @@ jobs:
         run: |
           mkdir output
           cp builddir/DungeonCrawl.exe output/dungeonCrawl-Windows.exe
-          cp /msys64/mingw64/bin/notcurses*.dll output/
+          cp /msys64/mingw64/bin/libnotcurses*.dll output/
 
       - uses: actions/upload-artifact@v4
         with:
