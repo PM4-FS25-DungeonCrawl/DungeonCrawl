@@ -28,8 +28,8 @@ jobs:
       - name: Copy to output
         run: |
           mkdir -p output
-          cp builddir/DungeonCrawl output/dungeonCrawl-Linux
-          cp /usr/lib/x86_64-linux-gnu/libnotcurses*.so.* output/  
+          cp builddir/DungeonCrawl output/linux/dungeonCrawl-Linux
+          cp /usr/lib/x86_64-linux-gnu/libnotcurses*.so.* output/linux/ 
 
       - uses: actions/upload-artifact@v4
         with:
@@ -54,8 +54,8 @@ jobs:
       - name: Copy to output
         run: |
           mkdir -p output
-          cp builddir/DungeonCrawl output/dungeonCrawl-macOS
-          cp /opt/homebrew/lib/libnotcurses*.dylib output/ || cp /usr/local/lib/libnotcurses*.dylib output/
+          cp builddir/DungeonCrawl output/mac/dungeonCrawl-macOS
+          cp /opt/homebrew/lib/libnotcurses*.dylib output/mac/ || cp /usr/local/lib/libnotcurses*.dylib output/mac/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -89,8 +89,8 @@ jobs:
       - name: Copy to output
         run: |
           mkdir output
-          cp builddir/DungeonCrawl.exe output/dungeonCrawl-Windows.exe
-          cp /a/_temp/msys64/mingw64/bin/libnotcurses*.dll output/
+          cp builddir/DungeonCrawl.exe output/windows/dungeonCrawl-Windows.exe
+          cp /a/_temp/msys64/mingw64/bin/libnotcurses*.dll output/windows/
 
       - uses: actions/upload-artifact@v4
         with:
