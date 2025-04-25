@@ -85,6 +85,11 @@ jobs:
         run: |
           meson setup builddir --buildtype=release
           ninja -C builddir
+      - name: Locate DLLs
+        shell: msys2 {0}
+        run: |
+          where libnotcurses*.dll || echo "DLL not found with 'where'"
+          find / -name "libnotcurses*.dll" 2>/dev/null || echo "DLL not found with 'find'"
 
       - name: Copy to output
         run: |
