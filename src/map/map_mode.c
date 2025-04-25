@@ -14,7 +14,7 @@
     #define KEY_EVENT NCTYPE_UNKNOWN
 #endif /* ifdef __APPLE__ */
 
-vector2d_t map_anchor = {5, 1};
+vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
 int player_has_key = 0;
 
@@ -42,7 +42,7 @@ map_mode_result_t handle_input(const ncinput* event) {
     if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
 
     // Only process arrow key events that are PRESS type (ignore RELEASE events)
-    if (event->evtype == KEY_EVENT) {
+    if (event->evtype == NCTYPE_UNKNOWN || event->evtype == NCTYPE_PRESS) {
         if (event->id == NCKEY_UP) new_y--;
         if (event->id == NCKEY_DOWN) new_y++;
         if (event->id == NCKEY_LEFT) new_x--;
@@ -100,20 +100,13 @@ map_mode_result_t map_mode_update(void) {
 
     if (ret > 0) {
         // Only process the event if it's a key press (not release or repeat)
-        if (ev.evtype == KEY_EVENT) {
+        if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
             next_state = handle_input(&ev);
         }
-        //commented out for testing if you find this, yeet it
-        // // Drain any additional queued events
-        // ncinput discard;
-        // while (notcurses_get_nblock(nc, &discard) > 0) {
-        //     // Discard extra events
-        // }
     }
-
+    ncplane_erase(stdplane);
     draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-
     notcurses_render(nc);
 
     return next_state;

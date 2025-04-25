@@ -79,7 +79,7 @@ static bool show_confirmation(const char* message) {
         notcurses_get_blocking(nc, &input);
 
         // Only process press events
-        if (input.evtype == KEY_EVENT) {
+        if (input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS) {
             if (input.id == 'y' || input.id == 'Y') {
                 return true;
             } else if (input.id == 'n' || input.id == 'N') {
@@ -135,9 +135,10 @@ menu_result_t show_main_menu(bool game_in_progress) {
         memset(&input, 0, sizeof(input));
         uint32_t ret = notcurses_get_nblock(nc, &input);
 
+
         if (ret > 0) {
             // Only process press events
-            if (input.evtype == KEY_EVENT) {
+            if (input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS) {
                 if (input.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + menu_count) % menu_count;
@@ -172,7 +173,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
                             notcurses_get_blocking(nc, &input_event);
 
                             // Only process press events
-                            if (input_event.evtype == KEY_EVENT) {
+                            if (input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS) {
                                 if (input_event.id == NCKEY_ENTER && name_length > 0) {
                                     input_active = false;
                                 } else if (input_event.id == NCKEY_BACKSPACE && name_length > 0) {
@@ -289,7 +290,7 @@ menu_result_t show_main_menu(bool game_in_progress) {
                             // }
 
                             // Only process press events
-                            if (nc_event.evtype == KEY_EVENT) {
+                            if (input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS) {
                                 if (nc_event.id == NCKEY_UP) {
                                     selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                                 } else if (nc_event.id == NCKEY_DOWN) {

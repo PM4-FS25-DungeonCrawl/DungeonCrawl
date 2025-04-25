@@ -174,7 +174,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == KEY_EVENT) {
+        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
@@ -228,7 +228,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == KEY_EVENT) {
+        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
@@ -285,7 +285,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
         if (ret > 0) {
             // Only process press events
-            if (event.evtype == KEY_EVENT) {
+        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
                 if (event.id == NCKEY_UP) {
                     // Move up
                     selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
