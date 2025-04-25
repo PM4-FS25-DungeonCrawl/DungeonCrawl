@@ -7,6 +7,34 @@
 #define MAX_NUMBER_SAVES 20
 #define TIMESTAMP_LENGTH 20
 
+#define SQL_CREATE_TABLES_GAMESTATE_GS            \
+    "CREATE TABLE IF NOT EXISTS \"game_state\" (" \
+    "\"GS_ID\"	INTEGER NOT NULL UNIQUE,"          \
+    "\"GS_SAVEDTIME\"	TEXT,"                      \
+    "\"GS_NAME\"	TEXT,"                           \
+    "PRIMARY KEY(\"GS_ID\" AUTOINCREMENT)"        \
+    ");"
+#define SQL_CREATE_TABLES_GAMESTATE_MS                               \
+    "CREATE TABLE IF NOT EXISTS \"map_state\" ("                     \
+    "\"MS_ID\"	INTEGER NOT NULL UNIQUE,"                             \
+    "\"MS_MAP\"	TEXT,"                                               \
+    "\"MS_REVEALED\"	TEXT,"                                          \
+    "\"MS_HEIGHT\"	INTEGER,"                                         \
+    "\"MS_WIDTH\"	INTEGER,"                                          \
+    "\"MS_GS_ID\"	INTEGER NOT NULL UNIQUE,"                          \
+    "PRIMARY KEY(\"MS_ID\" AUTOINCREMENT),"                          \
+    "FOREIGN KEY(\"MS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")" \
+    ");"
+#define SQL_CREATE_TABLES_GAMESTATE_PS                               \
+    "CREATE TABLE IF NOT EXISTS \"player_state\" ("                  \
+    "\"PS_ID\"	INTEGER NOT NULL UNIQUE,"                             \
+    "\"PS_X\"	INTEGER,"                                              \
+    "\"PS_Y\"	INTEGER,"                                              \
+    "\"PS_GS_ID\"	INTEGER NOT NULL UNIQUE,"                          \
+    "PRIMARY KEY(\"PS_ID\" AUTOINCREMENT),"                          \
+    "FOREIGN KEY(\"PS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")" \
+    ");"
+
 typedef void (*player_pos_setter_t)(int player_x, int player_y);
 
 typedef struct {
@@ -20,6 +48,12 @@ typedef struct {
     save_info_t* infos;
 } save_info_container_t;
 
+/**
+ * @brief Create the tables for the game state
+ * @param db_connection The database connection
+ * @note The tables will be created if they do not exist
+ */
+void create_tables_game_state(const db_connection_t* db_connection);
 void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);

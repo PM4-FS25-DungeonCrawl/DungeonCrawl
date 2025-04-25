@@ -11,6 +11,21 @@
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
-int init_game();
+typedef enum {
+    MAIN_MENU,
+    MAP_MODE,
+    COMBAT_MODE,
+    GENERATE_MAP,
+    EXIT,
+    EXIT_WITH_ERROR
+} game_state_t;
+
+extern db_connection_t db_connection;
+
+int run_game();
+
+void main_menu_state();
+
+void map_mode_state();
 
 #endif// GAME_H

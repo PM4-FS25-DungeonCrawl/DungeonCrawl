@@ -7,6 +7,7 @@ helper_db = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c',
+    '../src/database/gamestate/gamestate_database.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -77,6 +78,7 @@ test_memory_management = executable('test_memory_management', 'memory/test_memor
 test('test_combat_mode', test_combat_mode)
 test('test_character', test_character)
 test('test_database', test_database)
+test('test_gamestate_database', test_gamestate_database)
 test('test_draw_light', test_draw_light)
 test('test_damage', test_damage)
 test('test_ringbuffer', test_ringbuffer)

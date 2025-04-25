@@ -105,18 +105,17 @@ map_mode_result_t map_mode_update(void) {
         }
     }
     ncplane_erase(stdplane);
-    draw_light_on_player((const map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
     notcurses_render(nc);
 
     return next_state;
 }
 
-int init_map_mode(void) {
+void init_map_mode(void) {
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             revealed_map[x][y] = HIDDEN;
         }
     }
-    return 0;
 }
