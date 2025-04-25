@@ -85,17 +85,12 @@ jobs:
         run: |
           meson setup builddir --buildtype=release
           ninja -C builddir
-      - name: Locate DLLs
-        shell: msys2 {0}
-        run: |
-          where libnotcurses*.dll || echo "DLL not found with 'where'"
-          find / -name "libnotcurses*.dll" 2>/dev/null || echo "DLL not found with 'find'"
 
       - name: Copy to output
         run: |
           mkdir output
           cp builddir/DungeonCrawl.exe output/dungeonCrawl-Windows.exe
-          cp /msys64/mingw64/bin/libnotcurses*.dll output/
+          cp /a/_temp/msys64/mingw64/bin/libnotcurses*.dll output/
 
       - uses: actions/upload-artifact@v4
         with:
