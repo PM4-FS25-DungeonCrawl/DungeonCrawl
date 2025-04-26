@@ -12,12 +12,12 @@
 
 #include <stdbool.h>
 
-// === Internal Functions ===
-//TODO: Should these 2 function not be in to character.c?
+// Internal functions
 void invoke_potion_effect(character_t* character, potion_t* potion);
 
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
+
 /**
  * @brief Updates the localized strings used in the combat mode menus.
  *
@@ -32,7 +32,7 @@ void collect_potion_menu_options(potion_t* potions[], int count);
  */
 void update_combat_local(void);
 
-// === Intern Global Variables ===
+// Internal global variables
 vector2d_t combat_view_anchor = {1, 1};
 
 string_max_t* ability_menu_options;// holds the ability menu options
@@ -380,6 +380,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
                  potions[i]->value);
     }
 }
+
 
 void update_combat_local(void) {
     //main menu
