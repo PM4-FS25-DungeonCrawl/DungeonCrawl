@@ -9,6 +9,7 @@ typedef enum {
     COMBAT_MENU,
     ABILITY_MENU,
     ITEM_MENU,
+    GEAR_MENU,
     EVALUATE_COMBAT,// checks if the combat reached an end
     COMBAT_EXIT     // exit combat & game
 } internal_combat_state_t;
@@ -24,6 +25,9 @@ combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
 internal_combat_state_t potion_menu(character_t* player, character_t* monster);
+internal_combat_state_t gear_menu(character_t* player);
+internal_combat_state_t gear_inventory_menu(character_t* player);
+internal_combat_state_t equipment_menu(character_t* player);
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_potion(character_t* player, const character_t* monster, potion_t* item);

@@ -10,14 +10,17 @@
 
 #include <stdbool.h>
 
-#define MAX_COMBAT_MENU_OPTIONS 2
+#define MAX_COMBAT_MENU_OPTIONS 3
+#define MAX_GEAR_MENU_OPTIONS 2
 
 //key define for localization
 #define MAIN_MENU_TITLE_KEY "COMBAT.MAIN.MENU.HEAD"
 #define MAIN_MENU_OPTION1_KEY "COMBAT.MAIN.MENU.OPTION1"
 #define MAIN_MENU_OPTION2_KEY "COMBAT.MAIN.MENU.OPTION2"
+#define MAIN_MENU_OPTION3_KEY "COMBAT.MAIN.MENU.OPTION3"
 #define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
 #define ITEM_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
+#define GEAR_MENU_TITLE_KEY "COMBAT.GEAR.MENU.HEAD"
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -25,6 +28,8 @@ void invoke_potion_effect(character_t* character, potion_t* potion);
 
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
+void collect_gear_inventory_options(gear_t* gear_inventory[], const int count);
+void collect_equipment_options(gear_t* equipment[]);
 
 void update_local(void);
 
@@ -33,7 +38,9 @@ vector2d_t combat_view_anchor = {1, 1};
 char** combat_menu_options;
 char** ability_menu_options;
 char** potion_menu_options;
-
+char** gear_menu_options;
+char** gear_inventory_options;
+char** equipment_options;
 
 /**
  * @brief Initialize the combat mode
@@ -87,11 +94,58 @@ void init_combat_mode(void) {
         }
     }
 
+    gear_menu_options = (char**) malloc(sizeof(char*) * MAX_GEAR_MENU_OPTIONS);
+    if (gear_menu_options == NULL) {
+        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for gear menu options");
+        shutdown_combat_mode();
+        return;
+    }
+
+    for (int i = 0; i < MAX_GEAR_MENU_OPTIONS; i++) {
+        gear_menu_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+        if (gear_menu_options[i] == NULL) {
+            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for gear menu option %d", i);
+            shutdown_combat_mode();
+            return;
+        }
+    }
+
+    gear_inventory_options = (char**) malloc(sizeof(char*) * MAX_GEAR_LIMIT);
+    if (gear_inventory_options == NULL) {
+        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for gear inventory options");
+        shutdown_combat_mode();
+        return;
+    }
+
+    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
+        gear_inventory_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+        if (gear_inventory_options[i] == NULL) {
+            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for gear inventory option %d", i);
+            shutdown_combat_mode();
+            return;
+        }
+    }
+
+    equipment_options = (char**) malloc(sizeof(char*) * MAX_SLOT);
+    if (equipment_options == NULL) {
+        log_msg(ERROR, "Combat Mode", "Failed to allocate memory for equipment options");
+        shutdown_combat_mode();
+        return;
+    }
+
+    for (int i = 0; i < MAX_SLOT; i++) {
+        equipment_options[i] = (char*) malloc(sizeof(char) * MAX_STRING_LENGTH);
+        if (equipment_options[i] == NULL) {
+            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for equipment option %d", i);
+            shutdown_combat_mode();
+            return;
+        }
+    }
+
     update_local();
     //add update local function to the observer list
     add_observer(update_local);
 }
-
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
@@ -113,6 +167,9 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
             case ITEM_MENU:
                 combat_state = potion_menu(player, monster);
+                break;
+            case GEAR_MENU:
+                combat_state = gear_menu(player);
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
@@ -169,6 +226,8 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                     new_state = ABILITY_MENU;
                 } else if (selected_index == 1) {
                     new_state = ITEM_MENU;
+                } else if (selected_index == 2) {
+                    new_state = GEAR_MENU;
                 }
                 submenu_selected = true;
             } else if (event.key == TB_KEY_CTRL_C) {
@@ -237,7 +296,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
     while (!item_used_or_esc) {
         // draw menu options
-        draw_combat_menu(anchor, "Potion menu:", (const char**) potion_menu_options, player->potion_count, selected_index);
+        draw_combat_menu(anchor, "Potion Menu:", (const char**) potion_menu_options, player->potion_count, selected_index);
 
         // check for input
         struct tb_event event;
@@ -265,8 +324,109 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
             }
         }
     }
+    return new_state;
+}
 
+internal_combat_state_t gear_menu(character_t* player) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+    int selected_index = 0;
 
+    snprintf(gear_menu_options[0], MAX_STRING_LENGTH, "View Gear Inventory");
+    snprintf(gear_menu_options[1], MAX_STRING_LENGTH, "View Equipped Gear");
+
+    internal_combat_state_t new_state = GEAR_MENU;
+    bool submenu_selected = false;
+
+    while (!submenu_selected) {
+        draw_combat_menu(anchor, "Gear Menu:", (const char**)gear_menu_options, MAX_GEAR_MENU_OPTIONS, selected_index);
+
+        struct tb_event event;
+        const int ret = tb_peek_event(&event, 10);
+
+        if (ret == TB_OK) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                selected_index = (selected_index - 1 + MAX_GEAR_MENU_OPTIONS) % MAX_GEAR_MENU_OPTIONS;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                selected_index = (selected_index + 1) % MAX_GEAR_MENU_OPTIONS;
+            } else if (event.key == TB_KEY_ENTER) {
+                if (selected_index == 0) {
+                    new_state = gear_inventory_menu(player);
+                } else if (selected_index == 1) {
+                    new_state = equipment_menu(player);
+                }
+                submenu_selected = true;
+            } else if (event.key == TB_KEY_ESC) {
+                new_state = COMBAT_MENU;
+                submenu_selected = true;
+            }
+        }
+    }
+    return new_state;
+}
+
+internal_combat_state_t gear_inventory_menu(character_t* player) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+    int selected_index = 0;
+
+    collect_gear_inventory_options(player->gear_inventory, player->gear_count);
+
+    internal_combat_state_t new_state = GEAR_MENU;
+    bool item_selected_or_esc = false;
+
+    while (!item_selected_or_esc) {
+        draw_combat_menu(anchor, "Gear Inventory:", (const char**)gear_inventory_options, player->gear_count, selected_index);
+
+        struct tb_event event;
+        const int ret = tb_peek_event(&event, 10);
+
+        if (ret == TB_OK) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                selected_index = (selected_index + 1) % player->gear_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                equip_gear(player, player->gear_inventory[selected_index]);
+                collect_gear_inventory_options(player->gear_inventory, player->gear_count);
+            } else if (event.key == TB_KEY_ESC) {
+                new_state = GEAR_MENU;
+                item_selected_or_esc = true;
+            }
+        }
+    }
+    return new_state;
+}
+
+internal_combat_state_t equipment_menu(character_t* player) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+    int selected_index = 0;
+
+    collect_equipment_options(player->equipment);
+
+    internal_combat_state_t new_state = GEAR_MENU;
+    bool item_selected_or_esc = false;
+
+    while (!item_selected_or_esc) {
+        draw_combat_menu(anchor, "Equipped Gear:", (const char**)equipment_options, MAX_SLOT, selected_index);
+
+        struct tb_event event;
+        const int ret = tb_peek_event(&event, 10);
+
+        if (ret == TB_OK) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                selected_index = (selected_index + 1) % MAX_SLOT;
+            } else if (event.key == TB_KEY_ENTER) {
+                if (player->equipment[selected_index] != NULL) {
+                    unequip_gear(player, (gear_slot_t)selected_index);
+                    collect_equipment_options(player->equipment);
+                }
+            } else if (event.key == TB_KEY_ESC) {
+                new_state = GEAR_MENU;
+                item_selected_or_esc = true;
+            }
+        }
+    }
     return new_state;
 }
 
@@ -411,10 +571,35 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     }
 }
 
+void collect_gear_inventory_options(gear_t* gear_inventory[], const int count) {
+    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
+        memset(gear_inventory_options[i], '\0', MAX_STRING_LENGTH);
+    }
+
+    for (int i = 0; i < count; i++) {
+        snprintf(gear_inventory_options[i], MAX_STRING_LENGTH, "%s (Slot: %d)", gear_inventory[i]->name, gear_inventory[i]->slot);
+    }
+}
+
+void collect_equipment_options(gear_t* equipment[]) {
+    for (int i = 0; i < MAX_SLOT; i++) {
+        memset(equipment_options[i], '\0', MAX_STRING_LENGTH);
+    }
+
+    for (int i = 0; i < MAX_SLOT; i++) {
+        if (equipment[i] != NULL) {
+            snprintf(equipment_options[i], MAX_STRING_LENGTH, "%s (Slot: %d)", equipment[i]->name, i);
+        } else {
+            snprintf(equipment_options[i], MAX_STRING_LENGTH, "Empty (Slot: %d)", i);
+        }
+    }
+}
+
 void update_local(void) {
     //TODO: For now only the main combat menu options are localized
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
+    snprintf(combat_menu_options[2], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION3_KEY));
 }
 
 void shutdown_combat_mode(void) {
@@ -437,5 +622,26 @@ void shutdown_combat_mode(void) {
             if (potion_menu_options[i] != NULL) free(potion_menu_options[i]);
         }
         free(potion_menu_options);
+    }
+
+    if (gear_menu_options != NULL) {
+        for (int i = 0; i < MAX_GEAR_MENU_OPTIONS; i++) {
+            if (gear_menu_options[i] != NULL) free(gear_menu_options[i]);
+        }
+        free(gear_menu_options);
+    }
+
+    if (gear_inventory_options != NULL) {
+        for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
+            if (gear_inventory_options[i] != NULL) free(gear_inventory_options[i]);
+        }
+        free(gear_inventory_options);
+    }
+
+    if (equipment_options != NULL) {
+        for (int i = 0; i < MAX_SLOT; i++) {
+            if (equipment_options[i] != NULL) free(equipment_options[i]);
+        }
+        free(equipment_options);
     }
 }

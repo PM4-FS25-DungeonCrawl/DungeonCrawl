@@ -1,3 +1,4 @@
 attribute1;attribute2;attribute3;attribute4;text_de;text_en
 COMBAT;MAIN;MENU;OPTION1;Nutze Fähigkeit;Use Ability
 COMBAT;MAIN;MENU;OPTION2;Nutze Trank;Use Potion
+COMBAT;MAIN;MENU;OPTION3;Wähle Ausrüstung;Change Gear
