@@ -1,18 +1,12 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:47:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   47 |     srand(time(NULL));
+../src/logging/logger.c:138:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  138 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+      |             ^
+../src/main.c:45:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   45 |     srand(time(NULL));
       |     ^
-../src/game.c:200:13: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  200 |             case EXIT:
-      |             ^
-../src/game.c:205:22: note: last of these clones ends here
-  205 |                 break;
-      |                      ^
-../src/logging/logger.c:135:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
-  135 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
-      |             ^
 ../src/map/map_generator.c:82:6: warning: function 'carve_passages' is within a recursive call chain [misc-no-recursion]
    82 | void carve_passages(int x, int y) {
       |      ^
@@ -21,8 +15,8 @@
   105 |             carve_passages(nx, ny);
       |             ^
 ../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
-../src/menu/main_menu.c:163:56: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  163 |                             save_name[name_length++] = input_event.ch;
-      |                                                        ^
-Suppressed 93576 warnings (93551 in non-user code, 25 with check filters).
+../src/menu/save_menu.c:80:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   80 |                     save_name[name_length++] = input_event.ch;
+      |                                                ^
+Suppressed 121928 warnings (121861 in non-user code, 67 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

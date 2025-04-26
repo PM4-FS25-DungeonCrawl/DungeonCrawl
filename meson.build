@@ -10,7 +10,9 @@ project('DungeonCrawl', 'c',
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
     'src/main.c',
+    'src/common.c',
     'src/game.c',
+    'src/game_data.c',
 
     'src/map/map.c',
     'src/map/map_mode.c',
@@ -29,12 +31,15 @@ src_files = files(
     'src/item/potion.c',
 
     'src/menu/main_menu.c',
+    'src/menu/save_menu.c',
+    'src/menu/menu.c',
+    'src/menu/language_menu.c',
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/draw/draw_combat_mode.c',
 
+    'src/combat/draw/draw_combat_mode.c',
     'src/stats/stats.c',
     'src/stats/draw/draw_stats.c'
 )
