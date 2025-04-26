@@ -1,3 +1,7 @@
+/**
+ * @file draw_combat_mode.c
+ * @brief This file contains functions for rendering the combat mode in the Dungeon Crawl game
+ */
 #include "draw_combat_mode.h"
 
 #include "../../../include/termbox2.h"
@@ -74,7 +78,12 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     tb_present();
 }
 
-// Draw a combat log, showing the current action
+/**
+ * @brief Draws the combat log
+ * @param anchor The anchor point of the combat log, representing the top-left corner
+ * @param combat_log_message The message to be displayed in the combat log
+ * @note This function displays a combat log message and waits for user input before continuing
+ */
 void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     if (combat_log_message == NULL) {
         log_msg(ERROR, "Draw Combat Mode", "given combat log messsage is NULL");
@@ -92,7 +101,13 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     tb_poll_event(&event);
 }
 
-// Helper function to draw resource bar
+/**
+ * @brief Draws the resource bar for a character
+ * @param anchor The anchor point for the resource bar, representing the top-left corner
+ * @param c A pointer to the character whose resources are to be displayed
+ * @return The updated y-coordinate after drawing the resource bar
+ * @note This function displays the character's name, health, mana, and stamina in a formatted bar
+ */
 int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     const char* str_format = "%-10s | Health %-4d | Mana %-4d | Stamina %-4d";
 
