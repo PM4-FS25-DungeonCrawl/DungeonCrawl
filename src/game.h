@@ -10,13 +10,12 @@ typedef enum {
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
-    EXIT,
-    EXIT_WITH_ERROR
+    EXIT
 } game_state_t;
 
 extern db_connection_t db_connection;
 
-int run_game();
+void run_game();
 
 void main_menu_state();
 

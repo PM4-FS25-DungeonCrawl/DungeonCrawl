@@ -1,13 +1,11 @@
 #include "game.h"
 
 #include "../include/termbox2.h"
-#include "character/character.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
 #include "logging/logger.h"
-#include "main.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
@@ -25,21 +23,11 @@ int exit_code;
 void game_loop();
 void combat_mode_state();
 
-int run_game() {
-    // TODO: remove after notcurses switch
-    if (tb_init() != 0) {
-        log_msg(ERROR, "Game", "Failed to initialize termbox");
-        return FAIL_TB_INIT;
-    }
-    tb_set_output_mode(TB_OUTPUT_NORMAL);
-
-    exit_code = 0;
-
+void run_game() {
     game_in_progress = false;// Flag to track if a game has been started
     current_state = MAIN_MENU;
     //start the game loop
     game_loop();
-    return exit_code;
 }
 
 void game_loop() {
@@ -62,10 +50,6 @@ void game_loop() {
                 combat_mode_state();
                 break;
             case EXIT:
-                running = false;
-                break;
-            case EXIT_WITH_ERROR:
-                exit_code = 4;
                 running = false;
                 break;
         }
@@ -130,6 +114,9 @@ void main_menu_state() {
                 current_state = GENERATE_MAP;
             }
             break;
+        case MENU_CHANGE_LANGUAGE:
+            current_state = MAIN_MENU;
+            break;
         case MENU_EXIT:
             current_state = EXIT;
             break;
@@ -166,7 +153,6 @@ void combat_mode_state() {
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
             // TODO: add loot to player
-            // TODO: delete goblin from map
             tb_clear();
             current_state = MAP_MODE;
             break;
