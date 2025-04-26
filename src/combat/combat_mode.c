@@ -71,7 +71,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
             case ABILITY_MENU:
                 combat_state = ability_menu(player, monster);
                 break;
-            case ITEM_MENU:
+            case POTION_MENU:
                 combat_state = potion_menu(player, monster);
                 break;
             case EVALUATE_COMBAT:
@@ -133,7 +133,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                 if (selected_index == 0) {
                     new_state = ABILITY_MENU;
                 } else if (selected_index == 1) {
-                    new_state = ITEM_MENU;
+                    new_state = POTION_MENU;
                 }
                 submenu_selected = true;
             } else if (event.key == TB_KEY_CTRL_C) {
@@ -200,7 +200,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         return COMBAT_MENU;
     }
 
-    internal_combat_state_t new_state = ITEM_MENU;
+    internal_combat_state_t new_state = POTION_MENU;
     bool item_used_or_esc = false;
 
     while (!item_used_or_esc) {
@@ -293,16 +293,16 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     tb_present();
 }
 
-void use_potion(character_t* player, const character_t* monster, potion_t* item) {
+void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    invoke_potion_effect(player, item);
+    invoke_potion_effect(player, potion);
 
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), local_strings[como_potion_use.idx].characters,//TODO: This Method of using formats is not safe!!
              player->name,
-             item->name,
-             item->value,
-             potion_type_to_string(item->effectType));
+             potion->name,
+             potion->value,
+             potion_type_to_string(potion->effectType));
     draw_combat_log(anchor, message);
 }
 
