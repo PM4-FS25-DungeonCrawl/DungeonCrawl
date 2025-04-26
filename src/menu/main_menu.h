@@ -3,10 +3,15 @@
 
 #include "menu.h"
 
+
 /**
- * Initialize the main menu
+ * Initializes resources for the main menu, including memory allocation
+ * and observer registration for localized menu strings.
+ *
+ * @return 0 if the main menu initializes successfully,
+ *         non-zero value otherwise in case of failure.
  */
-void init_main_menu(void);
+int init_main_menu(void);
 
 /**
  * Display and handle the main menu
@@ -15,12 +20,5 @@ void init_main_menu(void);
  *         MENU_SAVE_GAME to save the game, MENU_LOAD_GAME to load a game, MENU_EXIT to exit the game
  */
 menu_result_t show_main_menu(bool game_in_progress);
-
-/**
- * Process a selected menu option
- * @param selected_option The selected menu option string
- * @param game_in_progress indicates whether there's an active game that can be continued
- */
-void select_menu_option(const char* selected_option, bool game_in_progress);
 
 #endif// MAIN_MENU_H

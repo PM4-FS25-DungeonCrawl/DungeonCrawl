@@ -1,12 +1,13 @@
 #ifndef SAVE_MENU_H
 #define SAVE_MENU_H
 
-#include "../database/database.h"
 #include "menu.h"
 
 // Global variables to store menu state
 extern int selected_save_file_id;
 extern char last_save_name[50];
+
+void init_save_menu(void);
 
 /**
  * Get the ID of the save file selected by the user

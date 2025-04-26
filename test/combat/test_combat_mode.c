@@ -1,12 +1,27 @@
 #include "../../src/character/character.h"
 #include "../../src/combat/ability.h"
 #include "../../src/combat/combat_mode.h"
+#include "../../src/common.h"
+#include "../../src/local/local.h"
 
 #include <assert.h>
 #include <stdio.h>
 
+
+void setup() {
+    init_local();
+    printf("Test");
+    main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (main_memory_pool == NULL) {
+        printf("Failed to initialize memory pool\n");
+        exit(EXIT_FAILURE);
+    }
+    init_combat_mode();
+}
+
+
 character_t* create_test_character() {
-    character_t* character = init_character(PLAYER, "Hero");
+    character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
@@ -108,8 +123,10 @@ void test_get_random_ability() {
 }
 
 int main(void) {
+    setup();
     test_use_ability();
     test_use_item();
     test_get_random_ability();
+    shutdown_memory_pool(main_memory_pool);
     return 0;
 }
