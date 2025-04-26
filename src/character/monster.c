@@ -1,7 +1,24 @@
+/**
+ * @file monster.c
+ * @brief This file contains functions for creating and initializing monster characters
+ *        in the Dungeon Crawl game. It includes the implementation for creating specific
+ *        types of monsters, such as goblins.
+ */
+
 #include "monster.h"
 
 #include <stdlib.h>
 
+/**
+ * @brief Creates and initializes a new goblin character.
+ *
+ * This function allocates memory for a goblin character, sets its attributes,
+ * damage modifiers, experience reward, and level. It uses the provided memory pool
+ * for allocation and ensures proper error handling in case of memory allocation failure.
+ *
+ * @param memory_pool A pointer to the memory pool used for allocating the goblin character.
+ * @return A pointer to the newly created goblin character, or NULL if memory allocation fails.
+ */
 character_t* create_new_goblin(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Goblin", "Memory pool is NULL");
 
