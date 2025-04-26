@@ -1,9 +1,6 @@
 /**
  * @file level.c
- * @brief Implements level progression and experience point (XP) management for characters in the DungeonCrawl game.
- *
- * This file contains functions for calculating XP requirements for leveling up,
- * adding XP to a character, and handling the level-up process, including skill point allocation.
+ * @brief Implements level progression and experience point (XP) management for characters in the DungeonCrawl game
  */
 
 #include "level.h"
@@ -13,10 +10,9 @@
 #include <math.h>
 
 /**
- * @brief Calculates the XP required for the next level.
- *
- * @param level The current level of the character.
- * @return The XP required to reach the next level.
+ * @brief Calculates the XP required for the next level
+ * @param level The current level of the character
+ * @return The XP required to reach the next level
  */
 int calculate_xp_for_next_level(int level) {
     // TODO: Maybe change to a more complex formula
@@ -24,10 +20,9 @@ int calculate_xp_for_next_level(int level) {
 }
 
 /**
- * @brief Adds XP to a character and handles level-up if the XP threshold is reached.
- *
- * @param player Pointer to the character gaining XP.
- * @param xp_earned The amount of XP earned.
+ * @brief Adds XP to a character and handles level-up if the XP threshold is reached
+ * @param player Pointer to the character gaining XP
+ * @param xp_earned The amount of XP earned
  */
 void add_xp(character_t* player, int xp_earned) {
     player->xp += xp_earned;
@@ -40,12 +35,8 @@ void add_xp(character_t* player, int xp_earned) {
 }
 
 /**
- * @brief Handles the level-up process for a character.
- *
- * Increases the character's level, deducts the XP required for the level-up,
- * and allocates skill points. Logs the level-up event.
- *
- * @param player Pointer to the character leveling up.
+ * @brief Handles the level-up process for a character
+ * @param player Pointer to the character leveling up
  */
 void level_up(character_t* player) {
     player->level++;

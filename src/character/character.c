@@ -1,11 +1,6 @@
 /**
  * @file character.c
- * @brief Implements character-related functionality for the DungeonCrawl game.
- *
- * This file contains functions for initializing, managing, and modifying
- * characters, including their stats, abilities, gear, potions, and resources.
- * It also provides utility functions for equipping/unequipping gear and
- * managing experience points and levels.
+ * @brief Implements character-related functionality for the DungeonCrawl game
  */
 
 #include "character.h"
@@ -16,12 +11,11 @@
 #include <stdlib.h>
 
 /**
- * @brief Initializes a new character.
- *
- * @param memory_pool Pointer to the memory pool for dynamic allocation.
- * @param type The type of the character (e.g., player, enemy).
- * @param name The name of the character.
- * @return Pointer to the initialized character, or NULL on failure.
+ * @brief Initializes a new character
+ * @param memory_pool Pointer to the memory pool for dynamic allocation
+ * @param type The type of the character (e.g., player, enemy)
+ * @param name The name of the character
+ * @return Pointer to the initialized character, or NULL on failure
  */
 character_t* init_character(memory_pool_t* memory_pool, const character_type_t type, const char* name) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Character", "In init_character memory pool is NULL");
@@ -44,10 +38,9 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
 }
 
 /**
- * @brief Frees the memory allocated for a character.
- *
- * @param memory_pool Pointer to the memory pool used for allocation.
- * @param c Pointer to the character to be freed.
+ * @brief Frees the memory allocated for a character
+ * @param memory_pool Pointer to the memory pool used for allocation
+ * @param c Pointer to the character to be freed
  */
 void free_character(memory_pool_t* memory_pool, character_t* c) {
     NULL_PTR_HANDLER_RETURN(memory_pool, , "Character", "In free_character memory pool is NULL");
@@ -56,13 +49,12 @@ void free_character(memory_pool_t* memory_pool, character_t* c) {
 }
 
 /**
- * @brief Sets the stats for a character.
- *
- * @param c Pointer to the character to set stats for.
- * @param strength Strength value.
- * @param intelligence Intelligence value.
- * @param dexterity Dexterity value.
- * @param constitution Constitution value.
+ * @brief Sets the stats for a character
+ * @param c Pointer to the character to set stats for
+ * @param strength Strength value
+ * @param intelligence Intelligence value
+ * @param dexterity Dexterity value
+ * @param constitution Constitution value
  */
 void set_character_stats(character_t* c, int strength, int intelligence, int dexterity, int constitution) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_stats character is NULL");
@@ -76,13 +68,12 @@ void set_character_stats(character_t* c, int strength, int intelligence, int dex
 }
 
 /**
- * @brief Sets the stats for a character.
- *
- * @param stats Pointer to the stats structure to set.
- * @param strength Strength value.
- * @param intelligence Intelligence value.
- * @param dexterity Dexterity value.
- * @param constitution Constitution value.
+ * @brief Sets the stats for a character
+ * @param stats Pointer to the stats structure to set
+ * @param strength Strength value
+ * @param intelligence Intelligence value
+ * @param dexterity Dexterity value
+ * @param constitution Constitution value
  */
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution) {
     NULL_PTR_HANDLER_RETURN(stats, , "Character", "In set_stats stats is NULL");
@@ -94,10 +85,9 @@ void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, in
 }
 
 /**
- * @brief Updates the character's resources based on their stats.
- *
- * @param max_resources Pointer to the max resources structure to update.
- * @param base_stats Pointer to the base stats structure.
+ * @brief Updates the character's resources based on their stats
+ * @param max_resources Pointer to the max resources structure to update
+ * @param base_stats Pointer to the base stats structure
  */
 void update_character_resources(resources_t* max_resources, stats_t* base_stats) {
     NULL_PTR_HANDLER_RETURN(max_resources, , "Character", "In update_character_resources max_resources is NULL");
@@ -109,11 +99,10 @@ void update_character_resources(resources_t* max_resources, stats_t* base_stats)
 }
 
 /**
- * @brief Sets the damage modifier for a character.
- *
- * @param c Pointer to the character to set the damage modifier for.
- * @param type The type of damage to modify.
- * @param value The value of the damage modifier.
+ * @brief Sets the damage modifier for a character
+ * @param c Pointer to the character to set the damage modifier for
+ * @param type The type of damage to modify
+ * @param value The value of the damage modifier
  */
 void set_character_dmg_modifier(character_t* c, damage_type_t type, int value) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_dmg_modifier character is NULL");
@@ -128,10 +117,9 @@ void set_character_dmg_modifier(character_t* c, damage_type_t type, int value) {
 }
 
 /**
- * @brief Adds an ability to a character.
- *
- * @param c Pointer to the character.
- * @param ability Pointer to the ability to add.
+ * @brief Adds an ability to a character
+ * @param c Pointer to the character
+ * @param ability Pointer to the ability to add
  */
 void add_ability(character_t* c, ability_t* ability) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_ability character is NULL");
@@ -146,10 +134,9 @@ void add_ability(character_t* c, ability_t* ability) {
 }
 
 /**
- * @brief Removes an ability from a character.
- *
- * @param c Pointer to the character.
- * @param ability Pointer to the ability to remove.
+ * @brief Removes an ability from a character
+ * @param c Pointer to the character
+ * @param ability Pointer to the ability to remove
  */
 void remove_ability(character_t* c, const ability_t* ability) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_ability character is NULL");
@@ -168,10 +155,9 @@ void remove_ability(character_t* c, const ability_t* ability) {
 }
 
 /**
- * @brief Adds gear to a character's inventory.
- *
- * @param c Pointer to the character.
- * @param gear Pointer to the gear to add.
+ * @brief Adds gear to a character's inventory
+ * @param c Pointer to the character
+ * @param gear Pointer to the gear to add
  */
 void add_gear(character_t* c, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_gear character is NULL");
@@ -186,10 +172,9 @@ void add_gear(character_t* c, gear_t* gear) {
 }
 
 /**
- * @brief Removes a gear item from a character's inventory.
- *
- * @param c Pointer to the character.
- * @param gear Pointer to the gear item to remove.
+ * @brief Removes a gear item from a character's inventory
+ * @param c Pointer to the character
+ * @param gear Pointer to the gear item to remove
  */
 void remove_gear(character_t* c, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_gear character is NULL");
@@ -209,10 +194,9 @@ void remove_gear(character_t* c, gear_t* gear) {
 }
 
 /**
- * @brief Adds a potion to a character's inventory.
- *
- * @param c Pointer to the character.
- * @param potion Pointer to the potion to add.
+ * @brief Adds a potion to a character's inventory
+ * @param c Pointer to the character
+ * @param potion Pointer to the potion to add
  */
 void add_potion(character_t* c, potion_t* potion) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_potion character is NULL");
@@ -227,10 +211,9 @@ void add_potion(character_t* c, potion_t* potion) {
 }
 
 /**
- * @brief Removes a potion from a character's inventory.
- *
- * @param c Pointer to the character.
- * @param potion Pointer to the potion to remove.
+ * @brief Removes a potion from a character's inventory
+ * @param c Pointer to the character
+ * @param potion Pointer to the potion to remove
  */
 void remove_potion(character_t* c, potion_t* potion) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_potion character is NULL");
@@ -250,10 +233,9 @@ void remove_potion(character_t* c, potion_t* potion) {
 }
 
 /**
- * @brief Equips a gear item to a character.
- *
- * @param c Pointer to the character.
- * @param gear Pointer to the gear item to equip.
+ * @brief Equips a gear item to a character
+ * @param c Pointer to the character
+ * @param gear Pointer to the gear item to equip
  */
 void equip_gear(character_t* c, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In equip_gear character is NULL");
@@ -277,10 +259,9 @@ void equip_gear(character_t* c, gear_t* gear) {
 }
 
 /**
- * @brief Unequips a gear item from a character.
- *
- * @param c Pointer to the character.
- * @param slot The slot to unequip from.
+ * @brief Unequips a gear item from a character
+ * @param c Pointer to the character
+ * @param slot The slot to unequip from
  */
 void unequip_gear(character_t* c, const gear_slot_t slot) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In unequip_gear character is NULL");
@@ -300,10 +281,9 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
 }
 
 /**
- * @brief sets initial xp for a character.
- *
- * @param c Pointer to the character.
- * @param xp The initial xp value.
+ * @brief sets initial xp for a character
+ * @param c Pointer to the character
+ * @param xp The initial xp value
  */
 void set_initial_xp(character_t* c, int xp) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_initial_xp character is NULL");
@@ -311,10 +291,9 @@ void set_initial_xp(character_t* c, int xp) {
 }
 
 /**
- * @brief Sets the level for a character.
- *
- * @param c Pointer to the character.
- * @param level The level value.
+ * @brief Sets the level for a character
+ * @param c Pointer to the character
+ * @param level The level value
  */
 void set_level(character_t* c, int level) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_level character is NULL");
@@ -322,10 +301,9 @@ void set_level(character_t* c, int level) {
 }
 
 /**
- * @brief Sets the XP reward for a character.
- *
- * @param c Pointer to the character.
- * @param xp_reward The XP reward value.
+ * @brief Sets the XP reward for a character
+ * @param c Pointer to the character
+ * @param xp_reward The XP reward value
  */
 void set_xp_reward(character_t* c, int xp_reward) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_xp_reward character is NULL");
