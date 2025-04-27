@@ -60,3 +60,5 @@ dkms.conf
 # Exclude txt files in log
 log/*.txt
 
+.cache
+compile_commands.json

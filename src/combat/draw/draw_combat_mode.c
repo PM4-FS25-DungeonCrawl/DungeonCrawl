@@ -1,7 +1,12 @@
 #include "draw_combat_mode.h"
 
-#include "../../../include/termbox2.h"
 #include "../../character/character.h"
+#include "../../game.h"
+
+#include <notcurses/notcurses.h>
+
+// External reference to notcurses context
+
 
 // Internal functions
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
@@ -18,9 +23,16 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c);
  * @note this function clears and presents the combat view
  */
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy, const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
-    tb_clear();
     //copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
+
+
+    // Clear the screen before drawing
+    ncplane_erase(stdplane);
+
+    // Draw title
+    ncplane_printf_yx(stdplane, vec.dy, anchor.dx + 20, "Combat Mode");
+    vec.dy += 2;
 
     vec.dy = draw_resource_bar(vec, player);
     vec.dy = draw_resource_bar(vec, enemy);
@@ -28,14 +40,16 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
 
     //print the enemy sprite line for line
     if (red_enemy_sprite) {
-        tb_print(anchor.dx, vec.dy, TB_RED, TB_DEFAULT, enemy_sprite);
+        ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0));// RED on BLACK
+        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
     } else {
-        tb_print(anchor.dx, vec.dy, TB_WHITE, TB_DEFAULT, enemy_sprite);
+        ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0));// WHITE on BLACK
+        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
     }
 
     vec.dy += sprite_height;
     vec.dy += 1;
-    tb_present();
+    notcurses_render(nc);
     return vec;
 }
 
@@ -56,22 +70,34 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
 
-    tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
+    // White on black
+    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
+
+    ncplane_set_channels(stdplane, white_on_black);
+    ncplane_putstr_yx(stdplane, vec.dy, 1, menu_name);
+    vec.dy++;
+
     for (int i = 0; i < menu_option_count; i++) {
+        char buffer[MAX_STRING_LENGTH];
+
         if (i == selected_index) {
-            char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i].characters);
-            tb_print(vec.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
+            snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i]);
+            // Bold is handled through styling channels in notcurses
+            ncplane_set_styles(stdplane, NCSTYLE_BOLD);
         } else {
-            char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i].characters);
-            tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
+            snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i]);
+            ncplane_set_styles(stdplane, NCSTYLE_NONE);
         }
+
+        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, buffer);
+        vec.dy++;
     }
+
     if (tail_msg != NULL) {
-        tb_print(vec.dx, vec.dy + 2, TB_WHITE, TB_DEFAULT, tail_msg);
+        ncplane_set_styles(stdplane, NCSTYLE_NONE);
+        ncplane_printf_yx(stdplane, vec.dy + 2, 1, "%s", tail_msg);
     }
-    tb_present();
+    notcurses_render(nc);
 }
 
 // Draw a combat log, showing the current action
@@ -83,13 +109,20 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), "%s", combat_log_message);
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, message);
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "Press any key to continue...");
-    tb_present();
+
+    // White on black
+    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
+    ncplane_set_channels(stdplane, white_on_black);
+
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, message);
+    anchor.dy++;
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, "Press any key to continue...");
+    anchor.dy++;
+    notcurses_render(nc);
 
     // Waiting for input
-    struct tb_event event;
-    tb_poll_event(&event);
+    ncinput input;
+    notcurses_get_blocking(nc, &input);
 }
 
 // Helper function to draw resource bar
@@ -99,7 +132,12 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     char c_info[MAX_STRING_LENGTH];
     snprintf(c_info, sizeof(c_info), str_format, c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
 
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, c_info);
+    // White on black
+    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
+    ncplane_set_channels(stdplane, white_on_black);
+
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, c_info);
+    anchor.dy++;
     return anchor.dy;
 }
 

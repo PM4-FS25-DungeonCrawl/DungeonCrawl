@@ -1,12 +1,24 @@
 #include "map_mode.h"
 
+#include "../game.h"
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
 
-vector2d_t map_anchor = {5, 1};
+#include <notcurses/notcurses.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#ifdef __APPLE__
+    #define KEY_EVENT NCTYPE_PRESS
+#else
+    #define KEY_EVENT NCTYPE_UNKNOWN
+#endif /* ifdef __APPLE__ */
+
+vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
 int player_has_key = 0;
+bool first_function_call = true;
 
 
 void set_player_start_pos(const int player_x, const int player_y) {
@@ -22,19 +34,22 @@ vector2d_t get_player_pos() {
 }
 
 
-map_mode_result_t handle_input(const struct tb_event* event) {
+map_mode_result_t handle_input(const ncinput* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
-    if (event->key == TB_KEY_CTRL_C) return QUIT;
+    if (event->id == 'c' && (event->modifiers & NCKEY_MOD_CTRL)) return QUIT;
 
     // Check for 'M' key press for menu
-    if (event->ch == 'm' || event->ch == 'M' || event->key == TB_KEY_ESC) return SHOW_MENU;
+    if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
 
-    if (event->key == TB_KEY_ARROW_UP) new_y--;
-    if (event->key == TB_KEY_ARROW_DOWN) new_y++;
-    if (event->key == TB_KEY_ARROW_LEFT) new_x--;
-    if (event->key == TB_KEY_ARROW_RIGHT) new_x++;
+    // Only process arrow key events that are PRESS type (ignore RELEASE events)
+    if (event->evtype == NCTYPE_UNKNOWN || event->evtype == NCTYPE_PRESS) {
+        if (event->id == NCKEY_UP) new_y--;
+        if (event->id == NCKEY_DOWN) new_y++;
+        if (event->id == NCKEY_LEFT) new_x--;
+        if (event->id == NCKEY_RIGHT) new_x++;
+    }
 
 
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
@@ -80,18 +95,23 @@ map_mode_result_t handle_input(const struct tb_event* event) {
  */
 map_mode_result_t map_mode_update(void) {
     map_mode_result_t next_state = CONTINUE;
-    struct tb_event ev;
-    const int ret = tb_peek_event(&ev, 10);
-
-    if (ret == TB_OK) {
-        next_state = handle_input(&ev);
+    ncinput ev;
+    memset(&ev, 0, sizeof(ev));
+    if (!first_function_call) {
+        const uint32_t ret = notcurses_get_blocking(nc, &ev);
+        if (ret > 0) {
+            // Only process the event if it's a key press (not release or repeat)
+            if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
+                next_state = handle_input(&ev);
+            }
+        }
     }
-    tb_clear();
+    first_function_call = false;
 
+    ncplane_erase(stdplane);
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-
-    tb_present();
+    notcurses_render(nc);
 
     return next_state;
 }

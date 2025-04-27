@@ -2,6 +2,13 @@
 #define COMMON_H
 
 #include "logging/logger.h"
+
+#include <notcurses/notcurses.h>
+
+// defining notcurses channels
+#define RED_ON_BLACK NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0)
+#define WHITE_ON_BLACK NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0)
+#define BLACK_ON_WHITE NCCHANNELS_INITIALIZER(0, 0, 0, 255, 255, 255)
 #include "memory/memory_management.h"
 
 #define MAX_STRING_LENGTH 256

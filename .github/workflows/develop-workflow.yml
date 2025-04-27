@@ -37,7 +37,7 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest ]  # Multi-OS build
+        os: [ ubuntu-latest, macos-latest, windows-latest]  # Multi-OS build
     runs-on: ${{ matrix.os }}
     needs: auto-format
 
