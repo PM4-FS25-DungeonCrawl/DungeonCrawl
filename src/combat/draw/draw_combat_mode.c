@@ -146,7 +146,7 @@ void draw_game_over() {
     ncplane_erase(stdplane);
     ncplane_set_channels(stdplane, RED_ON_BLACK);
     ncplane_printf_yx(stdplane, 1, 1, "Game over");
-    ncplane_set_channels(stdplane,WHITE_ON_BLACK);
+    ncplane_set_channels(stdplane, WHITE_ON_BLACK);
     ncplane_printf_yx(stdplane, 2, 1, "Press any key to exit...");
     notcurses_render(nc);
 
