@@ -131,7 +131,7 @@ void map_mode_state() {
             current_state = EXIT;
             break;
         case NEXT_FLOOR:
-            tb_clear();                // Clear screen before generating new floo
+            tb_clear();                 // Clear screen before generating new floo
             reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
