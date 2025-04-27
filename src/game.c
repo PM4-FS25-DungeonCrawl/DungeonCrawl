@@ -11,6 +11,7 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "stats/stats_mode.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -49,6 +50,12 @@ void game_loop() {
                 reset_goblin();
                 combat_mode_state();
                 break;
+            case STATS_MODE:
+                stats_mode(player);  // Pass your player object
+                current_state = MAP_MODE;  // assuming you have a state machine
+                break;
+
+
             case EXIT:
                 running = false;
                 break;
@@ -142,6 +149,9 @@ void map_mode_state() {
             tb_clear();// Clear the screen before showing menu
             current_state = MAIN_MENU;
             break;
+        case SHOW_STATS:
+            tb_clear();
+            current_state = STATS_MODE;
         default:
             log_msg(ERROR, "game", "Unknown return value from map_mode_update");
     }

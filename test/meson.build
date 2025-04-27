@@ -69,7 +69,8 @@ helper_memory = files(
 
 helper_stats = files(
     '../src/stats/stats.c',
-    '../src/stats/draw/draw_stats.c'
+    '../src/stats/draw/draw_stats.c',
+    '../src/stats/stats_mode.c'
 )
 
 test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'])

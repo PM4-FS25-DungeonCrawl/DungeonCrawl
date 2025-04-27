@@ -41,7 +41,8 @@ src_files = files(
 
     'src/combat/draw/draw_combat_mode.c',
     'src/stats/stats.c',
-    'src/stats/draw/draw_stats.c'
+    'src/stats/draw/draw_stats.c',
+    'src/stats/stats_mode.c'
 )
 
 include_files = files(

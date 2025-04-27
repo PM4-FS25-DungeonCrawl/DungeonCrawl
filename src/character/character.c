@@ -210,3 +210,8 @@ void set_xp_reward(character_t* character, int xp_reward) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_xp_reward character is NULL");
     character->xp_reward = xp_reward;
 }
+
+void set_skill_points(character_t* character, int skill_points) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_skill_points character is NULL");
+    character->skill_points = skill_points;
+}

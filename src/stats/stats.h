@@ -1,6 +1,8 @@
 #ifndef STATS_H
 #define STATS_H
 
+#include "../common.h"
+
 typedef enum {
     STRENGTH,
     INTELLIGENCE,
@@ -25,5 +27,7 @@ typedef struct {
     int armor;       // reduced physical damage taken
     int magic_resist;// reduced magical damage taken
 } defenses_t;
+
+void raise_skill(stats_t* stats, int stat, int value, int skillpoint);
 
 #endif//STATS_H
