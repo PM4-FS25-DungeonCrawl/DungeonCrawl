@@ -1,9 +1,5 @@
 #include "menu.h"
 
-#include "../logging/logger.h"
-
-#include <stdio.h>
-#include <string.h>
 
 void draw_menu(const char** menu_options, int menu_count, int selected_index) {
     tb_clear();

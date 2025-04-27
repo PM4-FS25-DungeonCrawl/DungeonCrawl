@@ -1,6 +1,5 @@
 #include "map_mode.h"
 
-#include "../../include/termbox2.h"
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
@@ -41,8 +40,8 @@ map_mode_result_t handle_input(const struct tb_event* event) {
     if (new_x >= 0 && new_x < WIDTH && new_y >= 0 && new_y < HEIGHT) {
         switch (map[new_x][new_y]) {
             case WALL:
-                // ignore wall
-                // break;
+            // ignore wall
+            // break;
             case START_DOOR:
                 // ignore start door
                 break;

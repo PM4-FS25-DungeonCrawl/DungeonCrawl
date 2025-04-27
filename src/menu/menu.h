@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include "../../include/termbox2.h"
-#include "../database/gamestate/gamestate_database.h"
 
 #include <stdbool.h>
 
@@ -11,6 +10,7 @@
 #define CONTINUE_OPTION "Continue"
 #define SAVE_GAME_OPTION "Save Game"
 #define LOAD_GAME_OPTION "Load Game"
+#define CHANGE_LANGUAGE_OPTION "Change Language"
 #define EXIT_OPTION "Exit"
 
 // Menu constants
@@ -25,6 +25,7 @@ typedef enum {
     MENU_CONTINUE,
     MENU_SAVE_GAME,
     MENU_LOAD_GAME,
+    MENU_CHANGE_LANGUAGE,
     MENU_EXIT
 } menu_result_t;
 
