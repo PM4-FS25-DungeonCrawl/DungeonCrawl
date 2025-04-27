@@ -27,9 +27,6 @@ bool menu_active;
 menu_result_t active_menu_state;
 
 // Color channels
-#define RED_ON_BLACK NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0)
-#define WHITE_ON_BLACK NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0)
-#define BLACK_ON_WHITE NCCHANNELS_INITIALIZER(0, 0, 0, 255, 255, 255)
 
 void init_main_menu(void) {
     log_msg(INFO, "Menu", "Initializing main menu");
@@ -65,9 +62,9 @@ menu_result_t show_main_menu(bool game_in_progress) {
 
         ncinput input;
         memset(&input, 0, sizeof(input));
-        uint32_t ret = notcurses_get_nblock(nc, &input);
+        notcurses_get_blocking(nc, &input);
 
-        if(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS) { continue;}
+        if(!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue;}
 
         switch (input.id) {
             case NCKEY_UP:
@@ -82,7 +79,11 @@ menu_result_t show_main_menu(bool game_in_progress) {
                 select_menu_option(selected_option, game_in_progress);
                 break;
             }
-            case TB_KEY_CTRL_C:
+            case 'c':
+                // if only c was pressed and not ctrl-c break. seems the cleanest solution to me
+                if (!(input.modifiers&NCKEY_MOD_CTRL)) {
+                    break;
+                }
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
                 break;

@@ -1,8 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "../../include/termbox2.h"
-#include "../database/gamestate/gamestate_database.h"
 
 #include <stdbool.h>
 

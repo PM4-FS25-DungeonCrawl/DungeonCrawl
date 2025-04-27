@@ -1,14 +1,20 @@
 #include "save_menu.h"
 
-#include "../../include/termbox2.h"
+#include "../common.h"
 #include "../logging/logger.h"
+#include "notcurses/nckeys.h"
+#include "src/database/gamestate/gamestate_database.h"
+#include "src/menu/menu.h"
 
+#include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
 
 // Global variables to store menu state
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 int get_selected_save_file_id(void) {
     return selected_save_file_id;
@@ -31,37 +37,38 @@ menu_result_t show_save_game_menu(void) {
 
     // Get save name from user
     while (input_active && name_length < 49) {
-        tb_clear();
-        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Enter name for save file:");
-        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, save_name);
-        tb_print(MENU_START_X, MENU_START_Y + 4, TB_WHITE, TB_DEFAULT, "Press Enter when done");
-        tb_present();
+        ncplane_erase(stdplane);
+        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Enter name for save file:");
+        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_name);
+        ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "Press Enter when done");
+        notcurses_render(nc);
 
-        struct tb_event input_event;
-        int ret = tb_poll_event(&input_event);
+        ncinput input;
+        memset(&input, 0, sizeof(input));
+        notcurses_get_blocking(nc, &input);
 
 
-        switch (input_event.key) {
-            case TB_KEY_ENTER:
+        switch (input.id) {
+            case NCKEY_ENTER:
                 if (name_length > 0) {
                     input_active = false;
                 }
                 break;
-            case TB_KEY_BACKSPACE2:
-            case TB_KEY_BACKSPACE:
+            case NCKEY_BACKSPACE:
                 // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
                 if (name_length > 0) {
                     save_name[--name_length] = '\0';
                 }
                 break;
-            case TB_KEY_ESC:
+            case NCKEY_ESC:
                 // Cancel save
                 input_active = false;
                 name_length = 0;// Set length to 0 to indicate cancellation
                 break;
             default:
-                if (input_event.ch != 0 && name_length < 49) {
-                    save_name[name_length++] = input_event.ch;
+                if (input.id != 0 && name_length < 49) {
+                    save_name[name_length++] = input.id;
                     save_name[name_length] = '\0';
                 }
                 break;
@@ -74,9 +81,10 @@ menu_result_t show_save_game_menu(void) {
         last_save_name[sizeof(last_save_name) - 1] = '\0';// Ensure null termination
 
         // Show saving message
-        tb_clear();
-        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Saving game...");
-        tb_present();
+        ncplane_erase(stdplane);
+        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Saving game...");
+        notcurses_render(nc);
 
         log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
 
@@ -111,13 +119,12 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     if (save_infos->count == 0) {
         // No saves available
-        tb_clear();
-        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "No saved games found.");
-        tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, "Press any key to return to the menu.");
-        tb_present();
+        ncplane_erase(stdplane);
+        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "No saved games found.");
+        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "Press any key to return to the menu.");
+        notcurses_render(nc);
 
-        struct tb_event tb_event;
-        tb_poll_event(&tb_event);
 
         db_close(&menu_db_connection);
         free_save_infos(save_infos);
@@ -129,8 +136,9 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     bool selection_active = true;
 
     while (selection_active) {
-        tb_clear();
-        tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Select a save file:");
+        ncplane_erase(stdplane);
+        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Select a save file:");
 
         int y = MENU_START_Y + 2;
         for (int i = 0; i < save_infos->count; i++) {
@@ -138,33 +146,35 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             snprintf(save_info, sizeof(save_info), "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
 
             if (i == selected_save_index) {
-                tb_print(MENU_START_X, y, TB_BLACK, TB_WHITE, save_info);
+                ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             } else {
-                tb_print(MENU_START_X, y, TB_WHITE, TB_DEFAULT, save_info);
+                ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             }
             y += MENU_ITEM_SPACING;
         }
 
-        tb_print(MENU_START_X, y + 2, TB_WHITE, TB_DEFAULT, "Arrow keys: Navigate | Enter: Select | Esc: Back");
-        tb_present();
+        ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
+        notcurses_render(nc);
 
-        struct tb_event tb_event;
-        tb_poll_event(&tb_event);
 
-        switch (tb_event.key) {
-            case TB_KEY_ARROW_UP:
+        ncinput input;
+        memset(&input, 0, sizeof(input));
+        notcurses_get_blocking(nc, &input);
+
+        switch (input.id) {
+            case NCKEY_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                 break;
-            case TB_KEY_ARROW_DOWN:
+            case NCKEY_DOWN:
                 selected_save_index = (selected_save_index + 1) % save_infos->count;
                 break;
-            case TB_KEY_ENTER:
+            case NCKEY_ENTER:
                 // Set the selected save file ID for loading
                 result = MENU_LOAD_GAME;
                 selected_save_file_id = save_infos->infos[selected_save_index].id;
                 selection_active = false;
                 break;
-            case TB_KEY_ESC:
+            case NCKEY_ESC:
                 selection_active = false;
                 break;
         }

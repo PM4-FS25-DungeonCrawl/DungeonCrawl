@@ -10,6 +10,8 @@
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <sys/_types/_u_int32_t.h>
 
 
 #ifdef __APPLE__
@@ -163,38 +165,34 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         // check for input
         ncinput event;
         memset(&event, 0, sizeof(event));
-        int ret = notcurses_get_nblock(nc, &event);
+        uint32_t ret = notcurses_get_blocking(nc, &event);
 
-        //commented out for testing if you find this, yeet it
-        // // Drain any additional queued events
-        // ncinput discard;
-        // while (notcurses_get_nblock(nc, &discard) > 0) {
-        //     // Discard extra events
-        // }
-
+        //skip if no valid input
         if (ret > 0) {
-            // Only process press events
+            continue;
+        }
+        // skip if key event is release
         if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-                if (event.id == NCKEY_UP) {
-                    // Move up
-                    selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
-                } else if (event.id == NCKEY_DOWN) {
-                    // Move down
-                    selected_index = (selected_index + 1) % MAX_COMBAT_MENU_OPTIONS;
-                } else if (event.id == NCKEY_ENTER) {
-                    // Return the selected state
-                    if (selected_index == 0) {
-                        new_state = ABILITY_MENU;
-                    } else if (selected_index == 1) {
-                        new_state = ITEM_MENU;
-                    }
-                    submenu_selected = true;
-                } else if (event.id == 'c' && (event.modifiers & NCKEY_MOD_CTRL)) {
-                    // Exit the game
-                    new_state = COMBAT_EXIT;
-                    submenu_selected = true;
-                }
+            continue;
+        }
+        if (event.id == NCKEY_UP) {
+            // Move up
+            selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
+        } else if (event.id == NCKEY_DOWN) {
+            // Move down
+            selected_index = (selected_index + 1) % MAX_COMBAT_MENU_OPTIONS;
+        } else if (event.id == NCKEY_ENTER) {
+            // Return the selected state
+            if (selected_index == 0) {
+                new_state = ABILITY_MENU;
+            } else if (selected_index == 1) {
+                new_state = ITEM_MENU;
             }
+            submenu_selected = true;
+        } else if (event.id == 'c' && (event.modifiers & NCKEY_MOD_CTRL)) {
+            // Exit the game
+            new_state = COMBAT_EXIT;
+            submenu_selected = true;
         }
     }
     return new_state;
@@ -217,36 +215,33 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         // check for input
         ncinput event;
         memset(&event, 0, sizeof(event));
-        int ret = notcurses_get_nblock(nc, &event);
+        uint32_t ret = notcurses_get_blocking(nc, &event);
 
-        //commented out for testing if you find this, yeet it
-        // // Drain any additional queued events
-        // ncinput discard;
-        // while (notcurses_get_nblock(nc, &discard) > 0) {
-        //     // Discard extra events
-        // }
 
+        //skip if no valid input
         if (ret > 0) {
-            // Only process press events
+            continue;
+        }
+        // skip if key event is release
         if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-                if (event.id == NCKEY_UP) {
-                    // Move up
-                    selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
-                } else if (event.id == NCKEY_DOWN) {
-                    // Move down
-                    selected_index = (selected_index + 1) % player->ability_count;
-                } else if (event.id == NCKEY_ENTER) {
-                    use_ability(player, monster, player->abilities[selected_index]);
-                    use_ability(monster, player, get_random_ability(monster));
+            continue;
+        }
+        if (event.id == NCKEY_UP) {
+            // Move up
+            selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
+        } else if (event.id == NCKEY_DOWN) {
+            // Move down
+            selected_index = (selected_index + 1) % player->ability_count;
+        } else if (event.id == NCKEY_ENTER) {
+            use_ability(player, monster, player->abilities[selected_index]);
+            use_ability(monster, player, get_random_ability(monster));
 
-                    new_state = EVALUATE_COMBAT;
-                    ability_used_or_esc = true;
-                } else if (event.id == NCKEY_ESC) {
-                    // go back to the combat menu
-                    new_state = COMBAT_MENU;
-                    ability_used_or_esc = true;
-                }
-            }
+            new_state = EVALUATE_COMBAT;
+            ability_used_or_esc = true;
+        } else if (event.id == NCKEY_ESC) {
+            // go back to the combat menu
+            new_state = COMBAT_MENU;
+            ability_used_or_esc = true;
         }
     }
     return new_state;
@@ -274,38 +269,35 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         // check for input
         ncinput event;
         memset(&event, 0, sizeof(event));
-        int ret = notcurses_get_nblock(nc, &event);
+        uint32_t ret = notcurses_get_blocking(nc, &event);
 
-        //commented out for testing if you find this, yeet it
-        // // Drain any additional queued events
-        // ncinput discard;
-        // while (notcurses_get_nblock(nc, &discard) > 0) {
-        //     // Discard extra events
-        // }
 
+        //skip if no valid input
         if (ret > 0) {
-            // Only process press events
+            continue;
+        }
+        // skip if key event is release
         if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-                if (event.id == NCKEY_UP) {
-                    // Move up
-                    selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
-                } else if (event.id == NCKEY_DOWN) {
-                    // Move down
-                    selected_index = (selected_index + 1) % player->potion_count;
-                } else if (event.id == NCKEY_ENTER) {
-                    // Use the selected potion
-                    use_potion(player, monster, player->potion_inventory[selected_index]);
-                    use_ability(monster, player, get_random_ability(monster));
-                    new_state = EVALUATE_COMBAT;
+            continue;
+        }
+        if (event.id == NCKEY_UP) {
+            // Move up
+            selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+        } else if (event.id == NCKEY_DOWN) {
+            // Move down
+            selected_index = (selected_index + 1) % player->potion_count;
+        } else if (event.id == NCKEY_ENTER) {
+            // Use the selected potion
+            use_potion(player, monster, player->potion_inventory[selected_index]);
+            use_ability(monster, player, get_random_ability(monster));
+            new_state = EVALUATE_COMBAT;
 
-                    collect_potion_menu_options(player->potion_inventory, player->potion_count);
-                    item_used_or_esc = true;
-                } else if (event.id == NCKEY_ESC) {
-                    // Go back to the combat menu
-                    new_state = COMBAT_MENU;
-                    item_used_or_esc = true;
-                }
-            }
+            collect_potion_menu_options(player->potion_inventory, player->potion_count);
+            item_used_or_esc = true;
+        } else if (event.id == NCKEY_ESC) {
+            // Go back to the combat menu
+            new_state = COMBAT_MENU;
+            item_used_or_esc = true;
         }
     }
     return new_state;

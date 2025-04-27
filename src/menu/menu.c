@@ -1,44 +1,53 @@
 #include "menu.h"
 
+#include "../common.h"
 #include "../logging/logger.h"
 
+#include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
 
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
+
 void draw_menu(const char** menu_options, int menu_count, int selected_index) {
-    tb_clear();
+    ncplane_erase(stdplane);
 
     // Draw title
-    tb_print(MENU_START_X, MENU_START_Y, TITLE_COLOR, TB_DEFAULT, TITLE);
+    ncplane_set_channels(stdplane, RED_ON_BLACK);
+    ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "%s", TITLE);
 
     // Draw menu options
     int y = MENU_START_Y + 3;
     for (int i = 0; i < menu_count; i++) {
         if (i == selected_index) {
-            tb_print(MENU_START_X, y, TB_BLACK, TB_WHITE, menu_options[i]);
+            ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+            ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", menu_options[i]);
         } else {
-            tb_print(MENU_START_X, y, TB_WHITE, TB_DEFAULT, menu_options[i]);
+            ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+            ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", menu_options[i]);
         }
         y += MENU_ITEM_SPACING;
     }
 
-    tb_present();
+    notcurses_render(nc);
 }
 
 bool show_confirmation(const char* message) {
-    tb_clear();
-    tb_print(MENU_START_X, MENU_START_Y, TB_WHITE, TB_DEFAULT, "Warning: All unsaved progress will be lost!");
-    tb_print(MENU_START_X, MENU_START_Y + 2, TB_WHITE, TB_DEFAULT, message);
-    tb_print(MENU_START_X, MENU_START_Y + 4, TB_WHITE, TB_DEFAULT, "(Y/N)");
-    tb_present();
+    ncplane_erase(stdplane);
+    ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+    ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Warning: All unsaved progress will be lost!");
+    ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", message);
+    ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "(Y/N)");
+    notcurses_render(nc);
 
     while (1) {
-        struct tb_event event;
-        tb_poll_event(&event);
-
-        if (event.ch == 'y' || event.ch == 'Y') {
+        ncinput input;
+        memset(&input, 0, sizeof(input));
+        notcurses_get_blocking(nc, &input);
+        if (input.id == 'y' || input.id == 'Y') {
             return true;
-        } else if (event.ch == 'n' || event.ch == 'N') {
+        } else if (input.id == 'n' || input.id == 'N') {
             return false;
         }
     }

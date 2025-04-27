@@ -50,7 +50,7 @@ int run_game() {
 
     // Initialize database connection
     db_connection_t db_connection;
-    if (!db_open(&db_connection, "../resources/database/game/dungeoncrawl_game.db")) {
+    if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
         log_msg(ERROR, "Game", "Failed to open database");
         return -1;
     }
@@ -105,8 +105,6 @@ void game_loop() {
         nc = NULL;
         stdplane = NULL;
     }
-
-    return exit_code;
 }
 
 void main_menu_state() {
