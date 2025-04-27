@@ -93,9 +93,9 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
         vec.dy++;
     }
 
-        if (tail_msg != NULL) {
-    ncplane_set_styles(stdplane, NCSTYLE_NONE);
-    ncplane_printf_yx(stdplane, vec.dy + 2, 1, "%s", tail_msg);
+    if (tail_msg != NULL) {
+        ncplane_set_styles(stdplane, NCSTYLE_NONE);
+        ncplane_printf_yx(stdplane, vec.dy + 2, 1, "%s", tail_msg);
     }
     notcurses_render(nc);
 }

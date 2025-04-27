@@ -60,7 +60,7 @@ menu_result_t show_language_menu() {
                 break;
             }
             case 'c':
-                if (!(event.modifiers&NCKEY_MOD_CTRL)) {
+                if (!(event.modifiers & NCKEY_MOD_CTRL)) {
                     break;
                 }
                 res = MENU_EXIT;

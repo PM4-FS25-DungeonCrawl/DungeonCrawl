@@ -22,7 +22,6 @@ struct notcurses* nc = NULL;
 struct ncplane* stdplane = NULL;
 
 
-
 db_connection_t db_connection;
 bool game_in_progress;
 game_state_t current_state;
@@ -31,7 +30,7 @@ int exit_code;
 void game_loop();
 void combat_mode_state();
 
-    void run_game() {
+void run_game() {
     // TODO: remove after notcurses switch
     setlocale(LC_ALL, "");
 
@@ -92,11 +91,11 @@ void main_menu_state() {
         case MENU_START_GAME:
             log_msg(INFO, "Game", "Starting new game");
             game_in_progress = true;// Mark that a game is now in progress
-        ncplane_erase(stdplane);
+            ncplane_erase(stdplane);
             current_state = GENERATE_MAP;
             break;
         case MENU_CONTINUE:
-        ncplane_erase(stdplane);
+            ncplane_erase(stdplane);
             current_state = MAP_MODE;
             break;
         case MENU_SAVE_GAME:
@@ -112,7 +111,7 @@ void main_menu_state() {
             save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
-        ncplane_erase(stdplane);
+            ncplane_erase(stdplane);
             current_state = MAP_MODE;
             break;
         case MENU_LOAD_GAME:
@@ -137,11 +136,11 @@ void main_menu_state() {
                 game_in_progress = true;
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
-        ncplane_erase(stdplane);
+                ncplane_erase(stdplane);
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-        ncplane_erase(stdplane);
+                ncplane_erase(stdplane);
                 current_state = GENERATE_MAP;
             }
             break;
@@ -162,7 +161,7 @@ void map_mode_state() {
             current_state = EXIT;
             break;
         case NEXT_FLOOR:
-        ncplane_erase(stdplane);               // Clear screen before generating new floo
+            ncplane_erase(stdplane);    // Clear screen before generating new floo
             reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
@@ -171,7 +170,7 @@ void map_mode_state() {
             current_state = COMBAT_MODE;
             break;
         case SHOW_MENU:
-        ncplane_erase(stdplane);
+            ncplane_erase(stdplane);
             current_state = MAIN_MENU;
             break;
         default:
@@ -185,7 +184,7 @@ void combat_mode_state() {
             log_msg(FINE, "Game", "Player won the combat");
             // TODO: add loot to player
             // TODO: delete goblin from map
-        ncplane_erase(stdplane);
+            ncplane_erase(stdplane);
             current_state = MAP_MODE;
             break;
         case PLAYER_LOST:

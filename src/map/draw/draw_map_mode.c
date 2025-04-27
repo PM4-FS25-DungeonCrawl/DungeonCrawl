@@ -36,7 +36,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, , "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     ncplane_set_channels(stdplane, RED_ON_BLACK);
-    ncplane_printf_yx(stdplane,anchor.dy,anchor.dx + width / 2 -7, "Dungeon Crawl");
+    ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -44,7 +44,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
             uint64_t channels = 0;
             const char* ch = " ";
 
-            if (x  == player_pos.dx && y  == player_pos.dy) {
+            if (x == player_pos.dx && y == player_pos.dy) {
                 // Player character
                 channels = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);// White on black
                 ncchannels_set_fg_rgb8(&channels, 255, 0, 0);             // Red foreground

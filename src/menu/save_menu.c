@@ -1,14 +1,13 @@
 #include "save_menu.h"
 
 #include "../common.h"
+#include "../database/database.h"
+#include "../database/gamestate/gamestate_database.h"
+#include "../local/local.h"
 #include "../logging/logger.h"
 #include "notcurses/nckeys.h"
 #include "src/database/gamestate/gamestate_database.h"
 #include "src/menu/menu.h"
-#include "../common.h"
-#include "../database/database.h"
-#include "../database/gamestate/gamestate_database.h"
-#include "../local/local.h"
 
 #include <notcurses/notcurses.h>
 #include <stdio.h>
@@ -180,7 +179,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         memset(&input, 0, sizeof(input));
         notcurses_get_blocking(nc, &input);
 
-        if(!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue;}
+        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
         switch (input.id) {
             case NCKEY_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;

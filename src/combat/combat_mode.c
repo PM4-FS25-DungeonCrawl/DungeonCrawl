@@ -3,13 +3,12 @@
 #include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
-#include "../game.h"
 #include "../common.h"
+#include "../game.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
-#include "../local/local_strings.h"
-#include "draw/draw_combat_mode.h"
 #include "ability.h"
+#include "draw/draw_combat_mode.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -143,7 +142,7 @@ combat_menu(const character_t* player, const character_t* monster) {
         notcurses_get_blocking(nc, &event);
 
         // skip if key event is release
-        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
+        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
         if (event.id == NCKEY_UP) {
             // Move up
             selected_index = (selected_index - 1 + MAX_COMO_MAIN_MENU_OPTION) % MAX_COMO_MAIN_MENU_OPTION;
@@ -192,7 +191,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         notcurses_get_blocking(nc, &event);
 
         // skip if key event is release
-        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
+        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
 
         if (event.id == NCKEY_UP) {
             // Move up
@@ -242,7 +241,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         memset(&event, 0, sizeof(event));
         notcurses_get_blocking(nc, &event);
 
-        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
+        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
         if (event.id == NCKEY_UP) {
             // Move up
             selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
