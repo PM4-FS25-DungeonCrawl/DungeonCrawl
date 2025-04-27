@@ -132,7 +132,7 @@ void map_mode_state() {
             break;
         case NEXT_FLOOR:
             tb_clear();                // Clear screen before generating new floo
-            reset_player_stats(player);// Heal player before entering new floor
+            reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
         case COMBAT:
