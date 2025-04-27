@@ -7,14 +7,6 @@
 ../src/main.c:45:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    45 |     srand(time(NULL));
       |     ^
-../src/map/map_generator.c:82:6: warning: function 'carve_passages' is within a recursive call chain [misc-no-recursion]
-   82 | void carve_passages(int x, int y) {
-      |      ^
-../src/map/map_generator.c:82:6: note: example recursive call chain, starting from function 'carve_passages'
-../src/map/map_generator.c:105:13: note: Frame #1: function 'carve_passages' calls function 'carve_passages' here:
-  105 |             carve_passages(nx, ny);
-      |             ^
-../src/map/map_generator.c:105:13: note: ... which was the starting point of the recursive call chain; there may be other cycles
 ../src/menu/save_menu.c:80:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    80 |                     save_name[name_length++] = input_event.ch;
       |                                                ^
