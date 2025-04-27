@@ -20,6 +20,10 @@ const char* potion_type_to_string(potion_type_t type) {
     switch (type) {
         case HEALING:
             return "Healing";
+        case MANA:
+            return "Mana";
+        case STAMINA:
+            return "Stamina";
         default:
             return "Unknown";
     }
