@@ -21,6 +21,8 @@
 #define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
 #define ITEM_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
 #define GEAR_MENU_TITLE_KEY "COMBAT.GEAR.MENU.HEAD"
+#define GEAR_MENU_OPTION1_KEY "COMBAT.GEAR.MENU.OPTION1"
+#define GEAR_MENU_OPTION2_KEY "COMBAT.GEAR.MENU.OPTION2"
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -28,6 +30,7 @@ void invoke_potion_effect(character_t* character, potion_t* potion);
 
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
+void collect_gear_menu_options(void);
 void collect_gear_inventory_options(gear_t* gear_inventory[], const int count);
 void collect_equipment_options(gear_t* equipment[]);
 
@@ -156,6 +159,8 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_menu_options(player->potion_inventory, player->potion_count);
+    collect_gear_inventory_options(player->gear_inventory, player->gear_count);
+    collect_equipment_options(player->equipment);
 
     while (combat_active) {
         switch (combat_state) {
@@ -169,7 +174,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 combat_state = potion_menu(player, monster);
                 break;
             case GEAR_MENU:
-                combat_state = gear_menu(player);
+                combat_state = gear_menu(player, monster);
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
@@ -327,12 +332,9 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     return new_state;
 }
 
-internal_combat_state_t gear_menu(character_t* player) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+internal_combat_state_t gear_menu(character_t* player, character_t* monster) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
-
-    snprintf(gear_menu_options[0], MAX_STRING_LENGTH, "View Gear Inventory");
-    snprintf(gear_menu_options[1], MAX_STRING_LENGTH, "View Equipped Gear");
 
     internal_combat_state_t new_state = GEAR_MENU;
     bool submenu_selected = false;
@@ -350,9 +352,9 @@ internal_combat_state_t gear_menu(character_t* player) {
                 selected_index = (selected_index + 1) % MAX_GEAR_MENU_OPTIONS;
             } else if (event.key == TB_KEY_ENTER) {
                 if (selected_index == 0) {
-                    new_state = gear_inventory_menu(player);
+                    new_state = gear_inventory_menu(player, monster);
                 } else if (selected_index == 1) {
-                    new_state = equipment_menu(player);
+                    new_state = equipment_menu(player, monster);
                 }
                 submenu_selected = true;
             } else if (event.key == TB_KEY_ESC) {
@@ -364,11 +366,16 @@ internal_combat_state_t gear_menu(character_t* player) {
     return new_state;
 }
 
-internal_combat_state_t gear_inventory_menu(character_t* player) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+internal_combat_state_t gear_inventory_menu(character_t* player, character_t* monster) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
-    collect_gear_inventory_options(player->gear_inventory, player->gear_count);
+    if (player->gear_count == 0) {
+        char message[MAX_STRING_LENGTH];
+        snprintf(message, sizeof(message), "You search your bag... but there is no gear available.");
+        draw_combat_log(anchor, message);
+        return GEAR_MENU;
+    }
 
     internal_combat_state_t new_state = GEAR_MENU;
     bool item_selected_or_esc = false;
@@ -396,11 +403,9 @@ internal_combat_state_t gear_inventory_menu(character_t* player) {
     return new_state;
 }
 
-internal_combat_state_t equipment_menu(character_t* player) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, NULL, ascii_goblin, GOBLIN_HEIGHT, false);
+internal_combat_state_t equipment_menu(character_t* player, character_t* monster) {
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
-
-    collect_equipment_options(player->equipment);
 
     internal_combat_state_t new_state = GEAR_MENU;
     bool item_selected_or_esc = false;
@@ -577,7 +582,10 @@ void collect_gear_inventory_options(gear_t* gear_inventory[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
-        snprintf(gear_inventory_options[i], MAX_STRING_LENGTH, "%s (Slot: %d)", gear_inventory[i]->name, gear_inventory[i]->slot);
+        snprintf(gear_inventory_options[i], MAX_STRING_LENGTH,
+                "%s (%s)",
+                 gear_inventory[i]->name,
+                 gear_slot_to_string(gear_inventory[i]->slot));
     }
 }
 
@@ -588,9 +596,14 @@ void collect_equipment_options(gear_t* equipment[]) {
 
     for (int i = 0; i < MAX_SLOT; i++) {
         if (equipment[i] != NULL) {
-            snprintf(equipment_options[i], MAX_STRING_LENGTH, "%s (Slot: %d)", equipment[i]->name, i);
+            snprintf(equipment_options[i], MAX_STRING_LENGTH,
+                "%s (%s)",
+                equipment[i]->name,
+                gear_slot_to_string((gear_slot_t)i));
         } else {
-            snprintf(equipment_options[i], MAX_STRING_LENGTH, "Empty (Slot: %d)", i);
+            snprintf(equipment_options[i], MAX_STRING_LENGTH,
+                "Empty (%s)",
+                gear_slot_to_string((gear_slot_t)i));
         }
     }
 }
@@ -600,6 +613,8 @@ void update_local(void) {
     snprintf(combat_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION1_KEY));
     snprintf(combat_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION2_KEY));
     snprintf(combat_menu_options[2], MAX_STRING_LENGTH, "%s", get_local_string(MAIN_MENU_OPTION3_KEY));
+    snprintf(gear_menu_options[0], MAX_STRING_LENGTH, "%s", get_local_string(GEAR_MENU_OPTION1_KEY));
+    snprintf(gear_menu_options[1], MAX_STRING_LENGTH, "%s", get_local_string(GEAR_MENU_OPTION2_KEY));
 }
 
 void shutdown_combat_mode(void) {
