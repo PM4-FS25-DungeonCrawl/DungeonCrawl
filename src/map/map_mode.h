@@ -30,5 +30,5 @@ map_mode_result_t map_mode_update(void);
 void init_map_mode(void);
 
 // has to be exposed for testing
-map_mode_result_t handle_input(const struct tb_event *event);
+map_mode_result_t handle_input(const struct tb_event* event);
 #endif//MAP_MODE_H

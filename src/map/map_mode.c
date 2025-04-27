@@ -22,7 +22,7 @@ vector2d_t get_player_pos() {
 }
 
 
-map_mode_result_t handle_input(const struct tb_event *event) {
+map_mode_result_t handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
@@ -88,8 +88,8 @@ map_mode_result_t map_mode_update(void) {
     }
     tb_clear();
 
-    draw_light_on_player((map_tile_t *) map, (map_tile_t *) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
-    draw_map_mode((const map_tile_t *) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
+    draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
+    draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
 
     tb_present();
 

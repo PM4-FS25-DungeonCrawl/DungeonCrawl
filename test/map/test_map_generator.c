@@ -1,8 +1,8 @@
+#include "../src/map/map.h"
+#include "../src/map/map_generator.h"
+
 #include <assert.h>
 #include <stdio.h>
-
-#include "../src/map/map_generator.h"
-#include "../src/map/map.h"
 
 int visited_test[WIDTH][HEIGHT];
 
