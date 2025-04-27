@@ -26,6 +26,7 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     //copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
+
     // Clear the screen before drawing
     ncplane_erase(stdplane);
 

@@ -41,23 +41,23 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
         log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given anchor is negative");
         return;
     }
-    if (player_pos.dx < anchor.dx || player_pos.dy < anchor.dy || player_pos.dx >= anchor.dx + width || player_pos.dy >= anchor.dy + height) {
+    if (player_pos.dx < 0|| player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height) {
         log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given player position out of bounds");
         return;
     }
 
-    for (int y = anchor.dx; y < height + anchor.dx; y++) {
-        for (int x = anchor.dy; x < width + anchor.dy; x++) {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
             // Setup channels (colors)
             uint64_t channels = 0;
             const char* ch = " ";
 
-            if (x == player_pos.dx && y == player_pos.dy) {
+            if (x  == player_pos.dx && y  == player_pos.dy) {
                 // Player character
                 channels = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);// White on black
                 ncchannels_set_fg_rgb8(&channels, 255, 0, 0);             // Red foreground
                 ncplane_set_channels(stdplane, channels);
-                ncplane_putchar_yx(stdplane, y, x, '@');
+                ncplane_putchar_yx(stdplane, y + anchor.dy, x + anchor.dx, '@');
                 continue;
             }
 
@@ -95,11 +95,10 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
-                    return;
             }
 
             ncplane_set_channels(stdplane, channels);
-            ncplane_putstr_yx(stdplane, y, x, ch);
+            ncplane_putstr_yx(stdplane, y + anchor.dy, x + anchor.dx, ch);
         }
     }
 

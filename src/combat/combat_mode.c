@@ -150,7 +150,8 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     return combat_result;
 }
 
-internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
+internal_combat_state_t
+combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
@@ -164,17 +165,12 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 
         // check for input
         ncinput event;
-        memset(&event, 0, sizeof(event));
-        uint32_t ret = notcurses_get_blocking(nc, &event);
 
-        //skip if no valid input
-        if (ret > 0) {
-            continue;
-        }
+        memset(&event, 0, sizeof(event));
+        notcurses_get_blocking(nc, &event);
+
         // skip if key event is release
-        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-            continue;
-        }
+        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
         if (event.id == NCKEY_UP) {
             // Move up
             selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
@@ -215,17 +211,11 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
         // check for input
         ncinput event;
         memset(&event, 0, sizeof(event));
-        uint32_t ret = notcurses_get_blocking(nc, &event);
+        notcurses_get_blocking(nc, &event);
 
-
-        //skip if no valid input
-        if (ret > 0) {
-            continue;
-        }
         // skip if key event is release
-        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-            continue;
-        }
+        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
+
         if (event.id == NCKEY_UP) {
             // Move up
             selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
@@ -269,17 +259,9 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         // check for input
         ncinput event;
         memset(&event, 0, sizeof(event));
-        uint32_t ret = notcurses_get_blocking(nc, &event);
+        notcurses_get_blocking(nc, &event);
 
-
-        //skip if no valid input
-        if (ret > 0) {
-            continue;
-        }
-        // skip if key event is release
-        if (event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS) {
-            continue;
-        }
+        if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
         if (event.id == NCKEY_UP) {
             // Move up
             selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;

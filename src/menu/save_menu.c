@@ -48,6 +48,7 @@ menu_result_t show_save_game_menu(void) {
         memset(&input, 0, sizeof(input));
         notcurses_get_blocking(nc, &input);
 
+        if(!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue;}
 
         switch (input.id) {
             case NCKEY_ENTER:

@@ -21,7 +21,7 @@ void draw_menu(const char** menu_options, int menu_count, int selected_index) {
     int y = MENU_START_Y + 3;
     for (int i = 0; i < menu_count; i++) {
         if (i == selected_index) {
-            ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+            ncplane_set_channels(stdplane, BLACK_ON_WHITE);
             ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", menu_options[i]);
         } else {
             ncplane_set_channels(stdplane, WHITE_ON_BLACK);

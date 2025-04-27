@@ -7,6 +7,7 @@
 
 #include <notcurses/notcurses.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS
@@ -17,6 +18,7 @@
 vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
 int player_has_key = 0;
+bool first_function_call = true;
 
 
 void set_player_start_pos(const int player_x, const int player_y) {
@@ -95,15 +97,18 @@ map_mode_result_t map_mode_update(void) {
     map_mode_result_t next_state = CONTINUE;
     ncinput ev;
     memset(&ev, 0, sizeof(ev));
+    if (!first_function_call) {
 
-    uint32_t ret = notcurses_get_blocking(nc, &ev);
-
-    if (ret > 0) {
+        const uint32_t ret = notcurses_get_blocking(nc, &ev);
+          if (ret > 0) {
         // Only process the event if it's a key press (not release or repeat)
         if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
             next_state = handle_input(&ev);
         }
     }
+    }
+    first_function_call = false;
+
     ncplane_erase(stdplane);
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
