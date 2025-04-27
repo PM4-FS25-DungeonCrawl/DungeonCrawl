@@ -94,7 +94,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
 
-                    tb_clear();
+                    ncplane_erase(stdplane);
                     char message[MAX_STRING_LENGTH];
                     snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
                     draw_combat_log(anchor, message);

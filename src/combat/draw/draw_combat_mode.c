@@ -2,6 +2,7 @@
 
 #include "../../character/character.h"
 #include "../../game.h"
+#include "src/common.h"
 
 #include <notcurses/notcurses.h>
 
@@ -142,12 +143,14 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
 }
 
 void draw_game_over() {
-    tb_clear();
-    tb_print(1, 1, TB_RED, TB_DEFAULT, "Game Over");
-    tb_print(1, 2, TB_WHITE, TB_DEFAULT, "Press any key to exit...");
-    tb_present();
+    ncplane_erase(stdplane);
+    ncplane_set_channels(stdplane, RED_ON_BLACK);
+    ncplane_printf_yx(stdplane, 1, 1, "Game over");
+    ncplane_set_channels(stdplane,WHITE_ON_BLACK);
+    ncplane_printf_yx(stdplane, 2, 1, "Press any key to exit...");
+    notcurses_render(nc);
 
     // Waiting for input
-    struct tb_event event;
-    tb_poll_event(&event);
+    ncinput input;
+    notcurses_get_blocking(nc, &input);
 }
