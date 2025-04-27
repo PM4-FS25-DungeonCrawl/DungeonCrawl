@@ -45,8 +45,6 @@ ability_table_t* init_ability_table(memory_pool_t* memory_pool) {
     init_ability(&table->abilities[MANA_SHIELD], "Mana Shield", 2, 0, 0, D6, MAGICAL);
 
 
-
-
     return table;
 }
 
