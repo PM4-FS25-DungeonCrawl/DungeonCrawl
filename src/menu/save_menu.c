@@ -48,7 +48,7 @@ menu_result_t show_save_game_menu(void) {
         memset(&input, 0, sizeof(input));
         notcurses_get_blocking(nc, &input);
 
-        if(!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue;}
+        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
 
         switch (input.id) {
             case NCKEY_ENTER:
@@ -106,7 +106,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     // Create a database connection for the menu to use
     db_connection_t menu_db_connection;
     // TODO: we need to discuss (this is probably reason why the database opens 3 times)
-    if (db_open(&menu_db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
+    if (db_open(&menu_db_connection, "../resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
         log_msg(ERROR, "Menu", "Failed to open database for save file listing");
         return MENU_CONTINUE;
     }
@@ -147,13 +147,16 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             snprintf(save_info, sizeof(save_info), "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
 
             if (i == selected_save_index) {
+                ncplane_set_channels(stdplane, BLACK_ON_WHITE);
                 ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             } else {
+                ncplane_set_channels(stdplane, WHITE_ON_BLACK);
                 ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             }
             y += MENU_ITEM_SPACING;
         }
 
+        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
         ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
         notcurses_render(nc);
 
@@ -162,6 +165,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         memset(&input, 0, sizeof(input));
         notcurses_get_blocking(nc, &input);
 
+        if(!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue;}
         switch (input.id) {
             case NCKEY_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
