@@ -24,7 +24,7 @@ typedef enum {
     SINISTER_STRIKE,
     SHIELDWALL,
     CRUSHING_BLOW,
-    ARCANE_MISSLE,
+    ARCANE_MISSILE,
     RIPOSTE,
     SWEEPING_STRIKE,
     EXECUTE,
@@ -34,6 +34,9 @@ typedef enum {
     BERSERKER_RAGE,
     STEADY_AIM,
     MANA_SHIELD,
+    CHOP,
+    AXE_SWING,
+    SHIELD_WALL,
     MAX_ABILITIES
 } ability_names_t;
 
