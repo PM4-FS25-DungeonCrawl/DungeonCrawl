@@ -1,5 +1,6 @@
 #include "draw_stats.h"
 #include "../../include/termbox2.h"
+#include "../../character/level.h"
 
 void render_stats_window(character_t* player) {
     if (player == NULL) {
@@ -13,13 +14,18 @@ void render_stats_window(character_t* player) {
     // Display player stats
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "Player Stats:");
     char stats_info[MAX_STRING_LENGTH];
-    snprintf(stats_info, sizeof(stats_info), "Health: %-4d | Mana: %-4d | Stamina: %-4d",
-             player->current_resources.health, player->current_resources.mana, player->current_resources.stamina);
+    snprintf(stats_info, sizeof(stats_info), "Health: %4d / %-4d| Mana: %4d / %-4d | Stamina: %4d / %-4d",
+             player->current_resources.health, player->max_resources.health, player->current_resources.mana, player->max_resources.mana, player->current_resources.stamina, player->max_resources.stamina);
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "Strength: %-4d | Intelligence: %-4d | Dexterity: %-4d | Constitution: %-4d",
              player->base_stats.strength, player->base_stats.intelligence, player->base_stats.dexterity, player->base_stats.constitution);
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
+
+    snprintf(stats_info, sizeof(stats_info), "Current level: %-4d | XP: %4d / %-4d",
+         player->level, player->xp, calculate_xp_for_next_level(player->level));
+    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
+
 
     // Display equipped armor
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "Equipped Armor:");

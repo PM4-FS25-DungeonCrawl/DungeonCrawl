@@ -43,6 +43,7 @@ void stats_mode(character_t* player) {
                         default: ;
                     }
                     player->skill_points--;
+                    update_character_resources(&player->max_resources, &player->base_stats);
                 }else {
                     tb_print(20, 17, TB_RED, TB_DEFAULT, "Not enough skill points!");
                     tb_present();
