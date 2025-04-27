@@ -7,9 +7,33 @@
 
 //index of the different abilities in the table
 typedef enum {
-    FIREBALL,
     SWORD_SLASH,
     BITE,
+    QUICK_SLASH,
+    HEAD_CHOP,
+    QUICK_SHOT,
+    FIREBLAST,
+    BACKSTAB,
+    DEFLECT,
+    MACE_STRIKE,
+    ARCANE_BOLT,
+    HEAVY_SWING,
+    PIERCING_STRIKE,
+    POWER_SHOT,
+    FIREBALL,
+    SINISTER_STRIKE,
+    SHIELDWALL,
+    CRUSHING_BLOW,
+    ARCANE_MISSLE,
+    RIPOSTE,
+    SWEEPING_STRIKE,
+    EXECUTE,
+    STEADY_SHOT,
+    PYROBLAST,
+    GUARDING_STANCE,
+    BERSERKER_RAGE,
+    STEADY_AIM,
+    MANA_SHIELD,
     MAX_ABILITIES
 } ability_names_t;
 
