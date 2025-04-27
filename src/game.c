@@ -74,11 +74,6 @@ void game_loop() {
                 break;
         }
     }
-    free_ability_table(ability_table);
-    free_character(goblin);
-    free_character(player);
-    free_potion(healing_potion);
-    shutdown_logger();
     // Close database connection
     db_close(&db_connection);
     shutdown_combat_mode();

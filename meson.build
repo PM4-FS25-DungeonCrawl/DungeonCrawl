@@ -4,7 +4,8 @@ project('DungeonCrawl', 'c',
         default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
 add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
 # List of external dependencies
-notcurses = dependency('notcurses',static: true)
+notcurses = dependency('notcurses', required: true)
+
 
 
 # List of all source files. Per meson convention all files are listed seperately.
@@ -65,7 +66,7 @@ memory_files = files(
 )
 
 # Include the test directory in the build.
-subdir('test')
+# subdir('test')
 
 # Define the executable
 executable(
@@ -75,5 +76,5 @@ executable(
     logging_files,
     local_files,
     memory_files,
-    dependencies: notcurses
+    dependencies: [notcurses] 
 )

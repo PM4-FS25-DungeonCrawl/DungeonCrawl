@@ -1,6 +1,8 @@
 #include "character.h"
 
 #include "../combat/ability.h"
+#include "../common.h"
+#include "../logging/logger.h"
 
 #include <stdio.h>
 #include <stdlib.h>

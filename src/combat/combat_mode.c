@@ -7,7 +7,8 @@
 #include "../common.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
-#include "./draw/draw_combat_mode.h"
+#include "../local/local_strings.h"
+#include "draw/draw_combat_mode.h"
 #include "ability.h"
 
 #include <notcurses/notcurses.h>
@@ -20,6 +21,7 @@
 #else
     #define KEY_EVENT NCTYPE_UNKNOWN
 #endif /* ifdef __APPLE__ */
+
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
@@ -137,10 +139,10 @@ combat_menu(const character_t* player, const character_t* monster) {
         if(!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue;}
         if (event.id == NCKEY_UP) {
             // Move up
-            selected_index = (selected_index - 1 + MAX_COMBAT_MENU_OPTIONS) % MAX_COMBAT_MENU_OPTIONS;
+            selected_index = (selected_index - 1 + MAX_COMO_MAIN_MENU_OPTION) % MAX_COMO_MAIN_MENU_OPTION;
         } else if (event.id == NCKEY_DOWN) {
             // Move down
-            selected_index = (selected_index + 1) % MAX_COMBAT_MENU_OPTIONS;
+            selected_index = (selected_index + 1) % MAX_COMO_MAIN_MENU_OPTION;
         } else if (event.id == NCKEY_ENTER) {
             // Return the selected state
             if (selected_index == 0) {

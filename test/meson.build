@@ -46,7 +46,7 @@ helper_combat = files(
     '../src/database/database.c',
     '../src/database/local/local_database.c',
 
-    'test_helper.c'
+    'test_helper.c',
 
     '../src/memory/memory_management.c'
 )
@@ -59,7 +59,6 @@ helper_map_generator = files(
     '../src/map/draw/draw_map_mode.c',
     '../src/map/draw/draw_light.c',
 
-    '../include/termbox2.c',
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
 )
@@ -84,6 +83,10 @@ helper_ringbuffer = files(
     '../src/logging/ringbuffer.c'
 )
 
+incdir_common = files(
+    '../src/logging/logger.h',
+)
+
 # executables
 helper_memory = files(
     '../src/logging/logger.c',
@@ -93,7 +96,7 @@ helper_memory = files(
 
 notcurses = dependency('notcurses')
 
-test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
+test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat,incdir_common, c_args: ['-w'],dependencies: notcurses)
 test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
 test_database = executable('test_database', 'database/test_database.c', helper_db, c_args: ['-w'],dependencies: notcurses)
 test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'],dependencies: notcurses)

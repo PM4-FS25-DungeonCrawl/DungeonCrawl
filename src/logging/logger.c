@@ -261,7 +261,7 @@ DWORD WINAPI log_writer_thread(LPVOID param) {
     bool running = true;
     while (running) {
         char log_msg[MAX_MSG_LENGTH];
-        if (read_from_ring_buffer(&log_buffer, log_msg) == 0) {
+        if (read_from_ringbuffer(&log_buffer, log_msg) == 0) {
             // message successfully read from the ringbuffer
             check_log_file();
             if (log_file) {

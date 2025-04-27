@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <notcurses/notcurses.h>
+#include "logging/logger.h"
 
 // defining notcurses channels
 #define RED_ON_BLACK NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0)

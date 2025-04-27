@@ -87,7 +87,7 @@ void shutdown_game() {
 int main(void) {
     const int exit_code = init();
     if (exit_code != COMMON_SUCCESS) {
-        shutdown();
+        shutdown_game();
         return exit_code;
     }
     run_game();
