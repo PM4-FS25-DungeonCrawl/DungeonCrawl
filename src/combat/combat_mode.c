@@ -11,7 +11,6 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <sys/_types/_u_int32_t.h>
 
 
 #ifdef __APPLE__
