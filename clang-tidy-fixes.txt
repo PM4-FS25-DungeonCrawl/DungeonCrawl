@@ -18,5 +18,5 @@
 ../src/menu/save_menu.c:80:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    80 |                     save_name[name_length++] = input_event.ch;
       |                                                ^
-Suppressed 121928 warnings (121861 in non-user code, 67 with check filters).
+Suppressed 146183 warnings (146116 in non-user code, 67 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
