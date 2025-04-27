@@ -2,11 +2,14 @@
 #define MAIN_H
 
 typedef enum {
-    SUCCESS = 0,
-    FAIL_TB_INIT = 1,
-    FAIL_LOCAL_INIT = 2,
-    FAIL_GAME_ENTITY_INIT = 3,
-    FAIL_ERROR = 4,
+    SUCCESS,
+    FAIL_TB_INIT,
+    FAIL_MEM_POOL_INIT,
+    FAIL_LOCAL_INIT,
+    FAIL_MAIN_MENU_INIT,
+    FAIL_GAME_MODE_INIT,
+    FAIL_GAME_ENTITY_INIT,
+    FAIL_ERROR,
 } exit_code_t;
 
 int main(void);

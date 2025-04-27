@@ -6,7 +6,6 @@
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
 #include "logging/logger.h"
-#include "main.h"
 #include "map/map.h"
 #include "map/map_generator.h"
 #include "map/map_mode.h"
@@ -32,7 +31,7 @@ int exit_code;
 void game_loop();
 void combat_mode_state();
 
-int run_game() {
+    void run_game() {
     // TODO: remove after notcurses switch
     setlocale(LC_ALL, "");
 
@@ -42,23 +41,13 @@ int run_game() {
     nc = notcurses_init(&ncopt, stdout);
     if (nc == NULL) {
         log_msg(ERROR, "game", "failed to initialize notcurses");
-        return -1;
+        return;
     }
     stdplane = notcurses_stdplane(nc);
-
-    exit_code = 0;
-
-    // Initialize database connection
-    db_connection_t db_connection;
-    if (!db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db")) {
-        log_msg(ERROR, "Game", "Failed to open database");
-        return -1;
-    }
     game_in_progress = false;// Flag to track if a game has been started
     current_state = MAIN_MENU;
     //start the game loop
     game_loop();
-    return exit_code;
 }
 
 void game_loop() {
@@ -81,10 +70,6 @@ void game_loop() {
                 combat_mode_state();
                 break;
             case EXIT:
-                running = false;
-                break;
-            case EXIT_WITH_ERROR:
-                exit_code = 4;
                 running = false;
                 break;
         }
@@ -164,6 +149,9 @@ void main_menu_state() {
         ncplane_erase(stdplane);
                 current_state = GENERATE_MAP;
             }
+            break;
+        case MENU_CHANGE_LANGUAGE:
+            current_state = MAIN_MENU;
             break;
         case MENU_EXIT:
             current_state = EXIT;

@@ -3,11 +3,15 @@
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/local/local_database.h"
+#include "local_strings.h"
 
 #include <stdlib.h>
 
 //Macros for the Local Database Path
 #define LOCAL_DB_PATH "../resources/database/local/dungeoncrawl_local.db"
+
+#define local_not_init_return(ret) \
+    if (observer_list == NULL) { return ret; }
 
 // forward declaration of the observer node structure
 typedef struct observer_node_t observer_node_t;
@@ -20,30 +24,20 @@ typedef struct observer_node_t {
     observer_node_t* next;
 } observer_node_t;
 
-/**
- * The pointer to the head of the observer list
- */
+// === External Global Variables ===
+string_max_t* local_strings;
+
+// === Internal Global Variables ===
 observer_node_t* observer_list = NULL;
-
-/**
- * The current language setting
- */
 local_language_t current_language = LANGUAGE_EN;
-
-/**
- * The database connection
- */
 db_connection_t local_db_connection;
 
-/**
- * @brief Initialize the local module.
- * @return 0 on success, non-zero on failure
- * @note This function must be called before using any other functions in this module.
- */
 int init_local(void) {
     // Initialize the observer list
     observer_list = malloc(sizeof(observer_node_t));
-    NULL_PTR_HANDLER_RETURN(observer_list, 2, "Local", "Failed to allocate memory for observer_list");
+    NULL_PTR_HANDLER_RETURN(observer_list, 1, "Local", "Failed to allocate memory for observer_list");
+
+    local_strings = malloc(sizeof(string_max_t) * MAX_LOCAL_STRINGS);
 
     observer_list->update_func = NULL;
     observer_list->next = NULL;
@@ -57,6 +51,7 @@ int init_local(void) {
  * @return the localized string
  */
 char* get_local_string(const char* key) {
+    local_not_init_return("local module not initialized");
     // This function should return the localized string for the given key
     return get_localization_string(&local_db_connection, key, &current_language);
 }
@@ -67,7 +62,7 @@ char* get_local_string(const char* key) {
  * @return true if the language was set successfully, false otherwise
  */
 bool set_language(const local_language_t local_lang) {
-    NULL_PTR_HANDLER_RETURN(observer_list, false, "Local", "Observer list is not initialized");
+    local_not_init_return(false);
 
     if (local_lang.lang >= MAX_LANG) {
         log_msg(WARNING, "Local", "Failed to set local language with invalid language: %d", local_lang.lang);
@@ -91,18 +86,13 @@ bool set_language(const local_language_t local_lang) {
  * Add an observer to the list.
  * @param update_func the function to be called when the language is updated
  */
-void add_observer(const update_observer_t update_func) {
-    if (update_func == NULL || observer_list == NULL) {
-        log_msg(ERROR, "Local", "Observer function is NULL or observer list is not initialized");
-        return;
-    }
+void add_local_observer(const update_observer_t update_func) {
+    local_not_init_return();
+    NULL_PTR_HANDLER_RETURN(update_func, , "Local", "Observer function is NULL");
 
     observer_node_t* new_node = malloc(sizeof(observer_node_t));
-    if (new_node == NULL) {
-        // Handle memory allocation failure
-        log_msg(ERROR, "Local", "Failed to allocate memory for new observer node");
-        return;
-    }
+    NULL_PTR_HANDLER_RETURN(new_node, , "Local", "Failed to allocate memory for new observer node");
+
     new_node->update_func = update_func;
     // add at the end of the list
     new_node->next = NULL;
@@ -113,12 +103,11 @@ void add_observer(const update_observer_t update_func) {
     current->next = new_node;
 }
 
-
-/**
- * Shutdown the local module and frees any allocated resources.
- * This function should be called when the module is no longer needed.
- */
 void shutdown_local(void) {
+    local_not_init_return();
+    //free the local strings
+    free(local_strings);
+
     // free the observer list
     observer_node_t* current = observer_list;
     while (current != NULL) {

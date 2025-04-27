@@ -5,16 +5,31 @@
 #include "notcurses/nckeys.h"
 #include "src/database/gamestate/gamestate_database.h"
 #include "src/menu/menu.h"
+#include "../common.h"
+#include "../database/database.h"
+#include "../database/gamestate/gamestate_database.h"
+#include "../local/local.h"
 
 #include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
+
+// === Internal Functions ===
+void update_save_menu_local(void);
 
 // Global variables to store menu state
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
+
+void init_save_menu() {
+    // update local once, so the strings are initialized
+    update_save_menu_local();
+    // add update local function to the observer list
+    add_local_observer(update_save_menu_local);
+}
+
 
 int get_selected_save_file_id(void) {
     return selected_save_file_id;
@@ -190,4 +205,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     db_close(&menu_db_connection);
 
     return result;
+}
+
+void update_save_menu_local(void) {
 }

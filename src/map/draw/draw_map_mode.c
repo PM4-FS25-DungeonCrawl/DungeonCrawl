@@ -2,6 +2,7 @@
 
 #include "../../asciiart/ascii.h"
 #include "../../logging/logger.h"
+#include "src/common.h"
 
 #include <notcurses/notcurses.h>
 
@@ -29,22 +30,13 @@ void draw_player_info(int x, int y, vector2d_t player_pos);
  * If any of the checks fail, an error message is logged and the function returns.
  */
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
-    if (arr == NULL) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given array is NULL");
-        return;
-    }
-    if (height <= 0 || width <= 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
-        return;
-    }
-    if (anchor.dx < 0 || anchor.dy < 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given anchor is negative");
-        return;
-    }
-    if (player_pos.dx < 0|| player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given player position out of bounds");
-        return;
-    }
+    NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
+    CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
+    CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0, , "Draw Map Mode", "In draw_map_mode given anchor is negative");
+    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, , "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
+
+    ncplane_set_channels(stdplane, RED_ON_BLACK);
+    ncplane_printf_yx(stdplane,anchor.dy,anchor.dx + width / 2 -7, "Dungeon Crawl");
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {

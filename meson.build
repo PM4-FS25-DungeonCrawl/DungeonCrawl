@@ -10,6 +10,7 @@ notcurses = dependency('notcurses',static: true)
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
     'src/main.c',
+    'src/common.c',
     'src/game.c',
     'src/game_data.c',
 
@@ -32,11 +33,13 @@ src_files = files(
     'src/menu/main_menu.c',
     'src/menu/save_menu.c',
     'src/menu/menu.c',
+    'src/menu/language_menu.c',
 
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/draw/draw_combat_mode.c'
+
+    'src/combat/draw/draw_combat_mode.c',
 )
 
 # List of all database files

@@ -60,9 +60,10 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
  * @param menu_options the options of the menu
  * @param menu_option_count the number of options in the menu
  * @param selected_index the index of the selected option
+ * @param tail_msg the message to be displayed at the bottom of the menu. If the message is NULL, it will not be displayed.
  * @note this function only presents the drawn menu (without clearing the screen)
  */
-void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char* menu_options[], const int menu_option_count, const int selected_index) {
+void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options, const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Draw Combat Menu", "Menu options are NULL");
         return;
@@ -92,8 +93,10 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, const char
         vec.dy++;
     }
 
+        if (tail_msg != NULL) {
     ncplane_set_styles(stdplane, NCSTYLE_NONE);
-    ncplane_putstr_yx(stdplane, vec.dy + 2, 1, "[ESC] Return to menu");
+    ncplane_printf_yx(stdplane, vec.dy + 2, 1, "%s", tail_msg);
+    }
     notcurses_render(nc);
 }
 
