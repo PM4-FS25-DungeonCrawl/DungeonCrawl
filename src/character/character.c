@@ -59,7 +59,7 @@ void update_character_resources(resources_t* max_resources, stats_t* base_stats)
 
     max_resources->health = (5 * base_stats->constitution);
     max_resources->mana = (1 * base_stats->intelligence);
-    max_resources->stamina = (1 * base_stats->strength);
+    max_resources->stamina = (2 * base_stats->strength);
 }
 
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {
@@ -211,4 +211,15 @@ void set_level(character_t* character, int level) {
 void set_xp_reward(character_t* character, int xp_reward) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_xp_reward character is NULL");
     character->xp_reward = xp_reward;
+}
+
+void reset_player_stats(character_t* player) {
+    if (player == NULL) return;
+
+    // reset current stats to their starting values
+    player->current_resources.health = player->max_resources.health;
+    player->current_resources.mana = player->max_resources.mana;
+    player->current_resources.stamina = player->max_resources.stamina;
+
+    log_msg(INFO, "Character", "Player stats reset to base values.");
 }

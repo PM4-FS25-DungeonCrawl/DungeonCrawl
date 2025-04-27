@@ -69,6 +69,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
     bool combat_active = true;
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
@@ -89,9 +90,15 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 // evaluate the combat result
                 if (player->current_resources.health <= 0) {
                     combat_result = PLAYER_LOST;
+                    draw_game_over();
                     combat_active = false;// exit the combat loop
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
+
+                    tb_clear();
+                    char message[MAX_STRING_LENGTH];
+                    snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
+                    draw_combat_log(anchor, message);
                     combat_active = false;// exit the combat loop
                     player->xp += monster->xp_reward;
                     if (player->xp >= calculate_xp_for_next_level(player->level)) {
@@ -334,6 +341,20 @@ void invoke_potion_effect(character_t* character, potion_t* potion) {
                 character->current_resources.health = character->max_resources.health;
             } else {
                 character->current_resources.health += potion->value;
+            }
+            break;
+        case MANA:
+            if (potion->value > (character->max_resources.mana - character->current_resources.mana)) {
+                character->current_resources.mana = character->max_resources.mana;
+            } else {
+                character->current_resources.mana += potion->value;
+            }
+            break;
+        case STAMINA:
+            if (potion->value > (character->max_resources.stamina - character->current_resources.stamina)) {
+                character->current_resources.stamina = character->max_resources.stamina;
+            } else {
+                character->current_resources.stamina += potion->value;
             }
             break;
         default:

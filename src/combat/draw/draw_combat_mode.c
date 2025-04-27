@@ -140,3 +140,14 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     anchor.dy++;
     return anchor.dy;
 }
+
+void draw_game_over() {
+    tb_clear();
+    tb_print(1, 1, TB_RED, TB_DEFAULT, "Game Over");
+    tb_print(1, 2, TB_WHITE, TB_DEFAULT, "Press any key to exit...");
+    tb_present();
+
+    // Waiting for input
+    struct tb_event event;
+    tb_poll_event(&event);
+}
