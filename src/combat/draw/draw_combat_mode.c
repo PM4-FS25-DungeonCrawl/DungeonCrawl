@@ -82,11 +82,11 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
         char buffer[MAX_STRING_LENGTH];
 
         if (i == selected_index) {
-            snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i]);
+            snprintf(buffer, sizeof(buffer), "> %-253s", (char*) &menu_options[i]);
             // Bold is handled through styling channels in notcurses
             ncplane_set_styles(stdplane, NCSTYLE_BOLD);
         } else {
-            snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i]);
+            snprintf(buffer, sizeof(buffer), "  %-253s", (char*) &menu_options[i]);
             ncplane_set_styles(stdplane, NCSTYLE_NONE);
         }
 
@@ -128,10 +128,8 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 
 // Helper function to draw resource bar
 int draw_resource_bar(vector2d_t anchor, const character_t* c) {
-    const char* str_format = "%-10s | Health %-4d | Mana %-4d | Stamina %-4d";
-
     char c_info[MAX_STRING_LENGTH];
-    snprintf(c_info, sizeof(c_info), str_format, c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
+    snprintf(c_info, sizeof(c_info), "%-10s | Health %-4d | Mana %-4d | Stamina %-4d", c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
 
     // White on black
     uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
