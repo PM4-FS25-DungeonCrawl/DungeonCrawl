@@ -94,12 +94,11 @@ menu_result_t show_main_menu(const bool game_in_progress) {
             case NCKEY_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case NCKEY_ENTER: {
+            case NCKEY_ENTER: 
                 // Get the selected menu option
                 const char* selected_option = menu_options[selected_index];
                 select_menu_option(selected_index, game_in_progress);
                 break;
-            }
             case 'c':
                 // if only c was pressed and not ctrl-c break. seems the cleanest solution to me
                 if (!(input.modifiers & NCKEY_MOD_CTRL)) {
