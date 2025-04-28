@@ -1,7 +1,8 @@
 #ifndef LOCAL_STRINGS_H
 #define LOCAL_STRINGS_H
 
-#define MAX_COMO_MAIN_MENU_OPTION 2
+#define MAX_COMO_MAIN_MENU_OPTION 3
+#define MAX_COMO_GEAR_MENU_OPTION 2
 
 typedef struct {
     int idx;
@@ -37,12 +38,22 @@ enum local_string_index {
     COMO_MAIN_MENU_TITLE,
     COMO_ABILITY_MENU_TITLE,
     COMO_POTION_MENU_TITLE,
+    COMO_GEAR_MENU_TITLE,
+    COMO_INVENTORY_MENU_TITLE,
+    COMO_EQUIPMENT_MENU_TITLE,
     COMO_MAIN_MENU_OPTION1,
     COMO_MAIN_MENU_OPTION2,
+    COMO_MAIN_MENU_OPTION3,
+    COMO_GEAR_MENU_OPTION1,
+    COMO_GEAR_MENU_OPTION2,
     COMO_ABILITY_FORMAT,
     COMO_POTION_FORMAT,
+    COMO_INVENTORY_FORMAT,
+    COMO_EQUIPMENT_FORMAT,
+    COMO_EQUIPMENT_FORMAT_EMPTY,
     COMO_SUBMENU_TAIL_MESSAGE,
     COMO_NO_MORE_POTIONS,
+    COMO_NO_MORE_GEAR,
     COMO_ATTACK_SUCCESS,
     COMO_ATTACK_MISS,
     COMO_ATTACK_FAIL,
@@ -69,12 +80,22 @@ static const local_key_t lame_language_german = {LAME_LANGUAGE_GERMAN, "LANGUAGE
 static const local_key_t como_main_menu_title = {COMO_MAIN_MENU_TITLE, "COMBAT.MAIN.MENU.HEAD"};
 static const local_key_t como_ability_menu_title = {COMO_ABILITY_MENU_TITLE, "COMBAT.ABILITY.MENU.HEAD"};
 static const local_key_t como_potion_menu_title = {COMO_POTION_MENU_TITLE, "COMBAT.POTION.MENU.HEAD"};
+static const local_key_t como_gear_menu_title = {COMO_GEAR_MENU_TITLE, "COMBAT.GEAR.MENU.HEAD"};
+static const local_key_t como_inventory_menu_title = {COMO_INVENTORY_MENU_TITLE, "COMBAT.INVENTORY.MENU.HEAD"};
+static const local_key_t como_equipment_menu_title = {COMO_EQUIPMENT_MENU_TITLE, "COMBAT.EQUIPMENT.MENU.HEAD"};
 static const local_key_t como_main_menu_option1 = {COMO_MAIN_MENU_OPTION1, "COMBAT.MAIN.MENU.OPTION1"};
 static const local_key_t como_main_menu_option2 = {COMO_MAIN_MENU_OPTION2, "COMBAT.MAIN.MENU.OPTION2"};
+static const local_key_t como_main_menu_option3 = {COMO_MAIN_MENU_OPTION3, "COMBAT.MAIN.MENU.OPTION3"};
+static const local_key_t como_gear_menu_option1 = {COMO_GEAR_MENU_OPTION1, "COMBAT.GEAR.MENU.OPTION1"};
+static const local_key_t como_gear_menu_option2 = {COMO_GEAR_MENU_OPTION2, "COMBAT.GEAR.MENU.OPTION2"};
 static const local_key_t como_ability_format = {COMO_ABILITY_FORMAT, "COMBAT.ABILITY.MENU.OPTION_FORMAT"};
 static const local_key_t como_potion_format = {COMO_POTION_FORMAT, "COMBAT.POTION.MENU.OPTION_FORMAT"};
+static const local_key_t como_inventory_format = {COMO_INVENTORY_FORMAT, "COMBAT.INVENTORY.MENU.OPTION_FORMAT"};
+static const local_key_t como_equipment_format = {COMO_EQUIPMENT_FORMAT, "COMBAT.EQUIPMENT.MENU.OPTION_FORMAT"};
+static const local_key_t como_equipment_format_empty = {COMO_EQUIPMENT_FORMAT_EMPTY, "COMBAT.EQUIPMENT.MENU.OPTION_FORMAT_EMPTY"};
 static const local_key_t como_submenu_tail_message = {COMO_SUBMENU_TAIL_MESSAGE, "COMBAT.SUB.MENU.TAIL"};
 static const local_key_t como_no_more_potions = {COMO_NO_MORE_POTIONS, "COMBAT.POTION.INVENTORY.EMPTY"};
+static const local_key_t como_no_more_gear = {COMO_NO_MORE_GEAR, "COMBAT.GEAR.INVENTORY.EMPTY"};
 static const local_key_t como_attack_success = {COMO_ATTACK_SUCCESS, "COMBAT.ATTACK.SUCCESS.FORMAT"};
 static const local_key_t como_attack_miss = {COMO_ATTACK_MISS, "COMBAT.ATTACK.MISS.FORMAT"};
 static const local_key_t como_attack_fail = {COMO_ATTACK_FAIL, "COMBAT.ATTACK.FAIL.FORMAT"};

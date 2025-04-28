@@ -12,22 +12,6 @@
 
 #include <stdbool.h>
 
-/*
-#define MAX_COMBAT_MENU_OPTIONS 3
-#define MAX_GEAR_MENU_OPTIONS 2
-
-//key define for localization
-#define MAIN_MENU_TITLE_KEY "COMBAT.MAIN.MENU.HEAD"
-#define MAIN_MENU_OPTION1_KEY "COMBAT.MAIN.MENU.OPTION1"
-#define MAIN_MENU_OPTION2_KEY "COMBAT.MAIN.MENU.OPTION2"
-#define MAIN_MENU_OPTION3_KEY "COMBAT.MAIN.MENU.OPTION3"
-#define ABILITY_MENU_TITLE_KEY "COMBAT.ABILITY.MENU.HEAD"
-#define ITEM_MENU_TITLE_KEY "COMBAT.ITEM.MENU.HEAD"
-#define GEAR_MENU_TITLE_KEY "COMBAT.GEAR.MENU.HEAD"
-#define GEAR_MENU_OPTION1_KEY "COMBAT.GEAR.MENU.OPTION1"
-#define GEAR_MENU_OPTION2_KEY "COMBAT.GEAR.MENU.OPTION2"
-*/
-
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
 void invoke_potion_effect(character_t* character, potion_t* potion);
@@ -148,7 +132,6 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         draw_combat_menu(anchor,
                          local_strings[como_main_menu_title.idx].characters,
                          &local_strings[como_main_menu_option1.idx],
-                         &local_strings[como_main_menu_option2.idx],
                          MAX_COMO_MAIN_MENU_OPTION,
                          selected_index,
                          NULL);
@@ -287,11 +270,9 @@ internal_combat_state_t gear_menu(character_t* player, character_t* monster) {
     bool submenu_selected = false;
 
     while (!submenu_selected) {
-        //draw_combat_menu(anchor, "Gear Menu:", (const char**)gear_menu_options, MAX_GEAR_MENU_OPTIONS, selected_index);
         draw_combat_menu(anchor,
                  local_strings[como_gear_menu_title.idx].characters,
                  &local_strings[como_gear_menu_option1.idx],
-                 &local_strings[como_gear_menu_option2.idx],
                  MAX_COMO_GEAR_MENU_OPTION,
                  selected_index,
                  NULL);
@@ -325,7 +306,6 @@ internal_combat_state_t gear_inventory_menu(character_t* player, character_t* mo
     int selected_index = 0;
 
     if (player->gear_count == 0) {
-        //snprintf(message, sizeof(message), "You search your bag... but there is no gear available.");
         draw_combat_log(anchor, local_strings[como_no_more_gear.idx].characters);
         return GEAR_MENU;
     }
@@ -334,7 +314,6 @@ internal_combat_state_t gear_inventory_menu(character_t* player, character_t* mo
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
-        //draw_combat_menu(anchor, "Gear Inventory:", (const char**)gear_inventory_options, player->gear_count, selected_index);
         draw_combat_menu(anchor,
                          local_strings[como_inventory_menu_title.idx].characters,
                          gear_inventory_options,
@@ -370,7 +349,6 @@ internal_combat_state_t equipment_menu(character_t* player, character_t* monster
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
-        //draw_combat_menu(anchor, "Equipped Gear:", (const char**)equipment_options, MAX_SLOT, selected_index);
         draw_combat_menu(anchor,
                         local_strings[como_equipment_menu_title.idx].characters,
                         equipment_options,
@@ -539,12 +517,11 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
 
 void collect_gear_inventory_options(gear_t* gear_inventory[], const int count) {
     for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
-        memset(gear_inventory_options[i], '\0', MAX_STRING_LENGTH);
+        memset(gear_inventory_options[i].characters, '\0', MAX_STRING_LENGTH);
     }
 
     for (int i = 0; i < count; i++) {
-        snprintf(gear_inventory_options[i], MAX_STRING_LENGTH,
-                //"%s (%s)",
+        snprintf(gear_inventory_options[i].characters, MAX_STRING_LENGTH,
                 local_strings[como_inventory_format.idx].characters,//TODO: This Method of using formats is not safe!!
                 gear_inventory[i]->name,
                 gear_slot_to_string(gear_inventory[i]->slot));
@@ -553,20 +530,18 @@ void collect_gear_inventory_options(gear_t* gear_inventory[], const int count) {
 
 void collect_equipment_options(gear_t* equipment[]) {
     for (int i = 0; i < MAX_SLOT; i++) {
-        memset(equipment_options[i], '\0', MAX_STRING_LENGTH);
+        memset(equipment_options[i].characters, '\0', MAX_STRING_LENGTH);
     }
 
     for (int i = 0; i < MAX_SLOT; i++) {
         if (equipment[i] != NULL) {
-            snprintf(equipment_options[i], MAX_STRING_LENGTH,
-                //"%s (%s)",
+            snprintf(equipment_options[i].characters, MAX_STRING_LENGTH,
                 local_strings[como_equipment_format.idx].characters,//TODO: This Method of using formats is not safe!!
                 equipment[i]->name,
                 gear_slot_to_string((gear_slot_t)i));
         } else {
-            snprintf(equipment_options[i], MAX_STRING_LENGTH,
-                //"Empty (%s)",
-                local_strings[como_equipment_empty_format.idx].characters,//TODO: This Method of using formats is not safe!!
+            snprintf(equipment_options[i].characters, MAX_STRING_LENGTH,
+                local_strings[como_equipment_format_empty.idx].characters,//TODO: This Method of using formats is not safe!!
                 gear_slot_to_string((gear_slot_t)i));
         }
     }
@@ -599,14 +574,14 @@ void update_combat_local(void) {
     //equipment menu
     snprintf(local_strings[como_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_menu_title.key));
     snprintf(local_strings[como_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format.key));
-    snprintf(local_strings[como_equipment_empty_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_empty_format.key));
+    snprintf(local_strings[como_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format_empty.key));
 
     //tail message
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
 
     //combat messages
     snprintf(local_strings[como_no_more_potions.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_potions.key));
-    snprintf(local_strings[como_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_potions.key));
+    snprintf(local_strings[como_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_gear.key));
     snprintf(local_strings[como_attack_success.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_success.key));
     snprintf(local_strings[como_attack_miss.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_miss.key));
     snprintf(local_strings[como_attack_fail.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_fail.key));
