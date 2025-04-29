@@ -13,6 +13,7 @@ typedef enum {
     QUIT,
     NEXT_FLOOR,
     COMBAT,
+    SHOW_INVENTORY,
     SHOW_MENU
 } map_mode_result_t;
 

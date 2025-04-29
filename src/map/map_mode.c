@@ -4,6 +4,7 @@
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
+#include "src/inventory/inventory_mode.h"
 
 vector2d_t map_anchor = {5, 1};
 vector2d_t player_pos;
@@ -17,11 +18,9 @@ void set_player_start_pos(const int player_x, const int player_y) {
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
-
 vector2d_t get_player_pos() {
     return player_pos;
 }
-
 
 map_mode_result_t handle_input(const struct tb_event* event) {
     int new_x = player_pos.dx;
@@ -31,6 +30,7 @@ map_mode_result_t handle_input(const struct tb_event* event) {
 
     // Check for 'M' key press for menu
     if (event->ch == 'm' || event->ch == 'M' || event->key == TB_KEY_ESC) return SHOW_MENU;
+    if (event->ch == 'i' || event->ch == 'I') return SHOW_INVENTORY;
 
     if (event->key == TB_KEY_ARROW_UP) new_y--;
     if (event->key == TB_KEY_ARROW_DOWN) new_y++;

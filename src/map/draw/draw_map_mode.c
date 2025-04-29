@@ -87,11 +87,12 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  */
 void draw_player_info(const vector2d_t ui_anchor, const vector2d_t player_pos) {
     tb_printf(ui_anchor.dx, ui_anchor.dy, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(ui_anchor.dx, ui_anchor.dy + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
-    tb_printf(ui_anchor.dx, ui_anchor.dy + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    tb_printf(ui_anchor.dx, ui_anchor.dy + 1, TB_WHITE, TB_BLACK, "Press 'I' for Inventory");
+    tb_printf(ui_anchor.dx, ui_anchor.dy + 2, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
+    tb_printf(ui_anchor.dx, ui_anchor.dy + 3, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
     for (int i = 0; i < HELMET_HEIGHT; i++) {
-        tb_printf(ui_anchor.dx, ui_anchor.dy + i + 3, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i]);
+        tb_printf(ui_anchor.dx, ui_anchor.dy + i + 4, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i]);
     }
 }

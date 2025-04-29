@@ -2,6 +2,7 @@
 
 #include "../include/termbox2.h"
 #include "combat/combat_mode.h"
+#include "inventory/inventory_mode.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
@@ -48,6 +49,9 @@ void game_loop() {
             case COMBAT_MODE:
                 reset_goblin();
                 combat_mode_state();
+                break;
+            case INVENTORY_MODE:
+                inventory_mode_state();
                 break;
             case EXIT:
                 running = false;
@@ -138,6 +142,10 @@ void map_mode_state() {
             log_msg(INFO, "Game", "Entering combat mode");
             current_state = COMBAT_MODE;
             break;
+        case SHOW_INVENTORY:
+            log_msg(INFO, "Game", "Entering inventory mode");
+            current_state = INVENTORY_MODE;
+            break;
         case SHOW_MENU:
             tb_clear();// Clear the screen before showing menu
             current_state = MAIN_MENU;
@@ -164,4 +172,9 @@ void combat_mode_state() {
             current_state = EXIT;
             break;
     }
+}
+
+void inventory_mode_state() {
+    start_inventory_mode(player);
+    current_state = MAP_MODE;
 }

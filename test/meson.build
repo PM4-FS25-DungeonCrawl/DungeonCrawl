@@ -35,6 +35,9 @@ helper_combat = files(
     '../src/character/player.c',
     '../src/character/monster.c',
 
+    '../src/inventory/inventory_mode.c',
+    '../src/inventory/draw/draw_inventory_mode.c',
+
     '../src/item/gear.c',
     '../src/item/potion.c',
 

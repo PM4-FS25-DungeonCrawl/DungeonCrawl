@@ -6,6 +6,7 @@
 #include "database/gamestate/gamestate_database.h"
 #include "game.h"
 #include "game_data.h"
+#include "inventory/inventory_mode.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
@@ -66,6 +67,10 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
     }
+    if (init_inventory_mode() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize inventory mode");
+        return FAIL_INVENTORY_MODE_INIT;
+    }
     if (init_game_data() != COMMON_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
@@ -83,6 +88,7 @@ void shutdown() {
     db_close(&db_connection);
 
     shutdown_combat_mode();
+    shutdown_inventory_mode();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
