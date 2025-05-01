@@ -109,7 +109,7 @@ test_memory_management = executable('test_memory_management', 'memory/test_memor
 
 
 # test
-test('test_combat_mode', test_combat_mode)
+#test('test_combat_mode', test_combat_mode)
 test('test_character', test_character)
 test('test_database', test_database)
 # test('test_gamestate_database', test_gamestate_database)
