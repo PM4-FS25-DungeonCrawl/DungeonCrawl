@@ -77,6 +77,7 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     vector2d_t vec = {anchor.dx, anchor.dy};
 
     ncplane_set_channels(stdplane, DEFAULT_COLORS);
+    ncplane_set_styles(stdplane, NCSTYLE_NONE);
     ncplane_putstr_yx(stdplane, vec.dy, 1, menu_name);
     vec.dy++;
 
