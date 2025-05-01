@@ -12,7 +12,7 @@
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS
 #else
-#define KEY_EVENT NCTYPE_UNKNOWN
+    #define KEY_EVENT NCTYPE_UNKNOWN
 #endif /* ifdef __APPLE__ */
 
 vector2d_t map_anchor = {5, 2};

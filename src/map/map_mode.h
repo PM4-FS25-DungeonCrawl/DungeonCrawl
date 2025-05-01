@@ -1,8 +1,8 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
-#include "../common.h"
 #include "../character/character.h"
+#include "../common.h"
 
 #include <notcurses/notcurses.h>
 

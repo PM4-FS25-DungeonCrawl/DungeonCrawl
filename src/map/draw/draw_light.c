@@ -16,10 +16,10 @@ int radius;
  * - the reverse check vector
  */
 const vector2d_t checks_vector[4][2] = {
-    {{1, 1}, {1, 0}}, // for up
-    {{-1, -1}, {-1, 0}}, // for down
-    {{1, -1}, {0, -1}}, // for left
-    {{-1, 1}, {0, 1}}, // for right
+        {{1, 1}, {1, 0}},   // for up
+        {{-1, -1}, {-1, 0}},// for down
+        {{1, -1}, {0, -1}}, // for left
+        {{-1, 1}, {0, 1}},  // for right
 };
 
 
