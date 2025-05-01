@@ -66,7 +66,7 @@ memory_files = files(
 )
 
 # Include the test directory in the build.
-# subdir('test')
+subdir('test')
 
 # Define the executable
 executable(
