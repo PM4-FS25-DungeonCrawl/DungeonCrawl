@@ -29,11 +29,14 @@ void draw_player_info(int x, int y, vector2d_t player_pos);
  * - check if the player position is within the bounds of the map
  * If any of the checks fail, an error message is logged and the function returns.
  */
-void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
+void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
+                   const vector2d_t player_pos) {
     NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
-    CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
+    CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode",
+                     "In draw_map_mode given height or width is zero or negative");
     CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0, , "Draw Map Mode", "In draw_map_mode given anchor is negative");
-    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, , "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
+    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, ,
+                     "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     ncplane_set_channels(stdplane, RED_TEXT_COLORS);
     ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
@@ -42,7 +45,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
         for (int x = 0; x < width; x++) {
             // Setup channels (colors)
             uint64_t channels = 0;
-            const char* ch = " ";
+            const char* ch;
 
             if (x == player_pos.dx && y == player_pos.dy) {
                 // Player character
@@ -76,6 +79,14 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     channels = KEY_COLORS;
                     ch = "$";
                     break;
+                case LIFE_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0xff, 0);// Black on green
+                    ch = "+";
+                    break;
+                case MANA_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0xff);// Black on blue
+                    ch = "+";
+                    break;
                 case GOBLIN:
                     channels = GOBLIN_COLORS;
                     ch = "!";
@@ -86,6 +97,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
+                    ch = " ";
             }
 
             ncplane_set_channels(stdplane, channels);

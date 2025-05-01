@@ -29,6 +29,7 @@ game_state_t current_state;
 int exit_code;
 
 void game_loop();
+
 void combat_mode_state();
 
 void run_game() {
@@ -181,7 +182,7 @@ void main_menu_state() {
 }
 
 void map_mode_state() {
-    switch (map_mode_update()) {
+    switch (map_mode_update(player)) {
         case CONTINUE:
             break;
         case QUIT:
