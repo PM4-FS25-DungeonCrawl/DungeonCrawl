@@ -2,7 +2,7 @@
 
 #include "../../character/character.h"
 #include "../../game.h"
-#include "src/common.h"
+#include "../../src/common.h"
 
 #include <notcurses/notcurses.h>
 
