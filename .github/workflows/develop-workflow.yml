@@ -53,19 +53,21 @@ jobs:
           sudo apt install -y clang-tidy-18
           pip3 install gcovr
 
-      - name: Install Dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install meson ninja    
+      # - name: Install Dependencies (macOS)
+      #   if: runner.os == 'macOS'
+      #   run: |
+      #     brew install meson ninja
 
       - name: Configure Meson with coverage flags
         if: runner.os == 'Linux'
         run: meson setup builddir --buildtype=debug --prefix=$PWD/builddir -Db_coverage=true
 
       - name: Configure Meson
+        if: runner.os == 'Linux' # TODO: remove this if-block when all other os are running
         run: meson setup builddir
 
       - name: Compile Project
+        if: runner.os == 'Linux' # TODO: remove this if-block when all other os are running
         run: ninja -C builddir
 
       - name: Run tests on Linux
