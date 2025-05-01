@@ -153,21 +153,21 @@ void main_menu_state() {
                 game_in_progress = true;
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
-            // clear screen
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                // clear screen
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                    }
                 }
-            }
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-            // clear screen
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                // clear screen
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                    }
                 }
-            }
                 current_state = GENERATE_MAP;
             }
             break;
