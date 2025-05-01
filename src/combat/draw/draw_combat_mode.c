@@ -29,7 +29,12 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
 
 
     // Clear the screen before drawing
-    ncplane_erase(stdplane);
+    // clear screen
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
 
     // Draw title
     ncplane_printf_yx(stdplane, vec.dy, anchor.dx + 20, "Combat Mode");
@@ -41,10 +46,10 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
 
     //print the enemy sprite line for line
     if (red_enemy_sprite) {
-        ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(255, 0, 0, 0, 0, 0));// RED on BLACK
+        ncplane_set_channels(stdplane, RED_TEXT_COLORS);
         ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
     } else {
-        ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0));// WHITE on BLACK
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
     }
 
@@ -71,10 +76,7 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
 
-    // White on black
-    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
-
-    ncplane_set_channels(stdplane, white_on_black);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     ncplane_putstr_yx(stdplane, vec.dy, 1, menu_name);
     vec.dy++;
 
@@ -111,9 +113,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), "%s", combat_log_message);
 
-    // White on black
-    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
-    ncplane_set_channels(stdplane, white_on_black);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
 
     ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, message);
     anchor.dy++;
@@ -132,8 +132,7 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     snprintf(c_info, sizeof(c_info), "%-10s | Health %-4d | Mana %-4d | Stamina %-4d", c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
 
     // White on black
-    uint64_t white_on_black = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);
-    ncplane_set_channels(stdplane, white_on_black);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
 
     ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, c_info);
     anchor.dy++;
@@ -141,10 +140,15 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
 }
 
 void draw_game_over() {
-    ncplane_erase(stdplane);
-    ncplane_set_channels(stdplane, RED_ON_BLACK);
+    // clear screen
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
+    ncplane_set_channels(stdplane, RED_TEXT_COLORS);
     ncplane_printf_yx(stdplane, 1, 1, "Game over");
-    ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     ncplane_printf_yx(stdplane, 2, 1, "Press any key to exit...");
     notcurses_render(nc);
 

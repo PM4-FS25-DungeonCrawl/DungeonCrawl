@@ -94,7 +94,12 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 } else if (monster->current_resources.health <= 0) {
                     combat_result = PLAYER_WON;
 
-                    ncplane_erase(stdplane);
+                    // clear screen
+                    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                        }
+                    }
                     char message[MAX_STRING_LENGTH];
                     snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
                     draw_combat_log(anchor, message);
@@ -168,7 +173,11 @@ combat_menu(const character_t* player, const character_t* monster) {
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     // Clear the screen before drawing a new menu
-    ncplane_erase(stdplane);
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
