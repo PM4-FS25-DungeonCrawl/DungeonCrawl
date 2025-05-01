@@ -40,6 +40,7 @@ void draw_menu(const char** menu_options, int menu_count, int selected_index) {
 
 bool show_confirmation(const char* message) {
     // clear screen
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
         for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
             ncplane_printf_yx(stdplane, (int) j, (int) i, " ");

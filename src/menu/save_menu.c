@@ -52,6 +52,7 @@ menu_result_t show_save_game_menu(void) {
     // Get save name from user
     while (input_active && name_length < 49) {
         // clear screen
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
             for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                 ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -102,6 +103,7 @@ menu_result_t show_save_game_menu(void) {
 
         // Show saving message
         // clear screen
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
             for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                 ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -145,6 +147,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     if (save_infos->count == 0) {
         // No saves available
         // clear screen
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
             for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                 ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -167,6 +170,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     while (selection_active) {
         // clear screen
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
             for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                 ncplane_printf_yx(stdplane, (int) j, (int) i, " ");

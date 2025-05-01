@@ -121,6 +121,7 @@ map_mode_result_t map_mode_update(character_t* player) {
     first_function_call = false;
 
     // clear screen
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
         for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
             ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
