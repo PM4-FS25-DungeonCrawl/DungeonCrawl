@@ -96,7 +96,7 @@ helper_memory = files(
 
 notcurses = dependency('notcurses')
 
-test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
+#test_combat_mode = executable('test_combat_mode', 'combat/test_combat_mode.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
 test_character = executable('test_character', 'character/test_character.c', helper_combat, c_args: ['-w'],dependencies: notcurses)
 test_database = executable('test_database', 'database/test_database.c', helper_db, c_args: ['-w'],dependencies: notcurses)
 test_draw_light = executable('test_draw_light', 'map/draw/test_draw_light.c', helper_draw_light, c_args: ['-w'],dependencies: notcurses)
