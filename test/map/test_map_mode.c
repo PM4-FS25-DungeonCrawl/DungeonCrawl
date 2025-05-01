@@ -1,4 +1,3 @@
-
 #include "../src/map/map.h"
 #include "../src/map/map_mode.h"
 
