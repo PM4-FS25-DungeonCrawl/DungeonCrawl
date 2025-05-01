@@ -3,7 +3,7 @@
 #include "../include/termbox2.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
-#include "database/gamestate/gamestate_database.h"
+#include "database/game/gamestate_database.h"
 #include "game_data.h"
 #include "logging/logger.h"
 #include "map/map.h"
