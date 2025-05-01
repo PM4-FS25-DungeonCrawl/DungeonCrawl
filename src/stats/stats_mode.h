@@ -14,4 +14,4 @@ typedef enum {
 void stats_mode(character_t* player);
 
 
-#endif //STATS_MODE_H
+#endif//STATS_MODE_H

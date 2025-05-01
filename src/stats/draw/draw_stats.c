@@ -1,6 +1,7 @@
 #include "draw_stats.h"
-#include "../../include/termbox2.h"
+
 #include "../../character/level.h"
+#include "../../include/termbox2.h"
 
 void render_stats_window(character_t* player) {
     if (player == NULL) {
@@ -23,7 +24,7 @@ void render_stats_window(character_t* player) {
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "Current level: %-4d | XP: %4d / %-4d",
-         player->level, player->xp, calculate_xp_for_next_level(player->level));
+             player->level, player->xp, calculate_xp_for_next_level(player->level));
     tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
 
 
@@ -32,11 +33,11 @@ void render_stats_window(character_t* player) {
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
             snprintf(stats_info, sizeof(stats_info), "Armor: %s | Defense: Armor %-4d, Magic Resist %-4d",
-                         player->equipment[i]->name, player->equipment[i]->defenses.armor, player->equipment[i]->defenses.magic_resist);
+                     player->equipment[i]->name, player->equipment[i]->defenses.armor, player->equipment[i]->defenses.magic_resist);
             tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, stats_info);
         } else {
             snprintf(stats_info, sizeof(stats_info), "No %s equipped",
-                         player->equipment[i]->name);
+                     player->equipment[i]->name);
             tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "No significant defenses equipped.");
         }
     }
@@ -60,12 +61,12 @@ void draw_stats_menu(const char* title, const string_max_t options[], int option
 
     // Draw menu title
     tb_print(2, y++, TB_WHITE, TB_DEFAULT, title);
-    y++; // Add a space after the title
+    y++;// Add a space after the title
 
     // Draw options
     for (int i = 0; i < option_count; i++) {
         if (i == selected_index) {
-            tb_print(2, y++, TB_BLACK, TB_WHITE, options[i].characters); // Highlight selected option
+            tb_print(2, y++, TB_BLACK, TB_WHITE, options[i].characters);// Highlight selected option
         } else {
             tb_print(2, y++, TB_WHITE, TB_DEFAULT, options[i].characters);
         }

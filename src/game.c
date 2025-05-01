@@ -73,8 +73,8 @@ void game_loop() {
                 combat_mode_state();
                 break;
             case STATS_MODE:
-                stats_mode(player);  // Pass your player object
-                current_state = MAP_MODE;  // assuming you have a state machine
+                stats_mode(player);      // Pass your player object
+                current_state = MAP_MODE;// assuming you have a state machine
                 break;
 
 

@@ -1,6 +1,7 @@
 #include "stats_mode.h"
-#include "./draw/draw_stats.h"
+
 #include "../../include/termbox2.h"
+#include "./draw/draw_stats.h"
 
 void stats_mode(character_t* player) {
     int selected_index = 0;
@@ -12,17 +13,15 @@ void stats_mode(character_t* player) {
 
         render_stats_window(player);
         draw_stats_menu(
-            "Stats Menu",
-            (string_max_t[]) {
-                {"Strength"},
-                {"Intelligence"},
-                {"Dexterity"},
-                {"Constitution"}
-            },
-            4,
-            selected_index,
-            "Use arrow keys to navigate, Enter to allocate, ESC to exit."
-        );
+                "Stats Menu",
+                (string_max_t[]) {
+                        {"Strength"},
+                        {"Intelligence"},
+                        {"Dexterity"},
+                        {"Constitution"}},
+                4,
+                selected_index,
+                "Use arrow keys to navigate, Enter to allocate, ESC to exit.");
 
         // Check for input
         struct tb_event event;
@@ -34,24 +33,31 @@ void stats_mode(character_t* player) {
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 selected_index = (selected_index + 1) % 4;
             } else if (event.key == TB_KEY_ENTER) {
-                if (player->skill_points >0) {
+                if (player->skill_points > 0) {
                     switch (selected_index) {
-                        case 0: raise_skill(&player->base_stats, 0, 1,player->skill_points); break;
-                        case 1: raise_skill(&player->base_stats, 1, 1,player->skill_points); break;
-                        case 2: raise_skill(&player->base_stats, 2, 1,player->skill_points); break;
-                        case 3: raise_skill(&player->base_stats, 3, 1,player->skill_points); break;
-                        default: ;
+                        case 0:
+                            raise_skill(&player->base_stats, 0, 1, player->skill_points);
+                            break;
+                        case 1:
+                            raise_skill(&player->base_stats, 1, 1, player->skill_points);
+                            break;
+                        case 2:
+                            raise_skill(&player->base_stats, 2, 1, player->skill_points);
+                            break;
+                        case 3:
+                            raise_skill(&player->base_stats, 3, 1, player->skill_points);
+                            break;
+                        default:;
                     }
                     player->skill_points--;
                     update_character_resources(&player->max_resources, &player->base_stats);
-                }else {
+                } else {
                     tb_print(20, 17, TB_RED, TB_DEFAULT, "Not enough skill points!");
                     tb_present();
                 }
             } else if (event.key == TB_KEY_ESC) {
                 tb_clear();
                 points_allocated_or_esc = true;
-
             }
         }
     }

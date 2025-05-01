@@ -1,4 +1,5 @@
 #include "stats.h"
+
 #include "../logging/logger.h"
 
 
@@ -31,5 +32,5 @@ void raise_skill(stats_t* stats, int stat, int value, int skillpoint) {
         return;
     }
     log_msg(INFO, "Stats", "Stats set to STR:%d INT:%d DEX:%d CON:%d",
-            stats->strength, stats->intelligence, stats->dexterity, stats->constitution );
+            stats->strength, stats->intelligence, stats->dexterity, stats->constitution);
 }
