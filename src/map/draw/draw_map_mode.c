@@ -38,7 +38,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, ,
                      "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
-    ncplane_set_channels(stdplane, RED_ON_BLACK);
+    ncplane_set_channels(stdplane, RED_TEXT_COLORS);
     ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
 
     for (int y = 0; y < height; y++) {
@@ -49,8 +49,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             if (x == player_pos.dx && y == player_pos.dy) {
                 // Player character
-                channels = NCCHANNELS_INITIALIZER(255, 255, 255, 0, 0, 0);// White on black
-                ncchannels_set_fg_rgb8(&channels, 255, 0, 0);             // Red foreground
+                channels = RED_TEXT_COLORS;
                 ncplane_set_channels(stdplane, channels);
                 ncplane_putchar_yx(stdplane, y + anchor.dy, x + anchor.dx, '@');
                 continue;
@@ -61,23 +60,23 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             switch (arr[access_idx]) {
                 case WALL:
-                    channels = NCCHANNELS_INITIALIZER(0x80, 0x40, 0x20, 0x80, 0x40, 0x20);// Brown on brown
+                    channels = WALL_COLORS;
                     ch = "#";
                     break;
                 case FLOOR:
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0);// White on black
+                    channels = FLOOR_COLORS;
                     ch = " ";
                     break;
                 case START_DOOR:
-                    channels = NCCHANNELS_INITIALIZER(0, 0xff, 0, 0, 0, 0);// Green on black
+                    channels = START_DOOR_COLORS;
                     ch = "#";
                     break;
                 case EXIT_DOOR:
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0, 0, 0, 0);// Yellow on black
+                    channels = EXIT_DOOR_COLORS;
                     ch = "#";
                     break;
                 case KEY:
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0, 0, 0, 0);// Yellow on black
+                    channels = KEY_COLORS;
                     ch = "$";
                     break;
                 case LIFE_FOUNTAIN:
@@ -89,11 +88,11 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     ch = "+";
                     break;
                 case GOBLIN:
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0xff, 0, 0);// White on red
+                    channels = GOBLIN_COLORS;
                     ch = "!";
                     break;
                 case HIDDEN:
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0xff, 0xff, 0xff);// White on white
+                    channels = HIDDEN_COLORS;
                     ch = " ";
                     break;
                 default:
@@ -117,8 +116,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  * @param player_pos the current player position
  */
 void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
-    uint64_t channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0);// White on black
-    ncplane_set_channels(stdplane, channels);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
 
     ncplane_printf_yx(stdplane, y, x, "HP: 100");
     ncplane_printf_yx(stdplane, y + 1, x, "Press 'M' for Menu");

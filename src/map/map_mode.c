@@ -120,7 +120,12 @@ map_mode_result_t map_mode_update(character_t* player) {
     }
     first_function_call = false;
 
-    ncplane_erase(stdplane);
+    // clear screen
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
     notcurses_render(nc);

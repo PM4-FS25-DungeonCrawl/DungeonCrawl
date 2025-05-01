@@ -51,8 +51,13 @@ menu_result_t show_save_game_menu(void) {
 
     // Get save name from user
     while (input_active && name_length < 49) {
-        ncplane_erase(stdplane);
-        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        // clear screen
+        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+            }
+        }
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Enter name for save file:");
         ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_name);
         ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "Press Enter when done");
@@ -96,8 +101,13 @@ menu_result_t show_save_game_menu(void) {
         last_save_name[sizeof(last_save_name) - 1] = '\0';// Ensure null termination
 
         // Show saving message
-        ncplane_erase(stdplane);
-        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        // clear screen
+        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+            }
+        }
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Saving game...");
         notcurses_render(nc);
 
@@ -134,8 +144,13 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     if (save_infos->count == 0) {
         // No saves available
-        ncplane_erase(stdplane);
-        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        // clear screen
+        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+            }
+        }
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "No saved games found.");
         ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "Press any key to return to the menu.");
         notcurses_render(nc);
@@ -151,8 +166,13 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     bool selection_active = true;
 
     while (selection_active) {
-        ncplane_erase(stdplane);
-        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        // clear screen
+        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+            }
+        }
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Select a save file:");
 
         int y = MENU_START_Y + 2;
@@ -161,16 +181,16 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             snprintf(save_info, sizeof(save_info), "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
 
             if (i == selected_save_index) {
-                ncplane_set_channels(stdplane, BLACK_ON_WHITE);
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             } else {
-                ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
             }
             y += MENU_ITEM_SPACING;
         }
 
-        ncplane_set_channels(stdplane, WHITE_ON_BLACK);
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
         ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
         notcurses_render(nc);
 
