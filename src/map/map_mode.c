@@ -12,7 +12,7 @@
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS
 #else
-    #define KEY_EVENT NCTYPE_UNKNOWN
+#define KEY_EVENT NCTYPE_UNKNOWN
 #endif /* ifdef __APPLE__ */
 
 vector2d_t map_anchor = {5, 2};
@@ -34,7 +34,7 @@ vector2d_t get_player_pos() {
 }
 
 
-map_mode_result_t handle_input(const ncinput* event) {
+map_mode_result_t handle_input(const ncinput* event, character_t* player) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
@@ -74,6 +74,18 @@ map_mode_result_t handle_input(const ncinput* event) {
                     return NEXT_FLOOR;
                 }
                 break;
+            case LIFE_FOUNTAIN:
+                player->current_resources.health = player->max_resources.health;
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
+                revealed_map[new_x][new_y] = FLOOR;
+                break;
+            case MANA_FOUNTAIN:
+                player->current_resources.mana = player->max_resources.mana;
+                player_pos.dx = new_x;
+                player_pos.dy = new_y;
+                revealed_map[new_x][new_y] = FLOOR;
+                break;
             case GOBLIN:
                 player_pos.dx = new_x;
                 player_pos.dy = new_y;
@@ -93,7 +105,7 @@ map_mode_result_t handle_input(const ncinput* event) {
  * Updates the player position based on the player's input and redraws the maze.
  * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
  */
-map_mode_result_t map_mode_update(void) {
+map_mode_result_t map_mode_update(character_t* player) {
     map_mode_result_t next_state = CONTINUE;
     ncinput ev;
     memset(&ev, 0, sizeof(ev));
@@ -102,7 +114,7 @@ map_mode_result_t map_mode_update(void) {
         if (ret > 0) {
             // Only process the event if it's a key press (not release or repeat)
             if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
-                next_state = handle_input(&ev);
+                next_state = handle_input(&ev, player);
             }
         }
     }
