@@ -20,7 +20,9 @@ typedef enum {
     START_DOOR = 2,
     EXIT_DOOR = 3,
     KEY = 4,
-    GOBLIN = 5,
+    LIFE_FOUNTAIN = 5,
+    MANA_FOUNTAIN = 6,
+    GOBLIN = 20,
     HIDDEN = 99
 } map_tile_t;
 

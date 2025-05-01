@@ -61,29 +61,10 @@ int process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j) {
     //calculated access index
     const int access_idx = x * map_height + y;
 
-    switch (map_arr[access_idx]) {
-        case WALL:
-            revealed_map_arr[access_idx] = WALL;
-            break_loop = need_loop_break(x, y, dir, j, prev_wall_at);
-            break;
-        case FLOOR:
-            revealed_map_arr[access_idx] = FLOOR;
-            break;
-        case START_DOOR:
-            revealed_map_arr[access_idx] = START_DOOR;
-            break;
-        case EXIT_DOOR:
-            revealed_map_arr[access_idx] = EXIT_DOOR;
-            break;
-        case KEY:
-            revealed_map_arr[access_idx] = KEY;
-            break;
-        case GOBLIN:
-            revealed_map_arr[access_idx] = GOBLIN;
-            break;
-        default:
-            // Does nothing
-            break;
+    revealed_map_arr[access_idx] = map_arr[access_idx];
+
+    if (map_arr[access_idx] == WALL) {
+        break_loop = need_loop_break(x, y, dir, j, prev_wall_at);
     }
     return break_loop;
 }

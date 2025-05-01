@@ -42,7 +42,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
         for (int x = 0; x < width; x++) {
             // Setup channels (colors)
             uint64_t channels = 0;
-            const char* ch = " ";
+            const char* ch;
 
             if (x == player_pos.dx && y == player_pos.dy) {
                 // Player character
@@ -58,7 +58,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             switch (arr[access_idx]) {
                 case WALL:
-                    channels = NCCHANNELS_INITIALIZER(0, 0, 0xff, 0, 0, 0xff);// Blue on blue
+                    channels = NCCHANNELS_INITIALIZER(0x80, 0x40, 0x20, 0x80, 0x40, 0x20);// Brown on brown
                     ch = "#";
                     break;
                 case FLOOR:
@@ -77,6 +77,14 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0, 0, 0, 0);// Yellow on black
                     ch = "$";
                     break;
+                case LIFE_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0xff, 0); // Black on green
+                    ch = "+";
+                    break;
+                case MANA_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0xff); // Black on blue
+                    ch = "+";
+                    break;
                 case GOBLIN:
                     channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0xff, 0, 0);// White on red
                     ch = "!";
@@ -87,6 +95,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
+                    ch = " ";
             }
 
             ncplane_set_channels(stdplane, channels);
