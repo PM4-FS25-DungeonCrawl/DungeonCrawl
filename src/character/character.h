@@ -75,4 +75,6 @@ void set_xp_reward(character_t* character, int xp_reward);
 void set_initial_xp(character_t* character, int xp);
 void set_skill_points(character_t* character, int skill_points);
 
+void reset_player_stats(character_t* player);
+
 #endif//CHARACTER_H

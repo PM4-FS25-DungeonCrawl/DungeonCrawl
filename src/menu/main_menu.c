@@ -1,13 +1,30 @@
 #include "main_menu.h"
 
-#include "../../include/termbox2.h"
 #include "../common.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
+#include "../logging/logger.h"
 #include "language_menu.h"
+#include "notcurses/nckeys.h"
 #include "save_menu.h"
 
+#include <notcurses/notcurses.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <time.h>// For nanosleep
+//
+#ifdef __APPLE__
+    #define KEY_EVENT NCTYPE_PRESS
+#else
+    #define KEY_EVENT NCTYPE_UNKNOWN
+#endif /* ifdef __APPLE__ */
+
+
+// External reference to notcurses context
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 // === Internal Functions ===
 /**
@@ -64,24 +81,33 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     while (menu_active) {
         draw_menu(menu_options, menu_count, selected_index);
 
-        struct tb_event event;
-        tb_peek_event(&event, 10);
+        ncinput input;
+        memset(&input, 0, sizeof(input));
+        notcurses_get_blocking(nc, &input);
 
-        switch (event.key) {
-            case TB_KEY_ARROW_UP:
+        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
+
+        switch (input.id) {
+            case NCKEY_UP:
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
                 break;
-            case TB_KEY_ARROW_DOWN:
+            case NCKEY_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case TB_KEY_ENTER:
+            case NCKEY_ENTER:
+                // Get the selected menu option
+                const char* selected_option = menu_options[selected_index];
                 select_menu_option(selected_index, game_in_progress);
                 break;
-            case TB_KEY_CTRL_C:
+            case 'c':
+                // if only c was pressed and not ctrl-c break. seems the cleanest solution to me
+                if (!(input.modifiers & NCKEY_MOD_CTRL)) {
+                    break;
+                }
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
                 break;
-            case TB_KEY_ESC:
+            case NCKEY_ESC:
                 active_menu_state = MENU_CONTINUE;
                 menu_active = false;
                 break;
