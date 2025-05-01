@@ -2,7 +2,7 @@
 
 #include "../../asciiart/ascii.h"
 #include "../../logging/logger.h"
-#include "src/common.h"
+#include "../../src/common.h"
 
 #include <notcurses/notcurses.h>
 
