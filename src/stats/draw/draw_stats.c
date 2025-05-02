@@ -1,10 +1,9 @@
 #include "draw_stats.h"
 
 #include "../../character/level.h"
-#include "../../logging/logger.h"
-
 #include "../../local/local.h"
 #include "../../local/local_strings.h"
+#include "../../logging/logger.h"
 
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
@@ -37,9 +36,8 @@ void render_stats_window(character_t* player) {
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
 
-
     snprintf(stats_info, sizeof(stats_info), "%s: %4d / %-4d| %s: %4d / %-4d | %s: %4d / %-4d",
-            local_strings[stmo_ability_hp.idx].characters,
+             local_strings[stmo_ability_hp.idx].characters,
              player->current_resources.health, player->max_resources.health,
              local_strings[stmo_ability_mp.idx].characters,
              player->current_resources.mana, player->max_resources.mana,
@@ -48,15 +46,15 @@ void render_stats_window(character_t* player) {
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %-4d | %s: %-4d | %s: %-4d",
-            local_strings[stmo_ability_strength.idx].characters, player->base_stats.strength,
-            local_strings[stmo_ability_intelligence.idx].characters, player->base_stats.intelligence,
-            local_strings[stmo_ability_dexterity.idx].characters, player->base_stats.dexterity,
-            local_strings[stmo_ability_constitution.idx].characters, player->base_stats.constitution);
+             local_strings[stmo_ability_strength.idx].characters, player->base_stats.strength,
+             local_strings[stmo_ability_intelligence.idx].characters, player->base_stats.intelligence,
+             local_strings[stmo_ability_dexterity.idx].characters, player->base_stats.dexterity,
+             local_strings[stmo_ability_constitution.idx].characters, player->base_stats.constitution);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %4d / %-4d",
-    local_strings[stmo_player_level.idx].characters, player->level,
-    local_strings[stmo_player_xp.idx].characters, player->xp, calculate_xp_for_next_level(player->level));
+             local_strings[stmo_player_level.idx].characters, player->level,
+             local_strings[stmo_player_xp.idx].characters, player->xp, calculate_xp_for_next_level(player->level));
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     // Display equipped armor
@@ -66,17 +64,17 @@ void render_stats_window(character_t* player) {
             snprintf(stats_info, sizeof(stats_info), "%s: %s | %s: %-4d, %s: %-4d",
                      local_strings[stmo_option_inventory.idx].characters, player->equipment[i]->name,
                      local_strings[stmo_player_armor.idx].characters, player->equipment[i]->defenses.armor,
-                     local_strings[stmo_player_magic_resist.idx].characters,player->equipment[i]->defenses.magic_resist);
+                     local_strings[stmo_player_magic_resist.idx].characters, player->equipment[i]->defenses.magic_resist);
             ncplane_putstr_yx(stdplane, y++, x, stats_info);
         } else {
-            snprintf(stats_info, sizeof(stats_info), "%s %d", local_strings[stmo_option_no_armor.idx].characters,i);
+            snprintf(stats_info, sizeof(stats_info), "%s %d", local_strings[stmo_option_no_armor.idx].characters, i);
             ncplane_putstr_yx(stdplane, y++, x, stats_info);
         }
     }
 
     y += 2;// Add space
 
-    snprintf(stats_info, sizeof(stats_info), "%s: %d",local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
+    snprintf(stats_info, sizeof(stats_info), "%s: %d", local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 }
 

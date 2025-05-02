@@ -1,11 +1,12 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include "../../src/stats/stats.h"
-#include "../../src/stats/stats_mode.h"
+#include "../../src/character/character.h"
 #include "../../src/local/local.h"
 #include "../../src/memory/memory_management.h"
-#include "../../src/character/character.h"
+#include "../../src/stats/stats.h"
+#include "../../src/stats/stats_mode.h"
+
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 void setup() {
@@ -22,16 +23,15 @@ void setup() {
 character_t* create_test_character() {
     character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
-    set_skill_points(character,5);
+    set_skill_points(character, 5);
     return character;
 }
-
 
 
 void test_skill_point_allocation() {
     character_t* test_character = create_test_character();
     assert(test_character != NULL);
-    assert(test_character ->skill_points == 5);
+    assert(test_character->skill_points == 5);
     printf("Testing skill point allocation...\n");
 
 
