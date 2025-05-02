@@ -1,4 +1,5 @@
 #include "stats_mode.h"
+
 #include "./draw/draw_stats.h"
 
 // Change from definition to declaration
@@ -16,17 +17,15 @@ void stats_mode(character_t* player) {
 
         render_stats_window(player);
         draw_stats_menu(
-            "Stats Menu",
-            (string_max_t[]) {
-                {"Strength"},
-                {"Intelligence"},
-                {"Dexterity"},
-                {"Constitution"}
-            },
-            4,
-            selected_index,
-            "Use arrow keys to navigate, Enter to allocate, ESC to exit."
-        );
+                "Stats Menu",
+                (string_max_t[]) {
+                        {"Strength"},
+                        {"Intelligence"},
+                        {"Dexterity"},
+                        {"Constitution"}},
+                4,
+                selected_index,
+                "Use arrow keys to navigate, Enter to allocate, ESC to exit.");
 
         // Check for input
         ncinput input;
@@ -41,11 +40,19 @@ void stats_mode(character_t* player) {
             } else if (input.id == NCKEY_ENTER) {
                 if (player->skill_points > 0) {
                     switch (selected_index) {
-                        case 0: raise_skill(&player->base_stats, 0, 1, player->skill_points); break;
-                        case 1: raise_skill(&player->base_stats, 1, 1, player->skill_points); break;
-                        case 2: raise_skill(&player->base_stats, 2, 1, player->skill_points); break;
-                        case 3: raise_skill(&player->base_stats, 3, 1, player->skill_points); break;
-                        default: ;
+                        case 0:
+                            raise_skill(&player->base_stats, 0, 1, player->skill_points);
+                            break;
+                        case 1:
+                            raise_skill(&player->base_stats, 1, 1, player->skill_points);
+                            break;
+                        case 2:
+                            raise_skill(&player->base_stats, 2, 1, player->skill_points);
+                            break;
+                        case 3:
+                            raise_skill(&player->base_stats, 3, 1, player->skill_points);
+                            break;
+                        default:;
                     }
                     player->skill_points--;
                     update_character_resources(&player->max_resources, &player->base_stats);

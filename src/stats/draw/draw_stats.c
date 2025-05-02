@@ -1,4 +1,5 @@
 #include "draw_stats.h"
+
 #include "../../character/level.h"
 #include "../../logging/logger.h"
 
@@ -32,7 +33,7 @@ void render_stats_window(character_t* player) {
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "Current level: %-4d | XP: %4d / %-4d",
-         player->level, player->xp, calculate_xp_for_next_level(player->level));
+             player->level, player->xp, calculate_xp_for_next_level(player->level));
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     // Display equipped armor
@@ -49,7 +50,7 @@ void render_stats_window(character_t* player) {
         }
     }
 
-    y += 2; // Add space
+    y += 2;// Add space
 
     snprintf(stats_info, sizeof(stats_info), "Available skillpoints: %d", player->skill_points);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
@@ -63,7 +64,7 @@ void draw_stats_menu(const char* title, const string_max_t options[], int option
     // Draw menu title
     ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
     ncplane_putstr_yx(stdplane, y++, x, title);
-    y++; // Add a space after the title
+    y++;// Add a space after the title
 
     // Draw options
     for (int i = 0; i < option_count; i++) {
