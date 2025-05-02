@@ -95,6 +95,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                     combat_result = PLAYER_WON;
 
                     // clear screen
+                    ncplane_set_channels(stdplane, DEFAULT_COLORS);
                     for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                         for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                             ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -173,6 +174,7 @@ combat_menu(const character_t* player, const character_t* monster) {
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     // Clear the screen before drawing a new menu
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
         for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
             ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -394,6 +396,7 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
 // Helper function to create ability options array
 void collect_ability_menu_options(ability_t* abilities[], const int count) {
     //clear the ability menu options
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
         memset(ability_menu_options[i].characters, '\0', sizeof(char) * MAX_STRING_LENGTH);
     }
@@ -413,6 +416,7 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
 // Helper function to create potion options array
 void collect_potion_menu_options(potion_t* potions[], const int count) {
     // clear the potion menu options
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
         memset(potion_menu_options[i].characters, '\0', MAX_STRING_LENGTH);
     }

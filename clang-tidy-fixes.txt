@@ -7,14 +7,14 @@
 ../src/main.c:39:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    39 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:91:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   91 |                     save_name[name_length++] = input.id;
+../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   92 |                     save_name[name_length++] = input.id;
       |                                                ^
-../src/menu/save_menu.c:183:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  183 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:187:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  187 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:186:15: note: else branch starts here
-  186 |             } else {
+../src/menu/save_menu.c:190:15: note: else branch starts here
+  190 |             } else {
       |               ^
-Suppressed 55185 warnings (55124 in non-user code, 61 with check filters).
+Suppressed 131022 warnings (130961 in non-user code, 61 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

@@ -102,6 +102,7 @@ void main_menu_state() {
             log_msg(INFO, "Game", "Starting new game");
             game_in_progress = true;// Mark that a game is now in progress
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -111,6 +112,7 @@ void main_menu_state() {
             break;
         case MENU_CONTINUE:
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -132,6 +134,7 @@ void main_menu_state() {
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -162,6 +165,7 @@ void main_menu_state() {
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
                 // clear screen
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                     for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                         ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -171,6 +175,7 @@ void main_menu_state() {
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
                 // clear screen
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                     for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                         ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -197,6 +202,7 @@ void map_mode_state() {
             break;
         case NEXT_FLOOR:
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -211,6 +217,7 @@ void map_mode_state() {
             break;
         case SHOW_MENU:
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
@@ -238,6 +245,7 @@ void combat_mode_state() {
             // TODO: add loot to player
             // TODO: delete goblin from map
             // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
                 for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
                     ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
