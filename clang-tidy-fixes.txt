@@ -16,5 +16,8 @@
 ../src/menu/save_menu.c:186:15: note: else branch starts here
   186 |             } else {
       |               ^
-Suppressed 55185 warnings (55124 in non-user code, 61 with check filters).
+../src/stats/stats_mode.c:33:19: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   33 |         int ret = notcurses_get_nblock(nc, &input);
+      |                   ^
+Suppressed 136769 warnings (136705 in non-user code, 64 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
