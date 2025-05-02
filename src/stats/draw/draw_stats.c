@@ -1,4 +1,5 @@
 #include "draw_stats.h"
+
 #include "../../character/level.h"
 #include "../../logging/logger.h"
 
@@ -73,7 +74,7 @@ void render_stats_window(character_t* player) {
         }
     }
 
-    y += 2; // Add space
+    y += 2;// Add space
 
     snprintf(stats_info, sizeof(stats_info), "%s: %d",local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
@@ -87,7 +88,7 @@ void draw_stats_menu(const char* title, const string_max_t options[], int option
     // Draw menu title
     ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
     ncplane_putstr_yx(stdplane, y++, x, title);
-    y++; // Add a space after the title
+    y++;// Add a space after the title
 
     // Draw options
     for (int i = 0; i < option_count; i++) {

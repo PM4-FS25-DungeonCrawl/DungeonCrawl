@@ -1,4 +1,5 @@
 #include "stats_mode.h"
+
 #include "./draw/draw_stats.h"
 #include "../local/local_strings.h"
 #include "../local/local.h"
@@ -28,7 +29,6 @@ void stats_mode(character_t* player) {
             4,
             selected_index,""
         );
-
         // Check for input
         ncinput input;
         // Remove unused variable
