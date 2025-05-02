@@ -12,7 +12,7 @@ string_max_t* stats_menu_options;// holds the ability menu options
 
 void update_stats_local(void);
 
-int init_combat_mode() {
+int init_stats_mode() {
     stats_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     NULL_PTR_HANDLER_RETURN(stats_menu_options, -1, "Stats Mode", "Allocated memory for stats window options in memory pool is NULL");
 
@@ -145,6 +145,6 @@ void update_stats_local(void) {
     snprintf(local_strings[stmo_option_no_armor.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_option_no_armor.key));
 }
 
-void shutdown_combat_mode() {
+void shutdown_stats_mode() {
     memory_pool_free(main_memory_pool, stats_menu_options);
 }

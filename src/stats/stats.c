@@ -1,5 +1,4 @@
 #include "stats.h"
-
 #include "../logging/logger.h"
 
 

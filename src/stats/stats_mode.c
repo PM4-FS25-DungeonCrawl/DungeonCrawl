@@ -1,7 +1,7 @@
 #include "stats_mode.h"
 #include "./draw/draw_stats.h"
-#include "src/local/local_strings.h"
-#include "src/local/local.h"
+#include "../local/local_strings.h"
+#include "../local/local.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
