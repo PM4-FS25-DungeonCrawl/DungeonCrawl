@@ -30,20 +30,25 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
  * @brief This function draws the inventory menu.
  * @param anchor The anchor point of the inventory menu, representing the top left corner.
  * @param menu_name The name of the menu.
+ * @param header_msg The message to be displayed at the top of the menu. If the message is NULL, it will not be displayed.
  * @param menu_options The options of the menu.
  * @param menu_option_count The number of options in the menu.
  * @param selected_index The index of the selected option.
  * @param tail_msg The message to be displayed at the bottom of the menu. If the message is NULL, it will not be displayed.
  * @note This function only presents the drawn menu (without clearing the screen).
  */
-void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options, const int menu_option_count, const int selected_index, const char* tail_msg) {
+void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const char* header_msg, string_max_t* menu_options, const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Draw Inventory Menu", "Menu options are NULL");
         return;
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
-
     tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
+
+    if (header_msg != NULL) {
+        tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, header_msg);
+    }
+
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
             char buffer[MAX_STRING_LENGTH];

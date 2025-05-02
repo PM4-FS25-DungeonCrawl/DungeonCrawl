@@ -92,6 +92,7 @@ internal_inventory_state_t inventory_menu(character_t* player) {
     while (!submenu_selected) {
         draw_inventory_menu(anchor,
                             local_strings[inmo_main_menu_title.idx].characters,
+                            NULL,
                             &local_strings[inmo_main_menu_option1.idx],
                             MAX_INMO_MAIN_MENU_OPTION,
                             selected_index,
@@ -139,6 +140,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
     while (!item_selected_or_esc) {
         draw_inventory_menu(anchor,
                             local_strings[inmo_inventory_menu_title.idx].characters,
+                            local_strings[inmo_inventory_header_message.idx].characters,
                             inventory_gear_options,
                             player->gear_count,
                             selected_index,
@@ -177,6 +179,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player) {
     while (!item_selected_or_esc) {
         draw_inventory_menu(anchor,
                             local_strings[inmo_equipment_menu_title.idx].characters,
+                            local_strings[inmo_equipment_header_message.idx].characters,
                             inventory_equipment_options,
                             MAX_SLOT,
                             selected_index,
@@ -256,6 +259,10 @@ void update_inventory_local(void) {
     snprintf(local_strings[inmo_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_menu_title.key));
     snprintf(local_strings[inmo_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format.key));
     snprintf(local_strings[inmo_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format_empty.key));
+
+    //header messages
+    snprintf(local_strings[inmo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_header_message.key));
+    snprintf(local_strings[inmo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_header_message.key));
 
     //tail message
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));

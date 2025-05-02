@@ -28,8 +28,6 @@ enum local_string_index {
     MAME_CONFIRMATION_CONTINUE,
     MAME_CONFIRMATION_EXIT,
 
-    //save menu index
-
     //language menu index
     LAME_LANGUAGE_ENGLISH,
     LAME_LANGUAGE_GERMAN,
@@ -58,6 +56,8 @@ enum local_string_index {
     INMO_INVENTORY_FORMAT,
     INMO_EQUIPMENT_FORMAT,
     INMO_EQUIPMENT_FORMAT_EMPTY,
+    INMO_INVENTORY_HEADER_MESSAGE,
+    INMO_EQUIPMENT_HEADER_MESSAGE,
     INMO_NO_MORE_GEAR,
 
     MAX_LOCAL_STRINGS
@@ -101,6 +101,8 @@ static const local_key_t inmo_main_menu_option2 = {INMO_MAIN_MENU_OPTION2, "INVE
 static const local_key_t inmo_inventory_format = {INMO_INVENTORY_FORMAT, "INVENTORY.INVENTORY.MENU.OPTION_FORMAT"};
 static const local_key_t inmo_equipment_format = {INMO_EQUIPMENT_FORMAT, "INVENTORY.EQUIPMENT.MENU.OPTION_FORMAT"};
 static const local_key_t inmo_equipment_format_empty = {INMO_EQUIPMENT_FORMAT_EMPTY, "INVENTORY.EQUIPMENT.MENU.OPTION_FORMAT_EMPTY"};
+static const local_key_t inmo_inventory_header_message = {INMO_INVENTORY_HEADER_MESSAGE, "INVENTORY.INVENTORY.HEAD.MESSAGE"};
+static const local_key_t inmo_equipment_header_message = {INMO_EQUIPMENT_HEADER_MESSAGE, "INVENTORY.EQUIPMENT.HEAD.MESSAGE"};
 static const local_key_t inmo_no_more_gear = {INMO_NO_MORE_GEAR, "INVENTORY.INVENTORY.INVENTORY.EMPTY"};
 
 #endif//LOCAL_STRINGS_H
