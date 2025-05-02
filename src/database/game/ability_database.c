@@ -20,8 +20,8 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection) 
     }
 
     // Allocate memory for the ability table
-    ability_init_t* ability_table = malloc(sizeof(ability_init_t) * MAX_ABILITIES);
-    if (ability_table == NULL) {
+    ability_init_t* ability_init_table = malloc(sizeof(ability_init_t) * MAX_ABILITIES);
+    if (ability_init_table == NULL) {
         log_msg(ERROR, "Ability", "Failed to allocate memory for ability table");
         sqlite3_finalize(stmt);
         return NULL;
@@ -30,19 +30,19 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection) 
     // Execute the statement and fetch the results
     int index = 0;
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW && index < MAX_ABILITIES) {
-        ability_table[index].ability_number = sqlite3_column_int(stmt, 0);
-        ability_table[index].name = strdup((const char*) sqlite3_column_text(stmt, 1));
-        ability_table[index].roll_amount = sqlite3_column_int(stmt, 2);
-        ability_table[index].accuracy = sqlite3_column_int(stmt, 3);
-        ability_table[index].resource_cost = sqlite3_column_int(stmt, 4);
-        ability_table[index].dice_size = (dice_size_t) sqlite3_column_int(stmt, 5);
-        ability_table[index].damage_type = (damage_type_t) sqlite3_column_int(stmt, 6);
+        ability_init_table[index].ability_number = sqlite3_column_int(stmt, 0);
+        ability_init_table[index].name = strdup((const char*) sqlite3_column_text(stmt, 1));
+        ability_init_table[index].roll_amount = sqlite3_column_int(stmt, 2);
+        ability_init_table[index].accuracy = sqlite3_column_int(stmt, 3);
+        ability_init_table[index].resource_cost = sqlite3_column_int(stmt, 4);
+        ability_init_table[index].dice_size = (dice_size_t) sqlite3_column_int(stmt, 5);
+        ability_init_table[index].damage_type = (damage_type_t) sqlite3_column_int(stmt, 6);
         index++;
     }
 
     if (rc != SQLITE_DONE) {
         log_msg(ERROR, "Ability", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
-        free(ability_table);
+        free(ability_init_table);
         sqlite3_finalize(stmt);
         return NULL;
     }
@@ -50,17 +50,17 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection) 
     // Finalize the statement
     sqlite3_finalize(stmt);
 
-    return ability_table;
+    return ability_init_table;
 }
 
-void free_ability_table(ability_init_t* ability_table) {
-    if (ability_table == NULL) {
+void free_ability_table_from_db(ability_init_t* ability_init_table) {
+    if (ability_init_table == NULL) {
         return;
     }
 
     for (int i = 0; i < MAX_ABILITIES; i++) {
-        free(ability_table[i].name);
-        ability_table[i].name = NULL;
+        free(ability_init_table[i].name);
+        ability_init_table[i].name = NULL;
     }
-    free(ability_table);
+    free(ability_init_table);
 }

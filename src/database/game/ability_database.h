@@ -31,6 +31,6 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection);
  * Clean up the ability table
  * Call this function to free the memory allocated for the ability table
  */
-void free_ability_table(ability_init_t* ability_table);
+void free_ability_table_from_db(ability_init_t* ability_init_table);
 
 #endif //ABILITY_DATABASE_H
