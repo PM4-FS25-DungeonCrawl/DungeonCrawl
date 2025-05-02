@@ -23,31 +23,34 @@ int init_inventory_mode();
 /**
  * @brief Starts the inventory mode.
  * @param player The player character whose inventory will be managed.
+ * @param monster The defeated monster whose inventory will be looted if not NULL.
  * @note This function handles the main loop for the inventory mode.
  */
-void start_inventory_mode(character_t* player);
-
+void start_inventory_mode(character_t* player, character_t* monster);
 
 /**
  * @brief Displays the main inventory menu.
  * @param player The player character whose inventory is being managed.
+ * @param monster The defeated monster whose inventory will be looted if not NULL.
  * @return internal_inventory_state_t The next state of the inventory mode.
  */
-internal_inventory_state_t inventory_menu(character_t* player);
+internal_inventory_state_t inventory_menu(character_t* player, character_t* monster);
 
 /**
  * @brief Displays the gear inventory menu.
  * @param player The player character whose inventory is being managed.
+ * @param monster The defeated monster whose inventory will be looted if not NULL.
  * @return internal_inventory_state_t The next state of the inventory mode.
  */
-internal_inventory_state_t inventory_gear_menu(character_t* player);
+internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster);
 
 /**
  * @brief Displays the equipment menu.
  * @param player The player character whose inventory is being managed.
+ * @param monster The defeated monster whose inventory will be looted if not NULL.
  * @return internal_inventory_state_t The next state of the inventory mode.
  */
-internal_inventory_state_t inventory_equipment_menu(character_t* player);
+internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster);
 
 /**
  * @brief Shuts down the inventory mode and frees allocated resources.

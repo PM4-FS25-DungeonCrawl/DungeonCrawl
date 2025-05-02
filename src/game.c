@@ -50,6 +50,9 @@ void game_loop() {
                 reset_goblin();
                 combat_mode_state();
                 break;
+            case LOOT_MODE:
+                loot_mode_state();
+                break;
             case INVENTORY_MODE:
                 inventory_mode_state();
                 break;
@@ -159,9 +162,8 @@ void combat_mode_state() {
     switch (start_combat(player, goblin)) {
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
-            // TODO: add loot to player
             tb_clear();
-            current_state = MAP_MODE;
+            current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:
             log_msg(FINE, "Game", "Player lost the combat");
@@ -174,7 +176,12 @@ void combat_mode_state() {
     }
 }
 
+void loot_mode_state() {
+    start_inventory_mode(player, goblin);
+    current_state = MAP_MODE;
+}
+
 void inventory_mode_state() {
-    start_inventory_mode(player);
+    start_inventory_mode(player, NULL);
     current_state = MAP_MODE;
 }

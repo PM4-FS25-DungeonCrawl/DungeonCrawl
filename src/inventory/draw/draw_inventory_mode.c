@@ -9,17 +9,17 @@ int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c);
 /**
  * @brief This function draws the inventory view.
  * @param anchor The anchor point of the inventory view, representing the top left corner.
- * @param player The player character.
+ * @param c The character of the inventory.
  * @return The new anchor point after drawing the inventory view.
  * @note This function clears and presents the inventory view.
  */
-vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player) {
+vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* c) {
     tb_clear();
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
-    // Draw the player's resource bar
-    vec.dy = draw_inventory_resource_bar(vec, player);
+    // Draw the character's resource bar
+    vec.dy = draw_inventory_resource_bar(vec, c);
     vec.dy += 2;
 
     tb_present();

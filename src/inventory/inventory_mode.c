@@ -54,23 +54,28 @@ int init_inventory_mode() {
 /**
  * @brief Starts the inventory mode.
  */
-void start_inventory_mode(character_t* player) {
+void start_inventory_mode(character_t* player, character_t* monster) {
     internal_inventory_state_t inventory_state = INVENTORY_MENU;
     bool inventory_active = true;
 
-    collect_inventory_gear_options(player->gear_inventory, player->gear_count);
-    collect_inventory_equipment_options(player->equipment);
+    if (monster != NULL) {
+        collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+        collect_inventory_equipment_options(monster->equipment);
+    } else {
+        collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+        collect_inventory_equipment_options(player->equipment);
+    }
 
     while (inventory_active) {
         switch (inventory_state) {
             case INVENTORY_MENU:
-                inventory_state = inventory_menu(player);
+                inventory_state = inventory_menu(player, monster);
                 break;
             case INVENTORY_GEAR_MENU:
-                inventory_state = inventory_gear_menu(player);
+                inventory_state = inventory_gear_menu(player, monster);
                 break;
             case INVENTORY_EQUIPMENT_MENU:
-                inventory_state = inventory_equipment_menu(player);
+                inventory_state = inventory_equipment_menu(player, monster);
                 break;
             case INVENTORY_EXIT:
                 inventory_active = false;
@@ -82,21 +87,32 @@ void start_inventory_mode(character_t* player) {
 /**
  * @brief Displays the main inventory menu.
  */
-internal_inventory_state_t inventory_menu(character_t* player) {
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, player);
+internal_inventory_state_t inventory_menu(character_t* player, character_t* monster) {
+    const character_t* target = (monster != NULL) ? monster : player;
+    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     internal_inventory_state_t new_state = INVENTORY_MENU;
     bool submenu_selected = false;
 
     while (!submenu_selected) {
-        draw_inventory_menu(anchor,
+        if (monster != NULL) {
+            draw_inventory_menu(anchor,
+                            local_strings[lomo_main_menu_title.idx].characters,
+                            NULL,
+                            &local_strings[lomo_main_menu_option1.idx],
+                            MAX_INMO_MAIN_MENU_OPTION,
+                            selected_index,
+                            local_strings[lomo_submenu_tail_message.idx].characters);
+        } else {
+            draw_inventory_menu(anchor,
                             local_strings[inmo_main_menu_title.idx].characters,
                             NULL,
                             &local_strings[inmo_main_menu_option1.idx],
                             MAX_INMO_MAIN_MENU_OPTION,
                             selected_index,
                             local_strings[como_submenu_tail_message.idx].characters);
+        }
 
         struct tb_event event;
         const int ret = tb_peek_event(&event, 10);
@@ -125,8 +141,9 @@ internal_inventory_state_t inventory_menu(character_t* player) {
 /**
  * @brief Displays the gear inventory menu.
  */
-internal_inventory_state_t inventory_gear_menu(character_t* player) {
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, player);
+internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster) {
+    const character_t* target = (monster != NULL) ? monster : player;
+    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     if (player->gear_count == 0) {
@@ -138,13 +155,23 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
-        draw_inventory_menu(anchor,
+        if (monster != NULL) {
+            draw_inventory_menu(anchor,
+                            local_strings[inmo_inventory_menu_title.idx].characters,
+                            local_strings[lomo_inventory_header_message.idx].characters,
+                            inventory_gear_options,
+                            monster->gear_count,
+                            selected_index,
+                            local_strings[lomo_submenu_tail_message.idx].characters);
+        } else {
+            draw_inventory_menu(anchor,
                             local_strings[inmo_inventory_menu_title.idx].characters,
                             local_strings[inmo_inventory_header_message.idx].characters,
                             inventory_gear_options,
                             player->gear_count,
                             selected_index,
                             local_strings[como_submenu_tail_message.idx].characters);
+        }
 
         struct tb_event event;
         const int ret = tb_peek_event(&event, 10);
@@ -155,8 +182,12 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 selected_index = (selected_index + 1) % player->gear_count;
             } else if (event.key == TB_KEY_ENTER) {
-                equip_gear(player, player->gear_inventory[selected_index]);
-                collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                if (monster != NULL) {
+
+                } else {
+                    equip_gear(player, player->gear_inventory[selected_index]);
+                    collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                }
             } else if (event.key == TB_KEY_ESC) {
                 new_state = INVENTORY_MENU;
                 item_selected_or_esc = true;
@@ -169,21 +200,32 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
 /**
  * @brief Displays the equipment menu.
  */
-internal_inventory_state_t inventory_equipment_menu(character_t* player) {
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, player);
+internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
+    const character_t* target = (monster != NULL) ? monster : player;
+    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     internal_inventory_state_t new_state = INVENTORY_MENU;
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
-        draw_inventory_menu(anchor,
+        if (monster != NULL) {
+            draw_inventory_menu(anchor,
+                            local_strings[inmo_equipment_menu_title.idx].characters,
+                            local_strings[lomo_equipment_header_message.idx].characters,
+                            inventory_equipment_options,
+                            MAX_SLOT,
+                            selected_index,
+                            local_strings[lomo_submenu_tail_message.idx].characters);
+        } else {
+            draw_inventory_menu(anchor,
                             local_strings[inmo_equipment_menu_title.idx].characters,
                             local_strings[inmo_equipment_header_message.idx].characters,
                             inventory_equipment_options,
                             MAX_SLOT,
                             selected_index,
                             local_strings[como_submenu_tail_message.idx].characters);
+        }
 
         struct tb_event event;
         const int ret = tb_peek_event(&event, 10);
@@ -194,9 +236,13 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player) {
             } else if (event.key == TB_KEY_ARROW_DOWN) {
                 selected_index = (selected_index + 1) % MAX_SLOT;
             } else if (event.key == TB_KEY_ENTER) {
-                if (player->equipment[selected_index] != NULL) {
-                    unequip_gear(player, (gear_slot_t)selected_index);
-                    collect_inventory_equipment_options(player->equipment);
+                if (monster != NULL) {
+
+                } else {
+                    if (player->equipment[selected_index] != NULL) {
+                        unequip_gear(player, (gear_slot_t)selected_index);
+                        collect_inventory_equipment_options(player->equipment);
+                    }
                 }
             } else if (event.key == TB_KEY_ESC) {
                 new_state = INVENTORY_MENU;
@@ -251,6 +297,11 @@ void update_inventory_local(void) {
     snprintf(local_strings[inmo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option1.key));
     snprintf(local_strings[inmo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option2.key));
 
+    //loot menu
+    snprintf(local_strings[lomo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_title.key));
+    snprintf(local_strings[lomo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option1.key));
+    snprintf(local_strings[lomo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option2.key));
+
     //inventory gear menu
     snprintf(local_strings[inmo_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_menu_title.key));
     snprintf(local_strings[inmo_inventory_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_format.key));
@@ -263,9 +314,12 @@ void update_inventory_local(void) {
     //header messages
     snprintf(local_strings[inmo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_header_message.key));
     snprintf(local_strings[inmo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_header_message.key));
+    snprintf(local_strings[lomo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_inventory_header_message.key));
+    snprintf(local_strings[lomo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_equipment_header_message.key));
 
     //tail message
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
+    snprintf(local_strings[lomo_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_submenu_tail_message.key));
 
     //inventory messages
     snprintf(local_strings[inmo_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear.key));

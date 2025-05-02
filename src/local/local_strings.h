@@ -60,6 +60,14 @@ enum local_string_index {
     INMO_EQUIPMENT_HEADER_MESSAGE,
     INMO_NO_MORE_GEAR,
 
+    //loot mode index
+    LOMO_MAIN_MENU_TITLE,
+    LOMO_MAIN_MENU_OPTION1,
+    LOMO_MAIN_MENU_OPTION2,
+    LOMO_INVENTORY_HEADER_MESSAGE,
+    LOMO_EQUIPMENT_HEADER_MESSAGE,
+    LOMO_SUBMENU_TAIL_MESSAGE,
+
     MAX_LOCAL_STRINGS
 };
 
@@ -104,5 +112,13 @@ static const local_key_t inmo_equipment_format_empty = {INMO_EQUIPMENT_FORMAT_EM
 static const local_key_t inmo_inventory_header_message = {INMO_INVENTORY_HEADER_MESSAGE, "INVENTORY.INVENTORY.HEAD.MESSAGE"};
 static const local_key_t inmo_equipment_header_message = {INMO_EQUIPMENT_HEADER_MESSAGE, "INVENTORY.EQUIPMENT.HEAD.MESSAGE"};
 static const local_key_t inmo_no_more_gear = {INMO_NO_MORE_GEAR, "INVENTORY.INVENTORY.INVENTORY.EMPTY"};
+
+//loot mode strings
+static const local_key_t lomo_main_menu_title = {LOMO_MAIN_MENU_TITLE, "LOOT.MAIN.MENU.HEAD"};
+static const local_key_t lomo_main_menu_option1 = {LOMO_MAIN_MENU_OPTION1, "LOOT.MAIN.MENU.OPTION1"};
+static const local_key_t lomo_main_menu_option2 = {LOMO_MAIN_MENU_OPTION2, "LOOT.MAIN.MENU.OPTION2"};
+static const local_key_t lomo_inventory_header_message = {LOMO_INVENTORY_HEADER_MESSAGE, "LOOT.INVENTORY.HEAD.MESSAGE"};
+static const local_key_t lomo_equipment_header_message = {LOMO_EQUIPMENT_HEADER_MESSAGE, "LOOT.EQUIPMENT.HEAD.MESSAGE"};
+static const local_key_t lomo_submenu_tail_message = {LOMO_SUBMENU_TAIL_MESSAGE, "LOOT.SUB.MENU.TAIL"};
 
 #endif//LOCAL_STRINGS_H
