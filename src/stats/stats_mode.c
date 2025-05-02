@@ -1,5 +1,7 @@
 #include "stats_mode.h"
 #include "./draw/draw_stats.h"
+#include "src/local/local_strings.h"
+#include "src/local/local.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
@@ -18,14 +20,13 @@ void stats_mode(character_t* player) {
         draw_stats_menu(
             "Stats Menu",
             (string_max_t[]) {
-                {"Strength"},
-                {"Intelligence"},
-                {"Dexterity"},
-                {"Constitution"}
+                {local_strings[stmo_ability_strength.idx].characters,},
+                {local_strings[stmo_ability_intelligence.idx].characters,},
+                {local_strings[stmo_ability_dexterity.idx].characters,},
+                {local_strings[stmo_ability_constitution.idx].characters,}
             },
             4,
-            selected_index,
-            "Use arrow keys to navigate, Enter to allocate, ESC to exit."
+            selected_index,""
         );
 
         // Check for input
@@ -50,7 +51,9 @@ void stats_mode(character_t* player) {
                     player->skill_points--;
                     update_character_resources(&player->max_resources, &player->base_stats);
                 } else {
-                    ncplane_putstr_yx(stdplane, 20, 17, "Not enough skill points!");
+                    char word[MAX_STRING_LENGTH];
+                    snprintf(word, MAX_STRING_LENGTH, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
+                    ncplane_putstr_yx(stdplane, 20, 17, word);
                     notcurses_render(nc);
                 }
             } else if (input.id == NCKEY_ESC) {
