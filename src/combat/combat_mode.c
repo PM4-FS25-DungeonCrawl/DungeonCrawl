@@ -18,8 +18,6 @@ void invoke_potion_effect(character_t* character, potion_t* potion);
 
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
-void collect_gear_inventory_options(gear_t* gear_inventory[], const int count);
-void collect_equipment_options(gear_t* equipment[]);
 
 /**
  * @brief Updates the localized strings used in the combat mode menus.
@@ -40,8 +38,6 @@ vector2d_t combat_view_anchor = {1, 1};
 
 string_max_t* ability_menu_options;
 string_max_t* potion_menu_options;
-string_max_t* gear_inventory_options;
-string_max_t* equipment_options;
 
 /**
  * @brief Initialize the combat mode
@@ -53,12 +49,6 @@ int init_combat_mode() {
 
     potion_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
     NULL_PTR_HANDLER_RETURN(potion_menu_options, -1, "Combat Mode", "Allocated memory for potion menu options in memory pool is NULL");
-
-    gear_inventory_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_GEAR_LIMIT);
-    NULL_PTR_HANDLER_RETURN(gear_inventory_options, -1, "Combat Mode", "Allocated memory for gear inventory options in memory pool is NULL");
-
-    equipment_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_SLOT);
-    NULL_PTR_HANDLER_RETURN(equipment_options, -1, "Combat Mode", "Allocated memory for equipment options in memory pool is NULL");
 
     //update local once, so the strings are initialized
     update_combat_local();
@@ -76,8 +66,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_menu_options(player->potion_inventory, player->potion_count);
-    collect_gear_inventory_options(player->gear_inventory, player->gear_count);
-    collect_equipment_options(player->equipment);
 
     while (combat_active) {
         switch (combat_state) {
@@ -89,9 +77,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
             case ITEM_MENU:
                 combat_state = potion_menu(player, monster);
-                break;
-            case GEAR_MENU:
-                combat_state = gear_menu(player, monster);
                 break;
             case EVALUATE_COMBAT:
                 // evaluate the combat result
@@ -115,7 +100,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 break;
         }
     }
-
     return combat_result;
 }
 
@@ -153,8 +137,6 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                     new_state = ABILITY_MENU;
                 } else if (selected_index == 1) {
                     new_state = ITEM_MENU;
-                } else if (selected_index == 2) {
-                    new_state = GEAR_MENU;
                 }
                 submenu_selected = true;
             } else if (event.key == TB_KEY_CTRL_C) {
@@ -256,122 +238,6 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                 // Go back to the combat menu
                 new_state = COMBAT_MENU;
                 item_used_or_esc = true;
-            }
-        }
-    }
-    return new_state;
-}
-
-internal_combat_state_t gear_menu(character_t* player, character_t* monster) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    int selected_index = 0;
-
-    internal_combat_state_t new_state = GEAR_MENU;
-    bool submenu_selected = false;
-
-    while (!submenu_selected) {
-        draw_combat_menu(anchor,
-                 local_strings[como_gear_menu_title.idx].characters,
-                 &local_strings[como_gear_menu_option1.idx],
-                 MAX_COMO_GEAR_MENU_OPTION,
-                 selected_index,
-                 NULL);
-
-        struct tb_event event;
-        const int ret = tb_peek_event(&event, 10);
-
-        if (ret == TB_OK) {
-            if (event.key == TB_KEY_ARROW_UP) {
-                selected_index = (selected_index - 1 + MAX_COMO_GEAR_MENU_OPTION) % MAX_COMO_GEAR_MENU_OPTION;
-            } else if (event.key == TB_KEY_ARROW_DOWN) {
-                selected_index = (selected_index + 1) % MAX_COMO_GEAR_MENU_OPTION;
-            } else if (event.key == TB_KEY_ENTER) {
-                if (selected_index == 0) {
-                    new_state = gear_inventory_menu(player, monster);
-                } else if (selected_index == 1) {
-                    new_state = equipment_menu(player, monster);
-                }
-                submenu_selected = true;
-            } else if (event.key == TB_KEY_ESC) {
-                new_state = COMBAT_MENU;
-                submenu_selected = true;
-            }
-        }
-    }
-    return new_state;
-}
-
-internal_combat_state_t gear_inventory_menu(character_t* player, character_t* monster) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    int selected_index = 0;
-
-    if (player->gear_count == 0) {
-        draw_combat_log(anchor, local_strings[como_no_more_gear.idx].characters);
-        return GEAR_MENU;
-    }
-
-    internal_combat_state_t new_state = GEAR_MENU;
-    bool item_selected_or_esc = false;
-
-    while (!item_selected_or_esc) {
-        draw_combat_menu(anchor,
-                         local_strings[como_inventory_menu_title.idx].characters,
-                         gear_inventory_options,
-                         player->gear_count,
-                         selected_index,
-                         local_strings[como_submenu_tail_message.idx].characters);
-
-        struct tb_event event;
-        const int ret = tb_peek_event(&event, 10);
-
-        if (ret == TB_OK) {
-            if (event.key == TB_KEY_ARROW_UP) {
-                selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
-            } else if (event.key == TB_KEY_ARROW_DOWN) {
-                selected_index = (selected_index + 1) % player->gear_count;
-            } else if (event.key == TB_KEY_ENTER) {
-                equip_gear(player, player->gear_inventory[selected_index]);
-                collect_gear_inventory_options(player->gear_inventory, player->gear_count);
-            } else if (event.key == TB_KEY_ESC) {
-                new_state = GEAR_MENU;
-                item_selected_or_esc = true;
-            }
-        }
-    }
-    return new_state;
-}
-
-internal_combat_state_t equipment_menu(character_t* player, character_t* monster) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    int selected_index = 0;
-
-    internal_combat_state_t new_state = GEAR_MENU;
-    bool item_selected_or_esc = false;
-
-    while (!item_selected_or_esc) {
-        draw_combat_menu(anchor,
-                        local_strings[como_equipment_menu_title.idx].characters,
-                        equipment_options,
-                        MAX_SLOT,
-                        selected_index,
-                        local_strings[como_submenu_tail_message.idx].characters);
-
-        struct tb_event event;
-        const int ret = tb_peek_event(&event, 10);
-
-        if (ret == TB_OK) {
-            if (event.key == TB_KEY_ARROW_UP) {
-                selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
-            } else if (event.key == TB_KEY_ARROW_DOWN) {
-                selected_index = (selected_index + 1) % MAX_SLOT;
-            } else if (event.key == TB_KEY_ENTER) {
-                if (player->equipment[selected_index] != NULL) {
-                    unequip_gear(player, (gear_slot_t)selected_index);
-                    collect_equipment_options(player->equipment);
-                }
-            } else if (event.key == TB_KEY_ESC) {
-                new_state = GEAR_MENU;
-                item_selected_or_esc = true;
             }
         }
     }
@@ -515,44 +381,11 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     }
 }
 
-void collect_gear_inventory_options(gear_t* gear_inventory[], const int count) {
-    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
-        memset(gear_inventory_options[i].characters, '\0', MAX_STRING_LENGTH);
-    }
-
-    for (int i = 0; i < count; i++) {
-        snprintf(gear_inventory_options[i].characters, MAX_STRING_LENGTH,
-                local_strings[como_inventory_format.idx].characters,//TODO: This Method of using formats is not safe!!
-                gear_inventory[i]->name,
-                gear_slot_to_string(gear_inventory[i]->slot));
-    }
-}
-
-void collect_equipment_options(gear_t* equipment[]) {
-    for (int i = 0; i < MAX_SLOT; i++) {
-        memset(equipment_options[i].characters, '\0', MAX_STRING_LENGTH);
-    }
-
-    for (int i = 0; i < MAX_SLOT; i++) {
-        if (equipment[i] != NULL) {
-            snprintf(equipment_options[i].characters, MAX_STRING_LENGTH,
-                local_strings[como_equipment_format.idx].characters,//TODO: This Method of using formats is not safe!!
-                equipment[i]->name,
-                gear_slot_to_string((gear_slot_t)i));
-        } else {
-            snprintf(equipment_options[i].characters, MAX_STRING_LENGTH,
-                local_strings[como_equipment_format_empty.idx].characters,//TODO: This Method of using formats is not safe!!
-                gear_slot_to_string((gear_slot_t)i));
-        }
-    }
-}
-
 void update_combat_local(void) {
     //main menu
     snprintf(local_strings[como_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_main_menu_title.key));
     snprintf(local_strings[como_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_main_menu_option1.key));
     snprintf(local_strings[como_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_main_menu_option2.key));
-    snprintf(local_strings[como_main_menu_option3.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_main_menu_option3.key));
 
     //ability menu
     snprintf(local_strings[como_ability_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_ability_menu_title.key));
@@ -562,26 +395,11 @@ void update_combat_local(void) {
     snprintf(local_strings[como_potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_potion_menu_title.key));
     snprintf(local_strings[como_potion_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_potion_format.key));
 
-    //gear menu
-    snprintf(local_strings[como_gear_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_title.key));
-    snprintf(local_strings[como_gear_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_option1.key));
-    snprintf(local_strings[como_gear_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_option2.key));
-
-    //gear inventory menu
-    snprintf(local_strings[como_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_inventory_menu_title.key));
-    snprintf(local_strings[como_inventory_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_inventory_format.key));
-
-    //equipment menu
-    snprintf(local_strings[como_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_menu_title.key));
-    snprintf(local_strings[como_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format.key));
-    snprintf(local_strings[como_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format_empty.key));
-
     //tail message
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
 
     //combat messages
     snprintf(local_strings[como_no_more_potions.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_potions.key));
-    snprintf(local_strings[como_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_gear.key));
     snprintf(local_strings[como_attack_success.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_success.key));
     snprintf(local_strings[como_attack_miss.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_miss.key));
     snprintf(local_strings[como_attack_fail.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_attack_fail.key));
@@ -591,6 +409,4 @@ void update_combat_local(void) {
 void shutdown_combat_mode() {
     memory_pool_free(main_memory_pool, ability_menu_options);
     memory_pool_free(main_memory_pool, potion_menu_options);
-    memory_pool_free(main_memory_pool, gear_inventory_options);
-    memory_pool_free(main_memory_pool, equipment_options);
 }

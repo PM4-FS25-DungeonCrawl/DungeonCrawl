@@ -91,20 +91,20 @@ internal_inventory_state_t inventory_menu(character_t* player) {
 
     while (!submenu_selected) {
         draw_inventory_menu(anchor,
-                            local_strings[como_gear_menu_title.idx].characters,
-                            &local_strings[como_gear_menu_option1.idx],
-                            MAX_COMO_GEAR_MENU_OPTION,
+                            local_strings[inmo_main_menu_title.idx].characters,
+                            &local_strings[inmo_main_menu_option1.idx],
+                            MAX_INMO_MAIN_MENU_OPTION,
                             selected_index,
-                            NULL);
+                            local_strings[como_submenu_tail_message.idx].characters);
 
         struct tb_event event;
         const int ret = tb_peek_event(&event, 10);
 
         if (ret == TB_OK) {
             if (event.key == TB_KEY_ARROW_UP) {
-                selected_index = (selected_index - 1 + MAX_COMO_GEAR_MENU_OPTION) % MAX_COMO_GEAR_MENU_OPTION;
+                selected_index = (selected_index - 1 + MAX_INMO_MAIN_MENU_OPTION) % MAX_INMO_MAIN_MENU_OPTION;
             } else if (event.key == TB_KEY_ARROW_DOWN) {
-                selected_index = (selected_index + 1) % MAX_COMO_GEAR_MENU_OPTION;
+                selected_index = (selected_index + 1) % MAX_INMO_MAIN_MENU_OPTION;
             } else if (event.key == TB_KEY_ENTER) {
                 if (selected_index == 0) {
                     new_state = INVENTORY_GEAR_MENU;
@@ -129,7 +129,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
     int selected_index = 0;
 
     if (player->gear_count == 0) {
-        draw_inventory_log(anchor, local_strings[como_no_more_gear.idx].characters);
+        draw_inventory_log(anchor, local_strings[inmo_no_more_gear.idx].characters);
         return INVENTORY_MENU;
     }
 
@@ -138,7 +138,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player) {
 
     while (!item_selected_or_esc) {
         draw_inventory_menu(anchor,
-                            local_strings[como_inventory_menu_title.idx].characters,
+                            local_strings[inmo_inventory_menu_title.idx].characters,
                             inventory_gear_options,
                             player->gear_count,
                             selected_index,
@@ -176,7 +176,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player) {
 
     while (!item_selected_or_esc) {
         draw_inventory_menu(anchor,
-                            local_strings[como_equipment_menu_title.idx].characters,
+                            local_strings[inmo_equipment_menu_title.idx].characters,
                             inventory_equipment_options,
                             MAX_SLOT,
                             selected_index,
@@ -214,7 +214,7 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(inventory_gear_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[como_inventory_format.idx].characters,
+                 local_strings[inmo_inventory_format.idx].characters,
                  gear_inventory[i]->name,
                  gear_slot_to_string(gear_inventory[i]->slot));
     }
@@ -231,12 +231,12 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
     for (int i = 0; i < MAX_SLOT; i++) {
         if (equipment[i] != NULL) {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
-                     local_strings[como_equipment_format.idx].characters,
+                     local_strings[inmo_equipment_format.idx].characters,
                      equipment[i]->name,
                      gear_slot_to_string((gear_slot_t)i));
         } else {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
-                     local_strings[como_equipment_format_empty.idx].characters,
+                     local_strings[inmo_equipment_format_empty.idx].characters,
                      gear_slot_to_string((gear_slot_t)i));
         }
     }
@@ -244,24 +244,24 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
 
 void update_inventory_local(void) {
     //inventory menu
-    snprintf(local_strings[como_gear_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_title.key));
-    snprintf(local_strings[como_gear_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_option1.key));
-    snprintf(local_strings[como_gear_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_gear_menu_option2.key));
+    snprintf(local_strings[inmo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_title.key));
+    snprintf(local_strings[inmo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option1.key));
+    snprintf(local_strings[inmo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option2.key));
 
     //inventory gear menu
-    snprintf(local_strings[como_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_inventory_menu_title.key));
-    snprintf(local_strings[como_inventory_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_inventory_format.key));
+    snprintf(local_strings[inmo_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_menu_title.key));
+    snprintf(local_strings[inmo_inventory_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_format.key));
 
     //inventory equipment menu
-    snprintf(local_strings[como_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_menu_title.key));
-    snprintf(local_strings[como_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format.key));
-    snprintf(local_strings[como_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_equipment_format_empty.key));
+    snprintf(local_strings[inmo_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_menu_title.key));
+    snprintf(local_strings[inmo_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format.key));
+    snprintf(local_strings[inmo_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format_empty.key));
 
     //tail message
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
 
     //inventory messages
-    snprintf(local_strings[como_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_gear.key));
+    snprintf(local_strings[inmo_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear.key));
 }
 
 /**
