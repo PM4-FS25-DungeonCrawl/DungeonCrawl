@@ -11,6 +11,7 @@ helper_db = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 )
 
 helper_draw_light = files(
@@ -19,6 +20,7 @@ helper_draw_light = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 )
 
 helper_combat = files(
@@ -40,6 +42,7 @@ helper_combat = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 
     '../src/local/local.c',
     '../include/sqlite3.c',
@@ -61,6 +64,7 @@ helper_map_generator = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 )
 
 helper_map_mode = files(
@@ -71,6 +75,7 @@ helper_map_mode = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 )
 
 
@@ -91,6 +96,7 @@ incdir_common = files(
 helper_memory = files(
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
     '../src/memory/memory_management.c'
 )
 

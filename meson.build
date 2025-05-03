@@ -52,6 +52,7 @@ database_files = files(
 )
 
 logging_files = files(
+    'src/thread/thread_handler.c',
     'src/logging/logger.c',
     'src/logging/ringbuffer.c'
 )
