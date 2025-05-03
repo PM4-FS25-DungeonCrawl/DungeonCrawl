@@ -14,8 +14,6 @@
 
 // === Internal Functions ===
 //TODO: Should these 2 function not be in to character.c?
-void invoke_potion_effect(character_t* character, potion_t* potion);
-
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
 

@@ -10,6 +10,7 @@ typedef enum {
     INVENTORY_MENU,
     INVENTORY_GEAR_MENU,
     INVENTORY_EQUIPMENT_MENU,
+    INVENTORY_POTION_MENU,
     INVENTORY_EXIT
 } internal_inventory_state_t;
 
@@ -45,12 +46,20 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
 internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster);
 
 /**
- * @brief Displays the equipment menu.
+ * @brief Displays the equipment inventory menu.
  * @param player The player character whose inventory is being managed.
  * @param monster The defeated monster whose inventory will be looted if not NULL.
  * @return internal_inventory_state_t The next state of the inventory mode.
  */
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster);
+
+/**
+ * @brief Displays the potion inventory menu.
+ * @param player The player character whose inventory is being managed.
+ * @param monster The defeated monster whose inventory will be looted if not NULL.
+ * @return internal_inventory_state_t The next state of the inventory mode.
+ */
+internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster);
 
 /**
  * @brief Shuts down the inventory mode and frees allocated resources.

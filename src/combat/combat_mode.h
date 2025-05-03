@@ -33,6 +33,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster);
 // TODO: These functions should not be here!
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
 void use_potion(character_t* player, const character_t* monster, potion_t* item);
+void invoke_potion_effect(character_t* character, potion_t* potion);
 bool use_usable_item(character_t* character, potion_t* item);
 bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 ability_t* get_random_ability(const character_t* character);

@@ -7,12 +7,14 @@
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "./draw/draw_inventory_mode.h"
+#include "src/combat/combat_mode.h"
 
 #include <stdbool.h>
 
 // === Internal Functions ===
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
 void collect_inventory_equipment_options(gear_t* equipment[]);
+void collect_inventory_potion_options(potion_t* potion_inventory[], const int count);
 
 /**
  * @brief Updates the localized strings used in the inventory mode menus.
@@ -33,6 +35,7 @@ vector2d_t inventory_view_anchor = {1, 1};
 
 string_max_t* inventory_gear_options;
 string_max_t* inventory_equipment_options;
+string_max_t* inventory_potion_options;
 
 /**
  * @brief Initializes the inventory mode.
@@ -43,6 +46,9 @@ int init_inventory_mode() {
 
     inventory_equipment_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_SLOT);
     NULL_PTR_HANDLER_RETURN(inventory_equipment_options, -1, "Inventory Mode", "Failed to allocate memory for inventory equipment options");
+
+    inventory_potion_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
+    NULL_PTR_HANDLER_RETURN(inventory_potion_options, -1, "Inventory Mode", "Failed to allocate memory for inventory potion options");
 
     //update local once, so the strings are initialized
     update_inventory_local();
@@ -61,9 +67,11 @@ void start_inventory_mode(character_t* player, character_t* monster) {
     if (monster != NULL) {
         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
         collect_inventory_equipment_options(monster->equipment);
+        collect_inventory_potion_options(monster->potion_inventory, monster->potion_count);
     } else {
         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
         collect_inventory_equipment_options(player->equipment);
+        collect_inventory_potion_options(player->potion_inventory, player->potion_count);
     }
 
     while (inventory_active) {
@@ -76,6 +84,9 @@ void start_inventory_mode(character_t* player, character_t* monster) {
                 break;
             case INVENTORY_EQUIPMENT_MENU:
                 inventory_state = inventory_equipment_menu(player, monster);
+                break;
+            case INVENTORY_POTION_MENU:
+                inventory_state = inventory_potion_menu(player, monster);
                 break;
             case INVENTORY_EXIT:
                 inventory_active = false;
@@ -129,6 +140,8 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                     new_state = INVENTORY_GEAR_MENU;
                 } else if (selected_index == 1) {
                     new_state = INVENTORY_EQUIPMENT_MENU;
+                } else if (selected_index == 2) {
+                    new_state = INVENTORY_POTION_MENU;
                 }
                 submenu_selected = true;
             } else if (event.key == TB_KEY_ESC) {
@@ -203,7 +216,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                     }
                 }
                 return INVENTORY_GEAR_MENU;
-            } else if (event.ch == 'd' || event.ch == 'D') {
+            } else if ((event.ch == 'd' || event.ch == 'D') && monster == NULL) {
                 remove_gear(player, player->gear_inventory[selected_index]);
                 collect_inventory_gear_options(player->gear_inventory, player->gear_count);
                 return INVENTORY_GEAR_MENU;
@@ -217,7 +230,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
 }
 
 /**
- * @brief Displays the equipment menu.
+ * @brief Displays the equipment inventory menu.
  */
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
@@ -289,6 +302,86 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
 }
 
 /**
+ * @brief Displays the potion inventory menu.
+ */
+internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster) {
+    const character_t* target = (monster != NULL) ? monster : player;
+    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
+    int selected_index = 0;
+
+    if (player->potion_count == 0) {
+        draw_inventory_log(anchor, local_strings[como_no_more_potions.idx].characters);
+        return INVENTORY_MENU;
+    }
+
+    internal_inventory_state_t new_state = INVENTORY_MENU;
+    bool item_selected_or_esc = false;
+
+    while (!item_selected_or_esc) {
+        if (monster != NULL) {
+            draw_inventory_menu(anchor,
+                            local_strings[inmo_potion_menu_title.idx].characters,
+                            local_strings[lomo_potion_header_message.idx].characters,
+                            inventory_potion_options,
+                            monster->potion_count,
+                            selected_index,
+                            NULL,
+                            local_strings[lomo_submenu_tail_message.idx].characters);
+        } else {
+            draw_inventory_menu(anchor,
+                            local_strings[inmo_potion_menu_title.idx].characters,
+                            local_strings[inmo_potion_header_message.idx].characters,
+                            inventory_potion_options,
+                            player->potion_count,
+                            selected_index,
+                            local_strings[inmo_submenu_key_message.idx].characters,
+                            local_strings[como_submenu_tail_message.idx].characters);
+        }
+
+        struct tb_event event;
+        const int ret = tb_peek_event(&event, 10);
+
+        if (ret == TB_OK) {
+            if (event.key == TB_KEY_ARROW_UP) {
+                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+            } else if (event.key == TB_KEY_ARROW_DOWN) {
+                selected_index = (selected_index + 1) % player->potion_count;
+            } else if (event.key == TB_KEY_ENTER) {
+                if (monster != NULL) {
+                    if (player->potion_count < MAX_POTION_LIMIT) {
+                        add_potion(player, monster->potion_inventory[selected_index]);
+                        remove_potion(monster, monster->potion_inventory[selected_index]);
+                        collect_inventory_potion_options(monster->potion_inventory, monster->potion_count);
+                    } else {
+                        draw_inventory_log(anchor, local_strings[inmo_no_more_potion_slot.idx].characters);
+                    }
+                } else {
+                    char message[MAX_STRING_LENGTH];
+                    snprintf(message, sizeof(message), local_strings[como_potion_use.idx].characters,//TODO: This method of using formats is not safe!
+                             player->name,
+                             player->potion_inventory[selected_index]->name,
+                             player->potion_inventory[selected_index]->value,
+                             potion_type_to_string(player->potion_inventory[selected_index]->effectType));
+
+                    invoke_potion_effect(player, player->potion_inventory[selected_index]);
+                    draw_inventory_log(anchor, message);
+                    collect_inventory_potion_options(player->potion_inventory, player->potion_count);
+                }
+                return INVENTORY_POTION_MENU;
+            } else if ((event.ch == 'd' || event.ch == 'D') && monster == NULL) {
+                remove_potion(player, player->potion_inventory[selected_index]);
+                collect_inventory_potion_options(player->potion_inventory, player->potion_count);
+                return INVENTORY_POTION_MENU;
+            } else if (event.key == TB_KEY_ESC) {
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+            }
+        }
+    }
+    return new_state;
+}
+
+/**
  * @brief Collects gear inventory options for display.
  */
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
@@ -305,7 +398,7 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 }
 
 /**
- * @brief Collects equipment options for display.
+ * @brief Collects equipment inventory options for display.
  */
 void collect_inventory_equipment_options(gear_t* equipment[]) {
     for (int i = 0; i < MAX_SLOT; i++) {
@@ -326,16 +419,34 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
     }
 }
 
+/**
+ * @brief Collects potion inventory options for display.
+ */
+void collect_inventory_potion_options(potion_t* potion_inventory[], const int count) {
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        memset(inventory_potion_options[i].characters, '\0', MAX_STRING_LENGTH);
+    }
+
+    for (int i = 0; i < count; i++) {
+        snprintf(inventory_potion_options[i].characters, MAX_STRING_LENGTH,
+                 local_strings[inmo_potion_format.idx].characters,
+                 potion_inventory[i]->name,
+                 potion_type_to_string(potion_inventory[i]->effectType));
+    }
+}
+
 void update_inventory_local(void) {
     //inventory menu
     snprintf(local_strings[inmo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_title.key));
     snprintf(local_strings[inmo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option1.key));
     snprintf(local_strings[inmo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option2.key));
+    snprintf(local_strings[inmo_main_menu_option3.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option3.key));
 
     //loot menu
     snprintf(local_strings[lomo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_title.key));
     snprintf(local_strings[lomo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option1.key));
     snprintf(local_strings[lomo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option2.key));
+    snprintf(local_strings[lomo_main_menu_option3.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option3.key));
 
     //inventory gear menu
     snprintf(local_strings[inmo_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_menu_title.key));
@@ -346,11 +457,17 @@ void update_inventory_local(void) {
     snprintf(local_strings[inmo_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format.key));
     snprintf(local_strings[inmo_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format_empty.key));
 
+    //inventory potion menu
+    snprintf(local_strings[inmo_potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_menu_title.key));
+    snprintf(local_strings[inmo_potion_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_format.key));
+
     //header messages
     snprintf(local_strings[inmo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_header_message.key));
     snprintf(local_strings[inmo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_header_message.key));
+    snprintf(local_strings[inmo_potion_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_header_message.key));
     snprintf(local_strings[lomo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_inventory_header_message.key));
     snprintf(local_strings[lomo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_equipment_header_message.key));
+    snprintf(local_strings[lomo_potion_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_potion_header_message.key));
 
     //tail messages
     snprintf(local_strings[inmo_submenu_key_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_submenu_key_message.key));
@@ -359,7 +476,9 @@ void update_inventory_local(void) {
 
     //inventory messages
     snprintf(local_strings[inmo_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear.key));
+    snprintf(local_strings[como_no_more_potions.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_potions.key));
     snprintf(local_strings[inmo_no_more_gear_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear_slot.key));
+    snprintf(local_strings[inmo_no_more_potion_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_potion_slot.key));
     snprintf(local_strings[inmo_no_free_equipment_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_free_equipment_slot.key));
 }
 
@@ -369,4 +488,5 @@ void update_inventory_local(void) {
 void shutdown_inventory_mode(void) {
     memory_pool_free(main_memory_pool, inventory_gear_options);
     memory_pool_free(main_memory_pool, inventory_equipment_options);
+    memory_pool_free(main_memory_pool, inventory_potion_options);
 }
