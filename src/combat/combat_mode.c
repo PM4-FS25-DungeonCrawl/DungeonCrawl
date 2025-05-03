@@ -34,6 +34,7 @@ void update_combat_local(void);
 
 // Internal global variables
 vector2d_t combat_view_anchor = {1, 1};
+internal_combat_state_t combat_state = COMBAT_MENU;
 
 string_max_t* ability_menu_options;// holds the ability menu options
 string_max_t* potion_menu_options; // holds the potion menu options
@@ -52,52 +53,40 @@ int init_combat_mode() {
     return 0;
 }
 
-
 combat_result_t start_combat(character_t* player, character_t* monster) {
-    // initial combat state
-    internal_combat_state_t combat_state = COMBAT_MENU;
-    combat_result_t combat_result = EXIT_GAME;
-    bool combat_active = true;
-
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_menu_options(player->potion_inventory, player->potion_count);
 
-    while (combat_active) {
-        switch (combat_state) {
-            case COMBAT_MENU:
-                combat_state = combat_menu(player, monster);
-                break;
-            case ABILITY_MENU:
-                combat_state = ability_menu(player, monster);
-                break;
-            case POTION_MENU:
-                combat_state = potion_menu(player, monster);
-                break;
-            case EVALUATE_COMBAT:
-                // evaluate the combat result
-                if (player->current_resources.health <= 0) {
-                    combat_result = PLAYER_LOST;
-                    combat_active = false;// exit the combat loop
-                } else if (monster->current_resources.health <= 0) {
-                    combat_result = PLAYER_WON;
-                    combat_active = false;// exit the combat loop
-                    player->xp += monster->xp_reward;
-                    if (player->xp >= calculate_xp_for_next_level(player->level)) {
-                        level_up(player);
-                    }
-                } else {
-                    combat_state = COMBAT_MENU;
+    switch (combat_state) {
+        case COMBAT_MENU:
+            combat_state = combat_menu(player, monster);
+            break;
+        case ABILITY_MENU:
+            combat_state = ability_menu(player, monster);
+            break;
+        case POTION_MENU:
+            combat_state = potion_menu(player, monster);
+            break;
+        case EVALUATE_COMBAT:
+            // evaluate the combat result
+            if (player->current_resources.health <= 0) {
+                return PLAYER_LOST;
+            } else if (monster->current_resources.health <= 0) {
+                return PLAYER_WON;
+                player->xp += monster->xp_reward;
+                if (player->xp >= calculate_xp_for_next_level(player->level)) {
+                    level_up(player);
                 }
-                break;
-            case COMBAT_EXIT:
-                combat_result = EXIT_GAME;
-                combat_active = false;// exit the combat loop
-                break;
-        }
+            } else {
+                combat_state = COMBAT_MENU;
+            }
+            break;
+        case COMBAT_EXIT:
+            return EXIT_GAME;
+            break;
     }
-
-    return combat_result;
+    return CONTINUE_COMBAT;
 }
 
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {

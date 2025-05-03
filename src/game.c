@@ -46,7 +46,6 @@ void game_loop() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                reset_goblin();
                 combat_mode_state();
                 break;
             case EXIT:
@@ -149,10 +148,13 @@ void map_mode_state() {
 
 void combat_mode_state() {
     switch (start_combat(player, goblin)) {
+        case CONTINUE_COMBAT:
+            break;
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
             // TODO: add loot to player
             tb_clear();
+            reset_goblin();
             current_state = MAP_MODE;
             break;
         case PLAYER_LOST:
