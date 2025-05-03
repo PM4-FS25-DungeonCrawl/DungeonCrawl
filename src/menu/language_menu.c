@@ -1,9 +1,14 @@
 #include "language_menu.h"
 
-#include "../../include/termbox2.h"
 #include "../common.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
+#include "notcurses/nckeys.h"
+
+#include <notcurses/notcurses.h>
+
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 // === Internal Functions ===
 void update_language_menu_local(void);
@@ -30,17 +35,20 @@ menu_result_t show_language_menu() {
         const int menu_count = 2;
         draw_menu(menu_options, menu_count, selected_index);
 
-        struct tb_event event;
-        tb_peek_event(&event, 10);
+        ncinput event;
+        memset(&event, 0, sizeof(event));
+        notcurses_get_blocking(nc, &event);
 
-        switch (event.key) {
-            case TB_KEY_ARROW_UP:
+        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+
+        switch (event.id) {
+            case NCKEY_UP:
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
                 break;
-            case TB_KEY_ARROW_DOWN:
+            case NCKEY_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case TB_KEY_ENTER: {
+            case NCKEY_ENTER: {
                 if (selected_index == 0) {
                     // English selected
                     set_language(language_en);
@@ -51,11 +59,14 @@ menu_result_t show_language_menu() {
                 selection_active = false;
                 break;
             }
-            case TB_KEY_CTRL_C:
+            case 'c':
+                if (!(event.modifiers & NCKEY_MOD_CTRL)) {
+                    break;
+                }
                 res = MENU_EXIT;
                 selection_active = false;
                 break;
-            case TB_KEY_ESC:
+            case NCKEY_ESC:
                 res = MENU_CONTINUE;
                 selection_active = false;
                 break;

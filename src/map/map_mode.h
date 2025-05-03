@@ -1,10 +1,14 @@
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
+#include "../character/character.h"
 #include "../common.h"
 
-#define COLOR_FOREGROUND TB_WHITE
-#define COLOR_BACKGROUND TB_BLACK
+#include <notcurses/notcurses.h>
+
+// Notcurses uses RGB channels directly, but we can define our colors for consistency
+#define COLOR_FOREGROUND 0xffffff// White
+#define COLOR_BACKGROUND 0x000000// Black
 
 #define LIGHT_RADIUS 3
 
@@ -24,7 +28,10 @@ void set_player_start_pos(int player_x, int player_y);
  */
 vector2d_t get_player_pos();
 
-map_mode_result_t map_mode_update(void);
+map_mode_result_t map_mode_update(character_t* player);
+
 void init_map_mode(void);
 
+// has to be exposed for testing
+map_mode_result_t handle_input(const ncinput* event, character_t* player);
 #endif//MAP_MODE_H

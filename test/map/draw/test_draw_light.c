@@ -42,7 +42,7 @@ void test_draw_light_on_player(void) {
 
     const vector2d_t player = {5, 5};
     const int light_radius = 3;
-    draw_light_on_player(test_map, revealed_test_map, height, width, player, light_radius);
+    draw_light_on_player((map_tile_t*) test_map, (map_tile_t*) revealed_test_map, height, width, player, light_radius);
     //print_array((int *)revealed_test_maze, height, width);
     //player position will not be drawn
     assert(revealed_test_map[5][5] == HIDDEN);

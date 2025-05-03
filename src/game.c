@@ -1,6 +1,6 @@
 #include "game.h"
 
-#include "../include/termbox2.h"
+#include "character/character.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
@@ -11,9 +11,17 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "src/common.h"
 
+#include <locale.h>
+#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
+
+// Global notcurses instance and standard plane
+struct notcurses* nc = NULL;
+struct ncplane* stdplane = NULL;
+
 
 db_connection_t db_connection;
 bool game_in_progress;
@@ -21,9 +29,23 @@ game_state_t current_state;
 int exit_code;
 
 void game_loop();
+
 void combat_mode_state();
 
 void run_game() {
+    // TODO: remove after notcurses switch
+    setlocale(LC_ALL, "");
+
+    // Initialize notcurses
+    notcurses_options ncopt;
+    memset(&ncopt, 0, sizeof(ncopt));
+    nc = notcurses_init(&ncopt, stdout);
+    if (nc == NULL) {
+        log_msg(ERROR, "game", "failed to initialize notcurses");
+        return;
+    }
+    stdplane = notcurses_stdplane(nc);
+    ncplane_set_bg_rgb(stdplane, 0x281D10);
     game_in_progress = false;// Flag to track if a game has been started
     current_state = MAIN_MENU;
     //start the game loop
@@ -53,6 +75,17 @@ void game_loop() {
                 break;
         }
     }
+    // Close database connection
+    db_close(&db_connection);
+    shutdown_combat_mode();
+    shutdown_logger();
+
+    // Shutdown notcurses
+    if (nc) {
+        notcurses_stop(nc);
+        nc = NULL;
+        stdplane = NULL;
+    }
 }
 
 void main_menu_state() {
@@ -60,11 +93,23 @@ void main_menu_state() {
         case MENU_START_GAME:
             log_msg(INFO, "Game", "Starting new game");
             game_in_progress = true;// Mark that a game is now in progress
-            tb_clear();             // Clear screen before generating map
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
             current_state = GENERATE_MAP;
             break;
         case MENU_CONTINUE:
-            tb_clear();// Clear screen before map mode
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
             current_state = MAP_MODE;
             break;
         case MENU_SAVE_GAME:
@@ -80,7 +125,13 @@ void main_menu_state() {
             save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
-            tb_clear();
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
             current_state = MAP_MODE;
             break;
         case MENU_LOAD_GAME:
@@ -105,11 +156,23 @@ void main_menu_state() {
                 game_in_progress = true;
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
-                tb_clear();
+                // clear screen
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                    }
+                }
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                tb_clear();
+                // clear screen
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                    }
+                }
                 current_state = GENERATE_MAP;
             }
             break;
@@ -123,14 +186,21 @@ void main_menu_state() {
 }
 
 void map_mode_state() {
-    switch (map_mode_update()) {
+    switch (map_mode_update(player)) {
         case CONTINUE:
             break;
         case QUIT:
             current_state = EXIT;
             break;
         case NEXT_FLOOR:
-            tb_clear();// Clear screen before generating new floor
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
+            reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
         case COMBAT:
@@ -138,7 +208,13 @@ void map_mode_state() {
             current_state = COMBAT_MODE;
             break;
         case SHOW_MENU:
-            tb_clear();// Clear the screen before showing menu
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
             current_state = MAIN_MENU;
             break;
         default:
@@ -153,7 +229,14 @@ void combat_mode_state() {
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
             // TODO: add loot to player
-            tb_clear();
+            // TODO: delete goblin from map
+            // clear screen
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
             reset_goblin();
             current_state = MAP_MODE;
             break;

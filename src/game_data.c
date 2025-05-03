@@ -11,6 +11,8 @@ ability_table_t* ability_table;
 character_t* goblin;
 character_t* player;
 potion_t* healing_potion;
+potion_t* mana_potion;
+potion_t* stamina_potion;
 
 int init_game_data() {
     ability_table = init_ability_table(main_memory_pool);
