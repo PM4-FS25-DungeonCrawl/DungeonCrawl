@@ -61,6 +61,7 @@ void add_ability(character_t* c, ability_t* ability);
 
 void add_gear(character_t* c, gear_t* item);
 void remove_gear(character_t* c, gear_t* item);
+void remove_equipped_gear(character_t* c, gear_slot_t slot);
 
 void add_potion(character_t* c, potion_t* item);
 void remove_potion(character_t* c, potion_t* item);

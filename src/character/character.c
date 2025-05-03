@@ -129,6 +129,22 @@ void remove_gear(character_t* c, gear_t* item) {
     log_msg(WARNING, "Character", "Equipable item %s not found in inventory!", item->name);
 }
 
+void remove_equipped_gear(character_t* c, gear_slot_t slot) {
+    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_equipped_gear character is NULL");
+    CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In remove_equipped_gear slot is invalid: %d", slot);
+
+    if (c->equipment[slot] != NULL) {
+        gear_t* item = c->equipment[slot];
+        c->defenses.armor -= item->defenses.armor;
+        c->defenses.magic_resist -= item->defenses.magic_resist;
+
+        log_msg(INFO, "Character", "%s removed %s from slot %d.", c->name, item->name, slot);
+        c->equipment[slot] = NULL;
+    } else {
+        log_msg(WARNING, "Character", "No item equipped in slot %d!", slot);
+    }
+}
+
 void add_potion(character_t* c, potion_t* item) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_potion character is NULL");
     NULL_PTR_HANDLER_RETURN(item, , "Character", "In add_potion item is NULL");

@@ -187,16 +187,22 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                 selected_index = (selected_index + 1) % player->gear_count;
             } else if (event.key == TB_KEY_ENTER) {
                 if (monster != NULL) {
-
+                    if (player->gear_count < MAX_GEAR_LIMIT) {
+                        add_gear(player, monster->gear_inventory[selected_index]);
+                        remove_gear(monster, monster->gear_inventory[selected_index]);
+                        collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+                    } else {
+                        draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+                    }
                 } else {
-                    if (player->equipment[player->gear_inventory[selected_index]->slot] != NULL) {
+                    if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
                         equip_gear(player, player->gear_inventory[selected_index]);
                         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
                     } else {
                         draw_inventory_log(anchor, local_strings[inmo_no_free_equipment_slot.idx].characters);
                     }
-                    return INVENTORY_GEAR_MENU;
                 }
+                return INVENTORY_GEAR_MENU;
             } else if (event.ch == 'd' || event.ch == 'D') {
                 remove_gear(player, player->gear_inventory[selected_index]);
                 collect_inventory_gear_options(player->gear_inventory, player->gear_count);
@@ -252,7 +258,16 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                 selected_index = (selected_index + 1) % MAX_SLOT;
             } else if (event.key == TB_KEY_ENTER) {
                 if (monster != NULL) {
-
+                    if (monster->equipment[selected_index] != NULL) {
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            add_gear(player, monster->equipment[selected_index]);
+                            remove_equipped_gear(monster, (gear_slot_t)selected_index);
+                            collect_inventory_equipment_options(monster->equipment);
+                        } else {
+                            draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
+                    }
                 } else {
                     if (player->equipment[selected_index] != NULL) {
                         if (player->gear_count < MAX_GEAR_LIMIT) {
