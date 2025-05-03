@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 //Macros for the Local Database Path
-#define LOCAL_DB_PATH "../resources/database/local/dungeoncrawl_local.db"
+#define LOCAL_DB_PATH "resources/database/local/dungeoncrawl_local.db"
 
 #define local_not_init_return(ret) \
     if (observer_list == NULL) { return ret; }
