@@ -113,8 +113,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     return CONTINUE_COMBAT;
 }
 
-internal_combat_state_t
-combat_menu(const character_t* player, const character_t* monster) {
+internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
