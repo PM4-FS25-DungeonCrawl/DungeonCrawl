@@ -163,6 +163,7 @@ void combat_mode_state() {
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
             tb_clear();
+            log_msg(INFO, "Game", "Entering loot mode");
             current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:

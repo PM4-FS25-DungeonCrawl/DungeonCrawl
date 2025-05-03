@@ -103,6 +103,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                             &local_strings[lomo_main_menu_option1.idx],
                             MAX_INMO_MAIN_MENU_OPTION,
                             selected_index,
+                            NULL,
                             local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
@@ -111,6 +112,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                             &local_strings[inmo_main_menu_option1.idx],
                             MAX_INMO_MAIN_MENU_OPTION,
                             selected_index,
+                            NULL,
                             local_strings[como_submenu_tail_message.idx].characters);
         }
 
@@ -162,6 +164,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                             inventory_gear_options,
                             monster->gear_count,
                             selected_index,
+                            NULL,
                             local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
@@ -170,6 +173,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                             inventory_gear_options,
                             player->gear_count,
                             selected_index,
+                            local_strings[inmo_submenu_key_message.idx].characters,
                             local_strings[como_submenu_tail_message.idx].characters);
         }
 
@@ -185,9 +189,18 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                 if (monster != NULL) {
 
                 } else {
-                    equip_gear(player, player->gear_inventory[selected_index]);
-                    collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                    if (player->equipment[player->gear_inventory[selected_index]->slot] != NULL) {
+                        equip_gear(player, player->gear_inventory[selected_index]);
+                        collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                    } else {
+                        draw_inventory_log(anchor, local_strings[inmo_no_free_equipment_slot.idx].characters);
+                    }
+                    return INVENTORY_GEAR_MENU;
                 }
+            } else if (event.ch == 'd' || event.ch == 'D') {
+                remove_gear(player, player->gear_inventory[selected_index]);
+                collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                return INVENTORY_GEAR_MENU;
             } else if (event.key == TB_KEY_ESC) {
                 new_state = INVENTORY_MENU;
                 item_selected_or_esc = true;
@@ -216,6 +229,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                             inventory_equipment_options,
                             MAX_SLOT,
                             selected_index,
+                            NULL,
                             local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
@@ -224,6 +238,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                             inventory_equipment_options,
                             MAX_SLOT,
                             selected_index,
+                            NULL,
                             local_strings[como_submenu_tail_message.idx].characters);
         }
 
@@ -240,8 +255,13 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
 
                 } else {
                     if (player->equipment[selected_index] != NULL) {
-                        unequip_gear(player, (gear_slot_t)selected_index);
-                        collect_inventory_equipment_options(player->equipment);
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            unequip_gear(player, (gear_slot_t)selected_index);
+                            collect_inventory_equipment_options(player->equipment);
+                        } else {
+                            draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
                     }
                 }
             } else if (event.key == TB_KEY_ESC) {
@@ -317,12 +337,15 @@ void update_inventory_local(void) {
     snprintf(local_strings[lomo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_inventory_header_message.key));
     snprintf(local_strings[lomo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_equipment_header_message.key));
 
-    //tail message
+    //tail messages
+    snprintf(local_strings[inmo_submenu_key_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_submenu_key_message.key));
     snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
     snprintf(local_strings[lomo_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_submenu_tail_message.key));
 
     //inventory messages
     snprintf(local_strings[inmo_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear.key));
+    snprintf(local_strings[inmo_no_more_gear_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear_slot.key));
+    snprintf(local_strings[inmo_no_free_equipment_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_free_equipment_slot.key));
 }
 
 /**

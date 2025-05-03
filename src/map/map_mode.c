@@ -28,7 +28,7 @@ map_mode_result_t handle_input(const struct tb_event* event) {
 
     if (event->key == TB_KEY_CTRL_C) return QUIT;
 
-    // Check for 'M' key press for menu
+    // Check for 'M' key press for menu or 'I' key press for inventory
     if (event->ch == 'm' || event->ch == 'M' || event->key == TB_KEY_ESC) return SHOW_MENU;
     if (event->ch == 'i' || event->ch == 'I') return SHOW_INVENTORY;
 

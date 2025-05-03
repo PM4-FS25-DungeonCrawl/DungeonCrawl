@@ -58,7 +58,10 @@ enum local_string_index {
     INMO_EQUIPMENT_FORMAT_EMPTY,
     INMO_INVENTORY_HEADER_MESSAGE,
     INMO_EQUIPMENT_HEADER_MESSAGE,
+    INMO_SUBMENU_KEY_MESSAGE,
     INMO_NO_MORE_GEAR,
+    INMO_NO_MORE_GEAR_SLOT,
+    INMO_NO_FREE_EQUIPMENT_SLOT,
 
     //loot mode index
     LOMO_MAIN_MENU_TITLE,
@@ -111,7 +114,10 @@ static const local_key_t inmo_equipment_format = {INMO_EQUIPMENT_FORMAT, "INVENT
 static const local_key_t inmo_equipment_format_empty = {INMO_EQUIPMENT_FORMAT_EMPTY, "INVENTORY.EQUIPMENT.MENU.OPTION_FORMAT_EMPTY"};
 static const local_key_t inmo_inventory_header_message = {INMO_INVENTORY_HEADER_MESSAGE, "INVENTORY.INVENTORY.HEAD.MESSAGE"};
 static const local_key_t inmo_equipment_header_message = {INMO_EQUIPMENT_HEADER_MESSAGE, "INVENTORY.EQUIPMENT.HEAD.MESSAGE"};
+static const local_key_t inmo_submenu_key_message = {INMO_SUBMENU_KEY_MESSAGE, "INVENTORY.SUB.MENU.MESSAGE"};
 static const local_key_t inmo_no_more_gear = {INMO_NO_MORE_GEAR, "INVENTORY.INVENTORY.INVENTORY.EMPTY"};
+static const local_key_t inmo_no_more_gear_slot = {INMO_NO_MORE_GEAR_SLOT, "INVENTORY.INVENTORY.INVENTORY.FULL"};
+static const local_key_t inmo_no_free_equipment_slot = {INMO_NO_FREE_EQUIPMENT_SLOT, "INVENTORY.EQUIPMENT.INVENTORY.FULL"};
 
 //loot mode strings
 static const local_key_t lomo_main_menu_title = {LOMO_MAIN_MENU_TITLE, "LOOT.MAIN.MENU.HEAD"};
