@@ -43,4 +43,4 @@ ability_t* get_random_ability(const character_t* character);
  */
 void shutdown_combat_mode(void);
 
-#endif //COMBAT_MODE_H
+#endif//COMBAT_MODE_H
