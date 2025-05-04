@@ -3,25 +3,25 @@
 #include "../logging/logger.h"
 
 
-void raise_skill(stats_t* stats, int stat, int value, int skillpoint) {
+void raise_skill(stats_t* stats, int stat, int skillpoint) {
     if (stats == NULL) {
         log_msg(ERROR, "Stats", "Stats pointer is NULL");
         return;
     }
-    if (value <= skillpoint) {
-        skillpoint -= value;
+    if (1 <= skillpoint) {
+        skillpoint--;
         switch (stat) {
             case 0:
-                stats->strength += value;
+                stats->strength++;
                 break;
             case 1:
-                stats->intelligence += value;
+                stats->intelligence++;
                 break;
             case 2:
-                stats->dexterity += value;
+                stats->dexterity++;
                 break;
             case 3:
-                stats->constitution += value;
+                stats->constitution++;
                 break;
             default:
                 log_msg(ERROR, "Stats", "Invalid stat type");

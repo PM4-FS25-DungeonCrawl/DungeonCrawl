@@ -7,7 +7,8 @@ typedef enum {
     STRENGTH,
     INTELLIGENCE,
     DEXTERITY,
-    CONSTITUTION
+    CONSTITUTION,
+    MAX_STATS // Used to see how many stats there are
 } stat_type_t;
 
 typedef struct {
@@ -28,6 +29,6 @@ typedef struct {
     int magic_resist;// reduced magical damage taken
 } defenses_t;
 
-void raise_skill(stats_t* stats, int stat, int value, int skillpoint);
+void raise_skill(stats_t* stats, int stat, int skillpoint);
 
 #endif//STATS_H

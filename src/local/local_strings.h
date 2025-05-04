@@ -65,6 +65,7 @@ enum local_string_index {
     STMO_OPTION_SKILLPOINTS,
     STMO_OPTION_INVENTORY,
     STMO_OPTION_NO_ARMOR,
+    STMO_MENU_STATS_TITLE,
 
     MAX_LOCAL_STRINGS
 };
@@ -99,8 +100,7 @@ static const local_key_t como_attack_fail = {COMO_ATTACK_FAIL, "COMBAT.ATTACK.FA
 static const local_key_t como_potion_use = {COMO_POTION_USE, "COMBAT.POTION.USE.FORMAT"};
 
 //stats mode strings
-static const local_key_t stmo_main_menu_title = {STMO_MAIN_MENU_TITLE, "STATS.MAIN.MENU.HEAD"};
-static const local_key_t stmo_ability_menu_title = {STMO_MAIN_MENU_TITLE, "STATS.ABILITY.MENU.HEAD"};
+static const local_key_t stmo_main_menu_title = {STMO_MAIN_MENU_TITLE, "STATS.MENU.TITLE.HEAD"};
 static const local_key_t stmo_ability_hp = {STMO_ABILITY_HP, "STATS.MENU.TITLE.HEALTH"};
 static const local_key_t stmo_ability_mp = {STMO_ABILITY_MP, "STATS.MENU.TITLE.MANA"};
 static const local_key_t stmo_ability_sp = {STMO_ABILITY_SP, "STATS.MENU.TITLE.STAMINA"};
@@ -115,5 +115,6 @@ static const local_key_t stmo_player_magic_resist = {STMO_PLAYER_MAGIC_RESIST, "
 static const local_key_t stmo_option_skillpoints = {STMO_OPTION_SKILLPOINTS, "STATS.MENU.OPTION_FORMAT.LEVEL"};
 static const local_key_t stmo_option_inventory = {STMO_OPTION_INVENTORY, "STATS.MENU.OPTION.ARMOR"};
 static const local_key_t stmo_option_no_armor = {STMO_OPTION_NO_ARMOR, "STATS.MENU.OPTION2.ARMOR"};
+static const local_key_t stmo_menu_stats_title = {STMO_MENU_STATS_TITLE, "STATS.MAIN.MENU.STATS"};
 
 #endif//LOCAL_STRINGS_H

@@ -120,7 +120,7 @@ void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
 
     ncplane_printf_yx(stdplane, y, x, "HP: 100");
     ncplane_printf_yx(stdplane, y + 1, x, "Press 'M' for Menu");
-    ncplane_printf_yx(stdplane, y + 2, x, "Press L for Stats");
+    ncplane_printf_yx(stdplane, y + 2, x, "Press 'L' for Stats");
     ncplane_printf_yx(stdplane, y + 3, x, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet

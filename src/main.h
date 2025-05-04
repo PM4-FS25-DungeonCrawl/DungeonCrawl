@@ -9,6 +9,7 @@ typedef enum {
     FAIL_MAIN_MENU_INIT,
     FAIL_GAME_MODE_INIT,
     FAIL_GAME_ENTITY_INIT,
+    FAIL_STATS_MODE_INIT,
     FAIL_ERROR,
 } exit_code_t;
 

@@ -32,7 +32,7 @@ void render_stats_window(character_t* player) {
     char stats_info[MAX_STRING_LENGTH];
     // Display player stats
     ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
-    snprintf(stats_info, MAX_STRING_LENGTH, "%s:", local_strings[stmo_main_menu_title.idx].characters);
+    snprintf(stats_info, MAX_STRING_LENGTH, "%s", local_strings[stmo_main_menu_title.idx].characters);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
 
@@ -58,7 +58,8 @@ void render_stats_window(character_t* player) {
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     // Display equipped armor
-    ncplane_putstr_yx(stdplane, y++, x, "Equipped Armor:");
+    snprintf(stats_info, sizeof(stats_info), "%s:", local_strings[stmo_option_inventory.idx].characters);
+    ncplane_putstr_yx(stdplane, y++, x, stats_info);
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
             snprintf(stats_info, sizeof(stats_info), "%s: %s | %s: %-4d, %s: %-4d",
@@ -78,17 +79,18 @@ void render_stats_window(character_t* player) {
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 }
 
-void draw_stats_menu(const char* title, const string_max_t options[], int option_count, int selected_index, const char* footer) {
+void draw_stats_menu(const char* title, const char* options[], int option_count, int selected_index, const char* footer) {
     // Calculate position to place the menu below the stats window
     int y = 20;
     int x = 2;
 
     // Draw menu title
-    ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
-    ncplane_putstr_yx(stdplane, y++, x, title);
+    //ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
+    ncplane_putstr_yx(stdplane, y, x, title);
     y++;// Add a space after the title
 
     // Draw options
+    x++;
     for (int i = 0; i < option_count; i++) {
         if (i == selected_index) {
             // Highlight selected option (white background, black text)
@@ -97,7 +99,7 @@ void draw_stats_menu(const char* title, const string_max_t options[], int option
             // Normal option (white text, black background)
             ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
         }
-        ncplane_putstr_yx(stdplane, y++, x, options[i].characters);
+        ncplane_putstr_yx(stdplane, y++, x, options[i]);
     }
 
     // Draw footer at the bottom
@@ -117,9 +119,6 @@ void draw_stats_log(const char* message) {
 void update_stats_local(void) {
     // Main menu title
     snprintf(local_strings[stmo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_main_menu_title.key));
-
-    // Ability menu title
-    snprintf(local_strings[stmo_ability_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_menu_title.key));
 
     // Stats titles
     snprintf(local_strings[stmo_ability_hp.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_hp.key));
