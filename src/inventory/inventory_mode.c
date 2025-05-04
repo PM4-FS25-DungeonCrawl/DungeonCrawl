@@ -161,7 +161,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
-    if (player->gear_count == 0) {
+    if (target->gear_count == 0) {
         draw_inventory_log(anchor, local_strings[inmo_no_more_gear.idx].characters);
         return INVENTORY_MENU;
     }
@@ -313,7 +313,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
-    if (player->potion_count == 0) {
+    if (target->potion_count == 0) {
         draw_inventory_log(anchor, local_strings[como_no_more_potions.idx].characters);
         return INVENTORY_MENU;
     }
