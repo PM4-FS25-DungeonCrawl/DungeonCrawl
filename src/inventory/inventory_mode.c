@@ -158,7 +158,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
  */
 internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
+    vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     if (player->gear_count == 0) {
@@ -205,6 +205,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                         remove_gear(monster, monster->gear_inventory[selected_index]);
                         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
                     } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
                         draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
                     }
                 } else {
@@ -212,6 +213,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                         equip_gear(player, player->gear_inventory[selected_index]);
                         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
                     } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
                         draw_inventory_log(anchor, local_strings[inmo_no_free_equipment_slot.idx].characters);
                     }
                 }
@@ -234,7 +236,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
  */
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
+    vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     internal_inventory_state_t new_state = INVENTORY_MENU;
@@ -277,6 +279,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                             remove_equipped_gear(monster, (gear_slot_t)selected_index);
                             collect_inventory_equipment_options(monster->equipment);
                         } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
                             draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
                         }
                         return INVENTORY_EQUIPMENT_MENU;
@@ -287,6 +290,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                             unequip_gear(player, (gear_slot_t)selected_index);
                             collect_inventory_equipment_options(player->equipment);
                         } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
                             draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
                         }
                         return INVENTORY_EQUIPMENT_MENU;
@@ -306,7 +310,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
  */
 internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
-    const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
+    vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     if (player->potion_count == 0) {
@@ -353,6 +357,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                         remove_potion(monster, monster->potion_inventory[selected_index]);
                         collect_inventory_potion_options(monster->potion_inventory, monster->potion_count);
                     } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
                         draw_inventory_log(anchor, local_strings[inmo_no_more_potion_slot.idx].characters);
                     }
                 } else {
@@ -364,6 +369,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                              potion_type_to_string(player->potion_inventory[selected_index]->effectType));
 
                     invoke_potion_effect(player, player->potion_inventory[selected_index]);
+                    anchor = draw_inventory_view(inventory_view_anchor, target);
                     draw_inventory_log(anchor, message);
                     collect_inventory_potion_options(player->potion_inventory, player->potion_count);
                 }
