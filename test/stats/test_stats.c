@@ -43,7 +43,7 @@ void test_skill_point_allocation() {
     // Allocate a point to strength
     assert(test_character->skill_points > 0);
     // Level up constitution to raise HP
-    raise_skill(&test_character->base_stats, 3, 1, test_character->skill_points);
+    raise_skill(&test_character->base_stats, 3, test_character->skill_points);
     test_character->skill_points--;
     update_character_resources(&test_character->max_resources, &test_character->base_stats);
 
@@ -54,7 +54,7 @@ void test_skill_point_allocation() {
     // Allocate a point to intelligence
     initial_max_mana = test_character->max_resources.mana;
     assert(test_character->skill_points > 0);
-    raise_skill(&test_character->base_stats, 1, 1, test_character->skill_points);
+    raise_skill(&test_character->base_stats, 1, test_character->skill_points);
     test_character->skill_points--;
     update_character_resources(&test_character->max_resources, &test_character->base_stats);
 
@@ -65,7 +65,7 @@ void test_skill_point_allocation() {
     // Test when skill points are 0
     test_character->skill_points = 0;
     int old_strength = test_character->base_stats.strength;
-    raise_skill(&test_character->base_stats, 0, 1, test_character->skill_points);
+    raise_skill(&test_character->base_stats, 0, test_character->skill_points);
 
     // Verify stat doesn't increase when no skill points are available
     assert(test_character->base_stats.strength == old_strength);
