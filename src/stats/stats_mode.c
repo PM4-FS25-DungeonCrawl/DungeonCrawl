@@ -1,9 +1,9 @@
 #include "stats_mode.h"
 
+#include "../combat/ability.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "./draw/draw_stats.h"
-#include "../combat/ability.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
@@ -26,14 +26,14 @@ void stats_mode(character_t* player) {
         menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
 
         draw_stats_menu(
-            local_strings[stmo_menu_stats_title.idx].characters,
-            menu_options,
-            4,
-            selected_index, "");
+                local_strings[stmo_menu_stats_title.idx].characters,
+                menu_options,
+                4,
+                selected_index, "");
         // Check for input
         ncinput input;
         // Remove unused variable
-        int ret = (int)notcurses_get_nblock(nc, &input);
+        int ret = (int) notcurses_get_nblock(nc, &input);
         if (ret > 0) {
             // Handle arrow keys
             if (input.id == NCKEY_UP) {
@@ -60,8 +60,8 @@ void stats_mode(character_t* player) {
                     player->skill_points--;
                     update_character_resources(&player->max_resources, &player->base_stats);
                 } else {
-                    char word[MAX_STRING_LENGTH-4];
-                    snprintf(word, MAX_STRING_LENGTH-4, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
+                    char word[MAX_STRING_LENGTH - 4];
+                    snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
                     ncplane_putstr_yx(stdplane, 20, 17, word);
                     notcurses_render(nc);
                 }

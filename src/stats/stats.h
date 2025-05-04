@@ -8,7 +8,7 @@ typedef enum {
     INTELLIGENCE,
     DEXTERITY,
     CONSTITUTION,
-    MAX_STATS // Used to see how many stats there are
+    MAX_STATS// Used to see how many stats there are
 } stat_type_t;
 
 typedef struct {
