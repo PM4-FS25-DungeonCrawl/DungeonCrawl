@@ -5,8 +5,8 @@
 #include "../game.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
-#include "./draw/draw_inventory_mode.h"
 #include "../src/combat/combat_mode.h"
+#include "./draw/draw_inventory_mode.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -109,22 +109,22 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
     while (!submenu_selected) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                            local_strings[lomo_main_menu_title.idx].characters,
-                            NULL,
-                            &local_strings[lomo_main_menu_option1.idx],
-                            MAX_INMO_MAIN_MENU_OPTION,
-                            selected_index,
-                            NULL,
-                            local_strings[lomo_submenu_tail_message.idx].characters);
+                                local_strings[lomo_main_menu_title.idx].characters,
+                                NULL,
+                                &local_strings[lomo_main_menu_option1.idx],
+                                MAX_INMO_MAIN_MENU_OPTION,
+                                selected_index,
+                                NULL,
+                                local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_main_menu_title.idx].characters,
-                            NULL,
-                            &local_strings[inmo_main_menu_option1.idx],
-                            MAX_INMO_MAIN_MENU_OPTION,
-                            selected_index,
-                            NULL,
-                            local_strings[como_submenu_tail_message.idx].characters);
+                                local_strings[inmo_main_menu_title.idx].characters,
+                                NULL,
+                                &local_strings[inmo_main_menu_option1.idx],
+                                MAX_INMO_MAIN_MENU_OPTION,
+                                selected_index,
+                                NULL,
+                                local_strings[como_submenu_tail_message.idx].characters);
         }
 
         // check for input
@@ -175,22 +175,22 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_inventory_menu_title.idx].characters,
-                            local_strings[lomo_inventory_header_message.idx].characters,
-                            inventory_gear_options,
-                            monster->gear_count,
-                            selected_index,
-                            NULL,
-                            local_strings[lomo_submenu_tail_message.idx].characters);
+                                local_strings[inmo_inventory_menu_title.idx].characters,
+                                local_strings[lomo_inventory_header_message.idx].characters,
+                                inventory_gear_options,
+                                monster->gear_count,
+                                selected_index,
+                                NULL,
+                                local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_inventory_menu_title.idx].characters,
-                            local_strings[inmo_inventory_header_message.idx].characters,
-                            inventory_gear_options,
-                            player->gear_count,
-                            selected_index,
-                            local_strings[inmo_submenu_key_message.idx].characters,
-                            local_strings[como_submenu_tail_message.idx].characters);
+                                local_strings[inmo_inventory_menu_title.idx].characters,
+                                local_strings[inmo_inventory_header_message.idx].characters,
+                                inventory_gear_options,
+                                player->gear_count,
+                                selected_index,
+                                local_strings[inmo_submenu_key_message.idx].characters,
+                                local_strings[como_submenu_tail_message.idx].characters);
         }
 
         // check for input
@@ -251,22 +251,22 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_equipment_menu_title.idx].characters,
-                            local_strings[lomo_equipment_header_message.idx].characters,
-                            inventory_equipment_options,
-                            MAX_SLOT,
-                            selected_index,
-                            NULL,
-                            local_strings[lomo_submenu_tail_message.idx].characters);
+                                local_strings[inmo_equipment_menu_title.idx].characters,
+                                local_strings[lomo_equipment_header_message.idx].characters,
+                                inventory_equipment_options,
+                                MAX_SLOT,
+                                selected_index,
+                                NULL,
+                                local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_equipment_menu_title.idx].characters,
-                            local_strings[inmo_equipment_header_message.idx].characters,
-                            inventory_equipment_options,
-                            MAX_SLOT,
-                            selected_index,
-                            NULL,
-                            local_strings[como_submenu_tail_message.idx].characters);
+                                local_strings[inmo_equipment_menu_title.idx].characters,
+                                local_strings[inmo_equipment_header_message.idx].characters,
+                                inventory_equipment_options,
+                                MAX_SLOT,
+                                selected_index,
+                                NULL,
+                                local_strings[como_submenu_tail_message.idx].characters);
         }
 
         // check for input
@@ -286,7 +286,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                 if (monster->equipment[selected_index] != NULL) {
                     if (player->gear_count < MAX_GEAR_LIMIT) {
                         add_gear(player, monster->equipment[selected_index]);
-                        remove_equipped_gear(monster, (gear_slot_t)selected_index);
+                        remove_equipped_gear(monster, (gear_slot_t) selected_index);
                         collect_inventory_equipment_options(monster->equipment);
                     } else {
                         anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -297,7 +297,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
             } else {
                 if (player->equipment[selected_index] != NULL) {
                     if (player->gear_count < MAX_GEAR_LIMIT) {
-                        unequip_gear(player, (gear_slot_t)selected_index);
+                        unequip_gear(player, (gear_slot_t) selected_index);
                         collect_inventory_equipment_options(player->equipment);
                     } else {
                         anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -333,22 +333,22 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_potion_menu_title.idx].characters,
-                            local_strings[lomo_potion_header_message.idx].characters,
-                            inventory_potion_options,
-                            monster->potion_count,
-                            selected_index,
-                            NULL,
-                            local_strings[lomo_submenu_tail_message.idx].characters);
+                                local_strings[inmo_potion_menu_title.idx].characters,
+                                local_strings[lomo_potion_header_message.idx].characters,
+                                inventory_potion_options,
+                                monster->potion_count,
+                                selected_index,
+                                NULL,
+                                local_strings[lomo_submenu_tail_message.idx].characters);
         } else {
             draw_inventory_menu(anchor,
-                            local_strings[inmo_potion_menu_title.idx].characters,
-                            local_strings[inmo_potion_header_message.idx].characters,
-                            inventory_potion_options,
-                            player->potion_count,
-                            selected_index,
-                            local_strings[inmo_submenu_key_message.idx].characters,
-                            local_strings[como_submenu_tail_message.idx].characters);
+                                local_strings[inmo_potion_menu_title.idx].characters,
+                                local_strings[inmo_potion_header_message.idx].characters,
+                                inventory_potion_options,
+                                player->potion_count,
+                                selected_index,
+                                local_strings[inmo_submenu_key_message.idx].characters,
+                                local_strings[como_submenu_tail_message.idx].characters);
         }
 
         // check for input
@@ -428,11 +428,11 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
                      local_strings[inmo_equipment_format.idx].characters,
                      equipment[i]->name,
-                     gear_slot_to_string((gear_slot_t)i));
+                     gear_slot_to_string((gear_slot_t) i));
         } else {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
                      local_strings[inmo_equipment_format_empty.idx].characters,
-                     gear_slot_to_string((gear_slot_t)i));
+                     gear_slot_to_string((gear_slot_t) i));
         }
     }
 }

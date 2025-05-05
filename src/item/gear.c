@@ -22,17 +22,29 @@ void free_equipable_gear(gear_t* gear) {
 
 const char* gear_slot_to_string(gear_slot_t slot) {
     switch (slot) {
-        case SLOT_HEAD: return "Head";
-        case SLOT_CHEST: return "Chest";
-        case SLOT_LEGS: return "Legs";
-        case SLOT_FEET: return "Feet";
-        case SLOT_HANDS: return "Hands";
-        case SLOT_NECK: return "Neck";
-        case SLOT_FINGER_RIGHT: return "Right Finger";
-        case SLOT_FINGER_LEFT: return "Left Finger";
-        case SLOT_LEFT_HAND: return "Left Hand";
-        case SLOT_RIGHT_HAND: return "Right Hand";
-        case SLOT_BOTH_HANDS: return "Both Hands";
-        default: return "Unknown Slot";
+        case SLOT_HEAD:
+            return "Head";
+        case SLOT_CHEST:
+            return "Chest";
+        case SLOT_LEGS:
+            return "Legs";
+        case SLOT_FEET:
+            return "Feet";
+        case SLOT_HANDS:
+            return "Hands";
+        case SLOT_NECK:
+            return "Neck";
+        case SLOT_FINGER_RIGHT:
+            return "Right Finger";
+        case SLOT_FINGER_LEFT:
+            return "Left Finger";
+        case SLOT_LEFT_HAND:
+            return "Left Hand";
+        case SLOT_RIGHT_HAND:
+            return "Right Hand";
+        case SLOT_BOTH_HANDS:
+            return "Both Hands";
+        default:
+            return "Unknown Slot";
     }
 }

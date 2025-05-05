@@ -67,4 +67,4 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
  */
 void shutdown_inventory_mode(void);
 
-#endif // INVENTORY_MODE_H
+#endif// INVENTORY_MODE_H
