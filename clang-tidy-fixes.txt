@@ -1,11 +1,27 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
+../src/inventory/draw/draw_inventory_mode.h:7:12: warning: function 'draw_inventory_view' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+    7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
+      |            ^
+../src/inventory/draw/draw_inventory_mode.c:18:12: note: the definition seen here
+   18 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* c) {
+      |            ^
+../src/inventory/draw/draw_inventory_mode.h:7:12: note: differing parameters are named here: ('player'), in definition: ('c')
+    7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
+      |            ^                                                               ~~~~~~
+      |                                                                            c
+../src/inventory/inventory_mode.c:15:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
+   15 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
+      |                                                               ^~~~~
+../src/inventory/inventory_mode.c:17:69: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
+   17 | void collect_inventory_potion_options(potion_t* potion_inventory[], const int count);
+      |                                                                     ^~~~~
 ../src/logging/logger.c:165:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   165 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:40:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   40 |     srand(time(NULL));
+../src/main.c:41:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   41 |     srand(time(NULL));
       |     ^
 ../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    92 |                     save_name[name_length++] = input.id;
@@ -22,5 +38,5 @@
 ../src/stats/draw/draw_stats.h:9:6: note: previously declared here
     9 | void update_stats_local(void);
       |      ^
-Suppressed 171036 warnings (170971 in non-user code, 65 with check filters).
+Suppressed 182330 warnings (182257 in non-user code, 73 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
