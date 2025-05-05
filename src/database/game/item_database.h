@@ -1,10 +1,10 @@
 #ifndef ITEM_DATABASE_H
 #define ITEM_DATABASE_H
 
-#include "../database.h"
+#include "../../character/stats.h"
 #include "../../item/gear.h"
 #include "../../item/potion.h"
-#include "../../character/stats.h"
+#include "../database.h"
 
 /**
  * To get potion table from the database, we need to define a struct
@@ -17,6 +17,19 @@ typedef struct potion_init_t {
     int value;
 } potion_init_t;
 
+/**
+ * To get gear table from the database, we need to define a struct
+ * This struct is for the initialization of the gear table
+ * The value of the struct corresponds to the init_gear() method in @see{gear.h} & @see{gear.c}
+ */
+
+typedef struct gear_init_t{
+    char* name;
+    gear_slot_t slot;
+    stats_t stats;
+    defenses_t defenses;
+    // ability_t abilities[4];
+} gear_init_t;
 /**
  * Get the potion table from the database
  * @param db_connection Pointer to the database connection
@@ -42,4 +55,29 @@ void free_potion_table_from_db(potion_init_t* potion_init_table, const db_connec
  */
 int count_potions_in_db(const db_connection_t* db_connection);
 
-#endif //ITEM_DATABASE_H
+/**
+ * Get the gear table from the database
+ * @param db_connection Pointer to the database connection
+ *
+ * @return gear_init_t* pointer to the gear table
+ */
+gear_init_t* init_gear_table_from_db(const db_connection_t* db_connection);
+
+/**
+ * Clean up the gear table
+ * Call this function to free the memory allocated for the gear table
+ *
+ * @param gear_init_table Pointer to the gear table
+ * @param db_connection Pointer to the database connection
+ */
+void free_gear_table_from_db(gear_init_t* gear_init_table, const db_connection_t* db_connection);
+
+/**
+ * Count the number of gears in the database
+ * @param db_connection Pointer to the database connection
+ *
+ * @return int number of gears in the database
+ */
+int count_gear_in_db(const db_connection_t* db_connection);
+
+#endif//ITEM_DATABASE_H
