@@ -55,11 +55,11 @@ typedef struct {
 } ability_table_t;
 
 
-ability_table_t* init_ability_table_from_db(memory_pool_t* memory_pool,const db_connection_t* db_connection);
 /**
  * Initialize the ability table, allocates memory and returns the pointer to the table.
  *
  * @param memory_pool Pointer to the memory pool for allocation.
+ * @param db_connection Pointer to the database connection
  * @return Pointer to the ability table.
  */
 ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connection_t* db_connection);
