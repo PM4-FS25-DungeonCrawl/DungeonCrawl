@@ -1,49 +1,11 @@
-145180 warnings and 4 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats_mode.c.
-147057 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats_mode.c.
-148931 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats.c.
-150805 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats.c.
-152223 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-153641 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-155059 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-156477 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-157895 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-159313 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-160732 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/logger.c.
-162022 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-163312 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-164602 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-165892 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-167182 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-168472 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-169762 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
-171052 warnings and 8 errors generated.
-Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/ringbuffer.c.
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
 ../src/logging/logger.c:165:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   165 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:39:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   39 |     srand(time(NULL));
+../src/main.c:40:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   40 |     srand(time(NULL));
       |     ^
 ../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    92 |                     save_name[name_length++] = input.id;
@@ -54,21 +16,11 @@ Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/logging/r
 ../src/menu/save_menu.c:190:15: note: else branch starts here
   190 |             } else {
       |               ^
-../src/stats/stats_mode.c:25:33: error: incompatible pointer to integer conversion initializing 'char' with an expression of type 'char[256]' [clang-diagnostic-int-conversion]
-   25 |                                 local_strings[stmo_ability_strength.idx].characters,
-      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/stats/stats_mode.c:28:33: error: incompatible pointer to integer conversion initializing 'char' with an expression of type 'char[256]' [clang-diagnostic-int-conversion]
-   28 |                                 local_strings[stmo_ability_intelligence.idx].characters,
-      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/stats/stats_mode.c:31:33: error: incompatible pointer to integer conversion initializing 'char' with an expression of type 'char[256]' [clang-diagnostic-int-conversion]
-   31 |                                 local_strings[stmo_ability_dexterity.idx].characters,
-      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/stats/stats_mode.c:34:33: error: incompatible pointer to integer conversion initializing 'char' with an expression of type 'char[256]' [clang-diagnostic-int-conversion]
-   34 |                                 local_strings[stmo_ability_constitution.idx].characters,
-      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../src/stats/stats_mode.c:41:19: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   41 |         int ret = notcurses_get_nblock(nc, &input);
-      |                   ^
+../src/stats/draw/draw_stats.c:13:6: warning: redundant 'update_stats_local' declaration [readability-redundant-declaration]
+   13 | void update_stats_local(void);
+      | ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/stats/draw/draw_stats.h:9:6: note: previously declared here
+    9 | void update_stats_local(void);
+      |      ^
 Suppressed 171036 warnings (170971 in non-user code, 65 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
-Found compiler error(s).
