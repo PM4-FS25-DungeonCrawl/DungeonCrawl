@@ -43,7 +43,6 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
     if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
     // Check for 'I' key press for inventory
     if (event->id == 'i' || event->id == 'I') return SHOW_INVENTORY;
-
     // Check for 'L' key press for stats
     if (event->id == 'l' || event->id == 'L') return SHOW_STATS;
 

@@ -271,7 +271,7 @@ void combat_mode_state() {
                 }
             }
             log_msg(INFO, "Game", "Entering loot mode");
-            current_state = MAP_MODE;
+            current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:
             log_msg(FINE, "Game", "Player lost the combat");

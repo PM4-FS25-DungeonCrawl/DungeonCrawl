@@ -1,7 +1,9 @@
 #include "draw_inventory_mode.h"
 
-#include "../../../include/termbox2.h"
 #include "../../character/character.h"
+#include "../../game.h"
+
+#include <notcurses/notcurses.h>
 
 // Internal functions
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c);
@@ -14,7 +16,13 @@ int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c);
  * @note This function clears and presents the inventory view.
  */
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* c) {
-    tb_clear();
+    // clear screen
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
+
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
@@ -22,7 +30,7 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* c) {
     vec.dy = draw_inventory_resource_bar(vec, c);
     vec.dy += 2;
 
-    tb_present();
+    notcurses_render(nc);
     return vec;
 }
 
@@ -44,31 +52,42 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
         return;
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
-    tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, menu_name);
+
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
+    ncplane_set_styles(stdplane, NCSTYLE_NONE);
+    ncplane_putstr_yx(stdplane, vec.dy, 1, menu_name);
+    vec.dy++;
 
     if (header_msg != NULL) {
-        tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, header_msg);
+        ncplane_set_styles(stdplane, NCSTYLE_NONE);
+        ncplane_printf_yx(stdplane, vec.dy++, vec.dx, header_msg);
     }
 
     for (int i = 0; i < menu_option_count; i++) {
+        char buffer[MAX_STRING_LENGTH];
+
         if (i == selected_index) {
-            char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "> %-253s", menu_options[i].characters);
-            tb_print(vec.dx, vec.dy++, TB_BOLD, TB_DEFAULT, buffer);
+            snprintf(buffer, sizeof(buffer), "> %-253s", (char*) &menu_options[i]);
+            ncplane_set_styles(stdplane, NCSTYLE_BOLD);
         } else {
-            char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "  %-253s", menu_options[i].characters);
-            tb_print(vec.dx, vec.dy++, TB_WHITE, TB_DEFAULT, buffer);
+            snprintf(buffer, sizeof(buffer), "  %-253s", (char*) &menu_options[i]);
+            ncplane_set_styles(stdplane, NCSTYLE_NONE);
         }
+
+        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, buffer);
+        vec.dy++;
     }
+
     if (key_msg != NULL) {
-        tb_print(vec.dx, vec.dy + 1, TB_WHITE, TB_DEFAULT, key_msg);
+        ncplane_set_styles(stdplane, NCSTYLE_NONE);
+        ncplane_printf_yx(stdplane, vec.dy + 1, vec.dx, key_msg);
     }
 
     if (tail_msg != NULL) {
-        tb_print(vec.dx, vec.dy + 2, TB_WHITE, TB_DEFAULT, tail_msg);
+        ncplane_set_styles(stdplane, NCSTYLE_NONE);
+        ncplane_printf_yx(stdplane, vec.dy + 2, vec.dx, tail_msg);
     }
-    tb_present();
+    notcurses_render(nc);
 }
 
 /**
@@ -84,13 +103,18 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
 
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), "%s", inventory_log_message);
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, message);
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, "Press any key to continue...");
-    tb_present();
+
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
+
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, message);
+    anchor.dy++;
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, "Press any key to continue...");
+    anchor.dy++;
+    notcurses_render(nc);
 
     // Waiting for input
-    struct tb_event event;
-    tb_poll_event(&event);
+    ncinput input;
+    notcurses_get_blocking(nc, &input);
 }
 
 /**
@@ -100,11 +124,13 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
  * @return The updated y-coordinate after drawing the resource bar.
  */
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c) {
-    const char* str_format = "%-10s | Health %-4d | Mana %-4d | Stamina %-4d";
-
     char c_info[MAX_STRING_LENGTH];
-    snprintf(c_info, sizeof(c_info), str_format, c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
+    snprintf(c_info, sizeof(c_info), "%-10s | Health %-4d | Mana %-4d | Stamina %-4d", c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
 
-    tb_print(anchor.dx, anchor.dy++, TB_WHITE, TB_DEFAULT, c_info);
+    // White on black
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
+
+    ncplane_putstr_yx(stdplane, anchor.dy, anchor.dx, c_info);
+    anchor.dy++;
     return anchor.dy;
 }
