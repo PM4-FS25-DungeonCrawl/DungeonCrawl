@@ -11,6 +11,7 @@
 #include "menu/main_menu.h"
 #include "notcurses/notcurses.h"
 #include "src/database/gamestate/gamestate_database.h"
+#include "stats/draw/draw_stats.h"
 
 #include <time.h>
 
@@ -64,6 +65,10 @@ int init() {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
     }
+    if (init_stats_mode() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Stats", "Failed to intialize stats components");
+        return FAIL_STATS_MODE_INIT;
+    }
 
     // TODO initialize notcurses here
 
@@ -77,6 +82,7 @@ void shutdown_game() {
     db_close(&db_connection);
 
     shutdown_combat_mode();
+    shutdown_stats_mode();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);

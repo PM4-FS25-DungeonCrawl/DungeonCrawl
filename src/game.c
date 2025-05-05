@@ -12,6 +12,7 @@
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
 #include "src/common.h"
+#include "stats/stats_mode.h"
 
 #include <locale.h>
 #include <notcurses/notcurses.h>
@@ -71,6 +72,19 @@ void game_loop() {
                 reset_goblin();
                 combat_mode_state();
                 break;
+            case STATS_MODE:
+                stats_mode(player);// Pass your player object
+
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                    }
+                }
+                current_state = MAP_MODE;
+                break;
+
+
             case EXIT:
                 running = false;
                 break;
@@ -218,6 +232,14 @@ void map_mode_state() {
             }
             current_state = MAIN_MENU;
             break;
+        case SHOW_STATS:
+            // clear screen
+            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+                }
+            }
+            current_state = STATS_MODE;
         default:
             log_msg(ERROR, "game", "Unknown return value from map_mode_update");
     }

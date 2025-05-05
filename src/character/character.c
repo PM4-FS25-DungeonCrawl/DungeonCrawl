@@ -213,6 +213,11 @@ void set_xp_reward(character_t* character, int xp_reward) {
     character->xp_reward = xp_reward;
 }
 
+void set_skill_points(character_t* character, int skill_points) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_skill_points character is NULL");
+    character->skill_points = skill_points;
+}
+
 void reset_player_stats(character_t* player) {
     if (player == NULL) return;
 
