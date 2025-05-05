@@ -2,9 +2,10 @@
 project('DungeonCrawl', 'c',
         version : '0.1',
         default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
-
+add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
 # List of external dependencies
-# termbox = dependency('termbox2')
+notcurses = dependency('notcurses', required: true)
+
 
 
 # List of all source files. Per meson convention all files are listed seperately.
@@ -43,14 +44,9 @@ src_files = files(
     'src/combat/damage.c',
 
     'src/combat/draw/draw_combat_mode.c',
-)
-
-include_files = files(
-    'include/termbox2.c'
-)
-
-debug_files = files(
-    'debug/debug.c'
+    'src/stats/stats.c',
+    'src/stats/draw/draw_stats.c',
+    'src/stats/stats_mode.c'
 )
 
 # List of all database files
@@ -82,10 +78,9 @@ subdir('test')
 executable(
     'DungeonCrawl',
     src_files,
-    include_files,
-    debug_files,
     database_files,
     logging_files,
     local_files,
-    memory_files
+    memory_files,
+    dependencies: [notcurses] 
 )

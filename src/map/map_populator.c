@@ -4,7 +4,12 @@
 
 #include <stdlib.h>
 
-// Check if a cell is a dead end (is floor and has only one neighboring non-wall cell)
+/**
+ * Check if a cell is a dead end (is floor and has only one neighboring non-wall cell)
+ * @param x the x coordinate of the cell
+ * @param y the y coordinate of the cell
+ * @return 1 if the cell is a dead end, 0 otherwise
+ */
 int is_dead_end(int x, int y) {
     // Count neighboring non-wall cells
     int neighbor_count = 0;
@@ -21,12 +26,15 @@ int is_dead_end(int x, int y) {
     return neighbor_count == 1 && map[x][y] == FLOOR;
 }
 
-// Place a key in a dead end that is not the start or exit edge
+
+/**
+ * Place a key in a dead end that is not the start or exit edge
+ */
 void place_key() {
     int x;
     int y;
 
-    // check for dead ends in a snake pattern and place the key in the first one found
+    // place the key in the first dead end found
     do {
         x = rand() % (WIDTH - 2) + 1;
         y = rand() % (HEIGHT - 2) + 1;
@@ -35,7 +43,13 @@ void place_key() {
     map[x][y] = KEY;
 }
 
-// Check if a cell is close to an enemy (based on ENEMY_MIN_DISTANCE)
+
+/**
+ * Check if a cell is close to an enemy (based on ENEMY_MIN_DISTANCE)
+ * @param x the x coordinate of the cell
+ * @param y the y coordinate of the cell
+ * @return 1 if the cell is close to an enemy, 0 otherwise
+ */
 int is_close_to_enemy(int x, int y) {
     for (int i = -ENEMY_MIN_DISTANCE; i <= ENEMY_MIN_DISTANCE + 1; i++) {
         for (int j = -ENEMY_MIN_DISTANCE; j <= ENEMY_MIN_DISTANCE + 1; j++) {
@@ -47,7 +61,9 @@ int is_close_to_enemy(int x, int y) {
     return 0;
 }
 
-// Place enemies in random locations
+/**
+ * Place enemies in random locations on the map
+ */
 void place_enemies() {
     for (int i = 0; i < ENEMY_COUNT; i++) {
         int x;
@@ -63,8 +79,37 @@ void place_enemies() {
     }
 }
 
-// Populate the map
+
+/**
+ * Place a mana fountain and a life fountain in random dead ends on the map
+ */
+void place_fountains() {
+    int x;
+    int y;
+
+    // place the life fountain in the first dead end found
+    do {
+        x = rand() % (WIDTH - 2) + 1;
+        y = rand() % (HEIGHT - 2) + 1;
+    } while (!is_dead_end(x, y));
+
+    map[x][y] = LIFE_FOUNTAIN;
+
+    // place the mana fountain in the first dead end found
+    do {
+        x = rand() % (WIDTH - 2) + 1;
+        y = rand() % (HEIGHT - 2) + 1;
+    } while (!is_dead_end(x, y));
+
+    map[x][y] = MANA_FOUNTAIN;
+}
+
+
+/**
+ * populates the map with a key, enemies, and fountains
+ */
 void populate_map() {
     place_key();
     place_enemies();
+    place_fountains();
 }
