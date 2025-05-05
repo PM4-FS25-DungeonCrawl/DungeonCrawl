@@ -29,6 +29,6 @@ typedef struct {
     int magic_resist;// reduced magical damage taken
 } defenses_t;
 
-void raise_skill(stats_t* stats, int stat, int skillpoint);
+void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint);
 
 #endif//STATS_H

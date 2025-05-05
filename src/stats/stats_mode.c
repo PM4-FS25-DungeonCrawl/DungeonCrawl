@@ -44,16 +44,16 @@ void stats_mode(character_t* player) {
                 if (player->skill_points > 0) {
                     switch (selected_index) {
                         case 0:
-                            raise_skill(&player->base_stats, 0, player->skill_points);
+                            raise_skill(&player->base_stats, STRENGTH, player->skill_points);
                             break;
                         case 1:
-                            raise_skill(&player->base_stats, 1, player->skill_points);
+                            raise_skill(&player->base_stats, INTELLIGENCE, player->skill_points);
                             break;
                         case 2:
-                            raise_skill(&player->base_stats, 2, player->skill_points);
+                            raise_skill(&player->base_stats, DEXTERITY, player->skill_points);
                             break;
                         case 3:
-                            raise_skill(&player->base_stats, 3, player->skill_points);
+                            raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
                             break;
                         default:;
                     }

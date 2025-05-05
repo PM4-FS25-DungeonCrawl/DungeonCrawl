@@ -3,7 +3,7 @@
 #include "../logging/logger.h"
 
 
-void raise_skill(stats_t* stats, int stat, int skillpoint) {
+void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint) {
     if (stats == NULL) {
         log_msg(ERROR, "Stats", "Stats pointer is NULL");
         return;
@@ -11,16 +11,16 @@ void raise_skill(stats_t* stats, int stat, int skillpoint) {
     if (1 <= skillpoint) {
         skillpoint--;
         switch (stat) {
-            case 0:
+            case STRENGTH:
                 stats->strength++;
                 break;
-            case 1:
+            case INTELLIGENCE:
                 stats->intelligence++;
                 break;
-            case 2:
+            case DEXTERITY:
                 stats->dexterity++;
                 break;
-            case 3:
+            case CONSTITUTION:
                 stats->constitution++;
                 break;
             default:
