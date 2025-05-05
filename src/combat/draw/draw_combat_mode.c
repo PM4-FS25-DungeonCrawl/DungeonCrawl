@@ -188,8 +188,11 @@ vector2d_t draw_combat_view_image(const vector2d_t anchor, const character_t* pl
         int term_y = ncplane_dim_y(stdplane);
         
         // Make the image MUCH smaller - tiny version
-        int target_height = term_y / 64; // Just 1/8 of terminal height (very small)
+        int target_height = term_y / 64; // 1/8 of terminal height
         int target_width = 0;           // Auto-calculate width to maintain aspect ratio
+        
+        // For GIF animations, check if there are multiple frames
+        bool is_gif = strstr(image_path, ".gif") != NULL;
         
         // Use ncvisual_blit to render the image with proper pixel scaling
         struct ncvisual_options vopts = {
@@ -201,24 +204,166 @@ vector2d_t draw_combat_view_image(const vector2d_t anchor, const character_t* pl
             .lenx = target_width       // Scale to target width
         };
         
-        struct ncplane* plane = ncvisual_blit(nc, visual, &vopts);
+        struct ncplane* plane;
+        
+        // For GIFs, handle animation differently
+        if (is_gif) {
+            // Set up for displaying the first frame only (we don't advance frames in this implementation)
+            // This could be enhanced to support animation by adding a frame loop
+            plane = ncvisual_blit(nc, visual, &vopts);
+        } else {
+            // Normal image handling
+            plane = ncvisual_blit(nc, visual, &vopts);
+        }
+        
         if (plane == NULL) {
             // If image rendering fails, fall back to ASCII representation
             log_msg(ERROR, "Combat Mode", "Failed to render image from %s", image_path);
-            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "[Goblin Image]");
-            vec.dy += 1;
-            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "XX   XX");
-            vec.dy += 1;
-            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " XX XX ");
-            vec.dy += 1;
-            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "  XXX  ");
-            vec.dy += 1;
-            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " XXXXX ");
+            if (strstr(image_path, "astronaut.gif") != NULL) {
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "[Astronaut Image]");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "  o   ");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " /|\\  ");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " / \\  ");
+            } else {
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "[Goblin Image]");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "XX   XX");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " XX XX ");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "  XXX  ");
+                vec.dy += 1;
+                ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, " XXXXX ");
+            }
             vec.dy += 5;
         } else {
             // Image displayed successfully, move cursor below it
             // Use the new tiny height (1/8 of terminal height) plus padding
             vec.dy += target_height + 1;
+        }
+        
+        // Reset the colors
+        ncplane_set_channels(stdplane, DEFAULT_COLORS);
+        
+        // Clean up
+        ncvisual_destroy(visual);
+    }
+
+    vec.dy += 1;
+    notcurses_render(nc);
+    return vec;
+}
+
+/**
+ * @brief Draws the combat view using an animated GIF
+ * @param anchor the anchor point of the combat view, representing the top left corner
+ * @param player the player character
+ * @param enemy the enemy character
+ * @param image_path the path to the GIF file
+ * @param red_enemy if true, apply red tint to the enemy image
+ * @return the new anchor point after drawing the combat view
+ */
+vector2d_t draw_combat_view_animated(const vector2d_t anchor, const character_t* player, const character_t* enemy, const char* image_path, const bool red_enemy) {
+    // Copy of the anchor
+    vector2d_t vec = {anchor.dx, anchor.dy};
+
+    // Clear the screen before drawing
+    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
+        }
+    }
+
+    // Draw title
+    ncplane_printf_yx(stdplane, vec.dy, anchor.dx + 20, "Combat Mode");
+    vec.dy += 2;
+
+    vec.dy = draw_resource_bar(vec, player);
+    vec.dy = draw_resource_bar(vec, enemy);
+    vec.dy += 2;
+
+    // Load animated GIF
+    struct ncvisual* visual = ncvisual_from_file(image_path);
+    if (visual == NULL) {
+        log_msg(ERROR, "Combat Mode", "Failed to load animation from %s", image_path);
+        // Fallback to text
+        ncplane_printf_yx(stdplane, vec.dy, anchor.dx, "Failed to load animation");
+        vec.dy += 3;
+    } else {
+        // Apply red colors if requested
+        if (red_enemy) {
+            ncplane_set_channels(stdplane, RED_TEXT_COLORS);
+        } else {
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+        }
+        
+        // Get terminal dimensions
+        int term_y = ncplane_dim_y(stdplane);
+        
+        // Make the animation extremely small (1/64 of terminal height)
+        int target_height = term_y / 64; // 1/64 of terminal height
+        int target_width = 0;            // Auto-calculate width to maintain aspect ratio
+        
+        // Create ncvisual_options for rendering
+        struct ncvisual_options vopts = {
+            .n = stdplane,
+            .y = vec.dy,
+            .x = anchor.dx,
+            .scaling = NCSCALE_SCALE,   // Enable scaling mode
+            .leny = target_height,      // Scale to target height
+            .lenx = target_width        // Auto-calculate width to maintain aspect ratio
+        };
+        
+        // Create a plane for the animation
+        struct ncplane* plane = ncvisual_blit(nc, visual, &vopts);
+        if (plane == NULL) {
+            log_msg(ERROR, "Combat Mode", "Failed to render animation from %s", image_path);
+            ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, "[Animation Failed]");
+            vec.dy += 5;
+        } else {
+            // Display the animation for a short time
+            int frames = 0;
+            bool continue_animation = true;
+            
+            // Update the cursor position based on GIF size
+            vec.dy += target_height + 1;
+            
+            // Setup non-blocking input
+            notcurses_render(nc);
+            ncinput input;
+            memset(&input, 0, sizeof(input));
+            
+            // Loop through frames (with a max limit)
+            while (continue_animation && frames < 50) {
+                // Advance to the next frame, loop back to the beginning when done
+                if (ncvisual_decode_loop(visual) >= 0) {
+                    // Render the new frame
+                    if (ncvisual_blit(nc, visual, &vopts) == NULL) {
+                        log_msg(ERROR, "Combat Mode", "Failed to render frame %d", frames);
+                        break;
+                    }
+                    
+                    // Render the frame
+                    notcurses_render(nc);
+                    
+                    // Small delay between frames
+                    struct timespec ts = { .tv_sec = 0, .tv_nsec = 100000000 }; // 100ms
+                    nanosleep(&ts, NULL);
+                    
+                    // Check for any key press to stop animation
+                    if (notcurses_get_nblock(nc, &input) != NULL) {
+                        continue_animation = false;
+                    }
+                    
+                    frames++;
+                } else {
+                    log_msg(ERROR, "Combat Mode", "Failed to decode frame");
+                    break;
+                }
+            }
         }
         
         // Reset the colors

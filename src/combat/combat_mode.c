@@ -68,8 +68,8 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     internal_combat_state_t combat_state = COMBAT_MENU;
     combat_result_t combat_result = EXIT_GAME;
     bool combat_active = true;
-    // Use image display for goblins
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    // Use animated GIF display for astronaut
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
 
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
@@ -126,8 +126,8 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
 internal_combat_state_t
 combat_menu(const character_t* player, const character_t* monster) {
-    // draw combat view
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    // draw combat view with animated GIF
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
     int selected_index = 0;
 
     internal_combat_state_t new_state = COMBAT_MENU;
@@ -181,8 +181,8 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
             ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
         }
     }
-    // draw combat view
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    // draw combat view with animated GIF
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
     int selected_index = 0;
 
     internal_combat_state_t new_state = ABILITY_MENU;
@@ -227,8 +227,8 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 }
 
 internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
-    // draw combat view
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    // draw combat view with animated GIF
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
     int selected_index = 0;
 
     if (player->potion_count == 0) {
@@ -292,12 +292,12 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
         sprite = false;
     }
 
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             const int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
-            draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", sprite);
+            draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", sprite);
 
 
             memset(message, 0, sizeof(message));
@@ -309,7 +309,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                      target->name);
             draw_combat_log(anchor, message);
         } else {
-            draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+            draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), local_strings[como_attack_miss.idx].characters,//TODO: This Method of using formats is not safe!!
@@ -328,7 +328,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* item) {
-    const vector2d_t anchor = draw_combat_view_image(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/goblin.png", false);
+    const vector2d_t anchor = draw_combat_view_animated(combat_view_anchor, player, monster, "/home/jil/DungeonCrawl/src/art/astronaut.gif", false);
     invoke_potion_effect(player, item);
 
     char message[MAX_STRING_LENGTH];
