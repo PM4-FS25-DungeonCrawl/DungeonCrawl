@@ -3,6 +3,7 @@
 
 #include "../../character/stats.h"
 #include "../../item/gear.h"
+#include "../../combat/ability.h"
 #include "../../item/potion.h"
 #include "../database.h"
 
@@ -28,7 +29,8 @@ typedef struct gear_init_t{
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;
-    // ability_t abilities[4];
+    ability_names_t ability_names[MAX_ABILITY_PER_GEAR];
+    int num_abilities;
 } gear_init_t;
 /**
  * Get the potion table from the database
