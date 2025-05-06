@@ -119,6 +119,7 @@ helper_stats = files(
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
+    '../src/thread/thread_handler.c',
 
     '../src/local/local.c',
     '../include/sqlite3.c',
