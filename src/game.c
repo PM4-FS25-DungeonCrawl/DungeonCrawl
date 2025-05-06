@@ -105,7 +105,6 @@ void game_loop() {
 void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
-            log_msg(INFO, "Game", "Starting new game");
             game_in_progress = true;// Mark that a game is now in progress
             // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
@@ -127,8 +126,6 @@ void main_menu_state() {
             current_state = MAP_MODE;
             break;
         case MENU_SAVE_GAME:
-            log_msg(INFO, "Game", "Saving game state to database");
-
             // Get the save name from the menu
             const char* save_name = get_save_name();
             if (save_name == NULL) {
@@ -149,8 +146,6 @@ void main_menu_state() {
             current_state = MAP_MODE;
             break;
         case MENU_LOAD_GAME:
-            log_msg(INFO, "Game", "Loading game state from database");
-
             const int save_id = get_selected_save_file_id();
             bool load_success = false;
 
@@ -218,7 +213,6 @@ void map_mode_state() {
             current_state = GENERATE_MAP;
             break;
         case COMBAT:
-            log_msg(INFO, "Game", "Entering combat mode");
             current_state = COMBAT_MODE;
             break;
         case SHOW_MENU:
@@ -249,7 +243,6 @@ void combat_mode_state() {
         case CONTINUE_COMBAT:
             break;
         case PLAYER_WON:
-            log_msg(FINE, "Game", "Player won the combat");
             // TODO: add loot to player
             // TODO: delete goblin from map
             // clear screen
@@ -263,7 +256,6 @@ void combat_mode_state() {
             current_state = MAP_MODE;
             break;
         case PLAYER_LOST:
-            log_msg(FINE, "Game", "Player lost the combat");
             //TODO: instead of exiting the game, a death screen should be shown
             current_state = EXIT;
             break;
