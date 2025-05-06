@@ -70,7 +70,6 @@ void game_loop() {
                 map_mode_state();
                 break;
             case COMBAT_MODE:
-                reset_goblin();
                 combat_mode_state();
                 break;
             case LOOT_MODE:
@@ -261,9 +260,6 @@ void combat_mode_state() {
             break;
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
-            current_state = LOOT_MODE;
-            // TODO: add loot to player
-            // TODO: delete goblin from map
             // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
             for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {

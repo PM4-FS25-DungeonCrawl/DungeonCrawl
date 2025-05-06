@@ -86,9 +86,10 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
         case EVALUATE_COMBAT:
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
-                return PLAYER_LOST;
                 draw_game_over();
-            } else if (monster->current_resources.health <= 0) {
+                return PLAYER_LOST;
+            }
+            if (monster->current_resources.health <= 0) {
                 // clear screen
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
@@ -96,17 +97,18 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                         ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
                     }
                 }
+
                 char message[MAX_STRING_LENGTH];
                 snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
                 draw_combat_log(anchor, message);
+
                 player->xp += monster->xp_reward;
                 if (player->xp >= calculate_xp_for_next_level(player->level)) {
                     level_up(player);
                 }
                 return PLAYER_WON;
-            } else {
-                combat_state = COMBAT_MENU;
             }
+            combat_state = COMBAT_MENU;
             break;
         case COMBAT_EXIT:
             return EXIT_GAME;
