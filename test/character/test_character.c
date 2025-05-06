@@ -1,4 +1,5 @@
 #include "../../src/character/character.h"
+#include "../../src/character/level.h"
 #include "../../src/combat/ability.h"
 
 #include <assert.h>
@@ -80,6 +81,15 @@ void test_reset_current_stats() {
     printf("test_reset_current_stats passed\n");
 }
 
+void test_character_level_up() {
+    character_t* character = setup_character();
+    int initial_level = character->level;
+    level_up(character);
+    assert(character->level == initial_level + 1);
+    free_character(test_character_memory_pool, character);
+    printf("test_character_level_up passed\n");
+}
+
 int main(void) {
     setup();
     test_init_character();
@@ -88,5 +98,6 @@ int main(void) {
     test_add_gear();
     test_add_potion();
     test_reset_current_stats();
+    test_character_level_up();
     return 0;
 }
