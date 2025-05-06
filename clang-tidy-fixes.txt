@@ -1,13 +1,3 @@
-../src/combat/combat_mode.h:36:6: warning: function 'use_potion' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-   36 | void use_potion(character_t* player, const character_t* monster, potion_t* item);
-      |      ^
-../src/combat/combat_mode.c:318:6: note: the definition seen here
-  318 | void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
-      |      ^
-../src/combat/combat_mode.h:36:6: note: differing parameters are named here: ('item'), in definition: ('potion')
-   36 | void use_potion(character_t* player, const character_t* monster, potion_t* item);
-      |      ^                                                                     ~~~~
-      |                                                                            potion
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
