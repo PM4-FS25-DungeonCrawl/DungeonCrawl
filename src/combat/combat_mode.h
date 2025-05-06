@@ -8,12 +8,13 @@
 typedef enum {
     COMBAT_MENU,
     ABILITY_MENU,
-    ITEM_MENU,
+    POTION_MENU,
     EVALUATE_COMBAT,// checks if the combat reached an end
     COMBAT_EXIT     // exit combat & game
 } internal_combat_state_t;
 
 typedef enum {
+    CONTINUE_COMBAT,
     PLAYER_WON,
     PLAYER_LOST,
     EXIT_GAME

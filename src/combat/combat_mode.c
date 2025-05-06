@@ -22,8 +22,7 @@
 #endif /* ifdef __APPLE__ */
 
 
-// === Internal Functions ===
-//TODO: Should these 2 function not be in to character.c?
+// Internal functions
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
 
@@ -41,8 +40,9 @@ void collect_potion_menu_options(potion_t* potions[], int count);
  */
 void update_combat_local(void);
 
-// === Intern Global Variables ===
+// Internal global variables
 vector2d_t combat_view_anchor = {1, 1};
+internal_combat_state_t combat_state = COMBAT_MENU;
 
 string_max_t* ability_menu_options;
 string_max_t* potion_menu_options;
@@ -67,65 +67,55 @@ int init_combat_mode() {
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
-    internal_combat_state_t combat_state = COMBAT_MENU;
-    combat_result_t combat_result = EXIT_GAME;
-    bool combat_active = true;
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_menu_options(player->potion_inventory, player->potion_count);
 
-    while (combat_active) {
-        switch (combat_state) {
-            case COMBAT_MENU:
-                combat_state = combat_menu(player, monster);
-                break;
-            case ABILITY_MENU:
-                combat_state = ability_menu(player, monster);
-                break;
-            case ITEM_MENU:
-                combat_state = potion_menu(player, monster);
-                break;
-            case EVALUATE_COMBAT:
-                // evaluate the combat result
-                if (player->current_resources.health <= 0) {
-                    combat_result = PLAYER_LOST;
-                    draw_game_over();
-                    combat_active = false;// exit the combat loop
-                } else if (monster->current_resources.health <= 0) {
-                    combat_result = PLAYER_WON;
-
-                    // clear screen
-                    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                        }
+    switch (combat_state) {
+        case COMBAT_MENU:
+            combat_state = combat_menu(player, monster);
+            break;
+        case ABILITY_MENU:
+            combat_state = ability_menu(player, monster);
+            break;
+        case POTION_MENU:
+            combat_state = potion_menu(player, monster);
+            break;
+        case EVALUATE_COMBAT:
+            // evaluate the combat result
+            if (player->current_resources.health <= 0) {
+                return PLAYER_LOST;
+                draw_game_over();
+            } else if (monster->current_resources.health <= 0) {
+                // clear screen
+                ncplane_set_channels(stdplane, DEFAULT_COLORS);
+                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
+                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
+                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
                     }
-                    char message[MAX_STRING_LENGTH];
-                    snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
-                    draw_combat_log(anchor, message);
-                    combat_active = false;// exit the combat loop
-                    player->xp += monster->xp_reward;
-                    if (player->xp >= calculate_xp_for_next_level(player->level)) {
-                        level_up(player);
-                    }
-                } else {
-                    combat_state = COMBAT_MENU;
                 }
-                break;
-            case COMBAT_EXIT:
-                combat_result = EXIT_GAME;
-                combat_active = false;// exit the combat loop
-                break;
-        }
+                char message[MAX_STRING_LENGTH];
+                snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
+                draw_combat_log(anchor, message);
+                player->xp += monster->xp_reward;
+                if (player->xp >= calculate_xp_for_next_level(player->level)) {
+                    level_up(player);
+                }
+                return PLAYER_WON;
+            } else {
+                combat_state = COMBAT_MENU;
+            }
+            break;
+        case COMBAT_EXIT:
+            return EXIT_GAME;
+            break;
     }
-    return combat_result;
+    return CONTINUE_COMBAT;
 }
 
-internal_combat_state_t
-combat_menu(const character_t* player, const character_t* monster) {
+internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
@@ -161,7 +151,7 @@ combat_menu(const character_t* player, const character_t* monster) {
             if (selected_index == 0) {
                 new_state = ABILITY_MENU;
             } else if (selected_index == 1) {
-                new_state = ITEM_MENU;
+                new_state = POTION_MENU;
             }
             submenu_selected = true;
         } else if (event.id == 'c' && (event.modifiers & NCKEY_MOD_CTRL)) {
@@ -236,7 +226,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
         return COMBAT_MENU;
     }
 
-    internal_combat_state_t new_state = ITEM_MENU;
+    internal_combat_state_t new_state = POTION_MENU;
     bool item_used_or_esc = false;
 
     while (!item_used_or_esc) {
@@ -326,16 +316,16 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
     notcurses_render(nc);
 }
 
-void use_potion(character_t* player, const character_t* monster, potion_t* item) {
+void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
-    invoke_potion_effect(player, item);
+    invoke_potion_effect(player, potion);
 
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), local_strings[como_potion_use.idx].characters,//TODO: This Method of using formats is not safe!!
              player->name,
-             item->name,
-             item->value,
-             potion_type_to_string(item->effectType));
+             potion->name,
+             potion->value,
+             potion_type_to_string(potion->effectType));
     draw_combat_log(anchor, message);
 }
 
