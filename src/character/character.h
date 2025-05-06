@@ -58,15 +58,16 @@ void update_character_resources(resources_t* max_resources, stats_t* base_stats)
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
 void add_ability(character_t* c, ability_t* ability);
+void remove_ability(character_t* c, const ability_t* ability);
 
-void add_gear(character_t* c, gear_t* item);
-void remove_gear(character_t* c, gear_t* item);
 void remove_equipped_gear(character_t* c, gear_slot_t slot);
 
-void add_potion(character_t* c, potion_t* item);
-void remove_potion(character_t* c, potion_t* item);
+void add_potion(character_t* c, potion_t* potion);
+void remove_potion(character_t* c, potion_t* potion);
 
-void equip_gear(character_t* c, gear_t* item);
+void add_gear(character_t* c, gear_t* gear);
+void remove_gear(character_t* c, gear_t* gear);
+void equip_gear(character_t* c, gear_t* gear);
 void unequip_gear(character_t* c, gear_slot_t slot);
 
 void reset_current_stats(character_t* character);
