@@ -20,6 +20,15 @@
 ../src/logging/logger.c:165:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   165 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
+../src/game.c:258:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  258 |         case PLAYER_LOST:
+      |         ^
+../src/game.c:264:18: note: last of these clones ends here
+  264 |             break;
+      |                  ^
+../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+    |             ^
 ../src/main.c:41:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    41 |     srand(time(NULL));
       |     ^

@@ -121,8 +121,6 @@ menu_result_t show_main_menu(const bool game_in_progress) {
 }
 
 void select_menu_option(const int selected_index, const bool game_in_progress) {
-    log_msg(INFO, "Main Menu", "Selected option: %d", selected_index);
-
     //if the game is not in progress and the selected index is bigger than 0, we need to add 2 to the selected index
     const int true_index = selected_index > 0 && !game_in_progress ? selected_index + 2 : selected_index;
 
@@ -138,9 +136,7 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
             menu_active = false;
             break;
         case 2:// Save Game
-            log_msg(INFO, "Main Menu", "Calling show_save_game_menu");
             active_menu_state = show_save_game_menu();
-            log_msg(INFO, "Main Menu", "Returned from show_save_game_menu with result: %d", active_menu_state);
             if (active_menu_state == MENU_SAVE_GAME) {
                 menu_active = false;
             }
