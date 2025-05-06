@@ -7,7 +7,7 @@
 #include "../item/gear.h"
 #include "../item/potion.h"
 #include "../memory/memory_management.h"
-#include "stats.h"
+#include "../stats/stats.h"
 
 #define MAX_ABILITY_LIMIT 20
 #define MAX_GEAR_LIMIT 20
@@ -58,14 +58,14 @@ void update_character_resources(resources_t* max_resources, stats_t* base_stats)
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
 void add_ability(character_t* c, ability_t* ability);
+void remove_ability(character_t* c, const ability_t* ability);
 
-void add_gear(character_t* c, gear_t* item);
-void remove_gear(character_t* c, gear_t* item);
+void add_potion(character_t* c, potion_t* potion);
+void remove_potion(character_t* c, potion_t* potion);
 
-void add_potion(character_t* c, potion_t* item);
-void remove_potion(character_t* c, potion_t* item);
-
-void equip_gear(character_t* c, gear_t* item);
+void add_gear(character_t* c, gear_t* gear);
+void remove_gear(character_t* c, gear_t* gear);
+void equip_gear(character_t* c, gear_t* gear);
 void unequip_gear(character_t* c, gear_slot_t slot);
 
 void reset_current_stats(character_t* character);
@@ -73,6 +73,7 @@ void reset_current_stats(character_t* character);
 void set_level(character_t* character, int level);
 void set_xp_reward(character_t* character, int xp_reward);
 void set_initial_xp(character_t* character, int xp);
+void set_skill_points(character_t* character, int skill_points);
 
 void reset_player_stats(character_t* player);
 

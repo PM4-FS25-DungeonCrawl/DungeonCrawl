@@ -18,6 +18,7 @@ typedef enum {
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
+    STATS_MODE,
     EXIT
 } game_state_t;
 
