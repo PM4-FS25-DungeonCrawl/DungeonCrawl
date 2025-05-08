@@ -6,9 +6,9 @@
 #include "../common.h"
 #include "../item/gear.h"
 #include "../item/potion.h"
+#include "../local/local_strings.h"
 #include "../memory/memory_management.h"
 #include "../stats/stats.h"
-#include "../local/local_strings.h"
 
 #define MAX_ABILITY_LIMIT 20
 #define MAX_GEAR_LIMIT 20
