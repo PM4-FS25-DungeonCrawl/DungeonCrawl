@@ -1,10 +1,10 @@
 # Define project language and version.
 project('DungeonCrawl', 'c',
         version : '0.1',
-        default_options : ['c_std=gnu2x','warning_level=3','debug=true'])
+        default_options : ['c_std=gnu2x', 'warning_level=3', 'debug=true'])
 add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
 # List of external dependencies
-notcurses = dependency('notcurses', required: true)
+notcurses = dependency('notcurses', required : true)
 
 
 
@@ -66,19 +66,26 @@ local_files = files(
 )
 
 memory_files = files(
-  'src/memory/memory_management.c'
+    'src/memory/memory_management.c'
 )
 
 # Include the test directory in the build.
 subdir('test')
 
-# Define the executable
-executable(
+# Copy the database file to the build directory
+configure_file(
+    input : 'resources/database/game/dungeoncrawl_game.db',
+    output : 'dungeoncrawl_game.db',
+    copy : true
+)
+
+    # Define the executable
+    executable(
     'DungeonCrawl',
     src_files,
     database_files,
     logging_files,
     local_files,
     memory_files,
-    dependencies: [notcurses] 
+    dependencies : [notcurses]
 )
