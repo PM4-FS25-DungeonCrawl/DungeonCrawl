@@ -183,6 +183,11 @@ static int animation_callback(struct ncvisual* ncv, struct ncvisual_options* vop
     
     // Render the current frame
     vopts->plane = visual->plane;
+    
+    // Critical section for rendering - use lock_output_mutex if it were accessible
+    // In a full implementation, we would use the mutex from common_output.c
+    // For now, since Notcurses manages this thread internally, we rely on its thread safety
+    
     if (!ncvisual_render(notcurses_instance, ncv, vopts)) {
         log_msg(ERROR, "media_output", "Failed to render animation frame");
         return -1;
