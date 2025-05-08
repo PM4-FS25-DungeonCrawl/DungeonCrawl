@@ -23,18 +23,21 @@ int init_game_data() {
 
     reset_goblin();
 
-    //if (ability_table == NULL || player == NULL || healing_potion == NULL) return 1;
+    if (ability_table == NULL || potion_table == NULL || gear_table == NULL || player == NULL) return 1;
     add_potion(player, &potion_table->potions[HEALING]);
 
     add_gear(player, gear_table->gears[LONGSWORD]);
-    add_gear(player, gear_table->gears[IRON_HELM_OF_THE_BEAR]);
-    add_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BEAR]);
-    add_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BEAR]);
+    equip_gear(player, player->gear_inventory[0]);
 
-    equip_gear(player, gear_table->gears[LONGSWORD]);
-    equip_gear(player, gear_table->gears[IRON_HELM_OF_THE_BEAR]);
-    equip_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BEAR]);
-    equip_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BEAR]);
+    add_gear(player, gear_table->gears[IRON_HELM_OF_THE_BOAR]);
+    equip_gear(player, player->gear_inventory[0]);
+
+    add_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BOAR]);
+    equip_gear(player, player->gear_inventory[0]);
+
+    add_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BOAR]);
+    equip_gear(player, player->gear_inventory[0]);
+
     return 0;
 }
 
