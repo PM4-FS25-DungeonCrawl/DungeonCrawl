@@ -23,6 +23,7 @@
 "FROM SplitAbilities "\
 "GROUP BY GR_ID) "\
 "SELECT GR_NAME, "\
+"GR_IDENT, "\
 "SL_NUMBER, "\
 "GR_ARMOR, "\
 "GR_MAGICRESIST, "\
@@ -161,18 +162,19 @@ gear_init_t* init_gear_table_from_db(const db_connection_t* db_connection) {
     int index = 0;
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW && index < gear_counted) {
         gear_init_table[index].name = strdup((const char*) sqlite3_column_text(stmt, 0));
-        gear_init_table[index].slot = (gear_slot_t) sqlite3_column_int(stmt, 1);
-        gear_init_table[index].defenses.armor = sqlite3_column_int(stmt, 2);
-        gear_init_table[index].defenses.magic_resist = sqlite3_column_int(stmt, 3);
-        gear_init_table[index].stats.strength = sqlite3_column_int(stmt, 4);
-        gear_init_table[index].stats.dexterity = sqlite3_column_int(stmt, 5);
-        gear_init_table[index].stats.intelligence = sqlite3_column_int(stmt, 6);
-        gear_init_table[index].stats.constitution = sqlite3_column_int(stmt, 7);
-        gear_init_table[index].num_abilities = sqlite3_column_int(stmt, 8);
-        gear_init_table[index].ability_names[0] = sqlite3_column_int(stmt, 9);
-        gear_init_table[index].ability_names[1] = sqlite3_column_int(stmt, 10);
-        gear_init_table[index].ability_names[2] = sqlite3_column_int(stmt, 11);
-        gear_init_table[index].ability_names[3] = sqlite3_column_int(stmt, 12);
+        gear_init_table[index].gear_identifier = sqlite3_column_int(stmt, 1);
+        gear_init_table[index].slot = (gear_slot_t) sqlite3_column_int(stmt, 2);
+        gear_init_table[index].defenses.armor = sqlite3_column_int(stmt, 3);
+        gear_init_table[index].defenses.magic_resist = sqlite3_column_int(stmt, 4);
+        gear_init_table[index].stats.strength = sqlite3_column_int(stmt, 5);
+        gear_init_table[index].stats.dexterity = sqlite3_column_int(stmt, 6);
+        gear_init_table[index].stats.intelligence = sqlite3_column_int(stmt, 7);
+        gear_init_table[index].stats.constitution = sqlite3_column_int(stmt, 8);
+        gear_init_table[index].num_abilities = sqlite3_column_int(stmt, 9);
+        gear_init_table[index].ability_names[0] = sqlite3_column_int(stmt, 10);
+        gear_init_table[index].ability_names[1] = sqlite3_column_int(stmt, 11);
+        gear_init_table[index].ability_names[2] = sqlite3_column_int(stmt, 12);
+        gear_init_table[index].ability_names[3] = sqlite3_column_int(stmt, 13);
         index++;
     }
     if (rc != SQLITE_DONE) {
