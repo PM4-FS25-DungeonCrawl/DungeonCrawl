@@ -185,3 +185,5 @@ Based on an analysis of the DungeonCrawl codebase, the following recommendations
    - For localization, use existing methods from src/local/* - do not modify these files
 
 This centralized approach will significantly improve code readability by removing duplicated input handling code from different game states. It will also make the codebase more maintainable and extensible for future features.
+
+IMPORTANT NOTE: we need to use the notcurses library and all it's available functionality for all input and output handling!
