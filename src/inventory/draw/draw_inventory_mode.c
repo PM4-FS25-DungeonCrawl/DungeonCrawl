@@ -120,7 +120,11 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
  */
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c) {
     char c_info[MAX_STRING_LENGTH];
-    snprintf(c_info, sizeof(c_info), "%-10s | Health %-4d | Mana %-4d | Stamina %-4d", c->name, c->current_resources.health, c->current_resources.mana, c->current_resources.stamina);
+    snprintf(c_info, sizeof(c_info), "%-20s | HP: %4d/%-4d | Mana: %4d/%-4d | Stamina: %4d/%-4d",
+         c->name,
+         c->current_resources.health, c->max_resources.health,
+         c->current_resources.mana, c->max_resources.mana,
+         c->current_resources.stamina, c->max_resources.stamina);
 
     // White on black
     ncplane_set_channels(stdplane, DEFAULT_COLORS);

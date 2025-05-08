@@ -407,7 +407,9 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
         snprintf(inventory_gear_options[i].characters, MAX_STRING_LENGTH,
                  local_strings[inmo_inventory_format.idx].characters,
                  gear_inventory[i]->name,
-                 gear_slot_to_string(gear_inventory[i]->slot));
+                 gear_slot_to_string(gear_inventory[i]->slot),
+                 gear_inventory[i]->defenses.armor,
+                 gear_inventory[i]->defenses.magic_resist);
     }
 }
 
@@ -424,7 +426,9 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
                      local_strings[inmo_equipment_format.idx].characters,
                      equipment[i]->name,
-                     gear_slot_to_string((gear_slot_t) i));
+                     gear_slot_to_string((gear_slot_t) i),
+                     equipment[i]->defenses.armor,
+                     equipment[i]->defenses.magic_resist);
         } else {
             snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
                      local_strings[inmo_equipment_format_empty.idx].characters,
