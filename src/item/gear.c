@@ -17,10 +17,6 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
     gear->slot = slot;
     gear->stats = stats;
     gear->defenses = defenses;
-    //gear->abilities[0] = ability_table.abilities[FIREBLAST];
-    //gear->abilities[1] = ability_table.abilities[FIREBALL];
-    //gear->abilities[2] = ability_table.abilities[PYROBLAST];
-    //gear->abilities[3] = ability_table.abilities[MANA_SHIELD];
 
     // Copy up to MAX_ABILITY_PER_GEAR or num_abilities, whichever is smaller
     int i = 0;
@@ -69,12 +65,6 @@ gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t*
         );
     }
     free_gear_table_from_db(rows, db_connection);
-    /*
-    for (int i = 0; i < table->num_gears; ++i) {
-        log_msg(INFO, "Database", "Gear name%s", table->gears[i]->name);
-    }
-*/
-    log_msg(INFO, "Database", "Gear name%s", table->gears[105]->name);
     return table;
 }
 

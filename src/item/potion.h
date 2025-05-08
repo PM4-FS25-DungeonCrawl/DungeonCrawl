@@ -25,8 +25,7 @@ typedef struct {
     potion_t potions[MAX_POTION_TYPES];
 } potion_table_t;
 
-potion_t* init_potion(memory_pool_t* memory_pool, const char* name, potion_type_t type, int value);
-potion_t* init_db_potion(potion_t* potion, const char* name, potion_type_t type, int value);
+potion_t* init_potion(potion_t* potion, const char* name, potion_type_t type, int value);
 potion_table_t* init_potion_table(memory_pool_t* memory_pool, const db_connection_t* db_connection);
 const char* potion_type_to_string(potion_type_t type);
 void free_potion(memory_pool_t* memory_pool, potion_t* potion);
