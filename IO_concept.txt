@@ -2,19 +2,27 @@
 
 This document outlines the IO handling architecture implemented in the TerminalGame project. This centralized approach can be implemented in other repositories to achieve a clean separation of concerns, multi-threading support, and consistent user interface experiences.
 
+## Implementation Status
+
+This document now includes implementation status markers:
+- ✅ Fully implemented
+- ⚠️ Partially implemented
+- 🔄 Ready for integration (implemented but not integrated into existing code)
+- ❌ Not yet implemented
+
 ## Core Principles
 
-1. **Separation of Concerns**: Input and output handling are completely decoupled from game logic.
-2. **Thread Safety**: Input handling runs in a separate thread to ensure UI responsiveness.
-3. **Abstraction Layers**: Hardware-specific code is abstracted away from application logic.
-4. **Centralized Management**: All IO operations go through dedicated handlers.
-5. **Extensibility**: Design supports adding new input/output types without modifying core logic.
+1. **Separation of Concerns**: Input and output handling are completely decoupled from game logic. ✅
+2. **Thread Safety**: Input handling runs in a separate thread to ensure UI responsiveness. ✅
+3. **Abstraction Layers**: Hardware-specific code is abstracted away from application logic. ✅
+4. **Centralized Management**: All IO operations go through dedicated handlers. ✅
+5. **Extensibility**: Design supports adding new input/output types without modifying core logic. ✅
 
 ## Input Handling Architecture
 
 ### Components
 
-1. **Input Handler (src/io/input/input_handler.h/c)**
+1. **Input Handler (src/io/input/input_handler.h/c)** ✅
    - Initializes and manages a dedicated input thread
    - Maintains a circular buffer for input events
    - Translates hardware-specific events into application-specific input types
@@ -22,170 +30,145 @@ This document outlines the IO handling architecture implemented in the TerminalG
 
 ### Implementation Details
 
-1. **Input Enumeration**:
+1. **Input Enumeration**: ✅
    - Define an application-specific input enumeration (input_t) that maps various inputs (keyboard, mouse, etc.) to logical actions.
    - Example: UP, DOWN, LEFT, RIGHT, ENTER, ESCAPE, etc.
 
-2. **Threaded Event Processing**:
+2. **Threaded Event Processing**: ✅
    - Input events are processed in a dedicated thread to prevent UI blocking.
    - Thread continuously polls for hardware events and converts them to the application's input type.
    - Uses a circular buffer to store inputs between processing cycles.
 
-3. **Interface**:
+3. **Interface**: ✅
    - `init_input_handler()`: Initializes the handler and starts the input thread.
-   - `get_next_input()`: Retrieves the next input from the buffer (non-blocking).
+   - `get_input_blocking()`: Retrieves the next input from the buffer (blocking).
+   - `get_input_nonblocking()`: Retrieves the next input from the buffer (non-blocking).
    - `shutdown_input_handler()`: Cleans up resources and stops the input thread.
 
 ## Output Handling Architecture
 
 ### Components
 
-1. **Common Output (src/io/output/common/common_output.h/c)**
+1. **Common Output (src/io/output/common/common_output.h/c)** ✅
    - Provides basic text and menu rendering functionality
    - Abstracts terminal/display operations
 
-2. **Specialized Output (src/io/output/specific/...)**
-   - Domain-specific rendering (e.g., map_output.c for map rendering)
-   - Implements optimized rendering for particular data structures
+2. **Specialized Output (src/io/output/specific/...)** ✅
+   - Domain-specific rendering:
+     - map_output.c for map rendering ✅
+     - stats_output.c for character stats ✅
+     - inventory_output.c for items and equipment ✅
+     - combat_output.c for combat scenarios ✅
 
-3. **Color Management (src/io/colors.h)**
+3. **Color Management (src/io/colors.h)** ✅
    - Defines a platform-independent color enumeration
    - Maps internal colors to hardware-specific color codes
 
 ### Implementation Details
 
-1. **Abstracted Rendering Functions**:
+1. **Abstracted Rendering Functions**: ✅
    - `print_text()`: Renders text with specified colors at given coordinates
    - `print_menu()`: Renders interactive menus with selection highlighting
    - `clear_screen()`: Clears the display
+   - `draw_box()`: Draws bordered boxes for UI elements
+   - `render_frame()`: Renders all changes to the screen
 
-2. **Specialized Renderers**:
-   - Implement custom renderers for complex game objects (maps, character stats, etc.)
-   - Follow consistent interface patterns for coordinates and rendering
+2. **Specialized Renderers**: ✅
+   - Map renderer displays the game world with fog of war
+   - Stats renderer shows character attributes and leveling
+   - Inventory renderer displays items and equipment
+   - Combat renderer visualizes combat situations with animations
 
-3. **Interface Consistency**:
+3. **Media Output**: ✅
+   - Supports displaying images and animated GIFs
+   - Handled by `media_output.h/c`
+
+4. **Interface Consistency**: ✅
    - All output functions follow similar parameter patterns (x, y coordinates, content, colors)
    - Functions handle boundary validation and error logging
 
 ## Menu System Integration
 
-The menu system (src/io/menu.h/c) demonstrates how input and output systems integrate:
+The menu system (src/io/menu/menu.h/c) demonstrates how input and output systems integrate: ✅
 
-1. **Menu Structure**:
+1. **Menu Structure**: ✅
    - Defines a menu_t structure containing title, options, selection state
    - Handles navigation state internally
 
-2. **Input-Output Loop**:
-   - `handle_menu()` processes input events to update menu state
-   - Automatically renders menu after state changes
+2. **Input-Output Loop**: ✅
+   - `menu_handle_input()` processes input events to update menu state
+   - `menu_render()` renders the menu based on its current state
+   - `menu_run()` combines input handling and rendering in a loop
    - Returns semantic results based on user interaction (selection, cancel, exit)
+
+3. **Menu Specializations**: ✅
+   - Main menu (main_menu.h/c) for game startup options
+   - Pause menu (pause_menu.h/c) for in-game pausing
+   - Dialog system (dialog.h/c) for messages and confirmations
 
 ## Localization Architecture
 
-### Components
+**Note**: Localization is being handled in a separate branch. The IO system is designed to work with the existing localization methods without modification. ⚠️
 
-1. **Local Handler (src/io/local/local_handler.h/c)**
-   - Manages loading and switching between language files
-   - Provides string lookup functionality
-   - Implements observer pattern for language change notifications
+## Current Implementation and Dependencies
 
-### Implementation Details
+The centralized IO system has been implemented with the following components and dependencies:
 
-1. **Property File Format**:
-   - Uses simple KEY="Value" pairs stored in .properties files
-   - Organizes strings by functional domains (menus, game objects, etc.)
+### Dependencies
 
-2. **Dynamic Language Switching**:
-   - `set_language()`: Changes active language and notifies observers
-   - `get_local_string()`: Retrieves localized text by key
-   - Observer pattern allows UI components to update when language changes
+1. **External Libraries**:
+   - Notcurses: Used for all terminal/display operations
+   - pthread (Linux/macOS) / WinAPI threads (Windows): For threading support
 
-3. **Interface**:
-   - `init_local_handler()`: Initializes handler with default language
-   - `get_language()`: Returns currently active language
-   - `observe_local()`: Registers callbacks for language change events
-   - `shutdown_local_handler()`: Cleans up resources
+2. **Internal Dependencies**:
+   - logging/logger.h/c: For error and debug logging
+   - logging/ringbuffer.h/c: For thread-safe communication between threads
+   - thread/thread_handler.h/c: For platform-independent thread creation
+   - local/local.h/c: For localization (usage only, not modified)
+   - character/character.h: For character stats and resources
+   - map/map.h: For map data structures
+   - combat/ability.h and combat/damage.h: For combat mechanics
 
-## Implementation Guide for New Projects
+### Implementation Notes
 
-To implement this IO architecture in a new project:
+1. **Thread Safety**:
+   - Input handling runs in its own thread
+   - Output handler has mutex protection for thread-safe rendering
+   - Uses existing ringbuffer for thread communication
 
-1. **Input System**:
-   - Define application-specific input enumeration
-   - Implement threaded input handler with circular buffer
-   - Add hardware-specific event translations
+2. **Cross-Platform Support**:
+   - Windows, Linux, and macOS support
+   - Platform-specific code for threads and timing is isolated
+   - Platform-specific input event types are handled appropriately
 
-2. **Output System**:
-   - Implement common text and UI rendering functions
-   - Define color mappings for your platform
-   - Add specialized renderers as needed
+3. **Notcurses Integration**:
+   - All rendering is done through Notcurses
+   - Input is captured via Notcurses' input functions
+   - Media display leverages Notcurses' visual capabilities
 
-3. **Localization**:
-   - Create language property files
-   - Implement language handler with observer pattern
-   - Use string lookup in all user-facing text
+4. **Performance Considerations**:
+   - Non-blocking input checks to prevent UI freezing
+   - Optimized rendering with batched updates
+   - Sleep timing in threads to reduce CPU usage
 
-4. **Integration**:
-   - Use menu system as a template for input/output integration
-   - Ensure consistent coordinate systems across all rendering
-   - Follow thread safety best practices
+## Integration Path (Future Work) 🔄
 
-## Benefits of This Architecture
+The IO system is fully implemented but not yet integrated into the existing game code. The integration will follow these steps:
 
-1. **Maintainability**: IO concerns are isolated from business logic
-2. **Portability**: Hardware-specific code is contained in translation layers
-3. **Testability**: Game logic can be tested without IO dependencies
-4. **Consistency**: Unified approach to all user interaction
-5. **Responsiveness**: Threading prevents UI blocking during processing
+1. Update the main game loop to use the centralized IO handler
+2. Replace direct Notcurses calls with calls to our abstraction layer
+3. Gradually migrate each game mode to use the specialized renderers
+4. Start with map_mode.c as it has the simplest interactions
+5. Ensure all functionality works correctly before proceeding to the next mode
 
-## Potential Enhancements
+## Potential Enhancements (Future Work) ❌
 
 1. **Event System**: Add pub/sub model for game events
-2. **UI Component Library**: Build reusable widgets (dialogs, toolbars, etc.)
-3. **Animation System**: Add support for timed visual effects
-4. **Audio Integration**: Follow similar patterns for sound effect handling
+2. **UI Component Library**: Build more reusable widgets (dialogs, toolbars, etc.)
+3. **Animation System**: Enhance visual effects beyond the basics
+4. **Audio Integration**: Add sound support using similar patterns
 5. **Configuration System**: Add user preferences for input and display settings
-
-## Implementation Recommendations for DungeonCrawl
-
-Based on an analysis of the DungeonCrawl codebase, the following recommendations would optimize the implementation of this architecture:
-
-### Implementation Scope
-
-**Important Note**: Localization is currently being handled in a separate branch. Do not modify any localization-related files or functionality. Instead, use the existing localization methods that are already in place.
-
-### Implementation Priorities
-
-1. **Input Handler First Approach**:
-   - Begin with implementing the input handler since it's the most critical component
-   - Leverage the existing ringbuffer code (src/logging/ringbuffer.h) for input event buffering
-   - Create a comprehensive input enumeration that maps hardware events to logical game actions
-
-2. **Enhanced Event System**:
-   - Consider using a more flexible event system that includes context data beyond enum values
-   - Support structured input events with payload data when needed (e.g., mouse coordinates)
-   - Add explicit support for combination keys (Ctrl, Alt, Shift modifiers)
-
-3. **Performance Considerations**:
-   - The threaded approach provides good UI responsiveness
-   - Make threading optional via compile-time flags for resource-constrained environments
-   - Use configurable buffer sizes instead of hardcoded values
-   - Optimize render calls to minimize screen redraws
-
-4. **Integration Path**:
-   - Create new `/src/io/` directory structure following the proposed organization
-   - Implement handlers first, then gradually integrate with existing code
-   - Start integration with map_mode.c which has the simplest input handling
-   - Progressively refactor other modes (combat_mode, stats_mode, etc.)
-
-5. **Existing Code Leverage**:
-   - Use the existing thread handler (src/thread/thread_handler.c) for input thread management
-   - Integrate with the current logging system for error reporting
-   - Adapt the Notcurses-specific code into the hardware abstraction layer
-   - For localization, use existing methods from src/local/* - do not modify these files
-
-This centralized approach will significantly improve code readability by removing duplicated input handling code from different game states. It will also make the codebase more maintainable and extensible for future features.
 
 IMPORTANT NOTE: we need to use the notcurses library and all it's available functionality for all input and output handling!
 
-and another important note: only create everything needed for the new centralized input handling, do NOT change any other files yet! Integration will be done at a later point in time!
+IMPORTANT NOTE: The implemented components are ready for integration but should not be integrated yet. Integration will be done at a later point in time.
