@@ -12,7 +12,7 @@
 "COUNT(*) OVER (PARTITION BY GR_ID) AS TotalAbilities"\
 "FROM ability,"\
 "gear"\
-"JOIN gear_involves_ability ON ability.AB_ID = gear_involves_ability.GA_AB_ID AND"\
+"JOIN gear_involves_ability ON main.ability.AB_ID = gear_involves_ability.GA_AB_ID AND"\
 "gear_involves_ability.GA_GR_ID = gear.GR_ID),"\
 "GroupedAbilities AS (SELECT GR_ID,"\
 "TotalAbilities,"\
@@ -38,9 +38,9 @@
 "FROM gear,"\
 "slot,"\
 "stats"\
-"JOIN gear_located_slot ON slot.SL_ID = gear_located_slot.GL_SL_ID AND gear.GR_ID = gear_located_slot.GL_GR_ID"\
-"JOIN gear_has_stats ON stats.ST_ID = gear_has_stats.GT_ST_ID AND gear.GR_ID = gear_has_stats.GT_GR_ID"\
-"LEFT JOIN GroupedAbilities ON GroupedAbilities.GR_ID = gear.GR_ID"
+"JOIN gear_located_slot ON main.slot.SL_ID = gear_located_slot.GL_SL_ID AND main.gear.GR_ID = gear_located_slot.GL_GR_ID"\
+"JOIN gear_has_stats ON stats.ST_ID = gear_has_stats.GT_ST_ID AND gear.GR_ID = main.gear_has_stats.GT_GR_ID"\
+"LEFT JOIN GroupedAbilities ON GroupedAbilities.GR_ID = main.gear.GR_ID"
 
 potion_init_t* init_potion_table_from_db(const db_connection_t* db_connection) {
     // Check if the database connection is open
