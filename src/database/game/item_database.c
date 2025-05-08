@@ -7,40 +7,40 @@
 #define SQL_SELECT_ALL_POTIONS "SELECT PO_TYPE, PO_NAME, PO_VALUE FROM potion"
 #define SQL_SELECT_COUNT_GEARS "SELECT COUNT(*) FROM gear"
 #define SQL_SELECT_ALL_GEARS "WITH SplitAbilities AS (SELECT GR_ID,"\
-"                               AB_NUMBER,"\
-"                               ROW_NUMBER() OVER (PARTITION BY GR_ID ORDER BY AB_ID) AS RowNum,"\
-"                               COUNT(*) OVER (PARTITION BY GR_ID)                    AS TotalAbilities"\
-"                        FROM ability,"\
-"                             gear"\
-"                                 JOIN gear_involves_ability ON ability.AB_ID = gear_involves_ability.GA_AB_ID AND"\
-"                                                               gear_involves_ability.GA_GR_ID = gear.GR_ID),"\
-"     GroupedAbilities AS (SELECT GR_ID,"\
-"                                 TotalAbilities,"\
-"                                 MAX(CASE WHEN RowNum = 1 THEN AB_NUMBER END) AS Ability_1,"\
-"                                 MAX(CASE WHEN RowNum = 2 THEN AB_NUMBER END) AS Ability_2,"\
-"                                 MAX(CASE WHEN RowNum = 3 THEN AB_NUMBER END) AS Ability_3,"\
-"                                 MAX(CASE WHEN RowNum = 4 THEN AB_NUMBER END) AS Ability_4"\
-"                          FROM SplitAbilities"\
-"                          GROUP BY GR_ID)"\
+"AB_NUMBER,"\
+"ROW_NUMBER() OVER (PARTITION BY GR_ID ORDER BY AB_ID) AS RowNum,"\
+"COUNT(*) OVER (PARTITION BY GR_ID) AS TotalAbilities"\
+"FROM ability,"\
+"gear"\
+"JOIN gear_involves_ability ON ability.AB_ID = gear_involves_ability.GA_AB_ID AND"\
+"gear_involves_ability.GA_GR_ID = gear.GR_ID),"\
+"GroupedAbilities AS (SELECT GR_ID,"\
+"TotalAbilities,"\
+"MAX(CASE WHEN RowNum = 1 THEN AB_NUMBER END) AS Ability_1,"\
+"MAX(CASE WHEN RowNum = 2 THEN AB_NUMBER END) AS Ability_2,"\
+"MAX(CASE WHEN RowNum = 3 THEN AB_NUMBER END) AS Ability_3,"\
+"MAX(CASE WHEN RowNum = 4 THEN AB_NUMBER END) AS Ability_4"\
+"FROM SplitAbilities"\
+"GROUP BY GR_ID)"\
 "SELECT GR_NAME,"\
-"       SL_NUMBER,"\
-"       GR_ARMOR,"\
-"       GR_MAGICRESIST,"\
-"       ST_STRENGTH,"\
-"       ST_DEXTERNITY,"\
-"       ST_INTELLIGENCE,"\
-"       ST_CONSTITUTION,"\
-"       coalesce(TotalAbilities, 0) AS TotalAbilities,"\
-"       coalesce(Ability_1, 0)      AS Ability_1,"\
-"       coalesce(Ability_2, 0)      AS Ability_2,"\
-"       coalesce(Ability_3, 0)      AS Ability_3,"\
-"       coalesce(Ability_4, 0)      AS Ability_4"\
+"SL_NUMBER,"\
+"GR_ARMOR,"\
+"GR_MAGICRESIST,"\
+"ST_STRENGTH,"\
+"ST_DEXTERNITY,"\
+"ST_INTELLIGENCE,"\
+"ST_CONSTITUTION,"\
+"coalesce(TotalAbilities, 0) AS TotalAbilities,"\
+"coalesce(Ability_1, 0) AS Ability_1,"\
+"coalesce(Ability_2, 0) AS Ability_2,"\
+"coalesce(Ability_3, 0) AS Ability_3,"\
+"coalesce(Ability_4, 0) AS Ability_4"\
 "FROM gear,"\
-"     slot,"\
-"     stats"\
-"         JOIN gear_located_slot ON slot.SL_ID = gear_located_slot.GL_SL_ID AND gear.GR_ID = gear_located_slot.GL_GR_ID"\
-"         JOIN gear_has_stats ON stats.ST_ID = gear_has_stats.GT_ST_ID AND gear.GR_ID = gear_has_stats.GT_GR_ID"\
-"         LEFT JOIN GroupedAbilities ON GroupedAbilities.GR_ID = gear.GR_ID"
+"slot,"\
+"stats"\
+"JOIN gear_located_slot ON slot.SL_ID = gear_located_slot.GL_SL_ID AND gear.GR_ID = gear_located_slot.GL_GR_ID"\
+"JOIN gear_has_stats ON stats.ST_ID = gear_has_stats.GT_ST_ID AND gear.GR_ID = gear_has_stats.GT_GR_ID"\
+"LEFT JOIN GroupedAbilities ON GroupedAbilities.GR_ID = gear.GR_ID"
 
 potion_init_t* init_potion_table_from_db(const db_connection_t* db_connection) {
     // Check if the database connection is open
