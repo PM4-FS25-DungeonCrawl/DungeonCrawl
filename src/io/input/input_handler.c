@@ -3,6 +3,13 @@
 
 #include <string.h>
 
+// Define platform-specific key event type
+#ifdef __APPLE__
+    #define KEY_EVENT NCTYPE_PRESS
+#else
+    #define KEY_EVENT NCTYPE_UNKNOWN
+#endif
+
 // The Notcurses instance to use for input handling
 static struct notcurses* notcurses_instance = NULL;
 
@@ -13,7 +20,13 @@ bool init_input_handler(struct notcurses* nc) {
     }
     
     notcurses_instance = nc;
-    log_msg(INFO, "input_handler", "Input handler initialized");
+    
+    #ifdef __APPLE__
+        log_msg(INFO, "input_handler", "Input handler initialized for macOS");
+    #else
+        log_msg(INFO, "input_handler", "Input handler initialized for Linux/Windows");
+    #endif
+    
     return true;
 }
 
@@ -71,8 +84,9 @@ input_t translate_input(const ncinput* raw_input) {
         return INPUT_QUIT;
     }
 
-    // Check for different event types
-    if (raw_input->evtype == NCTYPE_UNKNOWN || raw_input->evtype == NCTYPE_PRESS) {
+    // Check if this is the platform-specific event type we want to handle
+    // This follows the same pattern used in map_mode.c
+    if (raw_input->evtype == KEY_EVENT || raw_input->evtype == NCTYPE_PRESS) {
         // Arrow keys for navigation
         if (raw_input->id == NCKEY_UP) return INPUT_UP;
         if (raw_input->id == NCKEY_DOWN) return INPUT_DOWN;
