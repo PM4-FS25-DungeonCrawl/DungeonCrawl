@@ -145,3 +145,43 @@ To implement this IO architecture in a new project:
 3. **Animation System**: Add support for timed visual effects
 4. **Audio Integration**: Follow similar patterns for sound effect handling
 5. **Configuration System**: Add user preferences for input and display settings
+
+## Implementation Recommendations for DungeonCrawl
+
+Based on an analysis of the DungeonCrawl codebase, the following recommendations would optimize the implementation of this architecture:
+
+### Implementation Scope
+
+**Important Note**: Localization is currently being handled in a separate branch. Do not modify any localization-related files or functionality. Instead, use the existing localization methods that are already in place.
+
+### Implementation Priorities
+
+1. **Input Handler First Approach**:
+   - Begin with implementing the input handler since it's the most critical component
+   - Leverage the existing ringbuffer code (src/logging/ringbuffer.h) for input event buffering
+   - Create a comprehensive input enumeration that maps hardware events to logical game actions
+
+2. **Enhanced Event System**:
+   - Consider using a more flexible event system that includes context data beyond enum values
+   - Support structured input events with payload data when needed (e.g., mouse coordinates)
+   - Add explicit support for combination keys (Ctrl, Alt, Shift modifiers)
+
+3. **Performance Considerations**:
+   - The threaded approach provides good UI responsiveness
+   - Make threading optional via compile-time flags for resource-constrained environments
+   - Use configurable buffer sizes instead of hardcoded values
+   - Optimize render calls to minimize screen redraws
+
+4. **Integration Path**:
+   - Create new `/src/io/` directory structure following the proposed organization
+   - Implement handlers first, then gradually integrate with existing code
+   - Start integration with map_mode.c which has the simplest input handling
+   - Progressively refactor other modes (combat_mode, stats_mode, etc.)
+
+5. **Existing Code Leverage**:
+   - Use the existing thread handler (src/thread/thread_handler.c) for input thread management
+   - Integrate with the current logging system for error reporting
+   - Adapt the Notcurses-specific code into the hardware abstraction layer
+   - For localization, use existing methods from src/local/* - do not modify these files
+
+This centralized approach will significantly improve code readability by removing duplicated input handling code from different game states. It will also make the codebase more maintainable and extensible for future features.
