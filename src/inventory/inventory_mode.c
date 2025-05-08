@@ -85,6 +85,7 @@ inventory_result_t start_inventory(character_t* player, character_t* monster) {
             inventory_state = inventory_potion_menu(player, monster);
             break;
         case INVENTORY_EXIT:
+            inventory_state = INVENTORY_MENU;
             return EXIT_TO_MAP;
     }
     return CONTINUE_INVENTORY;
@@ -164,7 +165,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
         return INVENTORY_MENU;
     }
 
-    internal_inventory_state_t new_state = INVENTORY_MENU;
+    internal_inventory_state_t new_state = INVENTORY_GEAR_MENU;
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
@@ -240,7 +241,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
-    internal_inventory_state_t new_state = INVENTORY_MENU;
+    internal_inventory_state_t new_state = INVENTORY_EQUIPMENT_MENU;
     bool item_selected_or_esc = false;
 
     while (!item_selected_or_esc) {
