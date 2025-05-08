@@ -1,11 +1,27 @@
+../src/combat/combat_mode.h:36:6: warning: function 'use_potion' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+   36 | void use_potion(character_t* player, const character_t* monster, potion_t* item);
+      |      ^
+../src/combat/combat_mode.c:318:6: note: the definition seen here
+  318 | void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
+      |      ^
+../src/combat/combat_mode.h:36:6: note: differing parameters are named here: ('item'), in definition: ('potion')
+   36 | void use_potion(character_t* player, const character_t* monster, potion_t* item);
+      |      ^                                                                     ~~~~
+      |                                                                            potion
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/logging/logger.c:165:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
-  165 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+../src/game.c:258:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  258 |         case PLAYER_LOST:
+      |         ^
+../src/game.c:264:18: note: last of these clones ends here
+  264 |             break;
+      |                  ^
+../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:39:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   39 |     srand(time(NULL));
+../src/main.c:40:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   40 |     srand(time(NULL));
       |     ^
 ../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    92 |                     save_name[name_length++] = input.id;
@@ -16,5 +32,11 @@
 ../src/menu/save_menu.c:190:15: note: else branch starts here
   190 |             } else {
       |               ^
-Suppressed 131022 warnings (130961 in non-user code, 61 with check filters).
+../src/stats/draw/draw_stats.c:13:6: warning: redundant 'update_stats_local' declaration [readability-redundant-declaration]
+   13 | void update_stats_local(void);
+      | ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+../src/stats/draw/draw_stats.h:9:6: note: previously declared here
+    9 | void update_stats_local(void);
+      |      ^
+Suppressed 178483 warnings (178419 in non-user code, 64 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

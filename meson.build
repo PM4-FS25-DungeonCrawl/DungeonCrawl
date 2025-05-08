@@ -41,6 +41,9 @@ src_files = files(
     'src/combat/damage.c',
 
     'src/combat/draw/draw_combat_mode.c',
+    'src/stats/stats.c',
+    'src/stats/draw/draw_stats.c',
+    'src/stats/stats_mode.c'
 )
 
 # List of all database files
@@ -52,6 +55,7 @@ database_files = files(
 )
 
 logging_files = files(
+    'src/thread/thread_handler.c',
     'src/logging/logger.c',
     'src/logging/ringbuffer.c'
 )

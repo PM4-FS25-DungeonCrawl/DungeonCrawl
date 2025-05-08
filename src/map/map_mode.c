@@ -43,6 +43,9 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
     // Check for 'M' key press for menu
     if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
 
+    // Check for 'L' key press for stats
+    if (event->id == 'l' || event->id == 'L') return SHOW_STATS;
+
     // Only process arrow key events that are PRESS type (ignore RELEASE events)
     if (event->evtype == NCTYPE_UNKNOWN || event->evtype == NCTYPE_PRESS) {
         if (event->id == NCKEY_UP) new_y--;
