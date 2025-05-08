@@ -7,7 +7,8 @@
 
 #define MAX_ABILITY_PER_GEAR 4
 
-typedef enum {
+typedef enum
+{
     SLOT_HEAD,
     SLOT_CHEST,
     SLOT_LEGS,
@@ -17,12 +18,13 @@ typedef enum {
     SLOT_FINGER_RIGHT,
     SLOT_FINGER_LEFT,
     SLOT_LEFT_HAND, // Weapon slot
-    SLOT_RIGHT_HAND,// Weapon slot
-    SLOT_BOTH_HANDS,// Weapon slot
+    SLOT_RIGHT_HAND, // Weapon slot
+    SLOT_BOTH_HANDS, // Weapon slot
     MAX_SLOT
 } gear_slot_t;
 
-typedef enum {
+typedef enum
+{
     LONGSWORD,
     BARDICHE,
     CROSSBOW,
@@ -105,38 +107,55 @@ typedef enum {
     WHISPER_CHARM_OF_THE_FOX,
     WHISPER_CHARM_OF_THE_OWL,
     WHISPER_CHARM_OF_THE_RAVEN,
-    IRON_BAND_OF_THE_GOLIATH,
-    IRON_BAND_OF_THE_BOAR,
-    IRON_BAND_OF_THE_BEAR,
-    CARVED_RING_OF_THE_BOAR,
-    CARVED_RING_OF_THE_FOX,
-    CARVED_RING_OF_THE_OWL,
-    CARVED_RING_OF_THE_RAVEN,
-    CARVED_RING_OF_THE_WOLF,
-    CARVED_RING_OF_THE_LICH,
-    TRICKSTERS_LOOP_OF_THE_FOX,
-    TRICKSTERS_LOOP_OF_THE_OWL,
-    TRICKSTERS_LOOP_OF_THE_RAVEN,
+    IRON_BAND_OF_THE_GOLIATH_R,
+    IRON_BAND_OF_THE_BOAR_R,
+    IRON_BAND_OF_THE_BEAR_R,
+    CARVED_RING_OF_THE_BOAR_R,
+    CARVED_RING_OF_THE_FOX_R,
+    CARVED_RING_OF_THE_OWL_R,
+    CARVED_RING_OF_THE_RAVEN_R,
+    CARVED_RING_OF_THE_WOLF_R,
+    CARVED_RING_OF_THE_LICH_R,
+    TRICKSTERS_LOOP_OF_THE_FOX_R,
+    TRICKSTERS_LOOP_OF_THE_OWL_R,
+    TRICKSTERS_LOOP_OF_THE_RAVEN_R,
+    IRON_BAND_OF_THE_GOLIATH_L,
+    IRON_BAND_OF_THE_BOAR_L,
+    IRON_BAND_OF_THE_BEAR_L,
+    CARVED_RING_OF_THE_BOAR_L,
+    CARVED_RING_OF_THE_FOX_L,
+    CARVED_RING_OF_THE_OWL_L,
+    CARVED_RING_OF_THE_RAVEN_L,
+    CARVED_RING_OF_THE_WOLF_L,
+    CARVED_RING_OF_THE_LICH_L,
+    TRICKSTERS_LOOP_OF_THE_FOX_L,
+    TRICKSTERS_LOOP_OF_THE_OWL_L,
+    TRICKSTERS_LOOP_OF_THE_RAVEN_L,
     MAX_GEARS
 } gear_identifier_t;
 
 
-typedef struct{
+typedef struct
+{
     char name[MAX_NAME_LENGTH];
     gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;
-    defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    defenses_t defenses; // Armor Pieces can have other stats, e.g. +might etc. for now only armor
     ability_t abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 
-typedef struct {
+typedef struct
+{
     gear_t* gears[MAX_GEARS];
     int num_gears;
 } gear_table_t;
 
-gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses, const ability_table_t* ability_table, ability_names_t* abilities, int num_abilities);
-gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, const ability_table_t*ability_table );
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot,
+                  stats_t stats, defenses_t defenses, const ability_table_t* ability_table,
+                  const ability_names_t* abilities, int num_abilities);
+gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection,
+                              const ability_table_t* ability_table);
 void debug_print_gear_table(const gear_table_t* table);
 void free_equipable_gear(gear_t* gear);
 

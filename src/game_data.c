@@ -39,7 +39,7 @@ int init_game_data() {
     add_potion(player, mana_potion);
     add_potion(player, &potion_table->potions[HEALING]);
     add_gear(player, gear_table->gears[1]);
-    //equip_gear(player, gear_table->gears[1]);
+    equip_gear(player, gear_table->gears[1]);
     return 0;
 }
 
