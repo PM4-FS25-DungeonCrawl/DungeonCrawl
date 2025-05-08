@@ -26,6 +26,7 @@ typedef struct potion_init_t {
 
 typedef struct gear_init_t{
     char* name;
+    gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;

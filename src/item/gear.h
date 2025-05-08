@@ -22,15 +22,122 @@ typedef enum {
     MAX_SLOT
 } gear_slot_t;
 
-typedef struct {
+typedef enum {
+    LONGSWORD,
+    BARDICHE,
+    CROSSBOW,
+    MAGIC_STAFF,
+    SHORT_AXE,
+    STILETTO_DAGGER,
+    BUCKLER,
+    MACE,
+    WAND,
+    ARMING_SWORD,
+    IRON_HELM_OF_THE_GOLIATH,
+    IRON_HELM_OF_THE_BOAR,
+    IRON_HELM_OF_THE_BEAR,
+    SCOUTS_HOOD_OF_THE_BOAR,
+    SCOUTS_HOOD_OF_THE_FOX,
+    SCOUTS_HOOD_OF_THE_OWL,
+    SCOUTS_HOOD_OF_THE_RAVEN,
+    SCOUTS_HOOD_OF_THE_WOLF,
+    SCOUTS_HOOD_OF_THE_LICH,
+    SHADOW_HOOD_OF_THE_FOX,
+    SHADOW_HOOD_OF_THE_OWL,
+    SHADOW_HOOD_OF_THE_RAVEN,
+    BATTLEPLATE_OF_THE_GOLIATH,
+    BATTLEPLATE_OF_THE_BOAR,
+    BATTLEPLATE_OF_THE_BEAR,
+    REINFORCED_JERKIN_OF_THE_BOAR,
+    REINFORCED_JERKIN_OF_THE_FOX,
+    REINFORCED_JERKIN_OF_THE_OWL,
+    REINFORCED_JERKIN_OF_THE_RAVEN,
+    REINFORCED_JERKIN_OF_THE_WOLF,
+    REINFORCED_JERKIN_OF_THE_LICH,
+    LEATHER_JERKIN_OF_THE_FOX,
+    LEATHER_JERKIN_OF_THE_OWL,
+    LEATHER_JERKIN_OF_THE_RAVEN,
+    PLATED_GREAVES_OF_THE_GOLIATH,
+    PLATED_GREAVES_OF_THE_BOAR,
+    PLATED_GREAVES_OF_THE_BEAR,
+    RANGERS_TROUSERS_OF_THE_BOAR,
+    RANGERS_TROUSERS_OF_THE_FOX,
+    RANGERS_TROUSERS_OF_THE_OWL,
+    RANGERS_TROUSERS_OF_THE_RAVEN,
+    RANGERS_TROUSERS_OF_THE_WOLF,
+    RANGERS_TROUSERS_OF_THE_LICH,
+    SILENT_LEGGINGS_OF_THE_FOX,
+    SILENT_LEGGINGS_OF_THE_OWL,
+    SILENT_LEGGINGS_OF_THE_RAVEN,
+    STEEL_SABATONS_OF_THE_GOLIATH,
+    STEEL_SABATONS_OF_THE_BOAR,
+    STEEL_SABATONS_OF_THE_BEAR,
+    TRAVELERS_BOOTS_OF_THE_BOAR,
+    TRAVELERS_BOOTS_OF_THE_FOX,
+    TRAVELERS_BOOTS_OF_THE_OWL,
+    TRAVELERS_BOOTS_OF_THE_RAVEN,
+    TRAVELERS_BOOTS_OF_THE_WOLF,
+    TRAVELERS_BOOTS_OF_THE_LICH,
+    WINDSTEP_BOOTS_OF_THE_FOX,
+    WINDSTEP_BOOTS_OF_THE_OWL,
+    WINDSTEP_BOOTS_OF_THE_RAVEN,
+    GAUNTLETS_OF_THE_GOLIATH,
+    GAUNTLETS_OF_THE_BOAR,
+    GAUNTLETS_OF_THE_BEAR,
+    LEATHER_GLOVES_OF_THE_BOAR,
+    LEATHER_GLOVES_OF_THE_FOX,
+    LEATHER_GLOVES_OF_THE_OWL,
+    LEATHER_GLOVES_OF_THE_RAVEN,
+    LEATHER_GLOVES_OF_THE_WOLF,
+    LEATHER_GLOVES_OF_THE_LICH,
+    NIMBLE_GRIPS_OF_THE_FOX,
+    NIMBLE_GRIPS_OF_THE_OWL,
+    NIMBLE_GRIPS_OF_THE_RAVEN,
+    IRON_GORGET_OF_THE_GOLIATH,
+    IRON_GORGET_OF_THE_BOAR,
+    IRON_GORGET_OF_THE_BEAR,
+    PENDANT_OF_FOCUS_OF_THE_BOAR,
+    PENDANT_OF_FOCUS_OF_THE_FOX,
+    PENDANT_OF_FOCUS_OF_THE_OWL,
+    PENDANT_OF_FOCUS_OF_THE_RAVEN,
+    PENDANT_OF_FOCUS_OF_THE_WOLF,
+    PENDANT_OF_FOCUS_OF_THE_LICH,
+    WHISPER_CHARM_OF_THE_FOX,
+    WHISPER_CHARM_OF_THE_OWL,
+    WHISPER_CHARM_OF_THE_RAVEN,
+    IRON_BAND_OF_THE_GOLIATH,
+    IRON_BAND_OF_THE_BOAR,
+    IRON_BAND_OF_THE_BEAR,
+    CARVED_RING_OF_THE_BOAR,
+    CARVED_RING_OF_THE_FOX,
+    CARVED_RING_OF_THE_OWL,
+    CARVED_RING_OF_THE_RAVEN,
+    CARVED_RING_OF_THE_WOLF,
+    CARVED_RING_OF_THE_LICH,
+    TRICKSTERS_LOOP_OF_THE_FOX,
+    TRICKSTERS_LOOP_OF_THE_OWL,
+    TRICKSTERS_LOOP_OF_THE_RAVEN,
+    MAX_GEARS
+} gear_identifier_t;
+
+
+typedef struct{
     char name[MAX_NAME_LENGTH];
+    gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
-    // abilitiy_t abilities[MAX_ABILITY_PER_GEAR];
+    ability_t abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 
-gear_t* init_gear(const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_names_t* abilities, int num_abilities);
+typedef struct {
+    gear_t* gears[MAX_GEARS];
+    int num_gears;
+} gear_table_t;
+
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses, const ability_table_t* ability_table, ability_names_t* abilities, int num_abilities);
+gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, const ability_table_t*ability_table );
+void debug_print_gear_table(const gear_table_t* table);
 void free_equipable_gear(gear_t* gear);
 
 #endif//GEAR_H
