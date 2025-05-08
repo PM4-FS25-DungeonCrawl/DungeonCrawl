@@ -187,3 +187,5 @@ Based on an analysis of the DungeonCrawl codebase, the following recommendations
 This centralized approach will significantly improve code readability by removing duplicated input handling code from different game states. It will also make the codebase more maintainable and extensible for future features.
 
 IMPORTANT NOTE: we need to use the notcurses library and all it's available functionality for all input and output handling!
+
+and another important note: only create everything needed for the new centralized input handling, do NOT change any other files yet! Integration will be done at a later point in time!
