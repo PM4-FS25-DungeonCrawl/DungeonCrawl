@@ -28,17 +28,10 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c);
  * @note this function clears and presents the combat view
  */
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy, const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
+    clear_screen(stdplane);
+
     //copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
-
-
-    // Clear the screen before drawing
-    // clear screen
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
 
     // Draw title
     ncplane_printf_yx(stdplane, vec.dy, anchor.dx + 20, "Combat Mode");
@@ -156,12 +149,8 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
 }
 
 void draw_game_over() {
-    // clear screen
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
+    clear_screen(stdplane);
+
     ncplane_set_channels(stdplane, RED_TEXT_COLORS);
     ncplane_printf_yx(stdplane, 1, 1, "Game over");
     ncplane_set_channels(stdplane, DEFAULT_COLORS);

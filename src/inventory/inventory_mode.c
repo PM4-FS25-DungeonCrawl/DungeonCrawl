@@ -14,7 +14,6 @@
 // === Internal Functions ===
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
 void collect_inventory_equipment_options(gear_t* equipment[]);
-void collect_inventory_potion_options(potion_t* potion_inventory[], const int count);
 
 /**
  * @brief Updates the localized strings used in the inventory mode menus.
@@ -32,6 +31,7 @@ void update_inventory_local(void);
 
 // === Intern Global Variables ===
 vector2d_t inventory_view_anchor = {1, 1};
+internal_inventory_state_t inventory_state = INVENTORY_MENU;
 
 string_max_t* inventory_gear_options;
 string_max_t* inventory_equipment_options;
@@ -60,39 +60,34 @@ int init_inventory_mode() {
 /**
  * @brief Starts the inventory mode.
  */
-void start_inventory_mode(character_t* player, character_t* monster) {
-    internal_inventory_state_t inventory_state = INVENTORY_MENU;
-    bool inventory_active = true;
-
+inventory_result_t start_inventory(character_t* player, character_t* monster) {
     if (monster != NULL) {
         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
         collect_inventory_equipment_options(monster->equipment);
-        collect_inventory_potion_options(monster->potion_inventory, monster->potion_count);
+        collect_potion_options(inventory_potion_options, monster->potion_inventory, monster->potion_count, inmo_potion_format);
     } else {
         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
         collect_inventory_equipment_options(player->equipment);
-        collect_inventory_potion_options(player->potion_inventory, player->potion_count);
+        collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
     }
 
-    while (inventory_active) {
-        switch (inventory_state) {
-            case INVENTORY_MENU:
-                inventory_state = inventory_menu(player, monster);
-                break;
-            case INVENTORY_GEAR_MENU:
-                inventory_state = inventory_gear_menu(player, monster);
-                break;
-            case INVENTORY_EQUIPMENT_MENU:
-                inventory_state = inventory_equipment_menu(player, monster);
-                break;
-            case INVENTORY_POTION_MENU:
-                inventory_state = inventory_potion_menu(player, monster);
-                break;
-            case INVENTORY_EXIT:
-                inventory_active = false;
-                break;
-        }
+    switch (inventory_state) {
+        case INVENTORY_MENU:
+            inventory_state = inventory_menu(player, monster);
+            break;
+        case INVENTORY_GEAR_MENU:
+            inventory_state = inventory_gear_menu(player, monster);
+            break;
+        case INVENTORY_EQUIPMENT_MENU:
+            inventory_state = inventory_equipment_menu(player, monster);
+            break;
+        case INVENTORY_POTION_MENU:
+            inventory_state = inventory_potion_menu(player, monster);
+            break;
+        case INVENTORY_EXIT:
+            return EXIT_TO_MAP;
     }
+    return CONTINUE_INVENTORY;
 }
 
 /**
@@ -368,7 +363,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                 if (player->potion_count < MAX_POTION_LIMIT) {
                     add_potion(player, monster->potion_inventory[selected_index]);
                     remove_potion(monster, monster->potion_inventory[selected_index]);
-                    collect_inventory_potion_options(monster->potion_inventory, monster->potion_count);
+                    collect_potion_options(inventory_potion_options, monster->potion_inventory, monster->potion_count, inmo_potion_format);
                 } else {
                     anchor = draw_inventory_view(inventory_view_anchor, target);
                     draw_inventory_log(anchor, local_strings[inmo_no_more_potion_slot.idx].characters);
@@ -384,12 +379,12 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                 invoke_potion_effect(player, player->potion_inventory[selected_index]);
                 anchor = draw_inventory_view(inventory_view_anchor, target);
                 draw_inventory_log(anchor, message);
-                collect_inventory_potion_options(player->potion_inventory, player->potion_count);
+                collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
             }
             return INVENTORY_POTION_MENU;
         } else if ((event.id == 'd' || event.id == 'D') && monster == NULL) {
             remove_potion(player, player->potion_inventory[selected_index]);
-            collect_inventory_potion_options(player->potion_inventory, player->potion_count);
+            collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
             return INVENTORY_POTION_MENU;
         } else if (event.id == NCKEY_ESC) {
             new_state = INVENTORY_MENU;
@@ -434,22 +429,6 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
                      local_strings[inmo_equipment_format_empty.idx].characters,
                      gear_slot_to_string((gear_slot_t) i));
         }
-    }
-}
-
-/**
- * @brief Collects potion inventory options for display.
- */
-void collect_inventory_potion_options(potion_t* potion_inventory[], const int count) {
-    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        memset(inventory_potion_options[i].characters, '\0', MAX_STRING_LENGTH);
-    }
-
-    for (int i = 0; i < count; i++) {
-        snprintf(inventory_potion_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[inmo_potion_format.idx].characters,
-                 potion_inventory[i]->name,
-                 potion_type_to_string(potion_inventory[i]->effectType));
     }
 }
 

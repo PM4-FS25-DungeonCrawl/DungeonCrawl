@@ -16,12 +16,7 @@ int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c);
  * @note This function clears and presents the inventory view.
  */
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* c) {
-    // clear screen
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
+    clear_screen(stdplane);
 
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};

@@ -14,6 +14,11 @@ typedef enum {
     INVENTORY_EXIT
 } internal_inventory_state_t;
 
+typedef enum {
+    CONTINUE_INVENTORY,
+    EXIT_TO_MAP
+} inventory_result_t;
+
 /**
  * @brief Initialize the inventory mode
  * @return int 0 on success, 1 on failure
@@ -25,9 +30,9 @@ int init_inventory_mode();
  * @brief Starts the inventory mode.
  * @param player The player character whose inventory will be managed.
  * @param monster The defeated monster whose inventory will be looted if not NULL.
- * @note This function handles the main loop for the inventory mode.
+ * @return inventory_result_t The result of the inventory mode.
  */
-void start_inventory_mode(character_t* player, character_t* monster);
+inventory_result_t start_inventory(character_t* player, character_t* monster);
 
 /**
  * @brief Displays the main inventory menu.
