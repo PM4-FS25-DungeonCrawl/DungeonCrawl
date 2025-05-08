@@ -1,0 +1,147 @@
+# Centralized IO Handling Concept
+
+This document outlines the IO handling architecture implemented in the TerminalGame project. This centralized approach can be implemented in other repositories to achieve a clean separation of concerns, multi-threading support, and consistent user interface experiences.
+
+## Core Principles
+
+1. **Separation of Concerns**: Input and output handling are completely decoupled from game logic.
+2. **Thread Safety**: Input handling runs in a separate thread to ensure UI responsiveness.
+3. **Abstraction Layers**: Hardware-specific code is abstracted away from application logic.
+4. **Centralized Management**: All IO operations go through dedicated handlers.
+5. **Extensibility**: Design supports adding new input/output types without modifying core logic.
+
+## Input Handling Architecture
+
+### Components
+
+1. **Input Handler (src/io/input/input_handler.h/c)**
+   - Initializes and manages a dedicated input thread
+   - Maintains a circular buffer for input events
+   - Translates hardware-specific events into application-specific input types
+   - Provides thread-safe methods to retrieve pending inputs
+
+### Implementation Details
+
+1. **Input Enumeration**:
+   - Define an application-specific input enumeration (input_t) that maps various inputs (keyboard, mouse, etc.) to logical actions.
+   - Example: UP, DOWN, LEFT, RIGHT, ENTER, ESCAPE, etc.
+
+2. **Threaded Event Processing**:
+   - Input events are processed in a dedicated thread to prevent UI blocking.
+   - Thread continuously polls for hardware events and converts them to the application's input type.
+   - Uses a circular buffer to store inputs between processing cycles.
+
+3. **Interface**:
+   - `init_input_handler()`: Initializes the handler and starts the input thread.
+   - `get_next_input()`: Retrieves the next input from the buffer (non-blocking).
+   - `shutdown_input_handler()`: Cleans up resources and stops the input thread.
+
+## Output Handling Architecture
+
+### Components
+
+1. **Common Output (src/io/output/common/common_output.h/c)**
+   - Provides basic text and menu rendering functionality
+   - Abstracts terminal/display operations
+
+2. **Specialized Output (src/io/output/specific/...)**
+   - Domain-specific rendering (e.g., map_output.c for map rendering)
+   - Implements optimized rendering for particular data structures
+
+3. **Color Management (src/io/colors.h)**
+   - Defines a platform-independent color enumeration
+   - Maps internal colors to hardware-specific color codes
+
+### Implementation Details
+
+1. **Abstracted Rendering Functions**:
+   - `print_text()`: Renders text with specified colors at given coordinates
+   - `print_menu()`: Renders interactive menus with selection highlighting
+   - `clear_screen()`: Clears the display
+
+2. **Specialized Renderers**:
+   - Implement custom renderers for complex game objects (maps, character stats, etc.)
+   - Follow consistent interface patterns for coordinates and rendering
+
+3. **Interface Consistency**:
+   - All output functions follow similar parameter patterns (x, y coordinates, content, colors)
+   - Functions handle boundary validation and error logging
+
+## Menu System Integration
+
+The menu system (src/io/menu.h/c) demonstrates how input and output systems integrate:
+
+1. **Menu Structure**:
+   - Defines a menu_t structure containing title, options, selection state
+   - Handles navigation state internally
+
+2. **Input-Output Loop**:
+   - `handle_menu()` processes input events to update menu state
+   - Automatically renders menu after state changes
+   - Returns semantic results based on user interaction (selection, cancel, exit)
+
+## Localization Architecture
+
+### Components
+
+1. **Local Handler (src/io/local/local_handler.h/c)**
+   - Manages loading and switching between language files
+   - Provides string lookup functionality
+   - Implements observer pattern for language change notifications
+
+### Implementation Details
+
+1. **Property File Format**:
+   - Uses simple KEY="Value" pairs stored in .properties files
+   - Organizes strings by functional domains (menus, game objects, etc.)
+
+2. **Dynamic Language Switching**:
+   - `set_language()`: Changes active language and notifies observers
+   - `get_local_string()`: Retrieves localized text by key
+   - Observer pattern allows UI components to update when language changes
+
+3. **Interface**:
+   - `init_local_handler()`: Initializes handler with default language
+   - `get_language()`: Returns currently active language
+   - `observe_local()`: Registers callbacks for language change events
+   - `shutdown_local_handler()`: Cleans up resources
+
+## Implementation Guide for New Projects
+
+To implement this IO architecture in a new project:
+
+1. **Input System**:
+   - Define application-specific input enumeration
+   - Implement threaded input handler with circular buffer
+   - Add hardware-specific event translations
+
+2. **Output System**:
+   - Implement common text and UI rendering functions
+   - Define color mappings for your platform
+   - Add specialized renderers as needed
+
+3. **Localization**:
+   - Create language property files
+   - Implement language handler with observer pattern
+   - Use string lookup in all user-facing text
+
+4. **Integration**:
+   - Use menu system as a template for input/output integration
+   - Ensure consistent coordinate systems across all rendering
+   - Follow thread safety best practices
+
+## Benefits of This Architecture
+
+1. **Maintainability**: IO concerns are isolated from business logic
+2. **Portability**: Hardware-specific code is contained in translation layers
+3. **Testability**: Game logic can be tested without IO dependencies
+4. **Consistency**: Unified approach to all user interaction
+5. **Responsiveness**: Threading prevents UI blocking during processing
+
+## Potential Enhancements
+
+1. **Event System**: Add pub/sub model for game events
+2. **UI Component Library**: Build reusable widgets (dialogs, toolbars, etc.)
+3. **Animation System**: Add support for timed visual effects
+4. **Audio Integration**: Follow similar patterns for sound effect handling
+5. **Configuration System**: Add user preferences for input and display settings
