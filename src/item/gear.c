@@ -18,18 +18,15 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
     gear->stats = stats;
     gear->defenses = defenses;
 
-    // Copy up to MAX_ABILITY_PER_GEAR or num_abilities, whichever is smaller
     int i = 0;
     for (; i < MAX_ABILITY_PER_GEAR && i < num_abilities; ++i) {
         ability_names_t idx = abilities[i];
         if (idx < MAX_ABILITIES) {
             gear->abilities[i] = ability_table->abilities[abilities[i]];
         } else {
-            // Invalid index: zero out
             gear->abilities[i] = (ability_t){0};
         }
     }
-    // Zero out any remaining slots
     for (; i < MAX_ABILITY_PER_GEAR; ++i) {
         gear->abilities[i] = (ability_t){0};
     }
@@ -49,7 +46,6 @@ gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t*
     NULL_PTR_HANDLER_RETURN(table, NULL, "Gear", "Failed to allocate gear table");
 
     table->num_gears = count;
-    //table->gears = memory_pool_alloc(memory_pool, sizeof(gear_t*) * count);
     NULL_PTR_HANDLER_RETURN(table->gears, NULL, "Gear", "Failed to allocate gear array for table");
 
     for (int i = 0; i < count; ++i) {
