@@ -1,7 +1,6 @@
 #ifndef ITEM_DATABASE_H
 #define ITEM_DATABASE_H
 
-#include "../../character/stats.h"
 #include "../../combat/ability.h"
 #include "../../item/gear.h"
 #include "../../item/potion.h"
