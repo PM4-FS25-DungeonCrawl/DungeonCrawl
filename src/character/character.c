@@ -168,17 +168,14 @@ void equip_gear(character_t* c, gear_t* item) {
             return;
         }
 
-        remove_gear(c, item);
+        remove_gear(c, item); //removing from inventory
 
-        //adding each ability from the gear piece
         for (int i = 0; i < 4; ++i) {
             if (item->abilities[i].name[0] != '\0'){
                 add_ability(c, &item->abilities[i]);
             }
-
         }
 
-        //adding stats from the gear piece
         c->equipment[item->slot] = item;
         c->base_stats.strength += item->stats.strength;
         c->base_stats.intelligence += item->stats.intelligence;
@@ -187,11 +184,9 @@ void equip_gear(character_t* c, gear_t* item) {
         c->defenses.armor += item->defenses.armor;
         c->defenses.magic_resist += item->defenses.magic_resist;
 
-        //updating stats
         c->current_stats = c->base_stats;
         update_character_resources(&c->max_resources, &c->base_stats);
         c->current_resources = c->max_resources;
-
 
         log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, item->name);
         log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->name, item->slot);
