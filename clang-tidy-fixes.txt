@@ -1,3 +1,193 @@
+55079 warnings and 3 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/inventory_mode.c.
+56963 warnings and 6 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/inventory_mode.c.
+58850 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/inventory_mode.c.
+60734 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/draw/draw_inventory_mode.c.
+62618 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/draw/draw_inventory_mode.c.
+64505 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/draw/draw_inventory_mode.c.
+66399 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/game_data.c.
+67463 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+68527 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+69591 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+70655 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+71719 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+72783 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+73847 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+75722 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/main_menu.c.
+77596 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/menu.c.
+79470 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/language_menu.c.
+81348 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/save_menu.c.
+83225 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/gear.c.
+85102 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/gear.c.
+86979 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/gear.c.
+88866 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/gear.c.
+90742 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/potion.c.
+92618 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/potion.c.
+94494 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/potion.c.
+96377 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/potion.c.
+97105 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+97833 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+98561 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+99289 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+100017 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+101896 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats_mode.c.
+103776 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats_mode.c.
+105650 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats.c.
+107524 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats.c.
+109404 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/draw/draw_stats.c.
+111286 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/draw/draw_stats.c.
+113165 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_mode.c.
+115044 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c.
+116918 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map.c.
+118792 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map.c.
+120666 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c.
+122544 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/draw/draw_map_mode.c.
+124418 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/draw/draw_light.c.
+126292 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/draw/draw_light.c.
+128195 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/game.c.
+130071 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/common.c.
+131947 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/common.c.
+133823 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/common.c.
+135699 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/common.c.
+137578 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/combat_mode.c.
+139457 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/combat_mode.c.
+141336 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/combat_mode.c.
+143217 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/combat_mode.c.
+145096 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/draw/draw_combat_mode.c.
+146975 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/draw/draw_combat_mode.c.
+148854 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/draw/draw_combat_mode.c.
+150733 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/draw/draw_combat_mode.c.
+152613 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/damage.c.
+154493 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/damage.c.
+156373 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/damage.c.
+158255 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/damage.c.
+160131 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/ability.c.
+162007 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/ability.c.
+163883 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/ability.c.
+165767 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/ability.c.
+167643 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/ability_database.c.
+169519 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/ability_database.c.
+171395 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/ability_database.c.
+173271 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/ability_database.c.
+175148 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/ability_database.c.
+177044 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/gamestate_database.c.
+178940 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/gamestate_database.c.
+180836 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/gamestate_database.c.
+182732 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/gamestate_database.c.
+184628 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/gamestate_database.c.
+186504 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/item_database.c.
+188380 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/item_database.c.
+190256 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/item_database.c.
+192132 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/item_database.c.
+194010 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/game/item_database.c.
+194718 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+195426 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+196134 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+196842 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+197551 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+199427 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+201303 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+203179 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+205055 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+206931 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+208807 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/local.c.
+210683 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/local.c.
+212559 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/local.c.
+214438 warnings and 9 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/local.c.
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
@@ -26,20 +216,33 @@
 ../src/inventory/inventory_mode.c:15:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
    15 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
       |                                                               ^~~~~
+../src/inventory/inventory_mode.c:410:18: error: use of undeclared identifier 'gear_slot_to_string' [clang-diagnostic-error]
+  410 |                  gear_slot_to_string(gear_inventory[i]->slot),
+      |                  ^
+../src/inventory/inventory_mode.c:429:22: error: use of undeclared identifier 'gear_slot_to_string' [clang-diagnostic-error]
+  429 |                      gear_slot_to_string((gear_slot_t) i),
+      |                      ^
+../src/inventory/inventory_mode.c:435:22: error: use of undeclared identifier 'gear_slot_to_string' [clang-diagnostic-error]
+  435 |                      gear_slot_to_string((gear_slot_t) i));
+      |                      ^
+../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
+   10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
+      |                                                                                                                                                                                                           ^
+      |                                                                                                                                                                                          const 
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:41:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   41 |     srand(time(NULL));
+../src/main.c:40:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   40 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   92 |                     save_name[name_length++] = input.id;
+../src/menu/save_menu.c:91:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   91 |                     save_name[name_length++] = input.id;
       |                                                ^
-../src/menu/save_menu.c:187:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  187 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:186:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  186 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:190:15: note: else branch starts here
-  190 |             } else {
+../src/menu/save_menu.c:189:15: note: else branch starts here
+  189 |             } else {
       |               ^
 ../src/stats/draw/draw_stats.c:13:6: warning: redundant 'update_stats_local' declaration [readability-redundant-declaration]
    13 | void update_stats_local(void);
@@ -47,5 +250,6 @@
 ../src/stats/draw/draw_stats.h:9:6: note: previously declared here
     9 | void update_stats_local(void);
       |      ^
-Suppressed 189863 warnings (189791 in non-user code, 72 with check filters).
+Suppressed 214403 warnings (214315 in non-user code, 88 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+Found compiler error(s).
