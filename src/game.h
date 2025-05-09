@@ -1,15 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define COLOR_FOREGROUND TB_WHITE
-#define COLOR_BACKGROUND TB_BLACK
 #include "database/database.h"
+
+#include <notcurses/notcurses.h>
+
+// Define colors with notcurses
+#define COLOR_FG_RGB 255, 255, 255// White
+#define COLOR_BG_RGB 0, 0, 0      // Black
+
+// Global notcurses instance and plane
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 typedef enum {
     MAIN_MENU,
     MAP_MODE,
     COMBAT_MODE,
     GENERATE_MAP,
+    STATS_MODE,
     EXIT
 } game_state_t;
 

@@ -10,13 +10,13 @@
 
 void setup() {
     init_local();
-    printf("Test");
     main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
     if (main_memory_pool == NULL) {
         printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
     init_combat_mode();
+    printf("Setup complete");
 }
 
 

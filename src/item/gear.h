@@ -1,10 +1,11 @@
 #ifndef GEAR_H
 #define GEAR_H
 
-#include "../character/stats.h"
 #include "../common.h"
 #include "../combat/ability.h"
 #include "gear_identifier.h"
+#include "../stats/stats.h"
+
 
 #define MAX_ABILITY_PER_GEAR 4
 

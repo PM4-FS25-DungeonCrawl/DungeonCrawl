@@ -14,7 +14,6 @@ gear_table_t* gear_table;
 character_t* goblin;
 character_t* player;
 
-
 int init_game_data() {
     ability_table = init_ability_table(main_memory_pool, &db_connection);
     potion_table = init_potion_table(main_memory_pool, &db_connection);

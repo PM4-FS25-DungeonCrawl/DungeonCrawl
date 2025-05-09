@@ -1,6 +1,5 @@
 #include "main.h"
 
-#include "../include/termbox2.h"
 #include "combat/combat_mode.h"
 #include "common.h"
 #include "database/game/gamestate_database.h"
@@ -10,6 +9,9 @@
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "notcurses/notcurses.h"
+#include "src/database/gamestate/gamestate_database.h"
+#include "stats/draw/draw_stats.h"
 
 #include <time.h>
 
@@ -27,19 +29,12 @@ int init(void);
  * This function should be called before the program exits to ensure proper
  * shutdown of all modules, including logging, local settings, and game data.
  */
-void shutdown(void);
+void shutdown_game(void);
 
 int init() {
     // initialized the main memory pool
     main_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
     NULL_PTR_HANDLER_RETURN(main_memory_pool, FAIL_MEM_POOL_INIT, "Main", "Main memory pool is NULL");
-
-    // TODO: remove after notcurses switch
-    if (tb_init() != 0) {
-        log_msg(ERROR, "Game", "Failed to initialize termbox");
-        return FAIL_TB_INIT;
-    }
-    tb_set_output_mode(TB_OUTPUT_NORMAL);
 
     // seeding random function
     srand(time(NULL));
@@ -70,33 +65,38 @@ int init() {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
     }
+    if (init_stats_mode() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Stats", "Failed to intialize stats components");
+        return FAIL_STATS_MODE_INIT;
+    }
 
     // TODO initialize notcurses here
 
     return 0;
 }
 
-void shutdown() {
+void shutdown_game() {
     free_game_data();
     shutdown_local();
     // close database connection in game.c
     db_close(&db_connection);
 
     shutdown_combat_mode();
+    shutdown_stats_mode();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
     shutdown_logger();
-    tb_shutdown();
+    notcurses_stop(nc);
 }
 
 int main(void) {
     const int exit_code = init();
     if (exit_code != COMMON_SUCCESS) {
-        shutdown();
+        shutdown_game();
         return exit_code;
     }
     run_game();
-    shutdown();
+    shutdown_game();
     return exit_code;
 }
