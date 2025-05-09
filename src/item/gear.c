@@ -1,8 +1,8 @@
 #include "gear.h"
 
+#include "../database/game/item_database.h"
 #include "../logging/logger.h"
 
-#include "../database/game/item_database.h"
 #include <stdio.h>
 #include <stdlib.h>
 
