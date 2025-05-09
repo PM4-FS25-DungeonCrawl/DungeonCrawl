@@ -6,7 +6,6 @@
 #include "../local/local.h"
 #include "../logging/logger.h"
 #include "notcurses/nckeys.h"
-#include "src/database/gamestate/gamestate_database.h"
 #include "src/menu/menu.h"
 
 #include <notcurses/notcurses.h>

@@ -250,26 +250,26 @@ void equip_gear(character_t* c, gear_t* gear) {
         }
 
 
-        remove_gear(c, item);//removing from inventory
+        remove_gear(c, gear);//removing from inventory
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i].name[0] != '\0') {
-                add_ability(c, &item->abilities[i]);
+            if (gear->abilities[i].name[0] != '\0') {
+                add_ability(c, &gear->abilities[i]);
             }
         }
 
-        c->equipment[item->slot] = item;
-        c->base_stats.strength += item->stats.strength;
-        c->base_stats.intelligence += item->stats.intelligence;
-        c->base_stats.dexterity += item->stats.dexterity;
-        c->base_stats.constitution += item->stats.constitution;
-        c->defenses.armor += item->defenses.armor;
-        c->defenses.magic_resist += item->defenses.magic_resist;
+        c->equipment[gear->slot] = gear;
+        c->base_stats.strength += gear->stats.strength;
+        c->base_stats.intelligence += gear->stats.intelligence;
+        c->base_stats.dexterity += gear->stats.dexterity;
+        c->base_stats.constitution += gear->stats.constitution;
+        c->defenses.armor += gear->defenses.armor;
+        c->defenses.magic_resist += gear->defenses.magic_resist;
 
         update_character_resources(&c->max_resources, &c->base_stats);
 
-        log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, item->name);
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->name, item->slot);
+        log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->name);
+        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->name, gear->slot);
 
     } else {
         log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->name);
@@ -305,7 +305,7 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
 
         add_gear(c, item);
 
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, gear->name, slot);
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->name, slot);
         c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
