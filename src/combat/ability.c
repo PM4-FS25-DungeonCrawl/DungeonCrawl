@@ -5,7 +5,7 @@
 
 #include "ability.h"
 
-#include "src/database/game/ability_database.h"
+#include "../database/game/ability_database.h"
 
 #include <stdio.h>
 
