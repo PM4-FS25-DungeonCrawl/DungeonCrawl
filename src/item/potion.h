@@ -4,7 +4,7 @@
 #include "../common.h"
 #include "../memory/memory_management.h"
 
-#include <src/database/database.h>
+#include "../database/database.h"
 
 typedef enum {
     HEALING,

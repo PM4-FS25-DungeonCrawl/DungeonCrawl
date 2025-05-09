@@ -5,7 +5,7 @@
 #include "../memory/memory_management.h"
 #include "damage.h"
 
-#include <src/database/database.h>
+#include "../database/database.h"
 
 //index of the different abilities in the table
 typedef enum {
