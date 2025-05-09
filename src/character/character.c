@@ -250,10 +250,10 @@ void equip_gear(character_t* c, gear_t* gear) {
         }
 
 
-        remove_gear(c, item); //removing from inventory
+        remove_gear(c, item);//removing from inventory
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i].name[0] != '\0'){
+            if (item->abilities[i].name[0] != '\0') {
                 add_ability(c, &item->abilities[i]);
             }
         }
@@ -286,11 +286,10 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In unequip_gear slot is invalid: %d", slot);
 
     if (c->equipment[slot] != NULL) {
-
         gear_t* item = c->equipment[slot];
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i].name[0] != '\0'){
+            if (item->abilities[i].name[0] != '\0') {
                 remove_ability(c, &item->abilities[i]);
             }
         }

@@ -1,10 +1,10 @@
 #ifndef POTION_H
 #define POTION_H
 
-#include <src/database/database.h>
-
 #include "../common.h"
 #include "../memory/memory_management.h"
+
+#include <src/database/database.h>
 
 typedef enum {
     HEALING,

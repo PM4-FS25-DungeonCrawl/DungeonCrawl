@@ -1,4 +1,5 @@
 #include "ability_database.h"
+
 #include "../../logging/logger.h"
 
 #include <string.h>

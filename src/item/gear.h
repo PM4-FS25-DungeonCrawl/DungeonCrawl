@@ -1,16 +1,15 @@
 #ifndef GEAR_H
 #define GEAR_H
 
-#include "../common.h"
 #include "../combat/ability.h"
-#include "gear_identifier.h"
+#include "../common.h"
 #include "../stats/stats.h"
+#include "gear_identifier.h"
 
 
 #define MAX_ABILITY_PER_GEAR 4
 
-typedef enum
-{
+typedef enum {
     SLOT_HEAD,
     SLOT_CHEST,
     SLOT_LEGS,
@@ -20,8 +19,8 @@ typedef enum
     SLOT_FINGER_RIGHT,
     SLOT_FINGER_LEFT,
     SLOT_LEFT_HAND, // Weapon slot
-    SLOT_RIGHT_HAND, // Weapon slot
-    SLOT_BOTH_HANDS, // Weapon slot
+    SLOT_RIGHT_HAND,// Weapon slot
+    SLOT_BOTH_HANDS,// Weapon slot
     MAX_SLOT
 } gear_slot_t;
 
@@ -31,7 +30,7 @@ typedef struct
     gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;
-    defenses_t defenses; // Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
     ability_t abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 
@@ -43,6 +42,6 @@ typedef struct
 
 gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, const ability_table_t* ability_table, const ability_names_t* abilities, int num_abilities);
 gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, const ability_table_t* ability_table);
-void free_gear_table(memory_pool_t* memory_pool,gear_table_t* table);
+void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table);
 
 #endif//GEAR_H

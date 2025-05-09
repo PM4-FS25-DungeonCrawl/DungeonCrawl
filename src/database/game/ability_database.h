@@ -1,8 +1,8 @@
 #ifndef ABILITY_DATABASE_H
 #define ABILITY_DATABASE_H
 
-#include "../database.h"
 #include "../../combat/ability.h"
+#include "../database.h"
 
 /**
  * To get the ability table from the database, we need to define a struct
@@ -10,7 +10,7 @@
  * The values of the struct corresponds to the init_ability() method in @see{ability.h} & @see{ability.c}
  */
 typedef struct ability_init_t {
-    int ability_number; // The index of the ability in the table
+    int ability_number;// The index of the ability in the table
     char* name;
     int roll_amount;
     int accuracy;
@@ -33,4 +33,4 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection);
  */
 void free_ability_table_from_db(ability_init_t* ability_init_table);
 
-#endif //ABILITY_DATABASE_H
+#endif//ABILITY_DATABASE_H

@@ -2,8 +2,8 @@
 #define ITEM_DATABASE_H
 
 #include "../../character/stats.h"
-#include "../../item/gear.h"
 #include "../../combat/ability.h"
+#include "../../item/gear.h"
 #include "../../item/potion.h"
 #include "../database.h"
 
@@ -24,7 +24,7 @@ typedef struct potion_init_t {
  * The value of the struct corresponds to the init_gear() method in @see{gear.h} & @see{gear.c}
  */
 
-typedef struct gear_init_t{
+typedef struct gear_init_t {
     char* name;
     gear_identifier_t gear_identifier;
     gear_slot_t slot;

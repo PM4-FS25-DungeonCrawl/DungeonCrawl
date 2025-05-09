@@ -1,8 +1,7 @@
 #ifndef GEAR_IDENTIFIER_H
 #define GEAR_IDENTIFIER_H
 
-typedef enum
-{
+typedef enum {
     LONGSWORD,
     BARDICHE,
     CROSSBOW,
@@ -112,4 +111,4 @@ typedef enum
     MAX_GEARS
 } gear_identifier_t;
 
-#endif //GEAR_IDENTIFIER_H
+#endif//GEAR_IDENTIFIER_H

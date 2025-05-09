@@ -4,6 +4,7 @@
  */
 
 #include "ability.h"
+
 #include "src/database/game/ability_database.h"
 
 #include <stdio.h>
@@ -13,7 +14,6 @@ void init_ability(ability_t* ability, char* name, int roll_amount, int accuracy,
 
 
 ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connection_t* db_connection) {
-
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Ability", "Memory pool is NULL");
 
     ability_init_t* rows = get_ability_table_from_db(db_connection);
