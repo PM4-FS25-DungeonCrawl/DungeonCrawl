@@ -67,5 +67,11 @@ gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t*
 void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table) {
     NULL_PTR_HANDLER_RETURN(memory_pool, , "Gear", "In free_gear_table memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(table, , "Gear", "In free_gear_table table is NULL");
+    for (int i = 0; i < table->num_gears; ++i) {
+        gear_t* gear = table->gears[i];
+        if (gear != NULL) {
+            memory_pool_free(memory_pool, gear);
+        }
+    }
     memory_pool_free(memory_pool, table);
 }
