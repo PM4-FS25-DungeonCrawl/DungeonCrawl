@@ -2,7 +2,7 @@
 #include "../include/sqlite3.h"
 #include "../src/common.h"
 #include "../src/database/database.h"
-#include "../src/database/gamestate/gamestate_database.h"
+#include "../src/database/game/gamestate_database.h"
 
 #include <assert.h>
 #include <stdio.h>

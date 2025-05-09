@@ -2,11 +2,10 @@
 
 #include "../common.h"
 #include "../database/database.h"
-#include "../database/gamestate/gamestate_database.h"
+#include "../database/game/gamestate_database.h"
 #include "../local/local.h"
 #include "../logging/logger.h"
 #include "notcurses/nckeys.h"
-#include "src/database/gamestate/gamestate_database.h"
 #include "src/menu/menu.h"
 
 #include <notcurses/notcurses.h>

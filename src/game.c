@@ -3,7 +3,7 @@
 #include "character/character.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
-#include "database/gamestate/gamestate_database.h"
+#include "database/game/gamestate_database.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
 #include "logging/logger.h"

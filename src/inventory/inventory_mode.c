@@ -3,6 +3,7 @@
 #include "../character/character.h"
 #include "../common.h"
 #include "../game.h"
+#include "../item/gear.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "../src/combat/combat_mode.h"
