@@ -1,6 +1,6 @@
 #include "potion.h"
 
-#include <src/database/game/item_database.h>
+#include "../database/game/item_database.h"
 #include <stdio.h>
 #include <stdlib.h>
 
