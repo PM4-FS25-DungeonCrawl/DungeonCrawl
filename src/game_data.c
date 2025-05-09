@@ -28,10 +28,12 @@ int init_game_data() {
     add_potion(player, &potion_table->potions[STAMINA]);
 
     add_gear(player, gear_table->gears[MAGIC_STAFF]);
+    add_gear(player, gear_table->gears[BARDICHE]);
     add_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BOAR]);
+    add_gear(player, gear_table->gears[SHADOW_HOOD_OF_THE_FOX]);
 
 
-    equip_gear(player, player->gear_inventory[LONGSWORD]);
+    equip_gear(player, gear_table->gears[LONGSWORD]);
     equip_gear(player, gear_table->gears[IRON_HELM_OF_THE_BOAR]);
     equip_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BOAR]);
 
