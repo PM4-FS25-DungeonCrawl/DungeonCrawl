@@ -342,7 +342,6 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
     }
-
 }
 
 /**
