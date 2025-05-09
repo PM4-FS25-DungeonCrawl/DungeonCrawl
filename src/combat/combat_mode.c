@@ -23,8 +23,6 @@
 
 
 // Internal functions
-void invoke_potion_effect(character_t* character, potion_t* potion);
-
 void collect_ability_menu_options(ability_t* abilities[], int count);
 void collect_potion_menu_options(potion_t* potions[], int count);
 
@@ -46,9 +44,13 @@ void update_combat_local(void);
 vector2d_t combat_view_anchor = {1, 1};
 internal_combat_state_t combat_state = COMBAT_MENU;
 
-string_max_t* ability_menu_options;// holds the ability menu options
-string_max_t* potion_menu_options; // holds the potion menu options
+string_max_t* ability_menu_options;
+string_max_t* potion_menu_options;
 
+/**
+ * @brief Initialize the combat mode
+ * @note This function must be called before using any other functions in this module.
+ */
 int init_combat_mode() {
     ability_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     NULL_PTR_HANDLER_RETURN(ability_menu_options, -1, "Combat Mode", "Allocated memory for ability menu options in memory pool is NULL");
@@ -68,8 +70,9 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     collect_ability_menu_options(player->abilities, player->ability_count);
-    collect_potion_menu_options(player->potion_inventory, player->potion_count);
+    collect_potion_options(potion_menu_options, player->potion_inventory, player->potion_count, como_potion_format);
 
     switch (combat_state) {
         case COMBAT_MENU:
@@ -84,31 +87,27 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
         case EVALUATE_COMBAT:
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
-                return PLAYER_LOST;
                 draw_game_over();
-            } else if (monster->current_resources.health <= 0) {
-                return PLAYER_WON;
-                // clear screen
+                return PLAYER_LOST;
+            }
+            if (monster->current_resources.health <= 0) {
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                    }
-                }
+                clear_screen(stdplane);
+
                 char message[MAX_STRING_LENGTH];
                 snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
                 draw_combat_log(anchor, message);
+
                 player->xp += monster->xp_reward;
                 if (player->xp >= calculate_xp_for_next_level(player->level)) {
                     level_up(player);
                 }
-            } else {
-                combat_state = COMBAT_MENU;
+                return PLAYER_WON;
             }
+            combat_state = COMBAT_MENU;
             break;
         case COMBAT_EXIT:
             return EXIT_GAME;
-            break;
     }
     return CONTINUE_COMBAT;
 }
@@ -162,13 +161,8 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 }
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
-    // Clear the screen before drawing a new menu
     ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
+    clear_screen(stdplane);
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
@@ -254,7 +248,8 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
             use_ability(monster, player, get_random_ability(monster));
             new_state = EVALUATE_COMBAT;
 
-            collect_potion_menu_options(player->potion_inventory, player->potion_count);
+            ncplane_set_channels(stdplane, DEFAULT_COLORS);
+            collect_potion_options(potion_menu_options, player->potion_inventory, player->potion_count, como_potion_format);
             item_used_or_esc = true;
         } else if (event.id == NCKEY_ESC) {
             // Go back to the combat menu
@@ -286,7 +281,6 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             const int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
             draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, sprite);
-
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), local_strings[como_attack_success.idx].characters,//TODO: This Method of using formats is not safe!!
@@ -384,8 +378,6 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
 
 // Helper function to create ability options array
 void collect_ability_menu_options(ability_t* abilities[], const int count) {
-    //clear the ability menu options
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
         memset(ability_menu_options[i].characters, '\0', sizeof(char) * MAX_STRING_LENGTH);
     }
@@ -401,24 +393,6 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
                  damage_type_to_string(abilities[i]->damage_type));
     }
 }
-
-// Helper function to create potion options array
-void collect_potion_menu_options(potion_t* potions[], const int count) {
-    // clear the potion menu options
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        memset(potion_menu_options[i].characters, '\0', MAX_STRING_LENGTH);
-    }
-
-    for (int i = 0; i < count; i++) {
-        snprintf(potion_menu_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[como_potion_format.idx].characters,//TODO: This Method of using formats is not safe!!
-                 potions[i]->name,
-                 potion_type_to_string(potions[i]->effectType),
-                 potions[i]->value);
-    }
-}
-
 
 void update_combat_local(void) {
     //main menu

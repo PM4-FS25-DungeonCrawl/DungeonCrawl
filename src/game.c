@@ -5,6 +5,7 @@
 #include "database/database.h"
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
+#include "inventory/inventory_mode.h"
 #include "logging/logger.h"
 #include "map/map.h"
 #include "map/map_generator.h"
@@ -71,19 +72,19 @@ void game_loop() {
             case COMBAT_MODE:
                 combat_mode_state();
                 break;
+            case LOOT_MODE:
+                loot_mode_state();
+                break;
+            case INVENTORY_MODE:
+                inventory_mode_state();
+                break;
             case STATS_MODE:
                 stats_mode(player);// Pass your player object
 
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                    }
-                }
+                clear_screen(stdplane);
                 current_state = MAP_MODE;
                 break;
-
-
             case EXIT:
                 running = false;
                 break;
@@ -106,23 +107,13 @@ void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
             game_in_progress = true;// Mark that a game is now in progress
-            // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             current_state = GENERATE_MAP;
             break;
         case MENU_CONTINUE:
-            // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             current_state = MAP_MODE;
             break;
         case MENU_SAVE_GAME:
@@ -136,13 +127,8 @@ void main_menu_state() {
             save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
-            // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             current_state = MAP_MODE;
             break;
         case MENU_LOAD_GAME:
@@ -165,23 +151,13 @@ void main_menu_state() {
                 game_in_progress = true;
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
-                // clear screen
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                    }
-                }
+                clear_screen(stdplane);
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                // clear screen
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                    for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                        ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                    }
-                }
+                clear_screen(stdplane);
                 current_state = GENERATE_MAP;
             }
             break;
@@ -202,37 +178,26 @@ void map_mode_state() {
             current_state = EXIT;
             break;
         case NEXT_FLOOR:
-            // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
         case COMBAT:
             current_state = COMBAT_MODE;
             break;
+        case SHOW_INVENTORY:
+            current_state = INVENTORY_MODE;
+            break;
         case SHOW_MENU:
-            // clear screen
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             current_state = MAIN_MENU;
             break;
         case SHOW_STATS:
-            // clear screen
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
+            clear_screen(stdplane);
             current_state = STATS_MODE;
+            break;
         default:
             log_msg(ERROR, "game", "Unknown return value from map_mode_update");
     }
@@ -243,17 +208,10 @@ void combat_mode_state() {
         case CONTINUE_COMBAT:
             break;
         case PLAYER_WON:
-            // TODO: add loot to player
-            // TODO: delete goblin from map
-            // clear screen
+            log_msg(FINE, "Game", "Player won the combat");
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-                for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                    ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-                }
-            }
-            reset_goblin();
-            current_state = MAP_MODE;
+            clear_screen(stdplane);
+            current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:
             //TODO: instead of exiting the game, a death screen should be shown
@@ -261,6 +219,27 @@ void combat_mode_state() {
             break;
         case EXIT_GAME:
             current_state = EXIT;
+            break;
+    }
+}
+
+void loot_mode_state() {
+    switch (start_inventory(player, goblin)) {
+        case CONTINUE_INVENTORY:
+            break;
+        case EXIT_TO_MAP:
+            reset_goblin();
+            current_state = MAP_MODE;
+            break;
+    }
+}
+
+void inventory_mode_state() {
+    switch (start_inventory(player, NULL)) {
+        case CONTINUE_INVENTORY:
+            break;
+        case EXIT_TO_MAP:
+            current_state = MAP_MODE;
             break;
     }
 }

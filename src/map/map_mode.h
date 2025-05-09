@@ -18,7 +18,8 @@ typedef enum {
     NEXT_FLOOR,
     COMBAT,
     SHOW_MENU,
-    SHOW_STATS
+    SHOW_STATS,
+    SHOW_INVENTORY
 } map_mode_result_t;
 
 void set_player_start_pos(int player_x, int player_y);

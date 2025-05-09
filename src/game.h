@@ -17,6 +17,8 @@ typedef enum {
     MAIN_MENU,
     MAP_MODE,
     COMBAT_MODE,
+    LOOT_MODE,
+    INVENTORY_MODE,
     GENERATE_MAP,
     STATS_MODE,
     EXIT
@@ -29,5 +31,9 @@ void run_game();
 void main_menu_state();
 
 void map_mode_state();
+
+void inventory_mode_state();
+
+void loot_mode_state();
 
 #endif// GAME_H
