@@ -253,8 +253,8 @@ void equip_gear(character_t* c, gear_t* gear) {
         remove_gear(c, gear);//removing from inventory
 
         for (int i = 0; i < 4; ++i) {
-            if (gear->abilities[i].name[0] != '\0') {
-                add_ability(c, &gear->abilities[i]);
+            if (gear->abilities[i]->name[0] != '\0') {
+                add_ability(c, gear->abilities[i]);
             }
         }
 
@@ -289,8 +289,8 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
         gear_t* item = c->equipment[slot];
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i].name[0] != '\0') {
-                remove_ability(c, &item->abilities[i]);
+            if (item->abilities[i]->name[0] != '\0') {
+                remove_ability(c, item->abilities[i]);
             }
         }
 

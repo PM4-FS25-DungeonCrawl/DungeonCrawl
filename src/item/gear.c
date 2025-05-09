@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, const ability_table_t* ability_table, const ability_names_t* abilities, int num_abilities) {
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "In init_gear memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(name, NULL, "Gear", "In init_gear name is NULL");
     gear_t* gear = memory_pool_alloc(memory_pool, sizeof(gear_t));
@@ -23,19 +23,19 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
     for (; i < MAX_ABILITY_PER_GEAR && i < num_abilities; ++i) {
         ability_names_t idx = abilities[i];
         if (idx < MAX_ABILITIES) {
-            gear->abilities[i] = ability_table->abilities[abilities[i]];
+            gear->abilities[i] = &ability_table->abilities[abilities[i]];
         } else {
-            gear->abilities[i] = (ability_t) {0};
+            gear->abilities[i] = &(ability_t) {0};
         }
     }
     for (; i < MAX_ABILITY_PER_GEAR; ++i) {
-        gear->abilities[i] = (ability_t) {0};
+        gear->abilities[i] = &(ability_t) {0};
     }
     return gear;
 }
 
 
-gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, const ability_table_t* ability_table) {
+gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, ability_table_t* ability_table) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "Memory pool is NULL");
 
     gear_init_t* rows = init_gear_table_from_db(db_connection);

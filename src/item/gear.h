@@ -31,7 +31,7 @@ typedef struct
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
-    ability_t abilities[MAX_ABILITY_PER_GEAR];
+    ability_t *abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 
 typedef struct
@@ -40,8 +40,8 @@ typedef struct
     int num_gears;
 } gear_table_t;
 
-gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, const ability_table_t* ability_table, const ability_names_t* abilities, int num_abilities);
-gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, const ability_table_t* ability_table);
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities);
+gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, ability_table_t* ability_table);
 void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table);
 
 #endif//GEAR_H
