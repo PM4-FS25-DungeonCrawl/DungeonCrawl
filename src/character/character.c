@@ -184,9 +184,7 @@ void equip_gear(character_t* c, gear_t* item) {
         c->defenses.armor += item->defenses.armor;
         c->defenses.magic_resist += item->defenses.magic_resist;
 
-        c->current_stats = c->base_stats;
         update_character_resources(&c->max_resources, &c->base_stats);
-        c->current_resources = c->max_resources;
 
         log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, item->name);
         log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, item->name, item->slot);
@@ -215,9 +213,7 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
         c->defenses.armor -= item->defenses.armor;
         c->defenses.magic_resist -= item->defenses.magic_resist;
 
-        c->current_stats = c->base_stats;
         update_character_resources(&c->max_resources, &c->base_stats);
-        c->current_resources = c->max_resources;
 
         add_gear(c, item);
 
