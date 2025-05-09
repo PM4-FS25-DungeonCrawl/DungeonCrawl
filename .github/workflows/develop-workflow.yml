@@ -37,7 +37,7 @@ jobs:
   build-and-test:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest ]  # Multi-OS build
+        os: [ ubuntu-latest, macos-latest, windows-latest]  # Multi-OS build
     runs-on: ${{ matrix.os }}
     needs: auto-format
 
@@ -50,22 +50,26 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y meson ninja-build gcc python3-pip
+          sudo apt install -y libavdevice-dev libdeflate-dev libgpm-dev libncurses-dev libqrcodegen-dev libswscale-dev libunistring-dev pandoc pkg-config
+          sudo apt install libnotcurses-dev libnotcurses3
           sudo apt install -y clang-tidy-18
           pip3 install gcovr
 
-      - name: Install Dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install meson ninja    
+      # - name: Install Dependencies (macOS)
+      #   if: runner.os == 'macOS'
+      #   run: |
+      #     brew install meson ninja
 
       - name: Configure Meson with coverage flags
         if: runner.os == 'Linux'
         run: meson setup builddir --buildtype=debug --prefix=$PWD/builddir -Db_coverage=true
 
       - name: Configure Meson
+        if: runner.os == 'Linux' # TODO: remove this if-block when all other os are running
         run: meson setup builddir
 
       - name: Compile Project
+        if: runner.os == 'Linux' # TODO: remove this if-block when all other os are running
         run: ninja -C builddir
 
       - name: Run tests on Linux

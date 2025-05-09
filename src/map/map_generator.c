@@ -321,8 +321,8 @@ void generate_map() {
     int start_x = 0;
     int start_y = 0;
     int start_edge = 0;
-    if (!exit_x) {
-        //first time generating the map
+    if (!exit_x && !exit_y) {
+        // No exit yet, so this is the first time generating the map
         // Generate map with a random start position (at the start_edge)
         // Start position must be an odd coordinate (for dfs) and should be at least 3 cells away from other edges (not start_edge)
         start_edge = rand() % 4;

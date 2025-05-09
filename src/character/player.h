@@ -3,6 +3,6 @@
 
 #include "character.h"
 
-character_t* create_new_player(void);
+character_t* create_new_player(memory_pool_t* memory_pool);
 
 #endif//PLAYER_H

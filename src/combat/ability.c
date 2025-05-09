@@ -1,26 +1,46 @@
+/**
+ * @file ability.c
+ * @brief This file contains functions for initializing and managing abilities
+ */
+
 #include "ability.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
+// Internal functions
 void init_ability(ability_t* ability, char* name, int roll_amount, int accuracy, int resource_cost, dice_size_t dice_size, damage_type_t damage_type);
 
 /**
- * Initialize the ability table, allocates memory and returns the pointer to the table.
- *
- * @return Pointer to the ability table.
+ * @brief Initializes an ability table and populates it with predefined abilities
+ * @param memory_pool A pointer to the memory pool used for allocating the ability table
+ * @return A pointer to the initialized ability table or NULL if memory allocation fails
  */
-ability_table_t* init_ability_table(void) {
-    ability_table_t* table = malloc(sizeof(ability_table_t));
+ability_table_t* init_ability_table(memory_pool_t* memory_pool) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Ability", "Memory pool is NULL");
+
+    ability_table_t* table = memory_pool_alloc(memory_pool, sizeof(ability_table_t));
     NULL_PTR_HANDLER_RETURN(table, NULL, "Ability", "Failed to allocate memory for ability table");
 
-    init_ability(&table->abilities[FIREBALL], "Fireball", 4, 10, 1, D10, MAGICAL);
-    init_ability(&table->abilities[SWORD_SLASH], "Sword Slash", 4, 10, 1, D6, PHYSICAL);
+    init_ability(&table->abilities[FIREBALL], "Fireball", 4, 15, 1, D10, MAGICAL);
+    init_ability(&table->abilities[SWORD_SLASH], "Sword Slash", 4, 15, 1, D6, PHYSICAL);
     init_ability(&table->abilities[BITE], "Bite", 3, 20, 2, D8, PHYSICAL);
     return table;
 }
 
+/**
+ * @brief Initializes an ability with the given parameters
+ * @param ability A pointer to the ability to be initialized
+ * @param name The name of the ability
+ * @param roll_amount The number of dice rolls for the ability
+ * @param accuracy The accuracy of the ability
+ * @param resource_cost The resource cost of using the ability
+ * @param dice_size The size of the dice used for the ability
+ * @param damage_type The type of damage the ability deals
+ */
 void init_ability(ability_t* ability, char* name, const int roll_amount, const int accuracy, const int resource_cost, const dice_size_t dice_size, const damage_type_t damage_type) {
+    NULL_PTR_HANDLER_RETURN(ability, , "Ability", "In init_ability ability is NULL");
+    NULL_PTR_HANDLER_RETURN(name, , "Ability", "In init_ability name is NULL");
+
     snprintf(ability->name, sizeof(ability->name), "%s", name);
     ability->roll_amount = roll_amount;
     ability->accuracy = accuracy;
@@ -29,9 +49,14 @@ void init_ability(ability_t* ability, char* name, const int roll_amount, const i
     ability->damage_type = damage_type;
 }
 
+/**
+ * @brief Frees the memory allocated for the ability table
+ * @param memory_pool A pointer to the memory pool used for allocating the ability table
+ * @param table A pointer to the ability table to be freed
+ */
+void free_ability_table(memory_pool_t* memory_pool, ability_table_t* table) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, , "Ability", "In free_ability_table memory pool is NULL");
+    NULL_PTR_HANDLER_RETURN(table, , "Ability", "In free_ability_table table is NULL");
 
-void free_ability_table(ability_table_t* table) {
-    if (table != NULL) {
-        free(table);
-    }
+    memory_pool_free(memory_pool, table);
 }

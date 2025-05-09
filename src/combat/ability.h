@@ -2,6 +2,7 @@
 #define ABILITY_H
 
 #include "../common.h"
+#include "../memory/memory_management.h"
 #include "damage.h"
 
 //index of the different abilities in the table
@@ -25,8 +26,19 @@ typedef struct {
     ability_t abilities[MAX_ABILITIES];
 } ability_table_t;
 
-
-ability_table_t* init_ability_table(void);
-void free_ability_table(ability_table_t* table);
+/**
+ * Initialize the ability table, allocates memory and returns the pointer to the table.
+ *
+ * @param memory_pool Pointer to the memory pool for allocation.
+ * @return Pointer to the ability table.
+ */
+ability_table_t* init_ability_table(memory_pool_t* memory_pool);
+/**
+ * Free the ability table, deallocates memory in the memory pool.
+ *
+ * @param memory_pool Pointer to the memory pool for deallocation.
+ * @param table Pointer to the ability table to be freed.
+ */
+void free_ability_table(memory_pool_t* memory_pool, ability_table_t* table);
 
 #endif//ABILITY_H

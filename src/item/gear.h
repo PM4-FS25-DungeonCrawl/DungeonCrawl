@@ -1,8 +1,8 @@
 #ifndef GEAR_H
 #define GEAR_H
 
-#include "../character/stats.h"
 #include "../common.h"
+#include "../stats/stats.h"
 
 typedef enum {
     SLOT_HEAD,
@@ -29,5 +29,6 @@ typedef struct {
 
 gear_t* init_gear(const char* name, gear_slot_t slot, stats_t stats, defenses_t defenses);
 void free_equipable_gear(gear_t* gear);
+const char* gear_slot_to_string(gear_slot_t slot);
 
 #endif//GEAR_H

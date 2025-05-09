@@ -25,7 +25,11 @@
 char* get_iso8601_time();
 
 void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, const int width, const int height, const vector2d_t player, const char* save_name) {
-    //TODO: Check if the database connection is open (can't do i right now because branch localization is not merged yet)
+    // Check if the database connection is open
+    if (!db_is_open(db_connection)) {
+        log_msg(ERROR, "GameState", "Database connection is not open");
+        return;
+    }
 
     // Save the game state to the database into table game_state
     // Get the current time
@@ -431,4 +435,51 @@ void free_save_infos(save_info_container_t* save_infos) {
 
     free(save_infos->infos);
     free(save_infos);
+}
+
+void create_tables_game_state(const db_connection_t* db_connection) {
+    if (!db_is_open(db_connection)) {
+        log_msg(ERROR, "GameState", "Database is not open");
+        return;
+    }
+
+    //Create GS table
+    sqlite3_stmt* stmt;
+    int rc = sqlite3_prepare_v2(db_connection->db, SQL_CREATE_TABLES_GAMESTATE_GS, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+    }
+    sqlite3_finalize(stmt);
+    log_msg(INFO, "GameState", "Game state table (GS) created successfully if it didn't exist");
+
+    // Create MS table
+    rc = sqlite3_prepare_v2(db_connection->db, SQL_CREATE_TABLES_GAMESTATE_MS, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+    }
+    sqlite3_finalize(stmt);
+    log_msg(INFO, "GameState", "Game state table (MS) created successfully if it didn't exist");
+
+    // Create PS table
+    rc = sqlite3_prepare_v2(db_connection->db, SQL_CREATE_TABLES_GAMESTATE_PS, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+    }
+    sqlite3_finalize(stmt);
+    log_msg(INFO, "GameState", "Game state table (PS) created successfully if it didn't exist");
 }

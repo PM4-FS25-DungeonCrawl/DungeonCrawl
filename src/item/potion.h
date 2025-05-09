@@ -2,10 +2,13 @@
 #define POTION_H
 
 #include "../common.h"
+#include "../memory/memory_management.h"
 
 typedef enum {
     HEALING,
     // more effects can be added
+    MANA,
+    STAMINA,
     MAX_POTION_TYPES
 } potion_type_t;
 
@@ -16,8 +19,8 @@ typedef struct {
     // for other item effects more values might be needed
 } potion_t;
 
-potion_t* init_potion(const char* name, potion_type_t type, int value);
+potion_t* init_potion(memory_pool_t* memory_pool, const char* name, potion_type_t type, int value);
 const char* potion_type_to_string(potion_type_t type);
-void free_potion(potion_t* item);
+void free_potion(memory_pool_t* memory_pool, potion_t* potion);
 
 #endif//POTION_H
