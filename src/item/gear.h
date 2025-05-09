@@ -31,7 +31,7 @@ typedef struct
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
-    ability_t *abilities[MAX_ABILITY_PER_GEAR];
+    ability_t* abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 
 typedef struct
