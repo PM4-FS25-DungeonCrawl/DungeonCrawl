@@ -44,6 +44,7 @@ typedef struct
 gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities);
 gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, ability_table_t* ability_table);
 void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table);
+const char* gear_slot_to_string(gear_slot_t slot);
 
 
 #endif//GEAR_H

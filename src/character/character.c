@@ -211,11 +211,24 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In remove_equipped_gear slot is invalid: %d", slot);
 
     if (c->equipment[slot] != NULL) {
-        gear_t* gear = c->equipment[slot];
-        c->defenses.armor -= gear->defenses.armor;
-        c->defenses.magic_resist -= gear->defenses.magic_resist;
+        gear_t* item = c->equipment[slot];
 
-        log_msg(INFO, "Character", "%s removed %s from slot %d.", c->name, gear->name, slot);
+        for (int i = 0; i < 4; ++i) {
+            if (item->abilities[i]->name[0] != '\0') {
+                remove_ability(c, item->abilities[i]);
+            }
+        }
+
+        c->base_stats.strength -= item->stats.strength;
+        c->base_stats.intelligence -= item->stats.intelligence;
+        c->base_stats.dexterity -= item->stats.dexterity;
+        c->base_stats.constitution -= item->stats.constitution;
+        c->defenses.armor -= item->defenses.armor;
+        c->defenses.magic_resist -= item->defenses.magic_resist;
+
+        update_character_resources(&c->max_resources, &c->base_stats);
+
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->name, slot);
         c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
@@ -316,32 +329,8 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In unequip_gear character is NULL");
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In unequip_gear slot is invalid: %d", slot);
 
-
-    if (c->equipment[slot] != NULL) {
-        gear_t* item = c->equipment[slot];
-
-        for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i]->name[0] != '\0') {
-                remove_ability(c, item->abilities[i]);
-            }
-        }
-
-        c->base_stats.strength -= item->stats.strength;
-        c->base_stats.intelligence -= item->stats.intelligence;
-        c->base_stats.dexterity -= item->stats.dexterity;
-        c->base_stats.constitution -= item->stats.constitution;
-        c->defenses.armor -= item->defenses.armor;
-        c->defenses.magic_resist -= item->defenses.magic_resist;
-
-        update_character_resources(&c->max_resources, &c->base_stats);
-
-        add_gear(c, item);
-
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->name, slot);
-        c->equipment[slot] = NULL;
-    } else {
-        log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
-    }
+    add_gear(c, c->equipment[slot]);
+    remove_equipped_gear(c, slot);
 }
 
 /**
