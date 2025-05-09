@@ -1,12 +1,9 @@
-/**
- * @file character.c
- * @brief Implements character-related functionality for the DungeonCrawl game
- */
-
 #include "character.h"
 
 #include "../combat/ability.h"
 #include "../common.h"
+#include "../local/local.h"
+#include "../local/local_strings.h"
 #include "../logging/logger.h"
 
 #include <stdio.h>
@@ -130,6 +127,8 @@ void add_ability(character_t* c, ability_t* ability) {
     if (c->ability_count < MAX_ABILITY_LIMIT) {
         c->abilities[c->ability_count] = ability;
         c->ability_count++;
+
+        log_msg(INFO, "Character", "Ability %s added.", ability->name);
     } else {
         log_msg(INFO, "Character", "%s cannot learn more abilities!", c->name);
     }
@@ -151,6 +150,8 @@ void remove_ability(character_t* c, const ability_t* ability) {
             }
             c->abilities[c->ability_count - 1] = NULL;
             c->ability_count--;
+
+            log_msg(INFO, "Character", "Ability %s removed.", ability->name);
             break;
         }
     }
@@ -168,6 +169,8 @@ void add_gear(character_t* c, gear_t* gear) {
     if (c->gear_count < MAX_GEAR_LIMIT) {
         c->gear_inventory[c->gear_count] = gear;
         c->gear_count++;
+
+        log_msg(INFO, "Character", "Gear %s added to inventory.", gear->name);
     } else {
         log_msg(INFO, "Character", "%s cannot carry more gear!", c->name);
     }
@@ -189,10 +192,34 @@ void remove_gear(character_t* c, gear_t* gear) {
             }
             c->gear_inventory[c->gear_count - 1] = NULL;
             c->gear_count--;
+
+            log_msg(INFO, "Character", "Gear %s removed from inventory.", gear->name);
             return;
         }
     }
     log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->name);
+}
+
+/**
+ * @brief Removes the gear equipped in a specific slot of a character.
+ *
+ * @param c Pointer to the character whose gear is to be removed.
+ * @param slot The slot from which the gear should be removed.
+ */
+void remove_equipped_gear(character_t* c, gear_slot_t slot) {
+    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_equipped_gear character is NULL");
+    CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In remove_equipped_gear slot is invalid: %d", slot);
+
+    if (c->equipment[slot] != NULL) {
+        gear_t* gear = c->equipment[slot];
+        c->defenses.armor -= gear->defenses.armor;
+        c->defenses.magic_resist -= gear->defenses.magic_resist;
+
+        log_msg(INFO, "Character", "%s removed %s from slot %d.", c->name, gear->name, slot);
+        c->equipment[slot] = NULL;
+    } else {
+        log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
+    }
 }
 
 /**
@@ -207,6 +234,8 @@ void add_potion(character_t* c, potion_t* potion) {
     if (c->potion_count < MAX_POTION_LIMIT) {
         c->potion_inventory[c->potion_count] = potion;
         c->potion_count++;
+
+        log_msg(INFO, "Character", "Potion %s added to inventory.", potion->name);
     } else {
         log_msg(INFO, "Character", "%s cannot carry more potions!", c->name);
     }
@@ -228,6 +257,8 @@ void remove_potion(character_t* c, potion_t* potion) {
             }
             c->potion_inventory[c->potion_count - 1] = NULL;
             c->potion_count--;
+
+            log_msg(INFO, "Character", "Potion %s removed from inventory.", potion->name);
             return;
         }
     }
@@ -277,13 +308,14 @@ void equip_gear(character_t* c, gear_t* gear) {
 }
 
 /**
- * @brief Unequips a gear item from a character
+ * @brief Unequips a gear item from a character and adds it to the character's inventory.
  * @param c Pointer to the character
  * @param slot The slot to unequip from
  */
 void unequip_gear(character_t* c, const gear_slot_t slot) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In unequip_gear character is NULL");
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In unequip_gear slot is invalid: %d", slot);
+
 
     if (c->equipment[slot] != NULL) {
         gear_t* item = c->equipment[slot];
@@ -310,6 +342,7 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
     }
+
 }
 
 /**
@@ -356,4 +389,26 @@ void reset_player_stats(character_t* player) {
     player->current_resources.stamina = player->max_resources.stamina;
 
     log_msg(INFO, "Character", "Player stats reset to base values.");
+}
+
+/**
+ * @brief Collects potion options for display.
+ *
+ * @param potion_options Array of strings to store the formatted potion options.
+ * @param potions Array of pointers to the potions.
+ * @param count The number of potions.
+ * @param potion_format The localization key for the potion display format.
+ */
+void collect_potion_options(string_max_t* potion_options, potion_t* potions[], const int count, const local_key_t potion_format) {
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        memset(potion_options[i].characters, '\0', MAX_STRING_LENGTH);
+    }
+
+    for (int i = 0; i < count; i++) {
+        snprintf(potion_options[i].characters, MAX_STRING_LENGTH,
+                 local_strings[potion_format.idx].characters,
+                 potions[i]->name,
+                 potion_type_to_string(potions[i]->effectType),
+                 potions[i]->value);
+    }
 }

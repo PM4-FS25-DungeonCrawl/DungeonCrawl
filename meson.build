@@ -28,6 +28,9 @@ src_files = files(
     'src/character/monster.c',
     'src/character/level.c',
 
+    'src/inventory/inventory_mode.c',
+    'src/inventory/draw/draw_inventory_mode.c',
+
     'src/item/gear.c',
     'src/item/potion.c',
 

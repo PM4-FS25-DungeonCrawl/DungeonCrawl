@@ -6,10 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "In init_gear memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(name, NULL, "Gear", "In init_gear name is NULL");
     gear_t* gear = memory_pool_alloc(memory_pool, sizeof(gear_t));
+
 
     NULL_PTR_HANDLER_RETURN(gear, NULL, "Gear", "Failed to allocate memory for gear: %s", name);
 
@@ -74,4 +76,33 @@ void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table) {
         }
     }
     memory_pool_free(memory_pool, table);
+}
+
+const char* gear_slot_to_string(gear_slot_t slot) {
+    switch (slot) {
+        case SLOT_HEAD:
+            return "Head";
+        case SLOT_CHEST:
+            return "Chest";
+        case SLOT_LEGS:
+            return "Legs";
+        case SLOT_FEET:
+            return "Feet";
+        case SLOT_HANDS:
+            return "Hands";
+        case SLOT_NECK:
+            return "Neck";
+        case SLOT_FINGER_RIGHT:
+            return "Right Finger";
+        case SLOT_FINGER_LEFT:
+            return "Left Finger";
+        case SLOT_LEFT_HAND:
+            return "Left Hand";
+        case SLOT_RIGHT_HAND:
+            return "Right Hand";
+        case SLOT_BOTH_HANDS:
+            return "Both Hands";
+        default:
+            return "Unknown Slot";
+    }
 }
