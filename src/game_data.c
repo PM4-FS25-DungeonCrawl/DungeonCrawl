@@ -25,8 +25,8 @@ int init_game_data() {
 
     if (ability_table == NULL || potion_table == NULL || gear_table == NULL || player == NULL) return 1;
     add_potion(player, &potion_table->potions[HEALING]);
-    add_potion(player, &potion_table->potions[MANA_REGEN]);
-    add_potion(player, &potion_table->potions[STAMINA_REGEN]);
+    add_potion(player, &potion_table->potions[MANA]);
+    add_potion(player, &potion_table->potions[STAMINA]);
 
     add_gear(player, gear_table->gears[LONGSWORD]);
     equip_gear(player, player->gear_inventory[0]);

@@ -320,14 +320,14 @@ void invoke_potion_effect(character_t* character, potion_t* potion) {
                 character->current_resources.health += potion->value;
             }
             break;
-        case MANA_REGEN:
+        case MANA:
             if (potion->value > (character->max_resources.mana - character->current_resources.mana)) {
                 character->current_resources.mana = character->max_resources.mana;
             } else {
                 character->current_resources.mana += potion->value;
             }
         break;
-        case STAMINA_REGEN:
+        case STAMINA:
             if (potion->value > (character->max_resources.stamina - character->current_resources.stamina)) {
                 character->current_resources.stamina = character->max_resources.stamina;
             } else {

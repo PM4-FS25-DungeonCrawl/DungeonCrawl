@@ -8,8 +8,8 @@
 
 typedef enum {
     HEALING,
-    MANA_REGEN,
-    STAMINA_REGEN,
+    MANA,
+    STAMINA,
     // more effects can be added
     MAX_POTION_TYPES
 } potion_type_t;

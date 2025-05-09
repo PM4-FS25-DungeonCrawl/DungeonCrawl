@@ -36,11 +36,11 @@ potion_table_t* init_potion_table(memory_pool_t* memory_pool, const db_connectio
 const char* potion_type_to_string(potion_type_t type) {
     switch (type) {
         case HEALING:
-            return "Healing";
-        case MANA_REGEN:
-            return "Mana Regeneration";
-        case STAMINA_REGEN:
-            return "Stamina Regeneration";
+            return "Health";
+        case MANA:
+            return "Mana";
+        case STAMINA:
+            return "Stamina";
         default:
             return "Unknown";
     }
