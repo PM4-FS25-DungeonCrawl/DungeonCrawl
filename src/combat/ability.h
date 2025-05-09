@@ -2,10 +2,9 @@
 #define ABILITY_H
 
 #include "../common.h"
+#include "../database/database.h"
 #include "../memory/memory_management.h"
 #include "damage.h"
-
-#include "../database/database.h"
 
 //index of the different abilities in the table
 typedef enum {
