@@ -4,6 +4,7 @@
 #include "draw/draw_light.h"
 #include "draw/draw_map_mode.h"
 #include "map.h"
+#include "src/inventory/inventory_mode.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -28,11 +29,9 @@ void set_player_start_pos(const int player_x, const int player_y) {
     revealed_map[player_pos.dx][player_pos.dy] = FLOOR;
 }
 
-
 vector2d_t get_player_pos() {
     return player_pos;
 }
-
 
 map_mode_result_t handle_input(const ncinput* event, character_t* player) {
     int new_x = player_pos.dx;
@@ -42,7 +41,8 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
 
     // Check for 'M' key press for menu
     if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
-
+    // Check for 'I' key press for inventory
+    if (event->id == 'i' || event->id == 'I') return SHOW_INVENTORY;
     // Check for 'L' key press for stats
     if (event->id == 'l' || event->id == 'L') return SHOW_STATS;
 

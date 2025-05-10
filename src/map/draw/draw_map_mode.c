@@ -121,10 +121,11 @@ void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     ncplane_printf_yx(stdplane, y, x, "HP: 100");
     ncplane_printf_yx(stdplane, y + 1, x, "Press 'M' for Menu");
     ncplane_printf_yx(stdplane, y + 2, x, "Press 'L' for Stats");
-    ncplane_printf_yx(stdplane, y + 3, x, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    ncplane_printf_yx(stdplane, y + 3, x, "Press 'I' for Inventory");
+    ncplane_printf_yx(stdplane, y + 4, x, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
-    for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {
-        ncplane_printf_yx(stdplane, i, x, "%s", ascii_helmet[i - y - 3]);
+    for (int i = y + 4; i < y + 4 + HELMET_HEIGHT; i++) {
+        ncplane_printf_yx(stdplane, i, x, "%s", ascii_helmet[i - y - 4]);
     }
 }
