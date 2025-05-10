@@ -1,0 +1,54 @@
+@startuml
+
+title "State Diagramm, Stand: 09.05.2025 (develop)"
+
+state game
+state menu
+game -[hidden]down-> menu
+
+state game {
+  state MAIN_MENU
+  state MAP_MODE
+  state COMBAT_MODE
+  state GENERATE_MAP
+  state STATS_MODE
+  state EXIT
+}
+
+[*] -left-> MAIN_MENU
+MAIN_MENU --> MENU_CONTINUE : /\nmenu_active=true
+
+state menu {
+  state MENU_START_GAME
+  state MENU_CONTINUE
+  state MENU_SAVE_GAME
+  state MENU_LOAD_GAME
+  state MENU_CHANGE_LANGUAGE
+  state MENU_EXIT
+  
+  MENU_CONTINUE --> MENU_START_GAME : input=ENTER\nselected_index=0 /\nmenu_active=false
+  MENU_CONTINUE --> MENU_CONTINUE : input=ENTER\nselected_index=1 /\nmenu_active=false
+  MENU_CONTINUE --> MENU_SAVE_GAME : input=ENTER\nselected_index=2\nname_length>0 /\nmenu_active=false
+  MENU_CONTINUE --> MENU_LOAD_GAME : input=ENTER\nselected_index=3\nvalid_selection=true /\nmenu_active=false
+  MENU_CONTINUE --> MENU_CHANGE_LANGUAGE : input=ENTER\nselected_index=4 /\n...
+  MENU_CONTINUE --> MENU_EXIT : input=ENTER\nselected_index=5 /
+  
+  MENU_CONTINUE --> MENU_EXIT : input=c /
+  MENU_CHANGE_LANGUAGE --> MENU_EXIT : input=c /
+  
+  MENU_CONTINUE --> MENU_CONTINUE : input=ESC /\nmenu_active=false
+  MENU_CHANGE_LANGUAGE --> MENU_CONTINUE : input=ESC /
+  
+  MENU_EXIT --> MENU_EXIT : confirm=YES /\nmenu_active=false
+  
+}
+
+MENU_START_GAME --> GENERATE_MAP : menu_active=false /\ngame_in_progress=true
+MENU_CONTINUE --> MAP_MODE : menu_active=false /
+MENU_SAVE_GAME --> MAP_MODE : menu_active=false /
+MENU_LOAD_GAME --> MAP_MODE : menu_active=false\nload_success=true /
+MENU_LOAD_GAME --> GENERATE_MAP : menu_active=false\nload_success=false /
+MENU_CHANGE_LANGUAGE --> MAIN_MENU : menu_active=false /
+MENU_EXIT --> EXIT : menu_active=false /
+
+@enduml
