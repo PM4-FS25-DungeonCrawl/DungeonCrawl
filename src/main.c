@@ -2,15 +2,15 @@
 
 #include "combat/combat_mode.h"
 #include "common.h"
-#include "database/gamestate/gamestate_database.h"
+#include "database/game/gamestate_database.h"
 #include "game.h"
 #include "game_data.h"
+#include "inventory/inventory_mode.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "notcurses/notcurses.h"
-#include "src/database/gamestate/gamestate_database.h"
 #include "stats/draw/draw_stats.h"
 
 #include <time.h>
@@ -61,6 +61,10 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
     }
+    if (init_inventory_mode() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize inventory mode");
+        return FAIL_INVENTORY_MODE_INIT;
+    }
     if (init_game_data() != COMMON_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
@@ -83,6 +87,7 @@ void shutdown_game() {
 
     shutdown_combat_mode();
     shutdown_stats_mode();
+    shutdown_inventory_mode();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
