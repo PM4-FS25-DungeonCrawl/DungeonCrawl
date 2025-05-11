@@ -6,7 +6,7 @@
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "../src/combat/combat_mode.h"
-#include "./draw/draw_inventory_mode.h"
+#include "../io/output/specific/inventory_output.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>

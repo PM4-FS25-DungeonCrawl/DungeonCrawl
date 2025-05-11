@@ -3,7 +3,7 @@
 #include "../combat/ability.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
-#include "./draw/draw_stats.h"
+#include "../io/output/specific/stats_output.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
@@ -16,7 +16,7 @@ void stats_mode(character_t* player) {
     bool points_allocated_or_esc = false;
 
     while (!points_allocated_or_esc) {
-        // Draw stats menu
+        // Draw stats window
         render_stats_window(player);
         const char* menu_options[4];
 
@@ -62,19 +62,20 @@ void stats_mode(character_t* player) {
                 } else {
                     char word[MAX_STRING_LENGTH - 4];
                     snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
-                    ncplane_putstr_yx(stdplane, 20, 17, word);
-                    notcurses_render(nc);
+                    // Use centralized IO function instead of direct ncplane call
+                    print_text_default(20, 17, word);
+                    render_io_frame();
                 }
             } else if (input.id == NCKEY_ESC || input.id == 'l' || input.id == 'L') {
                 // Clear the screen before drawing a new menu
-                ncplane_erase(stdplane);
+                clear_screen();
                 points_allocated_or_esc = true;
             }
 
             // Re-render after input
-            notcurses_render(nc);
+            render_io_frame();
         }
     }
-    ncplane_erase(stdplane);
-    notcurses_render(nc);
+    clear_screen();
+    render_io_frame();
 }

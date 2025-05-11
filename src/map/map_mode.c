@@ -2,7 +2,7 @@
 
 #include "../game.h"
 #include "draw/draw_light.h"
-#include "draw/draw_map_mode.h"
+#include "../io/output/specific/map_output.h"
 #include "map.h"
 #include "src/inventory/inventory_mode.h"
 
@@ -123,16 +123,12 @@ map_mode_result_t map_mode_update(character_t* player) {
     }
     first_function_call = false;
 
-    // clear screen
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
+    // clear screen using the IO handler
+    clear_screen();
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-    notcurses_render(nc);
+    // Use the centralized render function instead of direct notcurses call
+    render_io_frame();
 
     return next_state;
 }

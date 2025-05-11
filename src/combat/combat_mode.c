@@ -8,7 +8,7 @@
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "ability.h"
-#include "draw/draw_combat_mode.h"
+#include "../io/output/specific/combat_output.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -70,7 +70,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_options(potion_menu_options, player->potion_inventory, player->potion_count, como_potion_format);
 
@@ -91,8 +90,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                clear_screen(stdplane);
+                clear_screen();
 
                 char message[MAX_STRING_LENGTH];
                 snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
@@ -161,8 +159,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 }
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    clear_screen(stdplane);
+    clear_screen();
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
@@ -248,7 +245,6 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
             use_ability(monster, player, get_random_ability(monster));
             new_state = EVALUATE_COMBAT;
 
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             collect_potion_options(potion_menu_options, player->potion_inventory, player->potion_count, como_potion_format);
             item_used_or_esc = true;
         } else if (event.id == NCKEY_ESC) {
@@ -306,7 +302,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                  ability->name);
         draw_combat_log(anchor, message);
     }
-    notcurses_render(nc);
+    render_io_frame();
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
