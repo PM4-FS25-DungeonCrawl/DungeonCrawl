@@ -42,8 +42,7 @@ int init() {
     init_logger();
 
     // Initialize database connection
-    // TODO: multiple paths dungeoncrawl
-    if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
+    if (db_open_multiple_access(&db_connection, DB_GAME) != DB_OPEN_STATUS_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }

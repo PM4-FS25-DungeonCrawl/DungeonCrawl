@@ -79,6 +79,12 @@ configure_file(
     copy : true
 )
 
+configure_file(
+    input : 'resources/database/local/dungeoncrawl_local.db',
+    output : 'dungeoncrawl_local.db',
+    copy : true
+)
+
     # Define the executable
     executable(
     'DungeonCrawl',
