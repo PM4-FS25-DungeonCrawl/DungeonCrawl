@@ -40,7 +40,7 @@ void test_skill_point_allocation() {
     int initial_max_mana = test_character->max_resources.mana;
     int initial_max_stamina = test_character->max_resources.stamina;
     // Due to dexterity accuracy not implemented yet, we will use dexterity as a placeholder
-    int initial_max_dexterity   = test_character->base_stats.dexterity;
+    int initial_max_dexterity = test_character->base_stats.dexterity;
 
     // Allocate a point to constitution
     assert(test_character->skill_points > 0);
