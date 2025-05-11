@@ -18,71 +18,88 @@
 #include <time.h>
 
 /**
- * Initializes all necessary parts and subsystems for the game.
- * This function sets up the logger, memory pool, database connection,
- * game modes, and other required modules. It also performs any necessary
- * seeding or initialization tasks needed for the game to run correctly.
- *
- * @return An exit code indicating success or the specific failure that occurred.
- */
-int init(void);
-/**
  * Frees all allocated resources and performs cleanup tasks for the game.
- * This function should be called before the program exits to ensure proper
- * shutdown of all modules, including logging, local settings, and game data.
  */
 void shutdown_game(void);
 
+/**
+ * Initializes all necessary parts and subsystems for the game.
+ * First initializes IO handler to show a splash screen, then initializes
+ * the rest of the systems sequentially.
+ *
+ * @return An exit code indicating success or the specific failure that occurred.
+ */
 int init() {
-    // initialized the main memory pool
+    // Initialize the main memory pool
     main_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
     NULL_PTR_HANDLER_RETURN(main_memory_pool, FAIL_MEM_POOL_INIT, "Main", "Main memory pool is NULL");
 
-    // seeding random function
+    // Seed random function
     srand(time(NULL));
 
+    // Initialize logger
     init_logger();
+    log_msg(INFO, "Main", "Initialization started");
+
+    // First initialize the IO handler (needed for the splash screen)
+    if (init_io_handler() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize IO handler");
+        return FAIL_IO_HANDLER_INIT;
+    }
+
+    // Show launch screen immediately before continuing with other initialization
+    show_launch_screen(3000);
+    log_msg(INFO, "Main", "Launch screen displayed, continuing initialization");
 
     // Initialize database connection
     if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }
-    create_tables_game_state(&db_connection);// only for dungeoncrawl_game.db
+    create_tables_game_state(&db_connection);
 
-    if (init_io_handler() != COMMON_SUCCESS) {
-        log_msg(ERROR, "Main", "Failed to initialize IO handler");
-        return FAIL_IO_HANDLER_INIT;
-    }
+    // Initialize localization
     if (init_local() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize local");
         return FAIL_LOCAL_INIT;
     }
+
+    // Initialize map mode
     init_map_mode();
+
+    // Initialize main menu
     if (init_main_menu() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize main menu");
         return FAIL_MAIN_MENU_INIT;
     }
+
+    // Initialize combat mode
     if (init_combat_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
     }
+
+    // Initialize inventory mode
     if (init_inventory_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize inventory mode");
         return FAIL_INVENTORY_MODE_INIT;
     }
+
+    // Initialize game data
     if (init_game_data() != COMMON_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to initialize game components");
         return FAIL_GAME_ENTITY_INIT;
     }
+
+    // Initialize stats mode
     if (init_stats_mode() != COMMON_SUCCESS) {
-        log_msg(ERROR, "Stats", "Failed to intialize stats components");
+        log_msg(ERROR, "Stats", "Failed to initialize stats components");
         return FAIL_STATS_MODE_INIT;
     }
 
-    // TODO initialize notcurses here
-
-    return 0;
+    // When all initialization is done, switch back to game mode
+    log_msg(INFO, "Main", "Initialization complete");
+    return COMMON_SUCCESS;
 }
 
 void shutdown_game() {

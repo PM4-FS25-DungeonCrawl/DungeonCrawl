@@ -22,7 +22,7 @@ struct ncplane* stdplane = NULL;
 // Global variables to maintain IO state
 static volatile bool io_running = false;
 static int current_game_state = 0;
-static io_state_t current_io_state = IO_STATE_GAME;
+io_state_t current_io_state = IO_STATE_GAME; // No longer static, so it can be accessed from game.c
 
 // Background loading operation variables
 static volatile bool loading_in_progress = false;
@@ -166,19 +166,19 @@ static void draw_launch_screen(void) {
     print_text(title_y + 2, version_x, version, DEFAULT_COLORS);
     print_text(title_y + 3, copyright_x, copyright, DEFAULT_COLORS);
 
-    // Draw a "Press any key to continue" message if close to the end
-    struct timespec current_time;
-    clock_gettime(CLOCK_MONOTONIC, &current_time);
-    uint64_t elapsed_ms = (current_time.tv_sec * 1000 + current_time.tv_nsec / 1000000) - launch_screen_start_time;
+    // Draw a loading message
+    const char* loading_msg = "Loading game...";
+    int loading_len = strlen(loading_msg);
+    int loading_x = (width - loading_len) / 2;
 
-    // Only show the "press any key" message in the last second
-    if (elapsed_ms >= launch_screen_duration - 1000) {
-        const char* press_key = "Press any key to continue...";
-        int key_len = strlen(press_key);
-        int key_x = (width - key_len) / 2;
+    // Show simple animation
+    static int frame = 0;
+    frame = (frame + 1) % 4;
+    char anim[5] = "|/-\\";
+    char animation_str[32];
+    snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
 
-        print_text(height - 5, key_x, press_key, DEFAULT_COLORS);
-    }
+    print_text(height - 5, (width - loading_len - 2) / 2, animation_str, DEFAULT_COLORS);
 
     // Render the frame
     render_frame();
@@ -199,17 +199,6 @@ static void process_io_events_thread(void) {
             case IO_STATE_LAUNCH:
                 // Draw the launch screen with game logo
                 draw_launch_screen();
-
-                // Check if the launch screen duration has elapsed
-                struct timespec current_time;
-                clock_gettime(CLOCK_MONOTONIC, &current_time);
-                uint64_t elapsed_ms = (current_time.tv_sec * 1000 + current_time.tv_nsec / 1000000) - launch_screen_start_time;
-
-                if (elapsed_ms >= launch_screen_duration) {
-                    // Launch screen duration has elapsed, go back to game mode
-                    current_io_state = IO_STATE_GAME;
-                    launch_screen_active = false;
-                }
                 break;
 
             case IO_STATE_GAME:
@@ -260,7 +249,7 @@ bool show_loading_screen(const char* text, void (*callback)(void)) {
     return true;
 }
 
-// Show the game launch screen for the specified duration
+// Show the game launch screen - will continue until manually changed
 bool show_launch_screen(int duration_ms) {
     if (duration_ms <= 0) {
         log_msg(ERROR, "io_handler", "Invalid duration for launch screen");
@@ -268,14 +257,10 @@ bool show_launch_screen(int duration_ms) {
     }
 
     // Set up the launch screen
-    launch_screen_duration = duration_ms;
     launch_screen_active = true;
     current_io_state = IO_STATE_LAUNCH;
 
-    // Record the start time
-    struct timespec start_time;
-    clock_gettime(CLOCK_MONOTONIC, &start_time);
-    launch_screen_start_time = start_time.tv_sec * 1000 + start_time.tv_nsec / 1000000;
+    log_msg(INFO, "io_handler", "Launch screen showing - will continue until changed");
 
     return true;
 }

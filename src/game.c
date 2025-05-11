@@ -17,6 +17,9 @@
 #include "io/output/common/common_output.h"
 #include "io/io_handler.h"
 
+// Access the IO state from io_handler.c
+extern io_state_t current_io_state;
+
 #include <locale.h>
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -34,8 +37,8 @@ void combat_mode_state();
 void run_game() {
     game_in_progress = false;// Flag to track if a game has been started
 
-    // Show launch screen for 3 seconds before starting the game
-    show_launch_screen(3000);
+    // Change IO state to game mode - needed after showing launch screen in init()
+    current_io_state = IO_STATE_GAME;
 
     current_state = MAIN_MENU;
     //start the game loop
