@@ -16,6 +16,7 @@
 #include "stats/stats_mode.h"
 #include "io/output/common/common_output.h"
 #include "io/io_handler.h"
+#include "io/input/input_types.h"
 
 #include <locale.h>
 #include <notcurses/notcurses.h>
@@ -32,6 +33,7 @@ void game_loop();
 void combat_mode_state();
 
 void run_game() {
+    log_msg(INFO, "Game", "Starting game loop");
     game_in_progress = false;// Flag to track if a game has been started
 
     current_state = MAIN_MENU;
@@ -40,18 +42,10 @@ void run_game() {
 }
 
 void game_loop() {
+    log_msg(INFO, "Game", "Entering game loop");
     bool running = true;//should only be set in the state machine
 
     while (running) {
-        // Process IO events - this will handle input and update the game state
-        // based on user interaction
-        game_state_t new_state = process_io_events(current_state);
-
-        // If the state changed due to input, update it
-        if (new_state != current_state) {
-            current_state = new_state;
-        }
-
         // Process current game state
         switch (current_state) {
             case MAIN_MENU:
@@ -235,4 +229,39 @@ void inventory_mode_state() {
             current_state = MAP_MODE;
             break;
     }
+}
+
+// Process input events and update game state
+// This is a temporary implementation that will be expanded later
+int process_io_events(int game_state) {
+    // Process input for the game state
+    input_event_t event;
+    if (get_next_input_event(&event)) {
+        // Handle the input event based on the current game state
+        switch (game_state) {
+            case MAIN_MENU:
+                // Handle main menu input (like escape or Quit key)
+                if (event.type == INPUT_QUIT) {
+                    return EXIT;
+                }
+                break;
+
+            case MAP_MODE:
+                // Handle map input
+                if (event.type == INPUT_QUIT) {
+                    return EXIT;
+                }
+                break;
+
+            default:
+                // Default handling
+                if (event.type == INPUT_QUIT) {
+                    return EXIT;
+                }
+                break;
+        }
+    }
+
+    // If no input was processed, return the current game state unchanged
+    return game_state;
 }

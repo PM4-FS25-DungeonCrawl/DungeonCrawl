@@ -11,6 +11,7 @@
 // Reference to the global notcurses instance and standard plane
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
+extern volatile int init_done;
 
 // Loading screen message buffer
 static char loading_message[256] = "";
@@ -87,6 +88,8 @@ void draw_launch_screen(void) {
     const char* loading_msg = "Loading game...";
     int loading_len = strlen(loading_msg);
 
+    while (!init_done) {
+
     // Show simple animation
     static int frame = 0;
     frame = (frame + 1) % 4;
@@ -98,4 +101,6 @@ void draw_launch_screen(void) {
 
     // Render the frame
     render_frame();
+    }
+    return;
 }

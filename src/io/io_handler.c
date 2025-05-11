@@ -19,9 +19,6 @@
 struct notcurses* nc = NULL;
 struct ncplane* stdplane = NULL;
 
-// Global variables for IO handling
-static volatile bool io_running = false;
-
 // Loading screen variables
 static char loading_message[256] = "";
 

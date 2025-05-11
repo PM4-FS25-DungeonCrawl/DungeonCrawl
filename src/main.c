@@ -14,8 +14,38 @@
 #include "src/database/gamestate/gamestate_database.h"
 #include "stats/draw/draw_stats.h"
 #include "io/io_handler.h"
+#include "io/output/specific/wait_output.h"
+
+#ifndef _WIN32
+#include <unistd.h> // for usleep
+#endif
 
 #include <time.h>
+
+// Global flag to signal when initialization is complete
+volatile int init_done = 0;
+
+// Function for the launch screen thread
+static void display_launch_screen_thread(void) {
+    log_msg(INFO, "Main", "Launch screen thread started");
+
+    // Draw the launch screen until initialization is complete
+    while (!init_done) {
+        // Call the draw_launch_screen function from wait_output.c
+        draw_launch_screen();
+
+        // Small sleep to avoid consuming 100% CPU
+        #ifdef _WIN32
+            Sleep(50);  // 50ms
+        #else
+            usleep(50000);  // 50ms
+        #endif
+    }
+
+    log_msg(INFO, "Main", "Launch screen thread ended - initialization completed");
+    // Clear the launch screen
+    clear_screen();
+}
 
 /**
  * Frees all allocated resources and performs cleanup tasks for the game.
@@ -46,18 +76,11 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize IO handler");
         return FAIL_IO_HANDLER_INIT;
     }
-
     
-    //TODO: handle threading here! create a thread that displays the loading screen, and is terminated as soon as the rest of the game is initialized
-    // Draw the launch screen and display while initializing (this is a placeholder, we need multithreading)
-    int init_done = 0;
-    while (!init_done) {
-        draw_launch_screen();
-        usleep(100000); // Sleep for 0.1 seconds
-        if (init_done) {
-            break;
-        }
-    }
+    // Start the launch screen in a background thread
+    //log_msg(INFO, "Main", "Starting launch screen thread");
+    //run_background_task(display_launch_screen_thread);
+    
 
     // Initialize database connection
     if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
@@ -107,7 +130,7 @@ int init() {
 
     // When all initialization is done, switch back to game mode
     log_msg(INFO, "Main", "Initialization complete");
-    int init_done = 1;
+    //init_done = 1;  // Set the global flag to signal completion
     return COMMON_SUCCESS;
 }
 
@@ -130,6 +153,7 @@ void shutdown_game() {
 
 int main(void) {
     const int exit_code = init();
+    log_msg(INFO, "Main", "Exit code: %d", exit_code);
     if (exit_code != COMMON_SUCCESS) {
         shutdown_game();
         return exit_code;

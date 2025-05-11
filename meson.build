@@ -66,7 +66,8 @@ logging_files = files(
 io_files = files(
     'src/io/io_handler.c',
     'src/io/output/common/common_output.c',
-    'src/io/input/input_handler.c'
+    'src/io/input/input_handler.c',
+    'src/io/output/specific/wait_output.c'
 )
 
 local_files = files(

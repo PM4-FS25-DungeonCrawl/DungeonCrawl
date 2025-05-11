@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+extern volatile int init_done;
+
 typedef enum {
     SUCCESS,
     FAIL_TB_INIT,

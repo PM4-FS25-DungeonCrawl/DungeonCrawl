@@ -9,6 +9,9 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 
+// Make the init_done flag accessible from other files
+extern volatile int init_done;
+
 // Global notcurses instance and standard plane
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
@@ -64,6 +67,17 @@ bool run_background_task(void (*callback)(void));
  * wrapper around the common_output render_frame function.
  */
 void render_io_frame(void);
+
+/**
+ * @brief Process input events and update IO state
+ *
+ * This function is called from the main game loop to process
+ * any pending input and update the IO system state.
+ *
+ * @param game_state The current game state
+ * @return The new game state after input processing
+ */
+int process_io_events(int game_state);
 
 /**
  * @brief Shutdown the IO handler
