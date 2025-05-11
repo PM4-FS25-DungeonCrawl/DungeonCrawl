@@ -1,24 +1,26 @@
 #include "wait_output.h"
 #include "../common/common_output.h"
-#include "../../input/input_handler.h"
 #include "../../io_handler.h"
-#include "../../../game.h"
 #include "../../../logging/logger.h"
-#include <notcurses/notcurses.h>
 #include <string.h>
 #include <stdio.h>
-
-// Reference to the global notcurses instance and standard plane
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
-extern volatile int init_done;
 
 // Loading screen message buffer
 static char loading_message[256] = "";
 
-// Draw the loading screen with animation
+/**
+ * @brief Draw a loading screen with animation
+ *
+ * This function displays a loading screen with the specified message and 
+ * a simple animation to indicate progress.
+ *
+ * @param text The message to display on the loading screen
+ */
 void draw_loading_screen(const char* text) {
-    if (!stdplane || !text) return;
+    if (!text) {
+        log_msg(ERROR, "Wait Output", "Loading screen text is NULL");
+        return;
+    }
 
     // Store the message
     strncpy(loading_message, text, sizeof(loading_message) - 1);
@@ -36,25 +38,28 @@ void draw_loading_screen(const char* text) {
     int msg_x = (width - msg_len) / 2;
     int msg_y = height / 2 - 1;
 
-    print_text(msg_y, msg_x, loading_message, DEFAULT_COLORS);
+    print_text_default(msg_y, msg_x, loading_message);
 
-    // Draw a simple loading animation based on the current time
+    // Draw a simple loading animation based on the current frame
     static int frame = 0;
     frame = (frame + 1) % 4;
 
     char anim[5] = "|/-\\";
     char animation_str[2] = {anim[frame], '\0'};
 
-    print_text(msg_y + 2, width / 2, animation_str, DEFAULT_COLORS);
+    print_text_default(msg_y + 2, width / 2, animation_str);
 
-    // Render the frame
-    render_frame();
+    // Render the frame using centralized IO handler
+    render_io_frame();
 }
 
-// Draw the launch screen with title and animation
+/**
+ * @brief Draw the launch screen with title and animation
+ *
+ * This function displays the game launch screen with title, version,
+ * copyright information, and a loading animation.
+ */
 void draw_launch_screen(void) {
-    if (!stdplane) return;
-
     // Get screen dimensions
     int width, height;
     get_screen_dimensions(&width, &height);
@@ -81,26 +86,26 @@ void draw_launch_screen(void) {
     int version_x = (width - version_len) / 2;
     int copyright_x = (width - copyright_len) / 2;
 
-    print_text(title_y + 2, version_x, version, DEFAULT_COLORS);
-    print_text(title_y + 3, copyright_x, copyright, DEFAULT_COLORS);
+    print_text_default(title_y + 2, version_x, version);
+    print_text_default(title_y + 3, copyright_x, copyright);
 
     // Draw a loading message
     const char* loading_msg = "Loading game...";
     int loading_len = strlen(loading_msg);
 
+    // Continue showing animation until init is done
+    extern volatile int init_done;
     while (!init_done) {
+        // Show simple animation
+        static int frame = 0;
+        frame = (frame + 1) % 4;
+        char anim[5] = "|/-\\";
+        char animation_str[32];
+        snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
 
-    // Show simple animation
-    static int frame = 0;
-    frame = (frame + 1) % 4;
-    char anim[5] = "|/-\\";
-    char animation_str[32];
-    snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
+        print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
 
-    print_text(height - 5, (width - loading_len - 2) / 2, animation_str, DEFAULT_COLORS);
-
-    // Render the frame
-    render_frame();
+        // Render the frame using centralized IO handler
+        render_io_frame();
     }
-    return;
 }
