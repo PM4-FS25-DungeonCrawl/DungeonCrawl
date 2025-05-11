@@ -127,8 +127,8 @@ jobs:
 
       - name: Rename Artifacts for Clarity #There will be a conflict due to files having the same name otherwhise
         run: |
-          mv artifacts/dungeonCrawl-executable-Linux/ artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
-          mv artifacts/dungeonCrawl-executable-macOS/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
+          mv artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
+          mv artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
 # mv artifacts/dungeonCrawl-executable-macOS/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-Windows.zip
 
 
