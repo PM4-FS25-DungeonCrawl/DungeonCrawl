@@ -29,7 +29,7 @@ void add_xp(character_t* player, int xp_earned) {
     log_msg(INFO, "XP", "Player earned %d XP. Total XP: %d", xp_earned, player->xp);
 
     // Check if the player has enough XP to level up
-    while (player->xp >= calculate_xp_for_next_level(player->level)) {
+    if (player->xp >= calculate_xp_for_next_level(player->level)) {
         level_up(player);
     }
 }
