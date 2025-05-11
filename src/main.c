@@ -47,9 +47,17 @@ int init() {
         return FAIL_IO_HANDLER_INIT;
     }
 
-    // Show launch screen immediately before continuing with other initialization
-    show_launch_screen(3000);
-    log_msg(INFO, "Main", "Launch screen displayed, continuing initialization");
+    
+    //TODO: handle threading here! create a thread that displays the loading screen, and is terminated as soon as the rest of the game is initialized
+    // Draw the launch screen and display while initializing (this is a placeholder, we need multithreading)
+    int init_done = 0;
+    while (!init_done) {
+        draw_launch_screen();
+        usleep(100000); // Sleep for 0.1 seconds
+        if (init_done) {
+            break;
+        }
+    }
 
     // Initialize database connection
     if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
@@ -99,6 +107,7 @@ int init() {
 
     // When all initialization is done, switch back to game mode
     log_msg(INFO, "Main", "Initialization complete");
+    int init_done = 1;
     return COMMON_SUCCESS;
 }
 

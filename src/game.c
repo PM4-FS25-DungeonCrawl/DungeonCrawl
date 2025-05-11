@@ -17,9 +17,6 @@
 #include "io/output/common/common_output.h"
 #include "io/io_handler.h"
 
-// Access the IO state from io_handler.c
-extern io_state_t current_io_state;
-
 #include <locale.h>
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -37,18 +34,9 @@ void combat_mode_state();
 void run_game() {
     game_in_progress = false;// Flag to track if a game has been started
 
-    // Change IO state to game mode - needed after showing launch screen in init()
-    current_io_state = IO_STATE_GAME;
-
     current_state = MAIN_MENU;
     //start the game loop
     game_loop();
-}
-
-// Example of a map generation callback function for the loading screen
-static void generate_map_callback(void) {
-    // Generate the map while showing a loading screen
-    generate_map();
 }
 
 void game_loop() {
@@ -71,11 +59,8 @@ void game_loop() {
                 break;
 
             case GENERATE_MAP:
-                // Instead of directly generating the map here, show a loading screen
-                // and generate the map in a background thread
-                show_loading_screen("Generating dungeon...", generate_map_callback);
-                // The next game loop will continue with MAP_MODE once loading is done
-                // The loading callback will generate the map
+                generate_map();
+                current_state = MAP_MODE;
                 break;
 
             case MAP_MODE:
