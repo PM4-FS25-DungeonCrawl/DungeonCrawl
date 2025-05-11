@@ -27,7 +27,6 @@ typedef enum db_type_t {
 } db_type_t;
 
 
-
 /**
  * This function is for the opening of the database.
  *
