@@ -105,44 +105,44 @@ jobs:
 #          name: dungeonCrawl-executable-${{ runner.os }}
 #          path: builddir/DungeonCrawl-Windows.zip
 
-  release:
-    needs: [build-linux, build-macos]
-    runs-on: ubuntu-latest
+release:
+  needs: [build-linux, build-macos]
+  runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v4
+  steps:
+    - uses: actions/checkout@v4
 
-      - name: Auto Tag Release
-        id: auto_tag
-        uses: anothrNick/github-tag-action@1.67.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
-          WITH_V: true
+    - name: Auto Tag Release
+      id: auto_tag
+      uses: anothrNick/github-tag-action@1.67.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEFAULT_BUMP: patch
+        WITH_V: true
 
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
 
-      - name: Rename Artifacts for Clarity #There will be a conflict due to files having the same name otherwhise
-        run: |
-          mv artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
-          mv artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
-# mv artifacts/dungeonCrawl-executable-macOS/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-Windows.zip
+    - name: Debug List artifact contents
+      run: ls -R artifacts/
 
+    - name: Rename Artifacts for Clarity
+      run: |
+        mv artifacts/dungeonCrawl-executable-Linux/release-linux/dungeonCrawl-Linux.zip artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
+        mv artifacts/dungeonCrawl-executable-macOS/release-macos/dungeonCrawl-macOS.zip artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.auto_tag.outputs.new_tag }}
-          name: Release ${{ steps.auto_tag.outputs.new_tag }}
-          body: "Release: Built from the latest commit. Each package contains the executable, database, and resource files."
-          draft: false
-          prerelease: false
-          files: |
-            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
-            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
-# artifacts/dungeonCrawl-executable-Windows/DungeonCrawl-Windows.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.auto_tag.outputs.new_tag }}
+        name: Release ${{ steps.auto_tag.outputs.new_tag }}
+        body: "Release: Built from the latest commit. Each package contains the executable, database, and resource files."
+        draft: false
+        prerelease: false
+        files: |
+          artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
+          artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
