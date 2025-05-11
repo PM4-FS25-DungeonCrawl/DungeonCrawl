@@ -35,8 +35,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-${{ runner.os }}
-          path: builddir/DungeonCrawl-Linux.zip
+          name: dungeonCrawl-executable-Linux
+          path: release-linux/
 
   build-macos:
     runs-on: macos-latest
@@ -63,8 +63,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-${{ runner.os }}
-          path: builddir/DungeonCrawl-macOS.zip
+          name: dungeonCrawl-executable-macOS
+          path: release-macos/
 
  # build-windows:
  #   runs-on: windows-latest
