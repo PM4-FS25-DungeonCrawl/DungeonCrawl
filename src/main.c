@@ -78,8 +78,8 @@ int init() {
     }
     
     // Start the launch screen in a background thread
-    //log_msg(INFO, "Main", "Starting launch screen thread");
-    //run_background_task(display_launch_screen_thread);
+    log_msg(INFO, "Main", "Starting launch screen thread");
+    run_background_task(display_launch_screen_thread);
     
 
     // Initialize database connection
@@ -130,7 +130,7 @@ int init() {
 
     // When all initialization is done, switch back to game mode
     log_msg(INFO, "Main", "Initialization complete");
-    //init_done = 1;  // Set the global flag to signal completion
+    init_done = 1;  // Set the global flag to signal completion
     return COMMON_SUCCESS;
 }
 
