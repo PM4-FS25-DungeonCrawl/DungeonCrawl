@@ -34,7 +34,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-Linux.zip
+          name: dungeonCrawl-executable-Linux
           path: dungeonCrawl-Linux.zip
 
   build-macos:
@@ -61,7 +61,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-macOS.zip
+          name: dungeonCrawl-executable-macOS
           path: dungeonCrawl-macOS.zip
 
  # build-windows:
@@ -140,7 +140,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-executable-Linux.zip
-            artifacts/dungeonCrawl-executable-macOS.zip
+            artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip
+            artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
