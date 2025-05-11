@@ -7,30 +7,35 @@
 #include "../../character/character.h"
 #include "../../game.h"
 #include "../../src/common.h"
+#include "../combat_mode.h"
 
+#include <limits.h>
 #include <notcurses/notcurses.h>
-
-// External reference to notcurses context
-
+#include <unistd.h>
 
 // Internal functions
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
-
+char* find_data(const char* filename);
+static struct ncplane* current_sprite_plane = NULL;
 /**
  * @brief this function draws the combat view
  * @param anchor the anchor point of the combat view, representing the top left corner
  * @param player the player character
  * @param enemy the enemy character
- * @param enemy_sprite the sprite of the enemy
- * @param sprite_height the height of the enemy sprite
+ * @param race the enemy race
  * @param red_enemy_sprite if true, the enemy sprite will be drawn in red
  * @return the new anchor point after drawing the combat view
  * @note this function clears and presents the combat view
  */
-vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy, const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
+vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy, const enemy_race_t race, const bool red_enemy_sprite) {
+    if (current_sprite_plane != NULL) {
+        ncplane_destroy(current_sprite_plane);
+        current_sprite_plane = NULL;
+    }
     clear_screen(stdplane);
+    const char* sprite_filename = NULL;
 
-    //copy of the anchor
+    // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Draw title
@@ -41,19 +46,145 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vec.dy = draw_resource_bar(vec, enemy);
     vec.dy += 2;
 
-    //print the enemy sprite line for line
-    if (red_enemy_sprite) {
-        ncplane_set_channels(stdplane, RED_TEXT_COLORS);
-        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
-    } else {
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_putstr_yx(stdplane, vec.dy, anchor.dx, enemy_sprite);
+    // Set correct enemy sprite path based on race
+    switch (race) {
+        case RACE_GOBLIN:
+            sprite_filename = "goblin.png";
+            break;
+        // Add more cases for other races
+        default:
+            log_msg(WARNING, "Draw combat mode", "invalid race for rendering sprite");
+            return vec;
     }
 
+    // Use a resource finder function similar to the demo code
+    char* image_path = find_data(sprite_filename);
+    if (image_path == NULL) {
+        log_msg(ERROR, "Draw combat mode", "Could not find sprite file");
+        return vec;
+    }
+
+    // Create a visual to render
+    struct ncvisual* visual = ncvisual_from_file(image_path);
+    free(image_path);// Free the path after use
+
+    if (visual == NULL) {
+        log_msg(ERROR, "Draw combat mode", "Could not load visual from file");
+        return vec;
+    }
+
+    // Calculate dimensions and scaling
+    unsigned screen_width, screen_height;
+    ncplane_dim_yx(stdplane, &screen_height, &screen_width);
+
+    // Target size for sprite
+    int target_width = 30;
+    int target_height = 30;
+
+    // Set up visual options
+    struct ncvisual_options vopts = {
+            .n = stdplane,                      // Render to standard plane
+            .y = vec.dy,                        // Y position
+            .x = anchor.dx,                     // X position
+            .begy = 0,                          // Start at beginning of visual
+            .begx = 0,                          // Start at beginning of visual
+            .leny = 0,                          // Use full height (0 means full)
+            .lenx = 0,                          // Use full width (0 means full)
+            .scaling = NCSCALE_SCALE,           // Scale to fit target dimensions
+            .flags = NCVISUAL_OPTION_CHILDPLANE,// Create child plane
+            .blitter = NCBLIT_2x1               // Let ncvisual pick appropriate blitter
+    };
+
+    // Get the geometry that will be used for this visual
+    ncvgeom geom;
+    if (ncvisual_geom(nc, visual, &vopts, &geom) != 0) {
+        log_msg(ERROR, "Draw combat mode", "Failed to calculate visual geometry");
+        ncvisual_destroy(visual);
+        return vec;
+    }
+
+    // If terminal doesn't support pixel graphics, use an appropriate blitter
+    if (!notcurses_check_pixel_support(nc)) {
+        log_msg(INFO, "Draw combat mode", "Pixel blitting not supported, using half blocks");
+        vopts.blitter = NCBLIT_2x1;// Using half blocks (▀ and ▄)
+    } else {
+        vopts.blitter = NCBLIT_PIXEL;
+    }
+
+    // Blit the visual to create a new plane
+    struct ncplane* sprite_plane = ncvisual_blit(nc, visual, &vopts);
+    current_sprite_plane = sprite_plane;
+
+
+    if (sprite_plane == NULL) {
+        log_msg(ERROR, "Draw combat mode", "Failed to blit visual");
+        ncvisual_destroy(visual);
+        return vec;
+    }
+
+    // Apply red tint if needed
+    if (red_enemy_sprite) {
+        nccell base = NCCELL_TRIVIAL_INITIALIZER;
+        ncchannels_set_fg_rgb8(&base.channels, 255, 0, 0);           // Set foreground to red
+        ncchannels_set_bg_alpha(&base.channels, NCALPHA_TRANSPARENT);// Transparent background
+        ncplane_set_base_cell(sprite_plane, &base);
+        nccell_release(sprite_plane, &base);// Release resources if necessary
+    }
+
+    // Update position for next element
+    unsigned sprite_height, sprite_width;
+    ncplane_dim_yx(sprite_plane, &sprite_height, &sprite_width);
     vec.dy += sprite_height;
     vec.dy += 1;
+
+    // Render the result
     notcurses_render(nc);
+
+    // Clean up resources
+    ncvisual_destroy(visual);
+    // Note: Don't destroy sprite_plane as it's now attached to stdplane
+
     return vec;
+}
+// clears the combat view
+void clear_combat_view() {
+    if (current_sprite_plane != NULL) {
+        ncplane_destroy(current_sprite_plane);
+        current_sprite_plane = NULL;
+        notcurses_render(nc);// Re-render to show the changes
+    }
+}
+/**
+ * @brief Find a resource file (similar to the demo code)
+ * @param filename The name of the file to find
+ * @return A dynamically allocated string with the full path, or NULL if not found
+ * @note The caller is responsible for freeing the returned string
+ */
+char* find_data(const char* filename) {
+    // Try several common locations for the resource files
+    const char* potential_paths[] = {
+            "./resources/sprites/",
+            "../resources/sprites/",
+            "../../resources/sprites/",
+            "./sprites/",
+            "./",
+            "../",
+            // Add more potential paths as needed
+    };
+
+    const int num_paths = sizeof(potential_paths) / sizeof(potential_paths[0]);
+    char temp_path[PATH_MAX];
+
+    for (int i = 0; i < num_paths; i++) {
+        snprintf(temp_path, PATH_MAX, "%s%s", potential_paths[i], filename);
+
+        // Check if file exists and is readable
+        if (access(temp_path, R_OK) == 0) {
+            return strdup(temp_path);
+        }
+    }
+
+    return NULL;
 }
 
 /**
