@@ -94,12 +94,10 @@ void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
             game_in_progress = true;// Mark that a game is now in progress
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             current_state = GENERATE_MAP;
             break;
         case MENU_CONTINUE:
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             current_state = MAP_MODE;
             break;
@@ -114,7 +112,6 @@ void main_menu_state() {
             save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             current_state = MAP_MODE;
             break;
@@ -138,12 +135,10 @@ void main_menu_state() {
                 game_in_progress = true;
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 clear_screen();
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
                 clear_screen();
                 current_state = GENERATE_MAP;
             }
@@ -165,7 +160,6 @@ void map_mode_state() {
             current_state = EXIT;
             break;
         case NEXT_FLOOR:
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
@@ -177,7 +171,6 @@ void map_mode_state() {
             current_state = INVENTORY_MODE;
             break;
         case SHOW_MENU:
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             current_state = MAIN_MENU;
             break;
@@ -196,7 +189,6 @@ void combat_mode_state() {
             break;
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
             clear_screen();
             current_state = LOOT_MODE;
             break;
@@ -229,39 +221,4 @@ void inventory_mode_state() {
             current_state = MAP_MODE;
             break;
     }
-}
-
-// Process input events and update game state
-// This is a temporary implementation that will be expanded later
-int process_io_events(int game_state) {
-    // Process input for the game state
-    input_event_t event;
-    if (get_next_input_event(&event)) {
-        // Handle the input event based on the current game state
-        switch (game_state) {
-            case MAIN_MENU:
-                // Handle main menu input (like escape or Quit key)
-                if (event.type == INPUT_QUIT) {
-                    return EXIT;
-                }
-                break;
-
-            case MAP_MODE:
-                // Handle map input
-                if (event.type == INPUT_QUIT) {
-                    return EXIT;
-                }
-                break;
-
-            default:
-                // Default handling
-                if (event.type == INPUT_QUIT) {
-                    return EXIT;
-                }
-                break;
-        }
-    }
-
-    // If no input was processed, return the current game state unchanged
-    return game_state;
 }
