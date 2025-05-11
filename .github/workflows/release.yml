@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dungeonCrawl-executable-Linux.zip
-          path: release-linux/
+          path: dungeonCrawl-Linux.zip
 
   build-macos:
     runs-on: macos-latest
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dungeonCrawl-executable-macOS.zip
-          path: release-macos/
+          path: dungeonCrawl-macOS.zip
 
  # build-windows:
  #   runs-on: windows-latest
