@@ -161,14 +161,4 @@ The IO system is fully implemented but not yet integrated into the existing game
 4. Start with map_mode.c as it has the simplest interactions
 5. Ensure all functionality works correctly before proceeding to the next mode
 
-## Potential Enhancements (Future Work) ❌
-
-1. **Event System**: Add pub/sub model for game events
-2. **UI Component Library**: Build more reusable widgets (dialogs, toolbars, etc.)
-3. **Animation System**: Enhance visual effects beyond the basics
-4. **Audio Integration**: Add sound support using similar patterns
-5. **Configuration System**: Add user preferences for input and display settings
-
 IMPORTANT NOTE: we need to use the notcurses library and all it's available functionality for all input and output handling!
-
-IMPORTANT NOTE: The implemented components are ready for integration but should not be integrated yet. Integration will be done at a later point in time.
