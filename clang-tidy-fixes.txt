@@ -1,18 +1,112 @@
+17026 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/inventory/draw/draw_inventory_mode.c.
+18918 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/game_data.c.
+21924 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/input/input_handler.c.
+24676 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/io_handler.c.
+26559 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/specific/inventory_output.c.
+28443 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/specific/map_output.c.
+30327 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/specific/stats_output.c.
+32215 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/specific/wait_output.c.
+34102 warnings and 1 error generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/specific/combat_output.c.
+35981 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c.
+38986 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/common/common_output.c.
+40050 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/thread/thread_handler.c.
+41925 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/main_menu.c.
+43799 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/menu.c.
+45673 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/language_menu.c.
+47551 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/menu/save_menu.c.
+49426 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/gear.c.
+51305 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/item/potion.c.
+52033 warnings and 7 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/memory/memory_management.c.
+53912 warnings and 13 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats_mode.c.
+55786 warnings and 13 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/stats.c.
+57666 warnings and 13 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/stats/draw/draw_stats.c.
+59546 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_mode.c.
+61423 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_generator.c.
+63297 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map.c.
+65171 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/map_populator.c.
+67049 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/draw/draw_map_mode.c.
+68923 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/map/draw/draw_light.c.
+70833 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/game.c.
+72709 warnings and 15 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/common.c.
+74592 warnings and 18 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/combat_mode.c.
+76471 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/draw/draw_combat_mode.c.
+78351 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/damage.c.
+80231 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/combat/ability.c.
+82127 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/gamestate/gamestate_database.c.
+82836 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/database.c.
+84712 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/database/local/local_database.c.
+86591 warnings and 20 errors generated.
+Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/local.c.
+../src/combat/combat_mode.c:93:17: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+   93 |                 clear_screen();
+      |                 ^
+../src/combat/combat_mode.c:162:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+  162 |     clear_screen();
+      |     ^
+../src/combat/combat_mode.c:305:5: error: use of undeclared identifier 'render_io_frame' [clang-diagnostic-error]
+  305 |     render_io_frame();
+      |     ^
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
+../src/combat/draw/draw_combat_mode.c:31:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+   31 |     clear_screen(stdplane);
+      |     ^
+../src/combat/draw/draw_combat_mode.c:156:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+  156 |     clear_screen(stdplane);
+      |     ^
 ../src/common.c:13:17: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    13 |     int width = ncplane_dim_x(stdplane);
       |                 ^
 ../src/common.c:14:18: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     int height = ncplane_dim_y(stdplane);
       |                  ^
-../src/game.c:216:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  216 |         case PLAYER_LOST:
+../src/game.c:195:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  195 |         case PLAYER_LOST:
       |         ^
-../src/game.c:222:18: note: last of these clones ends here
-  222 |             break;
+../src/game.c:201:18: note: last of these clones ends here
+  201 |             break;
       |                  ^
+../src/inventory/draw/draw_inventory_mode.c:19:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+   19 |     clear_screen(stdplane);
+      |     ^
 ../src/inventory/draw/draw_inventory_mode.h:7:12: warning: function 'draw_inventory_view' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
     7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
       |            ^
@@ -26,20 +120,69 @@
 ../src/inventory/inventory_mode.c:15:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
    15 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
       |                                                               ^~~~~
+../src/io/input/input_handler.c:119:17: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  119 |             if (sscanf(event_str, "%d:%d:%d:%d", &type, &id, &modifiers, &evtype) == 4) {
+      |                 ^
+../src/io/input/input_handler.c:154:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  154 |         if (sscanf(event_str, "%d:%d:%d:%d", &type, &id, &modifiers, &evtype) == 4) {
+      |             ^
+../src/io/input/input_handler.h:18:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+   18 | bool init_input_handler(struct notcurses* nc);
+      |      ^
+../src/io/input/input_handler.c:34:6: note: the definition seen here
+   34 | bool init_input_handler(struct notcurses* notcurses_ptr) {
+      |      ^
+../src/io/input/input_handler.h:18:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
+   18 | bool init_input_handler(struct notcurses* nc);
+      |      ^                                    ~~
+      |                                           notcurses_ptr
+../src/io/output/common/common_output.c:323:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  323 |     *width = ncplane_dim_x(stdplane);
+      |              ^
+../src/io/output/common/common_output.c:324:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  324 |     *height = ncplane_dim_y(stdplane);
+      |               ^
+../src/io/output/specific/wait_output.c:39:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   39 |     int msg_len = strlen(loading_message);
+      |                   ^
+../src/io/output/specific/wait_output.c:74:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   74 |     int title_len = strlen(title);
+      |                     ^
+../src/io/output/specific/wait_output.c:85:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   85 |     int version_len = strlen(version);
+      |                       ^
+../src/io/output/specific/wait_output.c:86:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   86 |     int copyright_len = strlen(copyright);
+      |                         ^
+../src/io/output/specific/wait_output.c:96:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   96 |     int loading_len = strlen(loading_msg);
+      |                       ^
+../src/io/output/specific/wait_output.c:99:25: warning: redundant 'init_done' declaration [readability-redundant-declaration]
+   99 |     extern volatile int init_done;
+      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+../src/io/output/specific/../../io_handler.h:13:21: note: previously declared here
+   13 | extern volatile int init_done;
+      |                     ^
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:41:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   41 |     srand(time(NULL));
+../src/main.c:68:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   68 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:92:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   92 |                     save_name[name_length++] = input.id;
+../src/map/map_mode.c:127:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+  127 |     clear_screen();
+      |     ^
+../src/map/map_mode.c:131:5: error: use of undeclared identifier 'render_io_frame' [clang-diagnostic-error]
+  131 |     render_io_frame();
+      |     ^
+../src/menu/save_menu.c:93:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   93 |                     save_name[name_length++] = input.id;
       |                                                ^
-../src/menu/save_menu.c:187:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  187 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:188:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  188 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:190:15: note: else branch starts here
-  190 |             } else {
+../src/menu/save_menu.c:191:15: note: else branch starts here
+  191 |             } else {
       |               ^
 ../src/stats/draw/draw_stats.c:13:6: warning: redundant 'update_stats_local' declaration [readability-redundant-declaration]
    13 | void update_stats_local(void);
@@ -47,5 +190,63 @@
 ../src/stats/draw/draw_stats.h:9:6: note: previously declared here
     9 | void update_stats_local(void);
       |      ^
-Suppressed 189863 warnings (189791 in non-user code, 72 with check filters).
+../src/stats/stats_mode.c:66:21: error: use of undeclared identifier 'print_text_default' [clang-diagnostic-error]
+   66 |                     print_text_default(20, 17, word);
+      |                     ^
+../src/stats/stats_mode.c:67:21: error: use of undeclared identifier 'render_io_frame' [clang-diagnostic-error]
+   67 |                     render_io_frame();
+      |                     ^
+../src/stats/stats_mode.c:71:17: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+   71 |                 clear_screen();
+      |                 ^
+../src/stats/stats_mode.c:76:13: error: use of undeclared identifier 'render_io_frame' [clang-diagnostic-error]
+   76 |             render_io_frame();
+      |             ^
+../src/stats/stats_mode.c:79:5: error: use of undeclared identifier 'clear_screen' [clang-diagnostic-error]
+   79 |     clear_screen();
+      |     ^
+../src/stats/stats_mode.c:80:5: error: use of undeclared identifier 'render_io_frame' [clang-diagnostic-error]
+   80 |     render_io_frame();
+      |     ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:61:56: error: too many arguments to function call, expected 4, have 7 [clang-diagnostic-error]
+   61 |     ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+      |     ~~~~~~~~~~~~~                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/notcurses/notcurses.h:3393:9: note: 'ncvisual_geom' declared here
+ 3393 | API int ncvisual_geom(const struct notcurses* nc, const struct ncvisual* n,
+      |         ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 3394 |                       const struct ncvisual_options* vopts, ncvgeom* geom)
+      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:102:56: error: too many arguments to function call, expected 4, have 7 [clang-diagnostic-error]
+  102 |     ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+      |     ~~~~~~~~~~~~~                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/include/notcurses/notcurses.h:3393:9: note: 'ncvisual_geom' declared here
+ 3393 | API int ncvisual_geom(const struct notcurses* nc, const struct ncvisual* n,
+      |         ^             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 3394 |                       const struct ncvisual_options* vopts, ncvgeom* geom)
+      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:166:21: error: use of undeclared identifier 'ncvisual_render'; did you mean 'ncvisual_resize'? [clang-diagnostic-error]
+  166 |     visual->plane = ncvisual_render(nc, visual->visual, &visual->options);
+      |                     ^~~~~~~~~~~~~~~
+      |                     ncvisual_resize
+/usr/include/notcurses/notcurses.h:3420:9: note: 'ncvisual_resize' declared here
+ 3420 | API int ncvisual_resize(struct ncvisual* n, int rows, int cols)
+      |         ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:186:12: error: no member named 'plane' in 'struct ncvisual_options' [clang-diagnostic-error]
+  186 |     vopts->plane = visual->plane;
+      |     ~~~~~  ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:192:10: error: use of undeclared identifier 'ncvisual_render'; did you mean 'ncvisual_resize'? [clang-diagnostic-error]
+  192 |     if (!ncvisual_render(nc, ncv, vopts)) {
+      |          ^~~~~~~~~~~~~~~
+      |          ncvisual_resize
+/usr/include/notcurses/notcurses.h:3420:9: note: 'ncvisual_resize' declared here
+ 3420 | API int ncvisual_resize(struct ncvisual* n, int rows, int cols)
+      |         ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/media/media_output.c:248:63: error: too many arguments to function call, expected 2, have 7 [clang-diagnostic-error]
+  248 |     visual->plane = ncplane_create(notcurses_stdplane(nc), 0, 0, 0, 0, NULL, NULL);
+      |                     ~~~~~~~~~~~~~~                            ^~~~~~~~~~~~~~~~~~~
+/usr/include/notcurses/notcurses.h:1479:27: note: 'ncplane_create' declared here
+ 1479 | API ALLOC struct ncplane* ncplane_create(struct ncplane* n, const ncplane_options* nopts)
+      |                           ^              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Suppressed 86569 warnings (86425 in non-user code, 144 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
+Found compiler error(s).
