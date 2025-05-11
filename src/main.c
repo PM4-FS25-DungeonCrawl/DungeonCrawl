@@ -2,7 +2,7 @@
 
 #include "combat/combat_mode.h"
 #include "common.h"
-#include "database/gamestate/gamestate_database.h"
+#include "database/game/gamestate_database.h"
 #include "game.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
@@ -11,7 +11,6 @@
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "notcurses/notcurses.h"
-#include "src/database/gamestate/gamestate_database.h"
 #include "stats/draw/draw_stats.h"
 
 #include <time.h>
