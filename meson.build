@@ -21,7 +21,6 @@ src_files = files(
     'src/map/map_populator.c',
 
     'src/map/draw/draw_light.c',
-    'src/map/draw/draw_map_mode.c',
 
     'src/character/character.c',
     'src/character/player.c',
@@ -29,7 +28,6 @@ src_files = files(
     'src/character/level.c',
 
     'src/inventory/inventory_mode.c',
-    'src/inventory/draw/draw_inventory_mode.c',
 
     'src/item/gear.c',
     'src/item/potion.c',
@@ -43,9 +41,7 @@ src_files = files(
     'src/combat/ability.c',
     'src/combat/damage.c',
 
-    'src/combat/draw/draw_combat_mode.c',
     'src/stats/stats.c',
-    'src/stats/draw/draw_stats.c',
     'src/stats/stats_mode.c'
 )
 
@@ -65,8 +61,13 @@ logging_files = files(
 
 io_files = files(
     'src/io/io_handler.c',
-    'src/io/output/common/common_output.c',
     'src/io/input/input_handler.c',
+    'src/io/output/common/common_output.c',
+    'src/io/output/media/media_output.c',
+    'src/io/output/specific/combat_output.c',
+    'src/io/output/specific/inventory_output.c',
+    'src/io/output/specific/map_output.c',
+    'src/io/output/specific/stats_output.c',
     'src/io/output/specific/wait_output.c'
 )
 

@@ -14,7 +14,7 @@
 #include "menu/main_menu.h"
 #include "notcurses/notcurses.h"
 #include "src/database/gamestate/gamestate_database.h"
-#include "stats/draw/draw_stats.h"
+#include "io/output/specific/stats_output.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep

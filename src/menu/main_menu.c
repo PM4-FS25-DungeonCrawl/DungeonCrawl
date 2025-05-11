@@ -96,7 +96,6 @@ menu_result_t show_main_menu(const bool game_in_progress) {
                 break;
             case NCKEY_ENTER:
                 // Get the selected menu option
-                const char* selected_option = menu_options[selected_index];
                 select_menu_option(selected_index, game_in_progress);
                 break;
             case 'c':

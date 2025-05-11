@@ -30,7 +30,6 @@ helper_combat = files(
     '../src/combat/ability.c',
     '../src/combat/damage.c',
 
-    '../src/combat/draw/draw_combat_mode.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -38,7 +37,6 @@ helper_combat = files(
     '../src/character/monster.c',
 
     '../src/inventory/inventory_mode.c',
-    '../src/inventory/draw/draw_inventory_mode.c',
 
     '../src/item/gear.c',
     '../src/item/potion.c',
@@ -62,7 +60,6 @@ helper_map_generator = files(
     '../src/map/map_generator.c',
     '../src/map/map_populator.c',
     '../src/map/map_mode.c',
-    '../src/map/draw/draw_map_mode.c',
     '../src/map/draw/draw_light.c',
 
     '../src/logging/logger.c',
@@ -73,7 +70,6 @@ helper_map_generator = files(
 helper_map_mode = files(
     '../src/map/map.c',
     '../src/map/map_mode.c',
-    '../src/map/draw/draw_map_mode.c',
     '../src/map/draw/draw_light.c',
 
     '../src/logging/logger.c',
@@ -110,7 +106,6 @@ helper_stats = files(
     '../src/combat/ability.c',
     '../src/combat/damage.c',
 
-    '../src/combat/draw/draw_combat_mode.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -135,7 +130,6 @@ helper_stats = files(
 
 
     '../src/stats/stats.c',
-    '../src/stats/draw/draw_stats.c',
     '../src/stats/stats_mode.c'
 )
 

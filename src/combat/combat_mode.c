@@ -14,6 +14,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "../io/io_handler.h"
+#include "../io/output/common/common_output.h"
 
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS

@@ -58,7 +58,8 @@ loaded_visual_t* load_image(const char* path, int* width, int* height) {
 
     // Get visual dimensions
     struct ncvisual_options vopts = {0};
-    ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+    struct ncvgeom geom = {0};
+    ncvisual_geom(nc, visual, &vopts, &geom);
 
     // Set output parameters if requested
     if (width) *width = loaded->width;
@@ -99,11 +100,12 @@ loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames
 
     // Get visual dimensions
     struct ncvisual_options vopts = {0};
-    ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+    struct ncvgeom geom = {0};
+    ncvisual_geom(nc, visual, &vopts, &geom);
 
     // Count frames
     loaded->frames = 0;
-    while (ncvisual_decode(visual) != NULL) {
+    while (ncvisual_decode(visual) != 1) {
         loaded->frames++;
     }
 
@@ -163,7 +165,7 @@ bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     }
 
     // Render the visual
-    visual->plane = ncvisual_render(nc, visual->visual, &visual->options);
+    visual->plane = ncvisual_blit(nc, visual->visual, &visual->options);
     if (!visual->plane) {
         log_msg(ERROR, "media_output", "Failed to render visual");
         return false;
@@ -183,13 +185,13 @@ static int animation_callback(struct ncvisual* ncv, struct ncvisual_options* vop
     }
 
     // Render the current frame
-    vopts->plane = visual->plane;
+    vopts->n = visual->plane;
 
     // Critical section for rendering - use lock_output_mutex if it were accessible
     // In a full implementation, we would use the mutex from common_output.c
     // For now, since Notcurses manages this thread internally, we rely on its thread safety
 
-    if (!ncvisual_render(nc, ncv, vopts)) {
+    if (!ncvisual_blit(nc, ncv, vopts)) {
         log_msg(ERROR, "media_output", "Failed to render animation frame");
         return -1;
     }
@@ -245,7 +247,8 @@ bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     if (visual->plane) {
         ncplane_destroy(visual->plane);
     }
-    visual->plane = ncplane_create(notcurses_stdplane(nc), 0, 0, 0, 0, NULL, NULL);
+    ncplane_options options = {0}; // TODO define options
+    visual->plane = ncplane_create(notcurses_stdplane(nc), &options);
     if (!visual->plane) {
         log_msg(ERROR, "media_output", "Failed to create plane for animation");
         return false;
