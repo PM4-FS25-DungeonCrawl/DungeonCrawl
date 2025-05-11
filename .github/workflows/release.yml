@@ -142,7 +142,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
-            artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
+            artifacts/dungeonCrawl-executable-Linux/
+            artifacts/dungeonCrawl-executable-macOS/
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
