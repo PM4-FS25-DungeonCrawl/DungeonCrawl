@@ -20,12 +20,17 @@ typedef enum {
     EXIT_GAME
 } combat_result_t;
 
+typedef enum {
+    RACE_GOBLIN
+} enemy_race_t;
+
 /**
  * @brief Initialize the combat mode
  * @return int 0 on success, 1 on failure
  * @note This function must be called before using any other functions in this module.
  */
-int init_combat_mode();
+int
+init_combat_mode();
 combat_result_t start_combat(character_t* player, character_t* monster);
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster);
 internal_combat_state_t ability_menu(character_t* player, character_t* monster);
