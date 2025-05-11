@@ -27,7 +27,6 @@ jobs:
         run: |
           mkdir -p release-linux
           cp builddir/DungeonCrawl release-linux/
-          cp -r database/ release-linux/ || true
           cp -r resources/ release-linux/ || true
           cd release-linux
           zip -r ../dungeonCrawl-Linux.zip .
@@ -35,7 +34,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-Linux
+          name: dungeonCrawl-executable-Linux.zip
           path: release-linux/
 
   build-macos:
@@ -55,7 +54,6 @@ jobs:
         run: |
           mkdir -p release-macos
           cp builddir/DungeonCrawl release-macos/
-          cp -r database/ release-macos/ || true
           cp -r resources/ release-macos/ || true
           cd release-macos
           zip -r ../dungeonCrawl-macOS.zip .
@@ -63,7 +61,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dungeonCrawl-executable-macOS
+          name: dungeonCrawl-executable-macOS.zip
           path: release-macos/
 
  # build-windows:
@@ -142,7 +140,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-executable-Linux/
-            artifacts/dungeonCrawl-executable-macOS/
+            artifacts/dungeonCrawl-executable-Linux.zip
+            artifacts/dungeonCrawl-executable-macOS.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
