@@ -6,6 +6,8 @@
 #include "game.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
+#include "io/io_handler.h"
+#include "io/output/specific/wait_output.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
@@ -13,11 +15,9 @@
 #include "notcurses/notcurses.h"
 #include "src/database/gamestate/gamestate_database.h"
 #include "stats/draw/draw_stats.h"
-#include "io/io_handler.h"
-#include "io/output/specific/wait_output.h"
 
 #ifndef _WIN32
-#include <unistd.h> // for usleep
+    #include <unistd.h>// for usleep
 #endif
 
 #include <time.h>
@@ -34,12 +34,12 @@ static void display_launch_screen_thread(void) {
         // Call the draw_launch_screen function from wait_output.c
         draw_launch_screen();
 
-        // Small sleep to avoid consuming 100% CPU
-        #ifdef _WIN32
-            Sleep(50);  // 50ms
-        #else
-            usleep(50000);  // 50ms
-        #endif
+// Small sleep to avoid consuming 100% CPU
+#ifdef _WIN32
+        Sleep(50);// 50ms
+#else
+        usleep(50000);// 50ms
+#endif
     }
 
     log_msg(INFO, "Main", "Launch screen thread ended - initialization completed");
@@ -76,11 +76,11 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize IO handler");
         return FAIL_IO_HANDLER_INIT;
     }
-    
+
     // Start the launch screen in a background thread
     log_msg(INFO, "Main", "Starting launch screen thread");
     run_background_task(display_launch_screen_thread);
-    
+
 
     // Initialize database connection
     if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
@@ -130,7 +130,7 @@ int init() {
 
     // When all initialization is done, switch back to game mode
     log_msg(INFO, "Main", "Initialization complete");
-    init_done = 1;  // Set the global flag to signal completion
+    init_done = 1;// Set the global flag to signal completion
     return COMMON_SUCCESS;
 }
 

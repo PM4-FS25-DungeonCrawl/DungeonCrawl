@@ -1,18 +1,19 @@
 #include "io_handler.h"
+
+#include "../common.h"// Added for COMMON_SUCCESS
 #include "../logging/logger.h"
 #include "../thread/thread_handler.h"
-#include "../common.h"  // Added for COMMON_SUCCESS
 #include "input/input_handler.h"
 #include "output/common/common_output.h"
 #include "output/specific/wait_output.h"
 
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include <time.h>
-#include <stdint.h>
 
 #ifndef _WIN32
-#include <unistd.h> // for usleep
+    #include <unistd.h>// for usleep
 #endif
 
 // Global notcurses instance and standard plane
@@ -33,7 +34,7 @@ int init_io_handler(void) {
     nc = notcurses_init(&ncopt, stdout);
     if (nc == NULL) {
         log_msg(ERROR, "io_handler", "Failed to initialize notcurses");
-        return 1; // Error code
+        return 1;// Error code
     }
 
     log_msg(INFO, "io_handler", "Getting standard plane");
@@ -42,7 +43,7 @@ int init_io_handler(void) {
         log_msg(ERROR, "io_handler", "Failed to get standard plane");
         notcurses_stop(nc);
         nc = NULL;
-        return 2; // Error code
+        return 2;// Error code
     }
 
     ncplane_set_bg_rgb(stdplane, 0x281D10);
@@ -50,18 +51,18 @@ int init_io_handler(void) {
     // Initialize input handler (which starts its own thread)
     if (!init_input_handler(nc)) {
         log_msg(ERROR, "io_handler", "Failed to initialize input handler");
-        return 3; // Error code
+        return 3;// Error code
     }
 
     // Initialize common output handler
     if (!init_output_handler()) {
         log_msg(ERROR, "io_handler", "Failed to initialize output handler");
         shutdown_input_handler();
-        return 4; // Error code
+        return 4;// Error code
     }
 
     log_msg(INFO, "io_handler", "IO handler initialized successfully");
-    return COMMON_SUCCESS; // 0
+    return COMMON_SUCCESS;// 0
 }
 
 // Get next input event (non-blocking)
@@ -72,7 +73,6 @@ bool get_next_input_event(input_event_t* event) {
 
     return get_input_nonblocking(event);
 }
-
 
 
 // Execute a callback in a background thread

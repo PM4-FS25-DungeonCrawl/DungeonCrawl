@@ -58,4 +58,4 @@ void update_stats_local(void);
  */
 void shutdown_stats_mode(void);
 
-#endif // STATS_OUTPUT_H
+#endif// STATS_OUTPUT_H

@@ -2,11 +2,12 @@
 #define INPUT_BUFFER_H
 
 #include "input_types.h"
+
 #include <stdbool.h>
 
 // Default buffer size can be overridden at compile time
 #ifndef INPUT_BUFFER_SIZE
-#define INPUT_BUFFER_SIZE 32
+    #define INPUT_BUFFER_SIZE 32
 #endif
 
 /**
@@ -65,4 +66,4 @@ bool input_buffer_read(input_buffer_t* buffer, input_event_t* event);
  */
 void input_buffer_clear(input_buffer_t* buffer);
 
-#endif // INPUT_BUFFER_H
+#endif// INPUT_BUFFER_H

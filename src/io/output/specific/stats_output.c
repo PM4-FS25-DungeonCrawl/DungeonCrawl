@@ -1,4 +1,5 @@
 #include "stats_output.h"
+
 #include "../../../character/character.h"
 #include "../../../character/level.h"
 #include "../../../local/local.h"
@@ -25,10 +26,10 @@ int init_stats_mode(void) {
 
     // Initialize localized strings
     update_stats_local();
-    
+
     // Register for locale changes
     add_local_observer(update_stats_local);
-    
+
     return 0;
 }
 
@@ -40,14 +41,14 @@ int init_stats_mode(void) {
 void render_stats_window(character_t* player) {
     // Clear the screen
     clear_screen();
-    
+
     int y = 0;
     int x = 0;
     char stats_info[MAX_STRING_LENGTH];
-    
+
     // Display stats title
     print_text_default(y++, x, local_strings[stmo_main_menu_title.idx].characters);
-    
+
     // Display player resources
     snprintf(stats_info, sizeof(stats_info), "%s: %4d / %-4d| %s: %4d / %-4d | %s: %4d / %-4d",
              local_strings[stmo_ability_hp.idx].characters,
@@ -57,7 +58,7 @@ void render_stats_window(character_t* player) {
              local_strings[stmo_ability_sp.idx].characters,
              player->current_resources.stamina, player->max_resources.stamina);
     print_text_default(y++, x, stats_info);
-    
+
     // Display player attributes
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %-4d | %s: %-4d | %s: %-4d",
              local_strings[stmo_ability_strength.idx].characters, player->base_stats.strength,
@@ -65,17 +66,17 @@ void render_stats_window(character_t* player) {
              local_strings[stmo_ability_dexterity.idx].characters, player->base_stats.dexterity,
              local_strings[stmo_ability_constitution.idx].characters, player->base_stats.constitution);
     print_text_default(y++, x, stats_info);
-    
+
     // Display player level and XP
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %4d / %-4d",
              local_strings[stmo_player_level.idx].characters, player->level,
              local_strings[stmo_player_xp.idx].characters, player->xp, calculate_xp_for_next_level(player->level));
     print_text_default(y++, x, stats_info);
-    
+
     // Display equipment header
     snprintf(stats_info, sizeof(stats_info), "%s:", local_strings[stmo_option_inventory.idx].characters);
     print_text_default(y++, x, stats_info);
-    
+
     // Display equipped items
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
@@ -88,13 +89,13 @@ void render_stats_window(character_t* player) {
         }
         print_text_default(y++, x, stats_info);
     }
-    
-    y += 2; // Add space
-    
+
+    y += 2;// Add space
+
     // Display skill points
     snprintf(stats_info, sizeof(stats_info), "%s: %d", local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
     print_text_default(y++, x, stats_info);
-    
+
     // Render the frame
     render_io_frame();
 }
@@ -112,20 +113,20 @@ void draw_stats_menu(const char* title, const char* options[], int option_count,
     // Set menu position
     int y = 20;
     int x = 2;
-    
+
     // Draw menu title
     print_text_default(y, x, title);
     y++;
     x++;
-    
+
     // Draw menu options using centralized print_menu
-    print_menu(title, options, option_count, selected_index, y, x, 
+    print_menu(title, options, option_count, selected_index, y, x,
                DEFAULT_COLORS, DEFAULT_COLORS, INVERTED_COLORS);
-    
+
     // Draw footer at the bottom
     y += option_count + 1;
     print_text_default(y, x, footer);
-    
+
     // Render the frame
     render_io_frame();
 }
@@ -138,7 +139,7 @@ void draw_stats_menu(const char* title, const char* options[], int option_count,
 void draw_stats_log(const char* message) {
     // Display message
     print_text_default(1, 2, message);
-    
+
     // Render the frame
     render_io_frame();
 }

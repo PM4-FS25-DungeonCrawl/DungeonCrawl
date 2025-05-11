@@ -1,7 +1,8 @@
 #include "inventory_output.h"
+
 #include "../../../character/character.h"
-#include "../../../logging/logger.h"
 #include "../../../common.h"
+#include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
 
@@ -25,7 +26,7 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
 
     // Render the frame
     render_io_frame();
-    
+
     return vec;
 }
 
@@ -41,15 +42,15 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
  * @param key_msg First message to display at the bottom (can be NULL)
  * @param tail_msg Second message to display at the bottom (can be NULL)
  */
-void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const char* header_msg, 
-                        string_max_t* menu_options, const int menu_option_count, 
-                        const int selected_index, const char* key_msg, const char* tail_msg) {
+void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const char* header_msg,
+                         string_max_t* menu_options, const int menu_option_count,
+                         const int selected_index, const char* key_msg, const char* tail_msg) {
     // Validate parameters
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Inventory Output", "Menu options are NULL");
         return;
     }
-    
+
     vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Draw menu title
@@ -64,9 +65,9 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
     // Convert the menu options to an array of strings for print_menu
     const char* options[menu_option_count];
     for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*)&menu_options[i];
+        options[i] = (const char*) &menu_options[i];
     }
-    
+
     // Draw menu items highlighting the selected one
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
@@ -93,7 +94,7 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
     if (tail_msg != NULL) {
         print_text_default(vec.dy + 2, vec.dx, tail_msg);
     }
-    
+
     // Render the frame
     render_io_frame();
 }
@@ -116,7 +117,7 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     anchor.dy++;
     print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
     anchor.dy++;
-    
+
     // Render the frame
     render_io_frame();
 
@@ -145,6 +146,6 @@ int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c) {
     // Display the resource bar
     print_text_default(anchor.dy, anchor.dx, c_info);
     anchor.dy++;
-    
+
     return anchor.dy;
 }

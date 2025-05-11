@@ -1,9 +1,11 @@
 #include "wait_output.h"
-#include "../common/common_output.h"
-#include "../../io_handler.h"
+
 #include "../../../logging/logger.h"
-#include <string.h>
+#include "../../io_handler.h"
+#include "../common/common_output.h"
+
 #include <stdio.h>
+#include <string.h>
 
 // Loading screen message buffer
 static char loading_message[256] = "";

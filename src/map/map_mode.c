@@ -1,8 +1,8 @@
 #include "map_mode.h"
 
 #include "../game.h"
-#include "draw/draw_light.h"
 #include "../io/output/specific/map_output.h"
+#include "draw/draw_light.h"
 #include "map.h"
 #include "src/inventory/inventory_mode.h"
 

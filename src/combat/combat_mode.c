@@ -5,10 +5,10 @@
 #include "../character/level.h"
 #include "../common.h"
 #include "../game.h"
+#include "../io/output/specific/combat_output.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "ability.h"
-#include "../io/output/specific/combat_output.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>

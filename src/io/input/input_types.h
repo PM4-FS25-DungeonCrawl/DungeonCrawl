@@ -16,16 +16,16 @@ typedef enum {
     INPUT_DOWN,
     INPUT_LEFT,
     INPUT_RIGHT,
-    
+
     // Action inputs
-    INPUT_CONFIRM,      // Enter/Space/Primary action
-    INPUT_CANCEL,       // Escape/Secondary action
-    INPUT_MENU,         // Open menu (M key)
-    INPUT_STATS,        // Show stats (L key)
-    
+    INPUT_CONFIRM,// Enter/Space/Primary action
+    INPUT_CANCEL, // Escape/Secondary action
+    INPUT_MENU,   // Open menu (M key)
+    INPUT_STATS,  // Show stats (L key)
+
     // Special inputs
-    INPUT_QUIT,         // Ctrl+C or other quit command
-    
+    INPUT_QUIT,// Ctrl+C or other quit command
+
     // No input received
     INPUT_NONE
 } input_t;
@@ -36,8 +36,8 @@ typedef enum {
  * This structure combines our logical input type with the raw Notcurses input data.
  */
 typedef struct {
-    input_t type;           // The logical input type
-    ncinput raw_input;      // The raw Notcurses input data
+    input_t type;     // The logical input type
+    ncinput raw_input;// The raw Notcurses input data
 } input_event_t;
 
-#endif // INPUT_TYPES_H
+#endif// INPUT_TYPES_H

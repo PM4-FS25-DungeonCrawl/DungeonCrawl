@@ -15,4 +15,4 @@ void draw_loading_screen(const char* text);
  */
 void draw_launch_screen(void);
 
-#endif // WAIT_OUTPUT_H
+#endif// WAIT_OUTPUT_H

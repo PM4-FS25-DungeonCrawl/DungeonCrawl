@@ -2,8 +2,9 @@
 #define INPUT_HANDLER_H
 
 #include "input_types.h"
-#include <stdbool.h>
+
 #include <notcurses/notcurses.h>
+#include <stdbool.h>
 
 /**
  * @brief Initialize the input handler
@@ -47,8 +48,7 @@ bool get_input_nonblocking(input_event_t* event);
  * @return The corresponding logical input type
  */
 // Made static to avoid conflicts with implementation in input_handler.c
-static inline input_t translate_input(const ncinput* raw_input)
-{
+static inline input_t translate_input(const ncinput* raw_input) {
     if (!raw_input) {
         return INPUT_NONE;
     }
@@ -90,4 +90,4 @@ static inline input_t translate_input(const ncinput* raw_input)
  */
 void shutdown_input_handler(void);
 
-#endif // INPUT_HANDLER_H
+#endif// INPUT_HANDLER_H

@@ -1,8 +1,8 @@
 #ifndef MAP_OUTPUT_H
 #define MAP_OUTPUT_H
 
-#include "../../../map/map.h"
 #include "../../../common.h"
+#include "../../../map/map.h"
 
 /**
  * @brief Draws the map mode UI based on the given parameters.
@@ -29,4 +29,4 @@ void draw_map_mode(const map_tile_t* arr, int height, int width, vector2d_t anch
  */
 void draw_player_info(int x, int y, vector2d_t player_pos);
 
-#endif // MAP_OUTPUT_H
+#endif// MAP_OUTPUT_H

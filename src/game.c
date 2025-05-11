@@ -6,6 +6,9 @@
 #include "database/gamestate/gamestate_database.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
+#include "io/input/input_types.h"
+#include "io/io_handler.h"
+#include "io/output/common/common_output.h"
 #include "logging/logger.h"
 #include "map/map.h"
 #include "map/map_generator.h"
@@ -14,9 +17,6 @@
 #include "menu/save_menu.h"
 #include "src/common.h"
 #include "stats/stats_mode.h"
-#include "io/output/common/common_output.h"
-#include "io/io_handler.h"
-#include "io/input/input_types.h"
 
 #include <locale.h>
 #include <notcurses/notcurses.h>

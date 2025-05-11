@@ -3,6 +3,7 @@
 
 #include "../../../character/character_fw.h"
 #include "../../../common.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -64,4 +65,4 @@ void draw_game_over(void);
  */
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
 
-#endif // COMBAT_OUTPUT_H
+#endif// COMBAT_OUTPUT_H

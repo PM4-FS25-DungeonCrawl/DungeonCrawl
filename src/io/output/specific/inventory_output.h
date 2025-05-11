@@ -3,6 +3,7 @@
 
 #include "../../../character/character_fw.h"
 #include "../../../common.h"
+
 #include <stdbool.h>
 
 /**
@@ -30,8 +31,8 @@ vector2d_t draw_inventory_view(vector2d_t anchor, const character_t* player);
  * @param key_msg First message to display at the bottom of the menu (can be NULL)
  * @param tail_msg Second message to display at the bottom of the menu (can be NULL)
  */
-void draw_inventory_menu(vector2d_t anchor, const char* menu_name, const char* header_msg, 
-                         string_max_t* menu_options, int menu_option_count, 
+void draw_inventory_menu(vector2d_t anchor, const char* menu_name, const char* header_msg,
+                         string_max_t* menu_options, int menu_option_count,
                          int selected_index, const char* key_msg, const char* tail_msg);
 
 /**
@@ -55,4 +56,4 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message);
  */
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c);
 
-#endif // INVENTORY_OUTPUT_H
+#endif// INVENTORY_OUTPUT_H

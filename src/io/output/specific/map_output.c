@@ -1,7 +1,8 @@
 #include "map_output.h"
+
 #include "../../../asciiart/ascii.h"
-#include "../../../logging/logger.h"
 #include "../../../common.h"
+#include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
 
@@ -23,13 +24,13 @@
  * If any of the checks fail, an error message is logged and the function returns.
  */
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
-                  const vector2d_t player_pos) {
+                   const vector2d_t player_pos) {
     NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
     CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode",
-                   "In draw_map_mode given height or width is zero or negative");
+                     "In draw_map_mode given height or width is zero or negative");
     CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0, , "Draw Map Mode", "In draw_map_mode given anchor is negative");
     CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, ,
-                   "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
+                     "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     // Print the title using centralized IO handler
     print_text(anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl", RED_TEXT_COLORS);
@@ -99,7 +100,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
     // Draw player info
     draw_player_info(anchor.dx, anchor.dy + height + 1, player_pos);
-    
+
     // Render the frame using centralized IO
     render_io_frame();
 }
@@ -117,7 +118,7 @@ void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     print_text_default(y + 1, x, "Press 'M' for Menu");
     print_text_default(y + 2, x, "Press 'L' for Stats");
     print_text_default(y + 3, x, "Press 'I' for Inventory");
-    
+
     // Format player position string
     char pos_str[64];
     snprintf(pos_str, sizeof(pos_str), "Player Position: %d, %d", player_pos.dx, player_pos.dy);
@@ -128,7 +129,7 @@ void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     for (int i = 0; i < HELMET_HEIGHT; i++) {
         helmet_lines[i] = ascii_helmet[i];
     }
-    
+
     // Use the multi-line string printing function for the helmet
     print_text_multi_strings_default(y + 5, x, helmet_lines, HELMET_HEIGHT);
 }

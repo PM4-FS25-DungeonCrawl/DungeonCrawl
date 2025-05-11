@@ -1,10 +1,10 @@
 #ifndef IO_HANDLER_H
 #define IO_HANDLER_H
 
-#include "input/input_types.h"
+#include "../common.h"// Added for COMMON_SUCCESS
 #include "input/input_handler.h"
+#include "input/input_types.h"
 #include "output/common/common_output.h"
-#include "../common.h"  // Added for COMMON_SUCCESS
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
@@ -86,4 +86,4 @@ int process_io_events(int game_state);
  */
 void shutdown_io_handler(void);
 
-#endif // IO_HANDLER_H
+#endif// IO_HANDLER_H

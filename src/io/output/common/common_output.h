@@ -2,6 +2,7 @@
 #define COMMON_OUTPUT_H
 
 #include "../../../common.h"
+
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -73,15 +74,14 @@ void print_text_multi_strings_default(int y, int x, const char* text[], int coun
  * @param selected_channel The color channel for the selected option
  * @return true on success, false on failure
  */
-void print_menu(const char* title, const char** options, int option_count, 
+void print_menu(const char* title, const char** options, int option_count,
                 int selected_index, int y, int x,
                 uint64_t title_channel,
                 uint64_t option_channel,
                 uint64_t selected_channel);
 
-void print_menu_default(const char* title, const char** options, int option_count, 
-                int selected_index, int y, int x);
-                
+void print_menu_default(const char* title, const char** options, int option_count,
+                        int selected_index, int y, int x);
 
 
 /**
@@ -109,4 +109,4 @@ bool get_screen_dimensions(int* width, int* height);
  */
 void shutdown_output_handler(void);
 
-#endif // COMMON_OUTPUT_H
+#endif// COMMON_OUTPUT_H

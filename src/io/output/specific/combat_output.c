@@ -1,7 +1,8 @@
 #include "combat_output.h"
+
 #include "../../../character/character.h"
-#include "../../../game.h"
 #include "../../../common.h"
+#include "../../../game.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
@@ -17,8 +18,8 @@
  * @param red_enemy_sprite If true, the enemy sprite will be drawn in red
  * @return The new anchor point after drawing the combat view
  */
-vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy, 
-                           const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
+vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy,
+                            const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
     // Copy of the anchor
@@ -42,10 +43,10 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
 
     vec.dy += sprite_height;
     vec.dy += 1;
-    
+
     // Render the frame
     render_io_frame();
-    
+
     return vec;
 }
 
@@ -59,8 +60,8 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
  * @param selected_index The index of the selected option
  * @param tail_msg The message to be displayed at the bottom of the menu
  */
-void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options, 
-                     const int menu_option_count, const int selected_index, const char* tail_msg) {
+void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options,
+                      const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Combat Output", "Menu options are NULL");
         return;
@@ -74,17 +75,17 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     // Convert string_max_t options to char* array for print_menu
     const char* options[menu_option_count];
     for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*)&menu_options[i];
+        options[i] = (const char*) &menu_options[i];
     }
-    
+
     // Use centralized menu drawing function
     print_menu_default(menu_name, options, menu_option_count, selected_index, vec.dy, anchor.dx);
-    
+
     // Draw tail message if provided
     if (tail_msg != NULL) {
         print_text_default(vec.dy + menu_option_count + 2, 1, tail_msg);
     }
-    
+
     // Render the frame
     render_io_frame();
 }

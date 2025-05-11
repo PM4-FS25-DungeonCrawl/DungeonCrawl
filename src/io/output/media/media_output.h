@@ -60,8 +60,8 @@ loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames
  * @param target_height Target height for scaling (0 for original size)
  * @return true on success, false on failure
  */
-bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type, 
-                   int target_width, int target_height);
+bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type,
+                    int target_width, int target_height);
 
 /**
  * @brief Start playing an animated visual
@@ -78,7 +78,7 @@ bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type,
  * @return true on success, false on failure
  */
 bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
-                         int target_width, int target_height, bool loop);
+                          int target_width, int target_height, bool loop);
 
 /**
  * @brief Stop an animated visual
@@ -106,4 +106,4 @@ void free_visual(loaded_visual_t* visual);
  */
 void shutdown_media_output(void);
 
-#endif // MEDIA_OUTPUT_H
+#endif// MEDIA_OUTPUT_H
