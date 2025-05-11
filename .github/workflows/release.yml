@@ -141,7 +141,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
-	          artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
+            artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
             artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
             artifacts/dungeonCrawl-executable-Windows/DungeonCrawl-Windows.zip
         env:
