@@ -16,7 +16,7 @@ struct loaded_visual_s {
 };
 
 // Global variables
-static struct notcurses* notcurses_instance = NULL;
+static struct notcurses* nc = NULL;
 
 bool init_media_output(struct notcurses* nc) {
     if (!nc) {
@@ -24,13 +24,13 @@ bool init_media_output(struct notcurses* nc) {
         return false;
     }
     
-    notcurses_instance = nc;
+    nc = nc;
     log_msg(INFO, "media_output", "Media output handler initialized");
     return true;
 }
 
 loaded_visual_t* load_image(const char* path, int* width, int* height) {
-    if (!notcurses_instance || !path) {
+    if (!nc || !path) {
         log_msg(ERROR, "media_output", "Media output not initialized or invalid path");
         return NULL;
     }
@@ -57,7 +57,7 @@ loaded_visual_t* load_image(const char* path, int* width, int* height) {
     
     // Get visual dimensions
     struct ncvisual_options vopts = {0};
-    ncvisual_geom(notcurses_instance, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+    ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
     
     // Set output parameters if requested
     if (width) *width = loaded->width;
@@ -71,7 +71,7 @@ loaded_visual_t* load_image(const char* path, int* width, int* height) {
 }
 
 loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames) {
-    if (!notcurses_instance || !path) {
+    if (!nc || !path) {
         log_msg(ERROR, "media_output", "Media output not initialized or invalid path");
         return NULL;
     }
@@ -98,7 +98,7 @@ loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames
     
     // Get visual dimensions
     struct ncvisual_options vopts = {0};
-    ncvisual_geom(notcurses_instance, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
+    ncvisual_geom(nc, visual, &vopts, &loaded->height, &loaded->width, NULL, NULL);
     
     // Count frames
     loaded->frames = 0;
@@ -124,7 +124,7 @@ loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames
 
 bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type, 
                    int target_width, int target_height) {
-    if (!notcurses_instance || !visual || !visual->visual) {
+    if (!nc || !visual || !visual->visual) {
         log_msg(ERROR, "media_output", "Invalid parameters for display_visual");
         return false;
     }
@@ -162,7 +162,7 @@ bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     }
     
     // Render the visual
-    visual->plane = ncvisual_render(notcurses_instance, visual->visual, &visual->options);
+    visual->plane = ncvisual_render(nc, visual->visual, &visual->options);
     if (!visual->plane) {
         log_msg(ERROR, "media_output", "Failed to render visual");
         return false;
@@ -188,20 +188,20 @@ static int animation_callback(struct ncvisual* ncv, struct ncvisual_options* vop
     // In a full implementation, we would use the mutex from common_output.c
     // For now, since Notcurses manages this thread internally, we rely on its thread safety
     
-    if (!ncvisual_render(notcurses_instance, ncv, vopts)) {
+    if (!ncvisual_render(nc, ncv, vopts)) {
         log_msg(ERROR, "media_output", "Failed to render animation frame");
         return -1;
     }
     
     // Render the changes
-    notcurses_render(notcurses_instance);
+    notcurses_render(nc);
     
     return 0; // Continue playing
 }
 
 bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
                          int target_width, int target_height, bool loop) {
-    if (!notcurses_instance || !visual || !visual->visual) {
+    if (!nc || !visual || !visual->visual) {
         log_msg(ERROR, "media_output", "Invalid parameters for play_animated_visual");
         return false;
     }
@@ -244,7 +244,7 @@ bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     if (visual->plane) {
         ncplane_destroy(visual->plane);
     }
-    visual->plane = ncplane_create(notcurses_stdplane(notcurses_instance), 0, 0, 0, 0, NULL, NULL);
+    visual->plane = ncplane_create(notcurses_stdplane(nc), 0, 0, 0, 0, NULL, NULL);
     if (!visual->plane) {
         log_msg(ERROR, "media_output", "Failed to create plane for animation");
         return false;
@@ -254,7 +254,7 @@ bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     visual->is_playing = true;
     
     // Start the animation
-    int ret = ncvisual_stream(notcurses_instance, visual->visual, 
+    int ret = ncvisual_stream(nc, visual->visual, 
                               loop ? -1 : 1, // negative value means infinite loop
                               animation_callback, &visual->options, visual);
     
@@ -300,7 +300,7 @@ void free_visual(loaded_visual_t* visual) {
 }
 
 void shutdown_media_output(void) {
-    notcurses_instance = NULL;
+    nc = NULL;
     
     log_msg(INFO, "media_output", "Media output handler shut down");
 }

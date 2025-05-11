@@ -144,3 +144,8 @@ void init_map_mode(void) {
         }
     }
 }
+
+void shutdown_map_mode(void) {
+    // Free any resources if needed
+    log_msg(INFO, "map_mode", "Map mode shut down");
+}

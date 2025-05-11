@@ -1,32 +1,27 @@
 #ifndef COMMON_OUTPUT_H
 #define COMMON_OUTPUT_H
 
-#include "../colors.h"
+#include "../../../common.h"
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
 
 /**
  * @brief Initialize the output handler
- * 
+ *
  * Sets up the output handling system.
  * This function must be called before any other output functions.
- * 
- * @param nc The Notcurses instance to use for output handling
- * @param stdplane The standard plane to use for output
+ *
  * @return true on success, false on failure
  */
-bool init_output_handler(struct notcurses* nc, struct ncplane* stdplane);
+bool init_output_handler(void);
 
 /**
  * @brief Clear the screen
- * 
+ *
  * Clears the entire standard plane.
- * 
- * @param bg_color The background color to fill with (default: COLOR_DEFAULT_BG)
- * @return true on success, false on failure
  */
-bool clear_screen(uint32_t bg_color);
+void clear_screen(void);
 
 /**
  * @brief Print text at a specific position
@@ -36,11 +31,10 @@ bool clear_screen(uint32_t bg_color);
  * @param y The Y coordinate (row)
  * @param x The X coordinate (column)
  * @param text The text to render
- * @param fg_color The foreground RGB color (0xRRGGBB)
- * @param bg_color The background RGB color (0xRRGGBB)
+ * @param ncchannel The color channel (foreground and background)
  * @return true on success, false on failure
  */
-bool print_text(int y, int x, const char* text, uint32_t fg_color, uint32_t bg_color);
+void print_text(int y, int x, const char* text, uint64_t ncchannel);
 
 /**
  * @brief Print text at a specific position with default colors
@@ -52,7 +46,16 @@ bool print_text(int y, int x, const char* text, uint32_t fg_color, uint32_t bg_c
  * @param text The text to render
  * @return true on success, false on failure
  */
-bool print_text_default(int y, int x, const char* text);
+void print_text_default(int y, int x, const char* text);
+
+void print_text_multi_line(int y, int x, const char* text, int max_width, u_int64_t ncchannel);
+
+void print_text_multi_line_default(int y, int x, const char* text, int max_width);
+
+//TODO: add a function that let's you pass multiple strings to print!!
+void print_text_multi_strings(int y, int x, const char* text[], int count, uint64_t ncchannel);
+
+void print_text_multi_strings_default(int y, int x, const char* text[], int count);
 
 /**
  * @brief Print a menu with selection highlighting
@@ -65,65 +68,21 @@ bool print_text_default(int y, int x, const char* text);
  * @param selected_index Index of the selected option
  * @param y The Y coordinate (row) for the menu start
  * @param x The X coordinate (column) for the menu start
- * @param title_fg Foreground color for the title
- * @param title_bg Background color for the title
- * @param option_fg Foreground color for options
- * @param option_bg Background color for options
- * @param selected_fg Foreground color for selected option
- * @param selected_bg Background color for selected option
+ * @param title_channel The color channel for the title
+ * @param option_channel The color channel for the options
+ * @param selected_channel The color channel for the selected option
  * @return true on success, false on failure
  */
-bool print_menu(const char* title, const char** options, int option_count, 
+void print_menu(const char* title, const char** options, int option_count, 
                 int selected_index, int y, int x,
-                uint32_t title_fg, uint32_t title_bg,
-                uint32_t option_fg, uint32_t option_bg,
-                uint32_t selected_fg, uint32_t selected_bg);
+                uint64_t title_channel,
+                uint64_t option_channel,
+                uint64_t selected_channel);
 
-/**
- * @brief Print a menu with default colors
- * 
- * Renders a menu with the specified options, highlighting the selected option,
- * using default colors.
- * 
- * @param title The menu title
- * @param options Array of option strings
- * @param option_count Number of options
- * @param selected_index Index of the selected option
- * @param y The Y coordinate (row) for the menu start
- * @param x The X coordinate (column) for the menu start
- * @return true on success, false on failure
- */
-bool print_menu_default(const char* title, const char** options, int option_count,
-                        int selected_index, int y, int x);
+void print_menu_default(const char* title, const char** options, int option_count, 
+                int selected_index, int y, int x);
+                
 
-/**
- * @brief Draw a box frame
- * 
- * Draws a box with optional title at the specified coordinates.
- * 
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param height The height of the box
- * @param width The width of the box
- * @param title Optional title (can be NULL)
- * @param fg_color The foreground RGB color (0xRRGGBB)
- * @param bg_color The background RGB color (0xRRGGBB)
- * @return true on success, false on failure
- */
-bool draw_box(int y, int x, int height, int width, const char* title,
-              uint32_t fg_color, uint32_t bg_color);
-
-/**
- * @brief Draw a box with default colors
- * 
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param height The height of the box
- * @param width The width of the box
- * @param title Optional title (can be NULL)
- * @return true on success, false on failure
- */
-bool draw_box_default(int y, int x, int height, int width, const char* title);
 
 /**
  * @brief Render the current frame

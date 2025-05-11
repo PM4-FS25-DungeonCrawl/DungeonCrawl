@@ -13,6 +13,7 @@
 #include "notcurses/notcurses.h"
 #include "src/database/gamestate/gamestate_database.h"
 #include "stats/draw/draw_stats.h"
+#include "io/io_handler.h"
 
 #include <time.h>
 
@@ -49,6 +50,10 @@ int init() {
     }
     create_tables_game_state(&db_connection);// only for dungeoncrawl_game.db
 
+    if (init_io_handler() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize IO handler");
+        return FAIL_IO_HANDLER_INIT;
+    }
     if (init_local() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize local");
         return FAIL_LOCAL_INIT;
@@ -86,6 +91,7 @@ void shutdown_game() {
     // close database connection in game.c
     db_close(&db_connection);
 
+    shutdown_map_mode();
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
@@ -93,7 +99,7 @@ void shutdown_game() {
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
     shutdown_logger();
-    notcurses_stop(nc);
+    shutdown_io_handler();
 }
 
 int main(void) {

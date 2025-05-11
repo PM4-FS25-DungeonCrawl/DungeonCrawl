@@ -12,6 +12,7 @@
 #include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 
 // === Internal Functions ===
 void update_save_menu_local(void);

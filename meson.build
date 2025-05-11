@@ -63,6 +63,11 @@ logging_files = files(
     'src/logging/ringbuffer.c'
 )
 
+io_files = files(
+    'src/io/io_handler.c',
+    'src/io/output/common/common_output.c',
+    'src/io/input/input_handler.c'
+)
 
 local_files = files(
     'src/local/local.c'
@@ -81,7 +86,8 @@ executable(
     src_files,
     database_files,
     logging_files,
+    io_files,
     local_files,
     memory_files,
-    dependencies: [notcurses] 
+    dependencies: [notcurses]
 )

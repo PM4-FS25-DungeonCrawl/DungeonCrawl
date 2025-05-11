@@ -8,7 +8,7 @@ memory_pool_t* main_memory_pool;
  *
  * @param stdplane The standard ncplane to operate on.
  */
-void clear_screen(struct ncplane* stdplane) {
+void clear_screen_legacy(struct ncplane* stdplane) {
     // Get the dimensions of the ncplane
     int width = ncplane_dim_x(stdplane);
     int height = ncplane_dim_y(stdplane);

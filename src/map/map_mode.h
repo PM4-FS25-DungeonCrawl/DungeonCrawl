@@ -33,6 +33,7 @@ vector2d_t get_player_pos();
 map_mode_result_t map_mode_update(character_t* player);
 
 void init_map_mode(void);
+void shutdown_map_mode(void);
 
 // has to be exposed for testing
 map_mode_result_t handle_input(const ncinput* event, character_t* player);

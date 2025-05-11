@@ -14,16 +14,13 @@
 #include "menu/save_menu.h"
 #include "src/common.h"
 #include "stats/stats_mode.h"
+#include "io/output/common/common_output.h"
+#include "io/io_handler.h"
 
 #include <locale.h>
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
-
-// Global notcurses instance and standard plane
-struct notcurses* nc = NULL;
-struct ncplane* stdplane = NULL;
-
 
 db_connection_t db_connection;
 bool game_in_progress;
@@ -35,72 +32,80 @@ void game_loop();
 void combat_mode_state();
 
 void run_game() {
-    // TODO: remove after notcurses switch
-    setlocale(LC_ALL, "");
-
-    // Initialize notcurses
-    notcurses_options ncopt;
-    memset(&ncopt, 0, sizeof(ncopt));
-    nc = notcurses_init(&ncopt, stdout);
-    if (nc == NULL) {
-        log_msg(ERROR, "game", "failed to initialize notcurses");
-        return;
-    }
-    stdplane = notcurses_stdplane(nc);
-    ncplane_set_bg_rgb(stdplane, 0x281D10);
     game_in_progress = false;// Flag to track if a game has been started
+
+    // Show launch screen for 3 seconds before starting the game
+    show_launch_screen(3000);
+
     current_state = MAIN_MENU;
     //start the game loop
     game_loop();
+}
+
+// Example of a map generation callback function for the loading screen
+static void generate_map_callback(void) {
+    // Generate the map while showing a loading screen
+    generate_map();
 }
 
 void game_loop() {
     bool running = true;//should only be set in the state machine
 
     while (running) {
+        // Process IO events - this will handle input and update the game state
+        // based on user interaction
+        game_state_t new_state = process_io_events(current_state);
+
+        // If the state changed due to input, update it
+        if (new_state != current_state) {
+            current_state = new_state;
+        }
+
+        // Process current game state
         switch (current_state) {
             case MAIN_MENU:
                 main_menu_state();
                 break;
+
             case GENERATE_MAP:
-                generate_map();
-                current_state = MAP_MODE;
+                // Instead of directly generating the map here, show a loading screen
+                // and generate the map in a background thread
+                show_loading_screen("Generating dungeon...", generate_map_callback);
+                // The next game loop will continue with MAP_MODE once loading is done
+                // The loading callback will generate the map
                 break;
+
             case MAP_MODE:
                 map_mode_state();
                 break;
+
             case COMBAT_MODE:
                 combat_mode_state();
                 break;
+
             case LOOT_MODE:
                 loot_mode_state();
                 break;
+
             case INVENTORY_MODE:
                 inventory_mode_state();
                 break;
+
             case STATS_MODE:
                 stats_mode(player);// Pass your player object
-
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                clear_screen(stdplane);
                 current_state = MAP_MODE;
                 break;
+
             case EXIT:
                 running = false;
                 break;
         }
     }
+
     // Close database connection
     db_close(&db_connection);
     shutdown_combat_mode();
     shutdown_logger();
-
-    // Shutdown notcurses
-    if (nc) {
-        notcurses_stop(nc);
-        nc = NULL;
-        stdplane = NULL;
-    }
 }
 
 void main_menu_state() {
@@ -108,12 +113,12 @@ void main_menu_state() {
         case MENU_START_GAME:
             game_in_progress = true;// Mark that a game is now in progress
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             current_state = GENERATE_MAP;
             break;
         case MENU_CONTINUE:
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             current_state = MAP_MODE;
             break;
         case MENU_SAVE_GAME:
@@ -128,7 +133,7 @@ void main_menu_state() {
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             current_state = MAP_MODE;
             break;
         case MENU_LOAD_GAME:
@@ -152,12 +157,12 @@ void main_menu_state() {
 
                 log_msg(INFO, "Game", "Game state loaded successfully");
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                clear_screen(stdplane);
+                clear_screen();
                 current_state = MAP_MODE;
             } else {
                 log_msg(ERROR, "Game", "Failed to load game state - generating new map");
                 ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                clear_screen(stdplane);
+                clear_screen();
                 current_state = GENERATE_MAP;
             }
             break;
@@ -179,7 +184,7 @@ void map_mode_state() {
             break;
         case NEXT_FLOOR:
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             reset_current_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
@@ -191,11 +196,11 @@ void map_mode_state() {
             break;
         case SHOW_MENU:
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             current_state = MAIN_MENU;
             break;
         case SHOW_STATS:
-            clear_screen(stdplane);
+            clear_screen();
             current_state = STATS_MODE;
             break;
         default:
@@ -210,7 +215,7 @@ void combat_mode_state() {
         case PLAYER_WON:
             log_msg(FINE, "Game", "Player won the combat");
             ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            clear_screen(stdplane);
+            clear_screen();
             current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:
