@@ -18,9 +18,11 @@ Bugfixes:
 TODO:
 [] implement loading screens (transition screens)
 [] properly handle initialization and shutdown of all modules (currently not the case)
-[] get media output functionality from fuckery branch
+[] implement media output functionality (working example in fuckery branch)
 [] color nc channels for everything
 [] put stats and player image display thingy next to map in map mode
+[] display HP and MP in Map Mode and make visuals nicer in general
+
 
 
 
