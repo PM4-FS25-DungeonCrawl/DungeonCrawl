@@ -341,6 +341,7 @@ void invoke_potion_effect(character_t* character, potion_t* potion) {
                 character->current_resources.mana += potion->value;
             }
             break;
+
         case STAMINA:
             if (potion->value > (character->max_resources.stamina - character->current_resources.stamina)) {
                 character->current_resources.stamina = character->max_resources.stamina;
@@ -348,6 +349,7 @@ void invoke_potion_effect(character_t* character, potion_t* potion) {
                 character->current_resources.stamina += potion->value;
             }
             break;
+
         default:
             log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
             break;

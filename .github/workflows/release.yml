@@ -3,7 +3,8 @@ name: Build & Release Executable
 on:
   push:
     branches:
-      - main
+      - main  # Trigger only on main branch
+      
   workflow_dispatch:
 jobs:
   build-linux:
@@ -14,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y meson ninja-build gcc python3-pip libnotcurses-dev
+          sudo apt install -y meson ninja-build gcc python3-pip libnotcurses-dev zip
           pip3 install gcovr
 
       - name: Build
@@ -22,11 +23,19 @@ jobs:
           meson setup builddir --buildtype=release
           ninja -C builddir
 
+      - name: Create package
+        run: |
+          mkdir -p release-linux
+          cp builddir/DungeonCrawl release-linux/
+          cp -r resources/ release-linux/ || true
+          cd release-linux
+          zip -r ../dungeonCrawl-Linux.zip .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dungeonCrawl-executable-Linux
-          path: builddir/DungeonCrawl
+          path: dungeonCrawl-Linux.zip
 
   build-macos:
     runs-on: macos-latest
@@ -41,42 +50,62 @@ jobs:
           meson setup builddir --buildtype=release
           ninja -C builddir
 
+      - name: Create package
+        run: |
+          mkdir -p release-macos
+          cp builddir/DungeonCrawl release-macos/
+          cp -r resources/ release-macos/ || true
+          cd release-macos
+          zip -r ../dungeonCrawl-macOS.zip .
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dungeonCrawl-executable-macOS
-          path: builddir/DungeonCrawl
+          path: dungeonCrawl-macOS.zip
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
+ # build-windows:
+ #   runs-on: windows-latest
+ #   steps:
+ #     - uses: actions/checkout@v4
 
-      - name: Build with MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: >-
-            mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-meson
-            mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-notcurses
+ #     - name: Build with MSYS2
+ #       uses: msys2/setup-msys2@v2
+ #       with:
+ #         msystem: MINGW64
+ #         update: true
+ #         install: >-
+ #           mingw-w64-x86_64-toolchain
+ #           mingw-w64-x86_64-meson
+ #           mingw-w64-x86_64-ninja
+ #           mingw-w64-x86_64-notcurses
+ #           zip
 
-      - name: Compile
-        shell: msys2 {0}
-        run: |
-          meson setup builddir --buildtype=release
-          ninja -C builddir
+ #     - name: Compile
+ #       shell: msys2 {0}
+ #       run: |
+ #         meson setup builddir --buildtype=release
+ #         ninja -C builddir
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dungeonCrawl-executable-Windows
-          path: builddir/DungeonCrawl.exe
+ #     - name: Create package
+ #       shell: msys2 {0}
+ #       run: |
+ #         mkdir -p release-windows
+ #         cp builddir/DungeonCrawl.exe release-windows/
+ #         cp -r database/ release-windows/ || true
+ #         cp -r resources/ release-windows/ || true
+ #         cd release-windows
+ #         zip -r ../dungeonCrawl-Windows.zip .
+
+#      - name: Upload artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: dungeonCrawl-executable-${{ runner.os }}
+#          path: builddir/DungeonCrawl-Windows.zip
 
   release:
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-linux, build-macos]
+
     runs-on: ubuntu-latest
 
     steps:
@@ -94,24 +123,27 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+  
+      - name: Debug List artifact contents
+        run: ls -R artifacts/
 
-      - name: Rename artifacts
-        run: |
-          mv artifacts/dungeonCrawl-executable-Linux/DungeonCrawl artifacts/dungeonCrawl-Linux
-          mv artifacts/dungeonCrawl-executable-macOS/DungeonCrawl artifacts/dungeonCrawl-macOS
-          mv artifacts/dungeonCrawl-executable-Windows/DungeonCrawl.exe artifacts/dungeonCrawl-Windows.exe
+#      - name: Rename Artifacts for Clarity
+#        run: |
+#            mv artifacts/dungeonCrawl-executable-Linux/ artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
+#            mv artifacts/dungeonCrawl-executable-macOS/release-macos/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
+
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ steps.auto_tag.outputs.new_tag }}
           name: Release ${{ steps.auto_tag.outputs.new_tag }}
-          body: "Release: Built from the latest commit."
+          body: "Release: Built from the latest commit. Each package contains the executable, database, and resource files."
           draft: false
           prerelease: false
           files: |
-            artifacts/dungeonCrawl-Linux
-            artifacts/dungeonCrawl-macOS
-            artifacts/dungeonCrawl-Windows.exe
+            artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip
+            artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

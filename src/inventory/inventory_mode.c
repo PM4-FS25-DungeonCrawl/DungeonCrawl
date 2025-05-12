@@ -4,6 +4,7 @@
 #include "../common.h"
 #include "../game.h"
 #include "../io/output/specific/inventory_output.h"
+#include "../item/gear.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "../src/combat/combat_mode.h"

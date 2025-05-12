@@ -117,8 +117,8 @@ Error while processing /home/runner/work/DungeonCrawl/DungeonCrawl/src/local/loc
     7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
       |            ^                                                               ~~~~~~
       |                                                                            c
-../src/inventory/inventory_mode.c:15:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
-   15 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
+../src/inventory/inventory_mode.c:16:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
+   16 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
       |                                                               ^~~~~
 ../src/io/input/input_handler.c:119:17: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   119 |             if (sscanf(event_str, "%d:%d:%d:%d", &type, &id, &modifiers, &evtype) == 4) {

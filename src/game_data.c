@@ -3,38 +3,54 @@
 #include "character/monster.h"
 #include "character/player.h"
 #include "common.h"
+#include "game.h"
 
 #include <stddef.h>
 
 // === External Global Variables ===
 ability_table_t* ability_table;
+potion_table_t* potion_table;
+gear_table_t* gear_table;
 character_t* goblin;
 character_t* player;
-potion_t* healing_potion;
-potion_t* mana_potion;
-potion_t* stamina_potion;
 
 int init_game_data() {
-    ability_table = init_ability_table(main_memory_pool);
+    ability_table = init_ability_table(main_memory_pool, &db_connection);
+    potion_table = init_potion_table(main_memory_pool, &db_connection);
+    gear_table = init_gear_table(main_memory_pool, &db_connection, ability_table);
     player = create_new_player(main_memory_pool);//initialize blank player
-    healing_potion = init_potion(main_memory_pool, "Healing Potion", HEALING, 20);
 
     reset_goblin();
 
-    if (ability_table == NULL || player == NULL || healing_potion == NULL) return 1;
-    // add abilities to player
-    add_ability(player, &ability_table->abilities[FIREBALL]);
-    add_ability(player, &ability_table->abilities[SWORD_SLASH]);
-    //add healing potion to a player
-    add_potion(player, healing_potion);
+    if (ability_table == NULL || potion_table == NULL || gear_table == NULL || player == NULL) return 1;
+    add_potion(player, &potion_table->potions[HEALING]);
+    add_potion(player, &potion_table->potions[MANA]);
+    add_potion(player, &potion_table->potions[STAMINA]);
+
+    add_gear(player, gear_table->gears[MAGIC_STAFF]);
+    add_gear(player, gear_table->gears[BARDICHE]);
+    add_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BOAR]);
+    add_gear(player, gear_table->gears[SHADOW_HOOD_OF_THE_FOX]);
+
+
+    equip_gear(player, gear_table->gears[LONGSWORD]);
+    equip_gear(player, gear_table->gears[IRON_HELM_OF_THE_BOAR]);
+    equip_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BOAR]);
+
+
+    add_gear(goblin, gear_table->gears[PENDANT_OF_FOCUS_OF_THE_OWL]);
+    add_gear(goblin, gear_table->gears[CROSSBOW]);
+    add_potion(goblin, &potion_table->potions[HEALING]);
+
     return 0;
 }
 
 int free_game_data() {
     free_ability_table(main_memory_pool, ability_table);
+    free_potion_table(main_memory_pool, potion_table);
+    free_gear_table(main_memory_pool, gear_table);
     free_character(main_memory_pool, player);
     free_character(main_memory_pool, goblin);
-    free_potion(main_memory_pool, healing_potion);
     return 0;
 }
 

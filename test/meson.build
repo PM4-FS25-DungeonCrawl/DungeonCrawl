@@ -7,7 +7,10 @@ helper_db = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c',
-    '../src/database/gamestate/gamestate_database.c',
+    '../src/database/game/ability_database.c',
+    '../src/database/game/gamestate_database.c',
+    '../src/database/game/item_database.c',
+
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -49,6 +52,9 @@ helper_combat = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c',
+    '../src/database/game/ability_database.c',
+    '../src/database/game/gamestate_database.c',
+    '../src/database/game/item_database.c',
 
     '../src/memory/memory_management.c',
 
@@ -137,6 +143,9 @@ helper_stats = files(
     '../include/sqlite3.c',
     '../src/database/database.c',
     '../src/database/local/local_database.c',
+    '../src/database/game/ability_database.c',
+    '../src/database/game/gamestate_database.c',
+    '../src/database/game/item_database.c',
 
     '../src/memory/memory_management.c',
 
