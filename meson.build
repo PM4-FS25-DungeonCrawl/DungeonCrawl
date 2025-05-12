@@ -26,9 +26,6 @@ src_files = files(
     'src/character/monster.c',
     'src/character/level.c',
 
-    'src/inventory/inventory_mode.c',
-    'src/inventory/draw/draw_inventory_mode.c',
-
     'src/item/gear.c',
     'src/item/potion.c',
 
@@ -54,6 +51,12 @@ stats_files = files(
     'src/stats/stats_mode.c',
     'src/stats/draw/draw_stats.c',
     'src/stats/local/stats_mode_local.c',
+)
+
+inventory_files = files(
+    'src/inventory/inventory_mode.c',
+    'src/inventory/draw/draw_inventory_mode.c',
+    'src/inventory/local/inventory_mode_local.c'
 )
 
 # List of all database files
@@ -88,6 +91,7 @@ executable(
     src_files,
     menu_files,
     stats_files,
+    inventory_files,
     database_files,
     logging_files,
     local_files,
