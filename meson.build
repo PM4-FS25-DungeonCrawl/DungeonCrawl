@@ -32,16 +32,19 @@ src_files = files(
     'src/item/gear.c',
     'src/item/potion.c',
 
-    'src/menu/main_menu.c',
-    'src/menu/save_menu.c',
-    'src/menu/menu.c',
-    'src/menu/language_menu.c',
-
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
 
     'src/combat/draw/draw_combat_mode.c',
+)
+
+menu_files = files(
+    'src/menu/main_menu.c',
+    'src/menu/save_menu.c',
+    'src/menu/menu.c',
+    'src/menu/language_menu.c',
+    'src/menu/local/save_menu_local.c',
 )
 
 stats_files = files(
@@ -81,6 +84,7 @@ subdir('test')
 executable(
     'DungeonCrawl',
     src_files,
+    menu_files,
     stats_files,
     database_files,
     logging_files,

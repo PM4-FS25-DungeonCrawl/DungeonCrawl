@@ -10,10 +10,11 @@
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
+#include "menu/save_menu.h"
 #include "stats/draw/draw_stats.h"
 
-#include <time.h>
 #include <notcurses/notcurses.h>
+#include <time.h>
 
 /**
  * Initializes all necessary parts and subsystems for the game.
@@ -57,6 +58,10 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize main menu");
         return FAIL_MAIN_MENU_INIT;
     }
+    if (init_save_menu() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize save menu");
+        return FAIL_SAVE_MENU_INIT;
+    }
     if (init_combat_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
@@ -88,6 +93,7 @@ void shutdown_game() {
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
+    shutdown_save_menu();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);

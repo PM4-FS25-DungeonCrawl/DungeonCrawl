@@ -3,29 +3,34 @@
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/game/gamestate_database.h"
-#include "../local/local.h"
-#include "../logging/logger.h"
+#include "../local/local_handler.h"
 #include "notcurses/nckeys.h"
 #include "src/menu/menu.h"
+#include "local/save_menu_local.h"
 
 #include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
 
-// === Internal Functions ===
-void update_save_menu_local(void);
 
-// Global variables to store menu state
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
-void init_save_menu() {
+int init_save_menu() {
+    save_menu_strings = malloc(sizeof(char*) * MAX_SAVE_MENU_STRINGS);
+    RETURN_WHEN_NULL(save_menu_strings, 1, "Save Menu", "Failed to allocate memory for save menu strings.");
+
+    for (int i = 0; i < MAX_SAVE_MENU_STRINGS; i++) {
+        save_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_save_menu_local();
     // add update local function to the observer list
-    add_local_observer(update_save_menu_local);
+    observe_local(update_save_menu_local);
+    return 0;
 }
 
 
@@ -34,7 +39,7 @@ int get_selected_save_file_id(void) {
 }
 
 const char* get_save_name(void) {
-    log_msg(INFO, "Save Menu", "Getting save name: %s", last_save_name[0] == '\0' ? "NULL" : last_save_name);
+    log_msg(FINE, "Save Menu", "Getting save name: %s", last_save_name[0] == '\0' ? "NULL" : last_save_name);
     if (last_save_name[0] == '\0') {
         return NULL;
     }
@@ -42,7 +47,7 @@ const char* get_save_name(void) {
 }
 
 menu_result_t show_save_game_menu(void) {
-    log_msg(INFO, "Save Menu", "Entering show_save_game_menu");
+    log_msg(FINE, "Save Menu", "Entering show_save_game_menu");
     char save_name[50] = {0};
     int name_length = 0;
     bool input_active = true;
@@ -58,9 +63,12 @@ menu_result_t show_save_game_menu(void) {
             }
         }
         ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Enter name for save file:");
-        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_name);
-        ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "Press Enter when done");
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X,
+                          "%s", save_menu_strings[SAVE_NAME_REQUEST]);
+        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X,
+                          "%s", save_name);
+        ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X,
+                          "%s", save_menu_strings[PRESS_ENTER_CONFIRM]);
         notcurses_render(nc);
 
         ncinput input;
@@ -109,7 +117,7 @@ menu_result_t show_save_game_menu(void) {
             }
         }
         ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Saving game...");
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "%s", save_menu_strings[SAVING]);
         notcurses_render(nc);
 
         log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
@@ -123,7 +131,7 @@ menu_result_t show_save_game_menu(void) {
 menu_result_t show_load_game_menu(bool game_in_progress) {
     menu_result_t result = MENU_CONTINUE;
 
-    if (game_in_progress && !show_confirmation("Do you want to continue?")) {
+    if (game_in_progress && !show_confirmation(save_menu_strings[CONFIRM_QUESTION])) {
         // User declined, return to continue
         return MENU_CONTINUE;
     }
@@ -153,8 +161,8 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             }
         }
         ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "No saved games found.");
-        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "Press any key to return to the menu.");
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "%s", save_menu_strings[SAVES_NOT_FOUND]);
+        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_menu_strings[PRESS_ANY_RETURN]);
         notcurses_render(nc);
 
 
@@ -176,7 +184,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             }
         }
         ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Select a save file:");
+        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "%s", save_menu_strings[SELECT_SAVE]);
 
         int y = MENU_START_Y + 2;
         for (int i = 0; i < save_infos->count; i++) {
@@ -194,7 +202,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         }
 
         ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
+        ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "%s", save_menu_strings[NAVIGATE_INSTRUCTIONS]);
         notcurses_render(nc);
 
 
@@ -229,5 +237,13 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     return result;
 }
 
-void update_save_menu_local(void) {
+void shutdown_save_menu(void) {
+    if (save_menu_strings != NULL) {
+        for (int i = 0; i < MAX_SAVE_MENU_STRINGS; i++) {
+            if (save_menu_strings[i] != NULL) {
+                free(save_menu_strings[i]);
+            }
+        }
+        free(save_menu_strings);
+    }
 }

@@ -1,10 +1,10 @@
 #include "menu.h"
 
 #include "../common.h"
+#include "local/save_menu_local.h"
 #include "../logging/logger.h"
 
 #include <notcurses/notcurses.h>
-#include <stdio.h>
 #include <string.h>
 
 extern struct notcurses* nc;
@@ -47,7 +47,7 @@ bool show_confirmation(const char* message) {
         }
     }
     ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Warning: All unsaved progress will be lost!");
+    ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "%s", save_menu_strings[WARNING_LOST_PROGRESS]);
     ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", message);
     ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "(Y/N)");
     notcurses_render(nc);
