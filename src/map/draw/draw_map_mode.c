@@ -1,9 +1,14 @@
 #include "draw_map_mode.h"
 
-#include "../../../include/termbox2.h"
 #include "../../asciiart/ascii.h"
 #include "../../logging/logger.h"
+#include "../../src/common.h"
 
+#include <notcurses/notcurses.h>
+
+// External declaration of the global notcurses instance and standard plane
+extern struct notcurses* nc;
+extern struct ncplane* stdplane;
 
 void draw_player_info(int x, int y, vector2d_t player_pos);
 
@@ -24,28 +29,29 @@ void draw_player_info(int x, int y, vector2d_t player_pos);
  * - check if the player position is within the bounds of the map
  * If any of the checks fail, an error message is logged and the function returns.
  */
-void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor, const vector2d_t player_pos) {
-    if (arr == NULL) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given array is NULL");
-        return;
-    }
-    if (height <= 0 || width <= 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given height or width is zero or negative");
-        return;
-    }
-    if (anchor.dx < 0 || anchor.dy < 0) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given anchor is negative");
-        return;
-    }
-    if (player_pos.dx < anchor.dx || player_pos.dy < anchor.dy || player_pos.dx >= anchor.dx + width || player_pos.dy >= anchor.dy + height) {
-        log_msg(ERROR, "Draw Map Mode", "In draw_map_mode given player position out of bounds");
-        return;
-    }
+void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
+                   const vector2d_t player_pos) {
+    NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
+    CHECK_ARG_RETURN(height <= 0 || width <= 0, , "Draw Map Mode",
+                     "In draw_map_mode given height or width is zero or negative");
+    CHECK_ARG_RETURN(anchor.dx < 0 || anchor.dy < 0, , "Draw Map Mode", "In draw_map_mode given anchor is negative");
+    CHECK_ARG_RETURN(player_pos.dx < 0 || player_pos.dy < 0 || player_pos.dx >= width || player_pos.dy >= height, ,
+                     "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
-    for (int y = anchor.dx; y < height + anchor.dx; y++) {
-        for (int x = anchor.dy; x < width + anchor.dy; x++) {
+    ncplane_set_channels(stdplane, RED_TEXT_COLORS);
+    ncplane_printf_yx(stdplane, anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl");
+
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            // Setup channels (colors)
+            uint64_t channels = 0;
+            const char* ch;
+
             if (x == player_pos.dx && y == player_pos.dy) {
-                tb_printf(x, y, TB_RED, TB_BLACK, "@");
+                // Player character
+                channels = RED_TEXT_COLORS;
+                ncplane_set_channels(stdplane, channels);
+                ncplane_putchar_yx(stdplane, y + anchor.dy, x + anchor.dx, '@');
                 continue;
             }
 
@@ -54,30 +60,48 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
             switch (arr[access_idx]) {
                 case WALL:
-                    tb_printf(x, y, TB_BLUE, TB_BLUE, "#");
+                    channels = WALL_COLORS;
+                    ch = "#";
                     break;
                 case FLOOR:
-                    tb_printf(x, y, TB_WHITE, TB_BLACK, " ");
+                    channels = FLOOR_COLORS;
+                    ch = " ";
                     break;
                 case START_DOOR:
-                    tb_printf(x, y, TB_GREEN, TB_BLACK, "#");
+                    channels = START_DOOR_COLORS;
+                    ch = "#";
                     break;
                 case EXIT_DOOR:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "#");
+                    channels = EXIT_DOOR_COLORS;
+                    ch = "#";
                     break;
                 case KEY:
-                    tb_printf(x, y, TB_YELLOW, TB_BLACK, "$");
+                    channels = KEY_COLORS;
+                    ch = "$";
+                    break;
+                case LIFE_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0xff, 0);// Black on green
+                    ch = "+";
+                    break;
+                case MANA_FOUNTAIN:
+                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0xff);// Black on blue
+                    ch = "+";
                     break;
                 case GOBLIN:
-                    tb_printf(x, y, TB_WHITE, TB_RED, "!");
+                    channels = GOBLIN_COLORS;
+                    ch = "!";
                     break;
                 case HIDDEN:
-                    tb_printf(x, y, TB_WHITE, TB_WHITE, " ");
+                    channels = HIDDEN_COLORS;
+                    ch = " ";
                     break;
                 default:
                     log_msg(ERROR, "map_mode", "Unknown tile type: %d", arr[access_idx]);
-                    return;
+                    ch = " ";
             }
+
+            ncplane_set_channels(stdplane, channels);
+            ncplane_putstr_yx(stdplane, y + anchor.dy, x + anchor.dx, ch);
         }
     }
 
@@ -92,12 +116,16 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  * @param player_pos the current player position
  */
 void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
-    tb_printf(x, y, TB_WHITE, TB_BLACK, "HP: 100");
-    tb_printf(x, y + 1, TB_WHITE, TB_BLACK, "Press 'M' for Menu");
-    tb_printf(x, y + 2, TB_WHITE, TB_BLACK, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    ncplane_set_channels(stdplane, DEFAULT_COLORS);
+
+    ncplane_printf_yx(stdplane, y, x, "HP: 100");
+    ncplane_printf_yx(stdplane, y + 1, x, "Press 'M' for Menu");
+    ncplane_printf_yx(stdplane, y + 2, x, "Press 'L' for Stats");
+    ncplane_printf_yx(stdplane, y + 3, x, "Press 'I' for Inventory");
+    ncplane_printf_yx(stdplane, y + 4, x, "Player Position: %d, %d", player_pos.dx, player_pos.dy);
 
     //draw a ascii art helmet
-    for (int i = y + 3; i < y + 3 + HELMET_HEIGHT; i++) {
-        tb_printf(x, i, TB_WHITE, TB_BLACK, "%s", ascii_helmet[i - y - 3]);
+    for (int i = y + 4; i < y + 4 + HELMET_HEIGHT; i++) {
+        ncplane_printf_yx(stdplane, i, x, "%s", ascii_helmet[i - y - 4]);
     }
 }

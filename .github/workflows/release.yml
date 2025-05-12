@@ -105,6 +105,7 @@ jobs:
 
   release:
     needs: [build-linux, build-macos]
+
     runs-on: ubuntu-latest
 
     steps:
@@ -131,6 +132,7 @@ jobs:
 #            mv artifacts/dungeonCrawl-executable-Linux/ artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
 #            mv artifacts/dungeonCrawl-executable-macOS/release-macos/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
 
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -142,5 +144,6 @@ jobs:
           files: |
             artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip
             artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
