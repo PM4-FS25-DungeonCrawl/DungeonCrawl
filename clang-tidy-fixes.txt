@@ -23,9 +23,6 @@
     7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
       |            ^                                                               ~~~~~~
       |                                                                            c
-../src/inventory/inventory_mode.c:16:63: warning: parameter 'count' is const-qualified in the function declaration; const-qualification of parameters only has an effect in function definitions [readability-avoid-const-params-in-decls]
-   16 | void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
-      |                                                               ^~~~~
 ../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
    10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
       |                                                                                                                                                                                                           ^
@@ -33,23 +30,17 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:40:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   40 |     srand(time(NULL));
+../src/main.c:42:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   42 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:91:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   91 |                     save_name[name_length++] = input.id;
+../src/menu/save_menu.c:99:48: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   99 |                     save_name[name_length++] = input.id;
       |                                                ^
-../src/menu/save_menu.c:186:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  186 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:194:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  194 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:189:15: note: else branch starts here
-  189 |             } else {
+../src/menu/save_menu.c:197:15: note: else branch starts here
+  197 |             } else {
       |               ^
-../src/stats/draw/draw_stats.c:13:6: warning: redundant 'update_stats_local' declaration [readability-redundant-declaration]
-   13 | void update_stats_local(void);
-      | ~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
-../src/stats/draw/draw_stats.h:9:6: note: previously declared here
-    9 | void update_stats_local(void);
-      |      ^
-Suppressed 214403 warnings (214315 in non-user code, 88 with check filters).
+Suppressed 214131 warnings (214037 in non-user code, 94 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
