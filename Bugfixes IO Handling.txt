@@ -17,6 +17,8 @@ notes DungeonCrawl
 - return from menu
 - return from inventory
 - return from stats (screen clears immediately, but map shows only after input)
+- return from item submenu to inventory
+- return from loot menu to map
 
 [] stat mode flickering
 
