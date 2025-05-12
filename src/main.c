@@ -9,10 +9,10 @@
 #include "local/local_handler.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
+#include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
 #include "stats/draw/draw_stats.h"
-#include "menu/language_menu.h"
 
 #include <notcurses/notcurses.h>
 #include <time.h>

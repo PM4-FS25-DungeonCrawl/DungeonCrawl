@@ -18,4 +18,4 @@ extern char** main_menu_strings;
 
 void update_main_menu_local(void);
 
-#endif //MAIN_MENU_LOCAL_H
+#endif//MAIN_MENU_LOCAL_H

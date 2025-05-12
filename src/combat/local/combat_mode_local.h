@@ -24,4 +24,4 @@ extern char** combat_mode_strings;
 
 void update_combat_local(void);
 
-#endif //COMBAT_MODE_LOCAL_H
+#endif//COMBAT_MODE_LOCAL_H

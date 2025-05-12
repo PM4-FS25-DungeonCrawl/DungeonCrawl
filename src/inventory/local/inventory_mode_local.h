@@ -36,4 +36,4 @@ extern char** inventory_mode_strings;
 
 void update_inventory_local(void);
 
-#endif //INVENTORY_MODE_LOCAL_H
+#endif//INVENTORY_MODE_LOCAL_H

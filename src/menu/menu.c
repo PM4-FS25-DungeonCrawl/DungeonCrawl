@@ -1,8 +1,8 @@
 #include "menu.h"
 
 #include "../common.h"
-#include "local/save_menu_local.h"
 #include "../logging/logger.h"
+#include "local/save_menu_local.h"
 
 #include <notcurses/notcurses.h>
 #include <string.h>
