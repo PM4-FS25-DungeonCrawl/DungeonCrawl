@@ -572,19 +572,34 @@ bool stop_animated_visual(loaded_visual_t* visual) {
 void free_visual(loaded_visual_t* visual) {
     if (!visual) return;
 
+    log_msg(INFO, "media_output", "Starting cleanup of visual resources");
+
     // Stop any playing animation
     if (visual->is_playing) {
         stop_animated_visual(visual);
     }
 
-    // Free Notcurses resources
+    // Clean up the plane properly - first erase its contents
     if (visual->plane) {
+        log_msg(INFO, "media_output", "Erasing plane contents before destruction");
+
+        // Erase the plane contents with transparency
+        ncplane_erase(visual->plane);
+
+        // Make sure the erase is visible
+        render_frame();
+
+        // Then destroy the plane
+        log_msg(INFO, "media_output", "Destroying plane");
         ncplane_destroy(visual->plane);
     }
+
+    // Free the visual resource
     if (visual->visual) {
+        log_msg(INFO, "media_output", "Destroying visual");
         ncvisual_destroy(visual->visual);
     }
-    
+
     // Free path if allocated
     if (visual->path) {
         free(visual->path);
@@ -592,6 +607,8 @@ void free_visual(loaded_visual_t* visual) {
 
     // Free the structure
     free(visual);
+
+    log_msg(INFO, "media_output", "Visual resources cleanup complete");
 }
 
 void shutdown_media_output(void) {
