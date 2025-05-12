@@ -26,7 +26,8 @@ typedef enum {
 
 typedef struct
 {
-    char name[MAX_NAME_LENGTH];
+    char local_key[MAX_NAME_LENGTH];
+    char* local_name;
     gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;

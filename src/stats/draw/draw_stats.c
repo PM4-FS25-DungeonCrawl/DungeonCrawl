@@ -59,7 +59,7 @@ void render_stats_window(character_t* player) {
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
             snprintf(stats_info, sizeof(stats_info), "%s: %s | %s: %-4d, %s: %-4d",
-                     stats_mode_strings[EQUIPPED_ARMOR_STR], player->equipment[i]->name,
+                     stats_mode_strings[EQUIPPED_ARMOR_STR], player->equipment[i]->local_key,
                      stats_mode_strings[ARMOR_STR], player->equipment[i]->defenses.armor,
                      stats_mode_strings[MAGIC_RESISTANCE_STR], player->equipment[i]->defenses.magic_resist);
             ncplane_putstr_yx(stdplane, y++, x, stats_info);

@@ -170,7 +170,7 @@ void add_gear(character_t* c, gear_t* gear) {
         c->gear_inventory[c->gear_count] = gear;
         c->gear_count++;
 
-        log_msg(INFO, "Character", "Gear %s added to inventory.", gear->name);
+        log_msg(INFO, "Character", "Gear %s added to inventory.", gear->local_key);
     } else {
         log_msg(INFO, "Character", "%s cannot carry more gear!", c->name);
     }
@@ -193,11 +193,11 @@ void remove_gear(character_t* c, gear_t* gear) {
             c->gear_inventory[c->gear_count - 1] = NULL;
             c->gear_count--;
 
-            log_msg(INFO, "Character", "Gear %s removed from inventory.", gear->name);
+            log_msg(INFO, "Character", "Gear %s removed from inventory.", gear->local_key);
             return;
         }
     }
-    log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->name);
+    log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->local_key);
 }
 
 /**
@@ -228,7 +228,7 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
 
         update_character_resources(&c->max_resources, &c->base_stats);
 
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->name, slot);
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->local_key, slot);
         c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
@@ -312,11 +312,11 @@ void equip_gear(character_t* c, gear_t* gear) {
 
         update_character_resources(&c->max_resources, &c->base_stats);
 
-        log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->name);
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->name, gear->slot);
+        log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->local_key);
+        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);
 
     } else {
-        log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->name);
+        log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
     }
 }
 
