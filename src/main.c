@@ -94,6 +94,7 @@ void shutdown_game() {
     shutdown_stats_mode();
     shutdown_inventory_mode();
     shutdown_save_menu();
+    shutdown_main_menu();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);

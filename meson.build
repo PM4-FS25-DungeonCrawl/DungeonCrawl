@@ -45,6 +45,7 @@ menu_files = files(
     'src/menu/menu.c',
     'src/menu/language_menu.c',
     'src/menu/local/save_menu_local.c',
+    'src/menu/local/main_menu_local.c',
 )
 
 stats_files = files(
