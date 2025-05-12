@@ -67,7 +67,7 @@ logging_files = files(
 
 
 local_files = files(
-    'src/local/local.c'
+    'src/local/local_handler.c'
 )
 
 memory_files = files(
