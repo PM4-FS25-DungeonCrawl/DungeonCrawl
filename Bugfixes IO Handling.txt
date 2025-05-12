@@ -8,3 +8,4 @@ Bugfixes:
 
 TODO:
 [] implement media output functionality (working example in fuckery branch)
+[] write doc for all io functions
