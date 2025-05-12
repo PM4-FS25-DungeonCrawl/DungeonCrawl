@@ -25,10 +25,10 @@ stats_result_t stats_mode(character_t* player) {
     menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
 
     draw_stats_menu(
-        local_strings[stmo_menu_stats_title.idx].characters,
-        menu_options,
-        4,
-        selected_index, "");
+            local_strings[stmo_menu_stats_title.idx].characters,
+            menu_options,
+            4,
+            selected_index, "");
     // Check for input
     ncinput input;
     // Remove unused variable
@@ -54,7 +54,7 @@ stats_result_t stats_mode(character_t* player) {
                     case 3:
                         raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
                         break;
-                    default: ;
+                    default:;
                 }
                 player->skill_points--;
                 update_character_resources(&player->max_resources, &player->base_stats);
