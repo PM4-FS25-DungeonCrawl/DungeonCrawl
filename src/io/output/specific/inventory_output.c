@@ -122,11 +122,12 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Render the frame
     render_io_frame();
 
-    // Wait for input using the IO handler
-    input_event_t event;
-    while (!get_next_input_event(&event)) {
-        // Wait until input is received
-    }
+    // Directly use notcurses_get_blocking to get any key press
+    ncinput event;
+    memset(&event, 0, sizeof(event));
+    notcurses_get_blocking(nc, &event);
+
+    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int)event.id);
 }
 
 /**

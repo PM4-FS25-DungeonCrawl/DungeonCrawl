@@ -104,11 +104,13 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     render_io_frame();
 
-    // Wait for input using the IO handler
-    input_event_t event;
-    while (!get_next_input_event(&event)) {
-        // Wait until input is received
-    }
+    // Directly use notcurses_get_blocking to get any key press
+    // This matches how input is handled in combat_menu, ability_menu, etc.
+    ncinput event;
+    memset(&event, 0, sizeof(event));
+    notcurses_get_blocking(nc, &event);
+
+    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int)event.id);
 }
 
 /**
@@ -121,11 +123,12 @@ void draw_game_over(void) {
     print_text_default(2, 1, "Press any key to exit...");
     render_io_frame();
 
-    // Wait for input using the IO handler
-    input_event_t event;
-    while (!get_next_input_event(&event)) {
-        // Wait until input is received
-    }
+    // Directly use notcurses_get_blocking to get any key press
+    ncinput event;
+    memset(&event, 0, sizeof(event));
+    notcurses_get_blocking(nc, &event);
+
+    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int)event.id);
 }
 
 /**
