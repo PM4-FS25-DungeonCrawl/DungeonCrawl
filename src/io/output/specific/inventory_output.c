@@ -63,6 +63,7 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
     }
 
     // Convert the menu options to an array of strings for print_menu
+    // TODO: why not use print_menu?
     const char* options[menu_option_count];
     for (int i = 0; i < menu_option_count; i++) {
         options[i] = (const char*) &menu_options[i];

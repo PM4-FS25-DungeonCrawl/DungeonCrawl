@@ -40,7 +40,9 @@ int init_stats_mode(void) {
  */
 void render_stats_window(character_t* player) {
     // Clear the screen
-    clear_screen();
+    //clear_screen();
+    ncplane_erase(stdplane);
+
 
     int y = 0;
     int x = 0;
@@ -113,11 +115,6 @@ void draw_stats_menu(const char* title, const char* options[], int option_count,
     // Set menu position
     int y = 20;
     int x = 2;
-
-    // Draw menu title
-    print_text_default(y, x, title);
-    y++;
-    x++;
 
     // Draw menu options using centralized print_menu
     print_menu(title, options, option_count, selected_index, y, x,

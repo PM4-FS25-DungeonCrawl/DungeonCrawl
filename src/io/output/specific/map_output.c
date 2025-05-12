@@ -72,10 +72,12 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     ch = "$";
                     break;
                 case LIFE_FOUNTAIN:
+                //TODO: Add life fountain colors
                     channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0xff, 0);// Black on green
                     ch = "+";
                     break;
                 case MANA_FOUNTAIN:
+                // TODO: Add mana fountain colors
                     channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0xff);// Black on blue
                     ch = "+";
                     break;
@@ -112,12 +114,12 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  * @param y The y position of the player info to be drawn
  * @param player_pos The current player position
  */
-void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
+void draw_player_info(int x, int y, const vector2d_t player_pos) {
     // Player information using centralized IO
-    print_text_default(y, x, "HP: 100");
-    print_text_default(y + 1, x, "Press 'M' for Menu");
-    print_text_default(y + 2, x, "Press 'L' for Stats");
-    print_text_default(y + 3, x, "Press 'I' for Inventory");
+    print_text_default(y++, x, "HP: 100");
+    print_text_default(y++, x, "Press 'M' for Menu");
+    print_text_default(y++, x, "Press 'L' for Stats");
+    print_text_default(y++, x, "Press 'I' for Inventory");
 
     // Format player position string
     char pos_str[64];
@@ -131,5 +133,5 @@ void draw_player_info(const int x, const int y, const vector2d_t player_pos) {
     }
 
     // Use the multi-line string printing function for the helmet
-    print_text_multi_strings_default(y + 5, x, helmet_lines, HELMET_HEIGHT);
+    print_text_multi_strings_default(y++, x, helmet_lines, HELMET_HEIGHT);
 }

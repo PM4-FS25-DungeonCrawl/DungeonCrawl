@@ -68,10 +68,6 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max
     }
     vector2d_t vec = {anchor.dx, anchor.dy};
 
-    // Draw menu name
-    print_text_default(vec.dy, 1, menu_name);
-    vec.dy++;
-
     // Convert string_max_t options to char* array for print_menu
     const char* options[menu_option_count];
     for (int i = 0; i < menu_option_count; i++) {
