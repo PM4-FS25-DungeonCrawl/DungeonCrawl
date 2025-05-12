@@ -101,21 +101,10 @@ void draw_launch_screen(void) {
 
     // Load the goblin image once during initialization
     static loaded_visual_t* goblin_img = NULL;
-    static bool image_loaded = false;
 
-    if (!image_loaded) {
-        log_msg(INFO, "Wait Output", "Loading goblin image for launch screen");
-        const char* image_path = "/home/jil/DungeonCrawl/src/art/goblin.png";
-        int img_width, img_height;
-        goblin_img = load_image(image_path, &img_width, &img_height);
-        image_loaded = true;
-
-        if (goblin_img) {
-            log_msg(INFO, "Wait Output", "Successfully loaded goblin image (%dx%d)", img_width, img_height);
-        } else {
-            log_msg(ERROR, "Wait Output", "Failed to load goblin image");
-        }
-    }
+    const char* image_path = "/home/jil/DungeonCrawl/src/art/goblin.png";
+    int img_width, img_height;
+    goblin_img = load_image(image_path, &img_width, &img_height);
 
     // Draw the goblin image if loaded
     if (goblin_img) {
@@ -124,9 +113,6 @@ void draw_launch_screen(void) {
         int image_width = 5;  // Terminal cells, not pixels
         int image_height = 5; // Terminal cells, not pixels
         int image_x = (width - image_width) / 2;
-
-        log_msg(INFO, "Wait Output", "Displaying goblin at position (%d, %d), size %dx%d",
-                image_x, image_y, image_width, image_height);
 
         // Display the image
         bool display_result = display_image_positioned(goblin_img, image_y, image_x, image_width, image_height);
@@ -169,6 +155,5 @@ void draw_launch_screen(void) {
         goblin_img = NULL;
         // Clear the image off the screen
         clear_screen();
-        image_loaded = false;
     }
 }
