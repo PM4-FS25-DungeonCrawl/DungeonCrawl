@@ -12,4 +12,4 @@ extern char** language_menu_strings;
 
 void update_language_menu_local(void);
 
-#endif //LANGUAGE_MENU_LOCAL_H
+#endif//LANGUAGE_MENU_LOCAL_H

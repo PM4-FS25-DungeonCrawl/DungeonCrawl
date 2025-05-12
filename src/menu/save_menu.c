@@ -4,9 +4,9 @@
 #include "../database/database.h"
 #include "../database/game/gamestate_database.h"
 #include "../local/local_handler.h"
+#include "local/save_menu_local.h"
 #include "notcurses/nckeys.h"
 #include "src/menu/menu.h"
-#include "local/save_menu_local.h"
 
 #include <notcurses/notcurses.h>
 #include <stdio.h>

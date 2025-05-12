@@ -1,10 +1,10 @@
 #include "main_menu.h"
 
 #include "../common.h"
-#include "local/main_menu_local.h"
 #include "../local/local_strings.h"
 #include "../logging/logger.h"
 #include "language_menu.h"
+#include "local/main_menu_local.h"
 #include "notcurses/nckeys.h"
 #include "save_menu.h"
 #include "src/local/local_handler.h"

@@ -175,7 +175,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[INVENTORY_MENU_TITLE],
                                 inventory_mode_strings[LOOT_GEAR_MENU_HEADER],
-                                inventory_gear_options, // TODO
+                                inventory_gear_options,// TODO
                                 monster->gear_count,
                                 selected_index,
                                 NULL,
@@ -184,7 +184,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[INVENTORY_MENU_TITLE],
                                 inventory_mode_strings[INVENTORY_MENU_HEADER],
-                                inventory_gear_options, // TODO
+                                inventory_gear_options,// TODO
                                 player->gear_count,
                                 selected_index,
                                 inventory_mode_strings[INVENTORY_DROP_GEAR_MSG],
@@ -251,7 +251,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
                                 inventory_mode_strings[LOOT_GEAR_MENU_HEADER],
-                                inventory_equipment_options, // TODO
+                                inventory_equipment_options,// TODO
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
@@ -260,7 +260,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
                                 inventory_mode_strings[EQUIPMENT_MENU_HEADER],
-                                inventory_equipment_options, // TODO
+                                inventory_equipment_options,// TODO
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
@@ -333,7 +333,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[POTION_MENU_TITLE],
                                 inventory_mode_strings[LOOT_POTION_MENU_HEADER],
-                                inventory_potion_options, // TODO
+                                inventory_potion_options,// TODO
                                 monster->potion_count,
                                 selected_index,
                                 NULL,
@@ -342,7 +342,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[POTION_MENU_TITLE],
                                 inventory_mode_strings[POTION_MENU_HEADER],
-                                inventory_potion_options, // TODO
+                                inventory_potion_options,// TODO
                                 player->potion_count,
                                 selected_index,
                                 inventory_mode_strings[POTION_DROP_POTION_MSG],
@@ -432,7 +432,7 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 
     for (int i = 0; i < count; i++) {
         snprintf(inventory_gear_options[i], MAX_STRING_LENGTH,
-                 inventory_mode_strings[INVENTORY_GEAR_FORMAT], //TODO: This method of using formats is not safe!
+                 inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
                  gear_inventory[i]->local_key,
                  gear_slot_to_string(gear_inventory[i]->slot),
                  gear_inventory[i]->defenses.armor,
@@ -467,14 +467,14 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
     for (int i = 0; i < MAX_SLOT; i++) {
         if (equipment[i] != NULL) {
             snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
-                     inventory_mode_strings[INVENTORY_GEAR_FORMAT], //TODO: This method of using formats is not safe!
+                     inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
                      equipment[i]->local_key,
                      gear_slot_to_string((gear_slot_t) i),
                      equipment[i]->defenses.armor,
                      equipment[i]->defenses.magic_resist);
         } else {
             snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
-                     inventory_mode_strings[INVENTORY_GEAR_FORMAT_EMPTY], //TODO: This method of using formats is not safe!
+                     inventory_mode_strings[INVENTORY_GEAR_FORMAT_EMPTY],//TODO: This method of using formats is not safe!
                      gear_slot_to_string((gear_slot_t) i));
         }
     }

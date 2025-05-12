@@ -31,5 +31,3 @@ void update_stats_local(void) {
     stats_mode_strings[EQUIPPED_ARMOR_STR] = get_local_string("STATS.EQUIPPED.ARMOR");
     stats_mode_strings[EMPTY_ARMOR_SLOT_STR] = get_local_string("STATS.EMPTY.ARMOR.SLOT");
 }
-
-
