@@ -6,14 +6,14 @@
 #include "game.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
-#include "local/local.h"
+#include "local/local_handler.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
-#include "notcurses/notcurses.h"
 #include "stats/draw/draw_stats.h"
 
 #include <time.h>
+#include <notcurses/notcurses.h>
 
 /**
  * Initializes all necessary parts and subsystems for the game.
@@ -48,8 +48,8 @@ int init() {
     }
     create_tables_game_state(&db_connection);// only for dungeoncrawl_game.db
 
-    if (init_local() != COMMON_SUCCESS) {
-        log_msg(ERROR, "Main", "Failed to initialize local");
+    if (init_local_handler(LANGE_EN) != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize local handler");
         return FAIL_LOCAL_INIT;
     }
     init_map_mode();
@@ -81,7 +81,7 @@ int init() {
 
 void shutdown_game() {
     free_game_data();
-    shutdown_local();
+    shutdown_local_handler();
     // close database connection in game.c
     db_close(&db_connection);
 
