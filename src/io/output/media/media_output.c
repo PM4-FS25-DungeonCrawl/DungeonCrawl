@@ -247,7 +247,7 @@ bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
     if (visual->plane) {
         ncplane_destroy(visual->plane);
     }
-    ncplane_options options = {0}; // TODO define options
+    ncplane_options options = {0};// TODO define options
     visual->plane = ncplane_create(notcurses_stdplane(nc), &options);
     if (!visual->plane) {
         log_msg(ERROR, "media_output", "Failed to create plane for animation");

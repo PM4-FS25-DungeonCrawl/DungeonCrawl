@@ -9,8 +9,8 @@
 #include <string.h>
 
 #ifndef _WIN32
-    #include <unistd.h>// for usleep
     #include <pthread.h>
+    #include <unistd.h>// for usleep
 #endif
 
 // Define platform-specific key event type
@@ -38,10 +38,10 @@ static volatile bool input_thread_running = false;
  * want immediate response.
  */
 typedef struct {
-    input_t type;       // Logical input type (UP, DOWN, etc.)
-    uint32_t id;        // Original key ID from notcurses
-    uint16_t modifiers; // Key modifiers (CTRL, ALT, etc.)
-    uint8_t evtype;     // Event type (press, release, etc.)
+    input_t type;      // Logical input type (UP, DOWN, etc.)
+    uint32_t id;       // Original key ID from notcurses
+    uint16_t modifiers;// Key modifiers (CTRL, ALT, etc.)
+    uint8_t evtype;    // Event type (press, release, etc.)
 } input_raw_data_t;
 
 #define MAX_INPUT_BUFFER_SIZE 32
@@ -53,21 +53,21 @@ static int input_buffer_count = 0;
 #ifdef _WIN32
 static CRITICAL_SECTION input_buffer_mutex;
 static CONDITION_VARIABLE input_buffer_cond;
-#define INIT_MUTEX() InitializeCriticalSection(&input_buffer_mutex)
-#define LOCK_MUTEX() EnterCriticalSection(&input_buffer_mutex)
-#define UNLOCK_MUTEX() LeaveCriticalSection(&input_buffer_mutex)
-#define SIGNAL_COND() WakeConditionVariable(&input_buffer_cond)
-#define WAIT_COND() SleepConditionVariableCS(&input_buffer_cond, &input_buffer_mutex, INFINITE)
-#define DESTROY_MUTEX() DeleteCriticalSection(&input_buffer_mutex)
+    #define INIT_MUTEX() InitializeCriticalSection(&input_buffer_mutex)
+    #define LOCK_MUTEX() EnterCriticalSection(&input_buffer_mutex)
+    #define UNLOCK_MUTEX() LeaveCriticalSection(&input_buffer_mutex)
+    #define SIGNAL_COND() WakeConditionVariable(&input_buffer_cond)
+    #define WAIT_COND() SleepConditionVariableCS(&input_buffer_cond, &input_buffer_mutex, INFINITE)
+    #define DESTROY_MUTEX() DeleteCriticalSection(&input_buffer_mutex)
 #else
 static pthread_mutex_t input_buffer_mutex;
 static pthread_cond_t input_buffer_cond;
-#define INIT_MUTEX() pthread_mutex_init(&input_buffer_mutex, NULL)
-#define LOCK_MUTEX() pthread_mutex_lock(&input_buffer_mutex)
-#define UNLOCK_MUTEX() pthread_mutex_unlock(&input_buffer_mutex)
-#define SIGNAL_COND() pthread_cond_signal(&input_buffer_cond)
-#define WAIT_COND() pthread_cond_wait(&input_buffer_cond, &input_buffer_mutex)
-#define DESTROY_MUTEX() pthread_mutex_destroy(&input_buffer_mutex)
+    #define INIT_MUTEX() pthread_mutex_init(&input_buffer_mutex, NULL)
+    #define LOCK_MUTEX() pthread_mutex_lock(&input_buffer_mutex)
+    #define UNLOCK_MUTEX() pthread_mutex_unlock(&input_buffer_mutex)
+    #define SIGNAL_COND() pthread_cond_signal(&input_buffer_cond)
+    #define WAIT_COND() pthread_cond_wait(&input_buffer_cond, &input_buffer_mutex)
+    #define DESTROY_MUTEX() pthread_mutex_destroy(&input_buffer_mutex)
 #endif
 
 // Forward declarations
@@ -186,18 +186,18 @@ static void input_thread_function(void) {
             if (type != INPUT_NONE) {
                 add_input_event(type, &raw_input);
                 log_msg(DEBUG, "input_handler", "Added input event: type=%d, id=%d",
-                       (int)type, (int)raw_input.id);
+                        (int) type, (int) raw_input.id);
             }
         }
 
-        // Small sleep to avoid using 100% CPU
-        // Notcurses doesn't offer a built-in way to wait for input events
-        // without blocking, so we use a polling approach with a small delay
-        #ifdef _WIN32
-            Sleep(10);// 10 milliseconds
-        #else
-            usleep(10000);// 10 milliseconds
-        #endif
+// Small sleep to avoid using 100% CPU
+// Notcurses doesn't offer a built-in way to wait for input events
+// without blocking, so we use a polling approach with a small delay
+#ifdef _WIN32
+        Sleep(10);// 10 milliseconds
+#else
+        usleep(10000);// 10 milliseconds
+#endif
     }
 
     log_msg(INFO, "input_handler", "Input thread stopped");
@@ -225,12 +225,12 @@ void shutdown_input_handler(void) {
     // Stop the input thread
     input_thread_running = false;
 
-    // Allow the thread some time to clean up
-    #ifdef _WIN32
-        Sleep(100);
-    #else
-        usleep(100000);
-    #endif
+// Allow the thread some time to clean up
+#ifdef _WIN32
+    Sleep(100);
+#else
+    usleep(100000);
+#endif
 
     // Destroy synchronization primitives
     DESTROY_MUTEX();

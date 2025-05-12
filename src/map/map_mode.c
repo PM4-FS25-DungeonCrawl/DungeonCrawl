@@ -1,17 +1,16 @@
 #include "map_mode.h"
 
 #include "../game.h"
+#include "../inventory/inventory_mode.h"
+#include "../io/io_handler.h"
+#include "../io/output/common/common_output.h"
 #include "../io/output/specific/map_output.h"
 #include "draw/draw_light.h"
 #include "map.h"
-#include "../inventory/inventory_mode.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
 
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS

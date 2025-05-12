@@ -5,6 +5,8 @@
 #include "../character/level.h"
 #include "../common.h"
 #include "../game.h"
+#include "../io/io_handler.h"
+#include "../io/output/common/common_output.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
@@ -13,9 +15,6 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
 
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS

@@ -127,7 +127,7 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     memset(&event, 0, sizeof(event));
     notcurses_get_blocking(nc, &event);
 
-    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int)event.id);
+    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) event.id);
 }
 
 /**

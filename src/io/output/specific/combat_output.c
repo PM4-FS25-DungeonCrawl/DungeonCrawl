@@ -110,7 +110,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     memset(&event, 0, sizeof(event));
     notcurses_get_blocking(nc, &event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int)event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) event.id);
 }
 
 /**
@@ -128,7 +128,7 @@ void draw_game_over(void) {
     memset(&event, 0, sizeof(event));
     notcurses_get_blocking(nc, &event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int)event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) event.id);
 }
 
 /**

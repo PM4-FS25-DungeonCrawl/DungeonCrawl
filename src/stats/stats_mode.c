@@ -1,11 +1,11 @@
 #include "stats_mode.h"
 
 #include "../combat/ability.h"
+#include "../io/io_handler.h"
+#include "../io/output/common/common_output.h"
 #include "../io/output/specific/stats_output.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
-#include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
