@@ -46,7 +46,7 @@ void draw_loading_screen(const char* text) {
     static int frame = 0;
     frame = (frame + 1) % 4;
 
-    char anim[5] = "|/-\\";
+    char anim[10] = "|/-\\|/-\\";
     char animation_str[2] = {anim[frame], '\0'};
 
     print_text_default(msg_y + 2, width / 2, animation_str);

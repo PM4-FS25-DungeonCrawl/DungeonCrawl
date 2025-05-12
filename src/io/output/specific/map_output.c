@@ -133,5 +133,5 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     }
 
     // Use the multi-line string printing function for the helmet
-    print_text_multi_strings_default(y++, x, helmet_lines, HELMET_HEIGHT);
+    //print_text_multi_strings_default(y++, x, helmet_lines, HELMET_HEIGHT);
 }
