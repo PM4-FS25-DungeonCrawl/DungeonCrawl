@@ -59,6 +59,12 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install meson ninja
+      
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          meson setup builddir --buildtype=release
+          ninja -C builddir
 
       - name: Configure Meson with coverage flags
         if: runner.os == 'Linux'
