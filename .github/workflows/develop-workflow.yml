@@ -55,10 +55,10 @@ jobs:
           sudo apt install -y clang-tidy-18
           pip3 install gcovr
 
-      # - name: Install Dependencies (macOS)
-      #   if: runner.os == 'macOS'
-      #   run: |
-      #     brew install meson ninja
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install meson ninja
 
       - name: Configure Meson with coverage flags
         if: runner.os == 'Linux'
