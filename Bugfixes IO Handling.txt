@@ -1,0 +1,24 @@
+notes DungeonCrawl
+
+[] IO handling specific: waiting screens (loading screens?)
+[] why isn't everything properly initialized in main?
+[] fix "press any key to continue"
+[] fix double titles
+[] fix fucked visuals
+[] get media output functionality from fuckery branch
+[] snprintf bugs
+[] input handling 
+[] color nc channels
+[] stats and player display thingy next to map in map mode
+[] input delay fix: also render if no input
+
+
+[] screen update wait for input bug: (display not updated after first keyboard input, only after next one)
+- return from menu
+- return from inventory
+- return from stats (screen clears immediately, but map shows only after input)
+
+[] stat mode flickering
+
+
+
