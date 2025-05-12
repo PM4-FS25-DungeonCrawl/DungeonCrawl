@@ -3,8 +3,11 @@
 #include "../../../character/character.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
+#include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
+
+#include <string.h>
 
 /**
  * @brief Draws the inventory view UI.
@@ -122,12 +125,11 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Render the frame
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) event.id);
+    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
 /**

@@ -1,6 +1,7 @@
 #include "stats_mode.h"
 
 #include "../combat/ability.h"
+#include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
 #include "../io/output/common/common_output.h"
 #include "../io/output/specific/stats_output.h"
@@ -30,39 +31,45 @@ stats_result_t stats_mode(character_t* player) {
             4,
             selected_index, "");
     // Check for input
-    ncinput input;
-    // Remove unused variable
-    int ret = (int) notcurses_get_nblock(nc, &input);
-    if (ret > 0) {
-        // Handle arrow keys
-        if (input.id == NCKEY_UP) {
-            selected_index = (selected_index > 0) ? selected_index - 1 : MAX_STATS - 1;
-        } else if (input.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % MAX_STATS;
-        } else if (input.id == NCKEY_ENTER) {
-            if (player->skill_points > 0) {
-                switch (selected_index) {
-                    case 0:
-                        raise_skill(&player->base_stats, STRENGTH, player->skill_points);
-                        break;
-                    case 1:
-                        raise_skill(&player->base_stats, INTELLIGENCE, player->skill_points);
-                        break;
-                    case 2:
-                        raise_skill(&player->base_stats, DEXTERITY, player->skill_points);
-                        break;
-                    case 3:
-                        raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
-                        break;
-                    default:;
+    input_event_t input_event;
+    if (get_input_nonblocking(&input_event)) {
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index > 0) ? selected_index - 1 : MAX_STATS - 1;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % MAX_STATS;
+                break;
+            case INPUT_CONFIRM:
+                if (player->skill_points > 0) {
+                    switch (selected_index) {
+                        case 0:
+                            raise_skill(&player->base_stats, STRENGTH, player->skill_points);
+                            break;
+                        case 1:
+                            raise_skill(&player->base_stats, INTELLIGENCE, player->skill_points);
+                            break;
+                        case 2:
+                            raise_skill(&player->base_stats, DEXTERITY, player->skill_points);
+                            break;
+                        case 3:
+                            raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
+                            break;
+                        default:;
+                    }
+                    player->skill_points--;
+                    update_character_resources(&player->max_resources, &player->base_stats);
                 }
-                player->skill_points--;
-                update_character_resources(&player->max_resources, &player->base_stats);
-            }
-        } else if (input.id == NCKEY_ESC || input.id == 'l' || input.id == 'L') {
-            // Clear the screen before drawing a new menu
-            clear_screen();
-            result = STATS_EXIT;
+                break;
+            case INPUT_CANCEL:
+            case INPUT_STATS:
+                // Clear the screen before drawing a new menu
+                clear_screen();
+                result = STATS_EXIT;
+                break;
+            default:
+                break;
         }
     }
 

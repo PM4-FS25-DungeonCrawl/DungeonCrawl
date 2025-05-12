@@ -2,6 +2,7 @@
 
 #include "../game.h"
 #include "../inventory/inventory_mode.h"
+#include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
 #include "../io/output/common/common_output.h"
 #include "../io/output/specific/map_output.h"
@@ -11,12 +12,7 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#ifdef __APPLE__
-    #define KEY_EVENT NCTYPE_PRESS
-#else
-    #define KEY_EVENT NCTYPE_UNKNOWN
-#endif /* ifdef __APPLE__ */
+#include <string.h>
 
 vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
@@ -35,25 +31,34 @@ vector2d_t get_player_pos() {
     return player_pos;
 }
 
-map_mode_result_t handle_input(const ncinput* event, character_t* player) {
+map_mode_result_t handle_input(const input_event_t* input_event, character_t* player) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
-    if (event->id == 'c' && (event->modifiers & NCKEY_MOD_CTRL)) return QUIT;
+    if (input_event->type == INPUT_QUIT) return QUIT;
+    if (input_event->type == INPUT_MENU || input_event->type == INPUT_CANCEL) return SHOW_MENU;
 
-    // Check for 'M' key press for menu
-    if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
-    // Check for 'I' key press for inventory
-    if (event->id == 'i' || event->id == 'I') return SHOW_INVENTORY;
-    // Check for 'L' key press for stats
-    if (event->id == 'l' || event->id == 'L') return SHOW_STATS;
+    // For special keys like 'I', we need to check the raw input value
+    uint32_t key_id = input_event->raw_input.id;
+    if (key_id == 'i' || key_id == 'I') return SHOW_INVENTORY;
+    if (input_event->type == INPUT_STATS) return SHOW_STATS;
 
-    // Only process arrow key events that are PRESS type (ignore RELEASE events)
-    if (event->evtype == NCTYPE_UNKNOWN || event->evtype == NCTYPE_PRESS) {
-        if (event->id == NCKEY_UP) new_y--;
-        if (event->id == NCKEY_DOWN) new_y++;
-        if (event->id == NCKEY_LEFT) new_x--;
-        if (event->id == NCKEY_RIGHT) new_x++;
+    // Process movement using logical input types
+    switch (input_event->type) {
+        case INPUT_UP:
+            new_y--;
+            break;
+        case INPUT_DOWN:
+            new_y++;
+            break;
+        case INPUT_LEFT:
+            new_x--;
+            break;
+        case INPUT_RIGHT:
+            new_x++;
+            break;
+        default:
+            break;
     }
 
 
@@ -112,15 +117,13 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
  */
 map_mode_result_t map_mode_update(character_t* player) {
     map_mode_result_t next_state = CONTINUE;
-    ncinput ev;
-    memset(&ev, 0, sizeof(ev));
+
     if (!first_function_call) {
-        const uint32_t ret = notcurses_get_blocking(nc, &ev);
-        if (ret > 0) {
-            // Only process the event if it's a key press (not release or repeat)
-            if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
-                next_state = handle_input(&ev, player);
-            }
+        input_event_t input_event;
+
+        // Use our input handler to get input
+        if (get_input_blocking(&input_event)) {
+            next_state = handle_input(&input_event, player);
         }
     }
     first_function_call = false;

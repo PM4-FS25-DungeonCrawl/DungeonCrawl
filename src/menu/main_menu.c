@@ -1,6 +1,7 @@
 #include "main_menu.h"
 
 #include "../common.h"
+#include "../io/input/input_handler.h"
 #include "../local/local.h"
 #include "../local/local_strings.h"
 #include "../logging/logger.h"
@@ -14,12 +15,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>// For nanosleep
-//
-#ifdef __APPLE__
-    #define KEY_EVENT NCTYPE_PRESS
-#else
-    #define KEY_EVENT NCTYPE_UNKNOWN
-#endif /* ifdef __APPLE__ */
 
 
 // External reference to notcurses context
@@ -81,32 +76,28 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     while (menu_active) {
         draw_menu(menu_options, menu_count, selected_index);
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
-
-        switch (input.id) {
-            case NCKEY_UP:
+        // Using our input type to navigate the menu
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
                 break;
-            case NCKEY_DOWN:
+            case INPUT_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case NCKEY_ENTER:
+            case INPUT_CONFIRM:
                 // Get the selected menu option
                 select_menu_option(selected_index, game_in_progress);
                 break;
-            case 'c':
-                // if only c was pressed and not ctrl-c break. seems the cleanest solution to me
-                if (!(input.modifiers & NCKEY_MOD_CTRL)) {
-                    break;
-                }
+            case INPUT_QUIT:
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
                 break;
-            case NCKEY_ESC:
+            case INPUT_CANCEL:
                 active_menu_state = MENU_CONTINUE;
                 menu_active = false;
                 break;

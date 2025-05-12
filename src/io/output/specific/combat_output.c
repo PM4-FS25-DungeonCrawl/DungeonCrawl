@@ -4,8 +4,11 @@
 #include "../../../common.h"
 #include "../../../game.h"
 #include "../../../logging/logger.h"
+#include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
+
+#include <string.h>
 
 /**
  * @brief Draws the combat view UI
@@ -104,13 +107,11 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    // This matches how input is handled in combat_menu, ability_menu, etc.
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
 /**
@@ -123,12 +124,11 @@ void draw_game_over(void) {
     print_text_default(2, 1, "Press any key to exit...");
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) input_event.raw_input.id);
 }
 
 /**

@@ -3,6 +3,7 @@
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/game/gamestate_database.h"
+#include "../io/input/input_handler.h"
 #include "../local/local.h"
 #include "../logging/logger.h"
 #include "notcurses/nckeys.h"
@@ -64,35 +65,32 @@ menu_result_t show_save_game_menu(void) {
         ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "Press Enter when done");
         notcurses_render(nc);
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
+        // For text input, we need to handle the raw input value
+        uint32_t key_id = input_event.raw_input.id;
 
-        switch (input.id) {
-            case NCKEY_ENTER:
-                if (name_length > 0) {
-                    input_active = false;
-                }
-                break;
-            case NCKEY_BACKSPACE:
-                // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
-                if (name_length > 0) {
-                    save_name[--name_length] = '\0';
-                }
-                break;
-            case NCKEY_ESC:
-                // Cancel save
-                input_active = false;
-                name_length = 0;// Set length to 0 to indicate cancellation
-                break;
-            default:
-                if (input.id != 0 && name_length < 49) {
-                    save_name[name_length++] = input.id;
-                    save_name[name_length] = '\0';
-                }
-                break;
+        if (input_event.type == INPUT_CONFIRM && name_length > 0) {
+            // Enter was pressed and we have a name
+            input_active = false;
+        } else if (input_event.type == INPUT_CANCEL) {
+            // Escape was pressed
+            input_active = false;
+            name_length = 0; // Set length to 0 to indicate cancellation
+        } else if (key_id == NCKEY_BACKSPACE && name_length > 0) {
+            // Backspace was pressed and we have characters to delete
+            save_name[--name_length] = '\0';
+        } else if (key_id != 0 && name_length < 49 &&
+                  !(input_event.type == INPUT_UP ||
+                    input_event.type == INPUT_DOWN ||
+                    input_event.type == INPUT_LEFT ||
+                    input_event.type == INPUT_RIGHT)) {
+            // A printable character was typed
+            save_name[name_length++] = key_id;
+            save_name[name_length] = '\0';
         }
     }
 
@@ -198,26 +196,26 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
         notcurses_render(nc);
 
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
-
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
-        switch (input.id) {
-            case NCKEY_UP:
+        // Use our logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                 break;
-            case NCKEY_DOWN:
+            case INPUT_DOWN:
                 selected_save_index = (selected_save_index + 1) % save_infos->count;
                 break;
-            case NCKEY_ENTER:
+            case INPUT_CONFIRM:
                 // Set the selected save file ID for loading
                 result = MENU_LOAD_GAME;
                 selected_save_file_id = save_infos->infos[selected_save_index].id;
                 selection_active = false;
                 break;
-            case NCKEY_ESC:
+            case INPUT_CANCEL:
                 selection_active = false;
                 break;
         }
