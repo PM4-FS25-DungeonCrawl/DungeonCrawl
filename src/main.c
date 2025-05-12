@@ -12,6 +12,7 @@
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
 #include "stats/draw/draw_stats.h"
+#include "menu/language_menu.h"
 
 #include <notcurses/notcurses.h>
 #include <time.h>
@@ -62,6 +63,10 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize save menu");
         return FAIL_SAVE_MENU_INIT;
     }
+    if (init_language_menu() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize language menu");
+        return FAIL_LANGUAGE_INIT;
+    }
     if (init_combat_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
         return FAIL_GAME_MODE_INIT;
@@ -93,6 +98,7 @@ void shutdown_game() {
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
+    shutdown_language_menu();
     shutdown_save_menu();
     shutdown_main_menu();
 

@@ -42,12 +42,14 @@ int init_main_menu() {
     main_menu_strings = (char**) malloc(sizeof(char*) * MAX_MAIN_MENU_STRINGS);
     RETURN_WHEN_NULL(main_menu_strings, 1, "Main Menu", "Failed to allocate memory for main menu strings.");
 
+    for (int i = 0; i < MAX_MAIN_MENU_STRINGS; i++) {
+        main_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_main_menu_local();
     // add update local function to the observer list
     observe_local(update_main_menu_local);
-
-    init_language_menu();
     return 0;
 }
 

@@ -1,31 +1,37 @@
 #include "language_menu.h"
 
 #include "../common.h"
-#include "../local/local.h"
+#include "../local/local_handler.h"
 #include "../local/local_strings.h"
 #include "notcurses/nckeys.h"
+#include "local/language_menu_local.h"
 
 #include <notcurses/notcurses.h>
 
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
-// === Internal Functions ===
-void update_language_menu_local(void);
+int init_language_menu() {
+    language_menu_strings = (char**) malloc(sizeof(char*) * MAX_LANGUAGE_MENU_STRINGS);
+    RETURN_WHEN_NULL(language_menu_strings, 1, "Language Menu", "Failed to allocate memory for language menu strings.");
 
-void init_language_menu() {
+    for (int i = 0; i < MAX_LANGUAGE_MENU_STRINGS; i++) {
+        language_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_language_menu_local();
     // add update local function to the observer list
-    add_local_observer(update_language_menu_local);
+    observe_local(update_language_menu_local);
+    return 0;
 }
 
 
 menu_result_t show_language_menu() {
     const char* menu_options[2];
 
-    menu_options[0] = &local_strings[lame_language_english.idx].characters[0];
-    menu_options[1] = &local_strings[lame_language_german.idx].characters[0];
+    menu_options[0] = language_menu_strings[LANGUAGE_ENGLISH];
+    menu_options[1] = language_menu_strings[LANGUAGE_GERMAN];
 
     menu_result_t res = MENU_CHANGE_LANGUAGE;
 
@@ -51,10 +57,10 @@ menu_result_t show_language_menu() {
             case NCKEY_ENTER: {
                 if (selected_index == 0) {
                     // English selected
-                    set_language(language_en);
+                    set_language(LANGE_EN);
                 } else if (selected_index == 1) {
                     // German selected
-                    set_language(language_de);
+                    set_language(LANGE_DE);
                 }
                 selection_active = false;
                 break;
@@ -76,11 +82,16 @@ menu_result_t show_language_menu() {
         }
     }
 
-
     return res;
 }
 
-void update_language_menu_local(void) {
-    snprintf(local_strings[lame_language_english.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lame_language_english.key));
-    snprintf(local_strings[lame_language_german.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lame_language_german.key));
+void shutdown_language_menu() {
+    if (language_menu_strings != NULL) {
+        for (int i = 0; i < MAX_LANGUAGE_MENU_STRINGS; i++) {
+            if (language_menu_strings[i] != NULL) {
+                free(language_menu_strings[i]);
+            }
+        }
+        free(language_menu_strings);
+    }
 }
