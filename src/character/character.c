@@ -2,12 +2,9 @@
 
 #include "../combat/ability.h"
 #include "../common.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
 #include "../logging/logger.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 /**
  * @brief Initializes a new character
@@ -377,26 +374,4 @@ void reset_player_stats(character_t* player) {
     player->current_resources.stamina = player->max_resources.stamina;
 
     log_msg(INFO, "Character", "Player stats reset to base values.");
-}
-
-/**
- * @brief Collects potion options for display.
- *
- * @param potion_options Array of strings to store the formatted potion options.
- * @param potions Array of pointers to the potions.
- * @param count The number of potions.
- * @param potion_format The localization key for the potion display format.
- */
-void collect_potion_options(string_max_t* potion_options, potion_t* potions[], const int count, const local_key_t potion_format) {
-    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
-        memset(potion_options[i].characters, '\0', MAX_STRING_LENGTH);
-    }
-
-    for (int i = 0; i < count; i++) {
-        snprintf(potion_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[potion_format.idx].characters,
-                 potions[i]->name,
-                 potion_type_to_string(potions[i]->effectType),
-                 potions[i]->value);
-    }
 }

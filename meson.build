@@ -28,12 +28,6 @@ src_files = files(
 
     'src/item/gear.c',
     'src/item/potion.c',
-
-    'src/combat/combat_mode.c',
-    'src/combat/ability.c',
-    'src/combat/damage.c',
-
-    'src/combat/draw/draw_combat_mode.c',
 )
 
 menu_files = files(
@@ -57,6 +51,14 @@ inventory_files = files(
     'src/inventory/inventory_mode.c',
     'src/inventory/draw/draw_inventory_mode.c',
     'src/inventory/local/inventory_mode_local.c'
+)
+
+combat_files = files(
+    'src/combat/combat_mode.c',
+    'src/combat/ability.c',
+    'src/combat/damage.c',
+    'src/combat/draw/draw_combat_mode.c',
+    'src/combat/local/combat_mode_local.c'
 )
 
 # List of all database files
@@ -92,6 +94,7 @@ executable(
     menu_files,
     stats_files,
     inventory_files,
+    combat_files,
     database_files,
     logging_files,
     local_files,

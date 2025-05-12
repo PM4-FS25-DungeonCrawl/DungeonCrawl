@@ -79,6 +79,4 @@ void set_skill_points(character_t* character, int skill_points);
 
 void reset_player_stats(character_t* player);
 
-void collect_potion_options(string_max_t* potion_options, potion_t* potions[], const int count, const local_key_t potion_format);
-
 #endif//CHARACTER_H
