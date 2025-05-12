@@ -1,28 +1,11 @@
 Bugfixes and TODOs DungeonCrawl
 
 Bugfixes:
-[] fix "press any key to continue"
 [] fix weird flickering (probably render problem), especially in stat mode
 [] input handling problems:
     - no multithreading if possible (performance is not an issue at all here)
     - actually use the input handler instead of calling the notcurses methods directly
 
 TODO:
-[] implement loading screens (transition screens)
 [] implement media output functionality (working example in fuckery branch)
 [] color nc channels for everything
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
