@@ -7,8 +7,6 @@
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
-string_max_t* stats_menu_options;// holds the ability menu options
-
 int init_stats_mode() {
     stats_mode_strings = (char**) malloc(sizeof(char*) * MAX_STATS_STRINGS);
     RETURN_WHEN_NULL(stats_mode_strings, 1, "Stats Mode", "Failed to allocate memory for stats mode strings.")
@@ -123,6 +121,4 @@ void shutdown_stats_mode() {
         }
         free(stats_mode_strings);
     }
-
-    memory_pool_free(main_memory_pool, stats_menu_options);
 }
