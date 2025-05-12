@@ -2,8 +2,6 @@
 
 #include "../../../common.h"
 #include "../../../logging/logger.h"
-#include "../../../logging/ringbuffer.h"
-#include "../../../thread/thread_handler.h"
 #include "../../io_handler.h"// Include this to access global nc and stdplane
 
 #include <stdbool.h>
@@ -11,7 +9,6 @@
 #include <string.h>
 
 #ifndef _WIN32
-    #include <pthread.h>
     #include <unistd.h>// for usleep
 #else
     #include <windows.h>
@@ -19,59 +16,6 @@
 
 // Using the global variables from io_handler.h
 // No need to redeclare them here as they're already included through io_handler.h
-
-// Mutex for thread safety with rendering operations
-#ifdef _WIN32
-static CRITICAL_SECTION output_mutex;
-#else
-static pthread_mutex_t output_mutex;
-#endif
-
-// Ring buffer for output commands from multiple threads
-static ring_buffer_t output_buffer;
-
-// Flag to control the output thread
-static volatile bool output_thread_running = false;
-
-// Forward declarations
-static void output_thread_function(void);
-
-// Helper function to initialize the mutex
-static bool init_output_mutex(void) {
-#ifdef _WIN32
-    InitializeCriticalSection(&output_mutex);
-    return true;
-#else
-    return (pthread_mutex_init(&output_mutex, NULL) == 0);
-#endif
-}
-
-// Helper function to lock the mutex
-static void lock_output_mutex(void) {
-#ifdef _WIN32
-    EnterCriticalSection(&output_mutex);
-#else
-    pthread_mutex_lock(&output_mutex);
-#endif
-}
-
-// Helper function to unlock the mutex
-static void unlock_output_mutex(void) {
-#ifdef _WIN32
-    LeaveCriticalSection(&output_mutex);
-#else
-    pthread_mutex_unlock(&output_mutex);
-#endif
-}
-
-// Helper function to destroy the mutex
-static void destroy_output_mutex(void) {
-#ifdef _WIN32
-    DeleteCriticalSection(&output_mutex);
-#else
-    pthread_mutex_destroy(&output_mutex);
-#endif
-}
 
 bool init_output_handler() {
     log_msg(INFO, "output_handler", "Starting initialization");
@@ -86,50 +30,8 @@ bool init_output_handler() {
         return false;
     }
 
-    // Initialize the mutex
-    if (!init_output_mutex()) {
-        log_msg(ERROR, "output_handler", "Failed to initialize output mutex");
-        return false;
-    }
-
-    // Initialize the output buffer
-    if (init_ringbuffer(&output_buffer) != 0) {
-        log_msg(ERROR, "output_handler", "Failed to initialize output buffer");
-        destroy_output_mutex();
-        return false;
-    }
-
-    // Start the output thread
-    output_thread_running = true;
-    start_simple_thread(output_thread_function);
-
     log_msg(INFO, "output_handler", "Output handler initialized");
     return true;
-}
-
-// Output thread function
-static void output_thread_function(void) {
-    log_msg(INFO, "output_handler", "Output thread started");
-
-    while (output_thread_running) {
-        char command[MAX_MSG_LENGTH];
-
-        // Check for commands in the buffer
-        // Note: read_from_ringbuffer is blocking, which works for our purpose
-        // as this thread is dedicated to rendering
-        read_from_ringbuffer(&output_buffer, command);
-
-        // Process the command
-        // We don't implement a full command parser here, but in a real implementation,
-        // we would parse the command and execute the appropriate rendering function
-
-        // For now, we just render the screen after any command
-        lock_output_mutex();
-        notcurses_render(nc);
-        unlock_output_mutex();
-    }
-
-    log_msg(INFO, "output_handler", "Output thread stopped");
 }
 
 void clear_screen(void) {
@@ -138,16 +40,9 @@ void clear_screen(void) {
         return;
     }
 
-    lock_output_mutex();
-
     // Clear the plane with the default colors
     ncplane_set_base(stdplane, " ", 0, DEFAULT_COLORS);
     ncplane_erase(stdplane);
-
-    // Add a command to the buffer to trigger a render
-    write_to_ringbuffer(&output_buffer, "CLEAR");
-
-    unlock_output_mutex();
 }
 
 void print_text(int y, int x, const char* text, uint64_t ncchannel) {
@@ -156,18 +51,9 @@ void print_text(int y, int x, const char* text, uint64_t ncchannel) {
         return;
     }
 
-    lock_output_mutex();
-
     // Set the channels and print the text
     ncplane_set_channels(stdplane, ncchannel);
     ncplane_putstr_yx(stdplane, y, x, text);
-
-    // Add a command to the buffer to trigger a render
-    char command[64];
-    snprintf(command, sizeof(command), "TEXT:%d:%d", y, x);
-    write_to_ringbuffer(&output_buffer, command);
-
-    unlock_output_mutex();
 }
 
 void print_text_default(int y, int x, const char* text) {
@@ -179,8 +65,6 @@ void print_text_multi_line(int y, int x, const char* text, int max_width, uint64
         log_msg(ERROR, "output_handler", "Invalid parameters for print_text_multi_line");
         return;
     }
-
-    lock_output_mutex();
 
     // Set the channels
     ncplane_set_channels(stdplane, ncchannel);
@@ -208,13 +92,6 @@ void print_text_multi_line(int y, int x, const char* text, int max_width, uint64
             ptr++;
         }
     }
-
-    // Add a command to the buffer to trigger a render
-    char command[64];
-    snprintf(command, sizeof(command), "MULTILINE:%d:%d", y, x);
-    write_to_ringbuffer(&output_buffer, command);
-
-    unlock_output_mutex();
 }
 
 void print_text_multi_line_default(int y, int x, const char* text, int max_width) {
@@ -227,8 +104,6 @@ void print_text_multi_strings(int y, int x, const char* text[], int count, uint6
         return;
     }
 
-    lock_output_mutex();
-
     // Set the channels
     ncplane_set_channels(stdplane, ncchannel);
 
@@ -238,13 +113,6 @@ void print_text_multi_strings(int y, int x, const char* text[], int count, uint6
             ncplane_putstr_yx(stdplane, y + i, x, text[i]);
         }
     }
-
-    // Add a command to the buffer to trigger a render
-    char command[64];
-    snprintf(command, sizeof(command), "MULTISTRINGS:%d:%d:%d", y, x, count);
-    write_to_ringbuffer(&output_buffer, command);
-
-    unlock_output_mutex();
 }
 
 void print_text_multi_strings_default(int y, int x, const char* text[], int count) {
@@ -261,8 +129,6 @@ void print_menu(const char* title, const char** options, int option_count,
         return;
     }
 
-    lock_output_mutex();
-
     // Print title
     ncplane_set_channels(stdplane, title_channel);
     ncplane_putstr_yx(stdplane, y, x, title);
@@ -277,13 +143,6 @@ void print_menu(const char* title, const char** options, int option_count,
         }
         ncplane_putstr_yx(stdplane, y + i + 1, x, options[i]);
     }
-
-    // Add a command to the buffer to trigger a render
-    char command[64];
-    snprintf(command, sizeof(command), "MENU:%d:%d:%d", y, x, selected_index);
-    write_to_ringbuffer(&output_buffer, command);
-
-    unlock_output_mutex();
 }
 
 void print_menu_default(const char* title, const char** options, int option_count,
@@ -298,16 +157,8 @@ bool render_frame(void) {
         return false;
     }
 
-    lock_output_mutex();
-
-    // Render all changes
+    // Render all changes directly
     int ret = notcurses_render(nc);
-
-    // Add a command to the buffer
-    write_to_ringbuffer(&output_buffer, "RENDER");
-
-    unlock_output_mutex();
-
     return ret >= 0;
 }
 
@@ -317,34 +168,14 @@ bool get_screen_dimensions(int* width, int* height) {
         return false;
     }
 
-    lock_output_mutex();
-
     // Get the dimensions of the standard plane
     *width = ncplane_dim_x(stdplane);
     *height = ncplane_dim_y(stdplane);
-
-    unlock_output_mutex();
 
     return true;
 }
 
 void shutdown_output_handler(void) {
-    // Stop the output thread
-    output_thread_running = false;
-
-// Allow the thread some time to clean up
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
-
-    // Free the output buffer
-    free_ringbuffer(&output_buffer);
-
-    // Destroy the mutex
-    destroy_output_mutex();
-
     // Reset the globals
     nc = NULL;
     stdplane = NULL;

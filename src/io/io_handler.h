@@ -13,6 +13,7 @@
 extern volatile int init_done;
 
 // Global notcurses instance and standard plane
+// These are used directly for rendering and are no longer part of a separate output thread
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
@@ -65,6 +66,7 @@ bool run_background_task(void (*callback)(void));
  *
  * Updates the screen with current content. This is a convenience
  * wrapper around the common_output render_frame function.
+ * This now directly calls notcurses_render instead of using a thread.
  */
 void render_io_frame(void);
 
