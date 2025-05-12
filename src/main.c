@@ -8,14 +8,11 @@
 #include "inventory/inventory_mode.h"
 #include "io/io_handler.h"
 #include "io/output/specific/stats_output.h"
-#include "io/output/specific/wait_output.h"
 #include "local/local.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
 #include "menu/main_menu.h"
 #include "notcurses/notcurses.h"
-#include "src/database/gamestate/gamestate_database.h"
-#include "stats/draw/draw_stats.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
