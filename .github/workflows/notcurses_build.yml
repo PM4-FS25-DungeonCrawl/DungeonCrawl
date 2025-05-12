@@ -1,0 +1,98 @@
+name: Notcurses build output
+
+on:
+  push:
+    branches:
+      - 76-notcurses-base
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 76-notcurses-base
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y meson ninja-build gcc python3-pip libnotcurses-dev
+          pip3 install gcovr
+
+      - name: Build
+        run: |
+          meson setup builddir --buildtype=release
+          ninja -C builddir
+
+      - name: Copy to output
+        run: |
+          mkdir -p output/linux
+          cp builddir/DungeonCrawl output/linux/dungeonCrawl-Linux
+          cp /usr/lib/x86_64-linux-gnu/libnotcurses*.so.* output/linux/ 
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output-linux
+          path: output/linux/
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 76-notcurses-base
+
+      - name: Install dependencies
+        run: brew install meson ninja notcurses
+
+      - name: Build
+        run: |
+          meson setup builddir --buildtype=release
+          ninja -C builddir
+
+      - name: Copy to output
+        run: |
+          mkdir -p output/mac
+          cp builddir/DungeonCrawl output/mac/dungeonCrawl-macOS
+          cp /opt/homebrew/lib/libnotcurses*.dylib output/mac/ || cp /usr/local/lib/libnotcurses*.dylib output/mac/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output-mac
+          path: output/mac/
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 76-notcurses-base
+
+      - name: Build with MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-toolchain
+            mingw-w64-x86_64-meson
+            mingw-w64-x86_64-ninja
+            mingw-w64-x86_64-notcurses
+
+      - name: Compile
+        shell: msys2 {0}
+        run: |
+          meson setup builddir --buildtype=release
+          ninja -C builddir
+
+      - name: Copy to output
+        run: |
+          mkdir output/windows
+          cp builddir/DungeonCrawl.exe output/windows/dungeonCrawl-Windows.exe
+          cp /a/_temp/msys64/mingw64/bin/libnotcurses*.dll output/windows/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output-windows
+          path: output/windows/
