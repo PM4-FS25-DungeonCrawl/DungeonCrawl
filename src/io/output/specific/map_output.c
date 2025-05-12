@@ -116,7 +116,6 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
  */
 void draw_player_info(int x, int y, const vector2d_t player_pos) {
     // Player information using centralized IO
-    print_text_default(y++, x, "HP: 100");
     print_text_default(y++, x, "Press 'M' for Menu");
     print_text_default(y++, x, "Press 'L' for Stats");
     print_text_default(y++, x, "Press 'I' for Inventory");
