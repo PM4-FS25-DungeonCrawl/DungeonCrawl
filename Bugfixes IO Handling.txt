@@ -1,26 +1,37 @@
-notes DungeonCrawl
+Bugfixes and TODOs DungeonCrawl
 
-[] IO handling specific: waiting screens (loading screens?)
-[] why isn't everything properly initialized in main?
+Bugfixes:
 [] fix "press any key to continue"
-[] fix double titles
-[] fix fucked visuals
-[] get media output functionality from fuckery branch
-[] snprintf bugs
-[] input handling 
-[] color nc channels
-[] stats and player display thingy next to map in map mode
-[] input delay fix: also render if no input
-
-
+[] fix weird flickering (probably render problem), especially in stat mode
+[] fix snprintf bugs
+[] input handling problems:
+    - no multithreading if possible (performance is not an issue at all here)
+    - actually use the input handler instead of calling the notcurses methods directly
+    - input delay in some instances (see todo "screen update wait for input bug")
 [] screen update wait for input bug: (display not updated after first keyboard input, only after next one)
-- return from menu
-- return from inventory
-- return from stats (screen clears immediately, but map shows only after input)
-- return from item submenu to inventory
-- return from loot menu to map
+    - return from menu
+    - return from inventory
+    - return from stats (screen clears immediately, but map shows only after input)
+    - return from item submenu to inventory
+    - return from loot menu to map
 
-[] stat mode flickering
+TODO:
+[] implement loading screens (transition screens)
+[] properly handle initialization and shutdown of all modules (currently not the case)
+[] get media output functionality from fuckery branch
+[] color nc channels for everything
+[] put stats and player image display thingy next to map in map mode
+
+
+
+
+
+
+
+
+
+
+
 
 
 
