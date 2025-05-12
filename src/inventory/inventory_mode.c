@@ -5,7 +5,6 @@
 #include "../game.h"
 #include "../item/gear.h"
 #include "../local/local_handler.h"
-#include "../local/local_strings.h"
 #include "../src/combat/combat_mode.h"
 #include "draw/draw_inventory_mode.h"
 #include "local/inventory_mode_local.h"
@@ -110,7 +109,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                                 inventory_mode_strings[MAIN_MENU_TITLE],
                                 NULL,
                                 &inventory_mode_strings[SHOW_GEAR],
-                                MAX_INMO_MAIN_MENU_OPTION,
+                                3,
                                 selected_index,
                                 NULL,
                                 inventory_mode_strings[FINISH_LOOTING_MSG]);
@@ -119,7 +118,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                                 inventory_mode_strings[MAIN_MENU_TITLE],
                                 NULL,
                                 &inventory_mode_strings[SHOW_GEAR],
-                                MAX_INMO_MAIN_MENU_OPTION,
+                                3,
                                 selected_index,
                                 NULL,
                                 inventory_mode_strings[PRESS_ESC_RETURN]);
@@ -134,9 +133,9 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
         if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
 
         if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + MAX_INMO_MAIN_MENU_OPTION) % MAX_INMO_MAIN_MENU_OPTION;
+            selected_index = (selected_index - 1 + 3) % 3;
         } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % MAX_INMO_MAIN_MENU_OPTION;
+            selected_index = (selected_index + 1) % 3;
         } else if (event.id == NCKEY_ENTER) {
             if (selected_index == 0) {
                 new_state = INVENTORY_GEAR_MENU;

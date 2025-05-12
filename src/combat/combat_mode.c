@@ -5,7 +5,6 @@
 #include "../character/level.h"
 #include "../common.h"
 #include "../game.h"
-#include "../local/local_strings.h"
 #include "ability.h"
 #include "draw/draw_combat_mode.h"
 #include "local/combat_mode_local.h"
@@ -141,7 +140,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         draw_combat_menu(anchor,
                          combat_mode_strings[MAIN_MENU_TITLE],
                          &combat_mode_strings[MAIN_MENU_OPTION1],
-                         MAX_COMO_MAIN_MENU_OPTION,
+                         2,
                          selected_index,
                          NULL);
 
@@ -155,10 +154,10 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
         if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
         if (event.id == NCKEY_UP) {
             // Move up
-            selected_index = (selected_index - 1 + MAX_COMO_MAIN_MENU_OPTION) % MAX_COMO_MAIN_MENU_OPTION;
+            selected_index = (selected_index - 1 + 2) % 2;
         } else if (event.id == NCKEY_DOWN) {
             // Move down
-            selected_index = (selected_index + 1) % MAX_COMO_MAIN_MENU_OPTION;
+            selected_index = (selected_index + 1) % 2;
         } else if (event.id == NCKEY_ENTER) {
             // Return the selected state
             if (selected_index == 0) {

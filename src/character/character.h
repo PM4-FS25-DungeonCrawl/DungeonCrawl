@@ -6,7 +6,6 @@
 #include "../common.h"
 #include "../item/gear.h"
 #include "../item/potion.h"
-#include "../local/local_strings.h"
 #include "../memory/memory_management.h"
 #include "../stats/stats.h"
 
