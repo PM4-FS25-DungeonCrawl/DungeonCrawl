@@ -8,4 +8,3 @@ Bugfixes:
 
 TODO:
 [] implement media output functionality (working example in fuckery branch)
-[] color nc channels for everything

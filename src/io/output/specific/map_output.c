@@ -72,13 +72,11 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                     ch = "$";
                     break;
                 case LIFE_FOUNTAIN:
-                    //TODO: Add life fountain colors
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0xff, 0);// Black on green
+                    channels = LIFE_FOUNTAIN_COLORS;
                     ch = "+";
                     break;
                 case MANA_FOUNTAIN:
-                    // TODO: Add mana fountain colors
-                    channels = NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0xff);// Black on blue
+                    channels = MANA_FOUNTAIN_COLORS;
                     ch = "+";
                     break;
                 case GOBLIN:
