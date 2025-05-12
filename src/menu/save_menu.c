@@ -79,15 +79,15 @@ menu_result_t show_save_game_menu(void) {
         } else if (input_event.type == INPUT_CANCEL) {
             // Escape was pressed
             input_active = false;
-            name_length = 0; // Set length to 0 to indicate cancellation
+            name_length = 0;// Set length to 0 to indicate cancellation
         } else if (key_id == NCKEY_BACKSPACE && name_length > 0) {
             // Backspace was pressed and we have characters to delete
             save_name[--name_length] = '\0';
         } else if (key_id != 0 && name_length < 49 &&
-                  !(input_event.type == INPUT_UP ||
-                    input_event.type == INPUT_DOWN ||
-                    input_event.type == INPUT_LEFT ||
-                    input_event.type == INPUT_RIGHT)) {
+                   !(input_event.type == INPUT_UP ||
+                     input_event.type == INPUT_DOWN ||
+                     input_event.type == INPUT_LEFT ||
+                     input_event.type == INPUT_RIGHT)) {
             // A printable character was typed
             save_name[name_length++] = key_id;
             save_name[name_length] = '\0';
