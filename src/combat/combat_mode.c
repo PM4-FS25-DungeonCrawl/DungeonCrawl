@@ -14,7 +14,8 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-
+#include <stdlib.h>
+#include <unistd.h>
 
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS
@@ -80,6 +81,7 @@ int init_combat_mode() {
 }
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
+    log_msg(FINE, "Combat", "Starting combat between %s and %s", player->name, monster->name);
     // initial combat state
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
@@ -402,6 +404,18 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
+        ability_menu_options[i] = (char*) malloc(MAX_STRING_LENGTH * sizeof(char));
+        if (ability_menu_options[i] == NULL) {
+            for (int j = 0; j < i; j++) {
+                free(ability_menu_options[j]);
+                ability_menu_options[j] = NULL;
+            }
+            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu options.");
+            return;
+        }
+    }
+
+    for (int i = 0; i < count; i++) {
         snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
                  combat_mode_strings[ABILITY_FORMAT],//TODO: This Method of using formats is not safe!!
                  abilities[i]->name,
@@ -422,11 +436,23 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     }
 
     for (int i = 0; i < count; i++) {
+        potion_menu_options[i] = (char*) malloc(MAX_STRING_LENGTH * sizeof(char));
+        if (potion_menu_options[i] == NULL) {
+            for (int j = 0; j < i; j++) {
+                free(potion_menu_options[j]);
+                potion_menu_options[j] = NULL;
+            }
+            log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu options.");
+            return;
+        }
+    }
+
+    for (int i = 0; i < count; i++) {
         snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
                  combat_mode_strings[POTION_FORMAT],//TODO: This Method of using formats is not safe!!
                  potions[i]->name,
-                 potions[i]->value,
-                 potion_type_to_string(potions[i]->effectType));
+                 potion_type_to_string(potions[i]->effectType),
+                 potions[i]->value);
     }
 }
 
