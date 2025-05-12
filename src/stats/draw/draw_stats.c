@@ -1,25 +1,26 @@
 #include "draw_stats.h"
 
 #include "../../character/level.h"
-#include "../../local/local.h"
-#include "../../local/local_strings.h"
-#include "../../logging/logger.h"
+#include "../../local/local_handler.h"
+#include "../local/stats_mode_local.h"
 
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
 string_max_t* stats_menu_options;// holds the ability menu options
 
-void update_stats_local(void);
-
 int init_stats_mode() {
-    stats_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
-    NULL_PTR_HANDLER_RETURN(stats_menu_options, -1, "Stats Mode", "Allocated memory for stats window options in memory pool is NULL");
+    stats_mode_strings = (char**) malloc(sizeof(char*) * MAX_STATS_STRINGS);
+    RETURN_WHEN_NULL(stats_mode_strings, 1, "Stats Mode", "Failed to allocate memory for stats mode strings.")
+
+    for (int i = 0; i < MAX_STATS_STRINGS; i++) {
+        stats_mode_strings[i] = NULL;
+    }
 
     //update local once, so the strings are initialized
     update_stats_local();
     //add update local function to the observer list
-    add_local_observer(update_stats_local);
+    observe_local(update_stats_local);
     return 0;
 }
 
@@ -32,51 +33,48 @@ void render_stats_window(character_t* player) {
     char stats_info[MAX_STRING_LENGTH];
     // Display player stats
     ncplane_set_channels(stdplane, NCCHANNELS_INITIALIZER(0xff, 0xff, 0xff, 0, 0, 0));
-    snprintf(stats_info, MAX_STRING_LENGTH, "%s", local_strings[stmo_main_menu_title.idx].characters);
+    snprintf(stats_info, MAX_STRING_LENGTH, "%s", stats_mode_strings[PLAYER_MENU_TITLE]);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
 
     snprintf(stats_info, sizeof(stats_info), "%s: %4d / %-4d| %s: %4d / %-4d | %s: %4d / %-4d",
-             local_strings[stmo_ability_hp.idx].characters,
-             player->current_resources.health, player->max_resources.health,
-             local_strings[stmo_ability_mp.idx].characters,
-             player->current_resources.mana, player->max_resources.mana,
-             local_strings[stmo_ability_sp.idx].characters,
-             player->current_resources.stamina, player->max_resources.stamina);
+             stats_mode_strings[HEALTH_STR], player->current_resources.health, player->max_resources.health,
+             stats_mode_strings[MANA_STR], player->current_resources.mana, player->max_resources.mana,
+             stats_mode_strings[STAMINA_STR], player->current_resources.stamina, player->max_resources.stamina);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %-4d | %s: %-4d | %s: %-4d",
-             local_strings[stmo_ability_strength.idx].characters, player->base_stats.strength,
-             local_strings[stmo_ability_intelligence.idx].characters, player->base_stats.intelligence,
-             local_strings[stmo_ability_dexterity.idx].characters, player->base_stats.dexterity,
-             local_strings[stmo_ability_constitution.idx].characters, player->base_stats.constitution);
+             stats_mode_strings[STRENGTH_STR], player->base_stats.strength,
+             stats_mode_strings[INTELLIGENCE_STR], player->base_stats.intelligence,
+             stats_mode_strings[DEXTERITY_STR], player->base_stats.dexterity,
+             stats_mode_strings[CONSTITUTION_STR], player->base_stats.constitution);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     snprintf(stats_info, sizeof(stats_info), "%s: %-4d | %s: %4d / %-4d",
-             local_strings[stmo_player_level.idx].characters, player->level,
-             local_strings[stmo_player_xp.idx].characters, player->xp, calculate_xp_for_next_level(player->level));
+             stats_mode_strings[LEVEL_STR], player->level,
+             stats_mode_strings[EXP_STR], player->xp, calculate_xp_for_next_level(player->level));
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
 
     // Display equipped armor
-    snprintf(stats_info, sizeof(stats_info), "%s:", local_strings[stmo_option_inventory.idx].characters);
+    snprintf(stats_info, sizeof(stats_info), "%s:", stats_mode_strings[INVENTORY_MENU_TITLE]);
     ncplane_putstr_yx(stdplane, y++, x, stats_info);
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
             snprintf(stats_info, sizeof(stats_info), "%s: %s | %s: %-4d, %s: %-4d",
-                     local_strings[stmo_option_inventory.idx].characters, player->equipment[i]->name,
-                     local_strings[stmo_player_armor.idx].characters, player->equipment[i]->defenses.armor,
-                     local_strings[stmo_player_magic_resist.idx].characters, player->equipment[i]->defenses.magic_resist);
+                     stats_mode_strings[EQUIPPED_ARMOR_STR], player->equipment[i]->name,
+                     stats_mode_strings[ARMOR_STR], player->equipment[i]->defenses.armor,
+                     stats_mode_strings[MAGIC_RESISTANCE_STR], player->equipment[i]->defenses.magic_resist);
             ncplane_putstr_yx(stdplane, y++, x, stats_info);
         } else {
-            snprintf(stats_info, sizeof(stats_info), "%s %d", local_strings[stmo_option_no_armor.idx].characters, i);
+            snprintf(stats_info, sizeof(stats_info), "%s %d", stats_mode_strings[EMPTY_ARMOR_SLOT_STR], i);
             ncplane_putstr_yx(stdplane, y++, x, stats_info);
         }
     }
 
     y += 2;// Add space
 
-    snprintf(stats_info, sizeof(stats_info), "%s: %d", local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
-    ncplane_putstr_yx(stdplane, y++, x, stats_info);
+    snprintf(stats_info, sizeof(stats_info), "%s: %d", stats_mode_strings[AVAILABLE_SKILL_POINTS_STR], player->skill_points);
+    ncplane_putstr_yx(stdplane, y, x, stats_info);
 }
 
 void draw_stats_menu(const char* title, const char* options[], int option_count, int selected_index, const char* footer) {
@@ -116,33 +114,15 @@ void draw_stats_log(const char* message) {
     notcurses_render(nc);
 }
 
-void update_stats_local(void) {
-    // Main menu title
-    snprintf(local_strings[stmo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_main_menu_title.key));
-
-    // Stats titles
-    snprintf(local_strings[stmo_ability_hp.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_hp.key));
-    snprintf(local_strings[stmo_ability_mp.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_mp.key));
-    snprintf(local_strings[stmo_ability_sp.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_sp.key));
-
-    // Ability stats
-    snprintf(local_strings[stmo_ability_strength.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_strength.key));
-    snprintf(local_strings[stmo_ability_intelligence.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_intelligence.key));
-    snprintf(local_strings[stmo_ability_dexterity.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_dexterity.key));
-    snprintf(local_strings[stmo_ability_constitution.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_ability_constitution.key));
-
-    // Player stats
-    snprintf(local_strings[stmo_player_level.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_player_level.key));
-    snprintf(local_strings[stmo_player_xp.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_player_xp.key));
-    snprintf(local_strings[stmo_player_armor.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_player_armor.key));
-    snprintf(local_strings[stmo_player_magic_resist.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_player_magic_resist.key));
-
-    // Options
-    snprintf(local_strings[stmo_option_skillpoints.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_option_skillpoints.key));
-    snprintf(local_strings[stmo_option_inventory.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_option_inventory.key));
-    snprintf(local_strings[stmo_option_no_armor.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(stmo_option_no_armor.key));
-}
-
 void shutdown_stats_mode() {
+    if (stats_mode_strings != NULL) {
+        for (int i = 0; i < MAX_STATS_STRINGS; i++) {
+            if (stats_mode_strings[i] != NULL) {
+                free(stats_mode_strings[i]);
+            }
+        }
+        free(stats_mode_strings);
+    }
+
     memory_pool_free(main_memory_pool, stats_menu_options);
 }
