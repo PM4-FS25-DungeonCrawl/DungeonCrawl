@@ -3,9 +3,17 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
+#include "../media/media_output.h"  // Added for media support
 
 #include <stdio.h>
 #include <string.h>
+
+// Include platform-specific headers for sleep functions
+#ifndef _WIN32
+    #include <unistd.h>  // For usleep on Unix/Linux
+#else
+    #include <windows.h> // For Sleep on Windows
+#endif
 
 // Loading screen message buffer
 static char loading_message[256] = "";
@@ -91,6 +99,42 @@ void draw_launch_screen(void) {
     print_text_default(title_y + 2, version_x, version);
     print_text_default(title_y + 3, copyright_x, copyright);
 
+    // Load the goblin image once during initialization
+    static loaded_visual_t* goblin_img = NULL;
+    static bool image_loaded = false;
+
+    if (!image_loaded) {
+        log_msg(INFO, "Wait Output", "Loading goblin image for launch screen");
+        const char* image_path = "/home/jil/DungeonCrawl/src/art/goblin.png";
+        int img_width, img_height;
+        goblin_img = load_image(image_path, &img_width, &img_height);
+        image_loaded = true;
+
+        if (goblin_img) {
+            log_msg(INFO, "Wait Output", "Successfully loaded goblin image (%dx%d)", img_width, img_height);
+        } else {
+            log_msg(ERROR, "Wait Output", "Failed to load goblin image");
+        }
+    }
+
+    // Draw the goblin image if loaded
+    if (goblin_img) {
+        // Position the image below the title
+        int image_y = title_y + 5;
+        int image_width = 5;  // Terminal cells, not pixels
+        int image_height = 5; // Terminal cells, not pixels
+        int image_x = (width - image_width) / 2;
+
+        log_msg(INFO, "Wait Output", "Displaying goblin at position (%d, %d), size %dx%d",
+                image_x, image_y, image_width, image_height);
+
+        // Display the image
+        bool display_result = display_image_positioned(goblin_img, image_y, image_x, image_width, image_height);
+        if (!display_result) {
+            log_msg(ERROR, "Wait Output", "Failed to display goblin image");
+        }
+    }
+
     // Draw a loading message
     const char* loading_msg = "Loading game...";
     int loading_len = strlen(loading_msg);
@@ -109,5 +153,22 @@ void draw_launch_screen(void) {
 
         // Render the frame using centralized IO handler
         render_io_frame();
+
+        // Pause briefly to prevent 100% CPU usage and to make animation visible
+#ifdef _WIN32
+        Sleep(100); // 100ms pause on Windows
+#else
+        usleep(100000); // 100ms pause on Unix/Linux
+#endif
+    }
+
+    // Free the goblin image when we're done with the launch screen
+    if (goblin_img) {
+        log_msg(INFO, "Wait Output", "Freeing goblin image as initialization completed");
+        free_visual(goblin_img);
+        goblin_img = NULL;
+        // Clear the image off the screen
+        clear_screen();
+        image_loaded = false;
     }
 }

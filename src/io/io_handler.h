@@ -5,6 +5,7 @@
 #include "input/input_handler.h"
 #include "input/input_types.h"
 #include "output/common/common_output.h"
+#include "output/media/media_output.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>

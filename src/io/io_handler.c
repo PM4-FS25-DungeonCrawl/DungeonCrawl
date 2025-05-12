@@ -61,6 +61,12 @@ int init_io_handler(void) {
         return 4;// Error code
     }
 
+    // Initialize media output handler
+    if (!init_media_output()) {
+        log_msg(ERROR, "io_handler", "Failed to initialize media output handler");
+        // Continue without media support, not a fatal error
+    }
+
     log_msg(INFO, "io_handler", "IO handler initialized successfully");
     return COMMON_SUCCESS;// 0
 }
