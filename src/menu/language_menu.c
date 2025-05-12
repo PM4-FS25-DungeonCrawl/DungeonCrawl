@@ -2,7 +2,6 @@
 
 #include "../common.h"
 #include "../local/local_handler.h"
-#include "../local/local_strings.h"
 #include "notcurses/nckeys.h"
 #include "local/language_menu_local.h"
 
