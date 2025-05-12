@@ -31,6 +31,7 @@ int exit_code;
 void game_loop();
 
 void combat_mode_state();
+void stats_mode_state();
 
 void run_game() {
     log_msg(INFO, "Game", "Starting game loop");
@@ -74,8 +75,7 @@ void game_loop() {
                 break;
 
             case STATS_MODE:
-                stats_mode(player);// Pass your player object
-                current_state = MAP_MODE;
+                stats_mode_state();
                 break;
 
             case EXIT:
@@ -218,6 +218,16 @@ void inventory_mode_state() {
         case CONTINUE_INVENTORY:
             break;
         case EXIT_TO_MAP:
+            current_state = MAP_MODE;
+            break;
+    }
+}
+
+void stats_mode_state() {
+    switch (stats_mode(player)) {
+        case STATS_WINDOW:
+            break;
+        case STATS_EXIT:
             current_state = MAP_MODE;
             break;
     }

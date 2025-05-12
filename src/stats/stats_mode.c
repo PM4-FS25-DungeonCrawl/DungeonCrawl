@@ -9,75 +9,63 @@
 
 // Change from definition to declaration
 extern struct notcurses* nc;
-extern struct ncplane* stdplane;
+int selected_index = 0;
 
-void stats_mode(character_t* player) {
-    stdplane = notcurses_stdplane(nc);
-    int selected_index = 0;
+stats_result_t stats_mode(character_t* player) {
+    clear_screen();
+    stats_result_t result = STATS_WINDOW;
 
-    bool points_allocated_or_esc = false;
+    // Draw stats window
+    render_stats_window(player);
+    const char* menu_options[4];
 
-    while (!points_allocated_or_esc) {
-        // Draw stats window
-        render_stats_window(player);
-        const char* menu_options[4];
+    menu_options[0] = &local_strings[stmo_ability_strength.idx].characters[0];
+    menu_options[1] = &local_strings[stmo_ability_intelligence.idx].characters[0];
+    menu_options[2] = &local_strings[stmo_ability_dexterity.idx].characters[0];
+    menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
 
-        menu_options[0] = &local_strings[stmo_ability_strength.idx].characters[0];
-        menu_options[1] = &local_strings[stmo_ability_intelligence.idx].characters[0];
-        menu_options[2] = &local_strings[stmo_ability_dexterity.idx].characters[0];
-        menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
-
-        draw_stats_menu(
-                local_strings[stmo_menu_stats_title.idx].characters,
-                menu_options,
-                4,
-                selected_index, "");
-        // Check for input
-        ncinput input;
-        // Remove unused variable
-        int ret = (int) notcurses_get_nblock(nc, &input);
-        if (ret > 0) {
-            // Handle arrow keys
-            if (input.id == NCKEY_UP) {
-                selected_index = (selected_index > 0) ? selected_index - 1 : MAX_STATS - 1;
-            } else if (input.id == NCKEY_DOWN) {
-                selected_index = (selected_index + 1) % MAX_STATS;
-            } else if (input.id == NCKEY_ENTER) {
-                if (player->skill_points > 0) {
-                    switch (selected_index) {
-                        case 0:
-                            raise_skill(&player->base_stats, STRENGTH, player->skill_points);
-                            break;
-                        case 1:
-                            raise_skill(&player->base_stats, INTELLIGENCE, player->skill_points);
-                            break;
-                        case 2:
-                            raise_skill(&player->base_stats, DEXTERITY, player->skill_points);
-                            break;
-                        case 3:
-                            raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
-                            break;
-                        default:;
-                    }
-                    player->skill_points--;
-                    update_character_resources(&player->max_resources, &player->base_stats);
-                } else {
-                    char word[MAX_STRING_LENGTH - 4];
-                    snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
-                    // Use centralized IO function instead of direct ncplane call
-                    print_text_default(20, 17, word);
-                    render_io_frame();
+    draw_stats_menu(
+        local_strings[stmo_menu_stats_title.idx].characters,
+        menu_options,
+        4,
+        selected_index, "");
+    // Check for input
+    ncinput input;
+    // Remove unused variable
+    int ret = (int) notcurses_get_nblock(nc, &input);
+    if (ret > 0) {
+        // Handle arrow keys
+        if (input.id == NCKEY_UP) {
+            selected_index = (selected_index > 0) ? selected_index - 1 : MAX_STATS - 1;
+        } else if (input.id == NCKEY_DOWN) {
+            selected_index = (selected_index + 1) % MAX_STATS;
+        } else if (input.id == NCKEY_ENTER) {
+            if (player->skill_points > 0) {
+                switch (selected_index) {
+                    case 0:
+                        raise_skill(&player->base_stats, STRENGTH, player->skill_points);
+                        break;
+                    case 1:
+                        raise_skill(&player->base_stats, INTELLIGENCE, player->skill_points);
+                        break;
+                    case 2:
+                        raise_skill(&player->base_stats, DEXTERITY, player->skill_points);
+                        break;
+                    case 3:
+                        raise_skill(&player->base_stats, CONSTITUTION, player->skill_points);
+                        break;
+                    default: ;
                 }
-            } else if (input.id == NCKEY_ESC || input.id == 'l' || input.id == 'L') {
-                // Clear the screen before drawing a new menu
-                clear_screen();
-                points_allocated_or_esc = true;
+                player->skill_points--;
+                update_character_resources(&player->max_resources, &player->base_stats);
             }
-
-            // Re-render after input
-            render_io_frame();
+        } else if (input.id == NCKEY_ESC || input.id == 'l' || input.id == 'L') {
+            // Clear the screen before drawing a new menu
+            clear_screen();
+            result = STATS_EXIT;
         }
     }
-    clear_screen();
+
     render_io_frame();
+    return result;
 }

@@ -97,9 +97,6 @@ void render_stats_window(character_t* player) {
     // Display skill points
     snprintf(stats_info, sizeof(stats_info), "%s: %d", local_strings[stmo_option_skillpoints.idx].characters, player->skill_points);
     print_text_default(y++, x, stats_info);
-
-    // Render the frame
-    render_io_frame();
 }
 
 /**
@@ -123,9 +120,6 @@ void draw_stats_menu(const char* title, const char* options[], int option_count,
     // Draw footer at the bottom
     y += option_count + 1;
     print_text_default(y, x, footer);
-
-    // Render the frame
-    render_io_frame();
 }
 
 /**
