@@ -6,7 +6,6 @@ helper_db = files(
     # actual needed files
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
@@ -50,10 +49,8 @@ helper_combat = files(
     '../src/logging/ringbuffer.c',
     '../src/thread/thread_handler.c',
 
-    '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
@@ -130,10 +127,8 @@ helper_stats = files(
     '../src/logging/ringbuffer.c',
     '../src/thread/thread_handler.c',
 
-    '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
@@ -141,7 +136,6 @@ helper_stats = files(
     'test_helper.c',
 
     '../src/memory/memory_management.c',
-
 
     '../src/stats/stats.c',
     '../src/stats/draw/draw_stats.c',

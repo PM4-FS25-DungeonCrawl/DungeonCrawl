@@ -53,9 +53,7 @@ src_files = files(
 database_files = files(
     'include/sqlite3.c',
     'src/database/database.c',
-    'src/database/local/local_database.c',
     'src/database/game/gamestate_database.c',
-    'src/database/game/ability_database.c',
     'src/database/game/item_database.c'
 )
 
