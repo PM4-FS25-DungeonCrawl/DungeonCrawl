@@ -1,10 +1,10 @@
 Bugfixes and TODOs DungeonCrawl
 
 Bugfixes:
-[] fix weird flickering (probably render problem), especially in stat mode
 [] input handling problems:
     - no multithreading if possible (performance is not an issue at all here)
     - actually use the input handler instead of calling the notcurses methods directly
 
 TODO:
 [] implement media output functionality (working example in fuckery branch)
+[] write doc for all io functions

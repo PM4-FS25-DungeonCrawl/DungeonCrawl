@@ -3,6 +3,7 @@
 #include "../../../character/character.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
+#include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
 
@@ -43,7 +44,7 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
  * @param tail_msg Second message to display at the bottom (can be NULL)
  */
 void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const char* header_msg,
-                         string_max_t* menu_options, const int menu_option_count,
+                         char** menu_options, const int menu_option_count,
                          const int selected_index, const char* key_msg, const char* tail_msg) {
     // Validate parameters
     if (menu_name == NULL || menu_options == NULL) {
@@ -62,25 +63,18 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
         print_text_default(vec.dy++, vec.dx, header_msg);
     }
 
-    // Convert the menu options to an array of strings for print_menu
-    // TODO: why not use print_menu?
-    const char* options[menu_option_count];
-    for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*) &menu_options[i];
-    }
-
     // Draw menu items highlighting the selected one
     for (int i = 0; i < menu_option_count; i++) {
         if (i == selected_index) {
             // Use > to indicate selected item and bold styling
             char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "> %s", options[i]);
+            snprintf(buffer, sizeof(buffer), "> %s", menu_options[i]);
             // For selected items, use inverted colors
             print_text(vec.dy, anchor.dx, buffer, INVERTED_COLORS);
         } else {
             // Use regular formatting for non-selected items
             char buffer[MAX_STRING_LENGTH];
-            snprintf(buffer, sizeof(buffer), "  %s", options[i]);
+            snprintf(buffer, sizeof(buffer), "  %s", menu_options[i]);
             print_text_default(vec.dy, anchor.dx, buffer);
         }
         vec.dy++;
@@ -122,12 +116,11 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Render the frame
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) event.id);
+    log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
 /**

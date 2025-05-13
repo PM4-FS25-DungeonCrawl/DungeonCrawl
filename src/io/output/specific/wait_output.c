@@ -26,6 +26,7 @@ static char loading_message[256] = "";
  *
  * @param text The message to display on the loading screen
  */
+// TODO: Attention multiple pre-declaration! io_handler.h & wait_output.h
 void draw_loading_screen(const char* text) {
     if (!text) {
         log_msg(ERROR, "Wait Output", "Loading screen text is NULL");

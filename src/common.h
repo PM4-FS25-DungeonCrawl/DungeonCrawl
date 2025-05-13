@@ -170,10 +170,4 @@ typedef struct string_max_t {
  */
 extern memory_pool_t* main_memory_pool;
 
-/**
- * @brief Clears the entire screen by overwriting all characters with spaces.
- * @deprecated Use clear_screen() from common_output.h instead
- */
-void clear_screen_legacy(struct ncplane* stdplane);//Renamed to avoid conflict
-
 #endif//COMMON_H

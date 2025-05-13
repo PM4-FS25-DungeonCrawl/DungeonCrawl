@@ -6,7 +6,6 @@
 #include "../common.h"
 #include "../item/gear.h"
 #include "../item/potion.h"
-#include "../local/local_strings.h"
 #include "../memory/memory_management.h"
 #include "../stats/stats.h"
 
@@ -78,7 +77,5 @@ void set_initial_xp(character_t* character, int xp);
 void set_skill_points(character_t* character, int skill_points);
 
 void reset_player_stats(character_t* player);
-
-void collect_potion_options(string_max_t* potion_options, potion_t* potions[], const int count, const local_key_t potion_format);
 
 #endif//CHARACTER_H

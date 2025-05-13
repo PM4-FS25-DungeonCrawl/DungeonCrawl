@@ -1,8 +1,6 @@
 #ifndef WAIT_OUTPUT_H
 #define WAIT_OUTPUT_H
 
-#include <stdbool.h>
-
 /**
  * @brief Draw a loading screen with animation
  *

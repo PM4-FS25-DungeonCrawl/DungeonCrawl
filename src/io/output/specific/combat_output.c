@@ -4,8 +4,11 @@
 #include "../../../common.h"
 #include "../../../game.h"
 #include "../../../logging/logger.h"
+#include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
+
+#include <string.h>
 
 /**
  * @brief Draws the combat view UI
@@ -60,22 +63,16 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
  * @param selected_index The index of the selected option
  * @param tail_msg The message to be displayed at the bottom of the menu
  */
-void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options,
+void draw_combat_menu(const vector2d_t anchor, const char* menu_name, char** menu_options,
                       const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Combat Output", "Menu options are NULL");
         return;
     }
-    vector2d_t vec = {anchor.dx, anchor.dy};
-
-    // Convert string_max_t options to char* array for print_menu
-    const char* options[menu_option_count];
-    for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*) &menu_options[i];
-    }
+    const vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Use centralized menu drawing function
-    print_menu_default(menu_name, options, menu_option_count, selected_index, vec.dy, anchor.dx);
+    print_menu_default(menu_name, menu_options, menu_option_count, selected_index, vec.dy, anchor.dx);
 
     // Draw tail message if provided
     if (tail_msg != NULL) {
@@ -104,13 +101,11 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    // This matches how input is handled in combat_menu, ability_menu, etc.
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
 /**
@@ -123,12 +118,11 @@ void draw_game_over(void) {
     print_text_default(2, 1, "Press any key to exit...");
     render_io_frame();
 
-    // Directly use notcurses_get_blocking to get any key press
-    ncinput event;
-    memset(&event, 0, sizeof(event));
-    notcurses_get_blocking(nc, &event);
+    // Use our input handler to get any key press
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 
-    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) event.id);
+    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) input_event.raw_input.id);
 }
 
 /**

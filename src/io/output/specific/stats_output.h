@@ -20,7 +20,7 @@ int init_stats_mode(void);
  *
  * @param player Pointer to the player character
  */
-void render_stats_window(character_t* player);
+void render_stats_window(const character_t* player);
 
 /**
  * @brief Draw the stats menu
@@ -33,7 +33,7 @@ void render_stats_window(character_t* player);
  * @param selected_index Currently selected option index
  * @param footer Text to display at the bottom of the menu
  */
-void draw_stats_menu(const char* title, const char* options[], int option_count, int selected_index, const char* footer);
+void draw_stats_menu(const char* title, const char** options, int option_count, int selected_index, const char* footer);
 
 /**
  * @brief Display a message in the stats log

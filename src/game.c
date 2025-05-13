@@ -31,6 +31,7 @@ int exit_code;
 void game_loop();
 
 void combat_mode_state();
+void stats_mode_state();
 
 void run_game() {
     log_msg(INFO, "Game", "Starting game loop");
@@ -74,8 +75,7 @@ void game_loop() {
                 break;
 
             case STATS_MODE:
-                stats_mode(player);// Pass your player object
-                current_state = MAP_MODE;
+                stats_mode_state();
                 break;
 
             case EXIT:
@@ -101,7 +101,7 @@ void main_menu_state() {
             clear_screen();
             current_state = MAP_MODE;
             break;
-        case MENU_SAVE_GAME:
+        case MENU_SAVE_GAME: {
             // Get the save name from the menu
             const char* save_name = get_save_name();
             if (save_name == NULL) {
@@ -115,7 +115,8 @@ void main_menu_state() {
             clear_screen();
             current_state = MAP_MODE;
             break;
-        case MENU_LOAD_GAME:
+        }
+        case MENU_LOAD_GAME: {
             const int save_id = get_selected_save_file_id();
             bool load_success = false;
 
@@ -143,6 +144,7 @@ void main_menu_state() {
                 current_state = GENERATE_MAP;
             }
             break;
+        }
         case MENU_CHANGE_LANGUAGE:
             current_state = MAIN_MENU;
             break;
@@ -218,6 +220,16 @@ void inventory_mode_state() {
         case CONTINUE_INVENTORY:
             break;
         case EXIT_TO_MAP:
+            current_state = MAP_MODE;
+            break;
+    }
+}
+
+void stats_mode_state() {
+    switch (stats_mode(player)) {
+        case STATS_WINDOW:
+            break;
+        case STATS_EXIT:
             current_state = MAP_MODE;
             break;
     }

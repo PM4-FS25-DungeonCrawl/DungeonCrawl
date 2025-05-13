@@ -1,11 +1,7 @@
 #ifndef COMMON_OUTPUT_H
 #define COMMON_OUTPUT_H
 
-#include "../../../common.h"
-
 #include <notcurses/notcurses.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 /**
  * @brief Initialize the output handler
