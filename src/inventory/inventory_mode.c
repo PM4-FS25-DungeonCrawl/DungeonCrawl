@@ -3,14 +3,14 @@
 #include "../character/character.h"
 #include "../common.h"
 #include "../game.h"
+#include "../io/input/input_handler.h"
+#include "../io/output/specific/inventory_output.h"
 #include "../item/gear.h"
 #include "../local/local_handler.h"
 #include "../src/combat/combat_mode.h"
-#include "draw/draw_inventory_mode.h"
 #include "local/inventory_mode_local.h"
 
 #include <notcurses/notcurses.h>
-#include <stdbool.h>
 
 // === Internal Functions ===
 void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
@@ -125,29 +125,33 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + 3) % 3;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % 3;
-        } else if (event.id == NCKEY_ENTER) {
-            if (selected_index == 0) {
-                new_state = INVENTORY_GEAR_MENU;
-            } else if (selected_index == 1) {
-                new_state = INVENTORY_EQUIPMENT_MENU;
-            } else if (selected_index == 2) {
-                new_state = INVENTORY_POTION_MENU;
-            }
-            submenu_selected = true;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_EXIT;
-            submenu_selected = true;
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + 3) % 3;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % 3;
+                break;
+            case INPUT_CONFIRM:
+                if (selected_index == 0) {
+                    new_state = INVENTORY_GEAR_MENU;
+                } else if (selected_index == 1) {
+                    new_state = INVENTORY_EQUIPMENT_MENU;
+                } else if (selected_index == 2) {
+                    new_state = INVENTORY_POTION_MENU;
+                }
+                submenu_selected = true;
+                break;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_EXIT;
+                submenu_selected = true;
+                break;
         }
     }
     return new_state;
@@ -191,44 +195,54 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+        // For character keys like 'd'/'D', we need to check the raw input value
+        uint32_t key_id = input_event.raw_input.id;
 
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % player->gear_count;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (player->gear_count < MAX_GEAR_LIMIT) {
-                    add_gear(player, monster->gear_inventory[selected_index]);
-                    remove_gear(monster, monster->gear_inventory[selected_index]);
-                    collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % player->gear_count;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (player->gear_count < MAX_GEAR_LIMIT) {
+                        add_gear(player, monster->gear_inventory[selected_index]);
+                        remove_gear(monster, monster->gear_inventory[selected_index]);
+                        collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                    }
                 } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                    if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
+                        equip_gear(player, player->gear_inventory[selected_index]);
+                        collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_EMPTY_MSG]);
+                    }
                 }
-            } else {
-                if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
-                    equip_gear(player, player->gear_inventory[selected_index]);
+                return INVENTORY_GEAR_MENU;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
+            default:
+                // Handle special character keys
+                if ((key_id == 'd' || key_id == 'D') && monster == NULL) {
+                    remove_gear(player, player->gear_inventory[selected_index]);
                     collect_inventory_gear_options(player->gear_inventory, player->gear_count);
-                } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_EMPTY_MSG]);
+                    return INVENTORY_GEAR_MENU;
                 }
-            }
-            return INVENTORY_GEAR_MENU;
-        } else if ((event.id == 'd' || event.id == 'D') && monster == NULL) {
-            remove_gear(player, player->gear_inventory[selected_index]);
-            collect_inventory_gear_options(player->gear_inventory, player->gear_count);
-            return INVENTORY_GEAR_MENU;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                break;
         }
     }
     return new_state;
@@ -267,45 +281,49 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % MAX_SLOT;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (monster->equipment[selected_index] != NULL) {
-                    if (player->gear_count < MAX_GEAR_LIMIT) {
-                        add_gear(player, monster->equipment[selected_index]);
-                        remove_equipped_gear(monster, (gear_slot_t) selected_index);
-                        collect_inventory_equipment_options(monster->equipment);
-                    } else {
-                        anchor = draw_inventory_view(inventory_view_anchor, target);
-                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % MAX_SLOT;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (monster->equipment[selected_index] != NULL) {
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            add_gear(player, monster->equipment[selected_index]);
+                            remove_equipped_gear(monster, (gear_slot_t) selected_index);
+                            collect_inventory_equipment_options(monster->equipment);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
                     }
-                    return INVENTORY_EQUIPMENT_MENU;
-                }
-            } else {
-                if (player->equipment[selected_index] != NULL) {
-                    if (player->gear_count < MAX_GEAR_LIMIT) {
-                        unequip_gear(player, (gear_slot_t) selected_index);
-                        collect_inventory_equipment_options(player->equipment);
-                    } else {
-                        anchor = draw_inventory_view(inventory_view_anchor, target);
-                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                } else {
+                    if (player->equipment[selected_index] != NULL) {
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            unequip_gear(player, (gear_slot_t) selected_index);
+                            collect_inventory_equipment_options(player->equipment);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
                     }
-                    return INVENTORY_EQUIPMENT_MENU;
                 }
-            }
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                break;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
         }
     }
     return new_state;
@@ -349,48 +367,58 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+        // For character keys like 'd'/'D', we need to check the raw input value
+        uint32_t key_id = input_event.raw_input.id;
 
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % player->potion_count;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (player->potion_count < MAX_POTION_LIMIT) {
-                    add_potion(player, monster->potion_inventory[selected_index]);
-                    remove_potion(monster, monster->potion_inventory[selected_index]);
-                    collect_inv_potion_options(monster->potion_inventory, monster->potion_count);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % player->potion_count;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (player->potion_count < MAX_POTION_LIMIT) {
+                        add_potion(player, monster->potion_inventory[selected_index]);
+                        remove_potion(monster, monster->potion_inventory[selected_index]);
+                        collect_inv_potion_options(monster->potion_inventory, monster->potion_count);
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[POTION_FULL_MSG]);
+                    }
                 } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, inventory_mode_strings[POTION_FULL_MSG]);
-                }
-            } else {
-                char message[MAX_STRING_LENGTH];
-                snprintf(message, sizeof(message), inventory_mode_strings[POTION_FORMAT],//TODO: This method of using formats is not safe!
-                         player->name,
-                         player->potion_inventory[selected_index]->name,
-                         player->potion_inventory[selected_index]->value,
-                         potion_type_to_string(player->potion_inventory[selected_index]->effectType));
+                    char message[MAX_STRING_LENGTH];
+                    snprintf(message, sizeof(message), inventory_mode_strings[POTION_FORMAT],//TODO: This method of using formats is not safe!
+                             player->name,
+                             player->potion_inventory[selected_index]->name,
+                             player->potion_inventory[selected_index]->value,
+                             potion_type_to_string(player->potion_inventory[selected_index]->effectType));
 
-                invoke_potion_effect(player, player->potion_inventory[selected_index]);
-                anchor = draw_inventory_view(inventory_view_anchor, target);
-                draw_inventory_log(anchor, message);
-                collect_inv_potion_options(player->potion_inventory, player->potion_count);
-            }
-            return INVENTORY_POTION_MENU;
-        } else if ((event.id == 'd' || event.id == 'D') && monster == NULL) {
-            remove_potion(player, player->potion_inventory[selected_index]);
-            collect_inv_potion_options(player->potion_inventory, player->potion_count);
-            return INVENTORY_POTION_MENU;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                    invoke_potion_effect(player, player->potion_inventory[selected_index]);
+                    anchor = draw_inventory_view(inventory_view_anchor, target);
+                    draw_inventory_log(anchor, message);
+                    collect_inv_potion_options(player->potion_inventory, player->potion_count);
+                }
+                return INVENTORY_POTION_MENU;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
+            default:
+                // Handle special character keys
+                if ((key_id == 'd' || key_id == 'D') && monster == NULL) {
+                    remove_potion(player, player->potion_inventory[selected_index]);
+                    collect_inv_potion_options(player->potion_inventory, player->potion_count);
+                    return INVENTORY_POTION_MENU;
+                }
+                break;
         }
     }
     return new_state;

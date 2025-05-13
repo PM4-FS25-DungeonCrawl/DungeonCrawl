@@ -7,7 +7,8 @@ typedef enum {
     STATS_WINDOW,
     STATS_EXIT
 } stats_result_t;
-void stats_mode(character_t* player);
+
+stats_result_t stats_mode(character_t* player);
 
 
 #endif//STATS_MODE_H

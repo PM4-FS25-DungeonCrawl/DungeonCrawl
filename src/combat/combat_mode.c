@@ -5,23 +5,17 @@
 #include "../character/level.h"
 #include "../common.h"
 #include "../game.h"
+#include "../io/input/input_handler.h"
+#include "../io/io_handler.h"
+#include "../io/output/common/common_output.h"
+#include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"
-#include "draw/draw_combat_mode.h"
 #include "local/combat_mode_local.h"
 
 #include <notcurses/notcurses.h>
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-#ifdef __APPLE__
-    #define KEY_EVENT NCTYPE_PRESS
-#else
-    #define KEY_EVENT NCTYPE_UNKNOWN
-#endif /* ifdef __APPLE__ */
-
 
 // Internal functions
 void collect_ability_menu_options(ability_t* abilities[], int count);
@@ -85,7 +79,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
     //collect menu options
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
     collect_ability_menu_options(player->abilities, player->ability_count);
     collect_potion_menu_options(player->potion_inventory, player->potion_count);
 
@@ -106,8 +99,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                clear_screen(stdplane);
+                clear_screen();
 
                 char message[MAX_STRING_LENGTH];
                 snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
@@ -145,39 +137,43 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
                          NULL);
 
         // check for input
-        ncinput event;
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
-
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-        if (event.id == NCKEY_UP) {
-            // Move up
-            selected_index = (selected_index - 1 + 2) % 2;
-        } else if (event.id == NCKEY_DOWN) {
-            // Move down
-            selected_index = (selected_index + 1) % 2;
-        } else if (event.id == NCKEY_ENTER) {
-            // Return the selected state
-            if (selected_index == 0) {
-                new_state = ABILITY_MENU;
-            } else if (selected_index == 1) {
-                new_state = POTION_MENU;
-            }
-            submenu_selected = true;
-        } else if (event.id == 'c' && (event.modifiers & NCKEY_MOD_CTRL)) {
-            // Exit the game
-            new_state = COMBAT_EXIT;
-            submenu_selected = true;
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                // Move up
+                selected_index = (selected_index - 1 + 2) % 2;
+                break;
+            case INPUT_DOWN:
+                // Move down
+                selected_index = (selected_index + 1) % 2;
+                break;
+            case INPUT_CONFIRM:
+                // Return the selected state
+                if (selected_index == 0) {
+                    new_state = ABILITY_MENU;
+                } else if (selected_index == 1) {
+                    new_state = POTION_MENU;
+                }
+                submenu_selected = true;
+                break;
+            case INPUT_QUIT:
+                // Exit the game
+                new_state = COMBAT_EXIT;
+                submenu_selected = true;
+                break;
+            default:;
         }
     }
     return new_state;
 }
 
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    clear_screen(stdplane);
+    clear_screen();
     // draw combat view
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
     int selected_index = 0;
@@ -195,29 +191,35 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                          combat_mode_strings[PRESS_ESC_RETURN]);
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                // Move up
+                selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
+                break;
+            case INPUT_DOWN:
+                // Move down
+                selected_index = (selected_index + 1) % player->ability_count;
+                break;
+            case INPUT_CONFIRM:
+                // Use ability
+                use_ability(player, monster, player->abilities[selected_index]);
+                use_ability(monster, player, get_random_ability(monster));
 
-        if (event.id == NCKEY_UP) {
-            // Move up
-            selected_index = (selected_index - 1 + player->ability_count) % player->ability_count;
-        } else if (event.id == NCKEY_DOWN) {
-            // Move down
-            selected_index = (selected_index + 1) % player->ability_count;
-        } else if (event.id == NCKEY_ENTER) {
-            use_ability(player, monster, player->abilities[selected_index]);
-            use_ability(monster, player, get_random_ability(monster));
-
-            new_state = EVALUATE_COMBAT;
-            ability_used_or_esc = true;
-        } else if (event.id == NCKEY_ESC) {
-            // go back to the combat menu
-            new_state = COMBAT_MENU;
-            ability_used_or_esc = true;
+                new_state = EVALUATE_COMBAT;
+                ability_used_or_esc = true;
+                break;
+            case INPUT_CANCEL:
+                // go back to the combat menu
+                new_state = COMBAT_MENU;
+                ability_used_or_esc = true;
+                break;
+            default:;
         }
     }
     return new_state;
@@ -246,30 +248,36 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                          combat_mode_strings[PRESS_ESC_RETURN]);
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-        if (event.id == NCKEY_UP) {
-            // Move up
-            selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
-        } else if (event.id == NCKEY_DOWN) {
-            // Move down
-            selected_index = (selected_index + 1) % player->potion_count;
-        } else if (event.id == NCKEY_ENTER) {
-            // Use the selected potion
-            use_potion(player, monster, player->potion_inventory[selected_index]);
-            use_ability(monster, player, get_random_ability(monster));
-            new_state = EVALUATE_COMBAT;
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                // Move up
+                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+                break;
+            case INPUT_DOWN:
+                // Move down
+                selected_index = (selected_index + 1) % player->potion_count;
+                break;
+            case INPUT_CONFIRM:
+                // Use the selected potion
+                use_potion(player, monster, player->potion_inventory[selected_index]);
+                use_ability(monster, player, get_random_ability(monster));
+                new_state = EVALUATE_COMBAT;
 
-            ncplane_set_channels(stdplane, DEFAULT_COLORS);
-            collect_potion_menu_options(player->potion_inventory, player->potion_count);
-            item_used_or_esc = true;
-        } else if (event.id == NCKEY_ESC) {
-            // Go back to the combat menu
-            new_state = COMBAT_MENU;
-            item_used_or_esc = true;
+                collect_potion_menu_options(player->potion_inventory, player->potion_count);
+                item_used_or_esc = true;
+                break;
+            case INPUT_CANCEL:
+                // Go back to the combat menu
+                new_state = COMBAT_MENU;
+                item_used_or_esc = true;
+                break;
+            default:;
         }
     }
     return new_state;
@@ -321,7 +329,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                  ability->name);
         draw_combat_log(anchor, message);
     }
-    notcurses_render(nc);
+    render_io_frame();
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* potion) {

@@ -1,11 +1,14 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+extern volatile int init_done;
+
 typedef enum {
     SUCCESS,
     FAIL_TB_INIT,
     FAIL_MEM_POOL_INIT,
     FAIL_LOCAL_INIT,
+    FAIL_IO_HANDLER_INIT,
     FAIL_MAIN_MENU_INIT,
     FAIL_SAVE_MENU_INIT,
     FAIL_LANGUAGE_INIT,

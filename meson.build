@@ -19,7 +19,6 @@ src_files = files(
     'src/map/map_populator.c',
 
     'src/map/draw/draw_light.c',
-    'src/map/draw/draw_map_mode.c',
 
     'src/character/character.c',
     'src/character/player.c',
@@ -43,13 +42,11 @@ menu_files = files(
 stats_files = files(
     'src/stats/stats.c',
     'src/stats/stats_mode.c',
-    'src/stats/draw/draw_stats.c',
     'src/stats/local/stats_mode_local.c',
 )
 
 inventory_files = files(
     'src/inventory/inventory_mode.c',
-    'src/inventory/draw/draw_inventory_mode.c',
     'src/inventory/local/inventory_mode_local.c'
 )
 
@@ -57,7 +54,6 @@ combat_files = files(
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/draw/draw_combat_mode.c',
     'src/combat/local/combat_mode_local.c'
 )
 
@@ -76,6 +72,17 @@ logging_files = files(
     'src/logging/ringbuffer.c'
 )
 
+io_files = files(
+    'src/io/io_handler.c',
+    'src/io/input/input_handler.c',
+    'src/io/output/common/common_output.c',
+    'src/io/output/media/media_output.c',
+    'src/io/output/specific/combat_output.c',
+    'src/io/output/specific/inventory_output.c',
+    'src/io/output/specific/map_output.c',
+    'src/io/output/specific/stats_output.c',
+    'src/io/output/specific/wait_output.c'
+)
 
 local_files = files(
     'src/local/local_handler.c'
@@ -105,6 +112,7 @@ configure_file(
     combat_files,
     database_files,
     logging_files,
+    io_files,
     local_files,
     memory_files,
     dependencies : [notcurses]

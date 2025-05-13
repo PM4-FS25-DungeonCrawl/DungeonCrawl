@@ -5,8 +5,6 @@
 
 #include "player.h"
 
-#include <stdlib.h>
-
 /**
  * @brief Creates and initializes a new player character
  * @param memory_pool A pointer to the memory pool used for allocating the player character

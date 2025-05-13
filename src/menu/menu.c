@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include "../common.h"
+#include "../io/input/input_handler.h"
 #include "../logging/logger.h"
 #include "local/save_menu_local.h"
 
@@ -53,13 +54,13 @@ bool show_confirmation(const char* message) {
     notcurses_render(nc);
 
     while (1) {
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
-        if (input.id == 'y' || input.id == 'Y') {
-            return true;
-        } else if (input.id == 'n' || input.id == 'N') {
-            return false;
+        input_event_t input_event;
+        if (get_input_blocking(&input_event)) {
+            if (input_event.raw_input.id == 'y' || input_event.raw_input.id == 'Y') {
+                return true;
+            } else if (input_event.raw_input.id == 'n' || input_event.raw_input.id == 'N') {
+                return false;
+            }
         }
     }
 }

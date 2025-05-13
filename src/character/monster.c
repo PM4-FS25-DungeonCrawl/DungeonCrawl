@@ -5,8 +5,6 @@
 
 #include "monster.h"
 
-#include <stdlib.h>
-
 /**
  * @brief Creates and initializes a new goblin character
  * @param memory_pool A pointer to the memory pool used for allocating the goblin character

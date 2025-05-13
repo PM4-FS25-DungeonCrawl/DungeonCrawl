@@ -1,9 +1,9 @@
 #include "language_menu.h"
 
 #include "../common.h"
+#include "../io/input/input_handler.h"
 #include "../local/local_handler.h"
 #include "local/language_menu_local.h"
-#include "notcurses/nckeys.h"
 
 #include <notcurses/notcurses.h>
 
@@ -40,20 +40,20 @@ menu_result_t show_language_menu() {
         const int menu_count = 2;
         draw_menu(menu_options, menu_count, selected_index);
 
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-
-        switch (event.id) {
-            case NCKEY_UP:
+        // Use our logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
                 break;
-            case NCKEY_DOWN:
+            case INPUT_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case NCKEY_ENTER: {
+            case INPUT_CONFIRM: {
                 if (selected_index == 0) {
                     // English selected
                     set_language(LANGE_EN);
@@ -64,14 +64,11 @@ menu_result_t show_language_menu() {
                 selection_active = false;
                 break;
             }
-            case 'c':
-                if (!(event.modifiers & NCKEY_MOD_CTRL)) {
-                    break;
-                }
+            case INPUT_QUIT:
                 res = MENU_EXIT;
                 selection_active = false;
                 break;
-            case NCKEY_ESC:
+            case INPUT_CANCEL:
                 res = MENU_CONTINUE;
                 selection_active = false;
                 break;
