@@ -7,7 +7,7 @@
 extern int selected_save_file_id;
 extern char last_save_name[50];
 
-void init_save_menu(void);
+int init_save_menu(void);
 
 /**
  * Get the ID of the save file selected by the user
@@ -33,5 +33,7 @@ menu_result_t show_save_game_menu(void);
  * @return MENU_LOAD_GAME if a save was selected, MENU_CONTINUE if canceled
  */
 menu_result_t show_load_game_menu(bool game_in_progress);
+
+void shutdown_save_menu(void);
 
 #endif// SAVE_MENU_H

@@ -21,4 +21,6 @@ int init_main_menu(void);
  */
 menu_result_t show_main_menu(bool game_in_progress);
 
+void shutdown_main_menu(void);
+
 #endif// MAIN_MENU_H

@@ -4,7 +4,6 @@
 #include "input_types.h"
 
 #include <notcurses/notcurses.h>
-#include <stdbool.h>
 
 /**
  * @brief Initialize the input handler

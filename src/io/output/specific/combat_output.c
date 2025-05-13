@@ -63,22 +63,16 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
  * @param selected_index The index of the selected option
  * @param tail_msg The message to be displayed at the bottom of the menu
  */
-void draw_combat_menu(const vector2d_t anchor, const char* menu_name, string_max_t* menu_options,
+void draw_combat_menu(const vector2d_t anchor, const char* menu_name, char** menu_options,
                       const int menu_option_count, const int selected_index, const char* tail_msg) {
     if (menu_name == NULL || menu_options == NULL) {
         log_msg(ERROR, "Combat Output", "Menu options are NULL");
         return;
     }
-    vector2d_t vec = {anchor.dx, anchor.dy};
-
-    // Convert string_max_t options to char* array for print_menu
-    const char* options[menu_option_count];
-    for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*) &menu_options[i];
-    }
+    const vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Use centralized menu drawing function
-    print_menu_default(menu_name, options, menu_option_count, selected_index, vec.dy, anchor.dx);
+    print_menu_default(menu_name, menu_options, menu_option_count, selected_index, vec.dy, anchor.dx);
 
     // Draw tail message if provided
     if (tail_msg != NULL) {

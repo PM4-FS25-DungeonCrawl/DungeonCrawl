@@ -35,7 +35,7 @@ vector2d_t draw_combat_view(vector2d_t anchor, const character_t* player, const 
  * @param selected_index The index of the selected option
  * @param tail_msg The message to be displayed at the bottom of the menu. If the message is NULL, it will not be displayed.
  */
-void draw_combat_menu(vector2d_t anchor, const char* menu_name, string_max_t* menu_options, int menu_option_count, int selected_index, const char* tail_msg);
+void draw_combat_menu(vector2d_t anchor, const char* menu_name, char** menu_options, int menu_option_count, int selected_index, const char* tail_msg);
 
 /**
  * @brief Draws the combat log.

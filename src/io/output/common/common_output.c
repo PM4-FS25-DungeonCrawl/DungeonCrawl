@@ -4,9 +4,7 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"// Include this to access global nc and stdplane
 
-#include <stdbool.h>
 #include <stdlib.h>
-#include <string.h>
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep

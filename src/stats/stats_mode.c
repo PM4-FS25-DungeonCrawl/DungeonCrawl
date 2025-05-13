@@ -5,8 +5,7 @@
 #include "../io/io_handler.h"
 #include "../io/output/common/common_output.h"
 #include "../io/output/specific/stats_output.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
+#include "local/stats_mode_local.h"
 
 // Change from definition to declaration
 extern struct notcurses* nc;
@@ -20,13 +19,13 @@ stats_result_t stats_mode(character_t* player) {
     render_stats_window(player);
     const char* menu_options[4];
 
-    menu_options[0] = &local_strings[stmo_ability_strength.idx].characters[0];
-    menu_options[1] = &local_strings[stmo_ability_intelligence.idx].characters[0];
-    menu_options[2] = &local_strings[stmo_ability_dexterity.idx].characters[0];
-    menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
+    menu_options[0] = stats_mode_strings[STRENGTH_STR];
+    menu_options[1] = stats_mode_strings[INTELLIGENCE_STR];
+    menu_options[2] = stats_mode_strings[DEXTERITY_STR];
+    menu_options[3] = stats_mode_strings[CONSTITUTION_STR];
 
     draw_stats_menu(
-            local_strings[stmo_menu_stats_title.idx].characters,
+            stats_mode_strings[STATS_MENU_TITLE],
             menu_options,
             4,
             selected_index, "");
@@ -60,6 +59,10 @@ stats_result_t stats_mode(character_t* player) {
                     }
                     player->skill_points--;
                     update_character_resources(&player->max_resources, &player->base_stats);
+                } else {
+                    char word[MAX_STRING_LENGTH - 4];
+                    snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", stats_mode_strings[AVAILABLE_SKILL_POINTS_STR]);
+                    print_text_default(20, 17, word);
                 }
                 break;
             case INPUT_CANCEL:

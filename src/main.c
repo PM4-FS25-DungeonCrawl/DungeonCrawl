@@ -8,16 +8,18 @@
 #include "inventory/inventory_mode.h"
 #include "io/io_handler.h"
 #include "io/output/specific/stats_output.h"
-#include "local/local.h"
+#include "local/local_handler.h"
 #include "logging/logger.h"
 #include "map/map_mode.h"
+#include "menu/language_menu.h"
 #include "menu/main_menu.h"
-#include "notcurses/notcurses.h"
+#include "menu/save_menu.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
 #endif
 
+#include <notcurses/notcurses.h>
 #include <time.h>
 
 // Global flag to signal when initialization is complete
@@ -81,15 +83,15 @@ int init() {
 
 
     // Initialize database connection
-    if (db_open(&db_connection, "resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
+    if (db_open_multiple_access(&db_connection, DB_GAME) != DB_OPEN_STATUS_SUCCESS) {
         log_msg(ERROR, "Game", "Failed to open database");
         return 1;
     }
     create_tables_game_state(&db_connection);
 
     // Initialize localization
-    if (init_local() != COMMON_SUCCESS) {
-        log_msg(ERROR, "Main", "Failed to initialize local");
+    if (init_local_handler(LANGE_EN) != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize local handler");
         return FAIL_LOCAL_INIT;
     }
 
@@ -101,7 +103,14 @@ int init() {
         log_msg(ERROR, "Main", "Failed to initialize main menu");
         return FAIL_MAIN_MENU_INIT;
     }
-
+    if (init_save_menu() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize save menu");
+        return FAIL_SAVE_MENU_INIT;
+    }
+    if (init_language_menu() != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize language menu");
+        return FAIL_LANGUAGE_INIT;
+    }
     // Initialize combat mode
     if (init_combat_mode() != COMMON_SUCCESS) {
         log_msg(ERROR, "Main", "Failed to initialize combat mode");
@@ -134,7 +143,7 @@ int init() {
 
 void shutdown_game() {
     free_game_data();
-    shutdown_local();
+    shutdown_local_handler();
     // close database connection in game.c
     db_close(&db_connection);
 
@@ -142,6 +151,9 @@ void shutdown_game() {
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
+    shutdown_language_menu();
+    shutdown_save_menu();
+    shutdown_main_menu();
 
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
