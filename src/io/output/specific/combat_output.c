@@ -8,10 +8,13 @@
 #include "../common/common_output.h"
 #include "../media/media_output.h"
 
+#include <string.h>
+
 // Global variables for cached resources
 static loaded_visual_t* enemy_visual = NULL;
-
-#include <string.h>
+// coresponding height and width of the resource
+int height;
+int width;
 
 /**
  * @brief Draws the combat view UI
@@ -28,6 +31,9 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
+    int rendered_width = 30;
+    int rendered_height = 0;
+
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
@@ -40,10 +46,9 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vec.dy = draw_resource_bar(vec, enemy);
     vec.dy += 2;
 
-
     // Check if enemy_visual needs to be loaded
     if (enemy_visual == NULL) {
-        enemy_visual = load_image(GOBLIN_IMAGE, NULL, NULL);
+        enemy_visual = load_image(GOBLIN_IMAGE, &width, &height);
         if (enemy_visual == NULL) {
             // Failed to load image, fallback to ASCII art
             log_msg(WARNING, "Combat Output", "Failed to load enemy image, using ASCII art");
@@ -53,14 +58,18 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                 vec.dy += sprite_height + 1;
             }
         } else {
+            // calculate correct rendered height
+            rendered_height = height / (width / rendered_width);
             // Successfully loaded image, display it
-            display_image_positioned(enemy_visual, anchor.dx, anchor.dy, 30, 30);
-            vec.dy += sprite_height + 1;
+            display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
+            vec.dy += rendered_height + 1;
         }
     } else {
+        // calculate correct rendered height
+        rendered_height = height / (width / rendered_width);
         // Enemy visual already loaded, display it
-        display_image_positioned(enemy_visual, anchor.dx, anchor.dy, 30, 30);
-        vec.dy += sprite_height + 1;
+        display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
+        vec.dy += rendered_height + 1;
     }
 
     // Render the frame
@@ -85,22 +94,10 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, char** men
         log_msg(ERROR, "Combat Output", "Menu options are NULL");
         return;
     }
-<<<<<<< Updated upstream
     const vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Use centralized menu drawing function
     print_menu_default(menu_name, menu_options, menu_option_count, selected_index, vec.dy, anchor.dx);
-=======
-
-    // Convert string_max_t options to char* array for print_menu
-    const char* options[menu_option_count];
-    for (int i = 0; i < menu_option_count; i++) {
-        options[i] = (const char*) &menu_options[i];
-    }
-
-    // Use centralized menu drawing function
-    print_menu_default(menu_name, options, menu_option_count, selected_index, anchor.dy, anchor.dx);
->>>>>>> Stashed changes
 
     // Draw tail message if provided
     if (tail_msg != NULL) {
@@ -129,17 +126,11 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     render_io_frame();
 
-<<<<<<< Updated upstream
     // Use our input handler to get any key press
     input_event_t input_event;
     get_input_blocking(&input_event);
 
     log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
-=======
-    // Use get_next_input_event to handle input in a more modular way
-    input_event_t event;
-    get_input_blocking(&event);
->>>>>>> Stashed changes
 }
 
 /**
@@ -153,18 +144,11 @@ void draw_game_over(void) {
     print_text_default(2, 1, "Press any key to exit...");
     render_io_frame();
 
-<<<<<<< Updated upstream
     // Use our input handler to get any key press
     input_event_t input_event;
     get_input_blocking(&input_event);
 
     log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) input_event.raw_input.id);
-=======
-    // Use get_next_input_event to handle input in a more modular way
-    input_event_t event;
-
-    get_input_blocking(&event);
->>>>>>> Stashed changes
 }
 
 /**
