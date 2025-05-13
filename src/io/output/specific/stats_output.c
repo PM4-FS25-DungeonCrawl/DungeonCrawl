@@ -1,12 +1,11 @@
 #include "stats_output.h"
 
+#include "../../../character/character.h"
 #include "../../../character/level.h"
 #include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
-#include "../../../stats/local/stats_mode_local.h"
-
-#include "../../../character/character.h"
 #include "../../../memory/memory_management.h"
+#include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
 
@@ -25,7 +24,7 @@ int init_stats_mode() {
     // Allocate memory for menu options
     stats_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     RETURN_WHEN_NULL(stats_menu_options, -1, "Stats Mode",
-        "Allocated memory for stats window options in memory pool is NULL");
+                     "Allocated memory for stats window options in memory pool is NULL");
 
     // Initialize localized strings
     update_stats_local();
