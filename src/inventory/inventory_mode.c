@@ -106,9 +106,9 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
     while (!submenu_selected) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                                inventory_mode_strings[MAIN_MENU_TITLE],
+                                inventory_mode_strings[LOOT_MAIN_MENU_TITLE],
                                 NULL,
-                                &inventory_mode_strings[SHOW_GEAR],
+                                &inventory_mode_strings[LOOT_OPTION_SHOW_GEAR],
                                 3,
                                 selected_index,
                                 NULL,
@@ -227,7 +227,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
                     } else {
                         anchor = draw_inventory_view(inventory_view_anchor, target);
-                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_EMPTY_MSG]);
+                        draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_SLOT_FULL]);
                     }
                 }
                 return INVENTORY_GEAR_MENU;
@@ -263,7 +263,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
         if (monster != NULL) {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
-                                inventory_mode_strings[LOOT_GEAR_MENU_HEADER],
+                                inventory_mode_strings[LOOT_EQUIPMENT_MENU_HEADER],
                                 inventory_equipment_options,// TODO
                                 MAX_SLOT,
                                 selected_index,
@@ -395,7 +395,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                     }
                 } else {
                     char message[MAX_STRING_LENGTH];
-                    snprintf(message, sizeof(message), inventory_mode_strings[POTION_FORMAT],//TODO: This method of using formats is not safe!
+                    snprintf(message, sizeof(message), inventory_mode_strings[POTION_USE],//TODO: This method of using formats is not safe!
                              player->name,
                              player->potion_inventory[selected_index]->name,
                              player->potion_inventory[selected_index]->value,
