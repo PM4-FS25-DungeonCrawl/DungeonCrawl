@@ -96,13 +96,13 @@ void update_character_resources(resources_t* current_resources, resources_t* max
     int new_max_stamina = 2 * base_stats->strength;
 
     if (max_resources->health > 0 && current_resources->health > 0) {
-        current_resources->health = (int)((double)current_resources->health / max_resources->health * new_max_health + 0.5);
+        current_resources->health = (int) ((double) current_resources->health / max_resources->health * new_max_health + 0.5);
     }
     if (max_resources->mana > 0 && current_resources->mana > 0) {
-        current_resources->mana = (int)((double)current_resources->mana / max_resources->mana * new_max_mana + 0.5);
+        current_resources->mana = (int) ((double) current_resources->mana / max_resources->mana * new_max_mana + 0.5);
     }
     if (max_resources->stamina > 0 && current_resources->stamina > 0) {
-        current_resources->stamina = (int)((double)current_resources->stamina / max_resources->stamina * new_max_stamina + 0.5);
+        current_resources->stamina = (int) ((double) current_resources->stamina / max_resources->stamina * new_max_stamina + 0.5);
     }
 
     // Limit current values to new max values
