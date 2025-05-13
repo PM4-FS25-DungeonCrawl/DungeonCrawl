@@ -3,16 +3,16 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/common_output.h"
-#include "../media/media_output.h"  // Added for media support
+#include "../media/media_output.h"// Added for media support
 
 #include <stdio.h>
 #include <string.h>
 
 // Include platform-specific headers for sleep functions
 #ifndef _WIN32
-    #include <unistd.h>  // For usleep on Unix/Linux
+    #include <unistd.h>// For usleep on Unix/Linux
 #else
-    #include <windows.h> // For Sleep on Windows
+    #include <windows.h>// For Sleep on Windows
 #endif
 
 // Loading screen message buffer
@@ -103,7 +103,7 @@ void draw_launch_screen(void) {
     // Load the goblin image once during initialization
     static loaded_visual_t* goblin_img = NULL;
 
-    const char* image_path = "/home/jil/DungeonCrawl/src/art/goblin.png";
+    const char* image_path = "resources/sprites/goblin.png";
     int img_width, img_height;
     goblin_img = load_image(image_path, &img_width, &img_height);
 
@@ -111,8 +111,8 @@ void draw_launch_screen(void) {
     if (goblin_img) {
         // Position the image below the title
         int image_y = title_y + 5;
-        int image_width = 5;  // Terminal cells, not pixels
-        int image_height = 5; // Terminal cells, not pixels
+        int image_width = 5; // Terminal cells, not pixels
+        int image_height = 5;// Terminal cells, not pixels
         int image_x = (width - image_width) / 2;
 
         // Display the image
@@ -143,9 +143,9 @@ void draw_launch_screen(void) {
 
         // Pause briefly to prevent 100% CPU usage and to make animation visible
 #ifdef _WIN32
-        Sleep(100); // 100ms pause on Windows
+        Sleep(100);// 100ms pause on Windows
 #else
-        usleep(100000); // 100ms pause on Unix/Linux
+        usleep(100000);// 100ms pause on Unix/Linux
 #endif
     }
 
