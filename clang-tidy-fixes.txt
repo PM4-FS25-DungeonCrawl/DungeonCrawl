@@ -7,11 +7,11 @@
 ../src/common.c:14:18: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     int height = ncplane_dim_y(stdplane);
       |                  ^
-../src/game.c:216:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  216 |         case PLAYER_LOST:
+../src/game.c:218:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  218 |         case PLAYER_LOST:
       |         ^
-../src/game.c:222:18: note: last of these clones ends here
-  222 |             break;
+../src/game.c:224:18: note: last of these clones ends here
+  224 |             break;
       |                  ^
 ../src/inventory/draw/draw_inventory_mode.h:7:12: warning: function 'draw_inventory_view' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
     7 | vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player);
@@ -42,5 +42,5 @@
 ../src/menu/save_menu.c:197:15: note: else branch starts here
   197 |             } else {
       |               ^
-Suppressed 214131 warnings (214037 in non-user code, 94 with check filters).
+Suppressed 214132 warnings (214037 in non-user code, 95 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
