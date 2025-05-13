@@ -2,14 +2,12 @@
 #include "../../src/combat/ability.h"
 #include "../../src/combat/combat_mode.h"
 #include "../../src/common.h"
-#include "../../src/local/local.h"
 
 #include <assert.h>
 #include <stdio.h>
 
 
 void setup() {
-    init_local();
     main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
     if (main_memory_pool == NULL) {
         printf("Failed to initialize memory pool\n");

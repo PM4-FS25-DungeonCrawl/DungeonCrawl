@@ -6,11 +6,9 @@ helper_db = files(
     # actual needed files
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
-
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -34,6 +32,7 @@ helper_combat = files(
     '../src/combat/damage.c',
 
     '../src/combat/draw/draw_combat_mode.c',
+    '../src/combat/local/combat_mode_local.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -42,6 +41,9 @@ helper_combat = files(
 
     '../src/inventory/inventory_mode.c',
     '../src/inventory/draw/draw_inventory_mode.c',
+    '../src/inventory/local/inventory_mode_local.c',
+
+    '../src/local/local_handler.c',
 
     '../src/item/gear.c',
     '../src/item/potion.c',
@@ -50,10 +52,8 @@ helper_combat = files(
     '../src/logging/ringbuffer.c',
     '../src/thread/thread_handler.c',
 
-    '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
@@ -117,6 +117,9 @@ helper_stats = files(
     '../src/combat/damage.c',
 
     '../src/combat/draw/draw_combat_mode.c',
+    '../src/combat/local/combat_mode_local.c',
+
+    '../src/local/local_handler.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -130,10 +133,8 @@ helper_stats = files(
     '../src/logging/ringbuffer.c',
     '../src/thread/thread_handler.c',
 
-    '../src/local/local.c',
     '../include/sqlite3.c',
     '../src/database/database.c',
-    '../src/database/local/local_database.c',
     '../src/database/game/ability_database.c',
     '../src/database/game/gamestate_database.c',
     '../src/database/game/item_database.c',
@@ -142,9 +143,9 @@ helper_stats = files(
 
     '../src/memory/memory_management.c',
 
-
     '../src/stats/stats.c',
     '../src/stats/draw/draw_stats.c',
+    '../src/stats/local/stats_mode_local.c',
     '../src/stats/stats_mode.c'
 )
 

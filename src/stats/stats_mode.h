@@ -1,7 +1,3 @@
-//
-// Created by Nghia Dao on 26/04/2025.
-//
-
 #ifndef STATS_MODE_H
 #define STATS_MODE_H
 #include "../character/character.h"

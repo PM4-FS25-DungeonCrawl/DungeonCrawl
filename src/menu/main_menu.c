@@ -1,17 +1,16 @@
 #include "main_menu.h"
 
 #include "../common.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
 #include "../logging/logger.h"
 #include "language_menu.h"
+#include "local/main_menu_local.h"
 #include "notcurses/nckeys.h"
 #include "save_menu.h"
+#include "src/local/local_handler.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
 #include <string.h>
 #include <time.h>// For nanosleep
 //
@@ -34,20 +33,22 @@ extern struct ncplane* stdplane;
  */
 void select_menu_option(int selected_index, bool game_in_progress);
 
-void update_main_menu_local(void);
-
 // === Internal Global Variables ===
 bool menu_active;
 menu_result_t active_menu_state;
 
 int init_main_menu() {
+    main_menu_strings = (char**) malloc(sizeof(char*) * MAX_MAIN_MENU_STRINGS);
+    RETURN_WHEN_NULL(main_menu_strings, 1, "Main Menu", "Failed to allocate memory for main menu strings.");
+
+    for (int i = 0; i < MAX_MAIN_MENU_STRINGS; i++) {
+        main_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_main_menu_local();
     // add update local function to the observer list
-    add_local_observer(update_main_menu_local);
-
-    init_save_menu();
-    init_language_menu();
+    observe_local(update_main_menu_local);
     return 0;
 }
 
@@ -56,21 +57,21 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     int menu_count;
 
     // Always include New Game
-    menu_options[0] = &local_strings[mame_new_game_option.idx].characters[0];
+    menu_options[0] = main_menu_strings[NEW_GAME_STR];
 
     if (game_in_progress) {
         // If game is in progress, show all options
-        menu_options[1] = &local_strings[mame_continue_option.idx].characters[0];
-        menu_options[2] = &local_strings[mame_save_game_option.idx].characters[0];
-        menu_options[3] = &local_strings[mame_load_game_option.idx].characters[0];
-        menu_options[4] = &local_strings[mame_change_language_option.idx].characters[0];
-        menu_options[5] = &local_strings[mame_exit_option.idx].characters[0];
+        menu_options[1] = main_menu_strings[CONTINUE_STR];
+        menu_options[2] = main_menu_strings[SAVE_GAME_STR];
+        menu_options[3] = main_menu_strings[LOAD_GAME_STR];
+        menu_options[4] = main_menu_strings[CHANGE_LANGUAGE_STR];
+        menu_options[5] = main_menu_strings[EXIT_STR];
         menu_count = 6;
     } else {
         // If no game in progress, only show New Game, Load Game and Exit
-        menu_options[1] = &local_strings[mame_load_game_option.idx].characters[0];
-        menu_options[2] = &local_strings[mame_change_language_option.idx].characters[0];
-        menu_options[3] = &local_strings[mame_exit_option.idx].characters[0];
+        menu_options[1] = main_menu_strings[LOAD_GAME_STR];
+        menu_options[2] = main_menu_strings[CHANGE_LANGUAGE_STR];
+        menu_options[3] = main_menu_strings[EXIT_STR];
         menu_count = 4;
     }
 
@@ -127,7 +128,7 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
 
     switch (true_index) {
         case 0:// New Game
-            if (!game_in_progress || show_confirmation(local_strings[mame_confirm_continue.idx].characters)) {
+            if (!game_in_progress || show_confirmation(main_menu_strings[QUESTION_CONTINUE])) {
                 active_menu_state = MENU_START_GAME;
                 menu_active = false;
             }
@@ -155,7 +156,7 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
             }
             break;
         case 5:// Exit
-            if (!game_in_progress || show_confirmation(local_strings[mame_confirm_exit.idx].characters)) {
+            if (!game_in_progress || show_confirmation(main_menu_strings[QUESTION_EXIT])) {
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
             }
@@ -166,14 +167,13 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
     }
 }
 
-void update_main_menu_local(void) {
-    snprintf(local_strings[mame_new_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_new_game_option.key));
-    snprintf(local_strings[mame_continue_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_continue_option.key));
-    snprintf(local_strings[mame_save_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_save_game_option.key));
-    snprintf(local_strings[mame_load_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_load_game_option.key));
-    snprintf(local_strings[mame_change_language_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_change_language_option.key));
-    snprintf(local_strings[mame_exit_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_exit_option.key));
-
-    snprintf(local_strings[mame_confirm_continue.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_confirm_continue.key));
-    snprintf(local_strings[mame_confirm_exit.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_confirm_exit.key));
+void shutdown_main_menu(void) {
+    if (main_menu_strings != NULL) {
+        for (int i = 0; i < MAX_MAIN_MENU_STRINGS; i++) {
+            if (main_menu_strings[i] != NULL) {
+                free(main_menu_strings[i]);
+            }
+        }
+        free(main_menu_strings);
+    }
 }
