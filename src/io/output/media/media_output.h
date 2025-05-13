@@ -12,13 +12,13 @@
 typedef struct loaded_visual_s loaded_visual_t;
 
 // Scale types for display functions
-#define SCALE_NONE 0     // No scaling, use original size
-#define SCALE_PRESERVE 1 // Scale preserving aspect ratio
-#define SCALE_STRETCH 2  // Stretch to exact dimensions
-#define SCALE_CELL 3     // Scale to fit in a single cell
+#define SCALE_NONE 0    // No scaling, use original size
+#define SCALE_PRESERVE 1// Scale preserving aspect ratio
+#define SCALE_STRETCH 2 // Stretch to exact dimensions
+#define SCALE_CELL 3    // Scale to fit in a single cell
 
-#define GOBLIN_IMAGE "goblin.png" // Example image file for goblin
-#define ASTRONAUT_IMAGE "astronaut.gif" // Example GIF file for goblin
+#define GOBLIN_IMAGE "resources/sprites/goblin.png"      // Example image file for goblin
+#define ASTRONAUT_IMAGE "resources/sprites/astronaut.gif"// Example GIF file for goblin
 
 /**
  * @brief Initialize the media output handler
@@ -195,4 +195,4 @@ void free_visual(loaded_visual_t* visual);
  */
 void shutdown_media_output(void);
 
-#endif // MEDIA_OUTPUT_H
+#endif// MEDIA_OUTPUT_H
