@@ -116,7 +116,7 @@ void main_menu_state() {
             clear_screen(stdplane);
             current_state = MAP_MODE;
             break;
-        case MENU_SAVE_GAME:
+        case MENU_SAVE_GAME: {
             // Get the save name from the menu
             const char* save_name = get_save_name();
             if (save_name == NULL) {
@@ -131,7 +131,8 @@ void main_menu_state() {
             clear_screen(stdplane);
             current_state = MAP_MODE;
             break;
-        case MENU_LOAD_GAME:
+        }
+        case MENU_LOAD_GAME: {
             const int save_id = get_selected_save_file_id();
             bool load_success = false;
 
@@ -161,6 +162,7 @@ void main_menu_state() {
                 current_state = GENERATE_MAP;
             }
             break;
+        }
         case MENU_CHANGE_LANGUAGE:
             current_state = MAIN_MENU;
             break;
