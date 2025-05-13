@@ -53,6 +53,9 @@ input_t translate_input(const ncinput* raw_input) {
 
         // Stats key (L)
         if (raw_input->id == 'l' || raw_input->id == 'L') return INPUT_STATS;
+
+        // Stats key (I)
+        if (raw_input->id == 'i' || raw_input->id == 'I') return INPUT_INVENTORY;
     }
 
     // If we didn't match anything, return INPUT_NONE

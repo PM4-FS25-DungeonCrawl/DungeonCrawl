@@ -18,10 +18,11 @@ typedef enum {
     INPUT_RIGHT,
 
     // Action inputs
-    INPUT_CONFIRM,// Enter/Space/Primary action
-    INPUT_CANCEL, // Escape/Secondary action
-    INPUT_MENU,   // Open menu (M key)
-    INPUT_STATS,  // Show stats (L key)
+    INPUT_CONFIRM,  // Enter/Space/Primary action
+    INPUT_CANCEL,   // Escape/Secondary action
+    INPUT_MENU,     // Open menu (M key)
+    INPUT_STATS,    // Show stats (L key)
+    INPUT_INVENTORY,// Show inventory (I key)
 
     // Special inputs
     INPUT_QUIT,// Ctrl+C or other quit command

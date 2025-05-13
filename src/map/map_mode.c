@@ -38,9 +38,8 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
     if (input_event->type == INPUT_QUIT) return QUIT;
     if (input_event->type == INPUT_MENU || input_event->type == INPUT_CANCEL) return SHOW_MENU;
 
-    // For special keys like 'I', we need to check the raw input value
-    uint32_t key_id = input_event->raw_input.id;
-    if (key_id == 'i' || key_id == 'I') return SHOW_INVENTORY;
+    // Process different modes
+    if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;
     if (input_event->type == INPUT_STATS) return SHOW_STATS;
 
     // Process movement using logical input types
