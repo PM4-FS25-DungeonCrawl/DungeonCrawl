@@ -57,7 +57,7 @@ void set_character_stats(character_t* c, int strength, int intelligence, int dex
 
     set_stats(&c->base_stats, strength, intelligence, dexterity, constitution);
     c->current_stats = c->base_stats;
-    update_character_resources(&c->max_resources, &c->base_stats);
+    update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
     c->current_resources = c->max_resources;
     c->defenses.armor = 0;
     c->defenses.magic_resist = 0;
@@ -82,16 +82,37 @@ void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, in
 
 /**
  * @brief Updates the character's resources based on their stats
+ * @param current_resources Pointer to the current resources structure to update
  * @param max_resources Pointer to the max resources structure to update
  * @param base_stats Pointer to the base stats structure
  */
-void update_character_resources(resources_t* max_resources, stats_t* base_stats) {
+void update_character_resources(resources_t* current_resources, resources_t* max_resources, stats_t* base_stats) {
+    NULL_PTR_HANDLER_RETURN(current_resources, , "Character", "In update_character_resources current_resources is NULL");
     NULL_PTR_HANDLER_RETURN(max_resources, , "Character", "In update_character_resources max_resources is NULL");
     NULL_PTR_HANDLER_RETURN(base_stats, , "Character", "In update_character_resources base_stats is NULL");
 
-    max_resources->health = (5 * base_stats->constitution);
-    max_resources->mana = (1 * base_stats->intelligence);
-    max_resources->stamina = (2 * base_stats->strength);
+    int new_max_health = 5 * base_stats->constitution;
+    int new_max_mana = 1 * base_stats->intelligence;
+    int new_max_stamina = 2 * base_stats->strength;
+
+    if (max_resources->health > 0 && current_resources->health > 0) {
+        current_resources->health = (int)((double)current_resources->health / max_resources->health * new_max_health + 0.5);
+    }
+    if (max_resources->mana > 0 && current_resources->mana > 0) {
+        current_resources->mana = (int)((double)current_resources->mana / max_resources->mana * new_max_mana + 0.5);
+    }
+    if (max_resources->stamina > 0 && current_resources->stamina > 0) {
+        current_resources->stamina = (int)((double)current_resources->stamina / max_resources->stamina * new_max_stamina + 0.5);
+    }
+
+    // Limit current values to new max values
+    current_resources->health = current_resources->health > new_max_health ? new_max_health : current_resources->health;
+    current_resources->mana = current_resources->mana > new_max_mana ? new_max_mana : current_resources->mana;
+    current_resources->stamina = current_resources->stamina > new_max_stamina ? new_max_stamina : current_resources->stamina;
+
+    max_resources->health = new_max_health;
+    max_resources->mana = new_max_mana;
+    max_resources->stamina = new_max_stamina;
 }
 
 /**
@@ -223,7 +244,7 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
         c->defenses.armor -= item->defenses.armor;
         c->defenses.magic_resist -= item->defenses.magic_resist;
 
-        update_character_resources(&c->max_resources, &c->base_stats);
+        update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
 
         log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->local_key, slot);
         c->equipment[slot] = NULL;
@@ -290,8 +311,7 @@ void equip_gear(character_t* c, gear_t* gear) {
             return;
         }
 
-
-        remove_gear(c, gear);//removing from inventory
+        remove_gear(c, gear);
 
         for (int i = 0; i < 4; ++i) {
             if (gear->abilities[i]->name[0] != '\0') {
@@ -300,6 +320,7 @@ void equip_gear(character_t* c, gear_t* gear) {
         }
 
         c->equipment[gear->slot] = gear;
+
         c->base_stats.strength += gear->stats.strength;
         c->base_stats.intelligence += gear->stats.intelligence;
         c->base_stats.dexterity += gear->stats.dexterity;
@@ -307,7 +328,7 @@ void equip_gear(character_t* c, gear_t* gear) {
         c->defenses.armor += gear->defenses.armor;
         c->defenses.magic_resist += gear->defenses.magic_resist;
 
-        update_character_resources(&c->max_resources, &c->base_stats);
+        update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
 
         log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->local_key);
         log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);

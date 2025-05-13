@@ -58,7 +58,7 @@ stats_result_t stats_mode(character_t* player) {
                         default:;
                     }
                     player->skill_points--;
-                    update_character_resources(&player->max_resources, &player->base_stats);
+                    update_character_resources(&player->current_resources, &player->max_resources, &player->base_stats);
                 } else {
                     char word[MAX_STRING_LENGTH - 4];
                     snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", stats_mode_strings[AVAILABLE_SKILL_POINTS_STR]);
