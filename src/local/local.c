@@ -8,7 +8,6 @@
 #include <stdlib.h>
 
 //Macros for the Local Database Path
-#define LOCAL_DB_PATH "resources/database/local/dungeoncrawl_local.db"
 
 #define local_not_init_return(ret) \
     if (observer_list == NULL) { return ret; }
@@ -42,7 +41,7 @@ int init_local(void) {
     observer_list->update_func = NULL;
     observer_list->next = NULL;
     // Initialize the database connection
-    return db_open(&local_db_connection, LOCAL_DB_PATH);
+    return db_open_multiple_access(&local_db_connection, DB_LOCAL);
 }
 
 /**

@@ -51,5 +51,5 @@
 ../src/stats/draw/draw_stats.h:9:6: note: previously declared here
     9 | void update_stats_local(void);
       |      ^
-Suppressed 214403 warnings (214315 in non-user code, 88 with check filters).
+Suppressed 214404 warnings (214315 in non-user code, 89 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
