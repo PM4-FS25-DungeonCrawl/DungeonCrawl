@@ -1,11 +1,11 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:197:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  197 |         case PLAYER_LOST:
+../src/game.c:196:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  196 |         case PLAYER_LOST:
       |         ^
-../src/game.c:203:18: note: last of these clones ends here
-  203 |             break;
+../src/game.c:202:18: note: last of these clones ends here
+  202 |             break;
       |                  ^
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
@@ -51,17 +51,17 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:68:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   68 |     srand(time(NULL));
+../src/main.c:69:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   69 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:100:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  100 |             save_name[name_length++] = key_id;
+../src/menu/save_menu.c:99:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   99 |             save_name[name_length++] = key_id;
       |                                        ^
-../src/menu/save_menu.c:193:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  193 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:192:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  192 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:196:15: note: else branch starts here
-  196 |             } else {
+../src/menu/save_menu.c:195:15: note: else branch starts here
+  195 |             } else {
       |               ^
 ../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
    11 | extern struct notcurses* nc;
@@ -69,5 +69,5 @@
 ../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
    17 | extern struct notcurses* nc;
       |                          ^
-Suppressed 298467 warnings (298282 in non-user code, 185 with check filters).
+Suppressed 230505 warnings (230320 in non-user code, 185 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
