@@ -44,7 +44,7 @@ void test_skill_point_allocation() {
     // Level up constitution to raise HP
     raise_skill(&test_character->base_stats, CONSTITUTION, test_character->skill_points);
     test_character->skill_points--;
-    update_character_resources(&test_character->max_resources, &test_character->base_stats);
+    update_character_resources(&test_character->current_resources, &test_character->max_resources, &test_character->base_stats);
 
     // Check if health increased (strength affects health)
     assert(test_character->max_resources.health > initial_max_health);
@@ -55,7 +55,7 @@ void test_skill_point_allocation() {
     assert(test_character->skill_points > 0);
     raise_skill(&test_character->base_stats, INTELLIGENCE, test_character->skill_points);
     test_character->skill_points--;
-    update_character_resources(&test_character->max_resources, &test_character->base_stats);
+    update_character_resources(&test_character->current_resources, &test_character->max_resources, &test_character->base_stats);
 
     // Check if mana increased (intelligence affects mana)
     assert(test_character->max_resources.mana > initial_max_mana);
@@ -66,7 +66,7 @@ void test_skill_point_allocation() {
     assert(test_character->skill_points > 0);
     raise_skill(&test_character->base_stats, STRENGTH, test_character->skill_points);
     test_character->skill_points--;
-    update_character_resources(&test_character->max_resources, &test_character->base_stats);
+    update_character_resources(&test_character->current_resources, &test_character->max_resources, &test_character->base_stats);
 
     // Check if dexterity increased (strength affects dexterity)
     assert(test_character->max_resources.stamina > initial_max_stamina);
@@ -76,7 +76,7 @@ void test_skill_point_allocation() {
     assert(test_character->skill_points > 0);
     raise_skill(&test_character->base_stats, DEXTERITY, test_character->skill_points);
     test_character->skill_points--;
-    update_character_resources(&test_character->max_resources, &test_character->base_stats);
+    update_character_resources(&test_character->current_resources, &test_character->max_resources, &test_character->base_stats);
 
     // Check if stamina increased (dexterity affects stamina)
     assert(test_character->base_stats.dexterity > initial_max_dexterity);
