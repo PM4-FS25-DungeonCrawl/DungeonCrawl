@@ -19,10 +19,13 @@ int init_game_data() {
     potion_table = init_potion_table(main_memory_pool, &db_connection);
     gear_table = init_gear_table(main_memory_pool, &db_connection, ability_table);
     player = create_new_player(main_memory_pool);//initialize blank player
-
+    player->base_attack = &ability_table->abilities[PUNCH];
+    add_ability(player, player->base_attack);
     reset_goblin();
 
     if (ability_table == NULL || potion_table == NULL || gear_table == NULL || player == NULL) return 1;
+
+
     add_potion(player, &potion_table->potions[HEALING]);
     add_potion(player, &potion_table->potions[MANA]);
     add_potion(player, &potion_table->potions[STAMINA]);

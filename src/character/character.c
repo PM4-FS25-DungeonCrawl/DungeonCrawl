@@ -229,22 +229,25 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In remove_equipped_gear slot is invalid: %d", slot);
 
     if (c->equipment[slot] != NULL) {
-        gear_t* item = c->equipment[slot];
+        gear_t* gear = c->equipment[slot];
 
-        for (int i = 0; i < item->num_abilities; ++i) {
-            remove_ability(c, item->abilities[i]);
-        }
-
-        c->base_stats.strength -= item->stats.strength;
-        c->base_stats.intelligence -= item->stats.intelligence;
-        c->base_stats.dexterity -= item->stats.dexterity;
-        c->base_stats.constitution -= item->stats.constitution;
-        c->defenses.armor -= item->defenses.armor;
-        c->defenses.magic_resist -= item->defenses.magic_resist;
-
+        c->base_stats.strength -= gear->stats.strength;
+        c->base_stats.intelligence -= gear->stats.intelligence;
+        c->base_stats.dexterity -= gear->stats.dexterity;
+        c->base_stats.constitution -= gear->stats.constitution;
+        c->defenses.armor -= gear->defenses.armor;
+        c->defenses.magic_resist -= gear->defenses.magic_resist;
         update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
 
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, item->local_key, slot);
+        for (int i = 0; i < gear->num_abilities; ++i) {
+            remove_ability(c, gear->abilities[i]);
+        }
+
+        if (c->ability_count == 0) {
+            add_ability(c, c->base_attack);
+        }
+
+        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, gear->local_key, slot);
         c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
@@ -310,11 +313,6 @@ void equip_gear(character_t* c, gear_t* gear) {
         }
 
         remove_gear(c, gear);
-        log_msg(INFO, "Character", "%s equipped , %d ability_amount", gear->local_key, gear->num_abilities);
-
-        for (int i = 0; i < gear->num_abilities; ++i) {
-            add_ability(c, gear->abilities[i]);
-        }
 
         c->equipment[gear->slot] = gear;
 
@@ -324,8 +322,15 @@ void equip_gear(character_t* c, gear_t* gear) {
         c->base_stats.constitution += gear->stats.constitution;
         c->defenses.armor += gear->defenses.armor;
         c->defenses.magic_resist += gear->defenses.magic_resist;
-
         update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
+
+        if (c->abilities[0] == c->base_attack) {
+            remove_ability(c, c->abilities[0]);
+        }
+
+        for (int i = 0; i < gear->num_abilities; ++i) {
+            add_ability(c, gear->abilities[i]);
+        }
 
 
         log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->local_key);
