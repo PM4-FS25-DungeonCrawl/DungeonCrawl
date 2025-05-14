@@ -57,11 +57,11 @@
 ../src/menu/save_menu.c:99:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    99 |             save_name[name_length++] = key_id;
       |                                        ^
-../src/menu/save_menu.c:192:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  192 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:184:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  184 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:195:15: note: else branch starts here
-  195 |             } else {
+../src/menu/save_menu.c:187:15: note: else branch starts here
+  187 |             } else {
       |               ^
 ../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
    11 | extern struct notcurses* nc;
