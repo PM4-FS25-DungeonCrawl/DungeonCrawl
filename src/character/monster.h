@@ -9,6 +9,6 @@
  * @return the pointer to the new goblin character, or NULL if memory allocation failed.
  */
 character_t* create_new_goblin(memory_pool_t* memory_pool);
-void scale_monster_stats(character_t* monster);
+int scale_stat_to_floor(int base);
 
 #endif//MONSTER_H
