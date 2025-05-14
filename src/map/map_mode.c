@@ -4,7 +4,7 @@
 #include "../inventory/inventory_mode.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/map_output.h"
 #include "draw/draw_light.h"
 #include "map.h"

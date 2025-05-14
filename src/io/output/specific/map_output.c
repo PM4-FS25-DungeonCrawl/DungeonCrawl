@@ -4,7 +4,7 @@
 #include "../../../common.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 /**
  * @brief Draws the map mode UI based on the given parameters.

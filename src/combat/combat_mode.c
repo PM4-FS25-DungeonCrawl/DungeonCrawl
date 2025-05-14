@@ -7,7 +7,7 @@
 #include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"

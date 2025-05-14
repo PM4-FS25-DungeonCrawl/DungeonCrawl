@@ -4,7 +4,7 @@
 #include "../logging/logger.h"
 #include "../thread/thread_handler.h"
 #include "input/input_handler.h"
-#include "output/common/common_output.h"
+#include "output/common/output_handler.h"
 #include "output/specific/wait_output.h"
 
 #include <stdbool.h>

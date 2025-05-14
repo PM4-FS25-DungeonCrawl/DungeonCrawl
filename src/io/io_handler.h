@@ -4,7 +4,7 @@
 #include "../common.h"// Added for COMMON_SUCCESS
 #include "input/input_handler.h"
 #include "input/input_types.h"
-#include "output/common/common_output.h"
+#include "output/common/output_handler.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>

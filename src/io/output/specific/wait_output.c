@@ -2,7 +2,7 @@
 
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 #include <stdio.h>
 #include <string.h>

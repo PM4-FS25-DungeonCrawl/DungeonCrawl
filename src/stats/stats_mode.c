@@ -3,7 +3,7 @@
 #include "../combat/ability.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/stats_output.h"
 #include "local/stats_mode_local.h"
 

@@ -7,7 +7,7 @@
 #include "../../../memory/memory_management.h"
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;
