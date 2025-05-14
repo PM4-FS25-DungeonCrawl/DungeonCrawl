@@ -8,6 +8,10 @@
 #include <string.h>
 #include <time.h>
 
+#ifndef CLOCK_MONOTONIC
+    #define CLOCK_MONOTONIC 1 // Fallback for platforms without CLOCK_MONOTONIC
+#endif
+
 // Define platform-specific key event type
 #ifdef __APPLE__
     #define KEY_EVENT NCTYPE_PRESS
