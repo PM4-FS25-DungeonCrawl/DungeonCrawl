@@ -147,8 +147,11 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                 submenu_selected = true;
                 break;
             case INPUT_CANCEL:
+            case INPUT_INVENTORY:
                 new_state = INVENTORY_EXIT;
                 submenu_selected = true;
+                break;
+            default:
                 break;
         }
     }
@@ -321,6 +324,8 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
             case INPUT_CANCEL:
                 new_state = INVENTORY_MENU;
                 item_selected_or_esc = true;
+                break;
+            default:
                 break;
         }
     }

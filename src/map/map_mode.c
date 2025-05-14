@@ -120,7 +120,7 @@ map_mode_result_t map_mode_update(character_t* player) {
         input_event_t input_event;
 
         // Use our input handler to get input
-        if (get_input_blocking(&input_event)) {
+        if (get_input_nonblocking(&input_event)) {
             next_state = handle_input(&input_event, player);
         }
     }

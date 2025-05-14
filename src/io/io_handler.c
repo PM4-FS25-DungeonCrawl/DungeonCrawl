@@ -62,16 +62,6 @@ int init_io_handler(void) {
     return COMMON_SUCCESS;// 0
 }
 
-// Get next input event (non-blocking)
-bool get_next_input_event(input_event_t* event) {
-    if (!event) {
-        return false;
-    }
-
-    return get_input_nonblocking(event);
-}
-
-
 // Execute a callback in a background thread
 bool run_background_task(void (*callback)(void)) {
     log_msg(INFO, "io_handler", "Running background task");

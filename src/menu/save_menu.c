@@ -225,6 +225,8 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
             case INPUT_CANCEL:
                 selection_active = false;
                 break;
+            default:
+                break;
         }
     }
 

@@ -93,6 +93,7 @@ menu_result_t show_main_menu(const bool game_in_progress) {
                 menu_active = false;
                 break;
             case INPUT_CANCEL:
+            case INPUT_MENU:
                 active_menu_state = MENU_CONTINUE;
                 menu_active = false;
                 break;

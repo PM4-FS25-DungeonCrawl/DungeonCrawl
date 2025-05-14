@@ -67,8 +67,6 @@ stats_result_t stats_mode(character_t* player) {
                 break;
             case INPUT_CANCEL:
             case INPUT_STATS:
-                // Clear the screen before drawing a new menu
-                clear_screen();
                 result = STATS_EXIT;
                 break;
             default:
