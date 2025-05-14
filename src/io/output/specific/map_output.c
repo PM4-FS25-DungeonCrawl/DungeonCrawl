@@ -102,7 +102,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     draw_player_info(anchor.dx, anchor.dy + height + 1, player_pos);
 
     // Render the frame using centralized IO
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -122,13 +122,4 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     char pos_str[64];
     snprintf(pos_str, sizeof(pos_str), "Player Position: %d, %d", player_pos.dx, player_pos.dy);
     print_text_default(y + 4, x, pos_str);
-
-    // Draw ASCII helmet
-    const char* helmet_lines[HELMET_HEIGHT];
-    for (int i = 0; i < HELMET_HEIGHT; i++) {
-        helmet_lines[i] = ascii_helmet[i];
-    }
-
-    // Use the multi-line string printing function for the helmet
-    //print_text_multi_strings_default(y++, x, helmet_lines, HELMET_HEIGHT);
 }

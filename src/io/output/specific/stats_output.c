@@ -130,7 +130,7 @@ void draw_stats_log(const char* message) {
     print_text_default(1, 2, message);
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 void shutdown_stats_mode() {

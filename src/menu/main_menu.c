@@ -8,8 +8,6 @@
 #include "save_menu.h"
 #include "src/local/local_handler.h"
 
-#include <notcurses/notcurses.h>
-
 
 // External reference to notcurses context
 extern struct notcurses* nc;

@@ -19,8 +19,9 @@
     #include <unistd.h>// for usleep
 #endif
 
-#include <notcurses/notcurses.h>
 #include <time.h>
+
+#include "io/output/specific/wait_output.h"
 
 // Global flag to signal when initialization is complete
 volatile int init_done = 0;

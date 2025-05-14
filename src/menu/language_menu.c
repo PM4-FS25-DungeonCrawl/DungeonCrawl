@@ -5,8 +5,6 @@
 #include "../local/local_handler.h"
 #include "local/language_menu_local.h"
 
-#include <notcurses/notcurses.h>
-
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 

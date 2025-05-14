@@ -53,7 +53,7 @@ void draw_loading_screen(const char* text) {
     print_text_default(msg_y + 2, width / 2, animation_str);
 
     // Render the frame using centralized IO handler
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -109,6 +109,6 @@ void draw_launch_screen(void) {
         print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
 
         // Render the frame using centralized IO handler
-        render_io_frame();
+        render_frame();
     }
 }

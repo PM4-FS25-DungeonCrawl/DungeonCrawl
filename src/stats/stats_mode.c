@@ -76,6 +76,6 @@ stats_result_t stats_mode(character_t* player) {
         }
     }
 
-    render_io_frame();
+    render_frame();
     return result;
 }

@@ -13,7 +13,6 @@
 #include "ability.h"
 #include "local/combat_mode_local.h"
 
-#include <notcurses/notcurses.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -329,7 +328,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                  ability->name);
         draw_combat_log(anchor, message);
     }
-    render_io_frame();
+    render_frame();
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* potion) {

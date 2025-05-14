@@ -20,9 +20,6 @@
 struct notcurses* nc = NULL;
 struct ncplane* stdplane = NULL;
 
-// Loading screen variables
-static char loading_message[256] = "";
-
 int init_io_handler(void) {
     log_msg(INFO, "io_handler", "Starting initialization");
 
@@ -86,11 +83,6 @@ bool run_background_task(void (*callback)(void)) {
     // Start a thread to execute the callback
     start_simple_thread(callback);
     return true;
-}
-
-// Convenience wrapper around render_frame
-void render_io_frame(void) {
-    render_frame();
 }
 
 void shutdown_io_handler(void) {

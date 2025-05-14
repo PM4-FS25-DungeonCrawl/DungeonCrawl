@@ -19,7 +19,6 @@
 #include "stats/stats_mode.h"
 
 #include <locale.h>
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
 

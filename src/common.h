@@ -3,8 +3,6 @@
 
 #include "logging/logger.h"
 
-#include <notcurses/notcurses.h>
-
 // change this to select color scheme
 #define PYXEL
 // I know this looks dumb af but this is the easiest way I have found

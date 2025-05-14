@@ -9,7 +9,6 @@
 #include "notcurses/nckeys.h"
 #include "src/menu/menu.h"
 
-#include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>

@@ -10,8 +10,6 @@
 #include "../src/combat/combat_mode.h"
 #include "local/inventory_mode_local.h"
 
-#include <notcurses/notcurses.h>
-
 // === Internal Functions ===
 void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
 void collect_inventory_equipment_options(gear_t* equipment[]);

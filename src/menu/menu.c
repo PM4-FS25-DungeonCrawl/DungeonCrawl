@@ -5,7 +5,6 @@
 #include "../logging/logger.h"
 #include "local/save_menu_local.h"
 
-#include <notcurses/notcurses.h>
 #include <string.h>
 
 extern struct notcurses* nc;
