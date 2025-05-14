@@ -5,6 +5,30 @@ The purpose of this document is to record decisions regarding the testing of the
 
 [Test coverage]
 
+## Testing Scope
+
+### Character:
+- character.c
+- level.c
+
+### Combat:
+- combat_mode.c
+    - invoke_potion_effect()
+    - consume_ability_resource()
+    - get_random_ability()
+- damage.c
+
+### Database:
+- database.c
+
+### Map:
+- map_generator.c
+- map_mode.c
+- draw_light.c
+
+### Stats:
+- stats.c
+
 ## Decisions Made in Testing
 
 ### UI components
