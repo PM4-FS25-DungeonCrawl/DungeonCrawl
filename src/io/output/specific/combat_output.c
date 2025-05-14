@@ -31,8 +31,8 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
-    int rendered_width = 30;
-    int rendered_height = 0;
+    int rendered_width = 10;
+    int rendered_height = 10;
 
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
