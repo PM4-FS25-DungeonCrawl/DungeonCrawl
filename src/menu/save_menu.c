@@ -7,7 +7,6 @@
 #include "../io/output/common/output_handler.h"
 #include "../local/local_handler.h"
 #include "local/save_menu_local.h"
-#include "notcurses/nckeys.h"
 #include "src/menu/menu.h"
 
 #include <stdio.h>
@@ -17,8 +16,6 @@
 
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
 
 int init_save_menu() {
     save_menu_strings = malloc(sizeof(char*) * MAX_SAVE_MENU_STRINGS);
