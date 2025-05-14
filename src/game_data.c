@@ -2,6 +2,7 @@
 
 #include "character/monster.h"
 #include "character/player.h"
+#include "item/loot_generation.h"
 #include "common.h"
 #include "game.h"
 
@@ -50,5 +51,6 @@ int reset_goblin() {
         return 1;
     }
     add_ability(goblin, &ability_table->abilities[BITE]);
+    generate_loot(goblin, gear_table, potion_table, 5);
     return 0;
 }
