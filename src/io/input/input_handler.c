@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // Define platform-specific key event type
 #ifdef __APPLE__
@@ -14,7 +15,25 @@
     #define KEY_EVENT NCTYPE_UNKNOWN
 #endif
 
-// Use the global nc from io_handler.c - no need to redeclare it here
+// Define the minimum time between key presses (milliseconds)
+#define KEY_DEBOUNCE_TIME_MS 20
+
+// Structure to track input timing for debouncing
+typedef struct {
+    struct timespec last_key_time;
+    bool first_key;
+} input_timing_t;
+
+// Global input timing tracker
+static input_timing_t input_timing = {
+    .first_key = true
+};
+
+// Calculate time difference in milliseconds
+static long get_time_diff_ms(struct timespec* start, struct timespec* end) {
+    return (end->tv_sec - start->tv_sec) * 1000 + 
+           (end->tv_nsec - start->tv_nsec) / 1000000;
+}
 
 /**
  * @brief Translate a raw Notcurses input to a logical input type
@@ -32,6 +51,11 @@ input_t translate_input(const ncinput* raw_input) {
     // Handle special case for Ctrl+C to quit
     if (raw_input->id == 'c' && (raw_input->modifiers & NCKEY_MOD_CTRL)) {
         return INPUT_QUIT;
+    }
+
+    // Escape key for cancel
+    if (raw_input->id == NCKEY_ESC) {
+        return INPUT_CANCEL;
     }
 
     // Check if this is a key event (allow both NCTYPE_UNKNOWN and NCTYPE_PRESS)
@@ -54,7 +78,7 @@ input_t translate_input(const ncinput* raw_input) {
         // Stats key (L)
         if (raw_input->id == 'l' || raw_input->id == 'L') return INPUT_STATS;
 
-        // Stats key (I)
+        // Inventory key (I)
         if (raw_input->id == 'i' || raw_input->id == 'I') return INPUT_INVENTORY;
     }
 
@@ -70,8 +94,35 @@ bool init_input_handler(struct notcurses* notcurses_ptr) {
 
     // Assign to the global variable
     nc = notcurses_ptr;
+    
+    // Initialize input timing
+    input_timing.first_key = true;
+    
     log_msg(INFO, "input_handler", "Set nc pointer to %p", (void*) nc);
     log_msg(INFO, "input_handler", "Input handler initialized");
+    return true;
+}
+
+// Check if enough time has passed since the last key press
+static bool should_process_key() {
+    struct timespec current_time;
+    clock_gettime(CLOCK_MONOTONIC, &current_time);
+    
+    if (input_timing.first_key) {
+        input_timing.first_key = false;
+        input_timing.last_key_time = current_time;
+        return true;
+    }
+    
+    long time_diff = get_time_diff_ms(&input_timing.last_key_time, &current_time);
+    
+    if (time_diff < KEY_DEBOUNCE_TIME_MS) {
+        // Not enough time has passed, ignore this key
+        return false;
+    }
+    
+    // Update the last key time
+    input_timing.last_key_time = current_time;
     return true;
 }
 
@@ -85,18 +136,29 @@ bool get_input_blocking(input_event_t* event) {
     ncinput raw_input;
     memset(&raw_input, 0, sizeof(ncinput));
 
-    uint32_t ret = notcurses_get_blocking(nc, &raw_input);
-    if (ret > 0) {
+    // Set default values in case we return early
+    event->type = INPUT_NONE;
+    memset(&event->raw_input, 0, sizeof(ncinput));
+
+    // Loop until we get a valid input or notcurses returns an error
+    while (true) {
+        uint32_t ret = notcurses_get_blocking(nc, &raw_input);
+        if (ret <= 0) {
+            // Error or no input
+            return false;
+        }
+        
+        // Debounce - if we're getting keys too fast, ignore some
+        if (!should_process_key()) {
+            log_msg(DEBUG, "input_handler", "Ignoring key press (debounce)");
+            continue;
+        }
+        
         // Translate and fill the event structure
         event->type = translate_input(&raw_input);
         event->raw_input = raw_input;
         return true;
     }
-
-    // No valid input received
-    event->type = INPUT_NONE;
-    memset(&event->raw_input, 0, sizeof(ncinput));
-    return false;
 }
 
 bool get_input_nonblocking(input_event_t* event) {
@@ -109,18 +171,26 @@ bool get_input_nonblocking(input_event_t* event) {
     ncinput raw_input;
     memset(&raw_input, 0, sizeof(ncinput));
 
-    uint32_t ret = notcurses_get_nblock(nc, &raw_input);
-    if (ret > 0) {
-        // Translate and fill the event structure
-        event->type = translate_input(&raw_input);
-        event->raw_input = raw_input;
-        return true;
-    }
-
-    // No valid input received
+    // Set default values in case we return early
     event->type = INPUT_NONE;
     memset(&event->raw_input, 0, sizeof(ncinput));
-    return false;
+    
+    uint32_t ret = notcurses_get_nblock(nc, &raw_input);
+    if (ret <= 0) {
+        // No input available
+        return false;
+    }
+    
+    // Debounce - if we're getting keys too fast, ignore some
+    if (!should_process_key()) {
+        log_msg(DEBUG, "input_handler", "Ignoring key press (debounce)");
+        return false;
+    }
+    
+    // Translate and fill the event structure
+    event->type = translate_input(&raw_input);
+    event->raw_input = raw_input;
+    return true;
 }
 
 void shutdown_input_handler(void) {
