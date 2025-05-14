@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 // Loading screen message buffer
 static char loading_message[256] = "";
