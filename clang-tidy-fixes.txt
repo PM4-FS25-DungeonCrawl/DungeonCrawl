@@ -10,8 +10,8 @@
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
       |      ^
-../src/io/input/input_handler.c:87:6: note: the definition seen here
-   87 | bool init_input_handler(struct notcurses* notcurses_ptr) {
+../src/io/input/input_handler.c:96:6: note: the definition seen here
+   96 | bool init_input_handler(struct notcurses* notcurses_ptr) {
       |      ^
 ../src/io/input/input_handler.h:17:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
    17 | bool init_input_handler(struct notcurses* nc);
@@ -41,8 +41,8 @@
 ../src/io/output/specific/wait_output.c:98:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    98 |     int loading_len = strlen(loading_msg);
       |                       ^
-../src/io/output/specific/wait_output.c:129:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  129 |     int msg_len = strlen(welcome_msg);
+../src/io/output/specific/wait_output.c:136:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  136 |     int msg_len = strlen(welcome_msg);
       |                   ^
 ../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
    10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
