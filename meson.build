@@ -2,11 +2,16 @@
 project('DungeonCrawl', 'c',
         version : '0.1',
         default_options : ['c_std=gnu2x', 'warning_level=3', 'debug=true'])
+
 add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
+
 # List of external dependencies
 notcurses = dependency('notcurses', required : true)
+cc = meson.get_compiler('c')
+math = cc.find_library('m', required : true)
 
-# List of all source files. Per meson convention all files are listed seperately.
+
+# List of all source files. Per meson convention all files are listed separately.
 src_files = files(
     'src/main.c',
     'src/common.c',
@@ -102,8 +107,8 @@ configure_file(
     copy : true
 )
 
-    # Define the executable
-    executable(
+# Define the executable
+executable(
     'DungeonCrawl',
     src_files,
     menu_files,
@@ -115,5 +120,5 @@ configure_file(
     io_files,
     local_files,
     memory_files,
-    dependencies : [notcurses]
+    dependencies : [notcurses, math]
 )
