@@ -35,7 +35,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
     int new_y = player_pos.dy;
 
     if (input_event->type == INPUT_QUIT) return QUIT;
-    if (input_event->type == INPUT_MENU || input_event->type == INPUT_CANCEL) return SHOW_MENU;
+    if (input_event->type == INPUT_MENU) return SHOW_MENU;
 
     // Process different modes
     if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;

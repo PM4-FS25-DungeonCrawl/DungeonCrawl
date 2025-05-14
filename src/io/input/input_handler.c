@@ -45,8 +45,8 @@ input_t translate_input(const ncinput* raw_input) {
         // Enter key for confirmation
         if (raw_input->id == NCKEY_ENTER || raw_input->id == ' ') return INPUT_CONFIRM;
 
-        // Escape key for cancellation
-        if (raw_input->id == NCKEY_ESC) return INPUT_CANCEL;
+        // Cancel key (C)
+        if (raw_input->id == 'c' || raw_input->id == 'C') return INPUT_CANCEL;
 
         // Menu key (M)
         if (raw_input->id == 'm' || raw_input->id == 'M') return INPUT_MENU;
