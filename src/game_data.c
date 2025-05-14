@@ -51,6 +51,6 @@ int reset_goblin() {
         return 1;
     }
     add_ability(goblin, &ability_table->abilities[BITE]);
-    generate_loot(goblin, gear_table, potion_table, 5);
+    generate_loot(goblin, gear_table, potion_table, 1);
     return 0;
 }
