@@ -31,8 +31,8 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
-    int rendered_width = 10;
-    int rendered_height = 10;
+    int rendered_width = 30;
+    int rendered_height = 0;
 
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
@@ -59,14 +59,14 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
             }
         } else {
             // calculate correct rendered height
-            rendered_height = height / (width / rendered_width);
+            rendered_height = height / ((width / rendered_width) * 2);
             // Successfully loaded image, display it
             display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
             vec.dy += rendered_height + 1;
         }
     } else {
         // calculate correct rendered height
-        rendered_height = height / (width / rendered_width);
+        rendered_height = height / ((width / rendered_width) * 2);
         // Enemy visual already loaded, display it
         display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
         vec.dy += rendered_height + 1;
