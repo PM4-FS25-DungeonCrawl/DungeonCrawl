@@ -45,8 +45,8 @@ static void display_launch_screen_thread(void) {
         // Check if we can exit the loop (both conditions met)
         time_t current_time = time(NULL);
         double elapsed_s = difftime(current_time, start_time);
-        long elapsed_ms = (long)(elapsed_s * 1000);
-        
+        long elapsed_ms = (long) (elapsed_s * 1000);
+
         min_time_elapsed = (elapsed_ms >= LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS);
     }
 
