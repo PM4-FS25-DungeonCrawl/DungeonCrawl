@@ -134,18 +134,12 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         return MENU_CONTINUE;
     }
 
-    // Create a database connection for the menu to use
-    db_connection_t menu_db_connection;
-    // TODO: we need to discuss (this is probably reason why the database opens 3 times)
-    if (db_open(&menu_db_connection, "../resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
-        log_msg(ERROR, "Menu", "Failed to open database for save file listing");
-        return MENU_CONTINUE;
-    }
+    // Use the global database connection from game.h instead of creating a new one
+    extern db_connection_t db_connection;
 
-    save_info_container_t* save_infos = get_save_infos(&menu_db_connection);
+    save_info_container_t* save_infos = get_save_infos(&db_connection);
     if (save_infos == NULL) {
         log_msg(ERROR, "Menu", "Failed to get save files");
-        db_close(&menu_db_connection);
         return MENU_CONTINUE;
     }
 
@@ -163,8 +157,6 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_menu_strings[PRESS_ANY_RETURN]);
         notcurses_render(nc);
 
-
-        db_close(&menu_db_connection);
         free_save_infos(save_infos);
         return MENU_CONTINUE;
     }
@@ -232,7 +224,6 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     // Clean up the save files
     free_save_infos(save_infos);
-    db_close(&menu_db_connection);
 
     return result;
 }
