@@ -187,7 +187,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                          ability_menu_options,
                          player->ability_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;
@@ -244,7 +244,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                          potion_menu_options,
                          player->potion_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;

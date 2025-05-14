@@ -119,7 +119,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                                 3,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -192,7 +192,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                                 player->gear_count,
                                 selected_index,
                                 inventory_mode_strings[INVENTORY_DROP_GEAR_MSG],
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -278,7 +278,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -366,7 +366,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                                 player->potion_count,
                                 selected_index,
                                 inventory_mode_strings[POTION_DROP_POTION_MSG],
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
