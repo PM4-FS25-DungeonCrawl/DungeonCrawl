@@ -7,6 +7,7 @@
 #include "../../io_handler.h"
 #include "../common/common_output.h"
 #include "../media/media_output.h"
+#include "notcurses/notcurses.h"
 
 #include <string.h>
 
@@ -33,6 +34,9 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
 
     int rendered_width = 30;
     int rendered_height = 0;
+    // - 15 somewhat of a magic number but is just to allow other ui elements to be drawn within
+    // the screen aswell since we don't exactly know how many abilites are going to exist
+    int max_rendered_height = ncplane_dim_y(stdplane) - 15;
 
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
@@ -59,14 +63,16 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
             }
         } else {
             // calculate correct rendered height
-            rendered_height = height / ((width / rendered_width) * 2);
+            int calculated_height = height / ((width / rendered_width) * 2);
+            rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
             // Successfully loaded image, display it
             display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
             vec.dy += rendered_height + 1;
         }
     } else {
         // calculate correct rendered height
-        rendered_height = height / ((width / rendered_width) * 2);
+        int calculated_height = height / ((width / rendered_width) * 2);
+        rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
         // Enemy visual already loaded, display it
         display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
         vec.dy += rendered_height + 1;
