@@ -147,7 +147,7 @@ void print_menu_default(const char* title, const char** options, int option_coun
  * @param x The X coordinate (column) for the prompt
  * @return true if input was confirmed, false if canceled
  */
-bool get_text_input(const char* prompt, char* buffer, int buffer_size, 
+bool get_text_input(const char* prompt, char* buffer, int buffer_size,
                     const char* confirm_msg, int y, int x);
 
 /**

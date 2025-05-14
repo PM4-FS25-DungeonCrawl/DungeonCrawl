@@ -2,9 +2,9 @@
 
 #include "../../../common.h"
 #include "../../../logging/logger.h"
-#include "../../io_handler.h"// Include this to access global nc and stdplane
 #include "../../input/input_handler.h"
 #include "../../input/input_types.h"
+#include "../../io_handler.h"// Include this to access global nc and stdplane
 
 #include <notcurses/nckeys.h>
 #include <stdlib.h>
@@ -153,8 +153,8 @@ void print_menu_default(const char* title, const char** options, int option_coun
                DEFAULT_COLORS, DEFAULT_COLORS, INVERTED_COLORS);
 }
 
-bool get_text_input(const char* prompt, char* buffer, int buffer_size, 
-                   const char* confirm_msg, int y, int x) {
+bool get_text_input(const char* prompt, char* buffer, int buffer_size,
+                    const char* confirm_msg, int y, int x) {
     if (!stdplane || !buffer || buffer_size <= 0) {
         log_msg(ERROR, "output_handler", "Invalid parameters for get_text_input");
         return false;
@@ -172,15 +172,15 @@ bool get_text_input(const char* prompt, char* buffer, int buffer_size,
 
         // Display prompt
         print_text_default(y, x, prompt);
-        
+
         // Display current input
         print_text_default(y + 2, x, buffer);
-        
+
         // Display confirm message if provided
         if (confirm_msg) {
             print_text_default(y + 4, x, confirm_msg);
         }
-        
+
         // Render the frame
         render_frame();
 
@@ -226,18 +226,18 @@ void show_message_screen(const char* message, const char* continue_message, int 
 
     // Clear screen
     clear_screen();
-    
+
     // Display message
     print_text_default(y, x, message);
-    
+
     // Display continue message if provided
     if (continue_message) {
         print_text_default(y + 2, x, continue_message);
     }
-    
+
     // Render the frame
     render_frame();
-    
+
     // Wait for any input to continue
     input_event_t input_event;
     while (!get_input_blocking(&input_event));
