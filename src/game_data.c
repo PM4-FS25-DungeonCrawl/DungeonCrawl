@@ -2,9 +2,9 @@
 
 #include "character/monster.h"
 #include "character/player.h"
-#include "item/loot_generation.h"
 #include "common.h"
 #include "game.h"
+#include "item/loot_generation.h"
 
 #include <stddef.h>
 

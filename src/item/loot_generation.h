@@ -7,4 +7,4 @@
 
 void generate_loot(character_t* c, gear_table_t* gear_table, potion_table_t* potion_table, int rolls);
 
-#endif // LOOT_GENERATION_H
+#endif// LOOT_GENERATION_H
