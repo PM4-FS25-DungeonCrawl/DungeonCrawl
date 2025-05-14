@@ -17,10 +17,10 @@
    17 | bool init_input_handler(struct notcurses* nc);
       |      ^                                    ~~
       |                                           notcurses_ptr
-../src/io/output/common/common_output.c:170:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+../src/io/output/common/output_handler.c:170:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   170 |     *width = ncplane_dim_x(stdplane);
       |              ^
-../src/io/output/common/common_output.c:171:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+../src/io/output/common/output_handler.c:171:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   171 |     *height = ncplane_dim_y(stdplane);
       |               ^
 ../src/io/output/specific/wait_output.c:40:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
@@ -69,5 +69,11 @@
 ../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
    17 | extern struct notcurses* nc;
       |                          ^
-Suppressed 230503 warnings (230320 in non-user code, 183 with check filters).
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/common/common_output.c:170:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  170 |     *width = ncplane_dim_x(stdplane);
+      |              ^
+/home/runner/work/DungeonCrawl/DungeonCrawl/src/io/output/common/common_output.c:171:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  171 |     *height = ncplane_dim_y(stdplane);
+      |               ^
+Suppressed 233259 warnings (233076 in non-user code, 183 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
