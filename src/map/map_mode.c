@@ -80,6 +80,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
                     player_has_key = 0;
                     player_pos.dx = new_x;
                     player_pos.dy = new_y;
+                    current_floor++;
                     return NEXT_FLOOR;
                 }
                 break;

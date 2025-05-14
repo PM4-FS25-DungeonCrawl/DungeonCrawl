@@ -13,6 +13,9 @@
 extern struct notcurses* nc;
 extern struct ncplane* stdplane;
 
+// global floor variable
+extern int current_floor = 1;
+
 typedef enum {
     MAIN_MENU,
     MAP_MODE,
