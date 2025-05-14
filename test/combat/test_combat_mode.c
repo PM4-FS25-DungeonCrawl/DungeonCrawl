@@ -14,7 +14,7 @@ void setup() {
         exit(EXIT_FAILURE);
     }
     init_combat_mode();
-    printf("Setup complete");
+    printf("Setup complete\n");
 }
 
 
@@ -24,69 +24,159 @@ character_t* create_test_character() {
     return character;
 }
 
-void test_use_ability() {
+/**
+ * @brief Test health potion
+ */
+void test_health_potion() {
     character_t* player = create_test_character();
-    character_t* enemy = create_test_character();
-
-    ability_t test_ability = {
-            .name = "Test Ability",
-            .roll_amount = 3,
-            .accuracy = 100,
-            .dice_size = D6,
-            .damage_type = PHYSICAL,
-            .resource_cost = 15};
-
-    // Test: Ability with sufficient stamina
-    player->current_resources.stamina = 15;// to be removed after implementation of stamina calculation based on strength
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.stamina == 0);
-
-    // Test: Ability with insufficient stamina
-    player->current_resources.stamina = 14;
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.stamina == 14);
-
-    // Test: Ability with sufficient mana
-    test_ability.damage_type = MAGICAL;
-    player->current_resources.mana = 15;// to be removed after implementation of mana calculation based on intelligence
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.mana == 0);
-
-    // Test: Ability with insufficient mana
-    player->current_resources.mana = 14;
-    use_ability(player, enemy, &test_ability);
-    assert(player->current_resources.mana == 14);
-
-    printf("test_use_ability passed\n");
-}
-
-void test_use_item() {
-    character_t* player = create_test_character();
-    character_t* enemy = create_test_character();
-
     potion_t test_potion = {
-            .effectType = HEALING,
-            .value = 20};
+        .effectType = HEALING,
+        .value = 20};
+        
+    add_potion(player, &test_potion);
+    add_potion(player, &test_potion);
+    
+    int* max_resource = &player->max_resources.health;
+    int* curr_resource = &player->current_resources.health;
 
-    player->potion_inventory[0] = &test_potion;
-    player->potion_inventory[1] = &test_potion;
-    player->potion_count = 2;
-    player->current_resources.health = 65;
+    *curr_resource -= test_potion.value - 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == *max_resource);
+    assert(player->potion_count == 1);
 
-    // Test: Use potion to heal
-    use_potion(player, enemy, player->potion_inventory[0]);
-    assert(player->current_resources.health == 85);
-
-    // Test: Use potion to heal to max health
-    use_potion(player, enemy, player->potion_inventory[0]);
-    assert(player->current_resources.health == 100);
-
-    // Test: Ensure potion inventory count is updated
+    *curr_resource -= test_potion.value + 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == (*max_resource - 1));
     assert(player->potion_count == 0);
 
-    printf("test_use_item passed\n");
+    printf("Test: test_health_potion() passed\n");
 }
 
+/**
+ * @brief Test stamina potion
+ */
+void test_stamina_potion() {
+    character_t* player = create_test_character();
+    potion_t test_potion = {
+        .effectType = STAMINA,
+        .value = 5};
+        
+    add_potion(player, &test_potion);
+    add_potion(player, &test_potion);
+    
+    int* max_resource = &player->max_resources.stamina;
+    int* curr_resource = &player->current_resources.stamina;
+
+    *curr_resource -= test_potion.value - 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == *max_resource);
+    assert(player->potion_count == 1);
+
+    *curr_resource -= test_potion.value + 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == (*max_resource - 1));
+    assert(player->potion_count == 0);
+
+    printf("Test: test_stamina_potion() passed\n");
+}
+
+/**
+ * @brief Test mana potion
+ */
+void test_mana_potion() {
+    character_t* player = create_test_character();
+    potion_t test_potion = {
+        .effectType = MANA,
+        .value = 3};
+        
+    add_potion(player, &test_potion);
+    add_potion(player, &test_potion);
+    
+    int* max_resource = &player->max_resources.mana;
+    int* curr_resource = &player->current_resources.mana;
+
+    *curr_resource -= test_potion.value - 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == *max_resource);
+    assert(player->potion_count == 1);
+
+    *curr_resource -= test_potion.value + 1;
+    assert(*curr_resource < *max_resource);
+    invoke_potion_effect(player, &test_potion);
+    assert(*curr_resource == (*max_resource - 1));
+    assert(player->potion_count == 0);
+
+    printf("Test: test_mana_potion() passed\n");
+}
+
+/**
+ * @brief Test stamina usage for ability
+ */
+void test_use_stamina_ability() {
+    character_t* player = create_test_character();
+    ability_t test_stamina_ability = {
+        .damage_type = PHYSICAL,
+        .resource_cost = 5};
+
+    int currStamina = player->current_resources.stamina;
+    assert(consume_ability_resource(player, &test_stamina_ability));
+    assert(player->current_resources.stamina == currStamina - test_stamina_ability.resource_cost);
+    printf("Test: test_use_stamina_ability() passed\n");
+}
+
+/**
+ * @brief Test mana usage for ability
+ */
+void test_use_mana_ability() {
+    character_t* player = create_test_character();
+    ability_t test_mana_ability = {
+        .damage_type = MAGICAL,
+        .resource_cost = 5};
+
+    int currMana = player->current_resources.mana;
+    assert(consume_ability_resource(player, &test_mana_ability));
+    assert(player->current_resources.mana == currMana - test_mana_ability.resource_cost);
+    printf("Test: test_use_mana_ability() passed\n");
+}
+
+/**
+ * @brief Test insufficient stamina for ability usage
+ */
+void test_use_stamina_ability_insufficient_resource() {
+    character_t* player = create_test_character();
+    ability_t test_stamina_ability = {
+        .damage_type = PHYSICAL,
+        .resource_cost = player->current_resources.stamina + 1};
+
+    int currStamina = player->current_resources.stamina;
+    assert(!consume_ability_resource(player, &test_stamina_ability));
+    assert(player->current_resources.stamina == currStamina);
+    printf("Test: test_use_stamina_ability_insufficient_resource() passed\n");
+}
+
+/**
+ * @brief Test insufficient mana for ability usage
+ */
+void test_use_mana_ability_insufficient_resource() {
+    character_t* player = create_test_character();
+    ability_t test_mana_ability = {
+        .damage_type = MAGICAL,
+        .resource_cost = player->current_resources.mana + 1};
+
+    int currMana = player->current_resources.mana;
+    assert(!consume_ability_resource(player, &test_mana_ability));
+    assert(player->current_resources.mana == currMana);
+    printf("Test: test_use_mana_ability_insufficient_resource() passed\n");
+}
+
+/**
+ * @brief Test to get random ability
+ */
 void test_get_random_ability() {
     character_t* player = create_test_character();
 
@@ -117,14 +207,26 @@ void test_get_random_ability() {
         assert(ability_found[i]);
     }
 
-    printf("test_get_random_ability passed\n");
+    printf("Test: test_get_random_ability() passed\n");
 }
 
 int main(void) {
     setup();
-    test_use_ability();
-    test_use_item();
+
+    // invoke_potion_effect() tests
+    test_health_potion();
+    test_stamina_potion();
+    test_mana_potion();
+
+    // consume_ability_resource() tests
+    test_use_stamina_ability();
+    test_use_mana_ability();
+    test_use_stamina_ability_insufficient_resource();
+    test_use_mana_ability_insufficient_resource();
+
+    // others
     test_get_random_ability();
+
     shutdown_memory_pool(main_memory_pool);
     return 0;
 }

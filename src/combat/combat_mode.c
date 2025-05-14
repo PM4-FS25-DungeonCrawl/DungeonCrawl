@@ -350,36 +350,36 @@ ability_t* get_random_ability(const character_t* character) {
     return character->abilities[random_index];
 }
 
-void invoke_potion_effect(character_t* character, potion_t* potion) {
+bool invoke_potion_effect(character_t* character, potion_t* potion) {
+    int* c_max_resource;
+    int* c_curr_resource;
+
     switch (potion->effectType) {
-        case HEALING:
-            if (potion->value > (character->max_resources.health - character->current_resources.health)) {
-                character->current_resources.health = character->max_resources.health;
-            } else {
-                character->current_resources.health += potion->value;
-            }
-            break;
-        case MANA:
-            if (potion->value > (character->max_resources.mana - character->current_resources.mana)) {
-                character->current_resources.mana = character->max_resources.mana;
-            } else {
-                character->current_resources.mana += potion->value;
-            }
-            break;
-
-        case STAMINA:
-            if (potion->value > (character->max_resources.stamina - character->current_resources.stamina)) {
-                character->current_resources.stamina = character->max_resources.stamina;
-            } else {
-                character->current_resources.stamina += potion->value;
-            }
-            break;
-
-        default:
-            log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
-            break;
+    case HEALING:
+        c_max_resource = &character->max_resources.health;
+        c_curr_resource = &character->current_resources.health;
+        break;
+    case MANA:
+        c_max_resource = &character->max_resources.mana;
+        c_curr_resource = &character->current_resources.mana;
+        break;
+    case STAMINA:
+        c_max_resource = &character->max_resources.stamina;
+        c_curr_resource = &character->current_resources.stamina;
+        break;
+    default:
+        log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
+        return false;
     }
+
+    if(potion->value > (*c_max_resource - *c_curr_resource)) {
+        *c_curr_resource = *c_max_resource;
+    } else {
+        *c_curr_resource += potion->value;
+    }
+    
     remove_potion(character, potion);
+    return true;
 }
 
 bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
