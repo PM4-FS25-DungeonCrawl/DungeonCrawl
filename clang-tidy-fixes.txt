@@ -10,8 +10,8 @@
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
       |      ^
-../src/io/input/input_handler.c:88:6: note: the definition seen here
-   88 | bool init_input_handler(struct notcurses* notcurses_ptr) {
+../src/io/input/input_handler.c:87:6: note: the definition seen here
+   87 | bool init_input_handler(struct notcurses* notcurses_ptr) {
       |      ^
 ../src/io/input/input_handler.h:17:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
    17 | bool init_input_handler(struct notcurses* nc);
@@ -26,27 +26,24 @@
 ../src/io/output/common/output_handler.c:265:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   265 |     *height = ncplane_dim_y(stdplane);
       |               ^
-../src/io/output/specific/wait_output.c:40:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   40 |     int msg_len = strlen(loading_message);
+../src/io/output/specific/wait_output.c:41:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   41 |     int msg_len = strlen(loading_message);
       |                   ^
-../src/io/output/specific/wait_output.c:75:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   75 |     int title_len = strlen(title);
+../src/io/output/specific/wait_output.c:76:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   76 |     int title_len = strlen(title);
       |                     ^
-../src/io/output/specific/wait_output.c:86:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   86 |     int version_len = strlen(version);
+../src/io/output/specific/wait_output.c:87:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   87 |     int version_len = strlen(version);
       |                       ^
-../src/io/output/specific/wait_output.c:87:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   87 |     int copyright_len = strlen(copyright);
+../src/io/output/specific/wait_output.c:88:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   88 |     int copyright_len = strlen(copyright);
       |                         ^
-../src/io/output/specific/wait_output.c:97:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   97 |     int loading_len = strlen(loading_msg);
+../src/io/output/specific/wait_output.c:98:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   98 |     int loading_len = strlen(loading_msg);
       |                       ^
-../src/io/output/specific/wait_output.c:100:25: warning: redundant 'init_done' declaration [readability-redundant-declaration]
-  100 |     extern volatile int init_done;
-      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/io/output/specific/../../io_handler.h:13:21: note: previously declared here
-   13 | extern volatile int init_done;
-      |                     ^
+../src/io/output/specific/wait_output.c:129:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  129 |     int msg_len = strlen(welcome_msg);
+      |                   ^
 ../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
    10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
       |                                                                                                                                                                                                           ^
@@ -54,14 +51,8 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:69:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   69 |     srand(time(NULL));
+../src/main.c:79:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   79 |     srand(time(NULL));
       |     ^
-../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
-   11 | extern struct notcurses* nc;
-      | ~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
-   17 | extern struct notcurses* nc;
-      |                          ^
-Suppressed 230504 warnings (230320 in non-user code, 184 with check filters).
+Suppressed 231375 warnings (231189 in non-user code, 186 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
