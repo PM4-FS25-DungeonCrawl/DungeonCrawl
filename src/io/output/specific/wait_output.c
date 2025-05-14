@@ -116,6 +116,13 @@ void draw_launch_screen(void) {
 #endif
 }
 
+/**
+ * @brief Draw the welcome screen with a message
+ *
+ * This function displays a welcome message on the screen and prompts
+ * the user to press any key to continue. It's typically shown after
+ * the launch screen animation completes.
+ */
 void draw_welcome_screen(void) {
     // Get screen dimensions
     int width, height;

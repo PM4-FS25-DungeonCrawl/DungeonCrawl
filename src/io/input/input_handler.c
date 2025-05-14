@@ -32,7 +32,16 @@ typedef struct {
 static input_timing_t input_timing = {
         .first_key = true};
 
-// Calculate time difference in milliseconds
+/**
+ * @brief Calculate time difference in milliseconds
+ * 
+ * Helper function that computes the difference between two timespec structures
+ * and returns the result in milliseconds.
+ *
+ * @param start Pointer to the start timestamp
+ * @param end Pointer to the end timestamp
+ * @return Time difference in milliseconds
+ */
 static long get_time_diff_ms(struct timespec* start, struct timespec* end) {
     return (end->tv_sec - start->tv_sec) * 1000 +
            (end->tv_nsec - start->tv_nsec) / 1000000;
@@ -101,7 +110,16 @@ bool init_input_handler(struct notcurses* notcurses_ptr) {
     return true;
 }
 
-// Check if enough time has passed since the last key press
+/**
+ * @brief Check if enough time has passed since the last key press
+ * 
+ * This function implements key debouncing to prevent input overflow.
+ * It checks if enough time has passed since the last key press to
+ * consider the current key press valid. This helps prevent rapid
+ * key repetition that could cause performance issues.
+ *
+ * @return true if the key should be processed, false if it should be ignored
+ */
 static bool should_process_key() {
     struct timespec current_time;
     clock_gettime(CLOCK_MONOTONIC, &current_time);
