@@ -11,7 +11,7 @@
 void draw_menu(const char** menu_options, int menu_count, int selected_index) {
     // Clear the screen
     clear_screen();
-    
+
     // Draw title
     print_text(MENU_START_Y, MENU_START_X, TITLE, RED_TEXT_COLORS);
 
@@ -35,12 +35,12 @@ void draw_menu(const char** menu_options, int menu_count, int selected_index) {
 bool show_confirmation(const char* message) {
     // Clear the screen
     clear_screen();
-    
+
     // Print confirmation messages
     print_text_default(MENU_START_Y, MENU_START_X, save_menu_strings[WARNING_LOST_PROGRESS]);
     print_text_default(MENU_START_Y + 2, MENU_START_X, message);
     print_text_default(MENU_START_Y + 4, MENU_START_X, "(Y/N)");
-    
+
     // Render the frame
     render_frame();
 

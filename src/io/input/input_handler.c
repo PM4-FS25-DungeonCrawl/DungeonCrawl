@@ -9,7 +9,7 @@
 #include <time.h>
 
 #ifndef CLOCK_MONOTONIC
-    #define CLOCK_MONOTONIC 1 // Fallback for platforms without CLOCK_MONOTONIC
+    #define CLOCK_MONOTONIC 1// Fallback for platforms without CLOCK_MONOTONIC
 #endif
 
 // Define platform-specific key event type
