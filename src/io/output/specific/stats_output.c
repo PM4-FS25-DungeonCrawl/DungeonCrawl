@@ -41,9 +41,7 @@ int init_stats_mode() {
  */
 void render_stats_window(const character_t* player) {
     // Clear the screen
-    //clear_screen();
-    ncplane_erase(stdplane);
-
+    clear_screen();
 
     int y = 0;
     int x = 0;

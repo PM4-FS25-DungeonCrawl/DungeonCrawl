@@ -2,16 +2,12 @@
 
 #include "../common.h"
 #include "../io/input/input_handler.h"
+#include "../io/output/common/output_handler.h"
 #include "../logging/logger.h"
 #include "language_menu.h"
 #include "local/main_menu_local.h"
 #include "save_menu.h"
 #include "src/local/local_handler.h"
-
-
-// External reference to notcurses context
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
 
 // === Internal Functions ===
 /**
