@@ -4,6 +4,9 @@
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
 
+// Define constants for display timing
+#define LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS 5000 // Minimum time to display launch screen (5 seconds)
+
 /**
  * @brief Initialize the output handler
  *
