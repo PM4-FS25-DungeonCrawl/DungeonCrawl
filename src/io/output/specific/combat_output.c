@@ -63,6 +63,7 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
             }
         } else {
             // calculate correct rendered height
+
             int calculated_height = height / ((width / rendered_width) * 2);
             rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
             // Successfully loaded image, display it
@@ -82,6 +83,10 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     render_io_frame();
 
     return vec;
+}
+
+void clear_enemy_sprite() {
+    display_image_positioned(enemy_visual, 0, 0, 0, 0);
 }
 
 /**
