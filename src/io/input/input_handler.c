@@ -52,11 +52,6 @@ input_t translate_input(const ncinput* raw_input) {
         return INPUT_QUIT;
     }
 
-    // Escape key for cancel
-    if (raw_input->id == NCKEY_ESC) {
-        return INPUT_CANCEL;
-    }
-
     // Check if this is a key event (allow both NCTYPE_UNKNOWN and NCTYPE_PRESS)
     if (raw_input->evtype == NCTYPE_PRESS || raw_input->evtype == NCTYPE_UNKNOWN) {
         // Arrow keys for navigation
