@@ -55,13 +55,12 @@ menu_result_t show_save_game_menu(void) {
 
     // Get save name from user using the output handler
     bool confirmed = get_text_input(
-        save_menu_strings[SAVE_NAME_REQUEST],
-        save_name,
-        sizeof(save_name),
-        save_menu_strings[PRESS_ENTER_CONFIRM],
-        MENU_START_Y,
-        MENU_START_X
-    );
+            save_menu_strings[SAVE_NAME_REQUEST],
+            save_name,
+            sizeof(save_name),
+            save_menu_strings[PRESS_ENTER_CONFIRM],
+            MENU_START_Y,
+            MENU_START_X);
 
     if (confirmed) {
         // Store the save name for later use
@@ -70,11 +69,10 @@ menu_result_t show_save_game_menu(void) {
 
         // Show saving message
         show_message_screen(
-            save_menu_strings[SAVING],
-            NULL,
-            MENU_START_Y,
-            MENU_START_X
-        );
+                save_menu_strings[SAVING],
+                NULL,
+                MENU_START_Y,
+                MENU_START_X);
 
         log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
         result = MENU_SAVE_GAME;
@@ -103,11 +101,10 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     if (save_infos->count == 0) {
         // No saves available - show message and return
         show_message_screen(
-            save_menu_strings[SAVES_NOT_FOUND],
-            save_menu_strings[PRESS_ANY_RETURN],
-            MENU_START_Y,
-            MENU_START_X
-        );
+                save_menu_strings[SAVES_NOT_FOUND],
+                save_menu_strings[PRESS_ANY_RETURN],
+                MENU_START_Y,
+                MENU_START_X);
 
         free_save_infos(save_infos);
         return MENU_CONTINUE;
@@ -127,15 +124,15 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
         if (!save_options[i]) {
             // Clean up previously allocated memory
             for (int j = 0; j < i; j++) {
-                free((void*)save_options[j]);
+                free((void*) save_options[j]);
             }
             free(save_options);
             free_save_infos(save_infos);
             log_msg(ERROR, "Menu", "Failed to allocate memory for save option");
             return MENU_CONTINUE;
         }
-        snprintf((char*)save_options[i], MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 5, 
-                "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
+        snprintf((char*) save_options[i], MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 5,
+                 "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
     }
 
     // Display the save files and let the user select one
@@ -145,31 +142,31 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     while (selection_active) {
         // Clear the screen
         clear_screen();
-        
+
         // Print the title and options
         print_text_default(MENU_START_Y, MENU_START_X, save_menu_strings[SELECT_SAVE]);
-        
+
         // Print the save options with highlighting
         for (int i = 0; i < save_infos->count; i++) {
             if (i == selected_save_index) {
                 // Highlight selected option with inverted colors
-                print_text(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING), 
-                           MENU_START_X, 
-                           save_options[i], 
+                print_text(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING),
+                           MENU_START_X,
+                           save_options[i],
                            INVERTED_COLORS);
             } else {
                 // Normal option
-                print_text_default(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING), 
-                                 MENU_START_X, 
-                                 save_options[i]);
+                print_text_default(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING),
+                                   MENU_START_X,
+                                   save_options[i]);
             }
         }
-        
+
         // Print the navigation instructions
-        print_text_default(MENU_START_Y + 2 + (save_infos->count * MENU_ITEM_SPACING) + 2, 
-                         MENU_START_X, 
-                         save_menu_strings[NAVIGATE_INSTRUCTIONS]);
-        
+        print_text_default(MENU_START_Y + 2 + (save_infos->count * MENU_ITEM_SPACING) + 2,
+                           MENU_START_X,
+                           save_menu_strings[NAVIGATE_INSTRUCTIONS]);
+
         // Render the frame
         render_frame();
 
@@ -203,7 +200,7 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
 
     // Clean up resources
     for (int i = 0; i < save_infos->count; i++) {
-        free((void*)save_options[i]);
+        free((void*) save_options[i]);
     }
     free(save_options);
     free_save_infos(save_infos);
