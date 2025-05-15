@@ -6,6 +6,9 @@
 
 #include <stdio.h>
 
+// Internal functions
+void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
+
 /**
  * @brief Initializes a new character
  * @param memory_pool Pointer to the memory pool for dynamic allocation
