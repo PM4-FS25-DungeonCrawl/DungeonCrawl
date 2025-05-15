@@ -54,7 +54,7 @@ typedef struct {
  * @note The tables will be created if they do not exist
  */
 void create_tables_game_state(const db_connection_t* db_connection);
-void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
+sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 save_info_container_t* get_save_infos(const db_connection_t* db_connection);
