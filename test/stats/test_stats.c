@@ -15,14 +15,12 @@ void setup() {
     printf("Setup complete\n");
 }
 
-
 character_t* create_test_character() {
     character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     set_skill_points(character, 10);
     return character;
 }
-
 
 void test_skill_point_allocation() {
     character_t* test_character = create_test_character();
@@ -95,12 +93,9 @@ void test_skill_point_allocation() {
 
 int main() {
     setup();
-    printf("Running stats tests...\n");
 
     test_skill_point_allocation();
 
-
-    printf("All stats tests passed successfully!\n");
     shutdown_memory_pool(test_memory_pool);
     return 0;
 }
