@@ -144,4 +144,13 @@ void save_character(db_connection_t* db_connection, const character_t character,
         sqlite3_finalize(stmt_player);
         return;
     }
+    // Execute the statement
+    rc = sqlite3_step(stmt_player);
+    if (rc != SQLITE_DONE) {
+        log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_player);
+        return;
+    }
+    // Finalize the statement
+    sqlite3_finalize(stmt_player);
 }
