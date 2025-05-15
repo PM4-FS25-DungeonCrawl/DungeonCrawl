@@ -14,14 +14,15 @@ void setup() {
     printf("Setup complete\n");
 }
 
-character_t* create_test_character() {
-    character_t* c = init_character(test_memory_pool, PLAYER, "Hero");
-    set_character_stats(c, 5, 10, 15, 20);
-    return c;
+// initialize a character for testing
+character_t* setup_character() {
+    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
+    set_character_stats(character, 5, 10, 15, 20);
+    return character;
 }
 
 void test_init_character() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     assert(c != NULL);
     assert(strcmp(c->name, "Hero") == 0);
     assert(c->type == PLAYER);
@@ -29,7 +30,7 @@ void test_init_character() {
 }
 
 void test_set_character_stats() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
 
     assert(c->base_stats.strength == 5);
     assert(c->base_stats.intelligence == 10);
@@ -40,7 +41,7 @@ void test_set_character_stats() {
 }
 
 void test_update_character_resources() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
 
     assert(c->current_resources.health == c->max_resources.health);
     assert(c->current_resources.stamina == c->max_resources.stamina);
@@ -50,7 +51,7 @@ void test_update_character_resources() {
 }
 
 void test_character_dmg_modifier() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     
     set_character_dmg_modifier(c, PHYSICAL, 10);
     assert(c->resistance[0].type == PHYSICAL);
@@ -60,7 +61,7 @@ void test_character_dmg_modifier() {
 }
 
 void test_add_and_remove_ability() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     ability_t test_ability = {.name = "Test Ability"};
     
     add_ability(c, &test_ability);
@@ -74,7 +75,7 @@ void test_add_and_remove_ability() {
 }
 
 void test_add_and_remove_potion() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     potion_t test_potion = {.name = "Healing Potion", .effectType = HEALING, .value = 20};
     
     add_potion(c, &test_potion);
@@ -88,7 +89,7 @@ void test_add_and_remove_potion() {
 }
 
 void test_add_and_remove_gear() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     gear_t test_gear = {.local_key = "Test Gear", .slot = SLOT_HEAD};
     
     add_gear(c, &test_gear);
@@ -103,7 +104,7 @@ void test_add_and_remove_gear() {
 }
 
 void test_equip_and_unequip_gear() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     gear_t test_gear = {
         .local_key = "Test Gear",
         .local_name = "Test Gear",
@@ -132,7 +133,7 @@ void test_equip_and_unequip_gear() {
 }
 
 void test_reset_current_stats() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
 
     c->current_stats.strength = c->base_stats.strength * 2;
     c->current_stats.intelligence = c->base_stats.intelligence * 2;
@@ -154,7 +155,7 @@ void test_reset_current_stats() {
 }
 
 void test_reset_current_resources() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
 
     c->current_resources.health = c->max_resources.health - 1;
     c->current_resources.stamina = c->max_resources.stamina - 1;
@@ -173,7 +174,7 @@ void test_reset_current_resources() {
 }
 
 void test_character_level_up() {
-    character_t* c = create_test_character();
+    character_t* c = setup_character();
     int initial_level = c->level;
     level_up(c);
     assert(c->level == initial_level + 1);
