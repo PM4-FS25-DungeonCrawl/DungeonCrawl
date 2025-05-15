@@ -1,11 +1,11 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:197:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  197 |         case PLAYER_LOST:
+../src/game.c:200:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  200 |         case PLAYER_LOST:
       |         ^
-../src/game.c:203:18: note: last of these clones ends here
-  203 |             break;
+../src/game.c:206:18: note: last of these clones ends here
+  206 |             break;
       |                  ^
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
@@ -69,5 +69,5 @@
 ../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
    17 | extern struct notcurses* nc;
       |                          ^
-Suppressed 298469 warnings (298282 in non-user code, 187 with check filters).
+Suppressed 300350 warnings (300163 in non-user code, 187 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
