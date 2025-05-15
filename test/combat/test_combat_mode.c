@@ -7,11 +7,11 @@
 #include <stdio.h>
 
 
-memory_pool_t* test_memory_pool;
+memory_pool_t* test_combat_memory;
 
 void setup() {
-    test_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (test_memory_pool == NULL) {
+    test_combat_memory = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (test_combat_memory == NULL) {
         printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
@@ -21,7 +21,7 @@ void setup() {
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(test_combat_memory, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
@@ -205,6 +205,6 @@ int main(void) {
     // others
     test_get_random_ability();
 
-    shutdown_memory_pool(test_memory_pool);
+    shutdown_memory_pool(test_combat_memory);
     return 0;
 }
