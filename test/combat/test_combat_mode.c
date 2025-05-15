@@ -6,9 +6,10 @@
 #include <assert.h>
 #include <stdio.h>
 
+
 void setup() {
-    test_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (test_memory_pool == NULL) {
+    main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (main_memory_pool == NULL) {
         printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
@@ -18,7 +19,7 @@ void setup() {
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
@@ -226,6 +227,6 @@ int main(void) {
     // others
     test_get_random_ability();
 
-    shutdown_memory_pool(test_memory_pool);
+    shutdown_memory_pool(main_memory_pool);
     return 0;
 }

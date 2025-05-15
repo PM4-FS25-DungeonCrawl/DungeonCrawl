@@ -6,9 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void setup() {
-    test_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (test_memory_pool == NULL) {
+    main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (main_memory_pool == NULL) {
         printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
@@ -17,7 +18,7 @@ void setup() {
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     set_skill_points(character, 10);
     return character;
@@ -99,8 +100,6 @@ int main() {
 
     test_skill_point_allocation();
 
-
     printf("All stats tests passed successfully!\n");
-    shutdown_memory_pool(test_memory_pool);
     return 0;
 }

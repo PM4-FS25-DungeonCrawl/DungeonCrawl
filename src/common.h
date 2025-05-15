@@ -168,6 +168,6 @@ typedef struct string_max_t {
 /**
  * The main memory pool for the game, used for dynamic memory allocation.
  */
-extern memory_pool_t* test_memory_pool;
+extern memory_pool_t* main_memory_pool;
 
 #endif//COMMON_H
