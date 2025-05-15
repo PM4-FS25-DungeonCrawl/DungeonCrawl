@@ -85,8 +85,8 @@ jobs:
       - name: Generate coverage report (text summary)
         if: runner.os == 'Linux'
         run: |
-          gcovr -r . --filter src/ --html --html-details -o coverage-report.html
-          gcovr -r . --filter src/ # simple text summary in console
+          gcovr -r . --filter src/ --exclude ".*draw.*" --exclude ".*stats_mode\.c" --html --html-details -o coverage-report.html
+          gcovr -r . --filter src/ --exclude ".*draw.*" --exclude ".*stats_mode\.c" # simple text summary in console
 
       - name: Generate clang-tidy report
         if: runner.os == 'Linux'
