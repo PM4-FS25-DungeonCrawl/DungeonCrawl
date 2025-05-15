@@ -22,7 +22,7 @@ int init_stats_mode() {
     }
 
     // Allocate memory for menu options
-    stats_menu_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
+    stats_menu_options = memory_pool_alloc(test_memory_pool, sizeof(string_max_t) * MAX_ABILITY_LIMIT);
     RETURN_WHEN_NULL(stats_menu_options, -1, "Stats Mode",
                      "Allocated memory for stats window options in memory pool is NULL");
 

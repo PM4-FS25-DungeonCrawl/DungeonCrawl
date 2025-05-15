@@ -1,3 +1,3 @@
 #include "common.h"
 
-memory_pool_t* main_memory_pool;
+memory_pool_t* test_memory_pool;

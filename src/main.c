@@ -61,8 +61,8 @@ void shutdown_game(void);
  */
 int init() {
     // Initialize the main memory pool
-    main_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
-    NULL_PTR_HANDLER_RETURN(main_memory_pool, FAIL_MEM_POOL_INIT, "Main", "Main memory pool is NULL");
+    test_memory_pool = init_memory_pool(STANDARD_MEMORY_POOL_SIZE);
+    NULL_PTR_HANDLER_RETURN(test_memory_pool, FAIL_MEM_POOL_INIT, "Main", "Main memory pool is NULL");
 
     // Seed random function
     srand(time(NULL));
@@ -156,7 +156,7 @@ void shutdown_game() {
     shutdown_main_menu();
 
     //shutdown the main memory pool
-    shutdown_memory_pool(main_memory_pool);
+    shutdown_memory_pool(test_memory_pool);
     shutdown_logger();
     shutdown_io_handler();
 }
