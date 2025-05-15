@@ -3,4 +3,4 @@
 
 int save_character();
 
-#endif //CHARACTER_DATABASE_H
+#endif//CHARACTER_DATABASE_H
