@@ -6,11 +6,11 @@
 #include <stdio.h>
 #include <string.h>
 
-memory_pool_t* test_character_memory_pool;
+memory_pool_t* test_memory_pool;
 
 void setup() {
-    test_character_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (test_character_memory_pool == NULL) {
+    test_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (test_memory_pool == NULL) {
         fprintf(stderr, "Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
@@ -18,7 +18,7 @@ void setup() {
 
 // initialize a character for testing
 character_t* setup_character() {
-    character_t* character = init_character(test_character_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 10, 15, 20);
     return character;
 }
@@ -28,7 +28,7 @@ void test_init_character() {
     assert(character != NULL);
     assert(strcmp(character->name, "Hero") == 0);
     assert(character->type == PLAYER);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_init_character passed\n");
 }
 
@@ -38,7 +38,7 @@ void test_set_character_stats() {
     assert(character->base_stats.intelligence == 10);
     assert(character->base_stats.dexterity == 15);
     assert(character->base_stats.constitution == 20);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_set_character_stats passed\n");
 }
 
@@ -48,7 +48,7 @@ void test_add_ability() {
     add_ability(character, &test_ability);
     assert(character->abilities[0] == &test_ability);
     assert(character->ability_count == 1);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_add_ability passed\n");
 }
 
@@ -58,7 +58,7 @@ void test_add_gear() {
     add_gear(character, &test_gear);
     assert(character->gear_inventory[0] == &test_gear);
     assert(character->gear_count == 1);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_add_gear passed\n");
 }
 
@@ -68,7 +68,7 @@ void test_add_potion() {
     add_potion(character, &test_potion);
     assert(character->potion_inventory[0] == &test_potion);
     assert(character->potion_count == 1);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_add_potion passed\n");
 }
 
@@ -77,7 +77,7 @@ void test_reset_current_stats() {
     character->current_stats.strength = 10;
     reset_current_stats(character);
     assert(character->current_stats.strength == character->base_stats.strength);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_reset_current_stats passed\n");
 }
 
@@ -86,7 +86,7 @@ void test_character_level_up() {
     int initial_level = character->level;
     level_up(character);
     assert(character->level == initial_level + 1);
-    free_character(test_character_memory_pool, character);
+    free_character(test_memory_pool, character);
     printf("test_character_level_up passed\n");
 }
 

@@ -214,7 +214,7 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
         gear_t* item = c->equipment[slot];
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i]->name[0] != '\0') {
+            if (item->abilities[i] != NULL) {
                 remove_ability(c, item->abilities[i]);
             }
         }
@@ -297,7 +297,7 @@ void equip_gear(character_t* c, gear_t* gear) {
         remove_gear(c, gear);//removing from inventory
 
         for (int i = 0; i < 4; ++i) {
-            if (gear->abilities[i]->name[0] != '\0') {
+            if (gear->abilities[i] != NULL) {
                 add_ability(c, gear->abilities[i]);
             }
         }
@@ -333,6 +333,18 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     remove_equipped_gear(c, slot);
 }
 
+void reset_current_stats(character_t* c) {
+    c->current_stats = c->base_stats;
+}
+
+void reset_current_resources(character_t* c) {
+    if (c == NULL) return;
+
+    // reset current stats to their starting values
+    c->current_resources = c->max_resources;
+    log_msg(INFO, "Character", "Player stats reset to base values.");
+}
+
 /**
  * @brief sets initial xp for a character
  * @param c Pointer to the character
@@ -366,15 +378,4 @@ void set_xp_reward(character_t* c, int xp_reward) {
 void set_skill_points(character_t* character, int skill_points) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_skill_points character is NULL");
     character->skill_points = skill_points;
-}
-
-void reset_player_stats(character_t* player) {
-    if (player == NULL) return;
-
-    // reset current stats to their starting values
-    player->current_resources.health = player->max_resources.health;
-    player->current_resources.mana = player->max_resources.mana;
-    player->current_resources.stamina = player->max_resources.stamina;
-
-    log_msg(INFO, "Character", "Player stats reset to base values.");
 }

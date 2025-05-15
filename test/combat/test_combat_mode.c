@@ -7,9 +7,11 @@
 #include <stdio.h>
 
 
+memory_pool_t* test_memory_pool;
+
 void setup() {
-    main_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
-    if (main_memory_pool == NULL) {
+    test_memory_pool = init_memory_pool(MIN_MEMORY_POOL_SIZE);
+    if (test_memory_pool == NULL) {
         printf("Failed to initialize memory pool\n");
         exit(EXIT_FAILURE);
     }
@@ -19,14 +21,11 @@ void setup() {
 
 
 character_t* create_test_character() {
-    character_t* character = init_character(main_memory_pool, PLAYER, "Hero");
+    character_t* character = init_character(test_memory_pool, PLAYER, "Hero");
     set_character_stats(character, 5, 5, 5, 20);
     return character;
 }
 
-/**
- * @brief Test health potion
- */
 void test_health_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
@@ -54,9 +53,6 @@ void test_health_potion() {
     printf("Test: test_health_potion() passed\n");
 }
 
-/**
- * @brief Test stamina potion
- */
 void test_stamina_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
@@ -84,9 +80,6 @@ void test_stamina_potion() {
     printf("Test: test_stamina_potion() passed\n");
 }
 
-/**
- * @brief Test mana potion
- */
 void test_mana_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
@@ -114,9 +107,6 @@ void test_mana_potion() {
     printf("Test: test_mana_potion() passed\n");
 }
 
-/**
- * @brief Test stamina usage for ability
- */
 void test_use_stamina_ability() {
     character_t* player = create_test_character();
     ability_t test_stamina_ability = {
@@ -129,9 +119,6 @@ void test_use_stamina_ability() {
     printf("Test: test_use_stamina_ability() passed\n");
 }
 
-/**
- * @brief Test mana usage for ability
- */
 void test_use_mana_ability() {
     character_t* player = create_test_character();
     ability_t test_mana_ability = {
@@ -144,9 +131,6 @@ void test_use_mana_ability() {
     printf("Test: test_use_mana_ability() passed\n");
 }
 
-/**
- * @brief Test insufficient stamina for ability usage
- */
 void test_use_stamina_ability_insufficient_resource() {
     character_t* player = create_test_character();
     ability_t test_stamina_ability = {
@@ -159,9 +143,6 @@ void test_use_stamina_ability_insufficient_resource() {
     printf("Test: test_use_stamina_ability_insufficient_resource() passed\n");
 }
 
-/**
- * @brief Test insufficient mana for ability usage
- */
 void test_use_mana_ability_insufficient_resource() {
     character_t* player = create_test_character();
     ability_t test_mana_ability = {
@@ -174,9 +155,6 @@ void test_use_mana_ability_insufficient_resource() {
     printf("Test: test_use_mana_ability_insufficient_resource() passed\n");
 }
 
-/**
- * @brief Test to get random ability
- */
 void test_get_random_ability() {
     character_t* player = create_test_character();
 
@@ -227,6 +205,6 @@ int main(void) {
     // others
     test_get_random_ability();
 
-    shutdown_memory_pool(main_memory_pool);
+    shutdown_memory_pool(test_memory_pool);
     return 0;
 }

@@ -68,13 +68,12 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot);
 void equip_gear(character_t* c, gear_t* gear);
 void unequip_gear(character_t* c, gear_slot_t slot);
 
-void reset_current_stats(character_t* character);
+void reset_current_stats(character_t* c);
+void reset_current_resources(character_t* c);
 
 void set_level(character_t* character, int level);
 void set_xp_reward(character_t* character, int xp_reward);
 void set_initial_xp(character_t* character, int xp);
 void set_skill_points(character_t* character, int skill_points);
-
-void reset_player_stats(character_t* player);
 
 #endif//CHARACTER_H
