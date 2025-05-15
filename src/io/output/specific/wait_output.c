@@ -61,7 +61,7 @@ void draw_loading_screen(const char* text) {
     print_text_default(msg_y + 2, width / 2, animation_str);
 
     // Render the frame using centralized IO handler
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -126,35 +126,48 @@ void draw_launch_screen(void) {
     const char* loading_msg = "Loading game...";
     int loading_len = strlen(loading_msg);
 
-    // Continue showing animation until init is done
-    extern volatile int init_done;
-    while (!init_done) {
-        // Show simple animation
-        static int frame = 0;
-        frame = (frame + 1) % 4;
-        char anim[5] = "|/-\\";
-        char animation_str[32];
-        snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
+    // Show simple animation
+    static int frame = 0;
+    frame = (frame + 1) % 4;
+    char anim[5] = "|/-\\";
+    char animation_str[32];
+    snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
 
-        print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
+    print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
 
-        // Render the frame using centralized IO handler
-        render_io_frame();
-
-        // Pause briefly to prevent 100% CPU usage and to make animation visible
+    // Render the frame using centralized IO handler
+    render_frame();
+// Sleep for a short duration to control the animation speed
 #ifdef _WIN32
-        Sleep(100);// 100ms pause on Windows
+    Sleep(50);
 #else
-        usleep(100000);// 100ms pause on Unix/Linux
+    usleep(50000);// 50ms
 #endif
-    }
+}
 
-    // Free the goblin image when we're done with the launch screen
-    if (goblin_img) {
-        log_msg(INFO, "Wait Output", "Freeing goblin image as initialization completed");
-        free_visual(goblin_img);
-        goblin_img = NULL;
-        // Clear the image off the screen
-        clear_screen();
-    }
+/**
+ * @brief Draw the welcome screen with a message
+ *
+ * This function displays a welcome message on the screen and prompts
+ * the user to press any key to continue. It's typically shown after
+ * the launch screen animation completes.
+ */
+void draw_welcome_screen(void) {
+    // Get screen dimensions
+    int width, height;
+    get_screen_dimensions(&width, &height);
+
+    // Clear the screen
+    clear_screen();
+
+    // Draw welcome message
+    const char* welcome_msg = "Welcome to Dungeon Crawl! Press any key to continue...";
+    int msg_len = strlen(welcome_msg);
+    int msg_x = (width - msg_len) / 2;
+    int msg_y = height / 2;
+
+    print_text_default(msg_y, msg_x, welcome_msg);
+
+    // Render the frame using centralized IO handler
+    render_frame();
 }

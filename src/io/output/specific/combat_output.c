@@ -5,9 +5,13 @@
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
+<<<<<<< HEAD
 #include "../common/common_output.h"
 #include "../media/media_output.h"
 #include "notcurses/notcurses.h"
+=======
+#include "../common/output_handler.h"
+>>>>>>> 157-io-bugs
 
 #include <string.h>
 
@@ -80,7 +84,7 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     }
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 
     return vec;
 }
@@ -116,7 +120,7 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, char** men
     }
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -135,7 +139,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
     anchor.dy++;
-    render_io_frame();
+    render_frame();
 
     // Use our input handler to get any key press
     input_event_t input_event;
@@ -153,7 +157,7 @@ void draw_game_over(void) {
     // Display game over message
     print_text(1, 1, "Game over", RED_TEXT_COLORS);
     print_text_default(2, 1, "Press any key to exit...");
-    render_io_frame();
+    render_frame();
 
     // Use our input handler to get any key press
     input_event_t input_event;

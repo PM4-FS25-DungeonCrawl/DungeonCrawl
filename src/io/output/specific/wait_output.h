@@ -13,4 +13,9 @@ void draw_loading_screen(const char* text);
  */
 void draw_launch_screen(void);
 
+/**
+ * @brief Draw the welcome screen with a message
+ */
+void draw_welcome_screen(void);
+
 #endif// WAIT_OUTPUT_H
