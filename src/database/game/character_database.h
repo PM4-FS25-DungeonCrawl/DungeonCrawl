@@ -11,7 +11,7 @@
  * @param character the character to save
  * @param game_state_id the game state id
  */
-void save_character(db_connection_t* db_connection, character_t character, const sqlite3_int64 game_state_id);
+void save_character(db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id);
 int get_character_from_db();
 
 #endif//CHARACTER_DATABASE_H
