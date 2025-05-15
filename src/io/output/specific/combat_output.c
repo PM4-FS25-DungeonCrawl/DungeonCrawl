@@ -5,13 +5,8 @@
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
-<<<<<<< HEAD
-#include "../common/common_output.h"
-#include "../media/media_output.h"
-#include "notcurses/notcurses.h"
-=======
 #include "../common/output_handler.h"
->>>>>>> 157-io-bugs
+#include "../media/media_output.h"
 
 #include <string.h>
 

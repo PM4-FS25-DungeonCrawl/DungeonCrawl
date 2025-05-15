@@ -2,7 +2,7 @@
 
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 #include "../media/media_output.h"// Added for media support
 
 #include <stdio.h>
@@ -100,6 +100,7 @@ void draw_launch_screen(void) {
     print_text_default(title_y + 2, version_x, version);
     print_text_default(title_y + 3, copyright_x, copyright);
 
+    /* comment out for now
     // Load the goblin image once during initialization
     static loaded_visual_t* goblin_img = NULL;
 
@@ -110,9 +111,9 @@ void draw_launch_screen(void) {
     // Draw the goblin image if loaded
     if (goblin_img) {
         // Position the image below the title
-        int image_y = title_y + 5;
-        int image_width = 5; // Terminal cells, not pixels
-        int image_height = 5;// Terminal cells, not pixels
+        int image_y = title_y + 10;
+        int image_width = 3; // Terminal cells, not pixels
+        int image_height = 3;// Terminal cells, not pixels
         int image_x = (width - image_width) / 2;
 
         // Display the image
@@ -121,6 +122,7 @@ void draw_launch_screen(void) {
             log_msg(ERROR, "Wait Output", "Failed to display goblin image");
         }
     }
+    */
 
     // Draw a loading message
     const char* loading_msg = "Loading game...";
@@ -137,12 +139,12 @@ void draw_launch_screen(void) {
 
     // Render the frame using centralized IO handler
     render_frame();
-// Sleep for a short duration to control the animation speed
-#ifdef _WIN32
-    Sleep(50);
-#else
-    usleep(50000);// 50ms
-#endif
+    // Sleep for a short duration to control the animation speed
+    #ifdef _WIN32
+        Sleep(50);
+    #else
+        usleep(50000);// 50ms
+    #endif
 }
 
 /**
