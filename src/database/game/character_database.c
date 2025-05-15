@@ -2,23 +2,23 @@
 
 #include "../../logging/logger.h"
 
-#define SQL_INSERT_CHARACTER "INSERT INTO character (CH_MAXHEALTH, "\
-"CH_MAXMANA, "\
-"CH_MAXSTAMINA, "\
-"CH_CURRENTHEALTH, "\
-"CH_CURRENTMANA, "\
-"CH_CURRENTSTAMINA, "\
-"CH_ARMOR, "\
-"CH_MAGICRESIST, "\
-"CH_LEVEL, "\
-"CH_XP, "\
-"CH_XPREWARD, "\
-"CH_SKILLPOINTS) "\
-"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
-#define SQL_INSERT_PLAYER "INSERT INTO player (PY_CH_ID, "\
-"PY_PS_ID, "\
-"PY_NAME) "\
-"VALUES (?, ?, ?);"
+#define SQL_INSERT_CHARACTER "INSERT INTO character (CH_MAXHEALTH, " \
+                             "CH_MAXMANA, "                          \
+                             "CH_MAXSTAMINA, "                       \
+                             "CH_CURRENTHEALTH, "                    \
+                             "CH_CURRENTMANA, "                      \
+                             "CH_CURRENTSTAMINA, "                   \
+                             "CH_ARMOR, "                            \
+                             "CH_MAGICRESIST, "                      \
+                             "CH_LEVEL, "                            \
+                             "CH_XP, "                               \
+                             "CH_XPREWARD, "                         \
+                             "CH_SKILLPOINTS) "                      \
+                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+#define SQL_INSERT_PLAYER "INSERT INTO player (PY_CH_ID, " \
+                          "PY_PS_ID, "                     \
+                          "PY_NAME) "                      \
+                          "VALUES (?, ?, ?);"
 
 void save_character(db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id) {
     // Check if the database connection is open
@@ -144,6 +144,4 @@ void save_character(db_connection_t* db_connection, const character_t character,
         sqlite3_finalize(stmt_player);
         return;
     }
-
-
 }

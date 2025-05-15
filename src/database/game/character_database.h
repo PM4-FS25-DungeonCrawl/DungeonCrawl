@@ -1,8 +1,8 @@
 #ifndef CHARACTER_DATABASE_H
 #define CHARACTER_DATABASE_H
 
-#include "../database.h"
 #include "../../character/character.h"
+#include "../database.h"
 
 /**
  * This function saves the character to the database.
