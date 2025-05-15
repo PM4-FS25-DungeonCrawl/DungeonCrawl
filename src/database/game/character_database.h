@@ -14,4 +14,4 @@
 void save_character(db_connection_t* db_connection, character_t character, const sqlite3_int64 game_state_id);
 int get_character_from_db();
 
-#endif //CHARACTER_DATABASE_H
+#endif//CHARACTER_DATABASE_H
