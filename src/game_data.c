@@ -4,6 +4,7 @@
 #include "character/player.h"
 #include "common.h"
 #include "game.h"
+#include "item/loot_generation.h"
 
 #include <stddef.h>
 
@@ -27,19 +28,8 @@ int init_game_data() {
     add_potion(player, &potion_table->potions[MANA]);
     add_potion(player, &potion_table->potions[STAMINA]);
 
-    add_gear(player, gear_table->gears[MAGIC_STAFF]);
-    add_gear(player, gear_table->gears[BARDICHE]);
-    add_gear(player, gear_table->gears[STEEL_SABATONS_OF_THE_BOAR]);
-    add_gear(player, gear_table->gears[SHADOW_HOOD_OF_THE_FOX]);
+    equip_gear(player, gear_table->gears[ARMING_SWORD]);
 
-
-    equip_gear(player, gear_table->gears[LONGSWORD]);
-    equip_gear(player, gear_table->gears[IRON_HELM_OF_THE_BOAR]);
-    equip_gear(player, gear_table->gears[BATTLEPLATE_OF_THE_BOAR]);
-
-
-    add_gear(goblin, gear_table->gears[PENDANT_OF_FOCUS_OF_THE_OWL]);
-    add_gear(goblin, gear_table->gears[CROSSBOW]);
     add_potion(goblin, &potion_table->potions[HEALING]);
 
     return 0;
@@ -61,5 +51,6 @@ int reset_goblin() {
         return 1;
     }
     add_ability(goblin, &ability_table->abilities[BITE]);
+    generate_loot(goblin, gear_table, potion_table, 1);
     return 0;
 }

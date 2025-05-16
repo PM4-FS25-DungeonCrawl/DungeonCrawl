@@ -53,7 +53,7 @@ character_t* init_character(memory_pool_t* memory_pool, character_type_t type, c
 void free_character(memory_pool_t* memory_pool, character_t* character);
 
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
-void update_character_resources(resources_t* max_resources, stats_t* base_stats);
+void update_character_resources(resources_t* current_resources, resources_t* max_resources, stats_t* base_stats);
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
 void add_ability(character_t* c, ability_t* ability);
