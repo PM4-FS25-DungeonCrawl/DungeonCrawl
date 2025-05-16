@@ -90,6 +90,9 @@ helper_map_mode = files(
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
     '../src/thread/thread_handler.c',
+    '../src/memory/memory_management.c',
+
+    '../src/character/character.c',
 
     '../src/io/io_handler.c',
     '../src/io/input/input_handler.c',

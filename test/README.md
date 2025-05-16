@@ -3,7 +3,7 @@
 ## Overview
 The purpose of this document is to record decisions regarding the testing of the DungeonCrawl project.
 
-[Test coverage]
+[Test coverage](https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html)
 
 ## Testing Scope
 

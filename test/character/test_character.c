@@ -186,19 +186,25 @@ void test_character_level_up() {
 int main(void) {
     setup();
 
+    //Test for character initializer
     test_init_character();
 
+    // Tests for character stats and modifiers
     test_set_character_stats();
     test_update_character_resources();
     test_character_dmg_modifier();
 
+    // Tests regarding adding things to character
     test_add_and_remove_ability();
     test_add_and_remove_potion();
     test_add_and_remove_gear();
     test_equip_and_unequip_gear();
     
+    // Tests for current stat and resource resetter
     test_reset_current_stats();
     test_reset_current_resources();
+    
+    // Test for leveling up
     test_character_level_up();
 
     shutdown_memory_pool(test_character_memory_pool);

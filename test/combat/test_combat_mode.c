@@ -6,7 +6,6 @@
 #include <assert.h>
 #include <stdio.h>
 
-
 memory_pool_t* test_combat_memory;
 
 void setup() {
@@ -18,7 +17,6 @@ void setup() {
     init_combat_mode();
     printf("Setup complete\n");
 }
-
 
 character_t* create_test_character() {
     character_t* character = init_character(test_combat_memory, PLAYER, "Hero");
