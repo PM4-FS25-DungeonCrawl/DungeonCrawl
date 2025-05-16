@@ -33,6 +33,11 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
         character->equipment[i] = NULL;
     }
 
+    for (int i = 0; i < MAX_DAMAGE_TYPE; i++) {
+        character->resistance[i].type = i;
+        character->resistance[i].value = 0;
+    }
+
     return character;
 }
 
@@ -106,12 +111,11 @@ void update_character_resources(resources_t* max_resources, stats_t* base_stats)
 void set_character_dmg_modifier(character_t* c, damage_type_t type, int value) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_dmg_modifier character is NULL");
 
-    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        if (c->resistance[i].type == type) {
-            c->resistance[i].value = value;
-            return;
-        }
+    if (type >= 0 && type < MAX_DAMAGE_TYPE) {
+        c->resistance[type].value = value;
+        return;
     }
+
     log_msg(WARNING, "Character", "Unknown damage type: %d", type);
 }
 

@@ -56,8 +56,8 @@ void test_character_dmg_modifier() {
     character_t* c = setup_character();
     
     set_character_dmg_modifier(c, PHYSICAL, 10);
-    assert(c->resistance[0].type == PHYSICAL);
-    assert(c->resistance[0].value == 10);
+    assert(c->resistance[PHYSICAL].type == PHYSICAL);
+    assert(c->resistance[PHYSICAL].value == 10);
 
     printf("Test: test_character_dmg_modifier() passed\n");
 }

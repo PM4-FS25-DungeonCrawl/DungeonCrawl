@@ -4,11 +4,10 @@
 #include "../character/character_fw.h"
 #include "ability_fw.h"
 
-#define DAMAGE_TYPE_COUNT 2
-
 typedef enum damage_type_t {
     PHYSICAL,
-    MAGICAL
+    MAGICAL,
+    MAX_DAMAGE_TYPE
 } damage_type_t;
 
 typedef enum dice_size_t {

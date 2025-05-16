@@ -29,7 +29,7 @@ typedef struct character_t {
     resources_t max_resources;
     resources_t current_resources;
 
-    damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
+    damage_resistance_t resistance[MAX_DAMAGE_TYPE];
     defenses_t defenses;
 
     ability_t* abilities[MAX_ABILITY_LIMIT];
