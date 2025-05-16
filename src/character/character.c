@@ -6,6 +6,9 @@
 
 #include <stdio.h>
 
+// Internal functions
+void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
+
 /**
  * @brief Initializes a new character
  * @param memory_pool Pointer to the memory pool for dynamic allocation
@@ -28,6 +31,11 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
 
     for (int i = 0; i < MAX_SLOT; i++) {
         character->equipment[i] = NULL;
+    }
+
+    for (int i = 0; i < MAX_DAMAGE_TYPE; i++) {
+        character->resistance[i].type = i;
+        character->resistance[i].value = 0;
     }
 
     return character;
@@ -124,12 +132,11 @@ void update_character_resources(resources_t* current_resources, resources_t* max
 void set_character_dmg_modifier(character_t* c, damage_type_t type, int value) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_dmg_modifier character is NULL");
 
-    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        if (c->resistance[i].type == type) {
-            c->resistance[i].value = value;
-            return;
-        }
+    if (type >= 0 && type < MAX_DAMAGE_TYPE) {
+        c->resistance[type].value = value;
+        return;
     }
+
     log_msg(WARNING, "Character", "Unknown damage type: %d", type);
 }
 
@@ -232,7 +239,7 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
         gear_t* item = c->equipment[slot];
 
         for (int i = 0; i < 4; ++i) {
-            if (item->abilities[i]->name[0] != '\0') {
+            if (item->abilities[i] != NULL) {
                 remove_ability(c, item->abilities[i]);
             }
         }
@@ -314,7 +321,7 @@ void equip_gear(character_t* c, gear_t* gear) {
         remove_gear(c, gear);
 
         for (int i = 0; i < 4; ++i) {
-            if (gear->abilities[i]->name[0] != '\0') {
+            if (gear->abilities[i] != NULL) {
                 add_ability(c, gear->abilities[i]);
             }
         }
@@ -351,6 +358,18 @@ void unequip_gear(character_t* c, const gear_slot_t slot) {
     remove_equipped_gear(c, slot);
 }
 
+void reset_current_stats(character_t* c) {
+    c->current_stats = c->base_stats;
+}
+
+void reset_current_resources(character_t* c) {
+    if (c == NULL) return;
+
+    // reset current stats to their starting values
+    c->current_resources = c->max_resources;
+    log_msg(INFO, "Character", "Player stats reset to base values.");
+}
+
 /**
  * @brief sets initial xp for a character
  * @param c Pointer to the character
@@ -384,15 +403,4 @@ void set_xp_reward(character_t* c, int xp_reward) {
 void set_skill_points(character_t* character, int skill_points) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_skill_points character is NULL");
     character->skill_points = skill_points;
-}
-
-void reset_player_stats(character_t* player) {
-    if (player == NULL) return;
-
-    // reset current stats to their starting values
-    player->current_resources.health = player->max_resources.health;
-    player->current_resources.mana = player->max_resources.mana;
-    player->current_resources.stamina = player->max_resources.stamina;
-
-    log_msg(INFO, "Character", "Player stats reset to base values.");
 }

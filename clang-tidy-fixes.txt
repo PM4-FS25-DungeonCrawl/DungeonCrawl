@@ -69,5 +69,5 @@
 ../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
    17 | extern struct notcurses* nc;
       |                          ^
-Suppressed 300345 warnings (300159 in non-user code, 186 with check filters).
+Suppressed 348955 warnings (348767 in non-user code, 188 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
