@@ -355,29 +355,29 @@ bool invoke_potion_effect(character_t* character, potion_t* potion) {
     int* c_curr_resource;
 
     switch (potion->effectType) {
-    case HEALING:
-        c_max_resource = &character->max_resources.health;
-        c_curr_resource = &character->current_resources.health;
-        break;
-    case MANA:
-        c_max_resource = &character->max_resources.mana;
-        c_curr_resource = &character->current_resources.mana;
-        break;
-    case STAMINA:
-        c_max_resource = &character->max_resources.stamina;
-        c_curr_resource = &character->current_resources.stamina;
-        break;
-    default:
-        log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
-        return false;
+        case HEALING:
+            c_max_resource = &character->max_resources.health;
+            c_curr_resource = &character->current_resources.health;
+            break;
+        case MANA:
+            c_max_resource = &character->max_resources.mana;
+            c_curr_resource = &character->current_resources.mana;
+            break;
+        case STAMINA:
+            c_max_resource = &character->max_resources.stamina;
+            c_curr_resource = &character->current_resources.stamina;
+            break;
+        default:
+            log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
+            return false;
     }
 
-    if(potion->value > (*c_max_resource - *c_curr_resource)) {
+    if (potion->value > (*c_max_resource - *c_curr_resource)) {
         *c_curr_resource = *c_max_resource;
     } else {
         *c_curr_resource += potion->value;
     }
-    
+
     remove_potion(character, potion);
     return true;
 }

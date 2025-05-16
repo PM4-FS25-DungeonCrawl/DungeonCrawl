@@ -1,6 +1,6 @@
+#include "../src/character/character.h"
 #include "../src/map/map.h"
 #include "../src/map/map_mode.h"
-#include "../src/character/character.h"
 #include "../src/memory/memory_management.h"
 
 #include <assert.h>
@@ -28,37 +28,29 @@ void test_map_mode() {
 
     // Setup keyevents
     input_event_t right = {
-        .type = INPUT_RIGHT,
-        .raw_input = {
-            .id = NCKEY_RIGHT
-        }
-    };
-    
+            .type = INPUT_RIGHT,
+            .raw_input = {
+                    .id = NCKEY_RIGHT}};
+
     input_event_t up = {
-        .type = INPUT_UP,
-        .raw_input = {
-            .id = NCKEY_UP
-        }
-    };
+            .type = INPUT_UP,
+            .raw_input = {
+                    .id = NCKEY_UP}};
 
     input_event_t down = {
-        .type = INPUT_DOWN,
-        .raw_input = {
-            .id = NCKEY_DOWN
-        }
-    };
+            .type = INPUT_DOWN,
+            .raw_input = {
+                    .id = NCKEY_DOWN}};
 
     input_event_t left = {
-        .type = INPUT_LEFT,
-        .raw_input = {
-            .id = NCKEY_LEFT
-        }
-    };
+            .type = INPUT_LEFT,
+            .raw_input = {
+                    .id = NCKEY_LEFT}};
 
     // Initialize the map and player position
     init_map_mode();
     set_player_start_pos(1, 1);
-    
+
     // Simulate player movement to an empty floor tile
     map[2][1] = FLOOR;
 
@@ -66,49 +58,49 @@ void test_map_mode() {
     vector2d_t player_pos = get_player_pos();
     assert(result == CONTINUE);
     assert(player_pos.dx == 2 && player_pos.dy == 1);
-    
+
     // Simulate player encountering a goblin
     map[2][2] = GOBLIN;
     result = handle_input(&down, c);
     player_pos = get_player_pos();
     assert(result == COMBAT);
     assert(player_pos.dx == 2 && player_pos.dy == 2);
-    
+
     // Simulate player hitting a wall
     map[1][2] = WALL;
     result = handle_input(&left, c);
     player_pos = get_player_pos();
     assert(result == CONTINUE);
-    assert(player_pos.dx == 2 && player_pos.dy == 2); // Position should not change
-    
+    assert(player_pos.dx == 2 && player_pos.dy == 2);// Position should not change
+
     // Simulate player hitting start door
     map[3][2] = START_DOOR;
     result = handle_input(&right, c);
     player_pos = get_player_pos();
     assert(result == CONTINUE);
-    assert(player_pos.dx == 2 && player_pos.dy == 2); // Position should not change
-    
+    assert(player_pos.dx == 2 && player_pos.dy == 2);// Position should not change
+
     // Simulate player hitting exit door
     map[2][3] = EXIT_DOOR;
     result = handle_input(&down, c);
     player_pos = get_player_pos();
     assert(result == CONTINUE);
-    assert(player_pos.dx == 2 && player_pos.dy == 2); // Position should not change
-    
+    assert(player_pos.dx == 2 && player_pos.dy == 2);// Position should not change
+
     //Simulate player picking up a key
     map[2][1] = KEY;
     result = handle_input(&up, c);
     player_pos = get_player_pos();
     assert(result == CONTINUE);
     assert(player_pos.dx == 2 && player_pos.dy == 1);
-    
+
     // Simulate player using the key on the exit door
     map[2][0] = EXIT_DOOR;
     result = handle_input(&up, c);
     player_pos = get_player_pos();
     assert(result == NEXT_FLOOR);
     assert(player_pos.dx == 2 && player_pos.dy == 0);
-    
+
     printf("All map_mode tests passed.\n");
 }
 

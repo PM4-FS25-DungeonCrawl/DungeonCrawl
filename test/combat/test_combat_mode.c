@@ -27,12 +27,12 @@ character_t* create_test_character() {
 void test_health_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
-        .effectType = HEALING,
-        .value = 20};
-        
+            .effectType = HEALING,
+            .value = 20};
+
     add_potion(player, &test_potion);
     add_potion(player, &test_potion);
-    
+
     int* max_resource = &player->max_resources.health;
     int* curr_resource = &player->current_resources.health;
 
@@ -54,12 +54,12 @@ void test_health_potion() {
 void test_stamina_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
-        .effectType = STAMINA,
-        .value = 5};
-        
+            .effectType = STAMINA,
+            .value = 5};
+
     add_potion(player, &test_potion);
     add_potion(player, &test_potion);
-    
+
     int* max_resource = &player->max_resources.stamina;
     int* curr_resource = &player->current_resources.stamina;
 
@@ -81,12 +81,12 @@ void test_stamina_potion() {
 void test_mana_potion() {
     character_t* player = create_test_character();
     potion_t test_potion = {
-        .effectType = MANA,
-        .value = 3};
-        
+            .effectType = MANA,
+            .value = 3};
+
     add_potion(player, &test_potion);
     add_potion(player, &test_potion);
-    
+
     int* max_resource = &player->max_resources.mana;
     int* curr_resource = &player->current_resources.mana;
 
@@ -108,8 +108,8 @@ void test_mana_potion() {
 void test_use_stamina_ability() {
     character_t* player = create_test_character();
     ability_t test_stamina_ability = {
-        .damage_type = PHYSICAL,
-        .resource_cost = 5};
+            .damage_type = PHYSICAL,
+            .resource_cost = 5};
 
     int currStamina = player->current_resources.stamina;
     assert(consume_ability_resource(player, &test_stamina_ability));
@@ -120,8 +120,8 @@ void test_use_stamina_ability() {
 void test_use_mana_ability() {
     character_t* player = create_test_character();
     ability_t test_mana_ability = {
-        .damage_type = MAGICAL,
-        .resource_cost = 5};
+            .damage_type = MAGICAL,
+            .resource_cost = 5};
 
     int currMana = player->current_resources.mana;
     assert(consume_ability_resource(player, &test_mana_ability));
@@ -132,8 +132,8 @@ void test_use_mana_ability() {
 void test_use_stamina_ability_insufficient_resource() {
     character_t* player = create_test_character();
     ability_t test_stamina_ability = {
-        .damage_type = PHYSICAL,
-        .resource_cost = player->current_resources.stamina + 1};
+            .damage_type = PHYSICAL,
+            .resource_cost = player->current_resources.stamina + 1};
 
     int currStamina = player->current_resources.stamina;
     assert(!consume_ability_resource(player, &test_stamina_ability));
@@ -144,8 +144,8 @@ void test_use_stamina_ability_insufficient_resource() {
 void test_use_mana_ability_insufficient_resource() {
     character_t* player = create_test_character();
     ability_t test_mana_ability = {
-        .damage_type = MAGICAL,
-        .resource_cost = player->current_resources.mana + 1};
+            .damage_type = MAGICAL,
+            .resource_cost = player->current_resources.mana + 1};
 
     int currMana = player->current_resources.mana;
     assert(!consume_ability_resource(player, &test_mana_ability));

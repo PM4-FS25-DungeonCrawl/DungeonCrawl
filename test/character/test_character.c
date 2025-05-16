@@ -54,7 +54,7 @@ void test_update_character_resources() {
 
 void test_character_dmg_modifier() {
     character_t* c = setup_character();
-    
+
     set_character_dmg_modifier(c, PHYSICAL, 10);
     assert(c->resistance[PHYSICAL].type == PHYSICAL);
     assert(c->resistance[PHYSICAL].value == 10);
@@ -65,7 +65,7 @@ void test_character_dmg_modifier() {
 void test_add_and_remove_ability() {
     character_t* c = setup_character();
     ability_t test_ability = {.name = "Test Ability"};
-    
+
     add_ability(c, &test_ability);
     assert(c->abilities[0] == &test_ability);
     assert(c->ability_count == 1);
@@ -79,7 +79,7 @@ void test_add_and_remove_ability() {
 void test_add_and_remove_potion() {
     character_t* c = setup_character();
     potion_t test_potion = {.name = "Healing Potion", .effectType = HEALING, .value = 20};
-    
+
     add_potion(c, &test_potion);
     assert(c->potion_inventory[0] == &test_potion);
     assert(c->potion_count == 1);
@@ -93,7 +93,7 @@ void test_add_and_remove_potion() {
 void test_add_and_remove_gear() {
     character_t* c = setup_character();
     gear_t test_gear = {.local_key = "Test Gear", .slot = SLOT_HEAD};
-    
+
     add_gear(c, &test_gear);
     assert(c->gear_inventory[0] == &test_gear);
     assert(c->gear_count == 1);
@@ -108,25 +108,21 @@ void test_add_and_remove_gear() {
 void test_equip_and_unequip_gear() {
     character_t* c = setup_character();
     gear_t test_gear = {
-        .local_key = "Test Gear",
-        .local_name = "Test Gear",
-        .slot = SLOT_HEAD,
-        .stats = {
-            .constitution = 1,
-            .dexterity = 1,
-            .intelligence = 1,
-            .strength = 1
-        },
-        .defenses = {
-            .armor = 10,
-            .magic_resist = 10
-        }};
-    
+            .local_key = "Test Gear",
+            .local_name = "Test Gear",
+            .slot = SLOT_HEAD,
+            .stats = {
+                    .constitution = 1,
+                    .dexterity = 1,
+                    .intelligence = 1,
+                    .strength = 1},
+            .defenses = {.armor = 10, .magic_resist = 10}};
+
     add_gear(c, &test_gear);
     equip_gear(c, &test_gear);
     assert(c->equipment[SLOT_HEAD] == &test_gear);
     assert(c->gear_count == 0);
-    
+
     unequip_gear(c, SLOT_HEAD);
     assert(c->equipment[SLOT_HEAD] == NULL);
     assert(c->gear_count == 1);
@@ -141,7 +137,7 @@ void test_reset_current_stats() {
     c->current_stats.intelligence = c->base_stats.intelligence * 2;
     c->current_stats.dexterity = c->base_stats.dexterity * 2;
     c->current_stats.constitution = c->base_stats.constitution * 2;
-    
+
     assert(c->current_stats.strength != c->base_stats.strength);
     assert(c->current_stats.intelligence != c->base_stats.intelligence);
     assert(c->current_stats.dexterity != c->base_stats.dexterity);
@@ -161,8 +157,8 @@ void test_reset_current_resources() {
 
     c->current_resources.health = c->max_resources.health - 1;
     c->current_resources.stamina = c->max_resources.stamina - 1;
-    c->current_resources.mana = c->max_resources.mana -1;
-    
+    c->current_resources.mana = c->max_resources.mana - 1;
+
     assert(c->current_resources.health != c->max_resources.health);
     assert(c->current_resources.stamina != c->max_resources.stamina);
     assert(c->current_resources.mana != c->max_resources.mana);
@@ -199,11 +195,11 @@ int main(void) {
     test_add_and_remove_potion();
     test_add_and_remove_gear();
     test_equip_and_unequip_gear();
-    
+
     // Tests for current stat and resource resetter
     test_reset_current_stats();
     test_reset_current_resources();
-    
+
     // Test for leveling up
     test_character_level_up();
 
