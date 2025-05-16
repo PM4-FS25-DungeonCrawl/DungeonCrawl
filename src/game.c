@@ -8,7 +8,7 @@
 #include "inventory/inventory_mode.h"
 #include "io/input/input_types.h"
 #include "io/io_handler.h"
-#include "io/output/common/common_output.h"
+#include "io/output/common/output_handler.h"
 #include "logging/logger.h"
 #include "map/map.h"
 #include "map/map_generator.h"
@@ -19,7 +19,6 @@
 #include "stats/stats_mode.h"
 
 #include <locale.h>
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
 

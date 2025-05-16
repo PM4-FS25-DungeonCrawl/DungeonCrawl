@@ -5,7 +5,7 @@
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 /**
  * @brief Draws the inventory view UI.
@@ -26,7 +26,7 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
     vec.dy += 2;
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 
     return vec;
 }
@@ -91,7 +91,7 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
     }
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -114,7 +114,7 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     anchor.dy++;
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 
     // Use our input handler to get any key press
     input_event_t input_event;

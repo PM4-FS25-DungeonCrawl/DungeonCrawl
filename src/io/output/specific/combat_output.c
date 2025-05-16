@@ -2,13 +2,19 @@
 
 #include "../../../character/character.h"
 #include "../../../common.h"
-#include "../../../game.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
+#include "../media/media_output.h"
 
 #include <string.h>
+
+// Global variables for cached resources
+static loaded_visual_t* enemy_visual = NULL;
+// coresponding height and width of the resource
+int height;
+int width;
 
 /**
  * @brief Draws the combat view UI
@@ -25,11 +31,17 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
+    int rendered_width = 30;
+    int rendered_height = 0;
+    // - 15 somewhat of a magic number but is just to allow other ui elements to be drawn within
+    // the screen aswell since we don't exactly know how many abilites are going to exist
+    int max_rendered_height = ncplane_dim_y(stdplane) - 15;
+
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Draw title
-    print_text(vec.dy, anchor.dx + 20, "Combat Mode", DEFAULT_COLORS);
+    print_text_default(vec.dy, anchor.dx + 20, "Combat Mode");
     vec.dy += 2;
 
     // Draw resource bars
@@ -37,20 +49,43 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vec.dy = draw_resource_bar(vec, enemy);
     vec.dy += 2;
 
-    // Print the enemy sprite line for line
-    if (red_enemy_sprite) {
-        print_text(vec.dy, anchor.dx, enemy_sprite, RED_TEXT_COLORS);
+    // Check if enemy_visual needs to be loaded
+    if (enemy_visual == NULL) {
+        enemy_visual = load_image(GOBLIN_IMAGE, &width, &height);
+        if (enemy_visual == NULL) {
+            // Failed to load image, fallback to ASCII art
+            log_msg(WARNING, "Combat Output", "Failed to load enemy image, using ASCII art");
+            if (enemy_sprite != NULL) {
+                uint64_t color = red_enemy_sprite ? RED_TEXT_COLORS : DEFAULT_COLORS;
+                print_text_multi_line(vec.dy, anchor.dx, enemy_sprite, 30, color);
+                vec.dy += sprite_height + 1;
+            }
+        } else {
+            // calculate correct rendered height
+
+            int calculated_height = height / ((width / rendered_width) * 2);
+            rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
+            // Successfully loaded image, display it
+            display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
+            vec.dy += rendered_height + 1;
+        }
     } else {
-        print_text_default(vec.dy, anchor.dx, enemy_sprite);
+        // calculate correct rendered height
+        int calculated_height = height / ((width / rendered_width) * 2);
+        rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
+        // Enemy visual already loaded, display it
+        display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
+        vec.dy += rendered_height + 1;
     }
 
-    vec.dy += sprite_height;
-    vec.dy += 1;
-
     // Render the frame
-    render_io_frame();
+    render_frame();
 
     return vec;
+}
+
+void clear_enemy_sprite() {
+    display_image_positioned(enemy_visual, 0, 0, 0, 0);
 }
 
 /**
@@ -76,11 +111,11 @@ void draw_combat_menu(const vector2d_t anchor, const char* menu_name, char** men
 
     // Draw tail message if provided
     if (tail_msg != NULL) {
-        print_text_default(vec.dy + menu_option_count + 2, 1, tail_msg);
+        print_text_default(anchor.dy + menu_option_count + 2, anchor.dx, tail_msg);
     }
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -99,7 +134,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     anchor.dy++;
     print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
     anchor.dy++;
-    render_io_frame();
+    render_frame();
 
     // Use our input handler to get any key press
     input_event_t input_event;
@@ -114,9 +149,10 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 void draw_game_over(void) {
     clear_screen();
 
+    // Display game over message
     print_text(1, 1, "Game over", RED_TEXT_COLORS);
     print_text_default(2, 1, "Press any key to exit...");
-    render_io_frame();
+    render_frame();
 
     // Use our input handler to get any key press
     input_event_t input_event;
@@ -133,6 +169,11 @@ void draw_game_over(void) {
  * @return The updated y-coordinate after drawing the resource bar
  */
 int draw_resource_bar(vector2d_t anchor, const character_t* c) {
+    if (c == NULL) {
+        log_msg(ERROR, "Combat Output", "Character is NULL");
+        return anchor.dy;
+    }
+
     char c_info[MAX_STRING_LENGTH];
     snprintf(c_info, sizeof(c_info), "%-20s | HP: %4d/%-4d | Mana: %4d/%-4d | Stamina: %4d/%-4d",
              c->name,

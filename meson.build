@@ -75,7 +75,7 @@ logging_files = files(
 io_files = files(
     'src/io/io_handler.c',
     'src/io/input/input_handler.c',
-    'src/io/output/common/common_output.c',
+    'src/io/output/common/output_handler.c',
     'src/io/output/media/media_output.c',
     'src/io/output/specific/combat_output.c',
     'src/io/output/specific/inventory_output.c',

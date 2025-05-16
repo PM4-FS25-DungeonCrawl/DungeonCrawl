@@ -4,12 +4,11 @@
 #include "../inventory/inventory_mode.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/map_output.h"
 #include "draw/draw_light.h"
 #include "map.h"
 
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
@@ -36,7 +35,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
     int new_y = player_pos.dy;
 
     if (input_event->type == INPUT_QUIT) return QUIT;
-    if (input_event->type == INPUT_MENU || input_event->type == INPUT_CANCEL) return SHOW_MENU;
+    if (input_event->type == INPUT_MENU) return SHOW_MENU;
 
     // Process different modes
     if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;
@@ -121,7 +120,7 @@ map_mode_result_t map_mode_update(character_t* player) {
         input_event_t input_event;
 
         // Use our input handler to get input
-        if (get_input_blocking(&input_event)) {
+        if (get_input_nonblocking(&input_event)) {
             next_state = handle_input(&input_event, player);
         }
     }
@@ -132,7 +131,7 @@ map_mode_result_t map_mode_update(character_t* player) {
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
     // Use the centralized render function instead of direct notcurses call
-    render_io_frame();
+    render_frame();
 
     return next_state;
 }

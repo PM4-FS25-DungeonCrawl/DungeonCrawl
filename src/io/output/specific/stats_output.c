@@ -7,7 +7,7 @@
 #include "../../../memory/memory_management.h"
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;
@@ -41,9 +41,7 @@ int init_stats_mode() {
  */
 void render_stats_window(const character_t* player) {
     // Clear the screen
-    //clear_screen();
-    ncplane_erase(stdplane);
-
+    clear_screen();
 
     int y = 0;
     int x = 0;
@@ -130,7 +128,7 @@ void draw_stats_log(const char* message) {
     print_text_default(1, 2, message);
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 void shutdown_stats_mode() {

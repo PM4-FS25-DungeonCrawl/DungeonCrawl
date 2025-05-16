@@ -7,13 +7,12 @@
 #include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"
 #include "local/combat_mode_local.h"
 
-#include <notcurses/notcurses.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -96,6 +95,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
                 draw_game_over();
+                clear_enemy_sprite();
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {
@@ -109,11 +109,14 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 if (player->xp >= calculate_xp_for_next_level(player->level)) {
                     level_up(player);
                 }
+                clear_enemy_sprite();
                 return PLAYER_WON;
             }
+            clear_screen();
             combat_state = COMBAT_MENU;
             break;
         case COMBAT_EXIT:
+            clear_enemy_sprite();
             return EXIT_GAME;
     }
     return CONTINUE_COMBAT;
@@ -188,7 +191,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                          ability_menu_options,
                          player->ability_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;
@@ -245,7 +248,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                          potion_menu_options,
                          player->potion_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;
@@ -329,7 +332,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                  ability->name);
         draw_combat_log(anchor, message);
     }
-    render_io_frame();
+    render_frame();
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
