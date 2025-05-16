@@ -26,23 +26,47 @@
 ../src/io/output/common/output_handler.c:265:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   265 |     *height = ncplane_dim_y(stdplane);
       |               ^
-../src/io/output/specific/wait_output.c:41:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   41 |     int msg_len = strlen(loading_message);
-      |                   ^
-../src/io/output/specific/wait_output.c:76:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   76 |     int title_len = strlen(title);
+../src/io/output/media/media_output.c:49:28: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   49 |     *cell_height = y > 0 ? y : 24;// Fallback values
+      |                            ^
+../src/io/output/media/media_output.c:50:27: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   50 |     *cell_width = x > 0 ? x : 80; // if we can't get dimensions
+      |                           ^
+../src/io/output/media/media_output.c:106:29: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  106 |             loaded->width = geom.pixx; // Width in pixels
+      |                             ^
+../src/io/output/media/media_output.c:107:30: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  107 |             loaded->height = geom.pixy;// Height in pixels
+      |                              ^
+../src/io/output/media/media_output.c:165:21: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  165 |     loaded->width = geom.pixy; // Height in pixels
       |                     ^
-../src/io/output/specific/wait_output.c:87:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   87 |     int version_len = strlen(version);
+../src/io/output/media/media_output.c:166:22: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  166 |     loaded->height = geom.pixx;// Width in pixels
+      |                      ^
+../src/io/output/media/media_output.c:438:51: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+  438 |     int ret = ncvisual_stream(nc, visual->visual, iterations, animation_callback,
+      |                                                   ^
+../src/io/output/specific/combat_output.c:38:31: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   38 |     int max_rendered_height = ncplane_dim_y(stdplane) - 15;
+      |                               ^
+../src/io/output/specific/wait_output.c:48:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   48 |     int msg_len = strlen(loading_message);
+      |                   ^
+../src/io/output/specific/wait_output.c:83:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   83 |     int title_len = strlen(title);
+      |                     ^
+../src/io/output/specific/wait_output.c:94:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   94 |     int version_len = strlen(version);
       |                       ^
-../src/io/output/specific/wait_output.c:88:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   88 |     int copyright_len = strlen(copyright);
+../src/io/output/specific/wait_output.c:95:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   95 |     int copyright_len = strlen(copyright);
       |                         ^
-../src/io/output/specific/wait_output.c:98:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   98 |     int loading_len = strlen(loading_msg);
+../src/io/output/specific/wait_output.c:129:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  129 |     int loading_len = strlen(loading_msg);
       |                       ^
-../src/io/output/specific/wait_output.c:136:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  136 |     int msg_len = strlen(welcome_msg);
+../src/io/output/specific/wait_output.c:167:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  167 |     int msg_len = strlen(welcome_msg);
       |                   ^
 ../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
    10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
@@ -51,8 +75,8 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:79:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   79 |     srand(time(NULL));
+../src/main.c:77:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   77 |     srand(time(NULL));
       |     ^
-Suppressed 231375 warnings (231189 in non-user code, 186 with check filters).
+Suppressed 240735 warnings (240551 in non-user code, 184 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
