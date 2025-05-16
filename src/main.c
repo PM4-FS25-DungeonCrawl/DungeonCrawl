@@ -35,10 +35,8 @@ static void display_launch_screen_thread(void) {
     time_t start_time = time(NULL);
     bool min_time_elapsed = false;
 
-    // Draw the launch screen until both conditions are met:
-    // 1. Initialization is complete
-    // 2. Minimum display time has elapsed
-    while (!init_done || !min_time_elapsed) {
+    // Draw the launch screen for LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS milliseconds
+    while (!min_time_elapsed) {
         // Call the draw_launch_screen function from wait_output.c
         draw_launch_screen();
 
@@ -56,6 +54,7 @@ static void display_launch_screen_thread(void) {
     render_frame();
 
     draw_welcome_screen();
+
 }
 
 /**
@@ -90,7 +89,8 @@ int init() {
 
     // Start the launch screen in a background thread
     log_msg(INFO, "Main", "Starting launch screen thread");
-    run_background_task(display_launch_screen_thread);
+    //don't need multithreading anymore, init is too fast
+    display_launch_screen_thread();
 
 
     // Initialize database connection

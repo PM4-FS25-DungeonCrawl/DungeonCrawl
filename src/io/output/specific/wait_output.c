@@ -172,4 +172,8 @@ void draw_welcome_screen(void) {
 
     // Render the frame using centralized IO handler
     render_frame();
+
+    // Wait for user input
+    input_event_t input_event;
+    get_input_blocking(&input_event);
 }
