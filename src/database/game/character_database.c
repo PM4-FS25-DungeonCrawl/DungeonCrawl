@@ -13,8 +13,16 @@
                              "CH_LEVEL, "                            \
                              "CH_XP, "                               \
                              "CH_XPREWARD, "                         \
-                             "CH_SKILLPOINTS) "                      \
-                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+                             "CH_SKILLPOINTS, "                      \
+                             "CH_BASESTRENGTH, " \
+                             "CH_BASEINTELLIGENCE, " \
+                             "CH_BASEDEXTERITY, " \
+                             "CH_BASECONSTITUTION, " \
+                             "CH_CURRENTSTRENGTH, " \
+                             "CH_CURRENTINTELLIGENCE, " \
+                             "CH_CURRENTDEXTERITY, " \
+                             "CH_CURRENTCONSTITUTION) " \
+                             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 #define SQL_INSERT_PLAYER "INSERT INTO player (PY_CH_ID, " \
                           "PY_PS_ID, "                     \
                           "PY_NAME) "                      \
@@ -103,6 +111,54 @@ void save_character(db_connection_t* db_connection, const character_t character,
     rc = sqlite3_bind_int(stmt, 12, character.skill_points);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "Character", "Failed to bind skill points: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 13, character.base_stats.strength);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind base strength: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 14, character.base_stats.intelligence);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind base intelligence: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 15, character.base_stats.dexterity);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind base dexterity: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 16, character.base_stats.constitution);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind base constitution: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 17, character.current_stats.strength);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind current strength: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 18, character.current_stats.intelligence);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind current intelligence: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 19, character.current_stats.dexterity);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind current dexterity: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    rc = sqlite3_bind_int(stmt, 20, character.current_stats.constitution);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind current constitution: %s", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt);
         return;
     }
