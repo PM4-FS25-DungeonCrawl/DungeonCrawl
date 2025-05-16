@@ -139,12 +139,12 @@ void draw_launch_screen(void) {
 
     // Render the frame using centralized IO handler
     render_frame();
-    // Sleep for a short duration to control the animation speed
-    #ifdef _WIN32
-        Sleep(50);
-    #else
-        usleep(50000);// 50ms
-    #endif
+// Sleep for a short duration to control the animation speed
+#ifdef _WIN32
+    Sleep(50);
+#else
+    usleep(50000);// 50ms
+#endif
 }
 
 /**

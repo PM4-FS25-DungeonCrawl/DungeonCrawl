@@ -54,7 +54,6 @@ static void display_launch_screen_thread(void) {
     render_frame();
 
     draw_welcome_screen();
-
 }
 
 /**

@@ -1,7 +1,7 @@
 #include "media_output.h"
 
 #include "../../../logging/logger.h"
-#include "../../io_handler.h"       // Include this to access global nc and stdplane
+#include "../../io_handler.h"        // Include this to access global nc and stdplane
 #include "../common/output_handler.h"// For get_screen_dimensions and render_frame
 
 #include <stdbool.h>
