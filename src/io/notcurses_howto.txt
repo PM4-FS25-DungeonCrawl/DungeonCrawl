@@ -1,0 +1,555 @@
+SOME IMPORTANT STUFF ABOUT USING THE NOTCURSES LIBRARY
+
+==========================
+INITIALIZATION AND CREATION
+==========================
+
+### Initialize notcurses:
+struct notcurses_options ncopts = {
+    .flags = NCOPTION_INHIBIT_SETLOCALE | NCOPTION_NO_ALTERNATE_SCREEN,
+};
+
+nc = notcurses_init(&ncopts, stdout);
+if (!nc) {
+    fprintf(stderr, "Failed to initialize notcurses\n");
+    return EXIT_FAILURE;
+}
+
+### Get the standard plane:
+stdplane = notcurses_stdplane(nc);
+if (!stdplane) {
+    fprintf(stderr, "Failed to get standard plane\n");
+    notcurses_stop(nc);
+    return EXIT_FAILURE;
+}
+
+### Important structs:
+struct notcurses; // Notcurses state for a given terminal, composed of ncplanes
+struct ncplane;   // a drawable Notcurses surface, composed of cells
+struct ncvisual;  // a visual bit of multimedia opened with LibAV|OIIO
+struct ncuplot;   // uint64_t histogram
+struct ncdplot;   // double histogram
+struct ncprogbar; // progress bar
+struct ncfdplane; // i/o wrapper to dump file descriptor to plane
+struct ncsubproc; // ncfdplane wrapper with subprocess management
+struct ncselector;// widget supporting selecting 1 from a list of options
+struct ncmultiselector; // widget supporting selecting 0..n from n options
+struct ncreader;  // widget supporting free string input ala readline
+struct ncfadectx; // context for a palette fade operation
+struct nctablet;  // grouped item within an ncreel
+struct ncreel;    // hierarchical block-based data browser
+struct nctab;     // grouped item within an nctabbed
+struct nctabbed;  // widget with one tab visible at a time
+struct ncdirect;  // direct mode context
+
+### Configuration for notcurses_init().
+typedef struct notcurses_options {
+  // The name of the terminfo database entry describing this terminal. If NULL,
+  // the environment variable TERM is used. Failure to open the terminal
+  // definition will result in failure to initialize notcurses.
+  const char* termtype;
+  // Progressively higher log levels result in more logging to stderr. By
+  // default, nothing is printed to stderr once fullscreen service begins.
+  ncloglevel_e loglevel;
+  // Desirable margins. If all are 0 (default), we will render to the entirety
+  // of the screen. If the screen is too small, we do what we can--this is
+  // strictly best-effort. Absolute coordinates are relative to the rendering
+  // area ((0, 0) is always the origin of the rendering area).
+  unsigned margin_t, margin_r, margin_b, margin_l;
+  // General flags; see NCOPTION_*. This is expressed as a bitfield so that
+  // future options can be added without reshaping the struct. Undefined bits
+  // must be set to 0.
+  uint64_t flags;
+} notcurses_options;
+
+### Notcurses options
+typedef struct ncplane_options {
+  int y;            // vertical placement relative to parent plane
+  int x;            // horizontal placement relative to parent plane
+  unsigned rows;    // rows, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+  unsigned cols;    // columns, must be >0 unless NCPLANE_OPTION_MARGINALIZED
+  void* userptr;    // user curry, may be NULL
+  const char* name; // name (used only for debugging), may be NULL
+  int (*resizecb)(struct ncplane*); // callback when parent is resized
+  uint64_t flags;   // closure over NCPLANE_OPTION_*
+  unsigned margin_b, margin_r; // margins (require NCPLANE_OPTION_MARGINALIZED)
+} ncplane_options;
+
+### configure scrolling
+All planes are created with scrolling disabled. Scrolling can be dynamically
+controlled with ncplane_set_scrolling(). Returns true if scrolling was
+previously enabled, or false if it was disabled.
+
+bool ncplane_set_scrolling(struct ncplane* n, unsigned scrollp);
+
+// Enable or disable the terminal's cursor, if supported, placing it at
+// 'y', 'x'. Immediate effect (no need for a call to notcurses_render()).
+// It is an error if 'y', 'x' lies outside the standard plane. Can be
+// called while already visible to move the cursor.
+API int notcurses_cursor_enable(struct notcurses* nc, int y, int x)
+  __attribute__ ((nonnull (1)));
+
+// Disable the hardware cursor. It is an error to call this while the
+// cursor is already disabled.
+API int notcurses_cursor_disable(struct notcurses* nc)
+  __attribute__ ((nonnull (1)));
+
+### configure autogrow
+By default, planes are created with autogrow disabled. Autogrow can be
+dynamically controlled with ncplane_set_autogrow(). Returns true if
+autogrow was previously enabled, or false if it was disabled.
+
+bool ncplane_set_autogrow(struct ncplane* n, unsigned growp);
+
+### Create a new ncplane bound to plane 'n', at the offset 'y'x'x' (relative to the origin of 'n') and the specified size. 
+The number of 'rows' and 'cols' must both be positive. This plane is initially at the top of the z-buffer,
+as if ncplane_move_top() had been called on it. The void* 'userptr' can be
+retrieved (and reset) later. A 'name' can be set, used in debugging.
+
+struct ncplane* ncplane_create(struct ncplane* n, const ncplane_options* nopts)
+
+==============================
+RENDERING AND REFRESHING
+==============================
+
+### Render the standard plane:
+notcurses_render(nc);
+
+### Clear the screen:
+ncplane_erase(stdplane);
+
+### Destroy the specified ncplane. 
+None of its contents will be visible after the next call to notcurses_render(). 
+It is an error to attempt to destroy the standard plane.
+
+int ncplane_destroy(struct ncplane* n);
+
+### Erase every cell in the ncplane (each cell is initialized to the null glyph and the default channels/styles). 
+All cells associated with this ncplane are invalidated, and must not be used after the call, *excluding* the base cell.
+The cursor is homed. The plane's active attributes are unaffected.
+
+void ncplane_erase(struct ncplane* n);
+
+### Stop notcurses: (use for shutdown)
+notcurses_stop(nc);
+
+### Renders and rasterizes the standard pile in one shot. Blocking call.
+static inline int
+notcurses_render(struct notcurses* nc){
+  struct ncplane* stdn = notcurses_stdplane(nc);
+  if(ncpile_render(stdn)){
+    return -1;
+  }
+  return ncpile_rasterize(stdn);
+}
+
+### Destroy all ncplanes other than the stdplane.
+void notcurses_drop_planes(struct notcurses* nc);
+
+### Get a reference to the standard plane (one matching our current idea of the terminal size) for this terminal. 
+The standard plane always exists, and its origin is always at the uppermost, leftmost cell of the terminal.
+
+struct ncplane* notcurses_stdplane(struct notcurses* nc);
+const struct ncplane* notcurses_stdplane_const(const struct notcurses* nc);
+
+### Utility resize callbacks.
+When a parent plane is resized, it invokes each
+child's resize callback. Any logic can be run in a resize callback, but
+these are some generically useful ones.
+
+### resize the plane to the visual region's size (used for the standard plane).
+int ncplane_resize_maximize(struct ncplane* n);
+
+### resize the plane to its parent's size, attempting to enforce the margins supplied along with NCPLANE_OPTION_MARGINALIZED.
+int ncplane_resize_marginalized(struct ncplane* n);
+
+### realign the plane 'n' against its parent, using the alignments specified with NCPLANE_OPTION_HORALIGNED and/or NCPLANE_OPTION_VERALIGNED.
+int ncplane_resize_realign(struct ncplane* n);
+
+### move the plane such that it is entirely within its parent, if possible. no resizing is performed.
+int ncplane_resize_placewithin(struct ncplane* n);
+
+### Resize the specified ncplane. The four parameters 'keepy', 'keepx',
+// 'keepleny', and 'keeplenx' define a subset of the ncplane to keep,
+// unchanged. This may be a region of size 0, though none of these four
+// parameters may be negative. 'keepx' and 'keepy' are relative to the ncplane.
+// They must specify a coordinate within the ncplane's totality. 'yoff' and
+// 'xoff' are relative to 'keepy' and 'keepx', and place the upper-left corner
+// of the resized ncplane. Finally, 'ylen' and 'xlen' are the dimensions of the
+// ncplane after resizing. 'ylen' must be greater than or equal to 'keepleny',
+// and 'xlen' must be greater than or equal to 'keeplenx'. It is an error to
+// attempt to resize the standard plane. If either of 'keepleny' or 'keeplenx'
+// is non-zero, both must be non-zero.
+//
+// Essentially, the kept material does not move. It serves to anchor the
+// resized plane. If there is no kept material, the plane can move freely.
+API int ncplane_resize(struct ncplane* n, int keepy, int keepx,
+                       unsigned keepleny, unsigned keeplenx,
+                       int yoff, int xoff,
+                       unsigned ylen, unsigned xlen);
+
+### Resize the plane, retaining what data we can (everything, unless we're
+// shrinking in some dimension). Keep the origin where it is.
+static inline int
+ncplane_resize_simple(struct ncplane* n, unsigned ylen, unsigned xlen){
+  unsigned oldy, oldx;
+  ncplane_dim_yx(n, &oldy, &oldx); // current dimensions of 'n'
+  unsigned keepleny = oldy > ylen ? ylen : oldy;
+  unsigned keeplenx = oldx > xlen ? xlen : oldx;
+  return ncplane_resize(n, 0, 0, keepleny, keeplenx, 0, 0, ylen, xlen);
+}
+
+### Move this plane relative to the standard plane, or the plane to which it is bound (if it is bound to a plane). 
+It is an error to attempt to move the standard plane.
+
+int ncplane_move_yx(struct ncplane* n, int y, int x);
+
+===========================
+INPUT
+===========================
+### Input events
+typedef enum {
+  NCTYPE_UNKNOWN,
+  NCTYPE_PRESS,
+  NCTYPE_REPEAT,
+  NCTYPE_RELEASE,
+} ncintype_e;
+
+### compare two ncinput structs for data equality. 
+NCTYPE_PRESS and NCTYPE_UNKNOWN are considered to be equivalent. NCKEY_MOD_CAPSLOCK
+and NCKEY_MOD_NUMLOCK are not considered relevant.
+
+static inline bool ncinput_equal_p(const ncinput* n1, const ncinput* n2);
+
+### getting input
+Read a UTF-32-encoded Unicode codepoint from input. This might only be part
+of a larger EGC. Provide a NULL 'ts' to block at length, and otherwise a
+timespec specifying an absolute deadline calculated using CLOCK_MONOTONIC.
+Returns a single Unicode code point, or a synthesized special key constant,
+or (uint32_t)-1 on error. Returns 0 on a timeout. If an event is processed,
+the return value is the 'id' field from that event. 'ni' may be NULL.
+
+uint32_t notcurses_get(struct notcurses* n, const struct timespec* ts, ncinput* ni);
+
+### get non blocking input
+'ni' may be NULL if the caller is uninterested in event details. If no event
+is immediately ready, returns 0.
+
+static inline uint32_t notcurses_get_nblock(struct notcurses* n, ncinput* ni);
+
+### get blocking input
+'ni' may be NULL if the caller is uninterested in event details. Blocks
+until an event is processed or a signal is received (including resize events).
+
+static inline uint32_t notcurses_get_blocking(struct notcurses* n, ncinput* ni);
+
+### Refresh the physical screen to match what was last rendered (i.e., without reflecting any changes since the last call to notcurses_render()). 
+This is primarily useful if the screen is externally corrupted, or if an
+NCKEY_RESIZE event has been read and you're not yet ready to render. The
+current screen geometry is returned in 'y' and 'x', if they are not NULL.
+
+API int notcurses_refresh(struct notcurses* n, unsigned* RESTRICT y, unsigned* RESTRICT x);
+
+==========================  
+TEXT OUTPUT
+==========================
+
+### Alignment within a plane or terminal. Left/right-justified, or centered.
+typedef enum {
+  NCALIGN_UNALIGNED,
+  NCALIGN_LEFT,
+  NCALIGN_CENTER,
+  NCALIGN_RIGHT,
+} ncalign_e;
+
+### Text output at a specific location
+// Write a series of EGCs to the current location, using the current style.
+// They will be interpreted as a series of columns (according to the definition
+// of ncplane_putc()). Advances the cursor by some positive number of columns
+// (though not beyond the end of the plane); this number is returned on success.
+// On error, a non-positive number is returned, indicating the number of columns
+// which were written before the error.
+static inline int ncplane_putstr_yx(struct ncplane* n, int y, int x, const char* gclusters);
+
+### Align text within a plane
+static inline int ncplane_putstr_aligned(struct ncplane* n, int y, ncalign_e align, const char* s);
+
+### Drawing Boxes:
+#define NCBOXMASK_TOP    0x0001
+#define NCBOXMASK_RIGHT  0x0002
+#define NCBOXMASK_BOTTOM 0x0004
+#define NCBOXMASK_LEFT   0x0008
+#define NCBOXGRAD_TOP    0x0010
+#define NCBOXGRAD_RIGHT  0x0020
+#define NCBOXGRAD_BOTTOM 0x0040
+#define NCBOXGRAD_LEFT   0x0080
+#define NCBOXCORNER_MASK 0x0300
+#define NCBOXCORNER_SHIFT 8u
+
+// Draw a box with its upper-left corner at the current cursor position, and its
+// lower-right corner at 'ystop'x'xstop'. The 6 cells provided are used to draw the
+// upper-left, ur, ll, and lr corners, then the horizontal and vertical lines.
+// 'ctlword' is defined in the least significant byte, where bits [7, 4] are a
+// gradient mask, and [3, 0] are a border mask:
+//  * 7, 3: top
+//  * 6, 2: right
+//  * 5, 1: bottom
+//  * 4, 0: left
+// If the gradient bit is not set, the styling from the hl/vl cells is used for
+// the horizontal and vertical lines, respectively. If the gradient bit is set,
+// the color is linearly interpolated between the two relevant corner cells.
+//
+// By default, vertexes are drawn whether their connecting edges are drawn or
+// not. The value of the bits corresponding to NCBOXCORNER_MASK control this,
+// and are interpreted as the number of connecting edges necessary to draw a
+// given corner. At 0 (the default), corners are always drawn. At 3, corners
+// are never drawn (since at most 2 edges can touch a box's corner).
+API int ncplane_box(struct ncplane* n, const nccell* ul, const nccell* ur,
+                    const nccell* ll, const nccell* lr, const nccell* hline,
+                    const nccell* vline, unsigned ystop, unsigned xstop,
+                    unsigned ctlword);
+
+// Draw a box with its upper-left corner at the current cursor position, having
+// dimensions 'ylen'x'xlen'. See ncplane_box() for more information. The
+// minimum box size is 2x2, and it cannot be drawn off-plane.
+static inline int
+ncplane_box_sized(struct ncplane* n, const nccell* ul, const nccell* ur,
+                  const nccell* ll, const nccell* lr, const nccell* hline,
+                  const nccell* vline, unsigned ystop, unsigned xstop,
+                  unsigned ctlword)
+
+static inline int
+ncplane_rounded_box_sized(struct ncplane* n, uint16_t styles, uint64_t channels, unsigned ylen, unsigned xlen, unsigned ctlword);
+
+static inline int
+ncplane_double_box(struct ncplane* n, uint16_t styles, uint64_t channels,
+                   unsigned ylen, unsigned xlen, unsigned ctlword);
+
+static inline int
+ncplane_ascii_box(struct ncplane* n, uint16_t styles, uint64_t channels,
+                  unsigned ylen, unsigned xlen, unsigned ctlword);
+
+### Filling an area with a character
+// Starting at the specified coordinate, if its glyph is different from that of
+// 'c', 'c' is copied into it, and the original glyph is considered the fill
+// target. We do the same to all cardinally-connected cells having this same
+// fill target. Returns the number of cells polyfilled. An invalid initial y, x
+// is an error. Returns the number of cells filled, or -1 on error.
+API int ncplane_polyfill_yx(struct ncplane* n, int y, int x, const nccell* c)
+
+============================
+VISUALS
+============================
+
+### // Create a new plane as prescribed in opts, either as a child of 'vopts->n',
+// or the root of a new pile if 'vopts->n' is NULL (or 'vopts' itself is NULL).
+// Blit 'ncv' to the created plane according to 'vopts'. If 'vopts->n' is
+// non-NULL, NCVISUAL_OPTION_CHILDPLANE must be supplied.
+__attribute__ ((nonnull (1, 2, 3))) static inline struct ncplane*
+ncvisualplane_create(struct notcurses* nc, const struct ncplane_options* opts,
+                     struct ncvisual* ncv, struct ncvisual_options* vopts)
+
+### // Get the default *media* (not plot) blitter for this environment when using
+// the specified scaling method. Currently, this means:
+//  - if lacking UTF-8, NCBLIT_1x1
+//  - otherwise, if not NCSCALE_STRETCH, NCBLIT_2x1
+//  - otherwise, if sextants are not known to be good, NCBLIT_2x2
+//  - otherwise NCBLIT_3x2
+// NCBLIT_2x2 and NCBLIT_3x2 both distort the original aspect ratio, thus
+// NCBLIT_2x1 is used outside of NCSCALE_STRETCH.
+API ncblitter_e ncvisual_media_defblitter(const struct notcurses* nc, ncscale_e scale)
+
+### Open a visual at 'file', extract a codec and parameters, decode the first
+// image to memory.
+API ALLOC struct ncvisual* ncvisual_from_file(const char* file)
+  __attribute__ ((nonnull (1)));
+
+### Visual Options
+struct ncvisual_options {
+// if no ncplane is provided, one will be created using the exact size
+// necessary to render the source with perfect fidelity (this might be
+// smaller or larger than the rendering area). if NCVISUAL_OPTION_CHILDPLANE
+// is provided, this must be non-NULL, and will be interpreted as the parent.
+struct ncplane* n;
+// the scaling is ignored if no ncplane is provided (it ought be NCSCALE_NONE
+// in this case). otherwise, the source is stretched/scaled relative to the
+// provided ncplane.
+ncscale_e scaling;
+// if an ncplane is provided, y and x specify where the visual will be
+// rendered on that plane. otherwise, they specify where the created ncplane
+// will be placed relative to the standard plane's origin. x is an ncalign_e
+// value if NCVISUAL_OPTION_HORALIGNED is provided. y is an ncalign_e if
+// NCVISUAL_OPTION_VERALIGNED is provided.
+int y, x;
+// the region of the visual that ought be rendered. for the entire visual,
+// pass an origin of 0, 0 and a size of 0, 0 (or the true height and width).
+// these numbers are all in terms of ncvisual pixels. negative values are
+// prohibited.
+unsigned begy, begx; // origin of rendered region in pixels
+unsigned leny, lenx; // size of rendered region in pixels
+// use NCBLIT_DEFAULT if you don't care, an appropriate blitter will be
+// chosen for your terminal, given your scaling. NCBLIT_PIXEL is never
+// chosen for NCBLIT_DEFAULT.
+ncblitter_e blitter; // glyph set to use (maps input to output cells)
+uint64_t flags; // bitmask over NCVISUAL_OPTION_*
+uint32_t transcolor; // treat this color as transparent under NCVISUAL_OPTION_ADDALPHA
+// pixel offsets within the cell. if NCBLIT_PIXEL is used, the bitmap will
+// be drawn offset from the upper-left cell's origin by these amounts. it is
+// an error if either number exceeds the cell-pixel geometry in its
+// dimension. if NCBLIT_PIXEL is not used, these fields are ignored.
+// this functionality can be used for smooth bitmap movement.
+unsigned pxoffy, pxoffx;
+};
+
+### // Destroy an ncvisual. Rendered elements will not be disrupted, but the visual
+// can be neither decoded nor rendered any further.
+API void ncvisual_destroy(struct ncvisual* ncv);
+
+### // Rotate the visual 'rads' radians. Only M_PI/2 and -M_PI/2 are supported at
+// the moment, but this might change in the future.
+API int ncvisual_rotate(struct ncvisual* n, double rads)
+  __attribute__ ((nonnull (1)));
+
+### // Scale the visual to 'rows' X 'columns' pixels, using the best scheme
+// available. This is a lossy transformation, unless the size is unchanged.
+API int ncvisual_resize(struct ncvisual* n, int rows, int cols)
+  __attribute__ ((nonnull (1)));
+
+### // Scale the visual to 'rows' X 'columns' pixels, using non-interpolative
+// (naive) scaling. No new colors will be introduced as a result.
+API int ncvisual_resize_noninterpolative(struct ncvisual* n, int rows, int cols)
+  __attribute__ ((nonnull (1)));
+
+### // Polyfill at the specified location within the ncvisual 'n', using 'rgba'.
+API int ncvisual_polyfill_yx(struct ncvisual* n, unsigned y, unsigned x, uint32_t rgba)
+  __attribute__ ((nonnull (1)));
+
+### // Render the decoded frame according to the provided options (which may be
+// NULL). The plane used for rendering depends on vopts->n and vopts->flags.
+// If NCVISUAL_OPTION_CHILDPLANE is set, vopts->n must not be NULL, and the
+// plane will always be created as a child of vopts->n. If this flag is not
+// set, and vopts->n is NULL, a new plane is created as root of a new pile.
+// If the flag is not set and vopts->n is not NULL, we render to vopts->n.
+// A subregion of the visual can be rendered using 'begx', 'begy', 'lenx', and
+// 'leny'. Negative values for any of these are an error. It is an error to
+// specify any region beyond the boundaries of the frame. Returns the (possibly
+// newly-created) plane to which we drew. Pixels may not be blitted to the
+// standard plane.
+API struct ncplane* ncvisual_blit(struct notcurses* nc, struct ncvisual* ncv,
+                                  const struct ncvisual_options* vopts)
+
+### Rendering visuals: (blitters)
+// we never blit full blocks, but instead spaces (more efficient) with the
+// background set to the desired foreground. these need be kept in the same
+// order as the blitters[] definition in lib/blit.c.
+typedef enum {
+  NCBLIT_DEFAULT, // let the ncvisual pick
+  NCBLIT_1x1,     // space, compatible with ASCII
+  NCBLIT_2x1,     // halves + 1x1 (space)     ▄▀
+  NCBLIT_2x2,     // quadrants + 2x1          ▗▐ ▖▀▟▌▙
+  NCBLIT_3x2,     // sextants (*NOT* 2x2)     🬀🬁🬂🬃🬄🬅🬆🬇🬈🬉🬊🬋🬌🬍🬎🬏🬐🬑🬒🬓🬔🬕🬖🬗🬘🬙🬚🬛🬜🬝🬞
+  NCBLIT_BRAILLE, // 4 rows, 2 cols (braille) ⡀⡄⡆⡇⢀⣀⣄⣆⣇⢠⣠⣤⣦⣧⢰⣰⣴⣶⣷⢸⣸⣼⣾⣿
+  NCBLIT_PIXEL,   // pixel graphics
+  // these blitters are suitable only for plots, not general media
+  NCBLIT_4x1,     // four vertical levels     █▆▄▂
+  NCBLIT_8x1,     // eight vertical levels    █▇▆▅▄▃▂▁
+} ncblitter_e;
+
+### STREAMS
+
+// Called for each frame rendered from 'ncv'. If anything but 0 is returned,
+// the streaming operation ceases immediately, and that value is propagated out.
+// The recommended absolute display time target is passed in 'tspec'.
+typedef int (*ncstreamcb)(struct ncvisual*, struct ncvisual_options*,
+                          const struct timespec*, void*);
+
+// Shut up and display my frames! Provide as an argument to ncvisual_stream().
+// If you'd like subtitles to be decoded, provide an ncplane as the curry. If the
+// curry is NULL, subtitles will not be displayed.
+API int ncvisual_simple_streamer(struct ncvisual* ncv, struct ncvisual_options* vopts,
+                                 const struct timespec* tspec, void* curry)
+  __attribute__ ((nonnull (1)));
+
+// Stream the entirety of the media, according to its own timing. Blocking,
+// obviously. streamer may be NULL; it is otherwise called for each frame, and
+// its return value handled as outlined for streamcb. If streamer() returns
+// non-zero, the stream is aborted, and that value is returned. By convention,
+// return a positive number to indicate intentional abort from within
+// streamer(). 'timescale' allows the frame duration time to be scaled. For a
+// visual naturally running at 30FPS, a 'timescale' of 0.1 will result in
+// 300FPS, and a 'timescale' of 10 will result in 3FPS. It is an error to
+// supply 'timescale' less than or equal to 0.
+API int ncvisual_stream(struct notcurses* nc, struct ncvisual* ncv,
+                        float timescale, ncstreamcb streamer,
+                        const struct ncvisual_options* vopts, void* curry)
+  __attribute__ ((nonnull (1, 2)));
+
+### Fade the ncplane out over the provided time, calling 'fader' at each
+// iteration. Requires a terminal which supports truecolor, or at least palette
+// modification (if the terminal uses a palette, our ability to fade planes is
+// limited, and affected by the complexity of the rest of the screen).
+API int ncplane_fadeout(struct ncplane* n, const struct timespec* ts,
+                        fadecb fader, void* curry);
+
+### Fade the ncplane in over the specified time. Load the ncplane with the
+// target cells without rendering, then call this function. When it's done, the
+// ncplane will have reached the target levels, starting from zeroes.
+API int ncplane_fadein(struct ncplane* n, const struct timespec* ts,
+                       fadecb fader, void* curry);
+
+### // Pulse the plane in and out until the callback returns non-zero, relying on
+// the callback 'fader' to initiate rendering. 'ts' defines the half-period
+// (i.e. the transition from black to full brightness, or back again). Proper
+// use involves preparing (but not rendering) an ncplane, then calling
+// ncplane_pulse(), which will fade in from black to the specified colors.
+API int ncplane_pulse(struct ncplane* n, const struct timespec* ts, fadecb fader, void* curry)
+
+===========================
+COLORS AND STYLES (see src/io/colors.h)
+===========================
+### initialize a 32-bit channel pair with specified RGB
+#define NCCHANNEL_INITIALIZER(r, g, b) \
+  (((uint32_t)(r) << 16u) + ((uint32_t)(g) << 8u) + (b) + NC_BGDEFAULT_MASK)
+
+### initialize a 64-bit channel pair with specified RGB fg/bg
+#define NCCHANNELS_INITIALIZER(fr, fg, fb, br, bg, bb) \
+  ((NCCHANNEL_INITIALIZER((fr), (fg), (fb)) << 32ull) + \
+   (NCCHANNEL_INITIALIZER((br), (bg), (bb))))
+
+### styles
+#define NCSTYLE_MASK      0xffffu
+#define NCSTYLE_ITALIC    0x0010u
+#define NCSTYLE_UNDERLINE 0x0008u
+#define NCSTYLE_UNDERCURL 0x0004u
+#define NCSTYLE_BOLD      0x0002u
+#define NCSTYLE_STRUCK    0x0001u
+#define NCSTYLE_NONE      0
+
+### Set the alpha and coloring bits of the plane's current channels from a 64-bit pair of channels.
+void ncplane_set_channels(struct ncplane* n, uint64_t channels)
+
+// Get the default foreground color, if it is known. Returns -1 on error
+// (unknown foreground). On success, returns 0, writing the RGB value to
+// 'fg' (if non-NULL)
+API int notcurses_default_foreground(const struct notcurses* nc, uint32_t* fg)
+  __attribute__ ((nonnull (1)));
+
+// Get the default background color, if it is known. Returns -1 on error
+// (unknown background). On success, returns 0, writing the RGB value to
+// 'bg' (if non-NULL) and setting 'bgtrans' high iff the background color
+// is treated as transparent.
+API int notcurses_default_background(const struct notcurses* nc, uint32_t* bg)
+  __attribute__ ((nonnull (1)));
+
+============================
+MENUS WITH NOTCURSES SELECTOR AND MENU
+============================
+
+see notcurses.h but rn everything works so I don't give a fuck
+
+============================
+TABS AND STUFF
+============================
+
+there is an option to create an illusion of "tabs" or "pop-ups" using that stuff but also that is not 
+today's problem 

@@ -40,17 +40,6 @@ typedef struct {
 static media_resource_t resources[MAX_RESOURCES];
 static int resource_count = 0;
 
-/* Scaline modes provided by Notcurses:
-typedef enum {
-  NCSCALE_NONE,
-  NCSCALE_SCALE,
-  NCSCALE_STRETCH,
-  NCSCALE_SCALE_HIRES,
-  NCSCALE_NONE_HIRES,
-  NCSCALE_INFLATE,
-} ncscale_e;
- */
-
 /* =========================================================================
  * INITIALIZATION AND CLEANUP
  * ========================================================================= */
