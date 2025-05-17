@@ -28,6 +28,7 @@ void update_inventory_local(void) {
     inventory_mode_strings[EQUIPMENT_MENU_TITLE] = get_local_string("EQUIPMENT.MENU.TITLE");
     inventory_mode_strings[EQUIPMENT_MENU_HEADER] = get_local_string("EQUIPMENT.MENU.HEADER");
     inventory_mode_strings[EQUIPMENT_SLOT_FULL] = get_local_string("EQUIPMENT.SLOT.FULL");
+    inventory_mode_strings[EQUIPMENT_HANDS_SLOT_FULL] = get_local_string("EQUIPMENT.HANDS.SLOT.FULL");
 
     inventory_mode_strings[POTION_FORMAT] = get_local_string("POTION.FORMAT");
     inventory_mode_strings[POTION_MENU_TITLE] = get_local_string("POTION.MENU.TITLE");
