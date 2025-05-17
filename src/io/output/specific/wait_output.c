@@ -3,7 +3,7 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-// Removed media_output.h to avoid linking issues
+#include "../media/media_output.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -145,6 +145,11 @@ void draw_welcome_screen(void) {
     int msg_y = height / 2;
 
     print_text_default(msg_y, msg_x, welcome_msg);
+
+    // display image below the welcome message
+    if (!display_png_at(GOBLIN_PNG, msg_x - 10, msg_y + 2, 5, NCSCALE_NONE)) {
+        log_msg(ERROR, "Wait Output", "Failed to display welcome image");
+    }
 
     // Render the frame using centralized IO handler
     render_frame();

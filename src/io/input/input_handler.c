@@ -166,7 +166,6 @@ bool get_input_blocking(input_event_t* event) {
 
         // Debounce - if we're getting keys too fast, ignore some
         if (!should_process_key()) {
-            log_msg(DEBUG, "input_handler", "Ignoring key press (debounce)");
             continue;
         }
 
@@ -199,7 +198,6 @@ bool get_input_nonblocking(input_event_t* event) {
 
     // Debounce - if we're getting keys too fast, ignore some
     if (!should_process_key()) {
-        log_msg(DEBUG, "input_handler", "Ignoring key press (debounce)");
         return false;
     }
 

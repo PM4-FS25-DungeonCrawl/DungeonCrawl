@@ -138,25 +138,28 @@ struct ncvisual_options* create_visual_options_alloc(struct ncplane* target_plan
 bool display_png_at(const char* filename, int x, int y, int height, ncscale_e scaling) {
     // Validate parameters
     if (!filename || height <= 0) {
+        log_msg(ERROR, "media_output", "Invalid parameters for display_png_at");
         return false;
     }
     
     // Load the media resource
     media_resource_t* resource = load_media(filename, MEDIA_PNG);
     if (!resource || !resource->is_loaded) {
+        log_msg(ERROR, "media_output", "Failed to load PNG resource");
         return false;
     }
     
     // Get the ncvisual from the resource
     struct ncvisual* visual = (struct ncvisual*)resource->data;
     if (!visual) {
+        log_msg(ERROR, "media_output", "Failed to get ncvisual from resource");
         return false;
     }
     
     // Create options structure for rendering
     struct ncvisual_options vopts = create_visual_options(NULL, scaling, y, x, height, 0, NCBLIT_DEFAULT, 0);
     
-    // Use ncvisual_blit instead of the obsolete ncvisual_render
+    // Use ncvisual_blit to render the visual
     struct ncplane* created_plane = ncvisual_blit(nc, visual, &vopts);
     
     return created_plane != NULL;
@@ -517,6 +520,7 @@ static media_resource_t* load_media(const char* filename, media_type_t type) {
     struct ncvisual* visual = ncvisual_from_file(filepath);
     if (!visual) {
         // Loading failed, decrement count
+        log_msg(ERROR, "media_output", "Failed to load media from file: %s", filepath);
         resource_count--;
         free(filepath);
         return NULL;
@@ -527,6 +531,7 @@ static media_resource_t* load_media(const char* filename, media_type_t type) {
     resource->is_loaded = true;
     
     free(filepath);
+    log_msg(INFO, "media_output", "Loaded media: %s", resource->filepath);
     return resource;
 }
 
@@ -543,6 +548,7 @@ static char* build_filepath(const char* filename, media_type_t type) {
     // Allocate memory for the path
     char* filepath = malloc(MAX_PATH_LEN);
     if (!filepath) {
+        log_msg(ERROR, "media_output", "Failed to allocate memory for file path");
         return NULL;
     }
     
@@ -562,6 +568,7 @@ static char* build_filepath(const char* filename, media_type_t type) {
     
     // Construct the full path
     snprintf(filepath, MAX_PATH_LEN, "%s%s%s", MEDIA_PATH, subdir, filename);
+    log_msg(INFO, "media_output", "Built file path: %s", filepath);
     
     return filepath;
 }
