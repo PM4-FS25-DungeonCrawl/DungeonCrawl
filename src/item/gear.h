@@ -26,11 +26,13 @@ typedef enum {
 
 typedef struct
 {
-    char name[MAX_NAME_LENGTH];
+    char local_key[MAX_NAME_LENGTH];
+    char* local_name;
     gear_identifier_t gear_identifier;
     gear_slot_t slot;
     stats_t stats;
     defenses_t defenses;// Armor Pieces can have other stats, e.g. +might etc. for now only armor
+    int num_abilities;
     ability_t* abilities[MAX_ABILITY_PER_GEAR];
 } gear_t;
 

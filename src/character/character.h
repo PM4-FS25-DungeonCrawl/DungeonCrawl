@@ -6,7 +6,6 @@
 #include "../common.h"
 #include "../item/gear.h"
 #include "../item/potion.h"
-#include "../local/local_strings.h"
 #include "../memory/memory_management.h"
 #include "../stats/stats.h"
 
@@ -34,6 +33,7 @@ typedef struct character_t {
     defenses_t defenses;
 
     ability_t* abilities[MAX_ABILITY_LIMIT];
+    ability_t* base_attack;
     int ability_count;
 
     potion_t* potion_inventory[MAX_POTION_LIMIT];
@@ -55,7 +55,7 @@ void free_character(memory_pool_t* memory_pool, character_t* character);
 
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
-void update_character_resources(resources_t* max_resources, stats_t* base_stats);
+void update_character_resources(resources_t* current_resources, resources_t* max_resources, stats_t* base_stats);
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value);
 
 void add_ability(character_t* c, ability_t* ability);
@@ -78,7 +78,5 @@ void set_initial_xp(character_t* character, int xp);
 void set_skill_points(character_t* character, int skill_points);
 
 void reset_player_stats(character_t* player);
-
-void collect_potion_options(string_max_t* potion_options, potion_t* potions[], const int count, const local_key_t potion_format);
 
 #endif//CHARACTER_H

@@ -37,6 +37,7 @@ typedef enum {
     ARCANE_MISSILE,
     SWORD_SLASH,
     RIPOSTE,
+    PUNCH,
     MAX_ABILITIES
 } ability_names_t;
 

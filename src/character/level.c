@@ -7,8 +7,6 @@
 
 #include "../logging/logger.h"
 
-#include <math.h>
-
 /**
  * @brief Calculates the XP required for the next level
  * @param level The current level of the character
@@ -16,7 +14,7 @@
  */
 int calculate_xp_for_next_level(int level) {
     // TODO: Maybe change to a more complex formula
-    return (int) (100 + 10 * level);
+    return 100 + 10 * level;
 }
 
 /**

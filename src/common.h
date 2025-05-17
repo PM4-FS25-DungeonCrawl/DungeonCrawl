@@ -127,8 +127,8 @@
 #define HIDDEN_COLORS NCCHANNELS_INITIALIZER(GREY_R, GREY_G, GREY_B, GREY_R, GREY_G, GREY_B)
 #define START_DOOR_COLORS NCCHANNELS_INITIALIZER(GREEN_R, GREEN_G, GREEN_B, BG_R, BG_G, BG_B)
 #define FLOOR_COLORS NCCHANNELS_INITIALIZER(BG_R, BG_G, BG_B, BG_R, BG_G, BG_B)
-#define LIFE_FOUNTAIN_COLLORS NCCHANNELS_INITIALIZER(BG_R, BG_G, BG_B, GREEN_R, GREEN_G, GREEN_B)
-#define MANA_FOUNTAIN_COLLORS NCCHANNELS_INITIALIZER(BG_R, BG_G, BG_B, BLUE_R, BLUE_G, BLUE_B)
+#define LIFE_FOUNTAIN_COLORS NCCHANNELS_INITIALIZER(BG_R, BG_G, BG_B, GREEN_R, GREEN_G, GREEN_B)
+#define MANA_FOUNTAIN_COLORS NCCHANNELS_INITIALIZER(BG_R, BG_G, BG_B, BLUE_R, BLUE_G, BLUE_B)
 
 #include "memory/memory_management.h"
 
@@ -169,10 +169,5 @@ typedef struct string_max_t {
  * The main memory pool for the game, used for dynamic memory allocation.
  */
 extern memory_pool_t* main_memory_pool;
-
-/**
- * @brief Clears the entire screen by overwriting all characters with spaces.
- */
-void clear_screen(struct ncplane* stdplane);
 
 #endif//COMMON_H
