@@ -27,6 +27,8 @@ src_files = files(
 
     'src/item/gear.c',
     'src/item/potion.c',
+    'src/item/loot_generation.c'
+
 )
 
 menu_files = files(
