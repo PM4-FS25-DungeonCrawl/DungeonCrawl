@@ -210,3 +210,7 @@ void save_character(db_connection_t* db_connection, const character_t character,
     // Finalize the statement
     sqlite3_finalize(stmt_player);
 }
+
+character_t get_character_from_db(db_connection_t* db_connection, int game_state_id) {
+
+}
