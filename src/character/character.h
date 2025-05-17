@@ -66,6 +66,7 @@ void remove_potion(character_t* c, potion_t* potion);
 void add_gear(character_t* c, gear_t* gear);
 void remove_gear(character_t* c, gear_t* gear);
 void remove_equipped_gear(character_t* c, gear_slot_t slot);
+bool add_equipped_gear(character_t* c, gear_t* gear);
 void equip_gear(character_t* c, gear_t* gear);
 void unequip_gear(character_t* c, gear_slot_t slot);
 

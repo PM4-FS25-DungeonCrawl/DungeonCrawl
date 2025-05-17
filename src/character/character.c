@@ -254,6 +254,33 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
 }
 
 /**
+ * @brief Adds an equipped gear in a specific slot of a character without updating stats and abilities.
+ *
+ * @param c Pointer to the character.
+ * @param gear Pointer to the equipped gear to add.
+ * @return True if the gear was successfully added, false otherwise.
+ */
+bool add_equipped_gear(character_t* c, gear_t* gear) {
+    NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_equipped_gear character is NULL");
+    NULL_PTR_HANDLER_RETURN(gear, , "Character", "In add_equipped_gear gear is NULL");
+
+    if (gear->slot < MAX_SLOT) {
+        if (c->equipment[gear->slot] != NULL) {
+            log_msg(WARNING, "Character", "Slot %d is already occupied!", gear->slot);
+            return false;
+        }
+
+        c->equipment[gear->slot] = gear;
+
+        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);
+        return true;
+    }
+
+    log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
+    return false;
+}
+
+/**
  * @brief Adds a potion to a character's inventory
  * @param c Pointer to the character
  * @param potion Pointer to the potion to add
@@ -305,11 +332,7 @@ void equip_gear(character_t* c, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(c, , "Character", "In equip_gear character is NULL");
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In equip_gear gear is NULL");
 
-    if (gear->slot < MAX_SLOT) {
-        if (c->equipment[gear->slot] != NULL) {
-            log_msg(WARNING, "Character", "Slot %d is already occupied!", gear->slot);
-            return;
-        }
+    if (add_equipped_gear(c, gear)) {
 
         remove_gear(c, gear);
 
@@ -318,8 +341,6 @@ void equip_gear(character_t* c, gear_t* gear) {
                 add_ability(c, gear->abilities[i]);
             }
         }
-
-        c->equipment[gear->slot] = gear;
 
         c->base_stats.strength += gear->stats.strength;
         c->base_stats.intelligence += gear->stats.intelligence;
@@ -331,10 +352,6 @@ void equip_gear(character_t* c, gear_t* gear) {
         update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
 
         log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->local_key);
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);
-
-    } else {
-        log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
     }
 }
 

@@ -128,10 +128,27 @@ void main_menu_state() {
                 log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
                 load_success = get_game_state_by_id(&db_connection, save_id, map, revealed_map, WIDTH, HEIGHT,
                                                     set_player_start_pos);
+                if (load_success) {
+                    // Load the player character from the database
+                    player = get_character_from_db(&db_connection, save_id);
+                    if (player == NULL) {
+                        log_msg(ERROR, "Game", "Failed to load player character");
+                        load_success = false;
+                    }
+                }
             } else {
                 // No save file was selected, try loading the latest save
                 log_msg(INFO, "Game", "No save ID provided, loading most recent save");
                 load_success = get_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
+
+                if (load_success) {
+                    // Load the player character from the database
+                    player = get_character_from_db(&db_connection, get_latest_save_id());   //TODO: Implement get_latest_save_id()
+                    if (player == NULL) {
+                        log_msg(ERROR, "Game", "Failed to load player character");
+                        load_success = false;
+                    }
+                }
             }
 
             if (load_success) {
