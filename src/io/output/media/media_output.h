@@ -13,34 +13,6 @@
 #define DUNGEON_INTRO_GIF "dungeon_intro.gif"
 
 /* =========================================================================
- * CONSTANTS AND DEFINITIONS
- * ========================================================================= */
-
-#define MEDIA_PATH "src/art/"// Path to media files
-#define MAX_PATH_LEN 256 // Maximum length for file paths
-
-// Media types enumeration
-typedef enum {
-    MEDIA_PNG,
-    MEDIA_GIF,
-    MEDIA_MP4
-} media_type_t;
-
-// structure to hold media resources
-typedef struct {
-    void* data;                // Pointer to the data (ncvisual, ncplane, etc.)
-    media_type_t type;         // Type of media
-    char filepath[MAX_PATH_LEN]; // File path
-    bool is_loaded;            // Is the media loaded
-    bool is_playing;           // For animated media (GIF/MP4)
-} media_resource_t;
-
-// Global media resource cache to avoid reloading
-#define MAX_RESOURCES 128
-static media_resource_t resources[MAX_RESOURCES];
-static int resource_count = 0;
-
-/* =========================================================================
  * INITIALIZATION AND CLEANUP
  * ========================================================================= */
 
