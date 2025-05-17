@@ -10,12 +10,6 @@
 
 #include <string.h>
 
-// Global variables for cached resources
-static loaded_visual_t* enemy_visual = NULL;
-// coresponding height and width of the resource
-int height;
-int width;
-
 /**
  * @brief Draws the combat view UI
  * 
@@ -31,12 +25,6 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
 
-    int rendered_width = 30;
-    int rendered_height = 0;
-    // - 15 somewhat of a magic number but is just to allow other ui elements to be drawn within
-    // the screen aswell since we don't exactly know how many abilites are going to exist
-    int max_rendered_height = ncplane_dim_y(stdplane) - 15;
-
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};
 
@@ -49,43 +37,10 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vec.dy = draw_resource_bar(vec, enemy);
     vec.dy += 2;
 
-    // Check if enemy_visual needs to be loaded
-    if (enemy_visual == NULL) {
-        enemy_visual = load_image(GOBLIN_IMAGE, &width, &height);
-        if (enemy_visual == NULL) {
-            // Failed to load image, fallback to ASCII art
-            log_msg(WARNING, "Combat Output", "Failed to load enemy image, using ASCII art");
-            if (enemy_sprite != NULL) {
-                uint64_t color = red_enemy_sprite ? RED_TEXT_COLORS : DEFAULT_COLORS;
-                print_text_multi_line(vec.dy, anchor.dx, enemy_sprite, 30, color);
-                vec.dy += sprite_height + 1;
-            }
-        } else {
-            // calculate correct rendered height
-
-            int calculated_height = height / ((width / rendered_width) * 2);
-            rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
-            // Successfully loaded image, display it
-            display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
-            vec.dy += rendered_height + 1;
-        }
-    } else {
-        // calculate correct rendered height
-        int calculated_height = height / ((width / rendered_width) * 2);
-        rendered_height = calculated_height < max_rendered_height ? calculated_height : max_rendered_height;
-        // Enemy visual already loaded, display it
-        display_image_positioned(enemy_visual, vec.dy, anchor.dx, rendered_width, rendered_height);
-        vec.dy += rendered_height + 1;
-    }
-
     // Render the frame
     render_frame();
 
     return vec;
-}
-
-void clear_enemy_sprite() {
-    display_image_positioned(enemy_visual, 0, 0, 0, 0);
 }
 
 /**

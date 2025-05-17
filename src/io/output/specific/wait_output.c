@@ -3,7 +3,7 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../media/media_output.h"// Added for media support
+// Removed media_output.h to avoid linking issues
 
 #include <stdio.h>
 #include <string.h>
@@ -99,30 +99,6 @@ void draw_launch_screen(void) {
 
     print_text_default(title_y + 2, version_x, version);
     print_text_default(title_y + 3, copyright_x, copyright);
-
-    /* comment out for now
-    // Load the goblin image once during initialization
-    static loaded_visual_t* goblin_img = NULL;
-
-    const char* image_path = "resources/sprites/goblin.png";
-    int img_width, img_height;
-    goblin_img = load_image(image_path, &img_width, &img_height);
-
-    // Draw the goblin image if loaded
-    if (goblin_img) {
-        // Position the image below the title
-        int image_y = title_y + 10;
-        int image_width = 3; // Terminal cells, not pixels
-        int image_height = 3;// Terminal cells, not pixels
-        int image_x = (width - image_width) / 2;
-
-        // Display the image
-        bool display_result = display_image_positioned(goblin_img, image_y, image_x, image_width, image_height);
-        if (!display_result) {
-            log_msg(ERROR, "Wait Output", "Failed to display goblin image");
-        }
-    }
-    */
 
     // Draw a loading message
     const char* loading_msg = "Loading game...";

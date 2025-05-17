@@ -54,12 +54,6 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message);
  */
 void draw_game_over(void);
 
-/**
- * @brief Cleans the enemy sprite of screen.
- *
- * This function clears the enemy sprite of the screen.
-*/
-void clear_enemy_sprite();
 
 /**
  * @brief Draws the resource bar for a character.

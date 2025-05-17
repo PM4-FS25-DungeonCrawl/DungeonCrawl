@@ -7,6 +7,8 @@
 #include "output/common/output_handler.h"
 #include "output/media/media_output.h"
 
+#include <notcurses/notcurses.h>
+
 #include <stdbool.h>
 
 // Make the init_done flag accessible from other files

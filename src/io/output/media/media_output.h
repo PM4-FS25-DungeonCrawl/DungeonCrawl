@@ -1,24 +1,59 @@
 #ifndef MEDIA_OUTPUT_H
 #define MEDIA_OUTPUT_H
 
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
+#include <notcurses/notcurses.h>
 
-/**
- * @brief Structure to represent a loaded visual
- * 
- * This is an opaque structure that encapsulates a Notcurses visual.
+/* =========================================================================
+ * MEDIA NAMES
+ * ========================================================================= */
+
+#define GOBLIN_PNG "goblin.png"      
+#define SKULL_GIF "skull.gif"
+#define DUNGEON_INTRO_GIF "dungeon_intro.gif"
+
+/* =========================================================================
+ * CONSTANTS AND DEFINITIONS
+ * ========================================================================= */
+
+#define MEDIA_PATH "src/art/"// Path to media files
+#define MAX_PATH_LEN 256 // Maximum length for file paths
+
+// Media types enumeration
+typedef enum {
+    MEDIA_PNG,
+    MEDIA_GIF,
+    MEDIA_MP4
+} media_type_t;
+
+// structure to hold media resources
+typedef struct {
+    void* data;                // Pointer to the data (ncvisual, ncplane, etc.)
+    media_type_t type;         // Type of media
+    char filepath[MAX_PATH_LEN]; // File path
+    bool is_loaded;            // Is the media loaded
+    bool is_playing;           // For animated media (GIF/MP4)
+} media_resource_t;
+
+// Global media resource cache to avoid reloading
+#define MAX_RESOURCES 128
+static media_resource_t resources[MAX_RESOURCES];
+static int resource_count = 0;
+
+/* Scaline modes provided by Notcurses:
+typedef enum {
+  NCSCALE_NONE,
+  NCSCALE_SCALE,
+  NCSCALE_STRETCH,
+  NCSCALE_SCALE_HIRES,
+  NCSCALE_NONE_HIRES,
+  NCSCALE_INFLATE,
+} ncscale_e;
  */
-typedef struct loaded_visual_s loaded_visual_t;
 
-// Scale types for display functions
-#define SCALE_NONE 0    // No scaling, use original size
-#define SCALE_PRESERVE 1// Scale preserving aspect ratio
-#define SCALE_STRETCH 2 // Stretch to exact dimensions
-#define SCALE_CELL 3    // Scale to fit in a single cell
-
-#define GOBLIN_IMAGE "resources/sprites/goblin.png"      // Example image file for goblin
-#define ASTRONAUT_IMAGE "resources/sprites/astronaut.gif"// Example GIF file for goblin
+/* =========================================================================
+ * INITIALIZATION AND CLEANUP
+ * ========================================================================= */
 
 /**
  * @brief Initialize the media output handler
@@ -30,169 +65,192 @@ typedef struct loaded_visual_s loaded_visual_t;
 bool init_media_output();
 
 /**
- * @brief Load an image file
- * 
- * Loads an image from the specified file path.
- * Supported formats depend on the Notcurses build (typically PNG, JPEG, WebP).
- * 
- * @param path Path to the image file
- * @param[out] width Optional pointer to store the image width
- * @param[out] height Optional pointer to store the image height
- * @return A handle to the loaded visual, or NULL on failure
- */
-loaded_visual_t* load_image(const char* path, int* width, int* height);
-
-/**
- * @brief Load an animated GIF
- * 
- * Loads an animated GIF from the specified file path.
- * 
- * @param path Path to the GIF file
- * @param[out] width Optional pointer to store the GIF width
- * @param[out] height Optional pointer to store the GIF height
- * @param[out] frames Optional pointer to store the number of frames
- * @return A handle to the loaded visual, or NULL on failure
- */
-loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames);
-
-/**
- * @brief Display a visual at the specified position with custom scaling
- * 
- * Renders a previously loaded visual at the given coordinates with custom scaling.
- * 
- * @param visual The visual to display
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param scale_type How to scale the visual (SCALE_NONE, SCALE_PRESERVE, SCALE_STRETCH, SCALE_CELL)
- * @param target_width Target width for scaling (0 for auto/original size)
- * @param target_height Target height for scaling (0 for auto/original size)
- * @return true on success, false on failure
- */
-bool display_visual(loaded_visual_t* visual, int y, int x, int scale_type,
-                    int target_width, int target_height);
-
-/**
- * @brief Display an image at fullscreen
- * 
- * Renders an image to fill the entire screen, stretching to fit.
- * 
- * @param visual The visual to display
- * @return true on success, false on failure
- */
-bool display_image_fullscreen(loaded_visual_t* visual);
-
-/**
- * @brief Display an image at the specified position and size
- * 
- * Renders an image at the specified position with the given dimensions.
- * 
- * @param visual The visual to display
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param width The width to display the image (in terminal columns)
- * @param height The height to display the image (in terminal rows)
- * @return true on success, false on failure
- */
-bool display_image_positioned(loaded_visual_t* visual, int y, int x, int width, int height);
-
-/**
- * @brief Display an image scaled to fit a single cell
- * 
- * Renders an image scaled down to fit in a single terminal cell at the specified position.
- * Useful for map display when replacing characters with small images.
- * 
- * @param visual The visual to display
- * @param y The Y coordinate (row) for the cell
- * @param x The X coordinate (column) for the cell
- * @return true on success, false on failure
- */
-bool display_image_cell(loaded_visual_t* visual, int y, int x);
-
-/**
- * @brief Start playing an animated visual with custom scaling
- * 
- * Begins playback of an animated visual (like a GIF) with custom scaling options.
- * 
- * @param visual The visual to play
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param scale_type How to scale the visual (SCALE_NONE, SCALE_PRESERVE, SCALE_STRETCH, SCALE_CELL)
- * @param target_width Target width for scaling (0 for auto/original size)
- * @param target_height Target height for scaling (0 for auto/original size)
- * @param loop Whether to loop the animation (true: loop, false: play once)
- * @return true on success, false on failure
- */
-bool play_animated_visual(loaded_visual_t* visual, int y, int x, int scale_type,
-                          int target_width, int target_height, bool loop);
-
-/**
- * @brief Play a GIF at fullscreen
- * 
- * Plays an animated GIF to fill the entire screen, stretching to fit.
- * 
- * @param visual The visual to play
- * @param loop Whether to loop the animation (true: loop, false: play once)
- * @return true on success, false on failure
- */
-bool play_gif_fullscreen(loaded_visual_t* visual, bool loop);
-
-/**
- * @brief Play a GIF at the specified position and size
- * 
- * Plays an animated GIF at the specified position with the given dimensions.
- * 
- * @param visual The visual to play
- * @param y The Y coordinate (row) for the top-left corner
- * @param x The X coordinate (column) for the top-left corner
- * @param width The width to display the GIF (in terminal columns)
- * @param height The height to display the GIF (in terminal rows)
- * @param loop Whether to loop the animation (true: loop, false: play once)
- * @return true on success, false on failure
- */
-bool play_gif_positioned(loaded_visual_t* visual, int y, int x, int width, int height, bool loop);
-
-/**
- * @brief Play a GIF scaled to fit a single cell
- * 
- * Plays an animated GIF scaled down to fit in a single terminal cell at the specified position.
- * Useful for map display when replacing characters with small animated images.
- * 
- * @param visual The visual to play
- * @param y The Y coordinate (row) for the cell
- * @param x The X coordinate (column) for the cell
- * @param loop Whether to loop the animation (true: loop, false: play once)
- * @return true on success, false on failure
- */
-bool play_gif_cell(loaded_visual_t* visual, int y, int x, bool loop);
-
-/**
- * @brief Stop an animated visual
- * 
- * Stops playback of a previously started animated visual.
- * 
- * @param visual The visual to stop
- * @return true on success, false on failure
- */
-bool stop_animated_visual(loaded_visual_t* visual);
-
-// These functions are defined in common_output.h
-// bool get_screen_dimensions(int* width, int* height);
-// bool render_frame(void);
-
-/**
- * @brief Free a loaded visual
- * 
- * Releases the resources associated with a loaded visual.
- * 
- * @param visual The visual to free
- */
-void free_visual(loaded_visual_t* visual);
-
-/**
  * @brief Shutdown the media output handler
  * 
  * Cleans up resources used by the media output handler.
  */
 void shutdown_media_output(void);
+
+/* =========================================================================
+ * UTILITY FUNCTIONS FOR RENDERING OPTIONS
+ * ========================================================================= */
+
+/**
+ * Create ncvisual options structure with the provided parameters
+ * 
+ * @param target_plane Target plane (NULL to create a new plane)
+ * @param scaling Scaling mode to use
+ * @param y Y coordinate in terminal cells
+ * @param x X coordinate in terminal cells
+ * @param height Height in terminal cells (0 for automatic)
+ * @param width Width in terminal cells (0 for automatic)
+ * @param blitter Blitter to use (NCBLIT_DEFAULT for default)
+ * @param flags Optional flags
+ * @return Initialized ncvisual_options structure
+ */
+struct ncvisual_options create_visual_options(struct ncplane* target_plane, 
+                                             ncscale_e scaling,
+                                             int y, int x,
+                                             int height, int width,
+                                             ncblitter_e blitter,
+                                             uint64_t flags);
+
+/**
+ * Create a dynamically allocated ncvisual options structure
+ * The caller is responsible for freeing the returned pointer
+ * 
+ * @param target_plane Target plane (NULL to create a new plane)
+ * @param scaling Scaling mode to use
+ * @param y Y coordinate in terminal cells
+ * @param x X coordinate in terminal cells
+ * @param height Height in terminal cells (0 for automatic)
+ * @param width Width in terminal cells (0 for automatic)
+ * @param blitter Blitter to use (NCBLIT_DEFAULT for default)
+ * @param flags Optional flags
+ * @return Dynamically allocated ncvisual_options structure (must be freed by caller)
+ */
+struct ncvisual_options* create_visual_options_alloc(struct ncplane* target_plane, 
+                                                    ncscale_e scaling,
+                                                    int y, int x,
+                                                    int height, int width,
+                                                    ncblitter_e blitter,
+                                                    uint64_t flags);
+
+/* =========================================================================
+ * PNG DISPLAY FUNCTIONS
+ * ========================================================================= */
+
+/**
+ * Display a PNG file at specified coordinates with scaling
+ * 
+ * @param filename PNG file name (will be loaded from src/art/png/)
+ * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
+ * @param height Height in terminal cells
+ * @param scaling Scaling mode to use
+ * @return true on success, false on failure
+ */
+bool display_png_at(const char* filename, int x, int y, int height, ncscale_e scaling);
+
+/**
+ * Fill the background with a PNG file scaled to terminal size
+ * 
+ * @param filename PNG file name (will be loaded from src/art/png/)
+ * @return true on success, false on failure
+ */
+bool fill_background_with_png(const char* filename);
+
+/**
+ * Fill a single terminal cell with a PNG image
+ * 
+ * @param filename PNG file name (will be loaded from src/art/png/)
+ * @param y Y coordinate in terminal cells
+ * @param x X coordinate in terminal cells
+ * @return true on success, false on failure
+ */
+bool fill_cell_with_png(const char* filename, int y, int x);
+
+/* =========================================================================
+ * GIF DISPLAY FUNCTIONS
+ * ========================================================================= */
+
+/**
+ * Display a GIF file at specified coordinates with scaling
+ * 
+ * @param filename GIF file name (will be loaded from src/art/gif/)
+ * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
+ * @param height Height in terminal cells
+ * @param scaling Scaling mode to use
+ * @param fps Frames per second (0 for default)
+ * @return true on success, false on failure
+ */
+bool display_gif_at(const char* filename, int x, int y, int height, ncscale_e scaling, float fps);
+
+/**
+ * Fill the background with a GIF file scaled to terminal size
+ * 
+ * @param filename GIF file name (will be loaded from src/art/gif/)
+ * @param fps Frames per second (0 for default)
+ * @return true on success, false on failure
+ */
+bool fill_background_with_gif(const char* filename, float fps);
+
+/* =========================================================================
+ * MP4 DISPLAY FUNCTIONS
+ * ========================================================================= */
+
+/**
+ * Display an MP4 file at specified coordinates with scaling
+ * 
+ * @param filename MP4 file name (will be loaded from src/art/mp4/)
+ * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
+ * @param height Height in terminal cells
+ * @param scaling Scaling mode to use
+ * @param fps Frames per second (0 for default)
+ * @return true on success, false on failure
+ */
+bool display_mp4_at(const char* filename, int x, int y, int height, ncscale_e scaling, float fps);
+
+/**
+ * Fill the background with an MP4 file scaled to terminal size
+ * 
+ * @param filename MP4 file name (will be loaded from src/art/mp4/)
+ * @param fps Frames per second (0 for default)
+ * @return true on success, false on failure
+ */
+bool fill_background_with_mp4(const char* filename, float fps);
+
+/* =========================================================================
+ * ANIMATION CONTROL FUNCTIONS
+ * ========================================================================= */
+
+/**
+ * Stop playing an animated media (GIF or MP4)
+ * 
+ * @param filename File name of the animation to stop
+ * @return true on success, false on failure
+ */
+bool stop_animation(const char* filename);
+
+/**
+ * Stop all animations
+ */
+void stop_all_animations(void);
+
+/**
+ * Pause/resume an animation
+ * 
+ * @param filename File name of the animation to toggle
+ * @return true on success, false on failure
+ */
+bool toggle_animation_pause(const char* filename);
+
+/**
+ * Refresh media display
+ * 
+ * @return true on success, false on failure
+ */
+bool refresh_media_display(void);
+
+/* =========================================================================
+ * RESOURCE MANAGEMENT FUNCTIONS
+ * ========================================================================= */
+
+/**
+ * Unload a specific media resource
+ * 
+ * @param filename File name to unload
+ * @return true on success, false on failure
+ */
+bool unload_media(const char* filename);
+
+/**
+ * Reload media after terminal resize
+ * 
+ * @return true on success, false on failure
+ */
+bool reload_media_after_resize(void);
 
 #endif// MEDIA_OUTPUT_H

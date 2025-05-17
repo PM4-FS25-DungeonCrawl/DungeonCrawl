@@ -95,7 +95,6 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
                 draw_game_over();
-                clear_enemy_sprite();
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {
@@ -109,14 +108,12 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 if (player->xp >= calculate_xp_for_next_level(player->level)) {
                     level_up(player);
                 }
-                clear_enemy_sprite();
                 return PLAYER_WON;
             }
             clear_screen();
             combat_state = COMBAT_MENU;
             break;
         case COMBAT_EXIT:
-            clear_enemy_sprite();
             return EXIT_GAME;
     }
     return CONTINUE_COMBAT;
