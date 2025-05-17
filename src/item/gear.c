@@ -20,6 +20,7 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
     gear->slot = slot;
     gear->stats = stats;
     gear->defenses = defenses;
+    gear->num_abilities = num_abilities;
 
     int i = 0;
     for (; i < MAX_ABILITY_PER_GEAR && i < num_abilities; ++i) {
