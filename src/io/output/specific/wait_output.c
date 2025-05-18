@@ -147,7 +147,7 @@ void draw_welcome_screen(void) {
     print_text_default(msg_y, msg_x, welcome_msg);
 
     // display image below the welcome message
-    if (!display_png_at(GOBLIN_PNG, msg_x - 10, msg_y + 2, 5, NCSCALE_NONE)) {
+    if (!display_image_at(GOBLIN_PNG, msg_x - 10, msg_y + 2, 5, 5, SCALE_PRESERVE)) {
         log_msg(ERROR, "Wait Output", "Failed to display welcome image");
     }
 

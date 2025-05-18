@@ -5,8 +5,38 @@
 #include <notcurses/notcurses.h>
 
 /* =========================================================================
- * MEDIA NAMES
+ * CONSTANTS AND DEFINITIONS
  * ========================================================================= */
+
+ /**
+ * @brief Structure to represent a loaded visual
+ * 
+ * This is an opaque structure that encapsulates a Notcurses visual.
+ */
+typedef struct loaded_visual_s loaded_visual_t;
+
+// Scale types for display functions
+typedef enum {
+    SCALE_NONE,         // No scaling, use original size
+    SCALE_PRESERVE,    // Scale preserving aspect ratio
+    SCALE_STRETCH,     // Stretch to exact dimensions
+    SCALE_CELL,         // Scale to fit in a single cell
+    SCALE_FULLSCREEN   // Scale to fill the entire screen
+} scale_type_t;
+
+// Media types enumeration
+typedef enum {
+    MEDIA_PNG,
+    MEDIA_GIF,
+    MEDIA_MP4
+} media_type_t;
+
+/* =========================================================================
+ * MEDIA PATHS AND NAMES
+ * ========================================================================= */
+
+#define MEDIA_PATH "src/art/"// Path to media files
+#define MAX_PATH_LEN 256 // Maximum length for file paths
 
 #define GOBLIN_PNG "goblin.png"      
 #define SKULL_GIF "skull.gif"
@@ -33,135 +63,68 @@ bool init_media_output();
 void shutdown_media_output(void);
 
 /* =========================================================================
- * UTILITY FUNCTIONS FOR RENDERING OPTIONS
+ * IMAGE DISPLAY FUNCTIONS
  * ========================================================================= */
 
 /**
- * Create ncvisual options structure with the provided parameters
+ * Display an image file at specified coordinates with scaling
  * 
- * @param target_plane Target plane (NULL to create a new plane)
- * @param scaling Scaling mode to use
- * @param y Y coordinate in terminal cells
- * @param x X coordinate in terminal cells
- * @param height Height in terminal cells (0 for automatic)
- * @param width Width in terminal cells (0 for automatic)
- * @param blitter Blitter to use (NCBLIT_DEFAULT for default)
- * @param flags Optional flags
- * @return Initialized ncvisual_options structure
- */
-struct ncvisual_options create_visual_options(struct ncplane* target_plane, 
-                                             ncscale_e scaling,
-                                             int y, int x,
-                                             int height, int width,
-                                             ncblitter_e blitter,
-                                             uint64_t flags);
-
-/**
- * Create a dynamically allocated ncvisual options structure
- * The caller is responsible for freeing the returned pointer
- * 
- * @param target_plane Target plane (NULL to create a new plane)
- * @param scaling Scaling mode to use
- * @param y Y coordinate in terminal cells
- * @param x X coordinate in terminal cells
- * @param height Height in terminal cells (0 for automatic)
- * @param width Width in terminal cells (0 for automatic)
- * @param blitter Blitter to use (NCBLIT_DEFAULT for default)
- * @param flags Optional flags
- * @return Dynamically allocated ncvisual_options structure (must be freed by caller)
- */
-struct ncvisual_options* create_visual_options_alloc(struct ncplane* target_plane, 
-                                                    ncscale_e scaling,
-                                                    int y, int x,
-                                                    int height, int width,
-                                                    ncblitter_e blitter,
-                                                    uint64_t flags);
-
-/* =========================================================================
- * PNG DISPLAY FUNCTIONS
- * ========================================================================= */
-
-/**
- * Display a PNG file at specified coordinates with scaling
- * 
- * @param filename PNG file name (will be loaded from src/art/png/)
+ * @param filename Image file name (PNG supported, loaded from src/art/png/)
  * @param x X coordinate in terminal cells
  * @param y Y coordinate in terminal cells
  * @param height Height in terminal cells
- * @param scaling Scaling mode to use
+ * @param width Width in terminal cells (0 for auto)
+ * @param scale_type Scaling mode to use
  * @return true on success, false on failure
  */
-bool display_png_at(const char* filename, int x, int y, int height, ncscale_e scaling);
+bool display_image_at(const char* filename, int x, int y, int height, int width, scale_type_t scale_type);
 
 /**
- * Fill the background with a PNG file scaled to terminal size
+ * Fill the background with an image file scaled to terminal size
  * 
- * @param filename PNG file name (will be loaded from src/art/png/)
+ * @param filename Image file name (PNG supported, loaded from src/art/png/)
  * @return true on success, false on failure
  */
-bool fill_background_with_png(const char* filename);
+bool fill_background_with_image(const char* filename);
 
 /**
- * Fill a single terminal cell with a PNG image
+ * Fill a single terminal cell with an image
  * 
- * @param filename PNG file name (will be loaded from src/art/png/)
- * @param y Y coordinate in terminal cells
+ * @param filename Image file name (PNG supported, loaded from src/art/png/)
  * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
  * @return true on success, false on failure
  */
-bool fill_cell_with_png(const char* filename, int y, int x);
+bool fill_cell_with_image(const char* filename, int x, int y);
 
 /* =========================================================================
- * GIF DISPLAY FUNCTIONS
+ * ANIMATION DISPLAY FUNCTIONS
  * ========================================================================= */
 
 /**
- * Display a GIF file at specified coordinates with scaling
+ * Display an animation file at specified coordinates with scaling
  * 
- * @param filename GIF file name (will be loaded from src/art/gif/)
+ * @param filename Animation file name (GIF supported, loaded from src/art/gif/)
  * @param x X coordinate in terminal cells
  * @param y Y coordinate in terminal cells
  * @param height Height in terminal cells
+ * @param width Width in terminal cells (0 for auto)
  * @param scaling Scaling mode to use
- * @param fps Frames per second (0 for default)
+ * @param fps Frames per second
+ * @param loop Whether to loop the animation
  * @return true on success, false on failure
  */
-bool display_gif_at(const char* filename, int x, int y, int height, ncscale_e scaling, float fps);
+bool display_animation_at(const char* filename, int x, int y, int height, int width, scale_type_t scale_type, float fps, bool loop);
 
 /**
- * Fill the background with a GIF file scaled to terminal size
+ * Fill the background with an animation file scaled to terminal size
  * 
- * @param filename GIF file name (will be loaded from src/art/gif/)
- * @param fps Frames per second (0 for default)
+ * @param filename Animation file name (GIF supported, loaded from src/art/gif/)
+ * @param fps Frames per second
+ * @param loop Whether to loop the animation
  * @return true on success, false on failure
  */
-bool fill_background_with_gif(const char* filename, float fps);
-
-/* =========================================================================
- * MP4 DISPLAY FUNCTIONS
- * ========================================================================= */
-
-/**
- * Display an MP4 file at specified coordinates with scaling
- * 
- * @param filename MP4 file name (will be loaded from src/art/mp4/)
- * @param x X coordinate in terminal cells
- * @param y Y coordinate in terminal cells
- * @param height Height in terminal cells
- * @param scaling Scaling mode to use
- * @param fps Frames per second (0 for default)
- * @return true on success, false on failure
- */
-bool display_mp4_at(const char* filename, int x, int y, int height, ncscale_e scaling, float fps);
-
-/**
- * Fill the background with an MP4 file scaled to terminal size
- * 
- * @param filename MP4 file name (will be loaded from src/art/mp4/)
- * @param fps Frames per second (0 for default)
- * @return true on success, false on failure
- */
-bool fill_background_with_mp4(const char* filename, float fps);
+bool fill_background_with_animation(const char* filename, float fps, bool loop);
 
 /* =========================================================================
  * ANIMATION CONTROL FUNCTIONS
@@ -181,14 +144,6 @@ bool stop_animation(const char* filename);
 void stop_all_animations(void);
 
 /**
- * Pause/resume an animation
- * 
- * @param filename File name of the animation to toggle
- * @return true on success, false on failure
- */
-bool toggle_animation_pause(const char* filename);
-
-/**
  * Refresh media display
  * 
  * @return true on success, false on failure
@@ -206,6 +161,14 @@ bool refresh_media_display(void);
  * @return true on success, false on failure
  */
 bool unload_media(const char* filename);
+
+/**
+ * Preload a media file into memory
+ * 
+ * @param filename File name to preload
+ * @return true on success, false on failure
+ */
+bool preload_media(const char* filename);
 
 /**
  * Reload media after terminal resize
