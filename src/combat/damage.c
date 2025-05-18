@@ -9,7 +9,6 @@
 int roll_dice(dice_size_t dice_size);
 
 int roll_dice(const dice_size_t dice_size) {
-    // TODO better randomness? (warning message)
     /* Seed random number generator */
     return rand() % dice_size + 1;
 }
@@ -32,7 +31,7 @@ int roll_damage(const ability_t* ability) {
 }
 
 int deal_damage(character_t* character, damage_type_t damage_type, const int damage) {
-    // TODO critical hits are ignored
+    // TODO critical hits amd strength/intelligence are ignored
     // negative damage resistance leads to more damage
     // damage += character->resistance[damage_type].value;
     // damage -= character->current_stats.armor;
