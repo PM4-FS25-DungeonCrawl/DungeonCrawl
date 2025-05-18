@@ -1,5 +1,6 @@
 #include "game_data.h"
 
+#include "character/level.h"
 #include "character/monster.h"
 #include "character/player.h"
 #include "common.h"
@@ -49,6 +50,7 @@ int reset_goblin() {
     if (goblin == NULL) {
         return 1;
     }
+    distribute_monster_skill_points(goblin);
     add_ability(goblin, &ability_table->abilities[BITE]);
     return 0;
 }

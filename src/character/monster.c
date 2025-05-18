@@ -4,8 +4,11 @@
  */
 
 #include "monster.h"
+#include "../character/level.h"
 #include "../game.h"
 #include <math.h>
+
+stat_type_t scaling_stats[8] = { STRENGTH, CONSTITUTION, STRENGTH, DEXTERITY, INTELLIGENCE, CONSTITUTION, DEXTERITY, STRENGTH};
 
 /**
  * @brief Creates and initializes a new goblin character
@@ -19,26 +22,36 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(goblin, NULL, "Goblin", "Failed to allocate memory for goblin");
 
     // Parameters are the default values for floor 1, which then get scaled
-    set_character_stats(goblin, scale_to_floor(3),
-        scale_to_floor(20),
-        scale_to_floor(4),
-        scale_to_floor(2));
+    set_character_stats(goblin, 10, 5, 5, 1);
 
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);
-    set_xp_reward(goblin, scale_to_floor(120));
+    set_xp_reward(goblin, scale_xp_reward(120));
     set_level(goblin, current_floor);
 
     return goblin;
 }
 
 /**
- * @brief scales the monster stats based on the current floor level
+ * @brief scales the xp reward based on the current floor
  * @param base base value for floor 1
  * @return new scaled value
  */
-int scale_to_floor(int base) {
-    float mult_increase = 1.0f; // increase per floor
+int scale_xp_reward(int base) {
+    float mult_increase = 0.1f; // increase per floor
     float multiplier = 1 + ((current_floor - 1) * mult_increase);
     return (int)round(base * multiplier);
+}
+
+/**
+ * @brief Distributes skill points to the monster
+ * @param monster Pointer to the monster
+ */
+void distribute_monster_skill_points(character_t* monster) {
+    monster->skill_points = current_floor;
+    while (monster->skill_points > 0) {
+        stat_type_t stat = scaling_stats[monster->level % 8];
+        raise_skill(&monster->base_stats, stat, monster->skill_points);
+        monster->skill_points--;
+    }
 }

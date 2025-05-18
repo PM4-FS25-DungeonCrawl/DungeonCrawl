@@ -1,6 +1,6 @@
 #include "map_output.h"
 
-#include <src/game.h>
+#include "../src/game.h"
 
 #include "../../../asciiart/ascii.h"
 #include "../../../common.h"
