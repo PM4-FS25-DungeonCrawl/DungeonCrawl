@@ -466,45 +466,61 @@ static loaded_visual_t* load_media(const char* filename, media_type_t media_type
 
 static loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int width, scale_type_t scale_type) {
     // Validate parameters
-    if (!filename || height < 0) { // Allow height=0 for fullscreen scaling
-        log_msg(ERROR, "media_output", "Invalid parameters for display_media");
+    if (!filename) {
+        log_msg(ERROR, "media_output", "Null filename for display_media");
         return NULL;
     }
 
-    // Determine media media_type from extension
+    // Allow height=0 for fullscreen and preserving aspect ratio
+    if (height < 0) {
+        log_msg(ERROR, "media_output", "Invalid height (%d) for display_media", height);
+        return NULL;
+    }
+
+    // Determine media type from extension with better logging
     media_type_t media_type;
     if (is_file_extension(filename, ".png")) {
         media_type = MEDIA_PNG;
+        log_msg(INFO, "media_output", "Detected PNG file: %s", filename);
     } else if (is_file_extension(filename, ".gif")) {
         media_type = MEDIA_GIF;
+        log_msg(INFO, "media_output", "Detected GIF file: %s", filename);
     } else if (is_file_extension(filename, ".mp4")) {
         media_type = MEDIA_MP4;
+        log_msg(INFO, "media_output", "Detected MP4 file: %s (not supported yet)", filename);
+        return NULL;
     } else {
-        return NULL; // Unsupported file media_type
+        log_msg(ERROR, "media_output", "Unsupported file extension for: %s", filename);
+        return NULL;
     }
 
-    // load the media
+    // Load the media
     loaded_visual_t* resource = load_media(filename, media_type);
     if (!resource || !resource->is_loaded) {
         log_msg(ERROR, "media_output", "Failed to load media: %s", filename);
         return NULL;
     }
     
-    // do scaling
+    log_msg(INFO, "media_output", "Setting up media for display: %s at position (%d,%d) size %dx%d", 
+            filename, x, y, width, height);
+    
+    // Set up scaling
     setup_scaling_options(resource, scale_type, width, height);
 
-    // coordinates
+    // Set coordinates
     resource->options.y = y;
     resource->options.x = x;
 
     // Clean up existing plane if needed
     if (resource->plane) {
-        log_msg(INFO, "media_output", "Destroying existing plane before creating new one");
+        log_msg(INFO, "media_output", "Destroying existing plane before new display");
+        ncplane_erase(resource->plane);  // Clear contents first
+        notcurses_render(nc);            // Update display
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
 
-    log_msg(INFO, "media_output", "Media successfully readied for display");
+    log_msg(INFO, "media_output", "Media successfully readied for display at position (%d,%d)", x, y);
     return resource;
 }
 
@@ -569,8 +585,18 @@ void stop_all_animations(void) {
 
 // Refresh media display
 bool refresh_media_display(void) {
-    // Force a redraw of the terminal
-    return notcurses_render(nc);
+    log_msg(INFO, "media_output", "Forcing a complete redraw of the terminal");
+    
+    // Force a redraw of the terminal with error checking
+    bool result = notcurses_render(nc);
+    
+    if (!result) {
+        log_msg(ERROR, "media_output", "Failed to refresh media display");
+    } else {
+        log_msg(INFO, "media_output", "Successfully refreshed media display");
+    }
+    
+    return result;
 }
 
 // Helper function for animation callback
@@ -825,7 +851,10 @@ static void free_media_resource(loaded_visual_t* resource) {
         return;
     }
 
-    resource->is_loaded = false;
+    log_msg(INFO, "media_output", "Starting cleanup of resource: %s", 
+            resource->path ? resource->path : "unknown");
+    
+    // Stop any animation first
     resource->is_playing = false;
     
     // Clean up the plane properly - first erase its contents
@@ -836,29 +865,33 @@ static void free_media_resource(loaded_visual_t* resource) {
         ncplane_erase(resource->plane);
 
         // Make sure the erase is visible
-        render_frame();
+        notcurses_render(nc);  // Use direct render for reliability
 
         // Then destroy the plane
         log_msg(INFO, "media_output", "Destroying plane");
         ncplane_destroy(resource->plane);
+        resource->plane = NULL;
     }
 
     // Free the visual resource
     if (resource->visual) {
         log_msg(INFO, "media_output", "Destroying visual");
         ncvisual_destroy(resource->visual);
+        resource->visual = NULL;
     }
 
     // Free path if allocated
     if (resource->path) {
+        log_msg(INFO, "media_output", "Freeing resource path");
         free(resource->path);
+        resource->path = NULL;
     }
 
+    // Mark as not loaded
+    resource->is_loaded = false;
+    
     // Resource is part of static array, no need to free the structure itself
-    
     log_msg(INFO, "media_output", "Visual resources cleanup complete");
-    
-    
 }
 
 static void media_cleanup(void) {
