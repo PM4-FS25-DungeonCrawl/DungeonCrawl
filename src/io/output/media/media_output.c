@@ -580,18 +580,29 @@ static int animation_callback(struct ncvisual* ncv, struct ncvisual_options* vop
 
     // Check if we should stop playing
     if (!visual || !visual->is_playing) {
+        log_msg(INFO, "media_output", "Animation stopping (is_playing=false)");
         return -1;// Stop the animation
     }
-
-    // Render the current frame
-    vopts->n = visual->plane;
-
-    if (!ncvisual_blit(nc, ncv, vopts)) {
-        log_msg(ERROR, "media_output", "Failed to render animation frame");
+    
+    if (!visual->plane) {
+        log_msg(ERROR, "media_output", "Animation plane is NULL");
         return -1;
     }
 
-    // Render the changes
+    // Make sure we're using the right plane
+    vopts->n = visual->plane;
+    
+    // Fixed blitter to ensure consistent rendering
+    vopts->blitter = NCBLIT_2x1;
+
+    // Render the current frame
+    struct ncplane* ret_plane = ncvisual_blit(nc, ncv, vopts);
+    if (!ret_plane) {
+        log_msg(ERROR, "media_output", "Failed to blit animation frame");
+        return -1;
+    }
+
+    // Render the changes with error checking
     if (!notcurses_render(nc)) {
         log_msg(ERROR, "media_output", "Failed to render animation changes");
         return -1;
@@ -682,22 +693,38 @@ static bool get_cell_dimensions(int* cell_width, int* cell_height) {
 // Helper function to set up scaling options
 static void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                                   int target_width, int target_height) {
-    // Apply scaling based on media_type
+    // Log scaling information
+    log_msg(INFO, "media_output", "Setting up scaling: type=%d, target=%dx%d, source=%dx%d",
+            scale_type, target_width, target_height, visual->width, visual->height);
+            
+    // Clear options first
+    memset(&visual->options, 0, sizeof(visual->options));
+    
+    // Apply scaling based on type
     switch (scale_type) {
         case SCALE_PRESERVE:
             // Scale preserving aspect ratio
             visual->options.scaling = NCSCALE_SCALE;
-            // Use original height and width if not specified
-            visual->options.leny = target_height > 0 ? target_height : visual->height;
-            visual->options.lenx = target_width > 0 ? target_width : visual->width;
+            // When using NCSCALE_SCALE, a zero value for lenx/leny means auto-scale
+            visual->options.leny = target_height > 0 ? target_height : 0;
+            visual->options.lenx = target_width > 0 ? target_width : 0;
+            log_msg(INFO, "media_output", "Using preserve aspect ratio scaling: %dx%d",
+                    visual->options.lenx, visual->options.leny);
             break;
 
         case SCALE_STRETCH:
             // Stretch to exact dimensions
-            visual->options.scaling = NCSCALE_STRETCH;
-            // Use original height and width if not specified
-            visual->options.leny = target_height > 0 ? target_height : visual->height;
-            visual->options.lenx = target_width > 0 ? target_width : visual->width;
+            if (target_width > 0 && target_height > 0) {
+                visual->options.scaling = NCSCALE_STRETCH;
+                visual->options.leny = target_height;
+                visual->options.lenx = target_width;
+                log_msg(INFO, "media_output", "Using stretch scaling: %dx%d",
+                        visual->options.lenx, visual->options.leny);
+            } else {
+                // Fall back to no scaling if dimensions are invalid
+                visual->options.scaling = NCSCALE_NONE;
+                log_msg(INFO, "media_output", "Invalid stretch dimensions, using no scaling");
+            }
             break;
 
         case SCALE_CELL:
@@ -705,6 +732,7 @@ static void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_ty
             visual->options.scaling = NCSCALE_SCALE;
             visual->options.leny = 1;
             visual->options.lenx = 1;
+            log_msg(INFO, "media_output", "Using cell scaling (1x1)");
             break;
 
         case SCALE_FULLSCREEN:
@@ -715,10 +743,13 @@ static void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_ty
             if (get_screen_dimensions(&screen_width, &screen_height)) {
                 visual->options.leny = screen_height;
                 visual->options.lenx = screen_width;
+                log_msg(INFO, "media_output", "Using fullscreen scaling: %dx%d",
+                        visual->options.lenx, visual->options.leny);
             } else {
                 // Fallback to original dimensions
                 visual->options.leny = visual->height;
                 visual->options.lenx = visual->width;
+                log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size");
             }
             break;
 
@@ -726,8 +757,12 @@ static void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_ty
         default:
             // No scaling
             visual->options.scaling = NCSCALE_NONE;
+            log_msg(INFO, "media_output", "Using no scaling");
             break;
     }
+    
+    // Set blitter to a reliable one
+    visual->options.blitter = NCBLIT_2x1;
 }
 
 // Check if a filename has a specific extension

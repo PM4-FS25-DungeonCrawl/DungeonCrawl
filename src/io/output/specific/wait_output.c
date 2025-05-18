@@ -147,8 +147,13 @@ void draw_welcome_screen(void) {
     print_text_default(msg_y, msg_x, welcome_msg);
 
     // display image below the welcome message
-    if (!display_image_at(GOBLIN_PNG, msg_x - 10, msg_y + 2, 5, 5, SCALE_PRESERVE)) {
+    if (!display_image_at(GOBLIN_PNG, msg_x - 10, msg_y + 2, 15, 15, SCALE_PRESERVE)) {
         log_msg(ERROR, "Wait Output", "Failed to display welcome image");
+    }
+
+    // render a gif next to tne goblin
+    if (!display_animation_at(SKULL_GIF, msg_x + 10, msg_y + 2, 15, 15, SCALE_PRESERVE, 10.0f, true)) {
+        log_msg(ERROR, "Wait Output", "Failed to display welcome animation");
     }
 
     // Render the frame using centralized IO handler
