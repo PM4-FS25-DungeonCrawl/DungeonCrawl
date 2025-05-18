@@ -1,5 +1,7 @@
 #include "map_output.h"
 
+#include <src/game.h>
+
 #include "../../../asciiart/ascii.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
@@ -117,6 +119,10 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     print_text_default(y++, x, "Press 'M' for Menu");
     print_text_default(y++, x, "Press 'L' for Stats");
     print_text_default(y++, x, "Press 'I' for Inventory");
+    // show current floor
+    char floor_str[32];
+    snprintf(floor_str, sizeof(floor_str), "Current floor: %d", current_floor);
+    print_text_default(y + 1, x, floor_str);
 
     // Format player position string
     char pos_str[64];

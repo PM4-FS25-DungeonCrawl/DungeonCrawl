@@ -18,33 +18,27 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
     character_t* goblin = init_character(memory_pool, MONSTER, "Goblin");
     NULL_PTR_HANDLER_RETURN(goblin, NULL, "Goblin", "Failed to allocate memory for goblin");
 
-    int base_strength = 3;
-    int base_intelligence = 20;
-    int base_dexterity = 4;
-    int base_constitution = current_floor;
-    int base_xp = 120;
-
-    set_character_stats(goblin, scale_stat_to_floor(base_strength),
-        scale_stat_to_floor(base_intelligence),
-        scale_stat_to_floor(base_dexterity),
-        scale_stat_to_floor(base_constitution));
+    // Parameters are the default values for floor 1, which then get scaled
+    set_character_stats(goblin, scale_to_floor(3),
+        scale_to_floor(20),
+        scale_to_floor(4),
+        scale_to_floor(2));
 
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);
-    set_xp_reward(goblin, scale_stat_to_floor(base_xp));
+    set_xp_reward(goblin, scale_to_floor(120));
     set_level(goblin, current_floor);
 
     return goblin;
 }
-
 
 /**
  * @brief scales the monster stats based on the current floor level
  * @param base base value for floor 1
  * @return new scaled value
  */
-int scale_stat_to_floor(int base) {
-    float mult_increase = 0.5f; // increase per floor
+int scale_to_floor(int base) {
+    float mult_increase = 1.0f; // increase per floor
     float multiplier = 1 + ((current_floor - 1) * mult_increase);
     return (int)round(base * multiplier);
 }
