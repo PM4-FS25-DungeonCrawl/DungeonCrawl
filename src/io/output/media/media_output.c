@@ -148,37 +148,55 @@ static bool display_image(loaded_visual_t* resource) {
         // If it's a GIF, display it as an animation with default 10 FPS
         return display_animation(resource, 10.0f, false);
     }
-    // Try a simpler approach using NCScale
-    resource->options.blitter = NCBLIT_2x2;              // Use a better blitter for clearer image
-    resource->options.flags = NCVISUAL_OPTION_CHILDPLANE;// Create as child plane
+    
+    // Clean up existing plane if needed
+    if (resource->plane) {
+        log_msg(INFO, "media_output", "Destroying existing plane");
+        ncplane_destroy(resource->plane);
+        resource->plane = NULL;
+    }
 
-    // Set the plane to NULL to let ncvisual_blit create a new one
-    resource->options.n = NULL;
-    // Directly blit the visual to create a new plane
-    struct ncplane* new_plane = ncvisual_blit(nc, resource->visual, &resource->options);
+    // Create a direct plane for the image
+    struct ncplane_options opts = {0};
+    opts.y = resource->options.y;
+    opts.x = resource->options.x;
+    opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->height;
+    opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->width;
 
-    if (!new_plane) {
-        log_msg(ERROR, "media_output", "Failed to create new plane via direct blit");
+    log_msg(INFO, "media_output", "Creating plane (%d,%d) with size %dx%d", 
+            opts.x, opts.y, opts.cols, opts.rows);
+            
+    resource->plane = ncplane_create(stdplane, &opts);
+    if (!resource->plane) {
+        log_msg(ERROR, "media_output", "Failed to create plane for image at (%d, %d)", 
+                resource->options.x, resource->options.y);
         return false;
     }
-    
-    // Store the new plane
-    if (resource->plane) {
-        log_msg(INFO, "media_output", "Destroying old plane");
-        ncplane_destroy(resource->plane);
-    }
-    resource->plane = new_plane;
 
-    log_msg(INFO, "media_output", "Successfully created visual plane");
+    // Set up visual options for direct blitting
+    struct ncvisual_options vopts = {0};
+    vopts.n = resource->plane;
+    vopts.y = 0;  // Relative to the plane
+    vopts.x = 0;  // Relative to the plane
+    vopts.scaling = resource->options.scaling;
+    vopts.blitter = NCBLIT_2x1;  // Simple blitter that works better
+
+    // Use direct blit
+    if (!ncvisual_blit(nc, resource->visual, &vopts)) {
+        log_msg(ERROR, "media_output", "Failed to blit visual to plane");
+        ncplane_destroy(resource->plane);
+        resource->plane = NULL;
+        return false;
+    }
 
     // Make sure the plane is visible
     ncplane_move_top(resource->plane);
+
     // Make sure changes are visible - force a render
     log_msg(INFO, "media_output", "Rendering frame to display visual");
-    if (!render_frame()) {
-        log_msg(WARNING, "media_output", "Render frame failed, visual may not be visible");
-    }
-    log_msg(INFO, "media_output", "Displaying image");
+    notcurses_render(nc);  // Directly call notcurses_render for maximum compatibility
+    
+    log_msg(INFO, "media_output", "Successfully displayed image");
     return true;
 }
 
@@ -245,21 +263,45 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
         if (filepath) {
             resource->visual = ncvisual_from_file(filepath);
             free(filepath);
+            if (!resource->visual) {
+                log_msg(ERROR, "media_output", "Failed to reload visual");
+                return false;
+            }
         }
     }
-    // Reset to first frame if needed
-    // Create a new plane for the visual
-    ncplane_options options = {0};
+    
+    // Clean up existing plane if needed
+    if (resource->plane) {
+        ncplane_destroy(resource->plane);
+        resource->plane = NULL;
+    }
+    
+    // Create a new plane for the visual with appropriate dimensions
+    struct ncplane_options options = {0};
     options.y = resource->options.y;
     options.x = resource->options.x;
     options.rows = resource->options.leny > 0 ? resource->options.leny : resource->height;
     options.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->width;
 
+    log_msg(INFO, "media_output", "Creating animation plane at (%d,%d) size %dx%d", 
+            options.x, options.y, options.cols, options.rows);
+            
     resource->plane = ncplane_create(stdplane, &options);
     if (!resource->plane) {
         log_msg(ERROR, "media_output", "Failed to create plane for animation");
         return false;
     }
+    
+    // Set up visual options for streaming
+    struct ncvisual_options vopts = {0};
+    vopts.n = resource->plane;         // Use our created plane
+    vopts.scaling = resource->options.scaling;
+    vopts.y = 0;                       // Coordinates relative to plane
+    vopts.x = 0;
+    vopts.blitter = NCBLIT_2x1;        // Use reliable blitter
+    
+    // Move the plane to the top to ensure visibility
+    ncplane_move_top(resource->plane);
 
     // Mark as playing
     resource->is_playing = true;
@@ -268,21 +310,25 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
     int iterations = loop ? -1 : 1;
     
     // Set the FPS via a timespec (converting fps to nanoseconds)
-    struct timespec frame_time = {0};
-    if (fps > 0) {
-        frame_time.tv_nsec = (long)(1000000000 / fps); // Convert fps to nanoseconds
-    }
+    resource->options.blitter = NCBLIT_2x1;  // Override blitter in original options too
     
-    int ret = ncvisual_stream(nc, resource->visual, iterations, animation_callback,
-                            &resource->options, resource);
+    // Use our constructed options instead of resource->options for the stream
+    int ret = ncvisual_stream(nc, resource->visual, iterations, animation_callback, &vopts, resource);
 
     if (ret) {
-        log_msg(ERROR, "media_output", "Failed to start animation");
+        log_msg(ERROR, "media_output", "Failed to start animation: error code %d", ret);
         resource->is_playing = false;
+        if (resource->plane) {
+            ncplane_destroy(resource->plane);
+            resource->plane = NULL;
+        }
         return false;
     }
 
-    log_msg(INFO, "media_output", "Displaying Animation");
+    // Force an initial render to make the animation appear immediately
+    notcurses_render(nc);
+    
+    log_msg(INFO, "media_output", "Successfully displaying animation");
     return true;
 }
 
