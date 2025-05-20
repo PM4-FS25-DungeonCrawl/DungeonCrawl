@@ -132,8 +132,8 @@ static bool display_image(loaded_visual_t *resource) {
     struct ncplane_options opts = {0};
     opts.y = resource->options.y;
     opts.x = resource->options.x;
-    opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->height;
-    opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->width;
+    opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->og_height;
+    opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->og_width;
 
     log_msg(INFO, "media_output", "Creating plane (%d,%d) with size %dx%d",
             opts.x, opts.y, opts.cols, opts.rows);

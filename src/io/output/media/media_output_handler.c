@@ -172,19 +172,19 @@ loaded_visual_t *load_media(const char *filename) {
     if (geo_ret) {
         log_msg(WARNING, "media_output", "Failed to get visual geometry, using default dimensions");
         // Use defaults if we can't get the dimensions
-        resource->width = 20; // Default width
-        resource->height = 20; // Default height
+        resource->og_width = 20; // Default width
+        resource->og_height = 20; // Default height
     } else {
         // Store dimensions with detailed logging
         if (geom.pixx <= 0 || geom.pixy <= 0) {
             log_msg(WARNING, "media_output", "Invalid media dimensions: %dx%d, using defaults",
                     geom.pixx, geom.pixy);
-            resource->width = 20; // Default width
-            resource->height = 20; // Default height
+            resource->og_width = 20; // Default width
+            resource->og_height = 20; // Default height
         } else {
-            resource->width = geom.pixx; // Width in pixels
-            resource->height = geom.pixy; // Height in pixels
-            log_msg(INFO, "media_output", "Got media dimensions: %dx%d", resource->width, resource->height);
+            resource->og_width = geom.pixx; // Width in pixels
+            resource->og_height = geom.pixy; // Height in pixels
+            log_msg(INFO, "media_output", "Got media dimensions: %dx%d", resource->og_width, resource->og_height);
         }
     }
 
@@ -345,7 +345,7 @@ void setup_scaling_options(loaded_visual_t *visual, scale_type_t scale_type,
                            int target_width, int target_height) {
     // Log scaling information
     log_msg(INFO, "media_output", "Setting up scaling: type=%d, target=%dx%d, source=%dx%d",
-            scale_type, target_width, target_height, visual->width, visual->height);
+            scale_type, target_width, target_height, visual->og_width, visual->og_height);
 
     // Clear options first
     memset(&visual->options, 0, sizeof(visual->options));
@@ -397,8 +397,8 @@ void setup_scaling_options(loaded_visual_t *visual, scale_type_t scale_type,
                         visual->options.lenx, visual->options.leny);
             } else {
                 // Fallback to original dimensions
-                visual->options.leny = visual->height;
-                visual->options.lenx = visual->width;
+                visual->options.leny = visual->og_height;
+                visual->options.lenx = visual->og_width;
                 log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size");
             }
             break;

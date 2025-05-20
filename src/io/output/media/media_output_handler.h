@@ -47,10 +47,10 @@ typedef struct loaded_visual_s {
     struct ncvisual* visual;        // The Notcurses visual
     struct ncplane* plane;          // The plane for rendering the visual
     struct ncvisual_options options;// Display options
-    media_type_t media_type;              // Type of media (PNG, GIF, MP4)
-    int width;                      // Original width
-    int height;                     // Original height
-    int frames;                     // Number of frames (for animations)
+    media_type_t media_type;        // Type of media (PNG, GIF, MP4)
+    unsigned int og_width;          // Original width
+    unsigned int og_height;         // Original height
+    unsigned int frames;            // Number of frames (for animations)
     bool is_playing;                // Whether an animation is currently playing
     bool is_loaded;                 // Whether the visual is loaded
     char* path;                     // Path to the file (for reloading)
