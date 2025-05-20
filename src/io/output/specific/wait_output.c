@@ -146,17 +146,9 @@ void draw_welcome_screen(void) {
     int msg_y = height / 2;
 
     print_text_default(msg_y, msg_x, welcome_msg);
-
-    //display image (to scale)
-    //display_image_at(GOBLIN_PNG, 0, 0, 15, 0, SCALE_PRESERVE);
     
     // display image stretched to specific size
-    display_image_at(GOBLIN_PNG, 0, 0, 15, 20, SCALE_STRETCH);
-
-    //display image fullscreen
-    //display_image_at(GOBLIN_PNG, 0, 0, 0, 0, SCALE_FULLSCREEN);
-
-    
+    display_image_at(GOBLIN_PNG, 20, msg_y - 10, 20, 25, SCALE_STRETCH);
 
     // Render the frame using centralized IO handler
     render_frame();
