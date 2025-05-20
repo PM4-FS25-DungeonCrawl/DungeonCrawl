@@ -13,5 +13,6 @@
  */
 void save_character(db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id);
 character_t* get_character_from_db(db_connection_t* db_connection, int game_state_id);
+void save_character_inventory(const db_connection_t* db_connection, const character_t character, const sqlite3_int64 character_id);
 
 #endif//CHARACTER_DATABASE_H
