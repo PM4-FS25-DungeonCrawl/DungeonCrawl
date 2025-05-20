@@ -62,6 +62,7 @@ helper_combat = files(
     '../src/io/input/input_handler.c',
     '../src/io/output/common/output_handler.c',
     '../src/io/output/media/media_output.c',
+    '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/combat_output.c',
     '../src/io/output/specific/inventory_output.c',
 )
@@ -81,6 +82,7 @@ helper_map_generator = files(
     '../src/io/input/input_handler.c',
     '../src/io/output/common/output_handler.c',
     '../src/io/output/media/media_output.c',
+    '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
 )
 
@@ -97,6 +99,7 @@ helper_map_mode = files(
     '../src/io/input/input_handler.c',
     '../src/io/output/common/output_handler.c',
     '../src/io/output/media/media_output.c',
+    '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
 )
 
@@ -161,6 +164,7 @@ helper_stats = files(
     '../src/stats/local/stats_mode_local.c',
     '../src/io/output/common/output_handler.c',
     '../src/io/output/media/media_output.c',
+    '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/stats_output.c',
     '../src/io/output/specific/combat_output.c',
 )

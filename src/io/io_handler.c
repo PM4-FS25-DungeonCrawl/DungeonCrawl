@@ -5,6 +5,8 @@
 #include "../thread/thread_handler.h"
 #include "input/input_handler.h"
 #include "output/common/output_handler.h"
+#include "output/media/media_output_handler.h"
+#include "output/media/media_output.h"
 #include "output/specific/wait_output.h"
 
 #include <stdbool.h>
