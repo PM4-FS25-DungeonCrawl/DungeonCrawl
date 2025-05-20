@@ -32,7 +32,7 @@
 #define SQL_INSERT_INVENTORY_POTION "INSERT INTO inventory_stores_potion (IP_IV_ID, IP_PO_ID) VALUES (?, (SELECT PO_ID from potion WHERE PO_TYPE = ? LIMIT 1));"
 #define SQL_INSERT_CHARACTER_INVENTORY "INSERT INTO character_has_inventory (CI_CH_ID, CI_IV_ID) VALUES (?, ?);"
 
-void save_character(db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id) {
+void save_character(const db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id) {
     // Check if the database connection is open
     if (!db_is_open(db_connection)) {
         log_msg(ERROR, "Character", "Database connection is not open");
@@ -273,7 +273,6 @@ void save_character_inventory(const db_connection_t* db_connection, const charac
     sqlite3_finalize(stmt_potion);
 
     // Loop through gears in character
-    log_msg(INFO, "Character", "Saving total %d gears", character.gear_count);
     for (int i = 0; i < character.gear_count; i++) {
         // Prepare the SQL statement for gear
         sqlite3_stmt* stmt_gear_save;
