@@ -17,7 +17,8 @@ typedef enum {
 typedef enum {
     MEDIA_PNG,
     MEDIA_GIF,
-    MEDIA_MP4
+    MEDIA_MP4,
+    MEDIA_UNSUPPORTED
 } media_type_t;
 
 /**

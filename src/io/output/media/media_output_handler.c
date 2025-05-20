@@ -436,7 +436,7 @@ media_type_t get_file_type(const char *filename) {
         return MEDIA_MP4;
     } else {
         log_msg(ERROR, "media_output", "Unsupported file extension for: %s", filename);
-        return;
+        return MEDIA_UNSUPPORTED;
     }
 }
 
