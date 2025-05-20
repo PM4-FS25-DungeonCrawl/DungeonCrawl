@@ -7,6 +7,7 @@
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
 #include "../media/media_output.h"
+#include "../media/media_files.h"
 
 #include <string.h>
 
@@ -36,6 +37,11 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vec.dy = draw_resource_bar(vec, player);
     vec.dy = draw_resource_bar(vec, enemy);
     vec.dy += 2;
+
+    // display goblin
+    // display image stretched to specific size
+    display_image_at(enemy_sprite, vec.dx + 10, vec.dy, sprite_height, 2*sprite_height, SCALE_STRETCH);
+    vec.dy += sprite_height + 2;
 
     // Render the frame
     render_frame();

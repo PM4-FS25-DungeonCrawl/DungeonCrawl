@@ -80,8 +80,8 @@ void destroy_media(loaded_visual_t* media) {
 
 // Refresh media display
 bool refresh_media_display(void) {
+    //TODO: fix
     log_msg(INFO, "media_output", "Forcing a complete redraw of the terminal");
-    
     // Force a redraw of the terminal with error checking
     bool result = notcurses_render(nc);
     
