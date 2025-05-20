@@ -87,6 +87,10 @@ void shutdown_media_output(void) {
     log_msg(INFO, "media_output", "Media output handler shut down");
 }
 
+void media_cleanup_now(void) {
+    media_cleanup();
+}
+
 /* =========================================================================
  * PNG DISPLAY FUNCTIONS
  * ========================================================================= */
@@ -179,7 +183,7 @@ static bool display_image(loaded_visual_t* resource) {
     vopts.y = 0;  // Relative to the plane
     vopts.x = 0;  // Relative to the plane
     vopts.scaling = resource->options.scaling;
-    vopts.blitter = NCBLIT_2x1;  // Simple blitter that works better
+    vopts.blitter = NCBLIT_2x2;  // Simple blitter that works better
 
     // Use direct blit
     if (!ncvisual_blit(nc, resource->visual, &vopts)) {

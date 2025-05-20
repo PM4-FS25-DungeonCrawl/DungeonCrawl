@@ -62,6 +62,8 @@ bool init_media_output();
  */
 void shutdown_media_output(void);
 
+void media_cleanup_now(void);
+
 /* =========================================================================
  * IMAGE DISPLAY FUNCTIONS
  * ========================================================================= */
