@@ -7,11 +7,11 @@
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
 #include "../io/output/common/output_handler.h"
+#include "../io/output/media/media_files.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"
 #include "local/combat_mode_local.h"
-#include "../io/output/media/media_files.h"
 
 #include <stdlib.h>
 #include <unistd.h>

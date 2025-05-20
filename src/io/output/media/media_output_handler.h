@@ -1,16 +1,16 @@
 #ifndef MEDIA_OUTPUT_HANDLER_H
 #define MEDIA_OUTPUT_HANDLER_H
 
-#include <stdbool.h>
 #include <notcurses/notcurses.h>
+#include <stdbool.h>
 
 // Scale types for display functions
 typedef enum {
-    SCALE_NONE,         // No scaling, use original size
-    SCALE_PRESERVE,    // Scale preserving aspect ratio
-    SCALE_STRETCH,     // Stretch to exact dimensions
-    SCALE_CELL,         // Scale to fit in a single cell
-    SCALE_FULLSCREEN   // Scale to fill the entire screen
+    SCALE_NONE,     // No scaling, use original size
+    SCALE_PRESERVE, // Scale preserving aspect ratio
+    SCALE_STRETCH,  // Stretch to exact dimensions
+    SCALE_CELL,     // Scale to fit in a single cell
+    SCALE_FULLSCREEN// Scale to fill the entire screen
 } scale_type_t;
 
 // Media types enumeration
@@ -25,19 +25,19 @@ typedef enum {
  * Media blitter options (rendering method)
  */
 typedef enum media_blitter {
-    MEDIA_BLITTER_DEFAULT = NCBLIT_DEFAULT,  // Use terminal's best option
-    MEDIA_BLITTER_ASCII = NCBLIT_1x1,        // Use ASCII only
-    MEDIA_BLITTER_HALF = NCBLIT_2x1,         // Use half blocks (▀ ▄)
-    MEDIA_BLITTER_QUAD = NCBLIT_2x2,         // Use quadrant blocks (▖ ▗ ▘ ▙)
-    MEDIA_BLITTER_BRAILLE = NCBLIT_BRAILLE,  // Use braille (⠀⠁⠂⠃...)
-    MEDIA_BLITTER_PIXEL = NCBLIT_PIXEL,      // Use pixel graphics if available
+    MEDIA_BLITTER_DEFAULT = NCBLIT_DEFAULT,// Use terminal's best option
+    MEDIA_BLITTER_ASCII = NCBLIT_1x1,      // Use ASCII only
+    MEDIA_BLITTER_HALF = NCBLIT_2x1,       // Use half blocks (▀ ▄)
+    MEDIA_BLITTER_QUAD = NCBLIT_2x2,       // Use quadrant blocks (▖ ▗ ▘ ▙)
+    MEDIA_BLITTER_BRAILLE = NCBLIT_BRAILLE,// Use braille (⠀⠁⠂⠃...)
+    MEDIA_BLITTER_PIXEL = NCBLIT_PIXEL,    // Use pixel graphics if available
 } media_blitter_t;
 
 /* =========================================================================
  * CONSTANTS AND DEFINITIONS
  * ========================================================================= */
 
- /**
+/**
  * @brief Structure to represent a loaded visual
  * 
  * This is an opaque structure that encapsulates a Notcurses visual.

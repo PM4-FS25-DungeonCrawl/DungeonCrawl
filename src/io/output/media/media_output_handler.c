@@ -5,10 +5,10 @@
 #include "../common/output_handler.h"// For get_screen_dimensions and render_frame
 #include "media_files.h"
 
+#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <notcurses/notcurses.h>
 
 
 /* =========================================================================
@@ -17,14 +17,14 @@
 
 // Global variables
 #define MAX_RESOURCES 128
-static loaded_visual_t resources[MAX_RESOURCES]; // Array to hold loaded visuals
+static loaded_visual_t resources[MAX_RESOURCES];// Array to hold loaded visuals
 static int resource_count = 0;
 
 /* =========================================================================
  * FORWARD DECLARATIONS
  * ========================================================================= */
 
-static void free_media_resource(loaded_visual_t *resource);
+static void free_media_resource(loaded_visual_t* resource);
 
 /* =========================================================================
 * INITIALIZATION AND CLEANUP
@@ -74,7 +74,7 @@ void media_cleanup(void) {
     resource_count = 0;
 }
 
-void destroy_media(loaded_visual_t *media) {
+void destroy_media(loaded_visual_t* media) {
     free_media_resource(media);
 }
 
@@ -100,7 +100,7 @@ bool refresh_media_display(void) {
  * ========================================================================= */
 
 // Load a media resource
-loaded_visual_t *load_media(const char *filename) {
+loaded_visual_t* load_media(const char* filename) {
     // Validate parameters
     if (!filename) {
         log_msg(ERROR, "media_output", "Invalid filename for load_media");
@@ -110,7 +110,7 @@ loaded_visual_t *load_media(const char *filename) {
     media_type_t media_type = get_file_type(filename);
 
     // Build the full file path
-    char *filepath = build_filepath(filename, media_type);
+    char* filepath = build_filepath(filename, media_type);
     if (!filepath) {
         return NULL;
     }
@@ -119,7 +119,7 @@ loaded_visual_t *load_media(const char *filename) {
     for (int i = 0; i < resource_count; i++) {
         if (strcmp(resources[i].path, filepath) == 0) {
             free(filepath);
-            return &resources[i]; // Return existing resource
+            return &resources[i];// Return existing resource
         }
     }
 
@@ -131,14 +131,14 @@ loaded_visual_t *load_media(const char *filename) {
     }
 
     // Load the visual from file with detailed error handling
-    struct ncvisual *visual = ncvisual_from_file(filepath);
+    struct ncvisual* visual = ncvisual_from_file(filepath);
     if (!visual) {
         log_msg(ERROR, "media_output", "Failed to load media: %s (check if file exists)", filepath);
         return NULL;
     }
 
     // Allocate a new resource
-    loaded_visual_t *resource = &resources[resource_count];
+    loaded_visual_t* resource = &resources[resource_count];
     if (!resource) {
         log_msg(ERROR, "media_output", "Failed to allocate memory for loaded visual");
         ncvisual_destroy(visual);
@@ -149,7 +149,7 @@ loaded_visual_t *load_media(const char *filename) {
     // Initialize the structure
     memset(resource, 0, sizeof(loaded_visual_t));
     resource->visual = visual;
-    resource->plane = NULL; // Will be created when displayed
+    resource->plane = NULL;// Will be created when displayed
 
     // Set resource properties
     resource->media_type = media_type;
@@ -173,17 +173,17 @@ loaded_visual_t *load_media(const char *filename) {
         log_msg(WARNING, "media_output", "Failed to get visual geometry, using default dimensions");
         // Use defaults if we can't get the dimensions
         resource->og_width = 20; // Default width
-        resource->og_height = 20; // Default height
+        resource->og_height = 20;// Default height
     } else {
         // Store dimensions with detailed logging
         if (geom.pixx <= 0 || geom.pixy <= 0) {
             log_msg(WARNING, "media_output", "Invalid media dimensions: %dx%d, using defaults",
                     geom.pixx, geom.pixy);
             resource->og_width = 20; // Default width
-            resource->og_height = 20; // Default height
+            resource->og_height = 20;// Default height
         } else {
             resource->og_width = geom.pixx; // Width in pixels
-            resource->og_height = geom.pixy; // Height in pixels
+            resource->og_height = geom.pixy;// Height in pixels
             log_msg(INFO, "media_output", "Got media dimensions: %dx%d", resource->og_width, resource->og_height);
         }
     }
@@ -191,7 +191,7 @@ loaded_visual_t *load_media(const char *filename) {
     // set attributes based on media media_type
     switch (media_type) {
         case MEDIA_PNG:
-            resource->frames = 1; // Single frame for static images
+            resource->frames = 1;// Single frame for static images
             break;
         case MEDIA_GIF:
             // Count frames by decoding the whole GIF
@@ -229,7 +229,7 @@ loaded_visual_t *load_media(const char *filename) {
     return resource;
 }
 
-loaded_visual_t *ready_media(const char *filename, int x, int y, int height, int width, scale_type_t scale_type) {
+loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int width, scale_type_t scale_type) {
     // Validate parameters
     if (!filename) {
         log_msg(ERROR, "media_output", "Null filename for display_media");
@@ -243,7 +243,7 @@ loaded_visual_t *ready_media(const char *filename, int x, int y, int height, int
     }
 
     // Load the media
-    loaded_visual_t *resource = load_media(filename);
+    loaded_visual_t* resource = load_media(filename);
     if (!resource || !resource->is_loaded) {
         log_msg(ERROR, "media_output", "Failed to load media: %s", filename);
         return NULL;
@@ -262,8 +262,8 @@ loaded_visual_t *ready_media(const char *filename, int x, int y, int height, int
     // Clean up existing plane if needed
     if (resource->plane) {
         log_msg(INFO, "media_output", "Destroying existing plane before new display");
-        ncplane_erase(resource->plane); // Clear contents first
-        notcurses_render(nc); // Update display
+        ncplane_erase(resource->plane);// Clear contents first
+        notcurses_render(nc);          // Update display
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
@@ -277,7 +277,7 @@ loaded_visual_t *ready_media(const char *filename, int x, int y, int height, int
  * ========================================================================= */
 
 // Unload a specific media resource
-bool unload_media(const char *filename) {
+bool unload_media(const char* filename) {
     if (!filename) {
         return false;
     }
@@ -341,7 +341,7 @@ bool unload_media(const char *filename) {
  * ========================================================================= */
 
 // Helper function to set up scaling options
-void setup_scaling_options(loaded_visual_t *visual, scale_type_t scale_type,
+void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                            int target_width, int target_height) {
     // Log scaling information
     log_msg(INFO, "media_output", "Setting up scaling: type=%d, target=%dx%d, source=%dx%d",
@@ -424,7 +424,7 @@ void setup_scaling_options(loaded_visual_t *visual, scale_type_t scale_type,
     return false;
 }*/
 
-media_type_t get_file_type(const char *filename) {
+media_type_t get_file_type(const char* filename) {
     if (is_file_extension(filename, ".png")) {
         log_msg(INFO, "media_output", "Detected PNG file: %s", filename);
         return MEDIA_PNG;
@@ -441,7 +441,7 @@ media_type_t get_file_type(const char *filename) {
 }
 
 // Check if a filename has a specific extension
-bool is_file_extension(const char *filename, const char *extension) {
+bool is_file_extension(const char* filename, const char* extension) {
     if (!filename || !extension) {
         return false;
     }
@@ -457,16 +457,16 @@ bool is_file_extension(const char *filename, const char *extension) {
 }
 
 // Build a full file path
-char *build_filepath(const char *filename, media_type_t media_type) {
+char* build_filepath(const char* filename, media_type_t media_type) {
     // Allocate memory for the path
-    char *filepath = malloc(MAX_PATH_LEN);
+    char* filepath = malloc(MAX_PATH_LEN);
     if (!filepath) {
         log_msg(ERROR, "media_output", "Failed to allocate memory for file path");
         return NULL;
     }
 
     // Build the path based on the media media_type
-    const char *subdir = "";
+    const char* subdir = "";
     switch (media_type) {
         case MEDIA_PNG:
             subdir = "png/";
@@ -493,7 +493,7 @@ char *build_filepath(const char *filename, media_type_t media_type) {
  * ========================================================================= */
 
 // Free a media resource
-static void free_media_resource(loaded_visual_t *resource) {
+static void free_media_resource(loaded_visual_t* resource) {
     if (!resource || !resource->is_loaded) {
         return;
     }
@@ -512,7 +512,7 @@ static void free_media_resource(loaded_visual_t *resource) {
         ncplane_erase(resource->plane);
 
         // Make sure the erase is visible
-        notcurses_render(nc); // Use direct render for reliability
+        notcurses_render(nc);// Use direct render for reliability
 
         // Then destroy the plane
         log_msg(INFO, "media_output", "Destroying plane");

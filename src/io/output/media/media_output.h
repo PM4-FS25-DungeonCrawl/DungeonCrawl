@@ -1,9 +1,10 @@
 #ifndef MEDIA_OUTPUT_H
 #define MEDIA_OUTPUT_H
 
-#include <stdbool.h>
-#include <notcurses/notcurses.h>
 #include "media_output_handler.h"
+
+#include <notcurses/notcurses.h>
+#include <stdbool.h>
 
 /* =========================================================================
  * IMAGE DISPLAY FUNCTIONS
@@ -80,7 +81,7 @@ bool display_gif_background(const char* filename, float fps, bool loop);
  * @param scale Scaling mode to use
  * @return true on success, false on failure
  */
-bool display_video_at(const char *filename, int x, int y, int width, int height, scale_type_t scale);
+bool display_video_at(const char* filename, int x, int y, int width, int height, scale_type_t scale);
 
 /**
  * Fill the background with a video file scaled to terminal size
@@ -90,7 +91,7 @@ bool display_video_at(const char *filename, int x, int y, int width, int height,
  * @param loop Whether to loop the video
  * @return true on success, false on failure
  */
-bool display_video_background(const char *filename, float fps, bool loop);
+bool display_video_background(const char* filename, float fps, bool loop);
 
 /* =========================================================================
  * ANIMATION CONTROL FUNCTIONS

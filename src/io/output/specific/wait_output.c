@@ -3,8 +3,8 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../media/media_output.h"
 #include "../media/media_files.h"
+#include "../media/media_output.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -146,7 +146,7 @@ void draw_welcome_screen(void) {
     int msg_y = height / 2;
 
     print_text_default(msg_y, msg_x, welcome_msg);
-    
+
     // display image stretched to specific size
     display_image_at(GOBLIN_PNG, 20, msg_y - 10, 20, 25, SCALE_STRETCH);
 

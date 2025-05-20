@@ -6,11 +6,11 @@
  * ========================================================================= */
 
 #define MEDIA_PATH "src/art/"// Path to media files
-#define MAX_PATH_LEN 256 // Maximum length for file paths
+#define MAX_PATH_LEN 256     // Maximum length for file paths
 
-#define GOBLIN_PNG "goblin.png"   
+#define GOBLIN_PNG "goblin.png"
 #define GOBLIN_HEIGHT 12
-#define GOBLIN_WIDTH 24  
+#define GOBLIN_WIDTH 24
 #define SKULL_GIF "skull.gif"
 #define DUNGEON_INTRO_GIF "dungeon_intro.gif"
 

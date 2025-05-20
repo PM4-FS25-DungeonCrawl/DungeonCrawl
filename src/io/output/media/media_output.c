@@ -3,13 +3,12 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"        // Include this to access global nc and stdplane
 #include "../common/output_handler.h"// For get_screen_dimensions and render_frame
+#include "media_files.h"
+#include "media_output_handler.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "media_output_handler.h"
-#include "media_files.h"
 
 
 /* =========================================================================
@@ -17,7 +16,7 @@
  * ========================================================================= */
 
 // Forward declarations for internal functions
-static bool display_image(loaded_visual_t *resource);
+static bool display_image(loaded_visual_t* resource);
 
 //static bool display_animation(loaded_visual_t *resource, float fps, bool loop);
 
@@ -26,14 +25,14 @@ static bool display_image(loaded_visual_t *resource);
  * ========================================================================= */
 
 // Display a PNG file at specified coordinates with scaling
-bool display_image_at(const char *filename, int x, int y, int height, int width, scale_type_t scale_type) {
+bool display_image_at(const char* filename, int x, int y, int height, int width, scale_type_t scale_type) {
     // Validate parameters
     if (!filename || height < 0) {
         // Allow height=0 for automatic scaling
         log_msg(ERROR, "media_output", "Invalid parameters for display_png_at");
         return false;
     }
-    loaded_visual_t *resource = ready_media(filename, x, y, height, width, scale_type);
+    loaded_visual_t* resource = ready_media(filename, x, y, height, width, scale_type);
     if (!resource) {
         log_msg(ERROR, "media_output", "Failed to load image for display");
         return false;
@@ -48,13 +47,13 @@ bool display_image_at(const char *filename, int x, int y, int height, int width,
 }*/
 
 // Fill a single terminal cell with a PNG image
-bool display_image_cell(const char *filename, int x, int y) {
+bool display_image_cell(const char* filename, int x, int y) {
     // Validate parameters
     if (!filename) {
         log_msg(ERROR, "media_output", "Invalid filename for fill_cell_with_png");
         return false;
     }
-    loaded_visual_t *resource = ready_media(filename, x, y, 1, 1, SCALE_CELL);
+    loaded_visual_t* resource = ready_media(filename, x, y, 1, 1, SCALE_CELL);
     if (!resource) {
         log_msg(ERROR, "media_output", "Failed to load image for cell");
         return false;
@@ -109,7 +108,7 @@ bool display_image_cell(const char *filename, int x, int y) {
 * ========================================================================= */
 
 // Helper function for displaying images
-static bool display_image(loaded_visual_t *resource) {
+static bool display_image(loaded_visual_t* resource) {
     // Validate parameters
     if (!resource || !resource->visual) {
         log_msg(ERROR, "media_output", "Invalid parameters for display_image");
@@ -118,7 +117,7 @@ static bool display_image(loaded_visual_t *resource) {
 
     if (resource->media_type == MEDIA_GIF) {
         // If it's a GIF, display it as an animation with default 10 FPS
-        return false; //TODO: return display_animation(resource, 10.0f, false);
+        return false;//TODO: return display_animation(resource, 10.0f, false);
     }
 
     // Clean up existing plane if needed
@@ -148,10 +147,10 @@ static bool display_image(loaded_visual_t *resource) {
     // Set up visual options for direct blitting
     struct ncvisual_options vopts = {0};
     vopts.n = resource->plane;
-    vopts.y = 0; // Relative to the plane
-    vopts.x = 0; // Relative to the plane
+    vopts.y = 0;// Relative to the plane
+    vopts.x = 0;// Relative to the plane
     vopts.scaling = resource->options.scaling;
-    vopts.blitter = NCBLIT_2x2; // Simple blitter that works better
+    vopts.blitter = NCBLIT_2x2;// Simple blitter that works better
 
     // Use direct blit
     if (!ncvisual_blit(nc, resource->visual, &vopts)) {
@@ -166,7 +165,7 @@ static bool display_image(loaded_visual_t *resource) {
 
     // Make sure changes are visible - force a render
     log_msg(INFO, "media_output", "Rendering frame to display visual");
-    notcurses_render(nc); // Directly call notcurses_render for maximum compatibility
+    notcurses_render(nc);// Directly call notcurses_render for maximum compatibility
 
     log_msg(INFO, "media_output", "Successfully displayed image");
     return true;
