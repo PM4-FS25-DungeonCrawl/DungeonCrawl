@@ -70,8 +70,6 @@ bool init_input_handler(struct notcurses* notcurses_ptr) {
 
     // Assign to the global variable
     nc = notcurses_ptr;
-    log_msg(INFO, "input_handler", "Set nc pointer to %p", (void*) nc);
-    log_msg(INFO, "input_handler", "Input handler initialized");
     return true;
 }
 
@@ -125,5 +123,4 @@ bool get_input_nonblocking(input_event_t* event) {
 
 void shutdown_input_handler(void) {
     nc = NULL;
-    log_msg(INFO, "input_handler", "Input handler shut down");
 }

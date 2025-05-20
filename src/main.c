@@ -27,8 +27,6 @@ volatile int init_done = 0;
 
 // Function for the launch screen thread
 static void display_launch_screen_thread(void) {
-    log_msg(INFO, "Main", "Launch screen thread started");
-
     // Draw the launch screen until initialization is complete
     while (!init_done) {
         // Call the draw_launch_screen function from wait_output.c
@@ -42,7 +40,6 @@ static void display_launch_screen_thread(void) {
 #endif
     }
 
-    log_msg(INFO, "Main", "Launch screen thread ended - initialization completed");
     // Clear the launch screen
     clear_screen();
 }
@@ -69,7 +66,6 @@ int init() {
 
     // Initialize logger
     init_logger();
-    log_msg(INFO, "Main", "Initialization started");
 
     // First initialize the IO handler (needed for the splash screen)
     if (init_io_handler() != COMMON_SUCCESS) {
@@ -78,7 +74,6 @@ int init() {
     }
 
     // Start the launch screen in a background thread
-    log_msg(INFO, "Main", "Starting launch screen thread");
     run_background_task(display_launch_screen_thread);
 
 
@@ -136,7 +131,6 @@ int init() {
     }
 
     // When all initialization is done, switch back to game mode
-    log_msg(INFO, "Main", "Initialization complete");
     init_done = 1;// Set the global flag to signal completion
     return COMMON_SUCCESS;
 }
@@ -163,7 +157,6 @@ void shutdown_game() {
 
 int main(void) {
     const int exit_code = init();
-    log_msg(INFO, "Main", "Exit code: %d", exit_code);
     if (exit_code != COMMON_SUCCESS) {
         shutdown_game();
         return exit_code;

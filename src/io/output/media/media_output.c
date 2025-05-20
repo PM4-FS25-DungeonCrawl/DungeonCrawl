@@ -26,7 +26,6 @@ bool init_media_output(struct notcurses* nc) {
     }
 
     nc = nc;
-    log_msg(INFO, "media_output", "Media output handler initialized");
     return true;
 }
 
@@ -68,7 +67,6 @@ loaded_visual_t* load_image(const char* path, int* width, int* height) {
     loaded->frames = 1;// Single frame for static images
     loaded->is_playing = false;
 
-    log_msg(INFO, "media_output", "Loaded image: %s (%dx%d)", path, loaded->width, loaded->height);
     return loaded;
 }
 
@@ -120,8 +118,6 @@ loaded_visual_t* load_gif(const char* path, int* width, int* height, int* frames
 
     loaded->is_playing = false;
 
-    log_msg(INFO, "media_output", "Loaded GIF: %s (%dx%d, %d frames)",
-            path, loaded->width, loaded->height, loaded->frames);
     return loaded;
 }
 
@@ -305,6 +301,4 @@ void free_visual(loaded_visual_t* visual) {
 
 void shutdown_media_output(void) {
     nc = NULL;
-
-    log_msg(INFO, "media_output", "Media output handler shut down");
 }

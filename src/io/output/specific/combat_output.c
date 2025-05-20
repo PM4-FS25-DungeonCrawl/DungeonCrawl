@@ -104,8 +104,6 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     // Use our input handler to get any key press
     input_event_t input_event;
     get_input_blocking(&input_event);
-
-    log_msg(DEBUG, "Combat Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
 /**
@@ -121,8 +119,6 @@ void draw_game_over(void) {
     // Use our input handler to get any key press
     input_event_t input_event;
     get_input_blocking(&input_event);
-
-    log_msg(DEBUG, "Combat Output", "Key pressed to exit game over: id=%d", (int) input_event.raw_input.id);
 }
 
 /**

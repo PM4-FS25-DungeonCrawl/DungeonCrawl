@@ -74,7 +74,6 @@ int init_combat_mode() {
 }
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
-    log_msg(FINE, "Combat", "Starting combat between %s and %s", player->name, monster->name);
     // initial combat state
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
 
