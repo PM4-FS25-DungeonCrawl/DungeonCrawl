@@ -272,7 +272,6 @@ bool add_equipped_gear(character_t* c, gear_t* gear) {
 
         c->equipment[gear->slot] = gear;
 
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);
         return true;
     }
 

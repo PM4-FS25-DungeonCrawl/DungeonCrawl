@@ -113,7 +113,6 @@ void main_menu_state() {
             const sqlite_int64 game_state_id = save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
             log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
             save_character(&db_connection, *player, game_state_id);
-            log_msg(INFO, "Game", "Player character saved successfully");
 
             clear_screen();
             current_state = MAP_MODE;
