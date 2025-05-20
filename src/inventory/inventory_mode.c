@@ -184,7 +184,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                                 monster->gear_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[INVENTORY_MENU_TITLE],
@@ -291,7 +291,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
@@ -379,7 +379,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                                 monster->potion_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[POTION_MENU_TITLE],
