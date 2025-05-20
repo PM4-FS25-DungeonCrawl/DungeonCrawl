@@ -27,7 +27,7 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);
     set_xp_reward(goblin, scale_xp_reward(120));
-    set_level(goblin, current_floor);
+    set_level(goblin, 0);
 
     return goblin;
 }
@@ -49,9 +49,11 @@ int scale_xp_reward(int base) {
  */
 void distribute_monster_skill_points(character_t* monster) {
     monster->skill_points = current_floor;
+    monster->level = current_floor;
     while (monster->skill_points > 0) {
         stat_type_t stat = scaling_stats[monster->level % 8];
-        raise_skill(&monster->base_stats, stat, monster->skill_points);
+        raise_skill(&monster->base_stats, stat, 1);
         monster->skill_points--;
     }
+    update_character_resources(&monster->current_resources, &monster->max_resources, &monster->base_stats);
 }

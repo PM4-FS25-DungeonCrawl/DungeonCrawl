@@ -8,8 +8,8 @@ void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint) {
         log_msg(ERROR, "Stats", "Stats pointer is NULL");
         return;
     }
-    if (1 <= skillpoint) {
-        skillpoint--;
+    if (skillpoint > 0) {
+        //skillpoint--; does not work because it is passed by value
         switch (stat) {
             case STRENGTH:
                 stats->strength++;
@@ -31,6 +31,7 @@ void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint) {
         log_msg(ERROR, "Stats", "Not enough skill points to allocate");
         return;
     }
+
     log_msg(INFO, "Stats", "Stats set to STR:%d INT:%d DEX:%d CON:%d",
             stats->strength, stats->intelligence, stats->dexterity, stats->constitution);
 }
