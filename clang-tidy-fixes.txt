@@ -1,11 +1,11 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:197:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  197 |         case PLAYER_LOST:
+../src/game.c:190:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  190 |         case PLAYER_LOST:
       |         ^
-../src/game.c:203:18: note: last of these clones ends here
-  203 |             break;
+../src/game.c:196:18: note: last of these clones ends here
+  196 |             break;
       |                  ^
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
@@ -17,11 +17,11 @@
    17 | bool init_input_handler(struct notcurses* nc);
       |      ^                                    ~~
       |                                           notcurses_ptr
-../src/io/output/common/common_output.c:170:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  170 |     *width = ncplane_dim_x(stdplane);
+../src/io/output/common/common_output.c:166:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  166 |     *width = ncplane_dim_x(stdplane);
       |              ^
-../src/io/output/common/common_output.c:171:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  171 |     *height = ncplane_dim_y(stdplane);
+../src/io/output/common/common_output.c:167:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  167 |     *height = ncplane_dim_y(stdplane);
       |               ^
 ../src/io/output/specific/wait_output.c:40:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    40 |     int msg_len = strlen(loading_message);
@@ -51,17 +51,17 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:68:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   68 |     srand(time(NULL));
+../src/main.c:65:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   65 |     srand(time(NULL));
       |     ^
-../src/menu/save_menu.c:100:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  100 |             save_name[name_length++] = key_id;
+../src/menu/save_menu.c:98:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   98 |             save_name[name_length++] = key_id;
       |                                        ^
-../src/menu/save_menu.c:193:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  193 |             if (i == selected_save_index) {
+../src/menu/save_menu.c:189:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  189 |             if (i == selected_save_index) {
       |             ^
-../src/menu/save_menu.c:196:15: note: else branch starts here
-  196 |             } else {
+../src/menu/save_menu.c:192:15: note: else branch starts here
+  192 |             } else {
       |               ^
 ../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
    11 | extern struct notcurses* nc;
