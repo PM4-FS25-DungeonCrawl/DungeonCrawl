@@ -162,7 +162,7 @@ void map_mode_state() {
             break;
         case NEXT_FLOOR:
             clear_screen();
-            reset_current_stats(player);// Heal player before entering new floor
+            reset_player_stats(player);// Heal player before entering new floor
             current_state = GENERATE_MAP;
             break;
         case COMBAT:

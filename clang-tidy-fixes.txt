@@ -78,5 +78,20 @@
 ../src/main.c:77:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    77 |     srand(time(NULL));
       |     ^
-Suppressed 240735 warnings (240551 in non-user code, 184 with check filters).
+../src/menu/save_menu.c:100:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  100 |             save_name[name_length++] = key_id;
+      |                                        ^
+../src/menu/save_menu.c:193:13: warning: if with identical then and else branches [bugprone-branch-clone]
+  193 |             if (i == selected_save_index) {
+      |             ^
+../src/menu/save_menu.c:196:15: note: else branch starts here
+  196 |             } else {
+      |               ^
+../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
+   11 | extern struct notcurses* nc;
+      | ~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
+   17 | extern struct notcurses* nc;
+      |                          ^
+Suppressed 300345 warnings (300159 in non-user code, 186 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

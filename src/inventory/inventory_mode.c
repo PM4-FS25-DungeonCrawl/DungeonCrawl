@@ -11,6 +11,7 @@
 #include "local/inventory_mode_local.h"
 
 // === Internal Functions ===
+bool can_equip_gear(character_t* player, gear_t* gear);
 void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
 void collect_inventory_equipment_options(gear_t* equipment[]);
 void collect_inv_potion_options(potion_t* potion_inventory[], int count);
@@ -183,7 +184,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                                 monster->gear_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_ESC_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[INVENTORY_MENU_TITLE],
@@ -224,8 +225,13 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                     }
                 } else {
                     if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
-                        equip_gear(player, player->gear_inventory[selected_index]);
-                        collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                        if (can_equip_gear(player, player->gear_inventory[selected_index])) {
+                            equip_gear(player, player->gear_inventory[selected_index]);
+                            collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_HANDS_SLOT_FULL]);
+                        }
                     } else {
                         anchor = draw_inventory_view(inventory_view_anchor, target);
                         draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_SLOT_FULL]);
@@ -250,6 +256,22 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
 }
 
 /**
+ * @brief Checks if the equipment can be equipped in case it occupies a hands slot.
+ */
+bool can_equip_gear(character_t* player, gear_t* gear) {
+    if (gear->slot == SLOT_BOTH_HANDS) {
+        if (player->equipment[SLOT_LEFT_HAND] != NULL || player->equipment[SLOT_RIGHT_HAND] != NULL) {
+            return false;
+        }
+    } else if (gear->slot == SLOT_LEFT_HAND || gear->slot == SLOT_RIGHT_HAND) {
+        if (player->equipment[SLOT_BOTH_HANDS] != NULL) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
  * @brief Displays the equipment inventory menu.
  */
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
@@ -269,7 +291,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_ESC_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
@@ -357,7 +379,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                                 monster->potion_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_ESC_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[POTION_MENU_TITLE],
