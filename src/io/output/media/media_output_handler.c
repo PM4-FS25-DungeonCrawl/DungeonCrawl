@@ -477,6 +477,8 @@ char *build_filepath(const char *filename, media_type_t media_type) {
         case MEDIA_MP4:
             subdir = "mp4/";
             break;
+        default:
+            break;
     }
 
     // Construct the full path
