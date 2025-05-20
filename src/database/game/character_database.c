@@ -1,6 +1,7 @@
 #include "character_database.h"
 
 #include "../../logging/logger.h"
+#include "src/game_data.h"
 
 #define SQL_INSERT_CHARACTER "INSERT INTO character (CH_MAXHEALTH, " \
                              "CH_MAXMANA, "                          \
@@ -457,4 +458,6 @@ void save_character_inventory(const db_connection_t* db_connection, const charac
 
 }
 
-character_t* get_character_from_db(db_connection_t* db_connection, int game_state_id) {}
+void get_character_from_db(db_connection_t* db_connection, character_t* character, int game_state_id) {
+    // add_gear(character, gear_table->gears[ARMING_SWORD]);
+}
