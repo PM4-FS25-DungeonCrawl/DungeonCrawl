@@ -341,7 +341,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             // When using NCSCALE_SCALE, a zero value for lenx/leny means auto-scale
             visual->options.leny = target_height > 0 ? target_height : 0;
             visual->options.lenx = target_width > 0 ? target_width : 0;
-                    visual->options.lenx, visual->options.leny);
             break;
 
         case SCALE_STRETCH:
@@ -350,7 +349,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                 visual->options.scaling = NCSCALE_STRETCH;
                 visual->options.leny = target_height;
                 visual->options.lenx = target_width;
-                        visual->options.lenx, visual->options.leny);
             } else {
                 // Fall back to no scaling if dimensions are invalid
                 visual->options.scaling = NCSCALE_NONE;
@@ -469,8 +467,6 @@ static void free_media_resource(loaded_visual_t* resource) {
     if (!resource || !resource->is_loaded) {
         return;
     }
-
-            resource->path ? resource->path : "unknown");
 
     // Stop any animation first
     resource->is_playing = false;
