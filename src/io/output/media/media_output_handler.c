@@ -31,7 +31,6 @@ static void free_media_resource(loaded_visual_t* resource);
 * ========================================================================= */
 
 bool init_media_output(void) {
-    log_msg(INFO, "media_output_handler", "Starting initialization");
 
     if (!nc) {
         log_msg(ERROR, "media_output", "Null Notcurses instance provided");
@@ -53,15 +52,12 @@ bool init_media_output(void) {
         log_msg(ERROR, "media_output", "Failed to ensure media directory exists");
     }*/
 
-    log_msg(INFO, "media_output", "Media output handler initialized");
     return true;
 }
 
 // Clean up the media handler
 void shutdown_media_output(void) {
     media_cleanup();
-
-    log_msg(INFO, "media_output", "Media output handler shut down");
 }
 
 void media_cleanup(void) {
@@ -81,15 +77,12 @@ void destroy_media(loaded_visual_t* media) {
 // Refresh media display
 bool refresh_media_display(void) {
     //TODO: fix
-    log_msg(INFO, "media_output", "Forcing a complete redraw of the terminal");
 
     // Force a redraw of the terminal with error checking
     bool result = notcurses_render(nc);
 
     if (!result) {
         log_msg(ERROR, "media_output", "Failed to refresh media display");
-    } else {
-        log_msg(INFO, "media_output", "Successfully refreshed media display");
     }
 
     return result;
@@ -184,7 +177,6 @@ loaded_visual_t* load_media(const char* filename) {
         } else {
             resource->og_width = geom.pixx; // Width in pixels
             resource->og_height = geom.pixy;// Height in pixels
-            log_msg(INFO, "media_output", "Got media dimensions: %dx%d", resource->og_width, resource->og_height);
         }
     }
 
@@ -225,7 +217,6 @@ loaded_visual_t* load_media(const char* filename) {
     }
 
     free(filepath);
-    log_msg(INFO, "media_output", "Successfully loaded media: %s", resource->path);
     return resource;
 }
 
@@ -249,9 +240,6 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
         return NULL;
     }
 
-    log_msg(INFO, "media_output", "Setting up media for display: %s at position (%d,%d) size %dx%d",
-            filename, x, y, width, height);
-
     // Set up scaling
     setup_scaling_options(resource, scale_type, width, height);
 
@@ -261,14 +249,12 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
 
     // Clean up existing plane if needed
     if (resource->plane) {
-        log_msg(INFO, "media_output", "Destroying existing plane before new display");
         ncplane_erase(resource->plane);// Clear contents first
         notcurses_render(nc);          // Update display
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
 
-    log_msg(INFO, "media_output", "Media successfully readied for display at position (%d,%d)", x, y);
     return resource;
 }
 
@@ -343,9 +329,6 @@ bool unload_media(const char* filename) {
 // Helper function to set up scaling options
 void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                            int target_width, int target_height) {
-    // Log scaling information
-    log_msg(INFO, "media_output", "Setting up scaling: type=%d, target=%dx%d, source=%dx%d",
-            scale_type, target_width, target_height, visual->og_width, visual->og_height);
 
     // Clear options first
     memset(&visual->options, 0, sizeof(visual->options));
@@ -358,7 +341,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             // When using NCSCALE_SCALE, a zero value for lenx/leny means auto-scale
             visual->options.leny = target_height > 0 ? target_height : 0;
             visual->options.lenx = target_width > 0 ? target_width : 0;
-            log_msg(INFO, "media_output", "Using preserve aspect ratio scaling: %dx%d",
                     visual->options.lenx, visual->options.leny);
             break;
 
@@ -368,12 +350,10 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                 visual->options.scaling = NCSCALE_STRETCH;
                 visual->options.leny = target_height;
                 visual->options.lenx = target_width;
-                log_msg(INFO, "media_output", "Using stretch scaling: %dx%d",
                         visual->options.lenx, visual->options.leny);
             } else {
                 // Fall back to no scaling if dimensions are invalid
                 visual->options.scaling = NCSCALE_NONE;
-                log_msg(INFO, "media_output", "Invalid stretch dimensions, using no scaling");
             }
             break;
 
@@ -382,7 +362,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             visual->options.scaling = NCSCALE_SCALE;
             visual->options.leny = 1;
             visual->options.lenx = 1;
-            log_msg(INFO, "media_output", "Using cell scaling (1x1)");
             break;
 
         case SCALE_FULLSCREEN:
@@ -393,8 +372,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             if (get_screen_dimensions(&screen_width, &screen_height)) {
                 visual->options.leny = screen_height;
                 visual->options.lenx = screen_width;
-                log_msg(INFO, "media_output", "Using fullscreen scaling: %dx%d",
-                        visual->options.lenx, visual->options.leny);
             } else {
                 // Fallback to original dimensions
                 visual->options.leny = visual->og_height;
@@ -407,7 +384,6 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
         default:
             // No scaling
             visual->options.scaling = NCSCALE_NONE;
-            log_msg(INFO, "media_output", "Using no scaling");
             break;
     }
 
@@ -426,13 +402,10 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
 
 media_type_t get_file_type(const char* filename) {
     if (is_file_extension(filename, ".png")) {
-        log_msg(INFO, "media_output", "Detected PNG file: %s", filename);
         return MEDIA_PNG;
     } else if (is_file_extension(filename, ".gif")) {
-        log_msg(INFO, "media_output", "Detected GIF file: %s", filename);
         return MEDIA_GIF;
     } else if (is_file_extension(filename, ".mp4")) {
-        log_msg(INFO, "media_output", "Detected MP4 file: %s (not supported yet)", filename);
         return MEDIA_MP4;
     } else {
         log_msg(ERROR, "media_output", "Unsupported file extension for: %s", filename);
@@ -483,7 +456,6 @@ char* build_filepath(const char* filename, media_type_t media_type) {
 
     // Construct the full path
     snprintf(filepath, MAX_PATH_LEN, "%s%s%s", MEDIA_PATH, subdir, filename);
-    log_msg(INFO, "media_output", "Built file path: %s", filepath);
 
     return filepath;
 }
@@ -498,7 +470,6 @@ static void free_media_resource(loaded_visual_t* resource) {
         return;
     }
 
-    log_msg(INFO, "media_output", "Starting cleanup of resource: %s",
             resource->path ? resource->path : "unknown");
 
     // Stop any animation first
@@ -506,7 +477,6 @@ static void free_media_resource(loaded_visual_t* resource) {
 
     // Clean up the plane properly - first erase its contents
     if (resource->plane) {
-        log_msg(INFO, "media_output", "Erasing plane contents before destruction");
 
         // Erase the plane contents with transparency
         ncplane_erase(resource->plane);
@@ -515,21 +485,18 @@ static void free_media_resource(loaded_visual_t* resource) {
         notcurses_render(nc);// Use direct render for reliability
 
         // Then destroy the plane
-        log_msg(INFO, "media_output", "Destroying plane");
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
 
     // Free the visual resource
     if (resource->visual) {
-        log_msg(INFO, "media_output", "Destroying visual");
         ncvisual_destroy(resource->visual);
         resource->visual = NULL;
     }
 
     // Free path if allocated
     if (resource->path) {
-        log_msg(INFO, "media_output", "Freeing resource path");
         free(resource->path);
         resource->path = NULL;
     }
@@ -538,5 +505,4 @@ static void free_media_resource(loaded_visual_t* resource) {
     resource->is_loaded = false;
 
     // Resource is part of static array, no need to free the structure itself
-    log_msg(INFO, "media_output", "Visual resources cleanup complete");
 }
