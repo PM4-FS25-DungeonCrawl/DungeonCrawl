@@ -31,7 +31,6 @@ static void free_media_resource(loaded_visual_t* resource);
 * ========================================================================= */
 
 bool init_media_output(void) {
-
     if (!nc) {
         log_msg(ERROR, "media_output", "Null Notcurses instance provided");
         return false;
@@ -329,7 +328,6 @@ bool unload_media(const char* filename) {
 // Helper function to set up scaling options
 void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                            int target_width, int target_height) {
-
     // Clear options first
     memset(&visual->options, 0, sizeof(visual->options));
 
@@ -342,7 +340,7 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             visual->options.leny = target_height > 0 ? target_height : 0;
             visual->options.lenx = target_width > 0 ? target_width : 0;
                     visual->options.lenx, visual->options.leny);
-            break;
+                    break;
 
         case SCALE_STRETCH:
             // Stretch to exact dimensions
@@ -472,37 +470,36 @@ static void free_media_resource(loaded_visual_t* resource) {
 
             resource->path ? resource->path : "unknown");
 
-    // Stop any animation first
-    resource->is_playing = false;
+            // Stop any animation first
+            resource->is_playing = false;
 
-    // Clean up the plane properly - first erase its contents
-    if (resource->plane) {
+            // Clean up the plane properly - first erase its contents
+            if (resource->plane) {
+                // Erase the plane contents with transparency
+                ncplane_erase(resource->plane);
 
-        // Erase the plane contents with transparency
-        ncplane_erase(resource->plane);
+                // Make sure the erase is visible
+                notcurses_render(nc);// Use direct render for reliability
 
-        // Make sure the erase is visible
-        notcurses_render(nc);// Use direct render for reliability
+                // Then destroy the plane
+                ncplane_destroy(resource->plane);
+                resource->plane = NULL;
+            }
 
-        // Then destroy the plane
-        ncplane_destroy(resource->plane);
-        resource->plane = NULL;
-    }
+            // Free the visual resource
+            if (resource->visual) {
+                ncvisual_destroy(resource->visual);
+                resource->visual = NULL;
+            }
 
-    // Free the visual resource
-    if (resource->visual) {
-        ncvisual_destroy(resource->visual);
-        resource->visual = NULL;
-    }
+            // Free path if allocated
+            if (resource->path) {
+                free(resource->path);
+                resource->path = NULL;
+            }
 
-    // Free path if allocated
-    if (resource->path) {
-        free(resource->path);
-        resource->path = NULL;
-    }
+            // Mark as not loaded
+            resource->is_loaded = false;
 
-    // Mark as not loaded
-    resource->is_loaded = false;
-
-    // Resource is part of static array, no need to free the structure itself
+            // Resource is part of static array, no need to free the structure itself
 }
