@@ -2,10 +2,19 @@
 
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
+#include "../media/media_files.h"
+#include "../media/media_output.h"
 
 #include <stdio.h>
 #include <string.h>
+
+// Include platform-specific headers for sleep functions
+#ifndef _WIN32
+    #include <unistd.h>// For usleep on Unix/Linux
+#else
+    #include <windows.h>// For Sleep on Windows
+#endif
 
 // Loading screen message buffer
 static char loading_message[256] = "";
@@ -53,7 +62,7 @@ void draw_loading_screen(const char* text) {
     print_text_default(msg_y + 2, width / 2, animation_str);
 
     // Render the frame using centralized IO handler
-    render_io_frame();
+    render_frame();
 }
 
 /**
@@ -96,19 +105,58 @@ void draw_launch_screen(void) {
     const char* loading_msg = "Loading game...";
     int loading_len = strlen(loading_msg);
 
-    // Continue showing animation until init is done
-    extern volatile int init_done;
-    while (!init_done) {
-        // Show simple animation
-        static int frame = 0;
-        frame = (frame + 1) % 4;
-        char anim[5] = "|/-\\";
-        char animation_str[32];
-        snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
+    // Show simple animation
+    static int frame = 0;
+    frame = (frame + 1) % 4;
+    char anim[5] = "|/-\\";
+    char animation_str[32];
+    snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
 
-        print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
+    print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
 
-        // Render the frame using centralized IO handler
-        render_io_frame();
-    }
+    // Render the frame using centralized IO handler
+    render_frame();
+// Sleep for a short duration to control the animation speed
+#ifdef _WIN32
+    Sleep(50);
+#else
+    usleep(50000);// 50ms
+#endif
+}
+
+/**
+ * @brief Draw the welcome screen with a message
+ *
+ * This function displays a welcome message on the screen and prompts
+ * the user to press any key to continue. It's typically shown after
+ * the launch screen animation completes.
+ */
+void draw_welcome_screen(void) {
+    // Get screen dimensions
+    int width, height;
+    get_screen_dimensions(&width, &height);
+
+    // Clear the screen
+    clear_screen();
+
+    // Draw welcome message
+    const char* welcome_msg = "Welcome to Dungeon Crawl! Press any key to continue...";
+    int msg_len = strlen(welcome_msg);
+    int msg_x = (width - msg_len) / 2;
+    int msg_y = height / 2;
+
+    print_text_default(msg_y, msg_x, welcome_msg);
+
+    // display image stretched to specific size
+    display_image_at(GOBLIN_PNG, 20, msg_y - 10, 20, 25, SCALE_STRETCH);
+
+    // Render the frame using centralized IO handler
+    render_frame();
+
+    // Wait for user input
+    input_event_t input_event;
+    get_input_blocking(&input_event);
+
+    // Clear the screen after input
+    media_cleanup();
 }

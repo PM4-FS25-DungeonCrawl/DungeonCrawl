@@ -4,7 +4,9 @@
 #include "../logging/logger.h"
 #include "../thread/thread_handler.h"
 #include "input/input_handler.h"
-#include "output/common/common_output.h"
+#include "output/common/output_handler.h"
+#include "output/media/media_output.h"
+#include "output/media/media_output_handler.h"
 #include "output/specific/wait_output.h"
 
 #include <stdbool.h>
@@ -19,9 +21,6 @@
 // Global notcurses instance and standard plane
 struct notcurses* nc = NULL;
 struct ncplane* stdplane = NULL;
-
-// Loading screen variables
-static char loading_message[256] = "";
 
 int init_io_handler(void) {
     log_msg(INFO, "io_handler", "Starting initialization");
@@ -61,19 +60,15 @@ int init_io_handler(void) {
         return 4;// Error code
     }
 
+    // Initialize media output handler
+    if (!init_media_output()) {
+        log_msg(ERROR, "io_handler", "Failed to initialize media output handler");
+        // Continue without media support, not a fatal error
+    }
+
     log_msg(INFO, "io_handler", "IO handler initialized successfully");
     return COMMON_SUCCESS;// 0
 }
-
-// Get next input event (non-blocking)
-bool get_next_input_event(input_event_t* event) {
-    if (!event) {
-        return false;
-    }
-
-    return get_input_nonblocking(event);
-}
-
 
 // Execute a callback in a background thread
 bool run_background_task(void (*callback)(void)) {
@@ -86,11 +81,6 @@ bool run_background_task(void (*callback)(void)) {
     // Start a thread to execute the callback
     start_simple_thread(callback);
     return true;
-}
-
-// Convenience wrapper around render_frame
-void render_io_frame(void) {
-    render_frame();
 }
 
 void shutdown_io_handler(void) {

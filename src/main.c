@@ -19,7 +19,8 @@
     #include <unistd.h>// for usleep
 #endif
 
-#include <notcurses/notcurses.h>
+#include "io/output/specific/wait_output.h"
+
 #include <time.h>
 
 // Global flag to signal when initialization is complete
@@ -28,23 +29,31 @@ volatile int init_done = 0;
 // Function for the launch screen thread
 static void display_launch_screen_thread(void) {
     log_msg(INFO, "Main", "Launch screen thread started");
+    clear_screen();
 
-    // Draw the launch screen until initialization is complete
-    while (!init_done) {
+    // Track if we've displayed for minimum time
+    time_t start_time = time(NULL);
+    bool min_time_elapsed = false;
+
+    // Draw the launch screen for LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS milliseconds
+    while (!min_time_elapsed) {
         // Call the draw_launch_screen function from wait_output.c
         draw_launch_screen();
 
-// Small sleep to avoid consuming 100% CPU
-#ifdef _WIN32
-        Sleep(50);// 50ms
-#else
-        usleep(50000);// 50ms
-#endif
+        // Check if we can exit the loop (both conditions met)
+        time_t current_time = time(NULL);
+        double elapsed_s = difftime(current_time, start_time);
+        long elapsed_ms = (long) (elapsed_s * 1000);
+
+        min_time_elapsed = (elapsed_ms >= LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS);
     }
 
-    log_msg(INFO, "Main", "Launch screen thread ended - initialization completed");
-    // Clear the launch screen
+    log_msg(INFO, "Main", "Launch screen thread ended - initialization completed and minimum time elapsed");
+    // Clear the screen and render one more time to ensure it's cleared
     clear_screen();
+    render_frame();
+
+    draw_welcome_screen();
 }
 
 /**
@@ -79,7 +88,8 @@ int init() {
 
     // Start the launch screen in a background thread
     log_msg(INFO, "Main", "Starting launch screen thread");
-    run_background_task(display_launch_screen_thread);
+    //don't need multithreading anymore, init is too fast
+    display_launch_screen_thread();
 
 
     // Initialize database connection

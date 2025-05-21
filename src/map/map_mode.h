@@ -5,8 +5,6 @@
 #include "../common.h"
 #include "../io/input/input_handler.h"
 
-#include <notcurses/notcurses.h>
-
 // Notcurses uses RGB channels directly, but we can define our colors for consistency
 #define COLOR_FOREGROUND 0xffffff// White
 #define COLOR_BACKGROUND 0x000000// Black
