@@ -31,7 +31,6 @@ static void free_media_resource(loaded_visual_t* resource);
 * ========================================================================= */
 
 bool init_media_output(void) {
-
     if (!nc) {
         log_msg(ERROR, "media_output", "Null Notcurses instance provided");
         return false;
@@ -329,7 +328,6 @@ bool unload_media(const char* filename) {
 // Helper function to set up scaling options
 void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                            int target_width, int target_height) {
-
     // Clear options first
     memset(&visual->options, 0, sizeof(visual->options));
 
@@ -473,7 +471,6 @@ static void free_media_resource(loaded_visual_t* resource) {
 
     // Clean up the plane properly - first erase its contents
     if (resource->plane) {
-
         // Erase the plane contents with transparency
         ncplane_erase(resource->plane);
 
