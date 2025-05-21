@@ -1,10 +1,14 @@
-#include "common_output.h"
+#include "output_handler.h"
 
 #include "../../../common.h"
 #include "../../../logging/logger.h"
+#include "../../input/input_handler.h"
+#include "../../input/input_types.h"
 #include "../../io_handler.h"// Include this to access global nc and stdplane
 
+#include <notcurses/nckeys.h>
 #include <stdlib.h>
+#include <string.h>
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
@@ -143,6 +147,96 @@ void print_menu_default(const char* title, const char** options, int option_coun
                         int selected_index, int y, int x) {
     print_menu(title, options, option_count, selected_index, y, x,
                DEFAULT_COLORS, DEFAULT_COLORS, INVERTED_COLORS);
+}
+
+bool get_text_input(const char* prompt, char* buffer, int buffer_size,
+                    const char* confirm_msg, int y, int x) {
+    if (!stdplane || !buffer || buffer_size <= 0) {
+        log_msg(ERROR, "output_handler", "Invalid parameters for get_text_input");
+        return false;
+    }
+
+    // Clear the buffer
+    memset(buffer, 0, buffer_size);
+    int text_length = 0;
+    bool input_active = true;
+    bool confirmed = false;
+
+    while (input_active) {
+        // Clear screen
+        clear_screen();
+
+        // Display prompt
+        print_text_default(y, x, prompt);
+
+        // Display current input
+        print_text_default(y + 2, x, buffer);
+
+        // Display confirm message if provided
+        if (confirm_msg) {
+            print_text_default(y + 4, x, confirm_msg);
+        }
+
+        // Render the frame
+        render_frame();
+
+        // Get input
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
+
+        // Process input
+        uint32_t key_id = input_event.raw_input.id;
+
+        if (input_event.type == INPUT_CONFIRM && text_length > 0) {
+            // Enter was pressed and we have input
+            input_active = false;
+            confirmed = true;
+        } else if (input_event.type == INPUT_CANCEL) {
+            // Escape was pressed
+            input_active = false;
+            confirmed = false;
+        } else if (key_id == NCKEY_BACKSPACE && text_length > 0) {
+            // Backspace was pressed and we have characters to delete
+            buffer[--text_length] = '\0';
+        } else if (key_id != 0 && text_length < buffer_size - 1 &&
+                   !(input_event.type == INPUT_UP ||
+                     input_event.type == INPUT_DOWN ||
+                     input_event.type == INPUT_LEFT ||
+                     input_event.type == INPUT_RIGHT)) {
+            // A printable character was typed
+            buffer[text_length++] = key_id;
+            buffer[text_length] = '\0';
+        }
+    }
+
+    return confirmed;
+}
+
+void show_message_screen(const char* message, const char* continue_message, int y, int x) {
+    if (!stdplane || !message) {
+        log_msg(ERROR, "output_handler", "Invalid parameters for show_message_screen");
+        return;
+    }
+
+    // Clear screen
+    clear_screen();
+
+    // Display message
+    print_text_default(y, x, message);
+
+    // Display continue message if provided
+    if (continue_message) {
+        print_text_default(y + 2, x, continue_message);
+    }
+
+    // Render the frame
+    render_frame();
+
+    // Wait for any input to continue
+    input_event_t input_event;
+    while (!get_input_blocking(&input_event));
 }
 
 bool render_frame(void) {

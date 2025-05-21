@@ -2,13 +2,9 @@
 
 #include "../combat/ability.h"
 #include "../io/input/input_handler.h"
-#include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/stats_output.h"
 #include "local/stats_mode_local.h"
-
-// Change from definition to declaration
-extern struct notcurses* nc;
 int selected_index = 0;
 
 stats_result_t stats_mode(character_t* player) {
@@ -67,8 +63,6 @@ stats_result_t stats_mode(character_t* player) {
                 break;
             case INPUT_CANCEL:
             case INPUT_STATS:
-                // Clear the screen before drawing a new menu
-                clear_screen();
                 result = STATS_EXIT;
                 break;
             default:
@@ -76,6 +70,6 @@ stats_result_t stats_mode(character_t* player) {
         }
     }
 
-    render_io_frame();
+    render_frame();
     return result;
 }

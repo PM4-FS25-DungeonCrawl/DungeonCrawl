@@ -1,19 +1,18 @@
 #include "combat_mode.h"
 
-#include "../asciiart/ascii.h"
 #include "../character/character.h"
 #include "../character/level.h"
 #include "../common.h"
 #include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
+#include "../io/output/media/media_files.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"
 #include "local/combat_mode_local.h"
 
-#include <notcurses/notcurses.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -75,7 +74,7 @@ int init_combat_mode() {
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
     // initial combat state
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
 
     //collect menu options
     collect_ability_menu_options(player->abilities, player->ability_count);
@@ -94,11 +93,13 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
         case EVALUATE_COMBAT:
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
+                media_cleanup();
                 draw_game_over();
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {
                 clear_screen();
+                media_cleanup();
 
                 char message[MAX_STRING_LENGTH];
                 snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
@@ -110,9 +111,11 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 }
                 return PLAYER_WON;
             }
+            clear_screen();
             combat_state = COMBAT_MENU;
             break;
         case COMBAT_EXIT:
+            media_cleanup();
             return EXIT_GAME;
     }
     return CONTINUE_COMBAT;
@@ -120,7 +123,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
 internal_combat_state_t combat_menu(const character_t* player, const character_t* monster) {
     // draw combat view
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
     internal_combat_state_t new_state = COMBAT_MENU;
@@ -174,7 +177,7 @@ internal_combat_state_t combat_menu(const character_t* player, const character_t
 internal_combat_state_t ability_menu(character_t* player, character_t* monster) {
     clear_screen();
     // draw combat view
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
     internal_combat_state_t new_state = ABILITY_MENU;
@@ -187,7 +190,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
                          ability_menu_options,
                          player->ability_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;
@@ -226,7 +229,7 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster) 
 
 internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
     // draw combat view
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
     int selected_index = 0;
 
     if (player->potion_count == 0) {
@@ -244,7 +247,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
                          potion_menu_options,
                          player->potion_count,
                          selected_index,
-                         combat_mode_strings[PRESS_ESC_RETURN]);
+                         combat_mode_strings[PRESS_C_RETURN]);
 
         // check for input
         input_event_t input_event;
@@ -297,12 +300,12 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
         sprite = false;
     }
 
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
     if (consume_ability_resource(attacker, ability)) {
         if (roll_hit(attacker->current_stats.dexterity, target->current_stats.dexterity)) {
             const int damage_dealt = deal_damage(target, ability->damage_type, roll_damage(ability));
 
-            draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, sprite);
+            draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, sprite);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), combat_mode_strings[ATTACK_SUCCESS],//TODO: This Method of using formats is not safe!!
@@ -313,7 +316,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                      target->name);
             draw_combat_log(anchor, message);
         } else {
-            draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+            draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
 
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), combat_mode_strings[ATTACK_MISS],//TODO: This Method of using formats is not safe!!
@@ -328,11 +331,11 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
                  ability->name);
         draw_combat_log(anchor, message);
     }
-    render_io_frame();
+    render_frame();
 }
 
 void use_potion(character_t* player, const character_t* monster, potion_t* potion) {
-    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, ascii_goblin, GOBLIN_HEIGHT, false);
+    const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
     invoke_potion_effect(player, potion);
 
     char message[MAX_STRING_LENGTH];

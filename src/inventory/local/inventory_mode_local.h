@@ -37,7 +37,7 @@ enum inventory_mode_index {
     LOOT_POTION_MENU_HEADER,
     FINISH_LOOTING_MSG,
 
-    PRESS_ESC_RETURN,
+    PRESS_C_RETURN,
     MAX_INVENTORY_STRINGS
 };
 
