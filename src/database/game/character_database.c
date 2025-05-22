@@ -2,6 +2,7 @@
 
 #include "../../logging/logger.h"
 #include "src/game_data.h"
+
 #include <stdio.h>
 
 #define SQL_INSERT_CHARACTER "INSERT INTO character (CH_MAXHEALTH, " \
