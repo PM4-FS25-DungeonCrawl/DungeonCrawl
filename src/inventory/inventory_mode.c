@@ -208,10 +208,10 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
         // Handle input using logical input types
         switch (input_event.type) {
             case INPUT_UP:
-                selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
+                selected_index = (selected_index - 1 + target->gear_count) % target->gear_count;
                 break;
             case INPUT_DOWN:
-                selected_index = (selected_index + 1) % player->gear_count;
+                selected_index = (selected_index + 1) % target->gear_count;
                 break;
             case INPUT_CONFIRM:
                 if (monster != NULL) {
@@ -403,10 +403,10 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
         // Handle input using logical input types
         switch (input_event.type) {
             case INPUT_UP:
-                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+                selected_index = (selected_index - 1 + target->potion_count) % target->potion_count;
                 break;
             case INPUT_DOWN:
-                selected_index = (selected_index + 1) % player->potion_count;
+                selected_index = (selected_index + 1) % target->potion_count;
                 break;
             case INPUT_CONFIRM:
                 if (monster != NULL) {
