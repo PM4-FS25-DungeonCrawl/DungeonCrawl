@@ -54,6 +54,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message);
  */
 void draw_game_over(void);
 
+
 /**
  * @brief Draws the resource bar for a character.
  *

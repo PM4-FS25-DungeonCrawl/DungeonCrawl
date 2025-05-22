@@ -33,6 +33,7 @@ typedef struct character_t {
     defenses_t defenses;
 
     ability_t* abilities[MAX_ABILITY_LIMIT];
+    ability_t* base_attack;
     int ability_count;
 
     potion_t* potion_inventory[MAX_POTION_LIMIT];
