@@ -11,9 +11,29 @@
 #include "local/inventory_mode_local.h"
 
 // === Internal Functions ===
+/**
+ * @brief Checks if the equipment can be equipped in case it occupies a hands slot.
+ * @param player The player character.
+ * @param gear The gear to check.
+ * @return bool True if the gear can be equipped, false otherwise.
+ */
 bool can_equip_gear(character_t* player, gear_t* gear);
+/**
+ * @brief Checks which options are available in the inventory menu for display.
+ * @param gear_inventory The gear inventory to check.
+ * @param count The number of items in the gear inventory.
+ */
 void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
+/**
+ * @brief Checks which options are available in the equipment menu for display.
+ * @param equipment The equipment to check.
+ */
 void collect_inventory_equipment_options(gear_t* equipment[]);
+/**
+ * @brief Checks which options are available in the potion menu for display.
+ * @param potion_inventory The potion inventory to check.
+ * @param count The number of items in the potion inventory.
+ */
 void collect_inv_potion_options(potion_t* potion_inventory[], int count);
 
 // === Intern Global Variables ===
