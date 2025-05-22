@@ -142,7 +142,7 @@ void main_menu_state() {
 
                 if (load_success) {
                     // Load the player character from the database
-                    // player = get_character_from_db(&db_connection, get_latest_save_id());   //TODO: Implement get_latest_save_id()
+                    get_character_from_db(&db_connection, player, get_latest_save_id(&db_connection));
                     if (player == NULL) {
                         log_msg(ERROR, "Game", "Failed to load player character");
                         load_success = false;

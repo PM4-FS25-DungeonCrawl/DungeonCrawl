@@ -70,4 +70,11 @@ void free_save_infos(save_info_container_t* save_infos);
  * @note The returned string is a flattened JSON Array (e.g. [[1,2],[3,4]] -> [1,2,3,4])
  */
 char* arr2D_to_flat_json(const int* arr, int width, int height);
+
+/**
+ *
+ * @param db_connection Connection to the database
+ * @return The ID of the latest save
+ */
+int get_latest_save_id(const db_connection_t* db_connection);
 #endif//GAMESTATE_DATABASE_H

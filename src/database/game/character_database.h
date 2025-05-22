@@ -29,7 +29,7 @@ void save_character_inventory(const db_connection_t* db_connection, const charac
  * @param character the character to retrieve
  * @param game_state_id the game state id
  */
-void get_character_from_db(db_connection_t* db_connection, character_t* character , int game_state_id);
+void get_character_from_db(const db_connection_t* db_connection, character_t* character , int game_state_id);
 
 
 #endif//CHARACTER_DATABASE_H

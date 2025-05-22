@@ -221,26 +221,7 @@ char* arr2D_to_flat_json(const int* arr, const int width, const int height) {
 }
 
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
-    // Get the last game state ID
-    sqlite3_stmt* stmt;
-    int rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_LAST_GAME_STATE, -1, &stmt, NULL);
-    if (rc != SQLITE_OK) {
-        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
-        return 0;
-    }
-    // Execute the statement
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_ROW) {
-        log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
-        sqlite3_finalize(stmt);
-        return 0;
-    }
-
-    const int game_state_id = sqlite3_column_int(stmt, 0);
-    sqlite3_finalize(stmt);
-
-    // Call get_game_state_by_id to load the game state
-    return get_game_state_by_id(db_connection, game_state_id, map, revealed_map, width, height, setter);
+    return get_game_state_by_id(db_connection, get_latest_save_id(db_connection), map, revealed_map, width, height, setter);
 }
 
 int get_game_state_by_id(const db_connection_t* db_connection, const int game_state_id, int* map, int* revealed_map, const int width, const int height, const player_pos_setter_t setter) {
@@ -483,4 +464,25 @@ void create_tables_game_state(const db_connection_t* db_connection) {
     }
     sqlite3_finalize(stmt);
     log_msg(INFO, "GameState", "Game state table (PS) created successfully if it didn't exist");
+}
+
+int get_latest_save_id(const db_connection_t* db_connection) {
+    // Get the last game state ID
+    sqlite3_stmt* stmt;
+    int rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_LAST_GAME_STATE, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "GameState", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return 0;
+    }
+    // Execute the statement
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_ROW) {
+        log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return 0;
+    }
+
+    const int game_state_id = sqlite3_column_int(stmt, 0);
+    sqlite3_finalize(stmt);
+    return game_state_id;
 }

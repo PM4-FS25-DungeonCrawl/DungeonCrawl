@@ -15,14 +15,14 @@
                              "CH_XP, "                               \
                              "CH_XPREWARD, "                         \
                              "CH_SKILLPOINTS, "                      \
-                             "CH_BASESTRENGTH, " \
-                             "CH_BASEINTELLIGENCE, " \
-                             "CH_BASEDEXTERITY, " \
-                             "CH_BASECONSTITUTION, " \
-                             "CH_CURRENTSTRENGTH, " \
-                             "CH_CURRENTINTELLIGENCE, " \
-                             "CH_CURRENTDEXTERITY, " \
-                             "CH_CURRENTCONSTITUTION) " \
+                             "CH_BASESTRENGTH, "                     \
+                             "CH_BASEINTELLIGENCE, "                 \
+                             "CH_BASEDEXTERITY, "                    \
+                             "CH_BASECONSTITUTION, "                 \
+                             "CH_CURRENTSTRENGTH, "                  \
+                             "CH_CURRENTINTELLIGENCE, "              \
+                             "CH_CURRENTDEXTERITY, "                 \
+                             "CH_CURRENTCONSTITUTION) "              \
                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
 #define SQL_INSERT_PLAYER "INSERT INTO player (PY_CH_ID, " \
                           "PY_PS_ID, "                     \
@@ -32,6 +32,46 @@
 #define SQL_INSERT_INVENTORY_GEAR "INSERT INTO inventory_stores_gear (IG_IV_ID, IG_GR_ID, IG_EQUIPPED) VALUES (?, (SELECT GR_ID from gear WHERE GR_IDENT = ? LIMIT 1), ?);"
 #define SQL_INSERT_INVENTORY_POTION "INSERT INTO inventory_stores_potion (IP_IV_ID, IP_PO_ID) VALUES (?, (SELECT PO_ID from potion WHERE PO_TYPE = ? LIMIT 1));"
 #define SQL_INSERT_CHARACTER_INVENTORY "INSERT INTO character_has_inventory (CI_CH_ID, CI_IV_ID) VALUES (?, ?);"
+#define SQL_SELECT_CHARACTER "SELECT PY_NAME, "                                \
+                             "CH_MAXHEALTH, "                                  \
+                             "CH_MAXMANA, "                                    \
+                             "CH_MAXSTAMINA, "                                 \
+                             "CH_CURRENTHEALTH, "                              \
+                             "CH_CURRENTMANA, "                                \
+                             "CH_CURRENTSTAMINA, "                             \
+                             "CH_ARMOR, "                                      \
+                             "CH_MAGICRESIST, "                                \
+                             "CH_LEVEL, "                                      \
+                             "CH_XP, "                                         \
+                             "CH_XPREWARD, "                                   \
+                             "CH_SKILLPOINTS, "                                \
+                             "CH_BASESTRENGTH, "                               \
+                             "CH_BASEINTELLIGENCE, "                           \
+                             "CH_BASEDEXTERITY, "                              \
+                             "CH_BASECONSTITUTION, "                           \
+                             "CH_CURRENTSTRENGTH, "                            \
+                             "CH_CURRENTINTELLIGENCE, "                        \
+                             "CH_CURRENTDEXTERITY, "                           \
+                             "CH_CURRENTCONSTITUTION, "                        \
+                             "CH_ID "                                          \
+                             "FROM player "                                    \
+                             "join main.character on CH_ID = player.PY_CH_ID " \
+                             "where PY_PS_ID = ? LIMIT 1;"
+#define SQL_SELECT_GEAR "SELECT GR_IDENT "                                                         \
+                        "FROM inventory "                                                          \
+                        "join main.character_has_inventory chi on inventory.IV_ID = chi.CI_IV_ID " \
+                        "join main.inventory_stores_gear isg on inventory.IV_ID = isg.IG_IV_ID "   \
+                        "join gear g on isg.IG_GR_ID = g.GR_ID "                                   \
+                        "where CI_CH_ID = ? "                                                      \
+                        "AND IV_TYPE = 0 "                                                         \
+                        "AND isg.IG_EQUIPPED = ?;"
+#define SQL_SELECT_POTION "SELECT PO_TYPE "                                                          \
+                          "FROM inventory "                                                          \
+                          "join main.character_has_inventory chi on inventory.IV_ID = chi.CI_IV_ID " \
+                          "join main.inventory_stores_potion isp on inventory.IV_ID = isp.IP_IV_ID " \
+                          "join potion p on isp.IP_PO_ID = p.PO_ID "                                 \
+                          "where CI_CH_ID = ? "                                                      \
+                          "AND IV_TYPE = 1;"
 
 void save_character(const db_connection_t* db_connection, const character_t character, const sqlite3_int64 game_state_id) {
     // Check if the database connection is open
@@ -454,10 +494,158 @@ void save_character_inventory(const db_connection_t* db_connection, const charac
     }
     // Finalize the statement
     sqlite3_finalize(stmt_character_inventory_potion);
-
-
 }
 
-void get_character_from_db(db_connection_t* db_connection, character_t* character, int game_state_id) {
+void get_character_from_db(const db_connection_t* db_connection, character_t* character, const int game_state_id) {
     // add_gear(character, gear_table->gears[ARMING_SWORD]);
+    // Check if the database connection is open
+    if (!db_is_open(db_connection)) {
+        log_msg(ERROR, "Character", "Database connection is not open");
+        return;
+    }
+    // Prepare the SQL statement
+    sqlite3_stmt* stmt;
+    sqlite3_int64 character_id = 0;
+    int rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_CHARACTER, -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    // Bind the game state ID to the statement
+    rc = sqlite3_bind_int(stmt, 1, game_state_id);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind game state ID: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt);
+        return;
+    }
+    // Execute the statement
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+        // Get the character data from the result set
+        const char* name = (const char*) sqlite3_column_text(stmt, 0);
+        character->max_resources.health = sqlite3_column_int(stmt, 1);
+        character->max_resources.mana = sqlite3_column_int(stmt, 2);
+        character->max_resources.stamina = sqlite3_column_int(stmt, 3);
+        character->current_resources.health = sqlite3_column_int(stmt, 4);
+        character->current_resources.mana = sqlite3_column_int(stmt, 5);
+        character->current_resources.stamina = sqlite3_column_int(stmt, 6);
+        character->defenses.armor = sqlite3_column_int(stmt, 7);
+        character->defenses.magic_resist = sqlite3_column_int(stmt, 8);
+        character->level = sqlite3_column_int(stmt, 9);
+        character->xp = sqlite3_column_int(stmt, 10);
+        character->xp_reward = sqlite3_column_int(stmt, 11);
+        character->skill_points = sqlite3_column_int(stmt, 12);
+        character->base_stats.strength = sqlite3_column_int(stmt, 13);
+        character->base_stats.intelligence = sqlite3_column_int(stmt, 14);
+        character->base_stats.dexterity = sqlite3_column_int(stmt, 15);
+        character->base_stats.constitution = sqlite3_column_int(stmt, 16);
+        character->current_stats.strength = sqlite3_column_int(stmt, 17);
+        character->current_stats.intelligence = sqlite3_column_int(stmt, 18);
+        character->current_stats.dexterity = sqlite3_column_int(stmt, 19);
+        character->current_stats.constitution = sqlite3_column_int(stmt, 20);
+        character_id = sqlite3_column_int64(stmt, 21);
+
+        // Set the name
+        snprintf(character->name, sizeof(character->name), "%s", name);
+
+    } else {
+        log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+    }
+    // Finalize the statement
+    sqlite3_finalize(stmt);
+    // Prepare the SQL statement for gear
+    sqlite3_stmt* stmt_gear;
+    rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_GEAR, -1, &stmt_gear, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    // Bind the character ID to the statement
+    rc = sqlite3_bind_int64(stmt_gear, 1, character_id);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind character ID: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_gear);
+        return;
+    }
+    // Bind the equipped status to the statement
+    rc = sqlite3_bind_int(stmt_gear, 2, 1);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind equipped status: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_gear);
+        return;
+    }
+    // Execute the statement
+    rc = sqlite3_step(stmt_gear);
+    // Loop through all equipped gears in the statement with the geartable
+    while (rc == SQLITE_ROW) {
+        gear_t* loaded_gear = gear_table->gears[sqlite3_column_int(stmt_gear, 0)];
+        character->equipment[loaded_gear->slot] = loaded_gear;
+        rc = sqlite3_step(stmt_gear);
+        if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+            log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+            sqlite3_finalize(stmt_gear);
+            return;
+        }
+    }
+
+    // Reset the statement for unequipped gears
+    rc = sqlite3_reset(stmt_gear);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to reset statement: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_gear);
+        return;
+    }
+
+    // Bind the unequipped status
+    rc = sqlite3_bind_int(stmt_gear, 2, 0);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind unequipped status: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_gear);
+        return;
+    }
+    // Execute the statement
+    rc = sqlite3_step(stmt_gear);
+    // Loop through all unequipped gears in the statement with the geartable
+    while (rc == SQLITE_ROW) {
+        gear_t* loaded_gear = gear_table->gears[sqlite3_column_int(stmt_gear, 0)];
+        character->gear_inventory[character->gear_count++] = loaded_gear;
+        rc = sqlite3_step(stmt_gear);
+        if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+            log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+            sqlite3_finalize(stmt_gear);
+            return;
+        }
+    }
+    // Finalize the statement
+    sqlite3_finalize(stmt_gear);
+
+    // Prepare the SQL statement for potions
+    sqlite3_stmt* stmt_potion;
+    rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_POTION, -1, &stmt_potion, NULL);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
+        return;
+    }
+    // Bind the character ID to the statement
+    rc = sqlite3_bind_int64(stmt_potion, 1, character_id);
+    if (rc != SQLITE_OK) {
+        log_msg(ERROR, "Character", "Failed to bind character ID: %s", sqlite3_errmsg(db_connection->db));
+        sqlite3_finalize(stmt_potion);
+        return;
+    }
+    // Execute the statement
+    rc = sqlite3_step(stmt_potion);
+    // Loop through all potions in the statement with the potions table
+    while (rc == SQLITE_ROW) {
+        potion_t loaded_potion = potion_table->potions[sqlite3_column_int(stmt_potion, 0)];
+        character->potion_inventory[character->potion_count++] = &loaded_potion;
+        rc = sqlite3_step(stmt_potion);
+        if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
+            log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
+            sqlite3_finalize(stmt_potion);
+            return;
+        }
+    }
+    // Finalize the statement
+    sqlite3_finalize(stmt_potion);
 }
