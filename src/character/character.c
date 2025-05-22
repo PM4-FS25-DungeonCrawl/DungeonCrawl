@@ -332,7 +332,6 @@ void equip_gear(character_t* c, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In equip_gear gear is NULL");
 
     if (add_equipped_gear(c, gear)) {
-
         remove_gear(c, gear);
 
         c->base_stats.strength += gear->stats.strength;
