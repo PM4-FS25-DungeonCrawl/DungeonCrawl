@@ -94,6 +94,7 @@ void game_loop() {
 void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
+            // TODO: Add a function to get the player name from the user
             game_in_progress = true;// Mark that a game is now in progress
             clear_screen();
             current_state = GENERATE_MAP;
