@@ -22,6 +22,10 @@ enum combat_mode_index {
 
 extern char** combat_mode_strings;
 
+/**
+ * @brief Updates the combat mode strings with localized versions.
+ * @note This function should be called after initializing the combat mode.
+ */
 void update_combat_local(void);
 
 #endif//COMBAT_MODE_LOCAL_H
