@@ -182,6 +182,10 @@ void save_game_state(const db_connection_t* db_connection, const int* map, const
     sqlite3_finalize(stmt_player);
 }
 
+/**
+ * @brief Get the current time in ISO 8601 format
+ * @return The current time as a string in ISO 8601 format (must be freed by the caller)
+ */
 char* get_iso8601_time() {
     const time_t now = time(NULL);
     const struct tm* tm = localtime(&now);
