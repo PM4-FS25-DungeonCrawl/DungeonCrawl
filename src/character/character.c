@@ -261,8 +261,8 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
  * @return True if the gear was successfully added, false otherwise.
  */
 bool add_equipped_gear(character_t* c, gear_t* gear) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_equipped_gear character is NULL");
-    NULL_PTR_HANDLER_RETURN(gear, , "Character", "In add_equipped_gear gear is NULL");
+    NULL_PTR_HANDLER_RETURN(c, false, "Character", "In add_equipped_gear character is NULL");
+    NULL_PTR_HANDLER_RETURN(gear, false, "Character", "In add_equipped_gear gear is NULL");
 
     if (gear->slot < MAX_SLOT) {
         if (c->equipment[gear->slot] != NULL) {
