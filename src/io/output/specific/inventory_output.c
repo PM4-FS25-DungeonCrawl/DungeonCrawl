@@ -7,13 +7,7 @@
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
 
-/**
- * @brief Draws the inventory view UI.
- *
- * @param anchor The anchor point of the inventory view, representing the top left corner
- * @param player The player character
- * @return The new anchor point after drawing the inventory view
- */
+
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player) {
     // Clear the screen
     clear_screen();
@@ -31,18 +25,7 @@ vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* playe
     return vec;
 }
 
-/**
- * @brief Draws the inventory menu.
- *
- * @param anchor The anchor point of the inventory menu
- * @param menu_name The name of the menu
- * @param header_msg The message to display at the top (can be NULL)
- * @param menu_options The options of the menu
- * @param menu_option_count The number of options in the menu
- * @param selected_index The index of the selected option
- * @param key_msg First message to display at the bottom (can be NULL)
- * @param tail_msg Second message to display at the bottom (can be NULL)
- */
+
 void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const char* header_msg,
                          char** menu_options, const int menu_option_count,
                          const int selected_index, const char* key_msg, const char* tail_msg) {
@@ -94,12 +77,6 @@ void draw_inventory_menu(const vector2d_t anchor, const char* menu_name, const c
     render_frame();
 }
 
-/**
- * @brief Draws the inventory log.
- *
- * @param anchor The anchor point of the inventory log
- * @param inventory_log_message The message to be displayed
- */
 void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Validate parameters
     if (inventory_log_message == NULL) {
@@ -123,13 +100,6 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     log_msg(DEBUG, "Inventory Output", "Key pressed to continue: id=%d", (int) input_event.raw_input.id);
 }
 
-/**
- * @brief Draws the resource bar for a character in the inventory view.
- *
- * @param anchor The anchor point for the resource bar
- * @param c A pointer to the character whose resources are to be displayed
- * @return The updated y-coordinate after drawing the resource bar
- */
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c) {
     char c_info[MAX_STRING_LENGTH];
     snprintf(c_info, sizeof(c_info), "%-20s | HP: %4d/%-4d | Mana: %4d/%-4d | Stamina: %4d/%-4d",

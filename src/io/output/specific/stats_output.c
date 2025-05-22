@@ -34,11 +34,7 @@ int init_stats_mode() {
     return 0;
 }
 
-/**
- * @brief Render the stats window
- *
- * @param player Pointer to the player character
- */
+
 void render_stats_window(const character_t* player) {
     // Clear the screen
     clear_screen();
@@ -95,15 +91,6 @@ void render_stats_window(const character_t* player) {
     print_text_default(y, x, stats_info);
 }
 
-/**
- * @brief Draw the stats menu
- *
- * @param title Menu title
- * @param options Array of option strings
- * @param option_count Number of options
- * @param selected_index Currently selected option index
- * @param footer Text to display at the bottom of the menu
- */
 void draw_stats_menu(const char* title, const char** options, int option_count, int selected_index, const char* footer) {
     // Set menu position
     int y = 20;
@@ -118,11 +105,6 @@ void draw_stats_menu(const char* title, const char** options, int option_count, 
     print_text_default(y, x, footer);
 }
 
-/**
- * @brief Display a message in the stats log
- *
- * @param message The message to display
- */
 void draw_stats_log(const char* message) {
     // Display message
     print_text_default(1, 2, message);
