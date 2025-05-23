@@ -15,14 +15,41 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
 
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);
+    character->base_stats = (stats_t) {0};
+    character->current_stats = (stats_t) {0};
+    character->max_resources = (resources_t) {0};
+    character->current_resources = (resources_t) {0};
+
+    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
+        character->resistance[i].type = i;
+        character->resistance[i].value = 0;
+    }
+
+    character->defenses = (defenses_t) {0};
+
+    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
+        character->abilities[i] = NULL;
+    }
+    character->base_attack = NULL;
     character->ability_count = 0;
-    character->gear_count = 0;
+
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        character->potion_inventory[i] = NULL;
+    }
     character->potion_count = 0;
+
+    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
+        character->gear_inventory[i] = NULL;
+    }
+    character->gear_count = 0;
 
     for (int i = 0; i < MAX_SLOT; i++) {
         character->equipment[i] = NULL;
     }
-
+    character->level = 0;
+    character->xp = 0;
+    character->xp_reward = 0;
+    character->skill_points = 0;
     return character;
 }
 
@@ -102,10 +129,8 @@ void add_ability(character_t* c, ability_t* ability) {
     if (c->ability_count < MAX_ABILITY_LIMIT) {
         c->abilities[c->ability_count] = ability;
         c->ability_count++;
-
-        log_msg(INFO, "Character", "Ability %s added.", ability->name);
     } else {
-        log_msg(INFO, "Character", "%s cannot learn more abilities!", c->name);
+        log_msg(WARNING, "Character", "%s cannot learn more abilities!", c->name);
     }
 }
 
@@ -121,7 +146,6 @@ void remove_ability(character_t* c, const ability_t* ability) {
             c->abilities[c->ability_count - 1] = NULL;
             c->ability_count--;
 
-            log_msg(INFO, "Character", "Ability %s removed.", ability->name);
             break;
         }
     }
@@ -136,9 +160,8 @@ void add_gear(character_t* c, gear_t* gear) {
         c->gear_inventory[c->gear_count] = gear;
         c->gear_count++;
 
-        log_msg(INFO, "Character", "Gear %s added to inventory.", gear->local_key);
     } else {
-        log_msg(INFO, "Character", "%s cannot carry more gear!", c->name);
+        log_msg(WARNING, "Character", "%s cannot carry more gear!", c->name);
     }
 }
 
@@ -155,7 +178,6 @@ void remove_gear(character_t* c, gear_t* gear) {
             c->gear_inventory[c->gear_count - 1] = NULL;
             c->gear_count--;
 
-            log_msg(INFO, "Character", "Gear %s removed from inventory.", gear->local_key);
             return;
         }
     }
@@ -186,7 +208,6 @@ void remove_equipped_gear(character_t* c, gear_slot_t slot) {
             add_ability(c, c->base_attack);
         }
 
-        log_msg(INFO, "Character", "%s unequipped %s from slot %d.", c->name, gear->local_key, slot);
         c->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
@@ -200,10 +221,8 @@ void add_potion(character_t* c, potion_t* potion) {
     if (c->potion_count < MAX_POTION_LIMIT) {
         c->potion_inventory[c->potion_count] = potion;
         c->potion_count++;
-
-        log_msg(INFO, "Character", "Potion %s added to inventory.", potion->name);
     } else {
-        log_msg(INFO, "Character", "%s cannot carry more potions!", c->name);
+        log_msg(WARNING, "Character", "%s cannot carry more potions!", c->name);
     }
 }
 
@@ -219,8 +238,6 @@ void remove_potion(character_t* c, potion_t* potion) {
             }
             c->potion_inventory[c->potion_count - 1] = NULL;
             c->potion_count--;
-
-            log_msg(INFO, "Character", "Potion %s removed from inventory.", potion->name);
             return;
         }
     }
@@ -257,11 +274,6 @@ void equip_gear(character_t* c, gear_t* gear) {
         for (int i = 0; i < gear->num_abilities; ++i) {
             add_ability(c, gear->abilities[i]);
         }
-
-
-        log_msg(INFO, "Character", "%s equipped %s — resources updated.", c->name, gear->local_key);
-        log_msg(INFO, "Character", "%s equipped %s in slot %d.", c->name, gear->local_key, gear->slot);
-
     } else {
         log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
     }
@@ -306,6 +318,4 @@ void reset_player_stats(character_t* player) {
     player->current_resources.health = player->max_resources.health;
     player->current_resources.mana = player->max_resources.mana;
     player->current_resources.stamina = player->max_resources.stamina;
-
-    log_msg(INFO, "Character", "Player stats reset to base values.");
 }

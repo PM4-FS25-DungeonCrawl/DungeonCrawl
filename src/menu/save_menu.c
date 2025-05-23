@@ -38,7 +38,6 @@ int get_selected_save_file_id(void) {
 }
 
 const char* get_save_name(void) {
-    log_msg(FINE, "Save Menu", "Getting save name: %s", last_save_name[0] == '\0' ? "NULL" : last_save_name);
     if (last_save_name[0] == '\0') {
         return NULL;
     }
@@ -46,7 +45,6 @@ const char* get_save_name(void) {
 }
 
 menu_result_t show_save_game_menu(void) {
-    log_msg(FINE, "Save Menu", "Entering show_save_game_menu");
     char save_name[50] = {0};
     menu_result_t result = MENU_CONTINUE;
 
@@ -71,7 +69,6 @@ menu_result_t show_save_game_menu(void) {
                 MENU_START_Y,
                 MENU_START_X);
 
-        log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
         result = MENU_SAVE_GAME;
     }
 

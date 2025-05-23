@@ -1,11 +1,11 @@
 ../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    14 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:196:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  196 |         case PLAYER_LOST:
+../src/game.c:187:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  187 |         case PLAYER_LOST:
       |         ^
-../src/game.c:202:18: note: last of these clones ends here
-  202 |             break;
+../src/game.c:193:18: note: last of these clones ends here
+  193 |             break;
       |                  ^
 ../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    17 | bool init_input_handler(struct notcurses* nc);
@@ -17,14 +17,14 @@
    17 | bool init_input_handler(struct notcurses* nc);
       |      ^                                    ~~
       |                                           notcurses_ptr
-../src/io/output/common/output_handler.c:213:37: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  213 |             buffer[text_length++] = key_id;
+../src/io/output/common/output_handler.c:209:37: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  209 |             buffer[text_length++] = key_id;
       |                                     ^
-../src/io/output/common/output_handler.c:264:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  264 |     *width = ncplane_dim_x(stdplane);
+../src/io/output/common/output_handler.c:260:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  260 |     *width = ncplane_dim_x(stdplane);
       |              ^
-../src/io/output/common/output_handler.c:265:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  265 |     *height = ncplane_dim_y(stdplane);
+../src/io/output/common/output_handler.c:261:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  261 |     *height = ncplane_dim_y(stdplane);
       |               ^
 ../src/io/output/specific/wait_output.c:49:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    49 |     int msg_len = strlen(loading_message);
@@ -51,8 +51,8 @@
 ../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:77:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   77 |     srand(time(NULL));
+../src/main.c:75:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   75 |     srand(time(NULL));
       |     ^
 Suppressed 252742 warnings (252536 in non-user code, 206 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

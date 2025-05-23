@@ -72,6 +72,7 @@ int init_combat_mode() {
     ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
     if (ability_menu_options == NULL) {
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
         log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu options.");
         return -1;
     }
@@ -79,6 +80,7 @@ int init_combat_mode() {
     potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
     if (potion_menu_options == NULL) {
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
         free(ability_menu_options);
         log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu options.");
         return -1;
@@ -104,7 +106,6 @@ int init_combat_mode() {
 }
 
 combat_result_t start_combat(character_t* player, character_t* monster) {
-    log_msg(FINE, "Combat", "Starting combat between %s and %s", player->name, monster->name);
     // initial combat state
     const vector2d_t anchor = draw_combat_view(combat_view_anchor, player, monster, GOBLIN_PNG, GOBLIN_HEIGHT, false);
 
@@ -502,26 +503,32 @@ void shutdown_combat_mode() {
         for (int i = 0; i < MAX_COMBAT_MODE_STRINGS; i++) {
             if (combat_mode_strings[i] != NULL) {
                 free(combat_mode_strings[i]);
+                combat_mode_strings[i] = NULL;
             }
         }
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
     }
 
     if (ability_menu_options != NULL) {
         for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
             if (ability_menu_options[i] != NULL) {
                 free(ability_menu_options[i]);
+                ability_menu_options[i] = NULL;
             }
         }
         free(ability_menu_options);
+        ability_menu_options = NULL;
     }
 
     if (potion_menu_options != NULL) {
         for (int i = 0; i < MAX_POTION_LIMIT; i++) {
             if (potion_menu_options[i] != NULL) {
                 free(potion_menu_options[i]);
+                potion_menu_options[i] = NULL;
             }
         }
         free(potion_menu_options);
+        potion_menu_options = NULL;
     }
 }
