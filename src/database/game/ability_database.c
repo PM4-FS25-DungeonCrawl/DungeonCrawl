@@ -29,6 +29,8 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection) 
         return NULL;
     }
 
+    memset(ability_init_table, 0, sizeof(ability_init_t) * MAX_ABILITIES);
+
     // Execute the statement and fetch the results
     int index = 0;
     while ((rc = sqlite3_step(stmt)) == SQLITE_ROW && index < MAX_ABILITIES) {
