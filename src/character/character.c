@@ -22,14 +22,41 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
 
     character->type = type;
     snprintf(character->name, sizeof(character->name), "%s", name);
+    character->base_stats = (stats_t) {0};
+    character->current_stats = (stats_t) {0};
+    character->max_resources = (resources_t) {0};
+    character->current_resources = (resources_t) {0};
+
+    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
+        character->resistance[i].type = i;
+        character->resistance[i].value = 0;
+    }
+
+    character->defenses = (defenses_t) {0};
+
+    for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
+        character->abilities[i] = NULL;
+    }
+    character->base_attack = NULL;
     character->ability_count = 0;
-    character->gear_count = 0;
+
+    for (int i = 0; i < MAX_POTION_LIMIT; i++) {
+        character->potion_inventory[i] = NULL;
+    }
     character->potion_count = 0;
+
+    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
+        character->gear_inventory[i] = NULL;
+    }
+    character->gear_count = 0;
 
     for (int i = 0; i < MAX_SLOT; i++) {
         character->equipment[i] = NULL;
     }
-
+    character->level = 0;
+    character->xp = 0;
+    character->xp_reward = 0;
+    character->skill_points = 0;
     return character;
 }
 
