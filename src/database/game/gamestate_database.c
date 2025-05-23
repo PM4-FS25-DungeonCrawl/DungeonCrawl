@@ -455,7 +455,6 @@ void create_tables_game_state(const db_connection_t* db_connection) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
     }
     sqlite3_finalize(stmt);
-    log_msg(INFO, "GameState", "Game state table (GS) created successfully if it didn't exist");
 
     // Create MS table
     rc = sqlite3_prepare_v2(db_connection->db, SQL_CREATE_TABLES_GAMESTATE_MS, -1, &stmt, NULL);
@@ -468,7 +467,6 @@ void create_tables_game_state(const db_connection_t* db_connection) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
     }
     sqlite3_finalize(stmt);
-    log_msg(INFO, "GameState", "Game state table (MS) created successfully if it didn't exist");
 
     // Create PS table
     rc = sqlite3_prepare_v2(db_connection->db, SQL_CREATE_TABLES_GAMESTATE_PS, -1, &stmt, NULL);
@@ -481,5 +479,4 @@ void create_tables_game_state(const db_connection_t* db_connection) {
         log_msg(ERROR, "GameState", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));
     }
     sqlite3_finalize(stmt);
-    log_msg(INFO, "GameState", "Game state table (PS) created successfully if it didn't exist");
 }

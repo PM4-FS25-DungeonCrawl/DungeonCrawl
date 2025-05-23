@@ -33,7 +33,6 @@ void combat_mode_state();
 void stats_mode_state();
 
 void run_game() {
-    log_msg(INFO, "Game", "Starting game loop");
     game_in_progress = false;// Flag to track if a game has been started
 
     current_state = MAIN_MENU;
@@ -42,7 +41,6 @@ void run_game() {
 }
 
 void game_loop() {
-    log_msg(INFO, "Game", "Entering game loop");
     bool running = true;//should only be set in the state machine
 
     while (running) {
@@ -109,7 +107,6 @@ void main_menu_state() {
 
             // Save the game with the provided name
             save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
-            log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
 
             clear_screen();
             current_state = MAP_MODE;
@@ -121,12 +118,10 @@ void main_menu_state() {
 
             if (save_id != -1) {
                 // Load the selected save file
-                log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
                 load_success = get_game_state_by_id(&db_connection, save_id, map, revealed_map, WIDTH, HEIGHT,
                                                     set_player_start_pos);
             } else {
                 // No save file was selected, try loading the latest save
-                log_msg(INFO, "Game", "No save ID provided, loading most recent save");
                 load_success = get_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
             }
 
@@ -134,7 +129,6 @@ void main_menu_state() {
                 // Set game_in_progress flag
                 game_in_progress = true;
 
-                log_msg(INFO, "Game", "Game state loaded successfully");
                 clear_screen();
                 current_state = MAP_MODE;
             } else {
@@ -189,7 +183,6 @@ void combat_mode_state() {
         case CONTINUE_COMBAT:
             break;
         case PLAYER_WON:
-            log_msg(FINE, "Game", "Player won the combat");
             clear_screen();
             current_state = LOOT_MODE;
             break;

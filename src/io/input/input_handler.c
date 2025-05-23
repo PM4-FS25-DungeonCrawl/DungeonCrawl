@@ -34,7 +34,7 @@ static input_timing_t input_timing = {
 
 /**
  * @brief Calculate time difference in milliseconds
- * 
+ *
  * Helper function that computes the difference between two timespec structures
  * and returns the result in milliseconds.
  *
@@ -105,14 +105,12 @@ bool init_input_handler(struct notcurses* notcurses_ptr) {
     // Initialize input timing
     input_timing.first_key = true;
 
-    log_msg(INFO, "input_handler", "Set nc pointer to %p", (void*) nc);
-    log_msg(INFO, "input_handler", "Input handler initialized");
     return true;
 }
 
 /**
  * @brief Check if enough time has passed since the last key press
- * 
+ *
  * This function implements key debouncing to prevent input overflow.
  * It checks if enough time has passed since the last key press to
  * consider the current key press valid. This helps prevent rapid
@@ -209,5 +207,4 @@ bool get_input_nonblocking(input_event_t* event) {
 
 void shutdown_input_handler(void) {
     nc = NULL;
-    log_msg(INFO, "input_handler", "Input handler shut down");
 }
