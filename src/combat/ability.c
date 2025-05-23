@@ -42,7 +42,6 @@ ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connect
 }
 
 
-
 void free_ability_table(memory_pool_t* memory_pool, ability_table_t* table) {
     NULL_PTR_HANDLER_RETURN(memory_pool, , "Ability", "In free_ability_table memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(table, , "Ability", "In free_ability_table table is NULL");
