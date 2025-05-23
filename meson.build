@@ -65,7 +65,8 @@ database_files = files(
     'src/database/database.c',
     'src/database/game/ability_database.c',
     'src/database/game/gamestate_database.c',
-    'src/database/game/item_database.c'
+    'src/database/game/item_database.c',
+    'src/database/game/character_database.c'
 )
 
 logging_files = files(

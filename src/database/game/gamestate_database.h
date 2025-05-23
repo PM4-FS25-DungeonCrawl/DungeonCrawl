@@ -54,7 +54,7 @@ typedef struct {
  * @note The tables will be created if they do not exist
  */
 void create_tables_game_state(const db_connection_t* db_connection);
-void save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
+sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
 save_info_container_t* get_save_infos(const db_connection_t* db_connection);
@@ -70,4 +70,11 @@ void free_save_infos(save_info_container_t* save_infos);
  * @note The returned string is a flattened JSON Array (e.g. [[1,2],[3,4]] -> [1,2,3,4])
  */
 char* arr2D_to_flat_json(const int* arr, int width, int height);
+
+/**
+ *
+ * @param db_connection Connection to the database
+ * @return The ID of the latest save
+ */
+int get_latest_save_id(const db_connection_t* db_connection);
 #endif//GAMESTATE_DATABASE_H

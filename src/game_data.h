@@ -2,12 +2,15 @@
 #define GAME_DATA_H
 
 #include "combat/ability.h"
+#include "item/gear.h"
 #include "item/potion.h"
 
 extern ability_table_t* ability_table;
 extern character_t* goblin;
 extern character_t* player;
 extern potion_t* healing_potion;
+extern gear_table_t* gear_table;
+extern potion_table_t* potion_table;
 
 /**
  * Initialize game data
