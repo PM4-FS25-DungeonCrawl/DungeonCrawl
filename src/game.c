@@ -83,8 +83,6 @@ void game_loop() {
 
     // Close database connection
     db_close(&db_connection);
-    shutdown_combat_mode();
-    shutdown_logger();
 }
 
 void main_menu_state() {
