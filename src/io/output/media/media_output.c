@@ -122,7 +122,6 @@ static bool display_image(loaded_visual_t* resource) {
 
     // Clean up existing plane if needed
     if (resource->plane) {
-        log_msg(INFO, "media_output", "Destroying existing plane");
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
@@ -133,9 +132,6 @@ static bool display_image(loaded_visual_t* resource) {
     opts.x = resource->options.x;
     opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->og_height;
     opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->og_width;
-
-    log_msg(INFO, "media_output", "Creating plane (%d,%d) with size %dx%d",
-            opts.x, opts.y, opts.cols, opts.rows);
 
     resource->plane = ncplane_create(stdplane, &opts);
     if (!resource->plane) {
@@ -164,10 +160,8 @@ static bool display_image(loaded_visual_t* resource) {
     ncplane_move_top(resource->plane);
 
     // Make sure changes are visible - force a render
-    log_msg(INFO, "media_output", "Rendering frame to display visual");
     notcurses_render(nc);// Directly call notcurses_render for maximum compatibility
 
-    log_msg(INFO, "media_output", "Successfully displayed image");
     return true;
 }
 

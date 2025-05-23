@@ -20,8 +20,6 @@
 // No need to redeclare them here as they're already included through io_handler.h
 
 bool init_output_handler() {
-    log_msg(INFO, "output_handler", "Starting initialization");
-
     if (!nc) {
         log_msg(ERROR, "output_handler", "Null Notcurses instance provided");
         return false;
@@ -31,8 +29,6 @@ bool init_output_handler() {
         log_msg(ERROR, "output_handler", "Null standard plane provided");
         return false;
     }
-
-    log_msg(INFO, "output_handler", "Output handler initialized");
     return true;
 }
 
@@ -271,6 +267,4 @@ void shutdown_output_handler(void) {
     // Reset the globals
     nc = NULL;
     stdplane = NULL;
-
-    log_msg(INFO, "output_handler", "Output handler shut down");
 }
