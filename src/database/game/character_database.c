@@ -639,8 +639,8 @@ void get_character_from_db(const db_connection_t* db_connection, character_t* ch
     rc = sqlite3_step(stmt_potion);
     // Loop through all potions in the statement with the potions table
     while (rc == SQLITE_ROW) {
-        potion_t loaded_potion = potion_table->potions[sqlite3_column_int(stmt_potion, 0)];
-        character->potion_inventory[character->potion_count++] = &loaded_potion;
+        potion_t* loaded_potion = &potion_table->potions[sqlite3_column_int(stmt_potion, 0)];
+        character->potion_inventory[character->potion_count++] = loaded_potion;
         rc = sqlite3_step(stmt_potion);
         if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
             log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));

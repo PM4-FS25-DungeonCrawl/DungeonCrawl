@@ -26,12 +26,13 @@ int init_game_data() {
 
     if (ability_table == NULL || potion_table == NULL || gear_table == NULL || player == NULL) return 1;
 
-
+    //TODO: This piece of code should be moved to NEW_GAME. Oterwise the player will may have more potion then he should after loading from the database.
     add_potion(player, &potion_table->potions[HEALING]);
     add_potion(player, &potion_table->potions[MANA]);
     add_potion(player, &potion_table->potions[STAMINA]);
 
     equip_gear(player, gear_table->gears[ARMING_SWORD]);
+    //END TODO
 
     add_potion(goblin, &potion_table->potions[HEALING]);
 
