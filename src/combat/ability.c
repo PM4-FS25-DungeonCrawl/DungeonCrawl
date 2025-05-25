@@ -42,6 +42,23 @@ ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connect
 }
 
 
+void free_ability_table(memory_pool_t* memory_pool, ability_table_t* table) {
+    NULL_PTR_HANDLER_RETURN(memory_pool, , "Ability", "In free_ability_table memory pool is NULL");
+    NULL_PTR_HANDLER_RETURN(table, , "Ability", "In free_ability_table table is NULL");
+
+    memory_pool_free(memory_pool, table);
+}
+
+/**
+ * @brief Initializes an ability with the given parameters.
+ * @param ability Pointer to the ability to be initialized.
+ * @param name Name of the ability.
+ * @param roll_amount Number of dice to roll.
+ * @param accuracy Accuracy of the ability.
+ * @param resource_cost Resource cost of the ability.
+ * @param dice_size Size of the dice used for rolling damage.
+ * @param damage_type Type of damage dealt by the ability.
+ */
 void init_ability(ability_t* ability, char* name, const int roll_amount, const int accuracy, const int resource_cost, const dice_size_t dice_size, const damage_type_t damage_type) {
     NULL_PTR_HANDLER_RETURN(ability, , "Ability", "In init_ability ability is NULL");
     NULL_PTR_HANDLER_RETURN(name, , "Ability", "In init_ability name is NULL");
@@ -52,16 +69,4 @@ void init_ability(ability_t* ability, char* name, const int roll_amount, const i
     ability->resource_cost = resource_cost;
     ability->dice_size = dice_size;
     ability->damage_type = damage_type;
-}
-
-/**
- * @brief Frees the memory allocated for the ability table
- * @param memory_pool A pointer to the memory pool used for allocating the ability table
- * @param table A pointer to the ability table to be freed
- */
-void free_ability_table(memory_pool_t* memory_pool, ability_table_t* table) {
-    NULL_PTR_HANDLER_RETURN(memory_pool, , "Ability", "In free_ability_table memory pool is NULL");
-    NULL_PTR_HANDLER_RETURN(table, , "Ability", "In free_ability_table table is NULL");
-
-    memory_pool_free(memory_pool, table);
 }

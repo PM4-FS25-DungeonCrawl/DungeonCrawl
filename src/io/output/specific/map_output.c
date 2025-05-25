@@ -6,23 +6,7 @@
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
 
-/**
- * @brief Draws the map mode UI based on the given parameters.
- *
- * @param arr The map array to be drawn
- * @param height The height of the map
- * @param width The width of the map
- * @param anchor The anchor position of the map mode, defined as the top left corner
- * @param player_pos The position of the player
- *
- * @note This function checks makes different checks to ensure the given parameters are valid.
- * The checks are done in the following order:
- * - check if the array is NULL
- * - check if the height and width are greater than 0
- * - check if the anchor position is greater or equal 0
- * - check if the player position is within the bounds of the map
- * If any of the checks fail, an error message is logged and the function returns.
- */
+
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
                    const vector2d_t player_pos) {
     NULL_PTR_HANDLER_RETURN(arr, , "Draw Map Mode", "In draw_map_mode given array is NULL");
@@ -105,13 +89,7 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
     render_frame();
 }
 
-/**
- * @brief Draws the player information of the map mode.
- *
- * @param x The x position of the player info to be drawn
- * @param y The y position of the player info to be drawn
- * @param player_pos The current player position
- */
+
 void draw_player_info(int x, int y, const vector2d_t player_pos) {
     // Player information using centralized IO
     print_text_default(y++, x, "Press 'M' for Menu");

@@ -43,6 +43,10 @@ enum inventory_mode_index {
 
 extern char** inventory_mode_strings;
 
+/**
+ * @brief Updates the inventory mode strings with the actual local strings.
+ * @note This function must be called after initializing the local handler.
+ */
 void update_inventory_local(void);
 
 #endif//INVENTORY_MODE_LOCAL_H

@@ -30,6 +30,37 @@ int potion_count = 0;
 char** ability_menu_options = NULL;
 char** potion_menu_options = NULL;
 
+// Define internal functions
+
+/** @brief Use an ability on a target character.
+ * @param attacker Pointer to the attacker character.
+ * @param target Pointer to the target character.
+ * @param ability Pointer to the ability to be used.
+ */
+void use_ability(character_t* attacker, character_t* target, const ability_t* ability);
+/** @brief Use a potion on a target character.
+ * @param player Pointer to the player character.
+ * @param monster Pointer to the monster character.
+ * @param potion Pointer to the potion to be used.
+ */
+void use_potion(character_t* player, const character_t* monster, potion_t* potion);
+/** @brief Invoke the effect of a potion on a character.
+ * @param character Pointer to the character which uses the potion.
+ * @param potion Pointer to which potion to be used.
+ */
+void invoke_potion_effect(character_t* character, potion_t* potion);
+/** @brief Consumes the mana or stamina resource of the attacker character.
+ * @param attacker Pointer to the attacker character.
+ * @param ability Pointer to the ability to be used.
+ * @return true if the resource was consumed, false otherwise.
+ */
+bool consume_ability_resource(character_t* attacker, const ability_t* ability);
+/** @brief Get a random ability from the character's abilities.
+ * @param character Pointer to the character whose abilities are to be used.
+ * @return Pointer to the randomly selected ability.
+ */
+ability_t* get_random_ability(const character_t* character);
+
 /**
  * @brief Initialize the combat mode
  * @note This function must be called before using any other functions in this module.
@@ -41,6 +72,7 @@ int init_combat_mode() {
     ability_menu_options = (char**) malloc(sizeof(char*) * MAX_ABILITY_LIMIT);
     if (ability_menu_options == NULL) {
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
         log_msg(ERROR, "Combat Mode", "Failed to allocate memory for ability menu options.");
         return -1;
     }
@@ -48,6 +80,7 @@ int init_combat_mode() {
     potion_menu_options = (char**) malloc(sizeof(char*) * MAX_POTION_LIMIT);
     if (potion_menu_options == NULL) {
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
         free(ability_menu_options);
         log_msg(ERROR, "Combat Mode", "Failed to allocate memory for potion menu options.");
         return -1;
@@ -470,26 +503,32 @@ void shutdown_combat_mode() {
         for (int i = 0; i < MAX_COMBAT_MODE_STRINGS; i++) {
             if (combat_mode_strings[i] != NULL) {
                 free(combat_mode_strings[i]);
+                combat_mode_strings[i] = NULL;
             }
         }
         free(combat_mode_strings);
+        combat_mode_strings = NULL;
     }
 
     if (ability_menu_options != NULL) {
         for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
             if (ability_menu_options[i] != NULL) {
                 free(ability_menu_options[i]);
+                ability_menu_options[i] = NULL;
             }
         }
         free(ability_menu_options);
+        ability_menu_options = NULL;
     }
 
     if (potion_menu_options != NULL) {
         for (int i = 0; i < MAX_POTION_LIMIT; i++) {
             if (potion_menu_options[i] != NULL) {
                 free(potion_menu_options[i]);
+                potion_menu_options[i] = NULL;
             }
         }
         free(potion_menu_options);
+        potion_menu_options = NULL;
     }
 }

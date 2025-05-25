@@ -76,18 +76,51 @@ bool init_media_output(void);
  */
 void shutdown_media_output(void);
 
+/***
+ * @brief Clean up all loaded media resources
+ *
+ * Frees all loaded media resources and resets the handler.
+ */
 void media_cleanup(void);
 
+/**
+ * @brief Frees the memory associated with a loaded media resource.
+ *
+ * @param media Pointer to the loaded media instance to destroy
+ */
 void destroy_media(loaded_visual_t* media);
 
+/**
+ * @brief Force a refresh of the media display
+ *
+ * @return bool indicating success or failure
+ */
 bool refresh_media_display(void);
 
 /* =========================================================================
  * LOAD AND READY FUNCTIONS
  * ========================================================================= */
 
+/**
+ * @brief load a media resource from file
+ * they can be different types (PNG, GIF, MP4)
+ *
+ * @param filename File name to load
+ * @return Pointer to a loaded visual instance
+ */
 loaded_visual_t* load_media(const char* filename);
 
+/**
+ * @brief Prepares a media resource for display
+ *
+ * @param filename File name to load
+ * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
+ * @param height Height in terminal cells
+ * @param width Width in terminal cells (0 for auto)
+ * @param scale_type Scaling type to apply
+ * @return Pointer to a loaded visual instance
+ */
 loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int width, scale_type_t scale_type);
 
 /* =========================================================================
@@ -95,7 +128,7 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
  * ========================================================================= */
 
 /**
- * Unload a specific media resource
+ * @brief Unload a specific media resource
  * 
  * @param filename File name to unload
  * @return true on success, false on failure
@@ -103,7 +136,7 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
 bool unload_media(const char* filename);
 
 /**
- * Preload a media file into memory
+ * @brief Preload a media file into memory
  * 
  * @param filename File name to preload
  * @return true on success, false on failure
@@ -111,7 +144,7 @@ bool unload_media(const char* filename);
 bool preload_media(const char* filename);
 
 /**
- * Reload media after terminal resize
+ * @brief Reload media after terminal resize
  * 
  * @return true on success, false on failure
  */
@@ -123,27 +156,27 @@ bool reload_media_after_resize(void);
  * ========================================================================= */
 
 /**
- * Display a loaded media file on its assigned plane
+ * @brief Display a loaded media file on its assigned plane
  * @param media Pointer to a loaded media instance
  * @return true on success, false on failure
  */
 bool media_output_render(loaded_visual_t* media);
 
 /**
- * Display the next frame of an animation or video
+ * @brief Display the next frame of an animation or video
  * @param media Pointer to a loaded media instance
  * @return true on success, false on failure or end of media
  */
 bool media_output_render_next_frame(loaded_visual_t* media);
 
 /**
- * Check if the notcurses implementation supports image loading
+ * @brief Check if the notcurses implementation supports image loading
  * @return true if supported, false otherwise
  */
 bool media_output_can_display_images(void);
 
 /**
- * Check if the notcurses implementation supports video loading
+ * @brief Check if the notcurses implementation supports video loading
  * @return true if supported, false otherwise
  */
 bool media_output_can_display_videos(void);
@@ -152,18 +185,51 @@ bool media_output_can_display_videos(void);
  * SCALING FUNCTIONS
  * ========================================================================= */
 
+/**
+ * @brief Enable different scaling options for the loaded visual
+ *
+ * @param visual Pointer to the loaded visual instance
+ * @param scale_type Scaling type to apply
+ * @param target_width Width to scale to
+ * @param target_height Height to scale to
+ */
 void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type, int target_width, int target_height);
 
 /* =========================================================================
  * FILE AND PATH HANDLING FUNCTIONS
  * ========================================================================= */
 
+/**
+ * @brief checks if a directory exists
+ * @param path Path to the directory
+ * @return success or failure
+ */
 bool directory_exists(const char* path);
 
+/**
+ * @brief Get the media type based on the file extension
+ *
+ * @param filename File name to check
+ * @return Media type (PNG, GIF, MP4, or UNSUPPORTED)
+ */
 media_type_t get_file_type(const char* filename);
 
+/**
+ * @brief Check if a filename has a specific extension
+ *
+ * @param filename File name to check
+ * @param extension Extension to check for
+ * @return true if the file has the specified extension, false otherwise
+ */
 bool is_file_extension(const char* filename, const char* extension);
 
+/**
+ * @brief Build a file path for the specified media type
+ *
+ * @param filename File name to build the path for
+ * @param media_type Type of media (PNG, GIF, MP4)
+ * @return Pointer to the constructed file path
+ */
 char* build_filepath(const char* filename, media_type_t media_type);
 
 #endif /* MEDIA_OUTPUT_HANDLER_H */
