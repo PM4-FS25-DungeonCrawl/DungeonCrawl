@@ -581,7 +581,7 @@ void get_character_from_db(const db_connection_t* db_connection, character_t* ch
     // Loop through all equipped gears in the statement with the geartable
     while (rc == SQLITE_ROW) {
         gear_t* loaded_gear = gear_table->gears[sqlite3_column_int(stmt_gear, 0)];
-        character->equipment[loaded_gear->slot] = loaded_gear;
+        add_equipped_gear(character, loaded_gear);
         rc = sqlite3_step(stmt_gear);
         if (rc != SQLITE_DONE && rc != SQLITE_ROW) {
             log_msg(ERROR, "Character", "Failed to execute statement: %s", sqlite3_errmsg(db_connection->db));

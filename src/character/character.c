@@ -220,6 +220,13 @@ bool add_equipped_gear(character_t* character, gear_t* gear) {
         }
 
         character->equipment[gear->slot] = gear;
+        if (character->abilities[0] == character->base_attack) {
+            remove_ability(character, character->abilities[0]);
+        }
+
+        for (int i = 0; i < gear->num_abilities; ++i) {
+            add_ability(character, gear->abilities[i]);
+        }
 
         return true;
     }
@@ -273,13 +280,6 @@ void equip_gear(character_t* character, gear_t* gear) {
         character->defenses.magic_resist += gear->defenses.magic_resist;
         update_character_resources(&character->current_resources, &character->max_resources, &character->base_stats);
 
-        if (character->abilities[0] == character->base_attack) {
-            remove_ability(character, character->abilities[0]);
-        }
-
-        for (int i = 0; i < gear->num_abilities; ++i) {
-            add_ability(character, gear->abilities[i]);
-        }
     } else {
         log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
     }
