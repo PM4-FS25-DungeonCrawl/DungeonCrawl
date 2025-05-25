@@ -3,6 +3,7 @@
 #include "character/character.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
+#include "database/game/character_database.h"
 #include "database/game/gamestate_database.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
@@ -31,6 +32,7 @@ void game_loop();
 
 void combat_mode_state();
 void stats_mode_state();
+int loading_game(int game_state_id, player_pos_setter_t setter);
 
 void run_game() {
     game_in_progress = false;// Flag to track if a game has been started
@@ -88,6 +90,8 @@ void game_loop() {
 void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
+            // TODO: Add a function to get the player name from the user
+            init_player("Hero");
             game_in_progress = true;// Mark that a game is now in progress
             clear_screen();
             current_state = GENERATE_MAP;
@@ -104,35 +108,44 @@ void main_menu_state() {
             }
 
             // Save the game with the provided name
-            save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
+            const sqlite_int64 game_state_id = save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
+            save_character(&db_connection, *player, game_state_id);
 
             clear_screen();
             current_state = MAP_MODE;
             break;
         }
         case MENU_LOAD_GAME: {
-            const int save_id = get_selected_save_file_id();
-            bool load_success = false;
-
-            if (save_id != -1) {
-                // Load the selected save file
-                load_success = get_game_state_by_id(&db_connection, save_id, map, revealed_map, WIDTH, HEIGHT,
-                                                    set_player_start_pos);
-            } else {
-                // No save file was selected, try loading the latest save
-                load_success = get_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
-            }
-
-            if (load_success) {
-                // Set game_in_progress flag
-                game_in_progress = true;
-
-                clear_screen();
-                current_state = MAP_MODE;
-            } else {
-                log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                clear_screen();
-                current_state = GENERATE_MAP;
+            const int save_id = get_selected_save_file_id() != -1 ? get_selected_save_file_id() : get_latest_save_id(&db_connection);
+            const int load_status = loading_game(save_id, set_player_start_pos);
+            switch (load_status) {
+                case 0:
+                    log_msg(INFO, "Game", "Game loaded successfully");
+                    // Set game_in_progress flag
+                    game_in_progress = true;
+                    clear_screen();
+                    current_state = MAP_MODE;
+                    break;
+                case 1:
+                    log_msg(ERROR, "Game", "Failed to reset player character - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                case 2:
+                    log_msg(ERROR, "Game", "Failed to load game state - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                case 3:
+                    log_msg(ERROR, "Game", "Failed to load player character - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                default:
+                    log_msg(ERROR, "Game", "Unknown error loading game state");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
             }
             break;
         }
@@ -223,4 +236,12 @@ void stats_mode_state() {
             current_state = MAP_MODE;
             break;
     }
+}
+
+int loading_game(const int game_state_id, const player_pos_setter_t setter) {
+    if (reset_player() != 0) return 1;
+    if (get_game_state_by_id(&db_connection, game_state_id, map, revealed_map, WIDTH, HEIGHT, setter) != 1) return 2;
+    get_character_from_db(&db_connection, player, game_state_id);
+    if (player == NULL) return 3;
+    return 0;
 }

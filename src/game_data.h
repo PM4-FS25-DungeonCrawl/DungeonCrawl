@@ -2,12 +2,15 @@
 #define GAME_DATA_H
 
 #include "combat/ability.h"
+#include "item/gear.h"
 #include "item/potion.h"
 
 extern ability_table_t* ability_table;
 extern character_t* goblin;
 extern character_t* player;
 extern potion_t* healing_potion;
+extern gear_table_t* gear_table;
+extern potion_table_t* potion_table;
 
 /**
  * Initialize game data
@@ -30,5 +33,24 @@ int free_game_data(void);
  *         or memory allocation issues.
  */
 int reset_goblin(void);
+
+/**
+ * Initializes the player character with default abilities and items.
+ * This function sets up the player with a base attack ability,
+ * adds default potions, and equips a starting piece of gear.
+ * It is used to prepare the player only for a new game.
+ * @param name The name of the player character.
+ *
+ * @return 0 if successful, 1 if failed
+ */
+int init_player(char* name);
+
+/**
+ * Resets the player character to its initial state, clearing all abilities,
+ * items, and stats. This function is used when loading a saved game.
+ *
+ * @return 0 if successful, 1 if failed
+ */
+int reset_player(void);
 
 #endif//GAME_DATA_H

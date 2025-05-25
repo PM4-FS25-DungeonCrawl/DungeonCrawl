@@ -51,6 +51,12 @@ internal_combat_state_t ability_menu(character_t* player, character_t* monster);
  * @param monster Pointer to the monster character.
  */
 internal_combat_state_t potion_menu(character_t* player, character_t* monster);
+/**
+ * @brief Invoke the effect of a potion on a character.
+ * @param character Pointer to the character which uses the potion.
+ * @param potion Pointer to which potion to be used.
+ */
+void invoke_potion_effect(character_t* character, potion_t* potion);
 
 
 /**

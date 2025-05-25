@@ -75,6 +75,7 @@ void free_character(memory_pool_t* memory_pool, character_t* character);
  * @param constitution Constitution value
  */
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
+
 /**
  * @brief Sets the stats for a character
  * @param stats Pointer to the stats structure to set
@@ -84,6 +85,7 @@ void set_character_stats(character_t* character, int strength, int intelligence,
  * @param constitution Constitution value
  */
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
+
 /**
  * @brief Updates the character's resources based on their stats
  * @param current_resources Pointer to the current resources structure to update
@@ -91,6 +93,7 @@ void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, in
  * @param base_stats Pointer to the base stats structure
  */
 void update_character_resources(resources_t* current_resources, resources_t* max_resources, stats_t* base_stats);
+
 /**
  * @brief Sets the damage modifier for a character
  * @param character Pointer to the character to set the damage modifier for
@@ -105,6 +108,7 @@ void set_character_dmg_modifier(character_t* character, damage_type_t type, int 
  * @param ability Pointer to the ability to add
  */
 void add_ability(character_t* character, ability_t* ability);
+
 /**
  * @brief Removes an ability from a character
  * @param character Pointer to the character
@@ -118,6 +122,7 @@ void remove_ability(character_t* character, const ability_t* ability);
  * @param potion Pointer to the potion to add
  */
 void add_potion(character_t* character, potion_t* potion);
+
 /**
  * @brief Removes a potion from a character's inventory
  * @param character Pointer to the character
@@ -131,12 +136,14 @@ void remove_potion(character_t* character, potion_t* potion);
  * @param gear Pointer to the gear to add
  */
 void add_gear(character_t* character, gear_t* gear);
+
 /**
  * @brief Removes a gear item from a character's inventory
  * @param character Pointer to the character
  * @param gear Pointer to the gear item to remove
  */
 void remove_gear(character_t* character, gear_t* gear);
+
 /**
  * @brief Removes the gear equipped in a specific slot of a character.
  *
@@ -144,12 +151,23 @@ void remove_gear(character_t* character, gear_t* gear);
  * @param slot The slot from which the gear should be removed.
  */
 void remove_equipped_gear(character_t* character, gear_slot_t slot);
+
+/**
+ * @brief Adds an equipped gear in a specific slot of a character without updating stats and abilities.
+ *
+ * @param character Pointer to the character.
+ * @param gear Pointer to the equipped gear to add.
+ * @return True if the gear was successfully added, false otherwise.
+ */
+bool add_equipped_gear(character_t* character, gear_t* gear);
+
 /**
  * @brief Equips a gear item to a character
  * @param character Pointer to the character
  * @param gear Pointer to the gear item to equip
  */
 void equip_gear(character_t* character, gear_t* gear);
+
 /**
  * @brief Unequips a gear item from a character and adds it to the character's inventory.
  * @param character Pointer to the character
@@ -169,18 +187,21 @@ void reset_current_stats(character_t* character);
  * @param level The level value
  */
 void set_level(character_t* character, int level);
+
 /**
  * @brief Sets the XP reward for a character
  * @param character Pointer to the character
  * @param xp_reward The XP reward value
  */
 void set_xp_reward(character_t* character, int xp_reward);
+
 /**
  * @brief sets initial xp for a character
  * @param character Pointer to the character
  * @param xp The initial xp value
  */
 void set_initial_xp(character_t* character, int xp);
+
 /**
  * @brief Sets the skill points for a character
  * @param character Pointer to the character
