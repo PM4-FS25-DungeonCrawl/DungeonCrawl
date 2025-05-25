@@ -34,4 +34,23 @@ int free_game_data(void);
  */
 int reset_goblin(void);
 
+/**
+ * Initializes the player character with default abilities and items.
+ * This function sets up the player with a base attack ability,
+ * adds default potions, and equips a starting piece of gear.
+ * It is used to prepare the player only for a new game.
+ * @param name The name of the player character.
+ *
+ * @return 0 if successful, 1 if failed
+ */
+int init_player(char* name);
+
+/**
+ * Resets the player character to its initial state, clearing all abilities,
+ * items, and stats. This function is used when loading a saved game.
+ *
+ * @return 0 if successful, 1 if failed
+ */
+int reset_player(void);
+
 #endif//GAME_DATA_H
