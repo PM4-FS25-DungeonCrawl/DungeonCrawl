@@ -53,21 +53,21 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
     return character;
 }
 
-void free_character(memory_pool_t* memory_pool, character_t* c) {
+void free_character(memory_pool_t* memory_pool, character_t* character) {
     NULL_PTR_HANDLER_RETURN(memory_pool, , "Character", "In free_character memory pool is NULL");
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In free_character character is NULL");
-    memory_pool_free(memory_pool, c);
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In free_character character is NULL");
+    memory_pool_free(memory_pool, character);
 }
 
-void set_character_stats(character_t* c, int strength, int intelligence, int dexterity, int constitution) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_stats character is NULL");
+void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_character_stats character is NULL");
 
-    set_stats(&c->base_stats, strength, intelligence, dexterity, constitution);
-    c->current_stats = c->base_stats;
-    update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
-    c->current_resources = c->max_resources;
-    c->defenses.armor = 0;
-    c->defenses.magic_resist = 0;
+    set_stats(&character->base_stats, strength, intelligence, dexterity, constitution);
+    character->current_stats = character->base_stats;
+    update_character_resources(&character->current_resources, &character->max_resources, &character->base_stats);
+    character->current_resources = character->max_resources;
+    character->defenses.armor = 0;
+    character->defenses.magic_resist = 0;
 }
 
 void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution) {
@@ -108,71 +108,71 @@ void update_character_resources(resources_t* current_resources, resources_t* max
     max_resources->stamina = new_max_stamina;
 }
 
-void set_character_dmg_modifier(character_t* c, damage_type_t type, int value) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_character_dmg_modifier character is NULL");
+void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_character_dmg_modifier character is NULL");
 
     for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        if (c->resistance[i].type == type) {
-            c->resistance[i].value = value;
+        if (character->resistance[i].type == type) {
+            character->resistance[i].value = value;
             return;
         }
     }
     log_msg(WARNING, "Character", "Unknown damage type: %d", type);
 }
 
-void add_ability(character_t* c, ability_t* ability) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_ability character is NULL");
+void add_ability(character_t* character, ability_t* ability) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In add_ability character is NULL");
     NULL_PTR_HANDLER_RETURN(ability, , "Character", "In add_ability ability is NULL");
 
-    if (c->ability_count < MAX_ABILITY_LIMIT) {
-        c->abilities[c->ability_count] = ability;
-        c->ability_count++;
+    if (character->ability_count < MAX_ABILITY_LIMIT) {
+        character->abilities[character->ability_count] = ability;
+        character->ability_count++;
     } else {
-        log_msg(WARNING, "Character", "%s cannot learn more abilities!", c->name);
+        log_msg(WARNING, "Character", "%s cannot learn more abilities!", character->name);
     }
 }
 
-void remove_ability(character_t* c, const ability_t* ability) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_ability character is NULL");
+void remove_ability(character_t* character, const ability_t* ability) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In remove_ability character is NULL");
     NULL_PTR_HANDLER_RETURN(ability, , "Character", "In remove_ability ability is NULL");
 
-    for (int i = 0; i < c->ability_count; i++) {
-        if (c->abilities[i] == ability) {
-            for (int j = i; j < c->ability_count - 1; j++) {
-                c->abilities[j] = c->abilities[j + 1];
+    for (int i = 0; i < character->ability_count; i++) {
+        if (character->abilities[i] == ability) {
+            for (int j = i; j < character->ability_count - 1; j++) {
+                character->abilities[j] = character->abilities[j + 1];
             }
-            c->abilities[c->ability_count - 1] = NULL;
-            c->ability_count--;
+            character->abilities[character->ability_count - 1] = NULL;
+            character->ability_count--;
 
             break;
         }
     }
 }
 
-void add_gear(character_t* c, gear_t* gear) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_gear character is NULL");
+void add_gear(character_t* character, gear_t* gear) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In add_gear character is NULL");
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In add_gear gear is NULL");
 
-    if (c->gear_count < MAX_GEAR_LIMIT) {
-        c->gear_inventory[c->gear_count] = gear;
-        c->gear_count++;
+    if (character->gear_count < MAX_GEAR_LIMIT) {
+        character->gear_inventory[character->gear_count] = gear;
+        character->gear_count++;
 
     } else {
-        log_msg(WARNING, "Character", "%s cannot carry more gear!", c->name);
+        log_msg(WARNING, "Character", "%s cannot carry more gear!", character->name);
     }
 }
 
-void remove_gear(character_t* c, gear_t* gear) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_gear character is NULL");
+void remove_gear(character_t* character, gear_t* gear) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In remove_gear character is NULL");
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In remove_gear gear is NULL");
 
-    for (int i = 0; i < c->gear_count; i++) {
-        if (c->gear_inventory[i] == gear) {
-            for (int j = i; j < c->gear_count - 1; j++) {
-                c->gear_inventory[j] = c->gear_inventory[j + 1];
+    for (int i = 0; i < character->gear_count; i++) {
+        if (character->gear_inventory[i] == gear) {
+            for (int j = i; j < character->gear_count - 1; j++) {
+                character->gear_inventory[j] = character->gear_inventory[j + 1];
             }
-            c->gear_inventory[c->gear_count - 1] = NULL;
-            c->gear_count--;
+            character->gear_inventory[character->gear_count - 1] = NULL;
+            character->gear_count--;
 
             return;
         }
@@ -180,46 +180,46 @@ void remove_gear(character_t* c, gear_t* gear) {
     log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->local_key);
 }
 
-void remove_equipped_gear(character_t* c, gear_slot_t slot) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_equipped_gear character is NULL");
+void remove_equipped_gear(character_t* character, gear_slot_t slot) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In remove_equipped_gear character is NULL");
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In remove_equipped_gear slot is invalid: %d", slot);
 
-    if (c->equipment[slot] != NULL) {
-        gear_t* gear = c->equipment[slot];
+    if (character->equipment[slot] != NULL) {
+        gear_t* gear = character->equipment[slot];
 
-        c->base_stats.strength -= gear->stats.strength;
-        c->base_stats.intelligence -= gear->stats.intelligence;
-        c->base_stats.dexterity -= gear->stats.dexterity;
-        c->base_stats.constitution -= gear->stats.constitution;
-        c->defenses.armor -= gear->defenses.armor;
-        c->defenses.magic_resist -= gear->defenses.magic_resist;
-        update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
+        character->base_stats.strength -= gear->stats.strength;
+        character->base_stats.intelligence -= gear->stats.intelligence;
+        character->base_stats.dexterity -= gear->stats.dexterity;
+        character->base_stats.constitution -= gear->stats.constitution;
+        character->defenses.armor -= gear->defenses.armor;
+        character->defenses.magic_resist -= gear->defenses.magic_resist;
+        update_character_resources(&character->current_resources, &character->max_resources, &character->base_stats);
 
         for (int i = 0; i < gear->num_abilities; ++i) {
-            remove_ability(c, gear->abilities[i]);
+            remove_ability(character, gear->abilities[i]);
         }
 
-        if (c->ability_count == 0) {
-            add_ability(c, c->base_attack);
+        if (character->ability_count == 0) {
+            add_ability(character, character->base_attack);
         }
 
-        c->equipment[slot] = NULL;
+        character->equipment[slot] = NULL;
     } else {
         log_msg(WARNING, "Character", "No gear equipped in slot %d!", slot);
     }
 }
 
-bool add_equipped_gear(character_t* c, gear_t* gear) {
-    NULL_PTR_HANDLER_RETURN(c, false, "Character", "In add_equipped_gear character is NULL");
+bool add_equipped_gear(character_t* character, gear_t* gear) {
+    NULL_PTR_HANDLER_RETURN(character, false, "Character", "In add_equipped_gear character is NULL");
     NULL_PTR_HANDLER_RETURN(gear, false, "Character", "In add_equipped_gear gear is NULL");
 
     if (gear->slot < MAX_SLOT) {
-        if (c->equipment[gear->slot] != NULL) {
+        if (character->equipment[gear->slot] != NULL) {
             log_msg(WARNING, "Character", "Slot %d is already occupied!", gear->slot);
             return false;
         }
 
-        c->equipment[gear->slot] = gear;
+        character->equipment[gear->slot] = gear;
 
         return true;
     }
@@ -228,29 +228,29 @@ bool add_equipped_gear(character_t* c, gear_t* gear) {
     return false;
 }
 
-void add_potion(character_t* c, potion_t* potion) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In add_potion character is NULL");
+void add_potion(character_t* character, potion_t* potion) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In add_potion character is NULL");
     NULL_PTR_HANDLER_RETURN(potion, , "Character", "In add_potion potion is NULL");
 
-    if (c->potion_count < MAX_POTION_LIMIT) {
-        c->potion_inventory[c->potion_count] = potion;
-        c->potion_count++;
+    if (character->potion_count < MAX_POTION_LIMIT) {
+        character->potion_inventory[character->potion_count] = potion;
+        character->potion_count++;
     } else {
-        log_msg(WARNING, "Character", "%s cannot carry more potions!", c->name);
+        log_msg(WARNING, "Character", "%s cannot carry more potions!", character->name);
     }
 }
 
-void remove_potion(character_t* c, potion_t* potion) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In remove_potion character is NULL");
+void remove_potion(character_t* character, potion_t* potion) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In remove_potion character is NULL");
     NULL_PTR_HANDLER_RETURN(potion, , "Character", "In remove_potion potion is NULL");
 
-    for (int i = 0; i < c->potion_count; i++) {
-        if (c->potion_inventory[i] == potion) {
-            for (int j = i; j < c->potion_count - 1; j++) {
-                c->potion_inventory[j] = c->potion_inventory[j + 1];
+    for (int i = 0; i < character->potion_count; i++) {
+        if (character->potion_inventory[i] == potion) {
+            for (int j = i; j < character->potion_count - 1; j++) {
+                character->potion_inventory[j] = character->potion_inventory[j + 1];
             }
-            c->potion_inventory[c->potion_count - 1] = NULL;
-            c->potion_count--;
+            character->potion_inventory[character->potion_count - 1] = NULL;
+            character->potion_count--;
             return;
         }
     }
@@ -258,54 +258,54 @@ void remove_potion(character_t* c, potion_t* potion) {
 }
 
 
-void equip_gear(character_t* c, gear_t* gear) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In equip_gear character is NULL");
+void equip_gear(character_t* character, gear_t* gear) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In equip_gear character is NULL");
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In equip_gear gear is NULL");
 
-    if (add_equipped_gear(c, gear)) {
-        remove_gear(c, gear);
+    if (add_equipped_gear(character, gear)) {
+        remove_gear(character, gear);
 
-        c->base_stats.strength += gear->stats.strength;
-        c->base_stats.intelligence += gear->stats.intelligence;
-        c->base_stats.dexterity += gear->stats.dexterity;
-        c->base_stats.constitution += gear->stats.constitution;
-        c->defenses.armor += gear->defenses.armor;
-        c->defenses.magic_resist += gear->defenses.magic_resist;
-        update_character_resources(&c->current_resources, &c->max_resources, &c->base_stats);
+        character->base_stats.strength += gear->stats.strength;
+        character->base_stats.intelligence += gear->stats.intelligence;
+        character->base_stats.dexterity += gear->stats.dexterity;
+        character->base_stats.constitution += gear->stats.constitution;
+        character->defenses.armor += gear->defenses.armor;
+        character->defenses.magic_resist += gear->defenses.magic_resist;
+        update_character_resources(&character->current_resources, &character->max_resources, &character->base_stats);
 
-        if (c->abilities[0] == c->base_attack) {
-            remove_ability(c, c->abilities[0]);
+        if (character->abilities[0] == character->base_attack) {
+            remove_ability(character, character->abilities[0]);
         }
 
         for (int i = 0; i < gear->num_abilities; ++i) {
-            add_ability(c, gear->abilities[i]);
+            add_ability(character, gear->abilities[i]);
         }
     } else {
         log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
     }
 }
 
-void unequip_gear(character_t* c, const gear_slot_t slot) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In unequip_gear character is NULL");
+void unequip_gear(character_t* character, const gear_slot_t slot) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In unequip_gear character is NULL");
     CHECK_ARG_RETURN(slot < 0 && slot >= MAX_SLOT, , "Character", "In unequip_gear slot is invalid: %d", slot);
 
-    add_gear(c, c->equipment[slot]);
-    remove_equipped_gear(c, slot);
+    add_gear(character, character->equipment[slot]);
+    remove_equipped_gear(character, slot);
 }
 
-void set_initial_xp(character_t* c, int xp) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_initial_xp character is NULL");
-    c->xp = xp;
+void set_initial_xp(character_t* character, int xp) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_initial_xp character is NULL");
+    character->xp = xp;
 }
 
-void set_level(character_t* c, int level) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_level character is NULL");
-    c->level = level;
+void set_level(character_t* character, int level) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_level character is NULL");
+    character->level = level;
 }
 
-void set_xp_reward(character_t* c, int xp_reward) {
-    NULL_PTR_HANDLER_RETURN(c, , "Character", "In set_xp_reward character is NULL");
-    c->xp_reward = xp_reward;
+void set_xp_reward(character_t* character, int xp_reward) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_xp_reward character is NULL");
+    character->xp_reward = xp_reward;
 }
 
 void set_skill_points(character_t* character, int skill_points) {

@@ -152,6 +152,13 @@ void remove_gear(character_t* character, gear_t* gear);
  */
 void remove_equipped_gear(character_t* character, gear_slot_t slot);
 
+/**
+ * @brief Adds an equipped gear in a specific slot of a character without updating stats and abilities.
+ *
+ * @param character Pointer to the character.
+ * @param gear Pointer to the equipped gear to add.
+ * @return True if the gear was successfully added, false otherwise.
+ */
 bool add_equipped_gear(character_t* character, gear_t* gear);
 
 /**
