@@ -51,6 +51,8 @@ int reset_goblin() {
 }
 
 int init_player(char* name) {
+    free_character(main_memory_pool, player);
+    player = create_new_player(main_memory_pool);
     if (player == NULL) {
         return 1;
     }
