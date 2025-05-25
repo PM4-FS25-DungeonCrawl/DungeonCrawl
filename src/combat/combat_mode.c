@@ -44,11 +44,6 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
  * @param potion Pointer to the potion to be used.
  */
 void use_potion(character_t* player, const character_t* monster, potion_t* potion);
-/** @brief Invoke the effect of a potion on a character.
- * @param character Pointer to the character which uses the potion.
- * @param potion Pointer to which potion to be used.
- */
-void invoke_potion_effect(character_t* character, potion_t* potion);
 /** @brief Consumes the mana or stamina resource of the attacker character.
  * @param attacker Pointer to the attacker character.
  * @param ability Pointer to the ability to be used.
