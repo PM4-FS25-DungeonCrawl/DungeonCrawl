@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode.c
+ * @brief Implements functionality for the inventory mode.
+ */
 #include "inventory_mode.h"
 
 #include "../character/character.h"
@@ -47,9 +51,6 @@ char** inventory_gear_options = NULL;
 char** inventory_equipment_options = NULL;
 char** inventory_potion_options = NULL;
 
-/**
- * @brief Initializes the inventory mode.
- */
 int init_inventory_mode() {
     inventory_mode_strings = (char**) malloc(sizeof(char*) * MAX_INVENTORY_STRINGS);
     RETURN_WHEN_NULL(inventory_mode_strings, -1, "Inventory Mode", "Failed to allocate memory for inventory mode strings");
@@ -77,9 +78,6 @@ int init_inventory_mode() {
     return 0;
 }
 
-/**
- * @brief Starts the inventory mode.
- */
 inventory_result_t start_inventory(character_t* player, character_t* monster) {
     if (monster != NULL) {
         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
@@ -111,9 +109,6 @@ inventory_result_t start_inventory(character_t* player, character_t* monster) {
     return CONTINUE_INVENTORY;
 }
 
-/**
- * @brief Displays the main inventory menu.
- */
 internal_inventory_state_t inventory_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -179,9 +174,6 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
     return new_state;
 }
 
-/**
- * @brief Displays the gear inventory menu.
- */
 internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -276,7 +268,11 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
 }
 
 /**
- * @brief Checks if the equipment can be equipped in case it occupies a hands slot.
+ * @brief Checks wether the character can equip certain gear or not.
+ *
+ * @param player Pointer to the player.
+ * @param gear Pointer to the gear to check.
+ * @return true if player can equip the gear false if not.
  */
 bool can_equip_gear(character_t* player, gear_t* gear) {
     if (gear->slot == SLOT_BOTH_HANDS) {
@@ -291,9 +287,6 @@ bool can_equip_gear(character_t* player, gear_t* gear) {
     return true;
 }
 
-/**
- * @brief Displays the equipment inventory menu.
- */
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -374,9 +367,6 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
     return new_state;
 }
 
-/**
- * @brief Displays the potion inventory menu.
- */
 internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -470,7 +460,10 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
 }
 
 /**
- * @brief Collects gear inventory options for display.
+ * @brief Collects all the options for inventory gear for displaying.
+ *
+ * @param gear_inventory An array of gear.
+ * @param count Ammount of items in the array.
  */
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
     if (inventory_gear_options != NULL) {
@@ -514,6 +507,8 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 
 /**
  * @brief Collects equipment inventory options for display.
+ *
+ * @param equipment An array of equipment.
  */
 void collect_inventory_equipment_options(gear_t* equipment[]) {
     if (inventory_equipment_options != NULL) {
@@ -552,6 +547,12 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
     }
 }
 
+/**
+ * @brief Collects all the options for inventory potions for displaying.
+ *
+ * @param potion_inventory An array of potions.
+ * @param count Ammount of potions in the array.
+ */
 void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
     if (inventory_potion_options != NULL) {
         for (int i = 0; i < inventory_potion_count; i++) {
@@ -591,9 +592,6 @@ void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
     }
 }
 
-/**
- * @brief Shuts down the inventory mode and frees allocated resources.
- */
 void shutdown_inventory_mode(void) {
     // free the local strings
     if (inventory_mode_strings != NULL) {
