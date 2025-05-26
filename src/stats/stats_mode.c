@@ -1,3 +1,7 @@
+/**
+ * @file stats_mode.c
+ * @brief Implementation for the stats_mode.
+ */
 #include "stats_mode.h"
 
 #include "../combat/ability.h"

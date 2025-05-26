@@ -1,3 +1,7 @@
+/**
+ * @file stats_mode_local.c
+ * @brief Implements localization for the map mode.
+ */
 #include "stats_mode_local.h"
 
 #include "../../local/local_handler.h"

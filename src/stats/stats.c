@@ -1,3 +1,7 @@
+/**
+ * @file stats.c
+ * @brief Implementation for stats.
+ */
 #include "stats.h"
 
 #include "../logging/logger.h"
