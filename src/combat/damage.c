@@ -1,3 +1,7 @@
+/**
+ * @file damage.c
+ * @brief Implements damage rolling, hit checks, and damage application logic.
+ */
 #include "damage.h"
 
 #include "../character/character.h"

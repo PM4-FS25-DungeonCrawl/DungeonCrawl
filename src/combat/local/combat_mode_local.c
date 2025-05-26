@@ -1,3 +1,7 @@
+/**
+ * @file combat_mode_local.c
+ * @brief Implementation for the localization of the combat mode.
+ */
 #include "combat_mode_local.h"
 
 #include "../../local/local_handler.h"

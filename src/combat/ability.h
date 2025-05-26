@@ -1,3 +1,7 @@
+/**
+ * @file ability.h
+ * @brief Exposes functions for working with abilities.
+ */
 #ifndef ABILITY_H
 #define ABILITY_H
 
@@ -63,6 +67,7 @@ typedef struct {
  * @return Pointer to the ability table.
  */
 ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connection_t* db_connection);
+
 /**
  * Free the ability table, deallocates memory in the memory pool.
  *

@@ -1,3 +1,7 @@
+/**
+ * @file combat_mode_local.h
+ * @brief Exposes functions for working with the localization of the combat mode.
+ */
 #ifndef COMBAT_MODE_LOCAL_H
 #define COMBAT_MODE_LOCAL_H
 

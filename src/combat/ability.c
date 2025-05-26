@@ -1,6 +1,6 @@
 /**
  * @file ability.c
- * @brief This file contains functions for initializing and managing abilities
+ * @brief This file contains functions for initializing and managing abilities.
  */
 
 #include "ability.h"
