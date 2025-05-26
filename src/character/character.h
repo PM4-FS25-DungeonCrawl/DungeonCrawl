@@ -1,3 +1,7 @@
+/**
+ * @file character.h
+ * @brief Exposes functions for working working with the character.
+ */
 #ifndef CHARACTER_H
 #define CHARACTER_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file character.c
+ * @brief Implements character functionallity.
+ */
 #include "character.h"
 
 #include "../combat/ability.h"

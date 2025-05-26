@@ -1,3 +1,7 @@
+/**
+ * @file monster.h
+ * @brief Declares routines for creating and destroying monster characters.
+ */
 #ifndef MONSTER_H
 #define MONSTER_H
 
