@@ -1,3 +1,7 @@
+/**
+ * @file map.c
+ * @brief Implementations for the games map.
+ */
 #include "map.h"
 
 map_tile_t map[WIDTH][HEIGHT];
