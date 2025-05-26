@@ -1,3 +1,7 @@
+/**
+ * @file inventory_output.c
+ * @brief Implements outputting to the screen for the inventory mode.
+ */
 #include "inventory_output.h"
 
 #include "../../../character/character.h"

@@ -1,3 +1,7 @@
+/**
+ * @file media_output.h
+ * @brief Exposes functions for drawing to the screen.
+ */
 #ifndef MEDIA_OUTPUT_H
 #define MEDIA_OUTPUT_H
 

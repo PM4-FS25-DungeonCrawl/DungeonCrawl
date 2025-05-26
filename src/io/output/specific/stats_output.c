@@ -1,3 +1,7 @@
+/**
+ * @file stats_output.c
+ * @brief Implements outputting to the screen for the stats mode.
+ */
 #include "stats_output.h"
 
 #include "../../../character/character.h"

@@ -1,3 +1,7 @@
+/**
+ * @file map_output.h
+ * @brief Exposes functions for outputing to the screen while in the map mode.
+ */
 #ifndef MAP_OUTPUT_H
 #define MAP_OUTPUT_H
 

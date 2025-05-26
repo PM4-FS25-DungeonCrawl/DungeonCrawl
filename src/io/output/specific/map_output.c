@@ -1,3 +1,7 @@
+/**
+ * @file map_output.c
+ * @brief Implements outputting to the screen for the map mode.
+ */
 #include "map_output.h"
 
 #include "../../../asciiart/ascii.h"

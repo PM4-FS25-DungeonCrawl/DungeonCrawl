@@ -1,3 +1,7 @@
+/**
+ * @file combat_output.c
+ * @brief Implements outputting to the screen for the combat mode.
+ */
 #include "combat_output.h"
 
 #include "../../../character/character.h"

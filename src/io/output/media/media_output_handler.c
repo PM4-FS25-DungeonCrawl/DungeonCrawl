@@ -1,3 +1,7 @@
+/**
+ * @file media_output_handler.c
+ * @brief Implements a handler for outputing media to the screen.
+ */
 #include "media_output_handler.h"
 
 #include "../../../logging/logger.h"
@@ -461,6 +465,11 @@ char* build_filepath(const char* filename, media_type_t media_type) {
  * ========================================================================= */
 
 // Free a media resource
+/**
+ * @brief Free a media resource
+ *
+ * @param resource The resource to be freed.
+ */
 static void free_media_resource(loaded_visual_t* resource) {
     if (!resource || !resource->is_loaded) {
         return;

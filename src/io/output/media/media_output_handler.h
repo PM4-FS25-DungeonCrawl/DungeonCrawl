@@ -1,3 +1,7 @@
+/**
+ * @file media_output_handler.h
+ * @brief Exposes functions for the media output handler.
+ */
 #ifndef MEDIA_OUTPUT_HANDLER_H
 #define MEDIA_OUTPUT_HANDLER_H
 

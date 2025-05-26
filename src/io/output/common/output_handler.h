@@ -1,3 +1,7 @@
+/**
+ * @file output_handler.h
+ * @brief Exposes functions for outputting to the console.
+ */
 #ifndef OUTPUT_HANDLER_H
 #define OUTPUT_HANDLER_H
 

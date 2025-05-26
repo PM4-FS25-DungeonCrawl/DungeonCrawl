@@ -1,3 +1,7 @@
+/**
+ * @file media_files.h
+ * @brief Defines the path and metadata to media files.
+ */
 #ifndef MEDIA_FILES_H
 #define MEDIA_FILES_H
 
