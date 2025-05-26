@@ -1,3 +1,7 @@
+/**
+ * @file language_menu.c
+ * @brief Implements the functionality of the language menu.
+ */
 #include "language_menu.h"
 
 #include "../common.h"

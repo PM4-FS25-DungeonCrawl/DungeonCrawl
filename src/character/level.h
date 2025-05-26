@@ -1,3 +1,7 @@
+/**
+ * @file level.h
+ * @brief Exposes functions for working with the character.
+ */
 #ifndef XP_LEVEL_H
 #define XP_LEVEL_H
 #include "character.h"

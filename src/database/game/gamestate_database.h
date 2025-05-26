@@ -1,3 +1,7 @@
+/**
+ * @file gamestate_database.h
+ * @brief Declares functions to create, save, load, and manage game state data in the SQLite database.
+ */
 #ifndef GAMESTATE_DATABASE_H
 #define GAMESTATE_DATABASE_H
 
@@ -54,10 +58,56 @@ typedef struct {
  * @note The tables will be created if they do not exist
  */
 void create_tables_game_state(const db_connection_t* db_connection);
+/**
+ * @brief  Save the game state.
+ *
+ * @param db_connection A database connection.
+ * @param map The current map where nothing is hidden.
+ * @param revealed_map The current state of the revealed map.
+ * @param width The width of the map.
+ * @param height The hight of the map.
+ * @param player The player position.
+ * @param save_name A name for the save file.
+ * @return 0 on success none 0 on failure.
+ */
 sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
+/**
+ * @brief  Load the game state from the database. 
+ *
+ * @param db_connection A database connection.
+ * @param map Pointer to the map to load into.
+ * @param revealed_map Pointer to the revealed map to load into.
+ * @param width Width of the map.
+ * @param height Hieght of the map.
+ * @param setter A setter for the player position.
+ * @return 0 on success none 0 on failure.
+ */
 int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+/**
+ * @brief  Load the game state for a specific id from the database. 
+ *
+ * @param db_connection A database connection.
+ * @param game_state_id The id of the game state to be loaded.
+ * @param map Pointer to the map to load into.
+ * @param revealed_map Pointer to the revealed map to load into.
+ * @param width Width of the map.
+ * @param height Hieght of the map.
+ * @param setter A setter for the player position.
+ * @return 0 on success none 0 on failure.
+ */
 int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+/**
+ * @brief Get the info of the saves.
+ *
+ * @param db_connection A database connedtion.
+ * @return A save_info_container containing the save info.
+ */
 save_info_container_t* get_save_infos(const db_connection_t* db_connection);
+/**
+ * @brief Free the resources associated with a save_info_container.
+ *
+ * @param save_infos Save info to free.
+ */
 void free_save_infos(save_info_container_t* save_infos);
 
 

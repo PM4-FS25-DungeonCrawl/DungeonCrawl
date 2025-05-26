@@ -1,3 +1,7 @@
+/**
+ * @file character_database.c
+ * @brief Implements functionality to work with the character and the database.
+ */
 #include "character_database.h"
 
 #include "../../logging/logger.h"

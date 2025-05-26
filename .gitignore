@@ -62,3 +62,4 @@ log/*.txt
 
 .cache
 compile_commands.json
+.aider*

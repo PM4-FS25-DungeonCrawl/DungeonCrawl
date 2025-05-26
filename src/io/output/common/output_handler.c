@@ -1,3 +1,7 @@
+/**
+ * @file output_handler.c
+ * @brief Implements functionality for handing ouptputting to the console.
+ */
 #include "output_handler.h"
 
 #include "../../../common.h"

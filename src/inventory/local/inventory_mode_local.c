@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode_local.c
+ * @brief Implements functionality for localizing the inventory mode.
+ */
 #include "inventory_mode_local.h"
 
 #include "../../local/local_handler.h"

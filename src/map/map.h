@@ -1,3 +1,7 @@
+/**
+ * @file map.h
+ * @brief Exposes common types and constants for the games map.
+ */
 #ifndef MAP_H
 #define MAP_H
 

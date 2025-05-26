@@ -1,3 +1,7 @@
+/**
+ * @file wait_output.c
+ * @brief Implementation for drawing the loading screen.
+ */
 #include "wait_output.h"
 
 #include "../../../logging/logger.h"

@@ -1,3 +1,7 @@
+/**
+ * @file combat_mode.c
+ * @brief Implementation of the combat mode.
+ */
 #include "combat_mode.h"
 
 #include "../character/character.h"
@@ -431,7 +435,12 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
     return false;
 }
 
-// Helper function to create ability options array
+/**
+ * @brief Collects all the options for abilities in the abilities menu for displaying.
+ *
+ * @param abilities An array of abilities.
+ * @param count Ammount of abilities in the array.
+ */
 void collect_ability_menu_options(ability_t* abilities[], const int count) {
     for (int i = 0; i < MAX_ABILITY_LIMIT; i++) {
         if (ability_menu_options[i] != NULL) {
@@ -464,6 +473,12 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
     }
 }
 
+/**
+ * @brief Collects all the options for potions in the potion menu for displaying.
+ *
+ * @param potions An array of potions.
+ * @param count Ammount of potions in the array.
+ */
 void collect_potion_menu_options(potion_t* potions[], const int count) {
     for (int i = 0; i < MAX_POTION_LIMIT; i++) {
         if (potion_menu_options[i] != NULL) {

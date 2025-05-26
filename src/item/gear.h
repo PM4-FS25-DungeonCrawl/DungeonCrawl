@@ -1,3 +1,7 @@
+/**
+ * @file gear.h
+ * @brief Exposes functions for working with gear.
+ */
 #ifndef GEAR_H
 #define GEAR_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file damage.h
+ * @brief Exposes functions for working with damage.
+ */
 #ifndef DAMAGE_H
 #define DAMAGE_H
 

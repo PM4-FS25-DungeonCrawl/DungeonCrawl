@@ -1,3 +1,7 @@
+/**
+ * @file main.c
+ * @brief Entry point handling game initialization, launch screen display, main loop start, and shutdown.
+ */
 #include "main.h"
 
 #include "combat/combat_mode.h"
@@ -26,7 +30,9 @@
 // Global flag to signal when initialization is complete
 volatile int init_done = 0;
 
-// Function for the launch screen thread
+/**
+ * @brief Display the launch screen.
+ */
 static void display_launch_screen_thread(void) {
     clear_screen();
 
@@ -146,6 +152,9 @@ int init() {
     return COMMON_SUCCESS;
 }
 
+/**
+ * @brief Shuts down the entire game and frees associated resources.
+ */
 void shutdown_game() {
     free_game_data();
     shutdown_local_handler();

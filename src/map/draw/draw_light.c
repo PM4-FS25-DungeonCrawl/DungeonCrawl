@@ -1,3 +1,7 @@
+/**
+ * @file draw_light.c
+ * @brief Implements functionality fro drawing light on player.
+ */
 #include "draw_light.h"
 
 #include <stdlib.h>
@@ -24,7 +28,7 @@ const vector2d_t checks_vector[4][2] = {
 
 
 /**
- * This is a helper function to check if the loop needs to break with this specific edge case.
+ * @brief This is a helper function to check if the loop needs to break with this specific edge case.
  * @param x current tile x-coordinates
  * @param y current tile y-coordinates
  * @param dir the direction to check
@@ -48,7 +52,7 @@ int need_loop_break(const int x, const int y, const vector2d_t dir, int j, int* 
 
 
 /**
- * This function processes the tile at the given coordinates and updates the revealed_map_arr array.
+ * @brief This function processes the tile at the given coordinates and updates the revealed_map_arr array.
  * @param x current tile x-coordinates
  * @param y current tile y-coordinates
  * @param prev_wall_at index of the previous wall tile
@@ -71,7 +75,7 @@ int process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir, int j) {
 
 
 /**
- * This function checks if the tile at the given coordinates is valid and processes it.
+ * @brief This function checks if the tile at the given coordinates is valid and processes it.
  * @param x current tile x-coordinates
  * @param y current tile y-coordinates
  * @param prev_wall_at index of the previous wall tile
@@ -112,7 +116,7 @@ int check_and_process_tile(int x, int y, int* prev_wall_at, const vector2d_t dir
 
 
 /**
- * Processes light in a specific direction and updates the revealed map_arr.
+ * @brief Processes light in a specific direction and updates the revealed map_arr.
  * @param player the player's position on the map_arr
  * @param dir the direction vector
  * @param diagonal_check the diagonal check vector
@@ -149,20 +153,6 @@ void process_light_in_direction(const vector2d_t player, const vector2d_t dir, c
     }
 }
 
-/**
- * Draws the light around the player in arr2.
- * The algorithm reveals the map around the player, based on the arr1, in arr2.
- * The light radius is the distance from the player, where the map tile is still visible.
- * A light radius of 3 means 3 tiles are visible in each direction (up, down, left, right) from the player.
- *
- * @param arr1 the pointer to the 2D array containing all the map tiles (no Hidden tiles)
- * @param arr2 the pointer to the 2D array to reveal the arr1,
- * based on the player's position and light radius
- * @param height the height of the map
- * @param width the width of the map
- * @param player the player's position on the map
- * @param light_radius the radius of the light around the player
- */
 void draw_light_on_player(map_tile_t* arr1, map_tile_t* arr2, int height, int width, vector2d_t player,
                           const int light_radius) {
     map_arr = arr1;

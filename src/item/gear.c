@@ -1,3 +1,7 @@
+/**
+ * @file gear.c
+ * @brief Implementation of the gear system.
+ */
 #include "gear.h"
 
 #include "../database/game/item_database.h"

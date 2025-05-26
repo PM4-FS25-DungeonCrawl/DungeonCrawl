@@ -1,3 +1,7 @@
+/**
+ * @file combat_mode.h
+ * @brief Declares combat mode state machine, including menus and combat operations.
+ */
 #ifndef COMBAT_MODE_H
 #define COMBAT_MODE_H
 

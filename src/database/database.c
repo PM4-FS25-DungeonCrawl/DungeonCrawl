@@ -1,3 +1,7 @@
+/**
+ * @file database.c
+ * @brief Implents functionality for working with the database.
+ */
 #include "database.h"
 
 #include "../logging/logger.h"

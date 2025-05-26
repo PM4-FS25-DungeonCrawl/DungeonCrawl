@@ -1,3 +1,7 @@
+/**
+ * @file gear_identifier.h
+ * @brief Defines a gear identifier struct.
+ */
 #ifndef GEAR_IDENTIFIER_H
 #define GEAR_IDENTIFIER_H
 

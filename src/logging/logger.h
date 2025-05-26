@@ -1,3 +1,8 @@
+/**
+ * @file logger.h
+ * @brief Header file for logging functionality of the game.
+ */
+
 #ifndef LOGGER_H
 #define LOGGER_H
 

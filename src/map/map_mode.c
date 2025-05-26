@@ -1,3 +1,7 @@
+/**
+ * @file map_mode.c
+ * @brief Implements functions for the map mode of the game.
+ */
 #include "map_mode.h"
 
 #include "../game.h"
@@ -109,10 +113,6 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
     return CONTINUE;
 }
 
-/**
- * Updates the player position based on the player's input and redraws the maze.
- * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
- */
 map_mode_result_t map_mode_update(character_t* player) {
     map_mode_result_t next_state = CONTINUE;
 

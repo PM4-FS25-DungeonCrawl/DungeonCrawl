@@ -1,3 +1,7 @@
+/**
+ * @file save_menu.c
+ * @brief Implementation of the save menu.
+ */
 #include "save_menu.h"
 
 #include "../common.h"

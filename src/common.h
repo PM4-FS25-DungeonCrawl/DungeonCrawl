@@ -1,3 +1,7 @@
+/**
+ * @file common.h
+ * @brief Defines common macros, types, and global variables for color schemes and utilities.
+ */
 #ifndef COMMON_H
 #define COMMON_H
 
@@ -133,6 +137,12 @@
 #define MAX_STRING_LENGTH 256
 #define MAX_NAME_LENGTH 64
 
+/**
+ * @brief Common success return value.
+ *
+ * This constant is used to indicate a successful operation in various functions
+ * throughout the application.
+ */
 #define COMMON_SUCCESS 0
 
 
@@ -164,7 +174,11 @@ typedef struct string_max_t {
 } string_max_t;
 
 /**
- * The main memory pool for the game, used for dynamic memory allocation.
+ * @brief Global memory pool for the application.
+ *
+ * This variable holds the main memory pool used for dynamic memory allocation
+ * throughout the application. It is initialized during the application's startup
+ * and should be properly managed to avoid memory leaks.
  */
 extern memory_pool_t* main_memory_pool;
 

@@ -1,3 +1,7 @@
+/**
+ * @file player.h
+ * @brief Exposes functions for working with the player.
+ */
 #ifndef PLAYER_H
 #define PLAYER_H
 

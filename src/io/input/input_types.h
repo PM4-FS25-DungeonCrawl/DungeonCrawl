@@ -1,3 +1,7 @@
+/**
+ * @file input_types.h
+ * @brief Declares structs for possible input types.
+ */
 #ifndef INPUT_TYPES_H
 #define INPUT_TYPES_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file wait_output.h
+ * @brief Exposes functions for drawing the laoding screen.
+ */
 #ifndef WAIT_OUTPUT_H
 #define WAIT_OUTPUT_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file stats_mode_local.h
+ * @brief Exposes functions and enums for working with localization in the map mode.
+ */
 #ifndef STATS_MODE_LOCAL_H
 #define STATS_MODE_LOCAL_H
 

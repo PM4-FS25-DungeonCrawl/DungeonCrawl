@@ -1,3 +1,7 @@
+/**
+ * @file combat_output.h
+ * @brief Exposes functions for outputing to the screen while in the combat mode.
+ */
 #ifndef COMBAT_OUTPUT_H
 #define COMBAT_OUTPUT_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file inventory_output.h
+ * @brief Exposes functions for outputing to the screen while in the inventory mode.
+ */
 #ifndef INVENTORY_OUTPUT_H
 #define INVENTORY_OUTPUT_H
 

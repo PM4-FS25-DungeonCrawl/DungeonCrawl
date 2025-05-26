@@ -1,3 +1,7 @@
+/**
+ * @file media_output.c
+ * @brief Implements functionality for outputing media to the screen.
+ */
 #include "media_output.h"
 
 #include "../../../logging/logger.h"
@@ -107,7 +111,12 @@ bool display_image_cell(const char* filename, int x, int y) {
 * INTERNAL DISPLAY FUNCTIONS
 * ========================================================================= */
 
-// Helper function for displaying images
+/**
+ * @brief Helper function to display a visual.
+ *
+ * @param resource Visual to display.
+ * @return True on success false on failure.
+ */
 static bool display_image(loaded_visual_t* resource) {
     // Validate parameters
     if (!resource || !resource->visual) {

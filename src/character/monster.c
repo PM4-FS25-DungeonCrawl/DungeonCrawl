@@ -5,7 +5,6 @@
 
 #include "monster.h"
 
-
 character_t* create_new_goblin(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Goblin", "Memory pool is NULL");
 

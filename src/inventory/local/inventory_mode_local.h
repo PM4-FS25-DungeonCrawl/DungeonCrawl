@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode_local.h
+ * @brief Exposes functions for localizing the inventory mode.
+ */
 #ifndef INVENTORY_MODE_LOCAL_H
 #define INVENTORY_MODE_LOCAL_H
 

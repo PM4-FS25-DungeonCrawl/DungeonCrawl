@@ -1,3 +1,7 @@
+/**
+ * @file main_menu.c
+ * @brief Implementation of the main menu.
+ */
 #include "main_menu.h"
 
 #include "../common.h"
@@ -102,6 +106,12 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     return active_menu_state;
 }
 
+/**
+ * @brief Select a menu option.
+ *
+ * @param selected_index The index of the menu option that is to be selected.
+ * @param game_in_progress A boolean which shows if the game is in progress or not.
+ */
 void select_menu_option(const int selected_index, const bool game_in_progress) {
     //if the game is not in progress and the selected index is bigger than 0, we need to add 2 to the selected index
     const int true_index = selected_index > 0 && !game_in_progress ? selected_index + 2 : selected_index;

@@ -1,3 +1,7 @@
+/**
+ * @file stats_output.h
+ * @brief Exposes functions for outputing to the screen in stats mode.
+ */
 #ifndef STATS_OUTPUT_H
 #define STATS_OUTPUT_H
 

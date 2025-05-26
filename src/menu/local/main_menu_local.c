@@ -1,3 +1,7 @@
+/**
+ * @file main_menu_local.c
+ * @brief Loads and updates localized strings for the main menu UI.
+ */
 #include "main_menu_local.h"
 
 #include "../../local/local_handler.h"

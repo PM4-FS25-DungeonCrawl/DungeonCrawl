@@ -1,3 +1,7 @@
+/**
+ * @file database.h
+ * @brief Exposes functions for working with the database.
+ */
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -34,7 +38,6 @@ typedef enum db_type_t {
  * @param db_name the path name of the database
  * @return 0 for success
  */
-
 int db_open(db_connection_t* db_connection, const char* db_name);
 
 /**

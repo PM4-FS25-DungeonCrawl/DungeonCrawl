@@ -1,3 +1,7 @@
+/**
+ * @file loot_generation.h
+ * @brief Exposes functions for loot generation.
+ */
 #ifndef LOOT_GENERATION_H
 #define LOOT_GENERATION_H
 
