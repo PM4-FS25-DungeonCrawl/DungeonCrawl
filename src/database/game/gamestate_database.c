@@ -1,3 +1,7 @@
+/**
+ * @file gamestate_database.c
+ * @brief Implements functionality to work with the gamestate and database.
+ */
 #include "gamestate_database.h"
 
 #include "../../logging/logger.h"

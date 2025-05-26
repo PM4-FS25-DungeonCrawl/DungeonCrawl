@@ -1,3 +1,7 @@
+/**
+ * @file character_database.h
+ * @brief Exposes functions for working with the character and database.
+ */
 #ifndef CHARACTER_DATABASE_H
 #define CHARACTER_DATABASE_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file ability_database.c
+ * @brief Implements functionality for working with abilites and the database.
+ */
 #include "ability_database.h"
 
 #include "../../logging/logger.h"

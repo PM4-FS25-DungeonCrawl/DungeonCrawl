@@ -1,3 +1,7 @@
+/**
+ * @file item_database.c
+ * @brief Implements functionality for working with items and database.
+ */
 #include "item_database.h"
 
 #include "../../logging/logger.h"
