@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_3a7e1ce788c4943857fa98d6ce347bef" kind="dir">
+    <compoundname>src/io/output/common</compoundname>
+    <innerfile refid="output__handler_8c">output_handler.c</innerfile>
+    <innerfile refid="output__handler_8h">output_handler.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/io/output/common/"/>
+  </compounddef>
+</doxygen>

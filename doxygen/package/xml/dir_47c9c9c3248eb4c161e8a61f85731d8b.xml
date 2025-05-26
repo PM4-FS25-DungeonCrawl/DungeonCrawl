@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_47c9c9c3248eb4c161e8a61f85731d8b" kind="dir">
+    <compoundname>src/inventory/local</compoundname>
+    <innerfile refid="inventory__mode__local_8c">inventory_mode_local.c</innerfile>
+    <innerfile refid="inventory__mode__local_8h">inventory_mode_local.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/inventory/local/"/>
+  </compounddef>
+</doxygen>

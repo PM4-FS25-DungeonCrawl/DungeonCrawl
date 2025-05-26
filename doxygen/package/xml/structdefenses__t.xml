@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structdefenses__t" kind="struct" language="C++" prot="public">
+    <compoundname>defenses_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdefenses__t_1a4ed341bf54b40070c0b5002e26097211" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int defenses_t::armor</definition>
+        <argsstring></argsstring>
+        <name>armor</name>
+        <qualifiedname>defenses_t::armor</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/stats/stats.h" line="32" column="9" bodyfile="src/stats/stats.h" bodystart="32" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdefenses__t_1a8f8a4531fdf8dee6fb80fd0b456f30d9" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int defenses_t::magic_resist</definition>
+        <argsstring></argsstring>
+        <name>magic_resist</name>
+        <qualifiedname>defenses_t::magic_resist</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/stats/stats.h" line="33" column="9" bodyfile="src/stats/stats.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/stats/stats.h" line="31" column="1" bodyfile="src/stats/stats.h" bodystart="31" bodyend="34"/>
+    <listofallmembers>
+      <member refid="structdefenses__t_1a4ed341bf54b40070c0b5002e26097211" prot="public" virt="non-virtual"><scope>defenses_t</scope><name>armor</name></member>
+      <member refid="structdefenses__t_1a8f8a4531fdf8dee6fb80fd0b456f30d9" prot="public" virt="non-virtual"><scope>defenses_t</scope><name>magic_resist</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

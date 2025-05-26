@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structdamage__resistance__t" kind="struct" language="C++" prot="public">
+    <compoundname>damage_resistance_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdamage__resistance__t_1a64c21544708c72be70d0a3c62df93b9e" prot="public" static="no" mutable="no">
+        <type>damage_type_t</type>
+        <definition>damage_type_t damage_resistance_t::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>damage_resistance_t::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.h" line="27" column="19" bodyfile="src/combat/damage.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdamage__resistance__t_1aac3c84accf96f77497a9562142d25dd9" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int damage_resistance_t::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>damage_resistance_t::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.h" line="28" column="9" bodyfile="src/combat/damage.h" bodystart="28" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/combat/damage.h" line="26" column="1" bodyfile="src/combat/damage.h" bodystart="26" bodyend="29"/>
+    <listofallmembers>
+      <member refid="structdamage__resistance__t_1a64c21544708c72be70d0a3c62df93b9e" prot="public" virt="non-virtual"><scope>damage_resistance_t</scope><name>type</name></member>
+      <member refid="structdamage__resistance__t_1aac3c84accf96f77497a9562142d25dd9" prot="public" virt="non-virtual"><scope>damage_resistance_t</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

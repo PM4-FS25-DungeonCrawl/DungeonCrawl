@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_ab9399deceb40e8694938c11cb7b5ec6" kind="dir">
+    <compoundname>src/menu/local</compoundname>
+    <innerfile refid="language__menu__local_8c">language_menu_local.c</innerfile>
+    <innerfile refid="language__menu__local_8h">language_menu_local.h</innerfile>
+    <innerfile refid="main__menu__local_8c">main_menu_local.c</innerfile>
+    <innerfile refid="main__menu__local_8h">main_menu_local.h</innerfile>
+    <innerfile refid="save__menu__local_8c">save_menu_local.c</innerfile>
+    <innerfile refid="save__menu__local_8h">save_menu_local.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/menu/local/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="inventory__mode__local_8c" kind="file" language="C++">
+    <compoundname>inventory_mode_local.c</compoundname>
+    <includes refid="inventory__mode__local_8h" local="yes">inventory_mode_local.h</includes>
+    <includes refid="local__handler_8h" local="yes">../../local/local_handler.h</includes>
+    <includes local="no">stdlib.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>src/inventory/local/inventory_mode_local.c</label>
+        <link refid="inventory__mode__local_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>inventory_mode_local.h</label>
+        <link refid="inventory__mode__local_8h"/>
+      </node>
+      <node id="3">
+        <label>../../local/local_handler.h</label>
+        <link refid="local__handler_8h"/>
+      </node>
+      <node id="4">
+        <label>stdlib.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="inventory__mode__local_8c_1ad8566c321a66d4765b0ae4480d389f6d" prot="public" static="no" mutable="no">
+        <type>char **</type>
+        <definition>char** inventory_mode_strings</definition>
+        <argsstring></argsstring>
+        <name>inventory_mode_strings</name>
+        <initializer>= NULL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/local/inventory_mode_local.c" line="11" column="6" bodyfile="src/inventory/local/inventory_mode_local.c" bodystart="11" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="inventory__mode__local_8c_1aa1783b4473320c2d88127547e69a6033" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void update_inventory_local</definition>
+        <argsstring>(void)</argsstring>
+        <name>update_inventory_local</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Updates the inventory mode strings with the actual local strings. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This function must be called after initializing the local handler. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/local/inventory_mode_local.c" line="13" column="6" bodyfile="src/inventory/local/inventory_mode_local.c" bodystart="13" bodyend="55"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implements functionality for localizing the inventory mode. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="inventory__mode__local_8h" kindref="compound">inventory_mode_local.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="local__handler_8h" kindref="compound">../../local/local_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**<sp/>inventory_mode_strings<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="inventory__mode__local_8c_1aa1783b4473320c2d88127547e69a6033" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="inventory__mode__local_8c_1aa1783b4473320c2d88127547e69a6033" kindref="member">update_inventory_local</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>MAX_INVENTORY_STRINGS;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(inventory_mode_strings[i]<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(inventory_mode_strings[i]);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[MAIN_MENU_TITLE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.MAIN.MENU.TITLE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[SHOW_GEAR]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.OPTION.SHOW.GEAR&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[SHOW_EQUIPPED_GEAR]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.OPTION.SHOW.GEAR.EQUIPPED&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[SHOW_POTIONS]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.OPTION.SHOW.POTIONS&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_FULL_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.FULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_EMPTY_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.EMPTY&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_MENU_TITLE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.MENU.TITLE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_DROP_GEAR_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.DROP_GEAR&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_GEAR_FORMAT]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.GEAR.FORMAT&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[INVENTORY_GEAR_FORMAT_EMPTY]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;INVENTORY.GEAR.FORMAT.EMPTY&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[EQUIPMENT_MENU_TITLE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;EQUIPMENT.MENU.TITLE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[EQUIPMENT_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;EQUIPMENT.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[EQUIPMENT_SLOT_FULL]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;EQUIPMENT.SLOT.FULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[EQUIPMENT_HANDS_SLOT_FULL]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;EQUIPMENT.HANDS.SLOT.FULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_FORMAT]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.FORMAT&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_MENU_TITLE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.MENU.TITLE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_FULL_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.FULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_EMPTY_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.EMPTY&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_DROP_POTION_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;POTION.DROP_POTION&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[POTION_USE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;COMBAT.POTION.USE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_MAIN_MENU_TITLE]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.MAIN.MENU.TITLE&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_OPTION_SHOW_GEAR]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.OPTION.SHOW.GEAR&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_OPTION_SHOW_GEAR_EQUIPPED]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.OPTION.SHOW.GEAR.EQUIPPED&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_OPTION_SHOW_POTIONS]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.OPTION.SHOW.POTIONS&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_GEAR_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.GEAR.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_EQUIPMENT_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.EQUIPMENT.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[LOOT_POTION_MENU_HEADER]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.POTION.MENU.HEADER&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[FINISH_LOOTING_MSG]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;LOOT.FINISH&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>inventory_mode_strings[PRESS_C_RETURN]<sp/>=<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="stringliteral">&quot;PRESS.C.RETURN&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/inventory/local/inventory_mode_local.c"/>
+  </compounddef>
+</doxygen>

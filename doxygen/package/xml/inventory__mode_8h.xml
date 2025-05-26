@@ -1,0 +1,420 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="inventory__mode_8h" kind="file" language="C++">
+    <compoundname>inventory_mode.h</compoundname>
+    <includes refid="character__fw_8h" local="yes">../character/character_fw.h</includes>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="inventory__mode_8c" local="yes">src/inventory/inventory_mode.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="1">
+        <label>src/inventory/inventory_mode.h</label>
+        <link refid="inventory__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="3">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="1">
+        <label>src/inventory/inventory_mode.h</label>
+        <link refid="inventory__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="5">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" prot="public" static="no" strong="no">
+        <type></type>
+        <name>internal_inventory_state_t</name>
+        <enumvalue id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adbaff601f9dad04ceb3af28ba794af39e8a" prot="public">
+          <name>INVENTORY_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba8085e10c8581ba3b90a8f4303c428a44" prot="public">
+          <name>INVENTORY_GEAR_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba73b2ddca113ff0a8775b7f4b2e6b9694" prot="public">
+          <name>INVENTORY_EQUIPMENT_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba1c103146121e9fef3f9b98298a49a9e6" prot="public">
+          <name>INVENTORY_POTION_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adbaad2a6216722bc5ec4375881e5974565a" prot="public">
+          <name>INVENTORY_EXIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+<para>Internal states for the inventory mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="13" column="1" bodyfile="src/inventory/inventory_mode.h" bodystart="13" bodyend="19"/>
+      </memberdef>
+      <memberdef kind="enum" id="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7" prot="public" static="no" strong="no">
+        <type></type>
+        <name>inventory_result_t</name>
+        <enumvalue id="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7a5f4d6883e1216b1c5bf390fafa908194" prot="public">
+          <name>CONTINUE_INVENTORY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7afbe2456d40ea3a419bb2b886a422e6de" prot="public">
+          <name>EXIT_TO_MAP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="21" column="1" bodyfile="src/inventory/inventory_mode.h" bodystart="21" bodyend="24"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="inventory__mode_8h_1af8e671ca0dad2fd5d8ba991c5872fbed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_inventory_mode</definition>
+        <argsstring>()</argsstring>
+        <name>init_inventory_mode</name>
+        <briefdescription>
+<para>Initialize the inventory mode. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>int 0 on success, 1 on failure </para>
+</simplesect>
+<simplesect kind="note"><para>This function must be called before using any other functions in this module. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="31" column="5" bodyfile="src/inventory/inventory_mode.c" bodystart="54" bodyend="79" declfile="src/inventory/inventory_mode.h" declline="31" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1a18570f8701fbaaf159853b93fb0883cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>inventory_result_t</type>
+        <definition>inventory_result_t start_inventory</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>start_inventory</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Starts the inventory mode. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The player character whose inventory will be managed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defeated monster whose inventory will be looted if not NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>inventory_result_t The result of the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="39" column="20" bodyfile="src/inventory/inventory_mode.c" bodystart="81" bodyend="110" declfile="src/inventory/inventory_mode.h" declline="39" declcolumn="20"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1a0542d449b5fb32f908e0bc103eaeb517" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref></type>
+        <definition>internal_inventory_state_t inventory_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>inventory_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Displays the main inventory menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The player character whose inventory is being managed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defeated monster whose inventory will be looted if not NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref> The next state of the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="47" column="28" bodyfile="src/inventory/inventory_mode.c" bodystart="112" bodyend="175" declfile="src/inventory/inventory_mode.h" declline="47" declcolumn="28"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1acc5c8039e2a24ee0e623733f9b9e8c2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref></type>
+        <definition>internal_inventory_state_t inventory_gear_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>inventory_gear_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Displays the gear inventory menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The player character whose inventory is being managed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defeated monster whose inventory will be looted if not NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref> The next state of the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="55" column="28" bodyfile="src/inventory/inventory_mode.c" bodystart="177" bodyend="268" declfile="src/inventory/inventory_mode.h" declline="55" declcolumn="28"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1aab5799dd02192c8fdd42dc1b27a6d84b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref></type>
+        <definition>internal_inventory_state_t inventory_equipment_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>inventory_equipment_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Displays the equipment inventory menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The player character whose inventory is being managed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defeated monster whose inventory will be looted if not NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref> The next state of the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="63" column="28" bodyfile="src/inventory/inventory_mode.c" bodystart="290" bodyend="368" declfile="src/inventory/inventory_mode.h" declline="63" declcolumn="28"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1acb47abb40ebc5018b2f18f93809eb3e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref></type>
+        <definition>internal_inventory_state_t inventory_potion_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>inventory_potion_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Displays the potion inventory menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The player character whose inventory is being managed. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defeated monster whose inventory will be looted if not NULL. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref> The next state of the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="71" column="28" bodyfile="src/inventory/inventory_mode.c" bodystart="370" bodyend="460" declfile="src/inventory/inventory_mode.h" declline="71" declcolumn="28"/>
+      </memberdef>
+      <memberdef kind="function" id="inventory__mode_8h_1aa75b29f414ad6a579098f1c8eb3af9f9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_inventory_mode</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_inventory_mode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shuts down the inventory mode and frees allocated resources. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This function must be called to clean up resources used by the inventory mode. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/inventory/inventory_mode.h" line="77" column="6" bodyfile="src/inventory/inventory_mode.c" bodystart="595" bodyend="632" declfile="src/inventory/inventory_mode.h" declline="77" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for working with the inventory mode. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>INVENTORY_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INVENTORY_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character__fw_8h" kindref="compound">../character/character_fw.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_MENU,</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_GEAR_MENU,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_EQUIPMENT_MENU,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_POTION_MENU,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_EXIT</highlight></codeline>
+<codeline lineno="19"><highlight class="normal">}<sp/><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref>;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>CONTINUE_INVENTORY,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>EXIT_TO_MAP</highlight></codeline>
+<codeline lineno="24"><highlight class="normal">}<sp/>inventory_result_t;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="inventory__mode_8h_1af8e671ca0dad2fd5d8ba991c5872fbed" kindref="member">init_inventory_mode</ref>();</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal">inventory_result_t<sp/><ref refid="inventory__mode_8h_1a18570f8701fbaaf159853b93fb0883cd" kindref="member">start_inventory</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref><sp/><ref refid="inventory__mode_8h_1a0542d449b5fb32f908e0bc103eaeb517" kindref="member">inventory_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref><sp/><ref refid="inventory__mode_8h_1acc5c8039e2a24ee0e623733f9b9e8c2d" kindref="member">inventory_gear_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref><sp/><ref refid="inventory__mode_8h_1aab5799dd02192c8fdd42dc1b27a6d84b" kindref="member">inventory_equipment_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><ref refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kindref="member">internal_inventory_state_t</ref><sp/><ref refid="inventory__mode_8h_1acb47abb40ebc5018b2f18f93809eb3e2" kindref="member">inventory_potion_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="inventory__mode_8h_1aa75b29f414ad6a579098f1c8eb3af9f9" kindref="member">shutdown_inventory_mode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>INVENTORY_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/inventory/inventory_mode.h"/>
+  </compounddef>
+</doxygen>

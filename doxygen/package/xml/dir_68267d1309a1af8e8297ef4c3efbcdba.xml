@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir">
+    <compoundname>src</compoundname>
+    <innerdir refid="dir_cf914bf64036ec92a184701ee3113d82">src/asciiart</innerdir>
+    <innerdir refid="dir_cff08ed9a466d3fe1316b71e9cfad869">src/character</innerdir>
+    <innerdir refid="dir_61f20e49ac5d6763f7282e8c799f7538">src/combat</innerdir>
+    <innerdir refid="dir_803ee67260c130b45d29089798491ab2">src/database</innerdir>
+    <innerdir refid="dir_8aa3e05b3c778144162028379a6046fd">src/inventory</innerdir>
+    <innerdir refid="dir_c184e51c84f2c3f0345bbc8a0d75d3e1">src/io</innerdir>
+    <innerdir refid="dir_dc176e3d98aca08d5e74d18511208cd7">src/item</innerdir>
+    <innerdir refid="dir_c7eb4fb5b3548168e57f75b63628aa56">src/local</innerdir>
+    <innerdir refid="dir_b3320b59a4aa4a7431bc8488b87009bf">src/logging</innerdir>
+    <innerdir refid="dir_391513bbec656ad0f0b1433a02685683">src/map</innerdir>
+    <innerdir refid="dir_94d7edf6f8f3d9af5fd63c44172da41c">src/memory</innerdir>
+    <innerdir refid="dir_1a56cc8cdc1689899910be5fa4716ee4">src/menu</innerdir>
+    <innerdir refid="dir_3de45fbf08d2e79aacff2f4de113ab26">src/stats</innerdir>
+    <innerdir refid="dir_bfedb72b9d87795234454f6223b9ab1e">src/thread</innerdir>
+    <innerfile refid="common_8c">common.c</innerfile>
+    <innerfile refid="common_8h">common.h</innerfile>
+    <innerfile refid="game_8c">game.c</innerfile>
+    <innerfile refid="game_8h">game.h</innerfile>
+    <innerfile refid="game__data_8c">game_data.c</innerfile>
+    <innerfile refid="game__data_8h">game_data.h</innerfile>
+    <innerfile refid="main_8c">main.c</innerfile>
+    <innerfile refid="main_8h">main.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/"/>
+  </compounddef>
+</doxygen>

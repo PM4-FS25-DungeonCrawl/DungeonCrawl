@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="io__handler_8h" kind="file" language="C++">
+    <compoundname>io_handler.h</compoundname>
+    <includes refid="common_8h" local="yes">../common.h</includes>
+    <includes refid="input__handler_8h" local="yes">input/input_handler.h</includes>
+    <includes refid="input__types_8h" local="yes">input/input_types.h</includes>
+    <includes refid="output__handler_8h" local="yes">output/common/output_handler.h</includes>
+    <includes refid="media__output_8h" local="yes">output/media/media_output.h</includes>
+    <includes local="no">notcurses/notcurses.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includedby refid="combat__mode_8c" local="yes">src/combat/combat_mode.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="input__handler_8c" local="yes">src/io/input/input_handler.c</includedby>
+    <includedby refid="io__handler_8c" local="yes">src/io/io_handler.c</includedby>
+    <includedby refid="output__handler_8c" local="yes">src/io/output/common/output_handler.c</includedby>
+    <includedby refid="media__output_8c" local="yes">src/io/output/media/media_output.c</includedby>
+    <includedby refid="media__output__handler_8c" local="yes">src/io/output/media/media_output_handler.c</includedby>
+    <includedby refid="combat__output_8c" local="yes">src/io/output/specific/combat_output.c</includedby>
+    <includedby refid="inventory__output_8c" local="yes">src/io/output/specific/inventory_output.c</includedby>
+    <includedby refid="map__output_8c" local="yes">src/io/output/specific/map_output.c</includedby>
+    <includedby refid="stats__output_8c" local="yes">src/io/output/specific/stats_output.c</includedby>
+    <includedby refid="wait__output_8c" local="yes">src/io/output/specific/wait_output.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>input/input_handler.h</label>
+        <link refid="input__handler_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>input_types.h</label>
+        <link refid="input__types_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/io/io_handler.h</label>
+        <link refid="io__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>output/common/output_handler.h</label>
+        <link refid="output__handler_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>output/media/media_output.h</label>
+        <link refid="media__output_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>media_output_handler.h</label>
+        <link refid="media__output__handler_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="4">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="7">
+        <label>notcurses/notcurses.h</label>
+      </node>
+      <node id="9">
+        <label>stdbool.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="3">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="4">
+        <label>src/io/input/input_handler.c</label>
+        <link refid="input__handler_8c"/>
+      </node>
+      <node id="5">
+        <label>src/io/io_handler.c</label>
+        <link refid="io__handler_8c"/>
+      </node>
+      <node id="1">
+        <label>src/io/io_handler.h</label>
+        <link refid="io__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>src/io/output/common/output_handler.c</label>
+        <link refid="output__handler_8c"/>
+      </node>
+      <node id="7">
+        <label>src/io/output/media/media_output.c</label>
+        <link refid="media__output_8c"/>
+      </node>
+      <node id="8">
+        <label>src/io/output/media/media_output_handler.c</label>
+        <link refid="media__output__handler_8c"/>
+      </node>
+      <node id="9">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="10">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="11">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+      <node id="12">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="13">
+        <label>src/io/output/specific/wait_output.c</label>
+        <link refid="wait__output_8c"/>
+      </node>
+      <node id="14">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="15">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="io__handler_8h_1a5980c706060e9eb24ebfe324322b2a44" prot="public" static="no" extern="yes" mutable="no">
+        <type>volatile int</type>
+        <definition>volatile int init_done</definition>
+        <argsstring></argsstring>
+        <name>init_done</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="18" column="21" bodyfile="src/main.c" bodystart="31" bodyend="-1" declfile="src/io/io_handler.h" declline="18" declcolumn="21"/>
+      </memberdef>
+      <memberdef kind="variable" id="io__handler_8h_1a7cb72d70c08b314262fc0143c49e3166" prot="public" static="no" extern="yes" mutable="no">
+        <type>struct notcurses *</type>
+        <definition>struct notcurses* nc</definition>
+        <argsstring></argsstring>
+        <name>nc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="22" column="24" bodyfile="src/io/io_handler.c" bodystart="26" bodyend="-1" declfile="src/io/io_handler.h" declline="22" declcolumn="24"/>
+      </memberdef>
+      <memberdef kind="variable" id="io__handler_8h_1a95672e218c892e33e2e89fdd88d800bc" prot="public" static="no" extern="yes" mutable="no">
+        <type>struct ncplane *</type>
+        <definition>struct ncplane* stdplane</definition>
+        <argsstring></argsstring>
+        <name>stdplane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="23" column="22" bodyfile="src/io/io_handler.c" bodystart="27" bodyend="-1" declfile="src/io/io_handler.h" declline="23" declcolumn="22"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="io__handler_8h_1a9a6706f8974be8033f25eaf9e771b0b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_io_handler</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_io_handler</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initialize the IO handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets up all input and output subsystems. <simplesect kind="return"><para>COMMON_SUCCESS on success, non-zero value on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="31" column="5" bodyfile="src/io/io_handler.c" bodystart="29" bodyend="70" declfile="src/io/io_handler.h" declline="31" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="io__handler_8h_1a3bccf50481367af8a07d1b0971c31015" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool run_background_task</definition>
+        <argsstring>(void(*callback)(void))</argsstring>
+        <name>run_background_task</name>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>callback</declname>
+        </param>
+        <briefdescription>
+<para>Execute a function in a background thread. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function executes the provided callback in a background thread.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>callback</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Function to execute in the background </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true if the thread started successfully, false otherwise </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="41" column="6" bodyfile="src/io/io_handler.c" bodystart="73" bodyend="82" declfile="src/io/io_handler.h" declline="41" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="io__handler_8h_1aa38fe030eff332323de447e604c8501d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_io_handler</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_io_handler</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shutdown the IO handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Cleans up all input and output subsystems. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/io_handler.h" line="48" column="6" bodyfile="src/io/io_handler.c" bodystart="84" bodyend="95" declfile="src/io/io_handler.h" declline="48" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for the IO-Handler. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>IO_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IO_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../common.h</ref>&quot;</highlight><highlight class="comment">//<sp/>Added<sp/>for<sp/>COMMON_SUCCESS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="input__handler_8h" kindref="compound">input/input_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="input__types_8h" kindref="compound">input/input_types.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="output__handler_8h" kindref="compound">output/common/output_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="media__output_8h" kindref="compound">output/media/media_output.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;notcurses/notcurses.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Make<sp/>the<sp/>init_done<sp/>flag<sp/>accessible<sp/>from<sp/>other<sp/>files</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>init_done;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Global<sp/>notcurses<sp/>instance<sp/>and<sp/>standard<sp/>plane</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="comment">//<sp/>These<sp/>are<sp/>used<sp/>directly<sp/>for<sp/>rendering<sp/>and<sp/>are<sp/>no<sp/>longer<sp/>part<sp/>of<sp/>a<sp/>separate<sp/>output<sp/>thread</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">notcurses*<sp/>nc;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ncplane*<sp/>stdplane;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="io__handler_8h_1a9a6706f8974be8033f25eaf9e771b0b1" kindref="member">init_io_handler</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="io__handler_8h_1a3bccf50481367af8a07d1b0971c31015" kindref="member">run_background_task</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*callback)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="io__handler_8h_1aa38fe030eff332323de447e604c8501d" kindref="member">shutdown_io_handler</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>IO_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/io/io_handler.h"/>
+  </compounddef>
+</doxygen>

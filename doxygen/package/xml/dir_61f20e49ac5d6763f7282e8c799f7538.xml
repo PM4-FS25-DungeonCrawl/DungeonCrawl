@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_61f20e49ac5d6763f7282e8c799f7538" kind="dir">
+    <compoundname>src/combat</compoundname>
+    <innerdir refid="dir_ce0c5e2e1b4aece46be1b47461832dfd">src/combat/local</innerdir>
+    <innerfile refid="ability_8c">ability.c</innerfile>
+    <innerfile refid="ability_8h">ability.h</innerfile>
+    <innerfile refid="ability__fw_8h">ability_fw.h</innerfile>
+    <innerfile refid="combat__mode_8c">combat_mode.c</innerfile>
+    <innerfile refid="combat__mode_8h">combat_mode.h</innerfile>
+    <innerfile refid="damage_8c">damage.c</innerfile>
+    <innerfile refid="damage_8h">damage.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/combat/"/>
+  </compounddef>
+</doxygen>

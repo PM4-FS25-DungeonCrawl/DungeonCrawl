@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="map__generator_8h" kind="file" language="C++">
+    <compoundname>map_generator.h</compoundname>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="map__generator_8c" local="yes">src/map/map_generator.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="3">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="1">
+        <label>src/map/map_generator.h</label>
+        <link refid="map__generator_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="map__generator_8h_1afd4d517816b21083bfcbb8ca886f92a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void generate_map</definition>
+        <argsstring>()</argsstring>
+        <name>generate_map</name>
+        <briefdescription>
+<para>Generate the map and populate it with keys, enemies, and the exit. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_generator.h" line="11" column="6" bodyfile="src/map/map_generator.c" bodystart="317" bodyend="348" declfile="src/map/map_generator.h" declline="11" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for generating the game map. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAP_GENERATOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_GENERATOR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__generator_8h_1afd4d517816b21083bfcbb8ca886f92a2" kindref="member">generate_map</ref>();</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//MAP_GENERATOR_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/map/map_generator.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,753 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="logger_8c" kind="file" language="C++">
+    <compoundname>logger.c</compoundname>
+    <includes refid="logger_8h" local="yes">logger.h</includes>
+    <includes refid="thread__handler_8h" local="yes">../thread/thread_handler.h</includes>
+    <includes refid="logger__config_8h" local="yes">logger_config.h</includes>
+    <includes refid="ringbuffer_8h" local="yes">ringbuffer.h</includes>
+    <includes local="no">stdarg.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">stdlib.h</includes>
+    <includes local="no">sys/stat.h</includes>
+    <includes local="no">time.h</includes>
+    <includes local="no">dirent.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>src/logging/logger.c</label>
+        <link refid="logger_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="4">
+        <label>logger_config.h</label>
+        <link refid="logger__config_8h"/>
+      </node>
+      <node id="5">
+        <label>ringbuffer.h</label>
+        <link refid="ringbuffer_8h_source"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../thread/thread_handler.h</label>
+        <link refid="thread__handler_8h"/>
+      </node>
+      <node id="12">
+        <label>dirent.h</label>
+      </node>
+      <node id="6">
+        <label>pthread.h</label>
+      </node>
+      <node id="7">
+        <label>stdarg.h</label>
+      </node>
+      <node id="8">
+        <label>stdio.h</label>
+      </node>
+      <node id="9">
+        <label>stdlib.h</label>
+      </node>
+      <node id="10">
+        <label>sys/stat.h</label>
+      </node>
+      <node id="11">
+        <label>time.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="logger_8c_1a2c14e30b8edd80c33d5aca8e59eae234" prot="public" static="no">
+        <name>STAT_STRUCT</name>
+        <initializer>struct stat</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="28" column="13" bodyfile="src/logging/logger.c" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1ac79f8734f2028b939fb79cbff7cbc473" prot="public" static="no">
+        <name>STAT_FUNC</name>
+        <initializer>stat</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="29" column="13" bodyfile="src/logging/logger.c" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1a33f0483b64221b258b080bba5882cf3c" prot="public" static="no">
+        <name>MKDIR</name>
+        <param><defname>path</defname></param>
+        <initializer>mkdir(path, 0755)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="30" column="13" bodyfile="src/logging/logger.c" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1a837df2c29aacf37cb96c2b65acb312a6" prot="public" static="no">
+        <name>PATH_SEP</name>
+        <initializer>&quot;/&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="31" column="13" bodyfile="src/logging/logger.c" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1a4620eb783fd7aaa1d61fe4fdaa750d74" prot="public" static="no">
+        <name>MAX_PATH_SIZE</name>
+        <initializer>4096</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="34" column="9" bodyfile="src/logging/logger.c" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1a45a75d076fd0268db347a013fc2a81ed" prot="public" static="no">
+        <name>LOG_DIRECTORY</name>
+        <initializer>&quot;log&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="37" column="9" bodyfile="src/logging/logger.c" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1ac903c26f555c37dbf720f4fc283eaa70" prot="public" static="no">
+        <name>LOG_FILE_FORMAT</name>
+        <initializer>&quot;log-%d.txt&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="38" column="9" bodyfile="src/logging/logger.c" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1aa62433a7807cf7f0bc9cf3f8323ba80c" prot="public" static="no">
+        <name>TIMESTAMP_FORMAT</name>
+        <initializer>&quot;%Y-%m-%d %H:%M:%S&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="40" column="9" bodyfile="src/logging/logger.c" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8c_1af8dd24004011a014ca1cd76e3946e933" prot="public" static="no">
+        <name>MSG_FORMAT</name>
+        <initializer>&quot;[%s] [%s] [%s] : %s\n&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="41" column="9" bodyfile="src/logging/logger.c" bodystart="41" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="logger_8c_1af20b78be3e637717e6e622f23bff02f4" prot="public" static="no" mutable="no">
+        <type>const char *</type>
+        <definition>const char* log_level_str[]</definition>
+        <argsstring>[]</argsstring>
+        <name>log_level_str</name>
+        <initializer>= {&quot;DEBUG&quot;, &quot;FINE&quot;, &quot;INFO&quot;, &quot;WARNING&quot;, &quot;ERROR&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="43" column="12" bodyfile="src/logging/logger.c" bodystart="43" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="variable" id="logger_8c_1ab936051f5aaca44c6c3c41dee0d19c36" prot="public" static="no" mutable="no">
+        <type>FILE *</type>
+        <definition>FILE* log_file</definition>
+        <argsstring></argsstring>
+        <name>log_file</name>
+        <initializer>= NULL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="97" column="6" bodyfile="src/logging/logger.c" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="logger_8c_1ab4698c0d5c140a233de44e801491fc35" prot="public" static="no" mutable="no">
+        <type><ref refid="structring__buffer__t" kindref="compound">ring_buffer_t</ref></type>
+        <definition>ring_buffer_t log_buffer</definition>
+        <argsstring></argsstring>
+        <name>log_buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="98" column="15" bodyfile="src/logging/logger.c" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="logger_8c_1a4e9f18da6d462f70b0105ba3ee976e16" prot="public" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool logger_is_running</definition>
+        <argsstring></argsstring>
+        <name>logger_is_running</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="101" column="6" bodyfile="src/logging/logger.c" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="logger_8c_1a26004895b14f496087255e72745bee14" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int file_id</definition>
+        <argsstring></argsstring>
+        <name>file_id</name>
+        <initializer>= 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="103" column="5" bodyfile="src/logging/logger.c" bodystart="103" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ensure_log_dir</definition>
+        <argsstring>(void)</argsstring>
+        <name>ensure_log_dir</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Ensures that the predefined log directory already exists, if not create a new one. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>0 if successfully created or already exists, 1 if failed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="105" column="5" bodyfile="src/logging/logger.c" bodystart="105" bodyend="114" declfile="src/logging/logger.c" declline="52" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int open_log_file</definition>
+        <argsstring>(int is_init)</argsstring>
+        <name>open_log_file</name>
+        <param>
+          <type>int</type>
+          <declname>is_init</declname>
+        </param>
+        <briefdescription>
+<para>Opens the log file with the current saved file id in appended modus. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>If the file already exists, it will be first removed and then created. If no file is found, create a new file corresponding to fopen(...).</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>is_init</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>if 0, no existing file will be removed </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 if successfully opened, 1 if failed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="117" column="5" bodyfile="src/logging/logger.c" bodystart="117" bodyend="142" declfile="src/logging/logger.c" declline="62" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a244494b217506ed4f6b95e4e36283b43" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int check_log_file</definition>
+        <argsstring>(void)</argsstring>
+        <name>check_log_file</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>This function should be called whenever a new log msg must be written. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Check if the log file is open, if not, a new file will be open.<itemizedlist>
+<listitem><para>Either by creating a new file if no file is in the log directory.</para>
+</listitem><listitem><para>Or creating a new file if the last used file reaches the max size. The new file will get the current file id + 1 or 0, if the id reached the max number of files.</para>
+</listitem><listitem><para>Or opening the file that was last used, the current id will be set. <simplesect kind="return"><para>0 if successfully, 1 if the current file was already closed, and a new file wasn&apos;t opened </para>
+</simplesect>
+</para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="144" column="5" bodyfile="src/logging/logger.c" bodystart="144" bodyend="160" declfile="src/logging/logger.c" declline="74" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int get_latest_file_id</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_latest_file_id</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>This function gets the latest file id from the log directory. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>0 or greater if successfully, -1 if failed </para>
+</simplesect>
+<simplesect kind="note"><para>This function should only be called once when the logger is initialized. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="162" column="5" bodyfile="src/logging/logger.c" bodystart="162" bodyend="199" declfile="src/logging/logger.c" declline="82" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void start_log_writer_thread</definition>
+        <argsstring>(void)</argsstring>
+        <name>start_log_writer_thread</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Starts the log writer thread. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function will be called from the logger initialization function. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="201" column="6" bodyfile="src/logging/logger.c" bodystart="201" bodyend="205" declfile="src/logging/logger.c" declline="88" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void log_writer_thread</definition>
+        <argsstring>(void)</argsstring>
+        <name>log_writer_thread</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>This function will be called from a different thread to read from the ringbuffer and then write in the log file. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="207" column="6" bodyfile="src/logging/logger.c" bodystart="207" bodyend="230" declfile="src/logging/logger.c" declline="94" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a542d97fece81d2a06b1e1ddf3d461c8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void init_logger</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_logger</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initializes the logging system for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function sets up the logging system to be ready for recording log entries. It creates or opens the log file, initializes the ring buffer used for storing log entries temporarily, and starts the thread that asynchronously writes logs to the file. This ensures logging is operational and ready to use for the application&apos;s lifetime.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>This function can only be called once during the application&apos;s lifecycle. Subsequent calls will have no effect if the logger is already initialized.</para>
+</listitem><listitem><para>All required resources for logging, such as the log file and ring buffer, are prepared within this initialization process.</para>
+</listitem><listitem><para>If any of the initialization steps fail (e.g., ring buffer initialization or file operations), the function ensures cleanup of allocated resources. </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="232" column="6" bodyfile="src/logging/logger.c" bodystart="232" bodyend="244"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1aa70df4f70b7969a40b70fda659005550" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void log_msg</definition>
+        <argsstring>(const log_level_t level, const char *module, const char *format,...)</argsstring>
+        <name>log_msg</name>
+        <param>
+          <type>log_level_t</type>
+          <declname>level</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>module</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>format</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+<para>Logs a formatted message with a specified log level and module. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function generates a log entry that includes a timestamp, log level, module name, and a custom message formatted using a variable argument list. The log message is written to a ring buffer for asynchronous processing.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>The logging system must be initialized and running before using this function. Otherwise, the function will return without performing any operations.</para>
+</listitem><listitem><para>The log level determines the severity or importance of the message.</para>
+</listitem></itemizedlist>
+</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The severity level of the log message (e.g., DEBUG, INFO, ERROR). If the provided log level exceeds the maximum defined levels, the INFO level will be used as a fallback. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A string identifying the module or component generating the log message. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>format</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A printf-style format string for the message content. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>...</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Additional arguments to be formatted into the log message according to the format string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="246" column="6" bodyfile="src/logging/logger.c" bodystart="246" bodyend="276"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8c_1a1d815b48f04fdfadbb66a1a6bebbe721" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_logger</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_logger</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shuts down the logging system for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function terminates the logging system, ensuring that no further log entries are recorded. It sets the logger&apos;s running state to false, effectively disabling any ongoing or future logging operations.</para>
+<para>Use this function to cleanly release logging resources and mark the completion of logging operations at the end of the application&apos;s lifecycle or during application shutdown sequences.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>Once this function is called, logging within the application will cease to function.</para>
+</listitem><listitem><para>This function should be called after all dependent systems and processes using the logger are finalized. </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.c" line="278" column="6" bodyfile="src/logging/logger.c" bodystart="278" bodyend="280"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implements logging functionality for the game. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logger_8h" kindref="compound">logger.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="thread__handler_8h" kindref="compound">../thread/thread_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logger__config_8h" kindref="compound">logger_config.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ringbuffer.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdarg.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;sys/stat.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;time.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#include<sp/>&lt;direct.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STAT_STRUCT<sp/>struct<sp/>_stat</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STAT_FUNC<sp/>_stat</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>MKDIR(path)<sp/>_mkdir(path)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>PATH_SEP<sp/>&quot;\\&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#include<sp/>&lt;dirent.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STAT_STRUCT<sp/>struct<sp/>stat</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>STAT_FUNC<sp/>stat</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>MKDIR(path)<sp/>mkdir(path,<sp/>0755)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>PATH_SEP<sp/>&quot;/&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_PATH_SIZE<sp/>4096</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">//<sp/>relative<sp/>directory<sp/>from<sp/>the<sp/>project<sp/>root</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LOG_DIRECTORY<sp/>&quot;log&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LOG_FILE_FORMAT<sp/>&quot;log-%d.txt&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TIMESTAMP_FORMAT<sp/>&quot;%Y-%m-%d<sp/>%H:%M:%S&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MSG_FORMAT<sp/>&quot;[%s]<sp/>[%s]<sp/>[%s]<sp/>:<sp/>%s\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>log_level_str[]<sp/>=<sp/>{</highlight><highlight class="stringliteral">&quot;DEBUG&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;FINE&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;INFO&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;WARNING&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;ERROR&quot;</highlight><highlight class="normal">};</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">//<sp/>===<sp/>internal<sp/>functions<sp/>===</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" kindref="member">ensure_log_dir</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" kindref="member">open_log_file</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>is_init);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a244494b217506ed4f6b95e4e36283b43" kindref="member">check_log_file</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" kindref="member">get_latest_file_id</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" kindref="member">start_log_writer_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" kindref="member">log_writer_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="comment">//<sp/>===<sp/>global<sp/>variables<sp/>===</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal">FILE*<sp/>log_file<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><ref refid="structring__buffer__t" kindref="compound">ring_buffer_t</ref><sp/>log_buffer;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">//states<sp/>if<sp/>the<sp/>file<sp/>writing<sp/>thread<sp/>is<sp/>still<sp/>running,<sp/>if<sp/>set<sp/>to<sp/>false,<sp/>the<sp/>thread<sp/>terminates<sp/>or<sp/>is<sp/>terminated</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>logger_is_running<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">//the<sp/>id<sp/>of<sp/>the<sp/>used<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>file_id<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105" refid="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" kindref="member">ensure_log_dir</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>STAT_STRUCT<sp/>st;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(STAT_FUNC(LOG_DIRECTORY,<sp/>&amp;st)<sp/>==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(MKDIR(LOG_DIRECTORY)<sp/>==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117" refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" kindref="member">open_log_file</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>is_init)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>name[16];</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(name,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(name),<sp/>LOG_FILE_FORMAT,<sp/>file_id);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>filename[256];</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(filename,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(filename),<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal"><sp/>PATH_SEP<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>LOG_DIRECTORY,<sp/>name);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(is_init)<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Check<sp/>if<sp/>the<sp/>file<sp/>already<sp/>exists</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>FILE*<sp/>existing_file<sp/>=<sp/>fopen(filename,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(existing_file)<sp/>{</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fclose(existing_file);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>If<sp/>the<sp/>file<sp/>already<sp/>exists,<sp/>remove<sp/>it</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(remove(filename)<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>log_file<sp/>=<sp/>fopen(filename,<sp/></highlight><highlight class="stringliteral">&quot;a&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!log_file)<sp/>{</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="logger_8c_1a244494b217506ed4f6b95e4e36283b43" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a244494b217506ed4f6b95e4e36283b43" kindref="member">check_log_file</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log_file)<sp/>{</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fseek(log_file,<sp/>0,<sp/>SEEK_END);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>file_size<sp/>=<sp/>ftell(log_file);</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(file_size<sp/>&gt;=<sp/>MAX_FILE_SIZE)<sp/>{</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fclose(log_file);</highlight><highlight class="comment">//close<sp/>the<sp/>current<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>file_id<sp/>=<sp/>(file_id<sp/>+<sp/>1)<sp/>%<sp/>MAX_N_FILES;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>open<sp/>a<sp/>new<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" kindref="member">open_log_file</ref>(1)<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>failed<sp/>to<sp/>open<sp/>a<sp/>new<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" kindref="member">get_latest_file_id</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" kindref="member">ensure_log_dir</ref>()<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>failed<sp/>to<sp/>ensure<sp/>the<sp/>log<sp/>directory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>latest_id<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/>DIR*<sp/>dir<sp/>=<sp/>opendir(LOG_DIRECTORY);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">dirent*<sp/>entry;</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>time_t<sp/>latest_time<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!dir)<sp/>{</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>failed<sp/>to<sp/>open<sp/>the<sp/>log<sp/>directory</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Iterate<sp/>through<sp/>the<sp/>log<sp/>directory<sp/>and<sp/>find<sp/>the<sp/>latest<sp/>used<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>((entry<sp/>=<sp/>readdir(dir))<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>id;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">stat<sp/>file_stat;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(sscanf(entry-&gt;d_name,<sp/>LOG_FILE_FORMAT,<sp/>&amp;</highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>==<sp/>1<sp/>&amp;&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal"><sp/>&gt;=<sp/>0<sp/>&amp;&amp;<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal"><sp/>&lt;<sp/>MAX_N_FILES)<sp/>{</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>filepath[MAX_PATH_SIZE];</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>snprintf(filepath,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(filepath),<sp/></highlight><highlight class="stringliteral">&quot;%s/%s&quot;</highlight><highlight class="normal">,<sp/>LOG_DIRECTORY,<sp/>entry-&gt;d_name);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(stat(filepath,<sp/>&amp;file_stat)<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(file_stat.st_mtime<sp/>&gt;<sp/>latest_time)<sp/>{</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>found<sp/>a<sp/>newer<sp/>file</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>latest_time<sp/>=<sp/>file_stat.st_mtime;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>latest_id<sp/>=<sp/>id;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/>closedir(dir);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>latest_id;</highlight></codeline>
+<codeline lineno="199"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"></highlight></codeline>
+<codeline lineno="201" refid="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" kindref="member">start_log_writer_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/>logger_is_running<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"></highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="thread__handler_8c_1ae977c56a16e1c4409e2ed3cdb804a887" kindref="member">start_simple_thread</ref>(<ref refid="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" kindref="member">log_writer_thread</ref>);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"></highlight></codeline>
+<codeline lineno="207" refid="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" kindref="member">log_writer_thread</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>running<sp/>=<sp/></highlight><highlight class="keyword">true</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(running)<sp/>{</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>[MAX_MSG_SIZE];</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(read_from_ringbuffer(&amp;log_buffer,<sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>)<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>message<sp/>successfully<sp/>read<sp/>from<sp/>the<sp/>ringbuffer</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="logger_8c_1a244494b217506ed4f6b95e4e36283b43" kindref="member">check_log_file</ref>();</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log_file)<sp/>{</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fprintf(log_file,<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>);</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fflush(log_file);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!logger_is_running)<sp/>{</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>thread<sp/>must<sp/>be<sp/>terminated</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>running<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//closes<sp/>all<sp/>pressures</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log_file)<sp/>{</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fclose(log_file);</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_file<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/>free_ringbuffer(&amp;log_buffer);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232" refid="logger_8c_1a542d97fece81d2a06b1e1ddf3d461c8a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a542d97fece81d2a06b1e1ddf3d461c8a" kindref="member">init_logger</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>ensures<sp/>the<sp/>init_logger<sp/>can<sp/>only<sp/>be<sp/>called<sp/>when<sp/>the<sp/>file<sp/>is<sp/>null</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log_file<sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(init_ringbuffer(&amp;log_buffer)<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>file_id<sp/>=<sp/><ref refid="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" kindref="member">get_latest_file_id</ref>();</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(file_id<sp/>==<sp/>-1<sp/>||<sp/><ref refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" kindref="member">open_log_file</ref>(0)<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fclose(log_file);</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" kindref="member">start_log_writer_thread</ref>();</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246" refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>log_level_t<sp/>level,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>module,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>format,<sp/>...)<sp/>{</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(log_file<sp/>==<sp/>NULL<sp/>||<sp/>!logger_is_running)<sp/>{</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>logger<sp/>is<sp/>not<sp/>initialized<sp/>or<sp/>not<sp/>running</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//get<sp/>timestamp</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>time_t<sp/>now<sp/>=<sp/>time(NULL);</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">tm*<sp/>tm<sp/>=<sp/>localtime(&amp;now);</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"></highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>timestamp[32];</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/><sp/><sp/>strftime(timestamp,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(timestamp),<sp/>TIMESTAMP_FORMAT,<sp/>tm);</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>log_level;</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(level<sp/>&gt;=<sp/>MAX_LOG_LEVEL)<sp/>{</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_level<sp/>=<sp/>log_level_str[INFO];</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_level<sp/>=<sp/>log_level_str[level];</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><sp/><sp/>va_list<sp/>args;</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/><sp/><sp/>va_start(args,<sp/>format);</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>msg[MAX_MSG_SIZE<sp/>-<sp/>MAX_HEADER_SIZE];</highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/>vsnprintf(msg,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(msg),<sp/>format,<sp/>args);</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>[MAX_MSG_SIZE];</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(<ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>,<sp/>MAX_MSG_SIZE,<sp/>MSG_FORMAT,<sp/>timestamp,<sp/>log_level,<sp/>module,<sp/>msg);</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/><sp/><sp/>va_end(args);</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/>write_to_ringbuffer(&amp;log_buffer,<sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"></highlight></codeline>
+<codeline lineno="278" refid="logger_8c_1a1d815b48f04fdfadbb66a1a6bebbe721" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8c_1a1d815b48f04fdfadbb66a1a6bebbe721" kindref="member">shutdown_logger</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><sp/><sp/>logger_is_running<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/logging/logger.c"/>
+  </compounddef>
+</doxygen>

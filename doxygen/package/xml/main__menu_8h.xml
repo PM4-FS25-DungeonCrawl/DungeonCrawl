@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="main__menu_8h" kind="file" language="C++">
+    <compoundname>main_menu.h</compoundname>
+    <includes refid="menu_8h" local="yes">menu.h</includes>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="main__menu_8c" local="yes">src/menu/main_menu.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>src/menu/main_menu.h</label>
+        <link refid="main__menu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>menu.h</label>
+        <link refid="menu_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="3">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="4">
+        <label>src/menu/main_menu.c</label>
+        <link refid="main__menu_8c"/>
+      </node>
+      <node id="1">
+        <label>src/menu/main_menu.h</label>
+        <link refid="main__menu_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="main__menu_8h_1a4b0fe964a06f0ea2182f7e9e52177df4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_main_menu</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_main_menu</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initializes resources for the main menu, including memory allocation and observer registration for localized menu strings. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>0 if the main menu initializes successfully, non-zero value otherwise in case of failure. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/menu/main_menu.h" line="18" column="5" bodyfile="src/menu/main_menu.c" bodystart="28" bodyend="41" declfile="src/menu/main_menu.h" declline="18" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="main__menu_8h_1a2c31ca9adcc57eb03e951dde451c03ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>menu_result_t</type>
+        <definition>menu_result_t show_main_menu</definition>
+        <argsstring>(bool game_in_progress)</argsstring>
+        <name>show_main_menu</name>
+        <param>
+          <type>bool</type>
+          <declname>game_in_progress</declname>
+        </param>
+        <briefdescription>
+<para>Display and handle the main menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>game_in_progress</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>indicates whether there&apos;s an active game that can be continued </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>MENU_START_GAME to start a new game, MENU_CONTINUE to continue the current game, MENU_SAVE_GAME to save the game, MENU_LOAD_GAME to load a game, MENU_EXIT to exit the game </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/menu/main_menu.h" line="26" column="15" bodyfile="src/menu/main_menu.c" bodystart="43" bodyend="107" declfile="src/menu/main_menu.h" declline="26" declcolumn="15"/>
+      </memberdef>
+      <memberdef kind="function" id="main__menu_8h_1ae888d257737440167bbff5f74705a8de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_main_menu</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_main_menu</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shuts down the main menu and frees associated data. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/menu/main_menu.h" line="31" column="6" bodyfile="src/menu/main_menu.c" bodystart="160" bodyend="169" declfile="src/menu/main_menu.h" declline="31" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for the main menu. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAIN_MENU_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAIN_MENU_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="menu_8h" kindref="compound">menu.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="main__menu_8h_1a4b0fe964a06f0ea2182f7e9e52177df4" kindref="member">init_main_menu</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal">menu_result_t<sp/><ref refid="main__menu_8h_1a2c31ca9adcc57eb03e951dde451c03ec" kindref="member">show_main_menu</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>game_in_progress);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="main__menu_8h_1ae888d257737440167bbff5f74705a8de" kindref="member">shutdown_main_menu</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>MAIN_MENU_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/menu/main_menu.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,1536 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.14.0" xml:lang="en-US">
+  <compound refid="structability__init__t" kind="struct"><name>ability_init_t</name>
+    <member refid="structability__init__t_1abb8cf26eb26c78a803f7c3c2be8f1e77" kind="variable"><name>ability_number</name></member>
+    <member refid="structability__init__t_1af3454e19f1e041683cd817bda374828f" kind="variable"><name>name</name></member>
+    <member refid="structability__init__t_1a2a796a183eb4ea53f9ea2c523d47f5c8" kind="variable"><name>roll_amount</name></member>
+    <member refid="structability__init__t_1af5ae5da109f19be2143eb97518ea4dda" kind="variable"><name>accuracy</name></member>
+    <member refid="structability__init__t_1a03e289d53988e5c2f7a352f17ed9b6dd" kind="variable"><name>resource_cost</name></member>
+    <member refid="structability__init__t_1a04bb589726dd237c34023a60210a1f05" kind="variable"><name>dice_size</name></member>
+    <member refid="structability__init__t_1a31f30b0abfd11bbd7d78b16ab226ba38" kind="variable"><name>damage_type</name></member>
+  </compound>
+  <compound refid="structability__t" kind="struct"><name>ability_t</name>
+    <member refid="structability__t_1a8c1d958e67e75a99551d73e6b3595afe" kind="variable"><name>name</name></member>
+    <member refid="structability__t_1abbe421e37c9ebfa092ab15e4a8673340" kind="variable"><name>roll_amount</name></member>
+    <member refid="structability__t_1a4078e5c5b95fbab54e7298597e58268f" kind="variable"><name>accuracy</name></member>
+    <member refid="structability__t_1a9e966c05eb5f740caebb592f73c7fdbe" kind="variable"><name>resource_cost</name></member>
+    <member refid="structability__t_1ad6deb613d0b06eaddb341f87a188e0e1" kind="variable"><name>dice_size</name></member>
+    <member refid="structability__t_1a29949a5bfa566cd190635fc30033f3aa" kind="variable"><name>damage_type</name></member>
+  </compound>
+  <compound refid="structability__table__t" kind="struct"><name>ability_table_t</name>
+    <member refid="structability__table__t_1a3302b1c8f27bf27448164beb119ac362" kind="variable"><name>abilities</name></member>
+  </compound>
+  <compound refid="structcharacter__t" kind="struct"><name>character_t</name>
+    <member refid="structcharacter__t_1a065cac7b664e635bb80758650a42885b" kind="variable"><name>type</name></member>
+    <member refid="structcharacter__t_1a40c997a23a469fdb29aa3fb96b4722ef" kind="variable"><name>name</name></member>
+    <member refid="structcharacter__t_1a0d13776011a9337406cec2e8eb7d9600" kind="variable"><name>base_stats</name></member>
+    <member refid="structcharacter__t_1aeaa4bec4043a168a5e9a216d41e691c4" kind="variable"><name>current_stats</name></member>
+    <member refid="structcharacter__t_1a956223f53c0beeee47af9f75c7b5d71d" kind="variable"><name>max_resources</name></member>
+    <member refid="structcharacter__t_1a808bece6fbaecf2ad1fc2ff9b849b932" kind="variable"><name>current_resources</name></member>
+    <member refid="structcharacter__t_1a99fbaddf00a3c5a23d3b4d6fd635734b" kind="variable"><name>resistance</name></member>
+    <member refid="structcharacter__t_1a7340cd4aa007346c1aea83791b73e27b" kind="variable"><name>defenses</name></member>
+    <member refid="structcharacter__t_1aa72d98bbc18f179626067f90a550cdf8" kind="variable"><name>abilities</name></member>
+    <member refid="structcharacter__t_1a6e8f52af52cabc1447da40375da40d85" kind="variable"><name>base_attack</name></member>
+    <member refid="structcharacter__t_1aac1e7e48bd4510672f96b53c5d8ad36e" kind="variable"><name>ability_count</name></member>
+    <member refid="structcharacter__t_1a33751da56ccd78a8c0a4238f15862ecb" kind="variable"><name>potion_inventory</name></member>
+    <member refid="structcharacter__t_1ad0db078d4ddcfa3c170c96c43fc60945" kind="variable"><name>potion_count</name></member>
+    <member refid="structcharacter__t_1a5993a2048c5718298216c58c367a7ed0" kind="variable"><name>gear_inventory</name></member>
+    <member refid="structcharacter__t_1a420f7c99833bde90ed621cb9a84796ad" kind="variable"><name>gear_count</name></member>
+    <member refid="structcharacter__t_1a38d18b130cc116b3a27c57af4b18b57d" kind="variable"><name>equipment</name></member>
+    <member refid="structcharacter__t_1afb2318209e24ef73c387a9d45795a498" kind="variable"><name>level</name></member>
+    <member refid="structcharacter__t_1ae04532e3c90caba2d15796538b47956d" kind="variable"><name>xp</name></member>
+    <member refid="structcharacter__t_1af19846e5139998e1d57934839e6629ed" kind="variable"><name>xp_reward</name></member>
+    <member refid="structcharacter__t_1a629aff581abf38335038b9f084ccc162" kind="variable"><name>skill_points</name></member>
+  </compound>
+  <compound refid="structdamage__resistance__t" kind="struct"><name>damage_resistance_t</name>
+    <member refid="structdamage__resistance__t_1a64c21544708c72be70d0a3c62df93b9e" kind="variable"><name>type</name></member>
+    <member refid="structdamage__resistance__t_1aac3c84accf96f77497a9562142d25dd9" kind="variable"><name>value</name></member>
+  </compound>
+  <compound refid="structdb__connection__t" kind="struct"><name>db_connection_t</name>
+    <member refid="structdb__connection__t_1a38d1524b9cdbb2a6722145d2a1acefde" kind="variable"><name>db</name></member>
+    <member refid="structdb__connection__t_1ac923188b836fbd0060554c560e5a428a" kind="variable"><name>err_msg</name></member>
+  </compound>
+  <compound refid="structdefenses__t" kind="struct"><name>defenses_t</name>
+    <member refid="structdefenses__t_1a4ed341bf54b40070c0b5002e26097211" kind="variable"><name>armor</name></member>
+    <member refid="structdefenses__t_1a8f8a4531fdf8dee6fb80fd0b456f30d9" kind="variable"><name>magic_resist</name></member>
+  </compound>
+  <compound refid="structgear__init__t" kind="struct"><name>gear_init_t</name>
+    <member refid="structgear__init__t_1a22c0843bea411873f59cdcb530c3676b" kind="variable"><name>name</name></member>
+    <member refid="structgear__init__t_1a9239a33cab3f1755d82fa7d606a105c3" kind="variable"><name>gear_identifier</name></member>
+    <member refid="structgear__init__t_1a97e9d51abe8348685d3b0dd15a91adba" kind="variable"><name>slot</name></member>
+    <member refid="structgear__init__t_1abb09a955ac18fe56e5c5f13fac2de650" kind="variable"><name>stats</name></member>
+    <member refid="structgear__init__t_1a35c6f11995a3cd4cdf3eba3d5e0bb5cd" kind="variable"><name>defenses</name></member>
+    <member refid="structgear__init__t_1a79cc5387dcbba467d94a51fdcea47bfa" kind="variable"><name>ability_names</name></member>
+    <member refid="structgear__init__t_1a248db479e3c87d25d51438a94538516a" kind="variable"><name>num_abilities</name></member>
+  </compound>
+  <compound refid="structgear__t" kind="struct"><name>gear_t</name>
+    <member refid="structgear__t_1a66c5799835ae3149f3d9208b7abd1b02" kind="variable"><name>local_key</name></member>
+    <member refid="structgear__t_1a13e454189d4ec4be15110d607e64937a" kind="variable"><name>local_name</name></member>
+    <member refid="structgear__t_1af83ffb4eeadd17ba1a3f77aa80166ab3" kind="variable"><name>gear_identifier</name></member>
+    <member refid="structgear__t_1a10c37ba32202879727702fdd3cc99d79" kind="variable"><name>slot</name></member>
+    <member refid="structgear__t_1a32670668c73d83533d3d9e9200f702e7" kind="variable"><name>stats</name></member>
+    <member refid="structgear__t_1a992e86ef9758596cfa220ef24ba4527f" kind="variable"><name>defenses</name></member>
+    <member refid="structgear__t_1a1d789e2523da5b354fb5bbf7695127a5" kind="variable"><name>num_abilities</name></member>
+    <member refid="structgear__t_1a485deafe254a85e37f37767dde564e3b" kind="variable"><name>abilities</name></member>
+  </compound>
+  <compound refid="structgear__table__t" kind="struct"><name>gear_table_t</name>
+    <member refid="structgear__table__t_1a524103832f075ddc4d1c36e73f834620" kind="variable"><name>gears</name></member>
+    <member refid="structgear__table__t_1a8eb88b30b6bc1b93b3a7bdd86ac03b5d" kind="variable"><name>num_gears</name></member>
+  </compound>
+  <compound refid="structinput__event__t" kind="struct"><name>input_event_t</name>
+    <member refid="structinput__event__t_1a25a0fcb4c823fb0154447cb2a79053d8" kind="variable"><name>type</name></member>
+    <member refid="structinput__event__t_1a0849aa13a5c1d72a80c8156d3b0ead04" kind="variable"><name>raw_input</name></member>
+  </compound>
+  <compound refid="structinput__timing__t" kind="struct"><name>input_timing_t</name>
+    <member refid="structinput__timing__t_1a45ba6a834d5f2bd08c562c875602d7a5" kind="variable"><name>last_key_time</name></member>
+    <member refid="structinput__timing__t_1a33a33dab097cc7903282c9173d8a23d3" kind="variable"><name>first_key</name></member>
+  </compound>
+  <compound refid="structloaded__visual__s" kind="struct"><name>loaded_visual_s</name>
+    <member refid="structloaded__visual__s_1a3a2e866e6fb11dbf652566a7748be641" kind="variable"><name>visual</name></member>
+    <member refid="structloaded__visual__s_1aead3d5c67bb956cb08e371c78d81ae25" kind="variable"><name>plane</name></member>
+    <member refid="structloaded__visual__s_1aab6a2c418ce7a9de3d5725763c5d4cf2" kind="variable"><name>options</name></member>
+    <member refid="structloaded__visual__s_1acd8e0e927be0ac0d25ca63bb81b9ff48" kind="variable"><name>media_type</name></member>
+    <member refid="structloaded__visual__s_1ae38f6d29bf06c39b736f19b873015daf" kind="variable"><name>og_width</name></member>
+    <member refid="structloaded__visual__s_1a2a2fa0621c9ab0fb06ad32543e172268" kind="variable"><name>og_height</name></member>
+    <member refid="structloaded__visual__s_1aa2af53c82ab97d6c8cc3942ef764b9d8" kind="variable"><name>frames</name></member>
+    <member refid="structloaded__visual__s_1a593b6721ce4ad11657973676156bac9c" kind="variable"><name>is_playing</name></member>
+    <member refid="structloaded__visual__s_1aa862a08ad7e15c977bf3292f70fcacc1" kind="variable"><name>is_loaded</name></member>
+    <member refid="structloaded__visual__s_1a553944db0126cf8a72cf924e551d99aa" kind="variable"><name>path</name></member>
+  </compound>
+  <compound refid="structobserver__node" kind="struct"><name>observer_node</name>
+    <member refid="structobserver__node_1a9731626230424547e6977da6756878c7" kind="variable"><name>update_func</name></member>
+    <member refid="structobserver__node_1a0866c362b6a93fa16ae150423ca9fdb8" kind="variable"><name>next</name></member>
+  </compound>
+  <compound refid="structpotion__init__t" kind="struct"><name>potion_init_t</name>
+    <member refid="structpotion__init__t_1a1a90ce5650a3e8ed59855a3783cf97cf" kind="variable"><name>potion_type</name></member>
+    <member refid="structpotion__init__t_1aa928ed4d34ce73db3db13ce7eb4abf77" kind="variable"><name>name</name></member>
+    <member refid="structpotion__init__t_1ac11ac3d03c427aaeeb3a7b0b5a0acdee" kind="variable"><name>value</name></member>
+  </compound>
+  <compound refid="structpotion__t" kind="struct"><name>potion_t</name>
+    <member refid="structpotion__t_1ad3c5d888a49701003407754366509b85" kind="variable"><name>name</name></member>
+    <member refid="structpotion__t_1a6ab85ade00a8a8c099493a0ec6170830" kind="variable"><name>effectType</name></member>
+    <member refid="structpotion__t_1af0df882f0654b9160e9a54e00b342183" kind="variable"><name>value</name></member>
+  </compound>
+  <compound refid="structpotion__table__t" kind="struct"><name>potion_table_t</name>
+    <member refid="structpotion__table__t_1ace02d63a671f6263ac20bdbc34a449a3" kind="variable"><name>potions</name></member>
+  </compound>
+  <compound refid="structresources__t" kind="struct"><name>resources_t</name>
+    <member refid="structresources__t_1ac11743ce497129c1a1cef94f0f8ddb34" kind="variable"><name>health</name></member>
+    <member refid="structresources__t_1ab3d6fb035b724e77e187406b8c155798" kind="variable"><name>mana</name></member>
+    <member refid="structresources__t_1a64718c9a5b842cf94792794bfa5c88e5" kind="variable"><name>stamina</name></member>
+  </compound>
+  <compound refid="structring__buffer__t" kind="struct"><name>ring_buffer_t</name>
+    <member refid="structring__buffer__t_1aaa9022fb52900fa2c18af99988e9fe0a" kind="variable"><name>messages</name></member>
+    <member refid="structring__buffer__t_1a066eafd33c6edd549d9341091ee079a8" kind="variable"><name>head</name></member>
+    <member refid="structring__buffer__t_1adb8a621f72bf286209e65225f25b4dab" kind="variable"><name>tail</name></member>
+    <member refid="structring__buffer__t_1a816304f74da26fd8c99e4908a530c644" kind="variable"><name>count</name></member>
+    <member refid="structring__buffer__t_1ad9c2cdcfcd865bc27c27b5c2e26e150b" kind="variable"><name>mutex</name></member>
+    <member refid="structring__buffer__t_1aaf3c2506f03f3b825692d73548f251ee" kind="variable"><name>cond</name></member>
+  </compound>
+  <compound refid="structsave__info__container__t" kind="struct"><name>save_info_container_t</name>
+    <member refid="structsave__info__container__t_1a022265e45efb75ec8339fc9aa771cfa0" kind="variable"><name>count</name></member>
+    <member refid="structsave__info__container__t_1ab623970b32bb3daa776dcb9ecea31e06" kind="variable"><name>infos</name></member>
+  </compound>
+  <compound refid="structsave__info__t" kind="struct"><name>save_info_t</name>
+    <member refid="structsave__info__t_1ae5c34009e6cef7dec7d821da839d2fd1" kind="variable"><name>id</name></member>
+    <member refid="structsave__info__t_1a85626e7a8684789e3c777f1072002f9f" kind="variable"><name>timestamp</name></member>
+    <member refid="structsave__info__t_1aa845309f39580dc673c85a467b74bc64" kind="variable"><name>name</name></member>
+  </compound>
+  <compound refid="structstats__t" kind="struct"><name>stats_t</name>
+    <member refid="structstats__t_1a662fbcf28f36dffeb81581bceca9505e" kind="variable"><name>strength</name></member>
+    <member refid="structstats__t_1a3fc72541c511d955dfc1b7790776e629" kind="variable"><name>intelligence</name></member>
+    <member refid="structstats__t_1a3ced4c6861352172b7becf8fa7b210ac" kind="variable"><name>dexterity</name></member>
+    <member refid="structstats__t_1a3ac1de15e9e5038611de561d15c07f04" kind="variable"><name>constitution</name></member>
+  </compound>
+  <compound refid="structstring__max__t" kind="struct"><name>string_max_t</name>
+    <member refid="structstring__max__t_1a8c06aec4674ff5104d489104d072f9a4" kind="variable"><name>characters</name></member>
+  </compound>
+  <compound refid="structthread__func__wrapper__t" kind="struct"><name>thread_func_wrapper_t</name>
+    <member refid="structthread__func__wrapper__t_1a0c88999c5df614530c928c737364ddcd" kind="variable"><name>func</name></member>
+  </compound>
+  <compound refid="structvector2d__t" kind="struct"><name>vector2d_t</name>
+    <member refid="structvector2d__t_1abca75df5dac7704007389993747a0796" kind="variable"><name>dx</name></member>
+    <member refid="structvector2d__t_1a092a33f620e4aee02c9b771a237d849e" kind="variable"><name>dy</name></member>
+  </compound>
+  <compound refid="ascii_8h" kind="file"><name>ascii.h</name>
+    <member refid="ascii_8h_1a8975507d50cb2b5e954f1be28ecda212" kind="define"><name>HELMET_WIDTH</name></member>
+    <member refid="ascii_8h_1a0ae384e0f8d270c7615b5fa0f85cd2e0" kind="define"><name>HELMET_HEIGHT</name></member>
+    <member refid="ascii_8h_1a6f22eab2a73ceb7edabb3b82aa22c4d0" kind="define"><name>GOBLIN_WIDTH</name></member>
+    <member refid="ascii_8h_1a5b6af1ac5d6bfca69ba7398c4859d05d" kind="define"><name>GOBLIN_HEIGHT</name></member>
+    <member refid="ascii_8h_1afcc78f849494e6bd62f6be9362668ab0" kind="variable"><name>ascii_helmet</name></member>
+    <member refid="ascii_8h_1a5fa21eff84b4fda532f1c65e51bb5785" kind="variable"><name>ascii_goblin</name></member>
+  </compound>
+  <compound refid="character_8c" kind="file"><name>character.c</name>
+    <member refid="character_8c_1a6475f3e7aa73cfe75a2371a6e07aba3d" kind="function"><name>init_character</name></member>
+    <member refid="character_8c_1a77ef40fdd4f884f5818d81a18d544460" kind="function"><name>free_character</name></member>
+    <member refid="character_8c_1a3f8d0f49cdd311f972cc95e12c27f36a" kind="function"><name>set_character_stats</name></member>
+    <member refid="character_8c_1a484f54433d003fa1ca771c709361d7cb" kind="function"><name>set_stats</name></member>
+    <member refid="character_8c_1a3b350cf68795ee4c81ed76bd4298837b" kind="function"><name>update_character_resources</name></member>
+    <member refid="character_8c_1a7c7f7133819e040d60b082e65d3479dc" kind="function"><name>set_character_dmg_modifier</name></member>
+    <member refid="character_8c_1ac1e7edc495be29bb8233cb226a2c2b15" kind="function"><name>add_ability</name></member>
+    <member refid="character_8c_1ad33b1544779645cd5debe1c4b3f3c292" kind="function"><name>remove_ability</name></member>
+    <member refid="character_8c_1a0ecf3b9eaff247ab9ee5c8af97c7d7ca" kind="function"><name>add_gear</name></member>
+    <member refid="character_8c_1a9b6139833c080df6362f786be008d485" kind="function"><name>remove_gear</name></member>
+    <member refid="character_8c_1ab1e37ddc08bedac489696c9d5c67a391" kind="function"><name>remove_equipped_gear</name></member>
+    <member refid="character_8c_1a7260b96f41aa6f3231f07bc00a63d9f6" kind="function"><name>add_equipped_gear</name></member>
+    <member refid="character_8c_1a54c2a5ff451efcd844bcdc22d912d7e2" kind="function"><name>add_potion</name></member>
+    <member refid="character_8c_1a9dfe2b261717a1bf4df0398248583d22" kind="function"><name>remove_potion</name></member>
+    <member refid="character_8c_1a3176d1d1f62a7fc8ceabef4df6a1062c" kind="function"><name>equip_gear</name></member>
+    <member refid="character_8c_1af400a546969c8ca37e027e41450ea40b" kind="function"><name>unequip_gear</name></member>
+    <member refid="character_8c_1af3632285f8e838713346e57ada76152c" kind="function"><name>set_initial_xp</name></member>
+    <member refid="character_8c_1ae2022c4f067b5680708525477ff5bd4a" kind="function"><name>set_level</name></member>
+    <member refid="character_8c_1ac57163bbd7a9a6802ebd1554cc24b2e9" kind="function"><name>set_xp_reward</name></member>
+    <member refid="character_8c_1aa0397e3fbf0b4f56425d5823a1f0b217" kind="function"><name>set_skill_points</name></member>
+    <member refid="character_8c_1a8d818f0345771df9d254997231eca424" kind="function"><name>reset_player_stats</name></member>
+  </compound>
+  <compound refid="character_8h" kind="file"><name>character.h</name>
+    <member refid="character_8h_1ae0600c50055508929622fa9800374b65" kind="define"><name>MAX_ABILITY_LIMIT</name></member>
+    <member refid="character_8h_1ace04dd5364c797a703db5e4f2be47fab" kind="define"><name>MAX_GEAR_LIMIT</name></member>
+    <member refid="character_8h_1aec3914781eec3fcc71489a3777f17f3a" kind="define"><name>MAX_POTION_LIMIT</name></member>
+    <member refid="character_8h_1a3456beb28fde149e47396d6aa2d94f5b" kind="enum"><name>character_type_t</name></member>
+    <member refid="character_8h_1a3456beb28fde149e47396d6aa2d94f5bade5dc3e0dbd007d995ed3e37bde5ce7e" kind="enumvalue"><name>PLAYER</name></member>
+    <member refid="character_8h_1a3456beb28fde149e47396d6aa2d94f5baf496eff98f9bb45646f2c88ea331998e" kind="enumvalue"><name>MONSTER</name></member>
+    <member refid="character_8h_1a3456beb28fde149e47396d6aa2d94f5bab26df4373bb31a33c70ffa75477f9875" kind="enumvalue"><name>BOSS</name></member>
+    <member refid="character_8h_1a0d3ef0e36507728a026ce3b4c23fd193" kind="typedef"><name>character_t</name></member>
+    <member refid="character_8h_1a87b851f7c5968a6dea7bb59499f24802" kind="function"><name>init_character</name></member>
+    <member refid="character_8h_1a77ef40fdd4f884f5818d81a18d544460" kind="function"><name>free_character</name></member>
+    <member refid="character_8h_1a3f8d0f49cdd311f972cc95e12c27f36a" kind="function"><name>set_character_stats</name></member>
+    <member refid="character_8h_1a484f54433d003fa1ca771c709361d7cb" kind="function"><name>set_stats</name></member>
+    <member refid="character_8h_1a3b350cf68795ee4c81ed76bd4298837b" kind="function"><name>update_character_resources</name></member>
+    <member refid="character_8h_1a7c7f7133819e040d60b082e65d3479dc" kind="function"><name>set_character_dmg_modifier</name></member>
+    <member refid="character_8h_1ac1e7edc495be29bb8233cb226a2c2b15" kind="function"><name>add_ability</name></member>
+    <member refid="character_8h_1ad33b1544779645cd5debe1c4b3f3c292" kind="function"><name>remove_ability</name></member>
+    <member refid="character_8h_1a54c2a5ff451efcd844bcdc22d912d7e2" kind="function"><name>add_potion</name></member>
+    <member refid="character_8h_1a9dfe2b261717a1bf4df0398248583d22" kind="function"><name>remove_potion</name></member>
+    <member refid="character_8h_1a0ecf3b9eaff247ab9ee5c8af97c7d7ca" kind="function"><name>add_gear</name></member>
+    <member refid="character_8h_1a9b6139833c080df6362f786be008d485" kind="function"><name>remove_gear</name></member>
+    <member refid="character_8h_1ab1e37ddc08bedac489696c9d5c67a391" kind="function"><name>remove_equipped_gear</name></member>
+    <member refid="character_8h_1a7260b96f41aa6f3231f07bc00a63d9f6" kind="function"><name>add_equipped_gear</name></member>
+    <member refid="character_8h_1a3176d1d1f62a7fc8ceabef4df6a1062c" kind="function"><name>equip_gear</name></member>
+    <member refid="character_8h_1acfa13bd0509bd8143fa383e5bd013cef" kind="function"><name>unequip_gear</name></member>
+    <member refid="character_8h_1aa21c3970e45e47130b84a456027be1f7" kind="function"><name>reset_current_stats</name></member>
+    <member refid="character_8h_1ae2022c4f067b5680708525477ff5bd4a" kind="function"><name>set_level</name></member>
+    <member refid="character_8h_1ac57163bbd7a9a6802ebd1554cc24b2e9" kind="function"><name>set_xp_reward</name></member>
+    <member refid="character_8h_1af3632285f8e838713346e57ada76152c" kind="function"><name>set_initial_xp</name></member>
+    <member refid="character_8h_1aa0397e3fbf0b4f56425d5823a1f0b217" kind="function"><name>set_skill_points</name></member>
+    <member refid="character_8h_1a8d818f0345771df9d254997231eca424" kind="function"><name>reset_player_stats</name></member>
+  </compound>
+  <compound refid="character__fw_8h" kind="file"><name>character_fw.h</name>
+  </compound>
+  <compound refid="level_8c" kind="file"><name>level.c</name>
+    <member refid="level_8c_1aea0c510ec470b2d9727d9d1ccfd186d7" kind="function"><name>calculate_xp_for_next_level</name></member>
+    <member refid="level_8c_1af549752973108dea0ccbd82ef2716be7" kind="function"><name>add_xp</name></member>
+    <member refid="level_8c_1a866698b613fe29e9c3792235f09cb1bd" kind="function"><name>level_up</name></member>
+  </compound>
+  <compound refid="level_8h" kind="file"><name>level.h</name>
+    <member refid="level_8h_1aa283e609db6410f78b649e0a4ae000bb" kind="define"><name>BASE_XP</name></member>
+    <member refid="level_8h_1a08ec72de6efc48aa28c5ddd87e117852" kind="define"><name>XP_MULTIPLIER</name></member>
+    <member refid="level_8h_1aea0c510ec470b2d9727d9d1ccfd186d7" kind="function"><name>calculate_xp_for_next_level</name></member>
+    <member refid="level_8h_1af549752973108dea0ccbd82ef2716be7" kind="function"><name>add_xp</name></member>
+    <member refid="level_8h_1a866698b613fe29e9c3792235f09cb1bd" kind="function"><name>level_up</name></member>
+  </compound>
+  <compound refid="monster_8c" kind="file"><name>monster.c</name>
+    <member refid="monster_8c_1a87b9e3e8f61fce3027c7bbb280251702" kind="function"><name>create_new_goblin</name></member>
+  </compound>
+  <compound refid="monster_8h" kind="file"><name>monster.h</name>
+    <member refid="monster_8h_1a87b9e3e8f61fce3027c7bbb280251702" kind="function"><name>create_new_goblin</name></member>
+  </compound>
+  <compound refid="player_8c" kind="file"><name>player.c</name>
+    <member refid="player_8c_1a635592dee150d6e5e10e37074c77925c" kind="function"><name>create_new_player</name></member>
+  </compound>
+  <compound refid="player_8h" kind="file"><name>player.h</name>
+    <member refid="player_8h_1a635592dee150d6e5e10e37074c77925c" kind="function"><name>create_new_player</name></member>
+  </compound>
+  <compound refid="ability_8c" kind="file"><name>ability.c</name>
+    <member refid="ability_8c_1a3a754887b3c38533f740a7e840a839d1" kind="function"><name>init_ability</name></member>
+    <member refid="ability_8c_1ab7a141920ca0b319993d2a758043f43a" kind="function"><name>init_ability_table</name></member>
+    <member refid="ability_8c_1aa23c1120061449449c0eed4b93ddbd7d" kind="function"><name>free_ability_table</name></member>
+  </compound>
+  <compound refid="ability_8h" kind="file"><name>ability.h</name>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7" kind="enum"><name>ability_names_t</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7aeefffe28464a015dfb1063783a8493b1" kind="enumvalue"><name>BITE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a879a6c76ae965d139a24228d9e218cba" kind="enumvalue"><name>QUICK_SLASH</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a941996a06b8108fa8ba7268a54d5091e" kind="enumvalue"><name>HEAVY_SWING</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7abec66a3f44442684ba7ade2fc2a4b2d7" kind="enumvalue"><name>SWEEPING_STRIKE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a55ea6694139e4dbbbb73df79dadb0084" kind="enumvalue"><name>GUARDING_STANCE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7aa782ac063e59f8e0c58192329f5b3383" kind="enumvalue"><name>HEAVY_CHOP</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7acdfc07abeccb32d4da83e43c1748f2f8" kind="enumvalue"><name>PIERCING_STRIKE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a887d2cbfd9131de5cc3745731421b34b" kind="enumvalue"><name>EXECUTE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a7351718529b67ae7e729364cef25e907" kind="enumvalue"><name>BERSERKER_RAGE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a09b10639eb463133712a3fd11f484c39" kind="enumvalue"><name>QUICK_SHOT</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a05164a9a84518fe86be816727b66c6c4" kind="enumvalue"><name>POWER_SHOT</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a97d26dcc6b3345cc6281e84edd547981" kind="enumvalue"><name>STEADY_SHOT</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad89327a3b772df7e27e74154e577b646" kind="enumvalue"><name>STEADY_AIM</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a27c6caf9a7735ccb1c4a9ec179b67a7f" kind="enumvalue"><name>FIREBLAST</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a4d358e60e3280c2db947379d0c2a14b9" kind="enumvalue"><name>FIREBALL</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7acbacde2f41a5d9e3144ed047e5163a9b" kind="enumvalue"><name>PYROBLAST</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ae9a4fc17cfbdb0c1a33d4e341408b534" kind="enumvalue"><name>MANA_SHIELD</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a04e2532882914275b932223e1f27c2ad" kind="enumvalue"><name>CHOP</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a3dd5f47c18bf1516f81a4e8c22cc6e7e" kind="enumvalue"><name>AXE_SWING</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a8170ef2fdf6f94755b7f323376510ee9" kind="enumvalue"><name>BACKSTAB</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a5a7e1551ef5193db68197bb1b9d7222b" kind="enumvalue"><name>SINISTER_STRIKE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad8ee60cd8bbdca64bd96355ae5d5d0e9" kind="enumvalue"><name>DEFLECT</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a5f8860ccf0a48b1cd8d20d8867b439ec" kind="enumvalue"><name>SHIELD_WALL</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a29a5bf9d18933f178de07b2bd0baa401" kind="enumvalue"><name>MACE_STRIKE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a19ef431f768e19a21ee539a507137fe1" kind="enumvalue"><name>CRUSHING_BLOW</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7af055b6b2d3d7ca1aadf3b3e1fe46f810" kind="enumvalue"><name>ARCANE_BOLT</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ac8af8c5b589944a631fad6d089b2e46b" kind="enumvalue"><name>ARCANE_MISSILE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a19b9ae3f4a272e61afe0b35d963c6cc8" kind="enumvalue"><name>SWORD_SLASH</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ab68f8237a89b6200287c6a8a3440f37b" kind="enumvalue"><name>RIPOSTE</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7af3cb30feedc837a971b1907f1a96db5e" kind="enumvalue"><name>PUNCH</name></member>
+    <member refid="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad97afce3c5cd4d5c10139b737d27ec5e" kind="enumvalue"><name>MAX_ABILITIES</name></member>
+    <member refid="ability_8h_1a53cd1d93c5919734fcd897db24c0344c" kind="typedef"><name>ability_t</name></member>
+    <member refid="ability_8h_1ab7a141920ca0b319993d2a758043f43a" kind="function"><name>init_ability_table</name></member>
+    <member refid="ability_8h_1aa23c1120061449449c0eed4b93ddbd7d" kind="function"><name>free_ability_table</name></member>
+  </compound>
+  <compound refid="ability__fw_8h" kind="file"><name>ability_fw.h</name>
+  </compound>
+  <compound refid="combat__mode_8c" kind="file"><name>combat_mode.c</name>
+    <member refid="combat__mode_8c_1a13826df80c58a5299ac2ef3d0a0ecca9" kind="variable"><name>combat_view_anchor</name></member>
+    <member refid="combat__mode_8c_1aee1f03fbb7752a074f0f8d91b6d96f6c" kind="variable"><name>combat_state</name></member>
+    <member refid="combat__mode_8c_1a367e63ada5bee7b5a1b137a27fd7d6b6" kind="variable"><name>ability_count</name></member>
+    <member refid="combat__mode_8c_1ae20e2f546218cf42a0c6669c471ad0a6" kind="variable"><name>potion_count</name></member>
+    <member refid="combat__mode_8c_1ada542416dade24693c8242d84f8ad6d8" kind="variable"><name>ability_menu_options</name></member>
+    <member refid="combat__mode_8c_1a611850562be14495ecdbd963b4319df6" kind="variable"><name>potion_menu_options</name></member>
+    <member refid="combat__mode_8c_1a1d68a5fc30d874da2dd376e3f49411d5" kind="function"><name>collect_ability_menu_options</name></member>
+    <member refid="combat__mode_8c_1a7f174fa8c9a4979c6dabd7e77b8b00fa" kind="function"><name>collect_potion_menu_options</name></member>
+    <member refid="combat__mode_8c_1aa2bedf146d66dde757b51dcd5b7f2fa7" kind="function"><name>use_ability</name></member>
+    <member refid="combat__mode_8c_1ac1fcc807bbb96e47948fa31be381b9ae" kind="function"><name>use_potion</name></member>
+    <member refid="combat__mode_8c_1af6c54c6c00c20b1922b9d1ae6372d27c" kind="function"><name>consume_ability_resource</name></member>
+    <member refid="combat__mode_8c_1a1c15ff78598d9c78a18220bbcca017ae" kind="function"><name>get_random_ability</name></member>
+    <member refid="combat__mode_8c_1a4489642ac6f512336e297d437004cada" kind="function"><name>init_combat_mode</name></member>
+    <member refid="combat__mode_8c_1adff6a8146a18465b29aa76f4b54facb8" kind="function"><name>start_combat</name></member>
+    <member refid="combat__mode_8c_1a0a514004243152865ac22b27d1211890" kind="function"><name>combat_menu</name></member>
+    <member refid="combat__mode_8c_1a77e3b5ffc58e6a523668d641c67f7fef" kind="function"><name>ability_menu</name></member>
+    <member refid="combat__mode_8c_1a9327b2902374974c36b1c0db697dd93a" kind="function"><name>potion_menu</name></member>
+    <member refid="combat__mode_8c_1a58ac73b65087af300431a59f02346a6d" kind="function"><name>invoke_potion_effect</name></member>
+    <member refid="combat__mode_8c_1a1f84464f00f0c859bd8285d825ffb48a" kind="function"><name>shutdown_combat_mode</name></member>
+  </compound>
+  <compound refid="combat__mode_8h" kind="file"><name>combat_mode.h</name>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4" kind="enum"><name>internal_combat_state_t</name></member>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4aa7fb61de63d62ad4b299f6d45d1116ba" kind="enumvalue"><name>COMBAT_MENU</name></member>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4ad1c2505cca3ebbf6feaf7f3b07ca5faa" kind="enumvalue"><name>ABILITY_MENU</name></member>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4a13f5eaf9fe69924f1d9f2519740eaa08" kind="enumvalue"><name>POTION_MENU</name></member>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4a4233c235093f96bff4d11ed50b48615c" kind="enumvalue"><name>EVALUATE_COMBAT</name></member>
+    <member refid="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4ac6d73a6e3c835be9af5bac0c53336445" kind="enumvalue"><name>COMBAT_EXIT</name></member>
+    <member refid="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95" kind="enum"><name>combat_result_t</name></member>
+    <member refid="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95ac6ed3dc60c12c1e4641581f6f0b9a5ce" kind="enumvalue"><name>CONTINUE_COMBAT</name></member>
+    <member refid="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a00b176e6c55489ce5dce286b0160f3a7" kind="enumvalue"><name>PLAYER_WON</name></member>
+    <member refid="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a7fb65b385f53ec2d6a89691c798aee90" kind="enumvalue"><name>PLAYER_LOST</name></member>
+    <member refid="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a4bf4cbde18067e0600c7c8a7a30ba316" kind="enumvalue"><name>EXIT_GAME</name></member>
+    <member refid="combat__mode_8h_1a4489642ac6f512336e297d437004cada" kind="function"><name>init_combat_mode</name></member>
+    <member refid="combat__mode_8h_1adff6a8146a18465b29aa76f4b54facb8" kind="function"><name>start_combat</name></member>
+    <member refid="combat__mode_8h_1a0a514004243152865ac22b27d1211890" kind="function"><name>combat_menu</name></member>
+    <member refid="combat__mode_8h_1a77e3b5ffc58e6a523668d641c67f7fef" kind="function"><name>ability_menu</name></member>
+    <member refid="combat__mode_8h_1a9327b2902374974c36b1c0db697dd93a" kind="function"><name>potion_menu</name></member>
+    <member refid="combat__mode_8h_1a58ac73b65087af300431a59f02346a6d" kind="function"><name>invoke_potion_effect</name></member>
+    <member refid="combat__mode_8h_1ad30e839f60b72cef664ee95ea45b139a" kind="function"><name>shutdown_combat_mode</name></member>
+  </compound>
+  <compound refid="damage_8c" kind="file"><name>damage.c</name>
+    <member refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kind="function"><name>roll_dice</name></member>
+    <member refid="damage_8c_1a326516441810b6b000549221476d6a11" kind="function"><name>roll_hit</name></member>
+    <member refid="damage_8c_1aca0547c88b4f1c36c3c1afdf3ee88334" kind="function"><name>roll_damage</name></member>
+    <member refid="damage_8c_1a7226337610a43ca1ec17ce5b9904152c" kind="function"><name>deal_damage</name></member>
+    <member refid="damage_8c_1aa21c3970e45e47130b84a456027be1f7" kind="function"><name>reset_current_stats</name></member>
+    <member refid="damage_8c_1a13256bc582689bed3cbee939a691a318" kind="function"><name>dice_size_to_string</name></member>
+    <member refid="damage_8c_1aae5971d1077b9b0c763897ced83a9fe3" kind="function"><name>damage_type_to_string</name></member>
+  </compound>
+  <compound refid="damage_8h" kind="file"><name>damage.h</name>
+    <member refid="damage_8h_1a8a16f6430e04c7b8866b565d55077ff2" kind="define"><name>DAMAGE_TYPE_COUNT</name></member>
+    <member refid="damage_8h_1a5f17f81a282eb99a72f27fb9ef567d0c" kind="enum"><name>damage_type_t</name></member>
+    <member refid="damage_8h_1a5f17f81a282eb99a72f27fb9ef567d0ca1212ef902b38594c5e3a18a86ec90edc" kind="enumvalue"><name>PHYSICAL</name></member>
+    <member refid="damage_8h_1a5f17f81a282eb99a72f27fb9ef567d0ca53e6e6706290ecb1c9fa9049b9df7299" kind="enumvalue"><name>MAGICAL</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7" kind="enum"><name>dice_size_t</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7ab6e74cb404ad3a7370b6cbb05f004fcb" kind="enumvalue"><name>D6</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7aea0726597b1f1d4e1fbe5bc51978a5e1" kind="enumvalue"><name>D8</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7adc4009866f9c8c1611854e1e70b683d9" kind="enumvalue"><name>D10</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7a2d33aedca327f4bc5671e43de930ae6d" kind="enumvalue"><name>D12</name></member>
+    <member refid="damage_8h_1a1fedfde2333a34261e0d2a1b2fa6aaa7a5957a793b1bbd7bc442e76f09cf16fe8" kind="enumvalue"><name>D20</name></member>
+    <member refid="damage_8h_1a8eb73e1dd09856a07360aa2650f24f95" kind="typedef"><name>damage_type_t</name></member>
+    <member refid="damage_8h_1a7604cc85e36097a7d3a5001d10c68b48" kind="typedef"><name>dice_size_t</name></member>
+    <member refid="damage_8h_1a4e5d1172dee7ede15418d99334a8cfe8" kind="typedef"><name>damage_resistance_t</name></member>
+    <member refid="damage_8h_1afcbcebc54a2d0bd20ed3d8b068840047" kind="function"><name>roll_hit</name></member>
+    <member refid="damage_8h_1aca0547c88b4f1c36c3c1afdf3ee88334" kind="function"><name>roll_damage</name></member>
+    <member refid="damage_8h_1a25ba3babeb00c95c37fb02598fbbebc9" kind="function"><name>deal_damage</name></member>
+    <member refid="damage_8h_1aa21c3970e45e47130b84a456027be1f7" kind="function"><name>reset_current_stats</name></member>
+    <member refid="damage_8h_1aaa9ee593fa7451d18a12255182c3aee1" kind="function"><name>dice_size_to_string</name></member>
+    <member refid="damage_8h_1a99293dd988793d2afd6936077de1e480" kind="function"><name>damage_type_to_string</name></member>
+  </compound>
+  <compound refid="combat__mode__local_8c" kind="file"><name>combat_mode_local.c</name>
+    <member refid="combat__mode__local_8c_1a57677ebcdd4f53e041043e731b2e1c2c" kind="variable"><name>combat_mode_strings</name></member>
+    <member refid="combat__mode__local_8c_1acd6b0a72c84921fc2e30bac1fda313f3" kind="function"><name>update_combat_local</name></member>
+  </compound>
+  <compound refid="combat__mode__local_8h" kind="file"><name>combat_mode_local.h</name>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8b" kind="enum"><name>combat_mode_index</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba3b5c8a1e7fc15a1f5f7b49d8b01379d3" kind="enumvalue"><name>MAIN_MENU_TITLE</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba9e9b2eb684b0cc9c9c1027ca0c1503e3" kind="enumvalue"><name>ABILITY_MENU_TITLE</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba55074148ca04ad1cb5e6a39b23f6af81" kind="enumvalue"><name>POTION_MENU_TITLE</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8bab96379d5849ef22a8773c37a99dd6c57" kind="enumvalue"><name>MAIN_MENU_OPTION1</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba8b6bb49e4f1a31aca7ecb22d6b349528" kind="enumvalue"><name>MAIN_MENU_OPTION2</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba0748b83811cbd0a803600b460f0727d2" kind="enumvalue"><name>ABILITY_FORMAT</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba331180bd020ce9088cf66e02bb529cd0" kind="enumvalue"><name>POTION_FORMAT</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8baf1747c04ace9bcd0a64f8f34b25eb87f" kind="enumvalue"><name>PRESS_C_RETURN</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba0682b5580e97aefd1960502491b812bf" kind="enumvalue"><name>NO_MORE_POTIONS</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba17b7caaffe7a64ce04b23ee7994f8aee" kind="enumvalue"><name>ATTACK_SUCCESS</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8baa907d2216406c70c3a56af8bf0916e4f" kind="enumvalue"><name>ATTACK_MISS</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8ba306bb8241a6eeb13f9da79847d2ea0d3" kind="enumvalue"><name>ATTACK_FAIL</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8baf9dc1f59fbce9e165d70e2804be3f516" kind="enumvalue"><name>POTION_USE</name></member>
+    <member refid="combat__mode__local_8h_1a3fd063bc113d0fcad038117cd136af8baf910b903ae9f273f40841dd67263caf0" kind="enumvalue"><name>MAX_COMBAT_MODE_STRINGS</name></member>
+    <member refid="combat__mode__local_8h_1a57677ebcdd4f53e041043e731b2e1c2c" kind="variable"><name>combat_mode_strings</name></member>
+    <member refid="combat__mode__local_8h_1acd6b0a72c84921fc2e30bac1fda313f3" kind="function"><name>update_combat_local</name></member>
+  </compound>
+  <compound refid="common_8c" kind="file"><name>common.c</name>
+    <member refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kind="variable"><name>main_memory_pool</name></member>
+  </compound>
+  <compound refid="common_8h" kind="file"><name>common.h</name>
+    <member refid="common_8h_1a4f30eadf02a9321d37143dd9d5a15105" kind="define"><name>PYXEL</name></member>
+    <member refid="common_8h_1a1fd65eb082e0d6ee0bf38cb0f3aeed32" kind="define"><name>FG_R</name></member>
+    <member refid="common_8h_1ae53828e672639e00bb8ec2624cbf79f8" kind="define"><name>FG_G</name></member>
+    <member refid="common_8h_1a528ef84a25c91f263dd74fb590909646" kind="define"><name>FG_B</name></member>
+    <member refid="common_8h_1a09c2679ee58cb82850eac26bd766d875" kind="define"><name>BG_R</name></member>
+    <member refid="common_8h_1af080f0b210b05fc215a1832ee43063c6" kind="define"><name>BG_G</name></member>
+    <member refid="common_8h_1ad3db52b2603dd0a865b4ef7f535e411e" kind="define"><name>BG_B</name></member>
+    <member refid="common_8h_1a2897013821ec1cf2c2f5c88fcb741e57" kind="define"><name>GREY_R</name></member>
+    <member refid="common_8h_1a52c601d8dce4bc03a4485b755e4ba36a" kind="define"><name>GREY_G</name></member>
+    <member refid="common_8h_1abeffa2f16ce94a817f681fb963cd1db5" kind="define"><name>GREY_B</name></member>
+    <member refid="common_8h_1a316a0638bfbe0e20540c1f1a147cee25" kind="define"><name>RED_R</name></member>
+    <member refid="common_8h_1aa957345bc099702441ed98d473292a9b" kind="define"><name>RED_G</name></member>
+    <member refid="common_8h_1a4919d3d3585938d691d49a438a2e3890" kind="define"><name>RED_B</name></member>
+    <member refid="common_8h_1adf1ed60c97cce954c1ebc697fb7a24ac" kind="define"><name>YELLOW_R</name></member>
+    <member refid="common_8h_1a9d5d82f06df69d50abdc2349794cb59e" kind="define"><name>YELLOW_G</name></member>
+    <member refid="common_8h_1a45abf82610d4a4a96872deef2a6fa64d" kind="define"><name>YELLOW_B</name></member>
+    <member refid="common_8h_1a6897549c493cf5cfb5e9f5286ee3c39b" kind="define"><name>GREEN_R</name></member>
+    <member refid="common_8h_1a3369039d7ad8a608b46da37bb7bdea74" kind="define"><name>GREEN_G</name></member>
+    <member refid="common_8h_1a608d0b8bad3d77227087a1d567285602" kind="define"><name>GREEN_B</name></member>
+    <member refid="common_8h_1ae716f8c026e59f1e2c70f60860d5b453" kind="define"><name>BLUE_R</name></member>
+    <member refid="common_8h_1a6c39242275aab00c71b3ee11b1ed7954" kind="define"><name>BLUE_G</name></member>
+    <member refid="common_8h_1af13b802a13a33db0a78902cc6ef9ed5e" kind="define"><name>BLUE_B</name></member>
+    <member refid="common_8h_1af9a590c07bbc9b0a72e6277887109624" kind="define"><name>BROWN_R</name></member>
+    <member refid="common_8h_1a8592f53f8ff2087f478e775384191db1" kind="define"><name>BROWN_G</name></member>
+    <member refid="common_8h_1ae8b0f618c34b5ceb81b5cd19641be546" kind="define"><name>BROWN_B</name></member>
+    <member refid="common_8h_1a39f8a9935b84a9498151609f0bf55269" kind="define"><name>DEFAULT_COLORS</name></member>
+    <member refid="common_8h_1a1281f7a988f09df68d3ee2d98cf1a244" kind="define"><name>INVERTED_COLORS</name></member>
+    <member refid="common_8h_1a4f394f4c919ef645289ae6ba94a19d8e" kind="define"><name>RED_TEXT_COLORS</name></member>
+    <member refid="common_8h_1ad78418e3fcef06bd3a4aacfcde4cf025" kind="define"><name>WALL_COLORS</name></member>
+    <member refid="common_8h_1ab225f622e938c942283a760744a26916" kind="define"><name>EXIT_DOOR_COLORS</name></member>
+    <member refid="common_8h_1a25728c0dad4362e0894c3b2bf41fdd37" kind="define"><name>KEY_COLORS</name></member>
+    <member refid="common_8h_1a45fd62068225b8ff834d20d887bc2f35" kind="define"><name>GOBLIN_COLORS</name></member>
+    <member refid="common_8h_1af4af42965fb26ab1ac98a6b3f724f35e" kind="define"><name>HIDDEN_COLORS</name></member>
+    <member refid="common_8h_1a88f79c1e8867157b07028ab4c89100a9" kind="define"><name>START_DOOR_COLORS</name></member>
+    <member refid="common_8h_1a19741743515ea91bd0a0594ccedfd2b5" kind="define"><name>FLOOR_COLORS</name></member>
+    <member refid="common_8h_1ac6ea14b2909a4135fd13e5fab47976e6" kind="define"><name>LIFE_FOUNTAIN_COLORS</name></member>
+    <member refid="common_8h_1ab2a3eb9b25c67f220f08ec5b9e7f3770" kind="define"><name>MANA_FOUNTAIN_COLORS</name></member>
+    <member refid="common_8h_1a6789ebc0df71a8ef76bfbb4fb5f74aad" kind="define"><name>MAX_STRING_LENGTH</name></member>
+    <member refid="common_8h_1a0c397a708cec89c74029582574516b30" kind="define"><name>MAX_NAME_LENGTH</name></member>
+    <member refid="common_8h_1a6419d6fe47f6bb9111c9da4104e2f918" kind="define"><name>COMMON_SUCCESS</name></member>
+    <member refid="common_8h_1a9befcdebda7b077cb2704c35353ab8b9" kind="define"><name>NULL_PTR_HANDLER_RETURN</name></member>
+    <member refid="common_8h_1a4a3bb59dedffca0d1aeea8e45175d14d" kind="define"><name>CHECK_ARG_RETURN</name></member>
+    <member refid="common_8h_1a2f6d4366f6ad80f6d773f91a580a3994" kind="typedef"><name>vector2d_t</name></member>
+    <member refid="common_8h_1a0a773bbabbfd60a29f580585da61cac3" kind="typedef"><name>string_max_t</name></member>
+    <member refid="common_8h_1aa6cf31d02a8bab4aae26726869596f6d" kind="variable"><name>main_memory_pool</name></member>
+  </compound>
+  <compound refid="database_8c" kind="file"><name>database.c</name>
+    <member refid="database_8c_1a0f12c21974bee23eadf91c4a70863b2c" kind="function"><name>db_open</name></member>
+    <member refid="database_8c_1ae413d66856aa9f7e0dd9cd5a53b29f33" kind="function"><name>db_close</name></member>
+    <member refid="database_8c_1a064257e61ac38087e12fb9b950289768" kind="function"><name>db_is_open</name></member>
+    <member refid="database_8c_1a899e6b9158acf515270cdf443b7a8432" kind="function"><name>db_open_multiple_access</name></member>
+  </compound>
+  <compound refid="database_8h" kind="file"><name>database.h</name>
+    <member refid="database_8h_1ab38a99217a30a072c06b739fc35c2d86" kind="define"><name>DB_OPEN_STATUS_SUCCESS</name></member>
+    <member refid="database_8h_1a8aafab2940dea01af6b163b821eb8011" kind="define"><name>DB_OPEN_STATUS_FAILURE</name></member>
+    <member refid="database_8h_1a2883ca9d11cb2b651bca8b1251e3c043" kind="define"><name>DB_BUILD_DIR_PATH</name></member>
+    <member refid="database_8h_1a78a14d9c424bd97e486745dcec30f77d" kind="define"><name>DB_RESOURCE_PATH</name></member>
+    <member refid="database_8h_1a98d52a77752b91893f2d4d7755eae3c9" kind="define"><name>DB_RESOURCE_PATH_UP</name></member>
+    <member refid="database_8h_1a1a156e5f25798b6003569ad32aed1e12" kind="enum"><name>db_type_t</name></member>
+    <member refid="database_8h_1a1a156e5f25798b6003569ad32aed1e12a847a432ad3ff731bb222d39945a6fde7" kind="enumvalue"><name>DB_GAME</name></member>
+    <member refid="database_8h_1a1a156e5f25798b6003569ad32aed1e12aed257c34c9f44b9b78311a8963717a6c" kind="enumvalue"><name>DB_LOCAL</name></member>
+    <member refid="database_8h_1a95f3a96208be21db8ece3fd30e32e40a" kind="typedef"><name>db_type_t</name></member>
+    <member refid="database_8h_1a0f12c21974bee23eadf91c4a70863b2c" kind="function"><name>db_open</name></member>
+    <member refid="database_8h_1ae413d66856aa9f7e0dd9cd5a53b29f33" kind="function"><name>db_close</name></member>
+    <member refid="database_8h_1a064257e61ac38087e12fb9b950289768" kind="function"><name>db_is_open</name></member>
+    <member refid="database_8h_1a899e6b9158acf515270cdf443b7a8432" kind="function"><name>db_open_multiple_access</name></member>
+  </compound>
+  <compound refid="ability__database_8c" kind="file"><name>ability_database.c</name>
+    <member refid="ability__database_8c_1a1ad3d891f7083f4076c11c307969bf65" kind="define"><name>SQL_SELECT_ALL_ABILITIES</name></member>
+    <member refid="ability__database_8c_1a23ecf5bd4fcbb6c0c843343b1d8b02e6" kind="function"><name>get_ability_table_from_db</name></member>
+    <member refid="ability__database_8c_1ab46922c47f81556621ae64c66e58c0da" kind="function"><name>free_ability_table_from_db</name></member>
+  </compound>
+  <compound refid="ability__database_8h" kind="file"><name>ability_database.h</name>
+    <member refid="ability__database_8h_1ae714af901e1642e60fb6087dd87d83d2" kind="typedef"><name>ability_init_t</name></member>
+    <member refid="ability__database_8h_1a23ecf5bd4fcbb6c0c843343b1d8b02e6" kind="function"><name>get_ability_table_from_db</name></member>
+    <member refid="ability__database_8h_1ab46922c47f81556621ae64c66e58c0da" kind="function"><name>free_ability_table_from_db</name></member>
+  </compound>
+  <compound refid="character__database_8c" kind="file"><name>character_database.c</name>
+    <member refid="character__database_8c_1abd3ffb82c43b3e8053e92da7a03e734c" kind="define"><name>SQL_INSERT_CHARACTER</name></member>
+    <member refid="character__database_8c_1ac04c74068509374ad51615abdea472aa" kind="define"><name>SQL_INSERT_PLAYER</name></member>
+    <member refid="character__database_8c_1afce3cbb40ca06e6e85d43c4608fa5e64" kind="define"><name>SQL_INSERT_INVENTORY</name></member>
+    <member refid="character__database_8c_1a78300fd93da1c798e38e1aadc6b7eade" kind="define"><name>SQL_INSERT_INVENTORY_GEAR</name></member>
+    <member refid="character__database_8c_1affba2378e2d25532b7a236ec4cc7c301" kind="define"><name>SQL_INSERT_INVENTORY_POTION</name></member>
+    <member refid="character__database_8c_1afe44ff401110a78e82fb6c218ff75918" kind="define"><name>SQL_INSERT_CHARACTER_INVENTORY</name></member>
+    <member refid="character__database_8c_1a763608fa306cb262d74d4f6e45104fdc" kind="define"><name>SQL_SELECT_CHARACTER</name></member>
+    <member refid="character__database_8c_1a711d7610421193d40aa64ac521de13ca" kind="define"><name>SQL_SELECT_GEAR</name></member>
+    <member refid="character__database_8c_1a6084f4dce70c78cd6e3204ba1538757a" kind="define"><name>SQL_SELECT_POTION</name></member>
+    <member refid="character__database_8c_1a842a3251a6fce7d096e1f3d3c5104d1a" kind="function"><name>save_character</name></member>
+    <member refid="character__database_8c_1a85888aa564d562721e655fb1be302042" kind="function"><name>save_character_inventory</name></member>
+    <member refid="character__database_8c_1ad29cc5c2eecfe7457f5c66f157e91c10" kind="function"><name>get_character_from_db</name></member>
+  </compound>
+  <compound refid="character__database_8h" kind="file"><name>character_database.h</name>
+    <member refid="character__database_8h_1a842a3251a6fce7d096e1f3d3c5104d1a" kind="function"><name>save_character</name></member>
+    <member refid="character__database_8h_1a85888aa564d562721e655fb1be302042" kind="function"><name>save_character_inventory</name></member>
+    <member refid="character__database_8h_1a98f082e8f07988f2e1fc2c2d7679040d" kind="function"><name>get_character_from_db</name></member>
+  </compound>
+  <compound refid="gamestate__database_8c" kind="file"><name>gamestate_database.c</name>
+    <member refid="gamestate__database_8c_1aa62433a7807cf7f0bc9cf3f8323ba80c" kind="define"><name>TIMESTAMP_FORMAT</name></member>
+    <member refid="gamestate__database_8c_1a0f5d40337f5da092b868d40bcafa5ad3" kind="define"><name>SQL_INSERT_GAME_STATE</name></member>
+    <member refid="gamestate__database_8c_1ad64a4dbbc206e1ae73576eeface89d88" kind="define"><name>SQL_INSERT_MAP_STATE</name></member>
+    <member refid="gamestate__database_8c_1a66be03618752f92cb8a5748b57c1b105" kind="define"><name>SQL_INSERT_PLAYER_STATE</name></member>
+    <member refid="gamestate__database_8c_1a468fb0895fad7651f7380cca20ac7813" kind="define"><name>SQL_SELECT_LAST_GAME_STATE</name></member>
+    <member refid="gamestate__database_8c_1a568202f9b39f2d647b9c495598e28af7" kind="define"><name>SQL_SELECT_MAP_STATE</name></member>
+    <member refid="gamestate__database_8c_1a81e8fcf0e399b80732ab7c64fb2b7987" kind="define"><name>SQL_SELECT_MAP</name></member>
+    <member refid="gamestate__database_8c_1aa63475cdf1317a51db2713df0f7ed8c9" kind="define"><name>SQL_SELECT_REVEALED_MAP</name></member>
+    <member refid="gamestate__database_8c_1ad809cd1396624aff7e90c941dd6c3ce1" kind="define"><name>SQL_SELECT_PLAYER_STATE</name></member>
+    <member refid="gamestate__database_8c_1a66e1bb6b6f486f979267809ee5291c19" kind="define"><name>SQL_SELECT_ALL_GAME_STATES</name></member>
+    <member refid="gamestate__database_8c_1aa85bcfad6111a8ba703fa55a8b8ff20e" kind="function"><name>get_iso8601_time</name></member>
+    <member refid="gamestate__database_8c_1a5939eebd6fcb052e5b1b2465bb97ee42" kind="function"><name>save_game_state</name></member>
+    <member refid="gamestate__database_8c_1aa55051e28e3b3b3fba26bfe29c3222a1" kind="function"><name>arr2D_to_flat_json</name></member>
+    <member refid="gamestate__database_8c_1a66a9ad4ea78ce3c63bd7399e7445f5e1" kind="function"><name>get_game_state</name></member>
+    <member refid="gamestate__database_8c_1ab2f4a1908e3962130626a23d00711e39" kind="function"><name>get_game_state_by_id</name></member>
+    <member refid="gamestate__database_8c_1ae37f61a14d87006756eb5c503b8934c2" kind="function"><name>get_save_infos</name></member>
+    <member refid="gamestate__database_8c_1aed834a6e5c0e9ae62c5914d52cd21578" kind="function"><name>free_save_infos</name></member>
+    <member refid="gamestate__database_8c_1a17208216d45a99fd57793a6bf795d3f8" kind="function"><name>create_tables_game_state</name></member>
+    <member refid="gamestate__database_8c_1aa93a439080a0ddfe9baed9d95c87db8d" kind="function"><name>get_latest_save_id</name></member>
+  </compound>
+  <compound refid="gamestate__database_8h" kind="file"><name>gamestate_database.h</name>
+    <member refid="gamestate__database_8h_1ad6f4711045cb7d5ee217b945fc80d99f" kind="define"><name>MAX_NUMBER_SAVES</name></member>
+    <member refid="gamestate__database_8h_1ae71070e1b46ba635d75b12ef83f08dce" kind="define"><name>TIMESTAMP_LENGTH</name></member>
+    <member refid="gamestate__database_8h_1ab1f471422cbadc122d49d4b815ff8ce7" kind="define"><name>SQL_CREATE_TABLES_GAMESTATE_GS</name></member>
+    <member refid="gamestate__database_8h_1a4170cddda3599a4b1bd57bec516e334f" kind="define"><name>SQL_CREATE_TABLES_GAMESTATE_MS</name></member>
+    <member refid="gamestate__database_8h_1a6b56a9a0cc7b240fbd5c08be1be2c807" kind="define"><name>SQL_CREATE_TABLES_GAMESTATE_PS</name></member>
+    <member refid="gamestate__database_8h_1aeabfd3372957934959084a2a5d838939" kind="typedef"><name>player_pos_setter_t</name></member>
+    <member refid="gamestate__database_8h_1a17208216d45a99fd57793a6bf795d3f8" kind="function"><name>create_tables_game_state</name></member>
+    <member refid="gamestate__database_8h_1abc2e97931172969fe3c3c2c2ac078983" kind="function"><name>save_game_state</name></member>
+    <member refid="gamestate__database_8h_1a364665e70a8666a236a9ce7a740a8e94" kind="function"><name>get_game_state</name></member>
+    <member refid="gamestate__database_8h_1a71b77426a03e96d431f1459670314119" kind="function"><name>get_game_state_by_id</name></member>
+    <member refid="gamestate__database_8h_1ae37f61a14d87006756eb5c503b8934c2" kind="function"><name>get_save_infos</name></member>
+    <member refid="gamestate__database_8h_1aed834a6e5c0e9ae62c5914d52cd21578" kind="function"><name>free_save_infos</name></member>
+    <member refid="gamestate__database_8h_1a5c15109719339e7194e149f9ba5abc19" kind="function"><name>arr2D_to_flat_json</name></member>
+    <member refid="gamestate__database_8h_1aa93a439080a0ddfe9baed9d95c87db8d" kind="function"><name>get_latest_save_id</name></member>
+  </compound>
+  <compound refid="item__database_8c" kind="file"><name>item_database.c</name>
+    <member refid="item__database_8c_1a69c27d9ceb7b62b79e1fb08e47df82b9" kind="define"><name>SQL_SELECT_COUNT_POTIONS</name></member>
+    <member refid="item__database_8c_1a6afd0e562d55a57d51b698bd6f108c49" kind="define"><name>SQL_SELECT_ALL_POTIONS</name></member>
+    <member refid="item__database_8c_1a87d64efccb6878ca515571eb0694b665" kind="define"><name>SQL_SELECT_COUNT_GEARS</name></member>
+    <member refid="item__database_8c_1a40d39ac3e0e3430bb5b2d73bbe7de559" kind="define"><name>SQL_SELECT_ALL_GEARS</name></member>
+    <member refid="item__database_8c_1a4b51056ad4c09df30359e735e4e0f127" kind="function"><name>init_potion_table_from_db</name></member>
+    <member refid="item__database_8c_1ad788bb97c9cb7c8156e6754d12a8e982" kind="function"><name>free_potion_table_from_db</name></member>
+    <member refid="item__database_8c_1a8e36d8a2398d7bbecda85a62c72870bb" kind="function"><name>count_potions_in_db</name></member>
+    <member refid="item__database_8c_1a2eae64cf18b35cd4bfd748651d024061" kind="function"><name>init_gear_table_from_db</name></member>
+    <member refid="item__database_8c_1a68ae01e3f5393770191aa3c1171c7fc6" kind="function"><name>free_gear_table_from_db</name></member>
+    <member refid="item__database_8c_1ac7d94bd95103f3f91acaa93718e04e8f" kind="function"><name>count_gear_in_db</name></member>
+  </compound>
+  <compound refid="item__database_8h" kind="file"><name>item_database.h</name>
+    <member refid="item__database_8h_1a18eea8fc8af88e83e588be1b129484ec" kind="typedef"><name>potion_init_t</name></member>
+    <member refid="item__database_8h_1ad83693df92c328894d663df74c5248f2" kind="typedef"><name>gear_init_t</name></member>
+    <member refid="item__database_8h_1a4b51056ad4c09df30359e735e4e0f127" kind="function"><name>init_potion_table_from_db</name></member>
+    <member refid="item__database_8h_1ad788bb97c9cb7c8156e6754d12a8e982" kind="function"><name>free_potion_table_from_db</name></member>
+    <member refid="item__database_8h_1a8e36d8a2398d7bbecda85a62c72870bb" kind="function"><name>count_potions_in_db</name></member>
+    <member refid="item__database_8h_1a2eae64cf18b35cd4bfd748651d024061" kind="function"><name>init_gear_table_from_db</name></member>
+    <member refid="item__database_8h_1a68ae01e3f5393770191aa3c1171c7fc6" kind="function"><name>free_gear_table_from_db</name></member>
+    <member refid="item__database_8h_1ac7d94bd95103f3f91acaa93718e04e8f" kind="function"><name>count_gear_in_db</name></member>
+  </compound>
+  <compound refid="game_8c" kind="file"><name>game.c</name>
+    <member refid="game_8c_1ad75d7d0954f91ea9c6e31276f0317c31" kind="variable"><name>db_connection</name></member>
+    <member refid="game_8c_1a1dc23dea94a88efba0f4224b38ecd67a" kind="variable"><name>game_in_progress</name></member>
+    <member refid="game_8c_1a152b3694f0e618608d4b17545863b2ad" kind="variable"><name>current_state</name></member>
+    <member refid="game_8c_1ab1729158be557ef60548f7b7575ea4dd" kind="variable"><name>exit_code</name></member>
+    <member refid="game_8c_1a46fea93bf5d63e93090fbb95b742b881" kind="function"><name>game_loop</name></member>
+    <member refid="game_8c_1a93c5d9cf967d912d6d68f73e6f57d075" kind="function"><name>combat_mode_state</name></member>
+    <member refid="game_8c_1a738d0f8d2ef3f1bd688309a02d1e497d" kind="function"><name>stats_mode_state</name></member>
+    <member refid="game_8c_1a694d1187f39959b999a25792408b42fc" kind="function"><name>loading_game</name></member>
+    <member refid="game_8c_1a6ff802f40779291bfa8d943c1fc0cf97" kind="function"><name>run_game</name></member>
+    <member refid="game_8c_1a813f052b4434baac9f0410b9b29d9add" kind="function"><name>main_menu_state</name></member>
+    <member refid="game_8c_1aa129a19e7fb247016f3205537f90cc8b" kind="function"><name>map_mode_state</name></member>
+    <member refid="game_8c_1a00ee39adf3b283b23d1f0367980a2fa4" kind="function"><name>loot_mode_state</name></member>
+    <member refid="game_8c_1a71b2f4c5f0e029545f44d9fef1f072cd" kind="function"><name>inventory_mode_state</name></member>
+  </compound>
+  <compound refid="game_8h" kind="file"><name>game.h</name>
+    <member refid="game_8h_1a0e805e1f8e1b21737196a8e84c4e5879" kind="define"><name>COLOR_FG_RGB</name></member>
+    <member refid="game_8h_1ac1babe4934963eeb4fe16a0c2c821ffa" kind="define"><name>COLOR_BG_RGB</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414d" kind="enum"><name>game_state_t</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414dac22743f1fc74de09544ecc9bab74a17b" kind="enumvalue"><name>MAIN_MENU</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414da4f59c6bf65a3e71d360c98a62ebeb36c" kind="enumvalue"><name>MAP_MODE</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414dac7f6dff8615cb594b1028ede1732ca55" kind="enumvalue"><name>COMBAT_MODE</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414da67c8a07037abd747c196032fc8ac2f6d" kind="enumvalue"><name>LOOT_MODE</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414da164fd02fc2504911d192f2939c71a602" kind="enumvalue"><name>INVENTORY_MODE</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414daf77198f346acabfdfd686c7af732aa3f" kind="enumvalue"><name>GENERATE_MAP</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414da5d649bc746f4722f2affb004476ca041" kind="enumvalue"><name>STATS_MODE</name></member>
+    <member refid="game_8h_1a4edce1ca040716922b6e4a79be4e414da7a10b5d68d31711288e1fe0fa17dbf4f" kind="enumvalue"><name>EXIT</name></member>
+    <member refid="game_8h_1a7cb72d70c08b314262fc0143c49e3166" kind="variable"><name>nc</name></member>
+    <member refid="game_8h_1a95672e218c892e33e2e89fdd88d800bc" kind="variable"><name>stdplane</name></member>
+    <member refid="game_8h_1ad75d7d0954f91ea9c6e31276f0317c31" kind="variable"><name>db_connection</name></member>
+    <member refid="game_8h_1a6ff802f40779291bfa8d943c1fc0cf97" kind="function"><name>run_game</name></member>
+    <member refid="game_8h_1a813f052b4434baac9f0410b9b29d9add" kind="function"><name>main_menu_state</name></member>
+    <member refid="game_8h_1aa129a19e7fb247016f3205537f90cc8b" kind="function"><name>map_mode_state</name></member>
+    <member refid="game_8h_1a71b2f4c5f0e029545f44d9fef1f072cd" kind="function"><name>inventory_mode_state</name></member>
+    <member refid="game_8h_1a00ee39adf3b283b23d1f0367980a2fa4" kind="function"><name>loot_mode_state</name></member>
+  </compound>
+  <compound refid="game__data_8c" kind="file"><name>game_data.c</name>
+    <member refid="game__data_8c_1a86fda8be60af76230375ec70e9e76260" kind="variable"><name>ability_table</name></member>
+    <member refid="game__data_8c_1a4016d531529ccc5cbdf836fd035baaa5" kind="variable"><name>potion_table</name></member>
+    <member refid="game__data_8c_1a19c1c03c9ec6672826c2f9dc35a79cf8" kind="variable"><name>gear_table</name></member>
+    <member refid="game__data_8c_1a92893c24bb6a4e0637cf2f4162e17040" kind="variable"><name>goblin</name></member>
+    <member refid="game__data_8c_1ae337ca840cc0321ce2538ec80cec3a1a" kind="variable"><name>player</name></member>
+    <member refid="game__data_8c_1acf51ee7fcee6655d62576a4c3338122c" kind="function"><name>init_game_data</name></member>
+    <member refid="game__data_8c_1ab2169a70baa362c11da5df787aa51e60" kind="function"><name>free_game_data</name></member>
+    <member refid="game__data_8c_1a0ae43f25d543d2efa5fba4a6992e865e" kind="function"><name>reset_goblin</name></member>
+    <member refid="game__data_8c_1abc7026a0adc4d59fba01fb4d0acfbd03" kind="function"><name>init_player</name></member>
+    <member refid="game__data_8c_1a6f63aa6e155b314929b60f9b57c0a988" kind="function"><name>reset_player</name></member>
+  </compound>
+  <compound refid="game__data_8h" kind="file"><name>game_data.h</name>
+    <member refid="game__data_8h_1a86fda8be60af76230375ec70e9e76260" kind="variable"><name>ability_table</name></member>
+    <member refid="game__data_8h_1a92893c24bb6a4e0637cf2f4162e17040" kind="variable"><name>goblin</name></member>
+    <member refid="game__data_8h_1ae337ca840cc0321ce2538ec80cec3a1a" kind="variable"><name>player</name></member>
+    <member refid="game__data_8h_1a464cacd6010c467c663728688471a993" kind="variable"><name>healing_potion</name></member>
+    <member refid="game__data_8h_1a19c1c03c9ec6672826c2f9dc35a79cf8" kind="variable"><name>gear_table</name></member>
+    <member refid="game__data_8h_1a4016d531529ccc5cbdf836fd035baaa5" kind="variable"><name>potion_table</name></member>
+    <member refid="game__data_8h_1a2bc1d2c142594875a1d0000c253dfc5f" kind="function"><name>init_game_data</name></member>
+    <member refid="game__data_8h_1a8654a198799f421be51780053214ce9c" kind="function"><name>free_game_data</name></member>
+    <member refid="game__data_8h_1a2f7c80c5ad940f6572ed2e0d165bd4a2" kind="function"><name>reset_goblin</name></member>
+    <member refid="game__data_8h_1abc7026a0adc4d59fba01fb4d0acfbd03" kind="function"><name>init_player</name></member>
+    <member refid="game__data_8h_1aab05a04a3dbf5773509d9e55f9b2af24" kind="function"><name>reset_player</name></member>
+  </compound>
+  <compound refid="inventory__mode_8c" kind="file"><name>inventory_mode.c</name>
+    <member refid="inventory__mode_8c_1aeaba3e5adbbfec3207b8e2790123c2cc" kind="variable"><name>inventory_view_anchor</name></member>
+    <member refid="inventory__mode_8c_1ac018910387030da46c95f1584a64091b" kind="variable"><name>inventory_state</name></member>
+    <member refid="inventory__mode_8c_1a1486e402442b4786598a68f7a4c6eba0" kind="variable"><name>inventory_gear_count</name></member>
+    <member refid="inventory__mode_8c_1a99d0f98afc6845cc0d06dc6ca4de5d10" kind="variable"><name>inventory_potion_count</name></member>
+    <member refid="inventory__mode_8c_1a661ecebb6d46306bacd951de60e8353d" kind="variable"><name>inventory_gear_options</name></member>
+    <member refid="inventory__mode_8c_1a293e0bf5c87648018fc0fb1deb7f289a" kind="variable"><name>inventory_equipment_options</name></member>
+    <member refid="inventory__mode_8c_1a15a7f4b78e69cff6cf1a5c627404ba90" kind="variable"><name>inventory_potion_options</name></member>
+    <member refid="inventory__mode_8c_1a363e67ed7a52ef1966f262010c27b356" kind="function"><name>can_equip_gear</name></member>
+    <member refid="inventory__mode_8c_1a6c4c9cef25cbf2b533b8b3466124ca3c" kind="function"><name>collect_inventory_gear_options</name></member>
+    <member refid="inventory__mode_8c_1a2c55d71a09ab64536769f143203e103c" kind="function"><name>collect_inventory_equipment_options</name></member>
+    <member refid="inventory__mode_8c_1aa80b1852ed366fde7487f103bf678e91" kind="function"><name>collect_inv_potion_options</name></member>
+    <member refid="inventory__mode_8c_1af8e671ca0dad2fd5d8ba991c5872fbed" kind="function"><name>init_inventory_mode</name></member>
+    <member refid="inventory__mode_8c_1a18570f8701fbaaf159853b93fb0883cd" kind="function"><name>start_inventory</name></member>
+    <member refid="inventory__mode_8c_1a0542d449b5fb32f908e0bc103eaeb517" kind="function"><name>inventory_menu</name></member>
+    <member refid="inventory__mode_8c_1acc5c8039e2a24ee0e623733f9b9e8c2d" kind="function"><name>inventory_gear_menu</name></member>
+    <member refid="inventory__mode_8c_1aab5799dd02192c8fdd42dc1b27a6d84b" kind="function"><name>inventory_equipment_menu</name></member>
+    <member refid="inventory__mode_8c_1acb47abb40ebc5018b2f18f93809eb3e2" kind="function"><name>inventory_potion_menu</name></member>
+    <member refid="inventory__mode_8c_1aa75b29f414ad6a579098f1c8eb3af9f9" kind="function"><name>shutdown_inventory_mode</name></member>
+  </compound>
+  <compound refid="inventory__mode_8h" kind="file"><name>inventory_mode.h</name>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adb" kind="enum"><name>internal_inventory_state_t</name></member>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adbaff601f9dad04ceb3af28ba794af39e8a" kind="enumvalue"><name>INVENTORY_MENU</name></member>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba8085e10c8581ba3b90a8f4303c428a44" kind="enumvalue"><name>INVENTORY_GEAR_MENU</name></member>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba73b2ddca113ff0a8775b7f4b2e6b9694" kind="enumvalue"><name>INVENTORY_EQUIPMENT_MENU</name></member>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adba1c103146121e9fef3f9b98298a49a9e6" kind="enumvalue"><name>INVENTORY_POTION_MENU</name></member>
+    <member refid="inventory__mode_8h_1a1bc846bdc17cdc0eb9e70ab7c7587adbaad2a6216722bc5ec4375881e5974565a" kind="enumvalue"><name>INVENTORY_EXIT</name></member>
+    <member refid="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7" kind="enum"><name>inventory_result_t</name></member>
+    <member refid="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7a5f4d6883e1216b1c5bf390fafa908194" kind="enumvalue"><name>CONTINUE_INVENTORY</name></member>
+    <member refid="inventory__mode_8h_1a40093636217fe01fa1c93deafec29de7afbe2456d40ea3a419bb2b886a422e6de" kind="enumvalue"><name>EXIT_TO_MAP</name></member>
+    <member refid="inventory__mode_8h_1af8e671ca0dad2fd5d8ba991c5872fbed" kind="function"><name>init_inventory_mode</name></member>
+    <member refid="inventory__mode_8h_1a18570f8701fbaaf159853b93fb0883cd" kind="function"><name>start_inventory</name></member>
+    <member refid="inventory__mode_8h_1a0542d449b5fb32f908e0bc103eaeb517" kind="function"><name>inventory_menu</name></member>
+    <member refid="inventory__mode_8h_1acc5c8039e2a24ee0e623733f9b9e8c2d" kind="function"><name>inventory_gear_menu</name></member>
+    <member refid="inventory__mode_8h_1aab5799dd02192c8fdd42dc1b27a6d84b" kind="function"><name>inventory_equipment_menu</name></member>
+    <member refid="inventory__mode_8h_1acb47abb40ebc5018b2f18f93809eb3e2" kind="function"><name>inventory_potion_menu</name></member>
+    <member refid="inventory__mode_8h_1aa75b29f414ad6a579098f1c8eb3af9f9" kind="function"><name>shutdown_inventory_mode</name></member>
+  </compound>
+  <compound refid="inventory__mode__local_8c" kind="file"><name>inventory_mode_local.c</name>
+    <member refid="inventory__mode__local_8c_1ad8566c321a66d4765b0ae4480d389f6d" kind="variable"><name>inventory_mode_strings</name></member>
+    <member refid="inventory__mode__local_8c_1aa1783b4473320c2d88127547e69a6033" kind="function"><name>update_inventory_local</name></member>
+  </compound>
+  <compound refid="inventory__mode__local_8h" kind="file"><name>inventory_mode_local.h</name>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97c" kind="enum"><name>inventory_mode_index</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca3b5c8a1e7fc15a1f5f7b49d8b01379d3" kind="enumvalue"><name>MAIN_MENU_TITLE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cabf418220d02fddf7cbd60fef2b9f8eb0" kind="enumvalue"><name>SHOW_GEAR</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca300d9ad1ef618c1b1c033b9cd3e9a9ed" kind="enumvalue"><name>SHOW_EQUIPPED_GEAR</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca4696e9fb929826858cb255ce43928626" kind="enumvalue"><name>SHOW_POTIONS</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cac466c7deeafd2bd2815a5ef8f141e7cb" kind="enumvalue"><name>INVENTORY_FULL_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cae7e36d639dfbcf612018918be04d0ba9" kind="enumvalue"><name>INVENTORY_EMPTY_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca502505d765033af68c4ccd34039c369e" kind="enumvalue"><name>INVENTORY_MENU_TITLE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca7e4e2260ddb170b734c0140196df4932" kind="enumvalue"><name>INVENTORY_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca0c337744f97093d5d3967fbba233482f" kind="enumvalue"><name>INVENTORY_DROP_GEAR_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca4c0bab0e5d21c908c718f8dfb7c99499" kind="enumvalue"><name>INVENTORY_GEAR_FORMAT</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca269b0e962c8a7e54577805b07228e8eb" kind="enumvalue"><name>INVENTORY_GEAR_FORMAT_EMPTY</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cae541c2ae0e9e3ffecfd724ab12f2b8d6" kind="enumvalue"><name>EQUIPMENT_MENU_TITLE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca49e94a969bdc3daf8373613fed74eaae" kind="enumvalue"><name>EQUIPMENT_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca935e4ff4b2ed7996f49228c69beee602" kind="enumvalue"><name>EQUIPMENT_SLOT_FULL</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca75864d20a70d62682bd1da8a80b86121" kind="enumvalue"><name>EQUIPMENT_HANDS_SLOT_FULL</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca331180bd020ce9088cf66e02bb529cd0" kind="enumvalue"><name>POTION_FORMAT</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca55074148ca04ad1cb5e6a39b23f6af81" kind="enumvalue"><name>POTION_MENU_TITLE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca943a5c325fc6410a9d30021ce0e9670a" kind="enumvalue"><name>POTION_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cac12d2b9e856fd50182467cd0fda4e704" kind="enumvalue"><name>POTION_FULL_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca4e6ed51309a8a953108d55fb00365dcd" kind="enumvalue"><name>POTION_EMPTY_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97caeb49ba7ab0f00b4c07d5b5dfc1b05d76" kind="enumvalue"><name>POTION_DROP_POTION_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97caf9dc1f59fbce9e165d70e2804be3f516" kind="enumvalue"><name>POTION_USE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cad0571ae32a725c7efacf7e97e7fc1bd2" kind="enumvalue"><name>LOOT_MAIN_MENU_TITLE</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca1fa8fd9132706db87641aa8c175b85a7" kind="enumvalue"><name>LOOT_OPTION_SHOW_GEAR</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca6cb84238a13863d07f7a976455fba292" kind="enumvalue"><name>LOOT_OPTION_SHOW_GEAR_EQUIPPED</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca1b1e675357f2494cddab0f2fb6ecd5d8" kind="enumvalue"><name>LOOT_OPTION_SHOW_POTIONS</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cabf090277769e60cc9f66254f5f77fd24" kind="enumvalue"><name>LOOT_GEAR_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97cade2398ead6eeb9e75eb336e642bea0bc" kind="enumvalue"><name>LOOT_EQUIPMENT_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca5af5517e05b49ed765d94079885bfef0" kind="enumvalue"><name>LOOT_POTION_MENU_HEADER</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca82b59f09ec3c407da55e7008807142cf" kind="enumvalue"><name>FINISH_LOOTING_MSG</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97caf1747c04ace9bcd0a64f8f34b25eb87f" kind="enumvalue"><name>PRESS_C_RETURN</name></member>
+    <member refid="inventory__mode__local_8h_1a213e84abd6e996e62dd2af75be26d97ca916bd35f7909d84cf44e2a37d89d60a8" kind="enumvalue"><name>MAX_INVENTORY_STRINGS</name></member>
+    <member refid="inventory__mode__local_8h_1ad8566c321a66d4765b0ae4480d389f6d" kind="variable"><name>inventory_mode_strings</name></member>
+    <member refid="inventory__mode__local_8h_1aa1783b4473320c2d88127547e69a6033" kind="function"><name>update_inventory_local</name></member>
+  </compound>
+  <compound refid="input__handler_8c" kind="file"><name>input_handler.c</name>
+    <member refid="input__handler_8c_1a6fb83f5e91e704391ff796553d5e0f46" kind="define"><name>CLOCK_MONOTONIC</name></member>
+    <member refid="input__handler_8c_1a4aa11a29bb125ab4b502f2ddd4067807" kind="define"><name>KEY_EVENT</name></member>
+    <member refid="input__handler_8c_1a3ac29280d151a22ffd015c6988ae362c" kind="define"><name>KEY_DEBOUNCE_TIME_MS</name></member>
+    <member refid="input__handler_8c_1a52a3b7efa7f1e465319159cf0f916366" kind="variable"><name>input_timing</name></member>
+    <member refid="input__handler_8c_1a2911473e4cbc0ff11169b71347be7f93" kind="function"><name>get_time_diff_ms</name></member>
+    <member refid="input__handler_8c_1a1155f725de68988b053cf1962699b4ad" kind="function"><name>translate_input</name></member>
+    <member refid="input__handler_8c_1a2249789ea0124ec4328f7de3bec9ba78" kind="function"><name>init_input_handler</name></member>
+    <member refid="input__handler_8c_1ad828c8f98efcde189a95693343077645" kind="function"><name>should_process_key</name></member>
+    <member refid="input__handler_8c_1a0730e0975aa5e78a98a269a46cf62181" kind="function"><name>get_input_blocking</name></member>
+    <member refid="input__handler_8c_1abb5786844da2a21d971c5509f50074cc" kind="function"><name>get_input_nonblocking</name></member>
+    <member refid="input__handler_8c_1ad987e650830efc5d227cc918e75736b4" kind="function"><name>shutdown_input_handler</name></member>
+  </compound>
+  <compound refid="input__handler_8h" kind="file"><name>input_handler.h</name>
+    <member refid="input__handler_8h_1a8e98d83b2d8d01b9b1d2dfb3bd26b49c" kind="function"><name>init_input_handler</name></member>
+    <member refid="input__handler_8h_1a0730e0975aa5e78a98a269a46cf62181" kind="function"><name>get_input_blocking</name></member>
+    <member refid="input__handler_8h_1abb5786844da2a21d971c5509f50074cc" kind="function"><name>get_input_nonblocking</name></member>
+    <member refid="input__handler_8h_1a1155f725de68988b053cf1962699b4ad" kind="function"><name>translate_input</name></member>
+    <member refid="input__handler_8h_1ad987e650830efc5d227cc918e75736b4" kind="function"><name>shutdown_input_handler</name></member>
+  </compound>
+  <compound refid="input__types_8h" kind="file"><name>input_types.h</name>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70" kind="enum"><name>input_t</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70acaee97a215d370b9196a07f5f6348272" kind="enumvalue"><name>INPUT_UP</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a0d2be88d3ee2402177d02065c68eb1ad" kind="enumvalue"><name>INPUT_DOWN</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a4d17c3e927238dbe1f36d6924843363a" kind="enumvalue"><name>INPUT_LEFT</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a201e0359b83020afa89d5275d04d90fc" kind="enumvalue"><name>INPUT_RIGHT</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70aee6b97db3d71ce690057a74f48500477" kind="enumvalue"><name>INPUT_CONFIRM</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a5ca8c66158af122edaba602b06a14c14" kind="enumvalue"><name>INPUT_CANCEL</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a99156e92e86e319320975555913d63ed" kind="enumvalue"><name>INPUT_MENU</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a4ee9c87df9ada3f9953a188611ae46d0" kind="enumvalue"><name>INPUT_STATS</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a4b757a91be4011a8c9eec7c361dc12b1" kind="enumvalue"><name>INPUT_INVENTORY</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70a2c96c29b787ae9c697bd201f3ebc2591" kind="enumvalue"><name>INPUT_QUIT</name></member>
+    <member refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70ad635d6b1496fa2fba6f87068d4193246" kind="enumvalue"><name>INPUT_NONE</name></member>
+  </compound>
+  <compound refid="io__handler_8c" kind="file"><name>io_handler.c</name>
+    <member refid="io__handler_8c_1a7cb72d70c08b314262fc0143c49e3166" kind="variable"><name>nc</name></member>
+    <member refid="io__handler_8c_1a95672e218c892e33e2e89fdd88d800bc" kind="variable"><name>stdplane</name></member>
+    <member refid="io__handler_8c_1a9a6706f8974be8033f25eaf9e771b0b1" kind="function"><name>init_io_handler</name></member>
+    <member refid="io__handler_8c_1a3bccf50481367af8a07d1b0971c31015" kind="function"><name>run_background_task</name></member>
+    <member refid="io__handler_8c_1aa38fe030eff332323de447e604c8501d" kind="function"><name>shutdown_io_handler</name></member>
+  </compound>
+  <compound refid="io__handler_8h" kind="file"><name>io_handler.h</name>
+    <member refid="io__handler_8h_1a5980c706060e9eb24ebfe324322b2a44" kind="variable"><name>init_done</name></member>
+    <member refid="io__handler_8h_1a7cb72d70c08b314262fc0143c49e3166" kind="variable"><name>nc</name></member>
+    <member refid="io__handler_8h_1a95672e218c892e33e2e89fdd88d800bc" kind="variable"><name>stdplane</name></member>
+    <member refid="io__handler_8h_1a9a6706f8974be8033f25eaf9e771b0b1" kind="function"><name>init_io_handler</name></member>
+    <member refid="io__handler_8h_1a3bccf50481367af8a07d1b0971c31015" kind="function"><name>run_background_task</name></member>
+    <member refid="io__handler_8h_1aa38fe030eff332323de447e604c8501d" kind="function"><name>shutdown_io_handler</name></member>
+  </compound>
+  <compound refid="output__handler_8c" kind="file"><name>output_handler.c</name>
+    <member refid="output__handler_8c_1a3ead9185056d925e3719f250e56cf432" kind="function"><name>init_output_handler</name></member>
+    <member refid="output__handler_8c_1abc40cd622f423abf44084c8f8595f57f" kind="function"><name>clear_screen</name></member>
+    <member refid="output__handler_8c_1a09c792afefa9c412b0eb42c83acad1fa" kind="function"><name>print_text</name></member>
+    <member refid="output__handler_8c_1a1e09f2e647d1eea643c22b2e0205590d" kind="function"><name>print_text_default</name></member>
+    <member refid="output__handler_8c_1a41f0be36455b3e47e16cd5575f76d319" kind="function"><name>print_text_multi_line</name></member>
+    <member refid="output__handler_8c_1adee6e471ac5d56d82d014bf9f333bf25" kind="function"><name>print_text_multi_line_default</name></member>
+    <member refid="output__handler_8c_1aec8006d4b846af1b846902afa177ffa6" kind="function"><name>print_text_multi_strings</name></member>
+    <member refid="output__handler_8c_1a2e2984603187cc3f2f0a496ae9189935" kind="function"><name>print_text_multi_strings_default</name></member>
+    <member refid="output__handler_8c_1aaf486a9e8bf78ab5e8a4fda01395f918" kind="function"><name>print_menu</name></member>
+    <member refid="output__handler_8c_1afbe3fda203ab199dae350ac75718ad3f" kind="function"><name>print_menu_default</name></member>
+    <member refid="output__handler_8c_1a1549d56b82287ffa671bc296df68ec53" kind="function"><name>get_text_input</name></member>
+    <member refid="output__handler_8c_1af7231f9a11f56c17d5115155eb76d834" kind="function"><name>show_message_screen</name></member>
+    <member refid="output__handler_8c_1a3e18b0ae03162818f0410141b4c5ecde" kind="function"><name>render_frame</name></member>
+    <member refid="output__handler_8c_1a4dcd19daec1563adb660a42885d97b75" kind="function"><name>get_screen_dimensions</name></member>
+    <member refid="output__handler_8c_1a382936f051e1cc32f8cb52b5e41d58c5" kind="function"><name>shutdown_output_handler</name></member>
+  </compound>
+  <compound refid="output__handler_8h" kind="file"><name>output_handler.h</name>
+    <member refid="output__handler_8h_1a1e8da20f9f71bafb2db6e9c8622e067d" kind="define"><name>LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS</name></member>
+    <member refid="output__handler_8h_1afcb66bf9a3097a30a0dd6c8b09f0c1ab" kind="function"><name>init_output_handler</name></member>
+    <member refid="output__handler_8h_1abc40cd622f423abf44084c8f8595f57f" kind="function"><name>clear_screen</name></member>
+    <member refid="output__handler_8h_1a09c792afefa9c412b0eb42c83acad1fa" kind="function"><name>print_text</name></member>
+    <member refid="output__handler_8h_1a1e09f2e647d1eea643c22b2e0205590d" kind="function"><name>print_text_default</name></member>
+    <member refid="output__handler_8h_1adf4be6a9774847c7504abba004df9018" kind="function"><name>print_text_multi_line</name></member>
+    <member refid="output__handler_8h_1adee6e471ac5d56d82d014bf9f333bf25" kind="function"><name>print_text_multi_line_default</name></member>
+    <member refid="output__handler_8h_1aec8006d4b846af1b846902afa177ffa6" kind="function"><name>print_text_multi_strings</name></member>
+    <member refid="output__handler_8h_1a2e2984603187cc3f2f0a496ae9189935" kind="function"><name>print_text_multi_strings_default</name></member>
+    <member refid="output__handler_8h_1aaf486a9e8bf78ab5e8a4fda01395f918" kind="function"><name>print_menu</name></member>
+    <member refid="output__handler_8h_1afbe3fda203ab199dae350ac75718ad3f" kind="function"><name>print_menu_default</name></member>
+    <member refid="output__handler_8h_1a1549d56b82287ffa671bc296df68ec53" kind="function"><name>get_text_input</name></member>
+    <member refid="output__handler_8h_1af7231f9a11f56c17d5115155eb76d834" kind="function"><name>show_message_screen</name></member>
+    <member refid="output__handler_8h_1a3e18b0ae03162818f0410141b4c5ecde" kind="function"><name>render_frame</name></member>
+    <member refid="output__handler_8h_1a4dcd19daec1563adb660a42885d97b75" kind="function"><name>get_screen_dimensions</name></member>
+    <member refid="output__handler_8h_1a382936f051e1cc32f8cb52b5e41d58c5" kind="function"><name>shutdown_output_handler</name></member>
+  </compound>
+  <compound refid="media__files_8h" kind="file"><name>media_files.h</name>
+    <member refid="media__files_8h_1aefb4f6201aeacd1bbc4a0582ceb09141" kind="define"><name>MEDIA_PATH</name></member>
+    <member refid="media__files_8h_1abdd33f362ae3bbdacb5de76473aa8a2f" kind="define"><name>MAX_PATH_LEN</name></member>
+    <member refid="media__files_8h_1a19e0245c0f829361a02a671d05ca02a8" kind="define"><name>GOBLIN_PNG</name></member>
+    <member refid="media__files_8h_1a5b6af1ac5d6bfca69ba7398c4859d05d" kind="define"><name>GOBLIN_HEIGHT</name></member>
+    <member refid="media__files_8h_1a6f22eab2a73ceb7edabb3b82aa22c4d0" kind="define"><name>GOBLIN_WIDTH</name></member>
+    <member refid="media__files_8h_1a9901b9f9de4d2aa1943df416a14a0cff" kind="define"><name>SKULL_GIF</name></member>
+    <member refid="media__files_8h_1a7af4312c4aa28fcf0f5744a1656cb432" kind="define"><name>DUNGEON_INTRO_GIF</name></member>
+  </compound>
+  <compound refid="media__output_8c" kind="file"><name>media_output.c</name>
+    <member refid="media__output_8c_1aaef47b73672303e61d583c4010585570" kind="function"><name>display_image</name></member>
+    <member refid="media__output_8c_1a819ae412791d36ed7d0d7aeec1315f82" kind="function"><name>display_image_at</name></member>
+    <member refid="media__output_8c_1a20b852ce150de9d23792b17e3a905c1c" kind="function"><name>display_image_cell</name></member>
+  </compound>
+  <compound refid="media__output_8h" kind="file"><name>media_output.h</name>
+    <member refid="media__output_8h_1a819ae412791d36ed7d0d7aeec1315f82" kind="function"><name>display_image_at</name></member>
+    <member refid="media__output_8h_1ae4661d7e30c3f0cb561cf43755e1881c" kind="function"><name>display_image_background</name></member>
+    <member refid="media__output_8h_1a20b852ce150de9d23792b17e3a905c1c" kind="function"><name>display_image_cell</name></member>
+    <member refid="media__output_8h_1aa8dd28c1c6d8b4af8e4747b88733e55f" kind="function"><name>display_gif_at</name></member>
+    <member refid="media__output_8h_1a502ad20244366a7ada0be6a6747498ee" kind="function"><name>display_gif_background</name></member>
+    <member refid="media__output_8h_1afbbc036c906edde6967cad42f025279d" kind="function"><name>display_video_at</name></member>
+    <member refid="media__output_8h_1a53908298b84750a423b2edda52a65bd6" kind="function"><name>display_video_background</name></member>
+    <member refid="media__output_8h_1ad13cd49b036f9b7d6c897359223b1fd8" kind="function"><name>media_output_play</name></member>
+    <member refid="media__output_8h_1a43f2eaaa147b6a7de63a2b722618ed13" kind="function"><name>media_output_pause</name></member>
+    <member refid="media__output_8h_1acbe1153f220380e2b8718734dc45dd6d" kind="function"><name>media_output_reset</name></member>
+  </compound>
+  <compound refid="media__output__handler_8c" kind="file"><name>media_output_handler.c</name>
+    <member refid="media__output__handler_8c_1a036c05ee5aeca0a55276156cd8870adc" kind="define"><name>MAX_RESOURCES</name></member>
+    <member refid="media__output__handler_8c_1a937b8484f334da1b081da1865d053640" kind="variable"><name>resources</name></member>
+    <member refid="media__output__handler_8c_1a93a6a080616ad515b17777b41ba75dea" kind="variable"><name>resource_count</name></member>
+    <member refid="media__output__handler_8c_1aa805313d9e81c49ba9b7c8a67e3b0052" kind="function"><name>free_media_resource</name></member>
+    <member refid="media__output__handler_8c_1aa376cccfe9485c0da2bf40fad30a585d" kind="function"><name>init_media_output</name></member>
+    <member refid="media__output__handler_8c_1a6c7bc02dff5465c7a2f34517d9e4f36b" kind="function"><name>shutdown_media_output</name></member>
+    <member refid="media__output__handler_8c_1a7281bb34b0551202de2396e2ed1b8bf1" kind="function"><name>media_cleanup</name></member>
+    <member refid="media__output__handler_8c_1a3d56ebacef1032e3d319d361a1409998" kind="function"><name>destroy_media</name></member>
+    <member refid="media__output__handler_8c_1a8c705311581ff5688337996fc1e05a23" kind="function"><name>refresh_media_display</name></member>
+    <member refid="media__output__handler_8c_1af0661cab798fd62c3a6357049f912ee1" kind="function"><name>load_media</name></member>
+    <member refid="media__output__handler_8c_1aba372d06ffef1f95c9dc4d2c88d4dd89" kind="function"><name>ready_media</name></member>
+    <member refid="media__output__handler_8c_1a9117f92f942a67aa43dffed230b656b7" kind="function"><name>unload_media</name></member>
+    <member refid="media__output__handler_8c_1ada15bd9b25aefff85111dc284146407d" kind="function"><name>setup_scaling_options</name></member>
+    <member refid="media__output__handler_8c_1a0b791e34c4561ffab7cfab81d81a46af" kind="function"><name>get_file_type</name></member>
+    <member refid="media__output__handler_8c_1aecd19c19a69456c91f413ed73a61b0e1" kind="function"><name>is_file_extension</name></member>
+    <member refid="media__output__handler_8c_1a2f8960151a697ff81f92506f7b1baf01" kind="function"><name>build_filepath</name></member>
+  </compound>
+  <compound refid="media__output__handler_8h" kind="file"><name>media_output_handler.h</name>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552" kind="enum"><name>scale_type_t</name></member>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552a1f362a7e92248402118e613c673f6f5b" kind="enumvalue"><name>SCALE_NONE</name></member>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552a36b837ba76d00a964cb0994e4b2102bd" kind="enumvalue"><name>SCALE_PRESERVE</name></member>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552a4fae5d00a21cbc569604f80ba5263f1d" kind="enumvalue"><name>SCALE_STRETCH</name></member>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552a5c60b7a6f884cfbb888c42a408f4bbd6" kind="enumvalue"><name>SCALE_CELL</name></member>
+    <member refid="media__output__handler_8h_1a0a7feabf771a43c07ac5bc9883552552a3353fe825fc4af4f7205304c35365c88" kind="enumvalue"><name>SCALE_FULLSCREEN</name></member>
+    <member refid="media__output__handler_8h_1a40c9240b64462ca76d1fd7416b8e19f2" kind="enum"><name>media_type_t</name></member>
+    <member refid="media__output__handler_8h_1a40c9240b64462ca76d1fd7416b8e19f2a3e22e84ce80c5b76f1c52ba62a9bc0f4" kind="enumvalue"><name>MEDIA_PNG</name></member>
+    <member refid="media__output__handler_8h_1a40c9240b64462ca76d1fd7416b8e19f2aaed5d33e62e9a3bc97ce16c42b70b40c" kind="enumvalue"><name>MEDIA_GIF</name></member>
+    <member refid="media__output__handler_8h_1a40c9240b64462ca76d1fd7416b8e19f2a4b557ff0c9458a6472127ffab05df2f6" kind="enumvalue"><name>MEDIA_MP4</name></member>
+    <member refid="media__output__handler_8h_1a40c9240b64462ca76d1fd7416b8e19f2af5824c98087249b2a178aa0fdd89fb57" kind="enumvalue"><name>MEDIA_UNSUPPORTED</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12" kind="enum"><name>media_blitter</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12aada2891695680ff53c2081e89f6e5359" kind="enumvalue"><name>MEDIA_BLITTER_DEFAULT</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12add494e01a2e96b53d7efd119ad9b459a" kind="enumvalue"><name>MEDIA_BLITTER_ASCII</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12a12c1979e24d081bd2a6f9850c4201791" kind="enumvalue"><name>MEDIA_BLITTER_HALF</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12a3bce7b4eedc9c6600d61339e51deca44" kind="enumvalue"><name>MEDIA_BLITTER_QUAD</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12ad54d0437ffd2c24f5cda0ab3b24058d4" kind="enumvalue"><name>MEDIA_BLITTER_BRAILLE</name></member>
+    <member refid="media__output__handler_8h_1a43f80e9bd49a8703019b5657889b9f12a30aecb9167b6bf2f5e3a234d6102e159" kind="enumvalue"><name>MEDIA_BLITTER_PIXEL</name></member>
+    <member refid="media__output__handler_8h_1a8ac6086bbd94024273d0f8902cd89d88" kind="typedef"><name>media_blitter_t</name></member>
+    <member refid="media__output__handler_8h_1abcfe9076ce1aec55ed7f3227a1afed1e" kind="typedef"><name>loaded_visual_t</name></member>
+    <member refid="media__output__handler_8h_1aa376cccfe9485c0da2bf40fad30a585d" kind="function"><name>init_media_output</name></member>
+    <member refid="media__output__handler_8h_1a6c7bc02dff5465c7a2f34517d9e4f36b" kind="function"><name>shutdown_media_output</name></member>
+    <member refid="media__output__handler_8h_1a7281bb34b0551202de2396e2ed1b8bf1" kind="function"><name>media_cleanup</name></member>
+    <member refid="media__output__handler_8h_1a3d56ebacef1032e3d319d361a1409998" kind="function"><name>destroy_media</name></member>
+    <member refid="media__output__handler_8h_1a8c705311581ff5688337996fc1e05a23" kind="function"><name>refresh_media_display</name></member>
+    <member refid="media__output__handler_8h_1af0661cab798fd62c3a6357049f912ee1" kind="function"><name>load_media</name></member>
+    <member refid="media__output__handler_8h_1aba372d06ffef1f95c9dc4d2c88d4dd89" kind="function"><name>ready_media</name></member>
+    <member refid="media__output__handler_8h_1a9117f92f942a67aa43dffed230b656b7" kind="function"><name>unload_media</name></member>
+    <member refid="media__output__handler_8h_1aa70880fe7104c86db5e168fa19d905b4" kind="function"><name>preload_media</name></member>
+    <member refid="media__output__handler_8h_1ab0e89e5d3fd82509933032efb937a3b2" kind="function"><name>reload_media_after_resize</name></member>
+    <member refid="media__output__handler_8h_1a9f9238aa9bc750b0feeadf0cfa944497" kind="function"><name>media_output_render</name></member>
+    <member refid="media__output__handler_8h_1a6f388ac47305f31e5c66e55413a0dce0" kind="function"><name>media_output_render_next_frame</name></member>
+    <member refid="media__output__handler_8h_1a6367e9a5fe5ba121cee6317786dcf4c1" kind="function"><name>media_output_can_display_images</name></member>
+    <member refid="media__output__handler_8h_1a89326dad6b1bd8432c39289074598b07" kind="function"><name>media_output_can_display_videos</name></member>
+    <member refid="media__output__handler_8h_1ada15bd9b25aefff85111dc284146407d" kind="function"><name>setup_scaling_options</name></member>
+    <member refid="media__output__handler_8h_1ac89546b79ca74e0e5b71a10f344597a3" kind="function"><name>directory_exists</name></member>
+    <member refid="media__output__handler_8h_1a0b791e34c4561ffab7cfab81d81a46af" kind="function"><name>get_file_type</name></member>
+    <member refid="media__output__handler_8h_1aecd19c19a69456c91f413ed73a61b0e1" kind="function"><name>is_file_extension</name></member>
+    <member refid="media__output__handler_8h_1a2f8960151a697ff81f92506f7b1baf01" kind="function"><name>build_filepath</name></member>
+  </compound>
+  <compound refid="combat__output_8c" kind="file"><name>combat_output.c</name>
+    <member refid="combat__output_8c_1a8bc13d02f8b645f91e1d055a072ec958" kind="function"><name>draw_combat_view</name></member>
+    <member refid="combat__output_8c_1a56b8d22d36c339ad7b349f91d5c0164f" kind="function"><name>draw_combat_menu</name></member>
+    <member refid="combat__output_8c_1a379d57eb096db30d157ab8060ce6b765" kind="function"><name>draw_combat_log</name></member>
+    <member refid="combat__output_8c_1ab675fce00927cce1769c5373d4f3b4b0" kind="function"><name>draw_game_over</name></member>
+    <member refid="combat__output_8c_1a9c15367131f863ddf5b8b9cb8c4f04ff" kind="function"><name>draw_resource_bar</name></member>
+  </compound>
+  <compound refid="combat__output_8h" kind="file"><name>combat_output.h</name>
+    <member refid="combat__output_8h_1a82e831a8cc98663dddcb03c1d53c8764" kind="function"><name>draw_combat_view</name></member>
+    <member refid="combat__output_8h_1aeddc5130e2bdd0efa690f82dc0245457" kind="function"><name>draw_combat_menu</name></member>
+    <member refid="combat__output_8h_1a379d57eb096db30d157ab8060ce6b765" kind="function"><name>draw_combat_log</name></member>
+    <member refid="combat__output_8h_1ab675fce00927cce1769c5373d4f3b4b0" kind="function"><name>draw_game_over</name></member>
+    <member refid="combat__output_8h_1a9c15367131f863ddf5b8b9cb8c4f04ff" kind="function"><name>draw_resource_bar</name></member>
+  </compound>
+  <compound refid="inventory__output_8c" kind="file"><name>inventory_output.c</name>
+    <member refid="inventory__output_8c_1a9bd3c11008f5a20187508060fcaf9d90" kind="function"><name>draw_inventory_view</name></member>
+    <member refid="inventory__output_8c_1a32e269c0a71a1f9fec853f3682e1f89e" kind="function"><name>draw_inventory_menu</name></member>
+    <member refid="inventory__output_8c_1abec162193825c157bb1f05ffb528c378" kind="function"><name>draw_inventory_log</name></member>
+    <member refid="inventory__output_8c_1a8d28bbf9106c02bae93e670cb95312a4" kind="function"><name>draw_inventory_resource_bar</name></member>
+  </compound>
+  <compound refid="inventory__output_8h" kind="file"><name>inventory_output.h</name>
+    <member refid="inventory__output_8h_1acb1328889552a8b2f3760db7d5bf26e6" kind="function"><name>draw_inventory_view</name></member>
+    <member refid="inventory__output_8h_1adf1ae5f8c282d46253c356cfc92ab63e" kind="function"><name>draw_inventory_menu</name></member>
+    <member refid="inventory__output_8h_1abec162193825c157bb1f05ffb528c378" kind="function"><name>draw_inventory_log</name></member>
+    <member refid="inventory__output_8h_1a8d28bbf9106c02bae93e670cb95312a4" kind="function"><name>draw_inventory_resource_bar</name></member>
+  </compound>
+  <compound refid="map__output_8c" kind="file"><name>map_output.c</name>
+    <member refid="map__output_8c_1aac6541fadbd511dff01fefad7580ad98" kind="function"><name>draw_map_mode</name></member>
+    <member refid="map__output_8c_1a49b86713798894c20c9369d2e446f7ea" kind="function"><name>draw_player_info</name></member>
+  </compound>
+  <compound refid="map__output_8h" kind="file"><name>map_output.h</name>
+    <member refid="map__output_8h_1a7f8ccd25c8c548a3bfec5be59dfa2102" kind="function"><name>draw_map_mode</name></member>
+    <member refid="map__output_8h_1aa88f7566f29a97a020de3128191cbc8c" kind="function"><name>draw_player_info</name></member>
+  </compound>
+  <compound refid="stats__output_8c" kind="file"><name>stats_output.c</name>
+    <member refid="stats__output_8c_1afae44613e432a8ab3b80cb1adf11f662" kind="variable"><name>stats_menu_options</name></member>
+    <member refid="stats__output_8c_1a94b418f8262b6fc6cbafa0403cbe98a6" kind="function"><name>init_stats_mode</name></member>
+    <member refid="stats__output_8c_1af8f5a3500d524531f5bb37af46bfb3d7" kind="function"><name>render_stats_window</name></member>
+    <member refid="stats__output_8c_1a82627edb3f9eaa1b7a45122de15662f0" kind="function"><name>draw_stats_menu</name></member>
+    <member refid="stats__output_8c_1a3e8fcb2a8309ea33878b15b0fd83c0cd" kind="function"><name>draw_stats_log</name></member>
+    <member refid="stats__output_8c_1a7f0ffe57d66df99fa94af889f5a72add" kind="function"><name>shutdown_stats_mode</name></member>
+  </compound>
+  <compound refid="stats__output_8h" kind="file"><name>stats_output.h</name>
+    <member refid="stats__output_8h_1aba1cf0536f3a1b903f86ba6ab11eabca" kind="function"><name>init_stats_mode</name></member>
+    <member refid="stats__output_8h_1af8f5a3500d524531f5bb37af46bfb3d7" kind="function"><name>render_stats_window</name></member>
+    <member refid="stats__output_8h_1a82627edb3f9eaa1b7a45122de15662f0" kind="function"><name>draw_stats_menu</name></member>
+    <member refid="stats__output_8h_1a3e8fcb2a8309ea33878b15b0fd83c0cd" kind="function"><name>draw_stats_log</name></member>
+    <member refid="stats__output_8h_1a2fecf4cc31411f0fe0da5fe2bdeeed1b" kind="function"><name>update_stats_local</name></member>
+    <member refid="stats__output_8h_1a4bec609c34e5b95540570fc2fe90a969" kind="function"><name>shutdown_stats_mode</name></member>
+  </compound>
+  <compound refid="wait__output_8c" kind="file"><name>wait_output.c</name>
+    <member refid="wait__output_8c_1a81bbb0b5859cfdeced6f3060bcd04a81" kind="variable"><name>loading_message</name></member>
+    <member refid="wait__output_8c_1a633ad329c9d4bbc85e167c14d69d86a2" kind="function"><name>draw_loading_screen</name></member>
+    <member refid="wait__output_8c_1a4d088844951d67f0ba31dc7da59ce15e" kind="function"><name>draw_launch_screen</name></member>
+    <member refid="wait__output_8c_1a2c658aa459451809549a584cc482f854" kind="function"><name>draw_welcome_screen</name></member>
+  </compound>
+  <compound refid="wait__output_8h" kind="file"><name>wait_output.h</name>
+    <member refid="wait__output_8h_1a633ad329c9d4bbc85e167c14d69d86a2" kind="function"><name>draw_loading_screen</name></member>
+    <member refid="wait__output_8h_1a4d088844951d67f0ba31dc7da59ce15e" kind="function"><name>draw_launch_screen</name></member>
+    <member refid="wait__output_8h_1a2c658aa459451809549a584cc482f854" kind="function"><name>draw_welcome_screen</name></member>
+  </compound>
+  <compound refid="gear_8c" kind="file"><name>gear.c</name>
+    <member refid="gear_8c_1a3c6e8a495a903764f6566fb54bd1aee3" kind="function"><name>init_gear</name></member>
+    <member refid="gear_8c_1a8692ae861ae780f3af5db9d58fb9be00" kind="function"><name>init_gear_table</name></member>
+    <member refid="gear_8c_1a0c01826fef93a02232f8e89733fbf35f" kind="function"><name>free_gear_table</name></member>
+    <member refid="gear_8c_1abcd5746e9cf5f81afc0c81ef443c788e" kind="function"><name>gear_slot_to_string</name></member>
+  </compound>
+  <compound refid="gear_8h" kind="file"><name>gear.h</name>
+    <member refid="gear_8h_1ae35bb62091798902f2da854ffb0e26b0" kind="define"><name>MAX_ABILITY_PER_GEAR</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6" kind="enum"><name>gear_slot_t</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a308e798a2e5a7f485d17a990663bc54a" kind="enumvalue"><name>SLOT_HEAD</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a8138442d082e2c8afe9b5032b166f4ca" kind="enumvalue"><name>SLOT_CHEST</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a4597ff756fc9fb37a15ff3ddbb98e2cd" kind="enumvalue"><name>SLOT_LEGS</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a5293b17245592b8efccfe0301165fbf3" kind="enumvalue"><name>SLOT_FEET</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6aa3de6d8d1ec21034b289f9487d1b011c" kind="enumvalue"><name>SLOT_HANDS</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a1a3ee4ea26b2012e768e1219e2f71d3b" kind="enumvalue"><name>SLOT_NECK</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6afd62312e99a559c4ec1b88bbbfd3a9af" kind="enumvalue"><name>SLOT_FINGER_RIGHT</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a56143156debdad16f66384b4c7a5b25c" kind="enumvalue"><name>SLOT_FINGER_LEFT</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a40facc3d86404599d1839f963354f884" kind="enumvalue"><name>SLOT_LEFT_HAND</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a763b23d48224aaeaef3afb6e15059d70" kind="enumvalue"><name>SLOT_RIGHT_HAND</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6ac586cbc5a646f5190a2a4f3541d2ceb8" kind="enumvalue"><name>SLOT_BOTH_HANDS</name></member>
+    <member refid="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a7272571dd3fa9f8f18f940155e031610" kind="enumvalue"><name>MAX_SLOT</name></member>
+    <member refid="gear_8h_1a3c6e8a495a903764f6566fb54bd1aee3" kind="function"><name>init_gear</name></member>
+    <member refid="gear_8h_1a8692ae861ae780f3af5db9d58fb9be00" kind="function"><name>init_gear_table</name></member>
+    <member refid="gear_8h_1a0c01826fef93a02232f8e89733fbf35f" kind="function"><name>free_gear_table</name></member>
+    <member refid="gear_8h_1abcd5746e9cf5f81afc0c81ef443c788e" kind="function"><name>gear_slot_to_string</name></member>
+  </compound>
+  <compound refid="gear__identifier_8h" kind="file"><name>gear_identifier.h</name>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349" kind="enum"><name>gear_identifier_t</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a33e4b5b56dd96c33d999236764da9402" kind="enumvalue"><name>LONGSWORD</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4112e683048c4426083d52f87a4b7c8d" kind="enumvalue"><name>BARDICHE</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4f9adef2492fef9fca85c72bb600325d" kind="enumvalue"><name>CROSSBOW</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5a9eb7f9437e3dd5d9c7850220021987" kind="enumvalue"><name>MAGIC_STAFF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0d34a49295719eb2b78e1cbae279cbd6" kind="enumvalue"><name>SHORT_AXE</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0a794d28e176d279fa01308a0b16e089" kind="enumvalue"><name>STILETTO_DAGGER</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8c0d7f7e4e35089fc0e7604e769e3c42" kind="enumvalue"><name>BUCKLER</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a854ad25b4ccac11ba16811fb3740b921" kind="enumvalue"><name>MACE</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a684cc44c31c41f2bf9903ed2f9db29fd" kind="enumvalue"><name>WAND</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a76794112c7a74962a14329998bd5d322" kind="enumvalue"><name>ARMING_SWORD</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5f316bf79baf7585fb56cf5651cf1dba" kind="enumvalue"><name>IRON_HELM_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a50499044debfe781caa4517b9b52b017" kind="enumvalue"><name>IRON_HELM_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a2ce40bd3836227aa094343f035f3aee0" kind="enumvalue"><name>IRON_HELM_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af5d19bbc80cb18e52d260af49eeb1d4f" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a50a015b83297fc5e469ed4ea4fb634c7" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa114dfa55cf509c07e29a1585d556e99" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9fc2d3e83c9c1e705f1a7afee1d4cc7f" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a071a009fc8dad6ae541747d2177f4456" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a987801919fa432484cd8454fa8f85197" kind="enumvalue"><name>SCOUTS_HOOD_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a74199b003d6aa5ec72938ec0db35e71f" kind="enumvalue"><name>SHADOW_HOOD_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a18f8df183a1c3d22e4e57d4133cd8c36" kind="enumvalue"><name>SHADOW_HOOD_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab21e15833425e33ec617877f353e851b" kind="enumvalue"><name>SHADOW_HOOD_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0640772b10eef037d3cb54409508f951" kind="enumvalue"><name>BATTLEPLATE_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a1449be8489d4ff4d2ed1ed5db95154be" kind="enumvalue"><name>BATTLEPLATE_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a654b54d0a3841b04fe5499ed0a1eea50" kind="enumvalue"><name>BATTLEPLATE_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa027916ae077193649902a92ba65d0f7" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a07603e45252e1f5261a2446352e39170" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a6447c9cc090ddffebe3007d2e2c4310d" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae690325beed58a8aeb65114bbfcb2205" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab41723bd2c11f10c07a443d3fdbffe43" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae426bc648486831b959025732d9fa867" kind="enumvalue"><name>REINFORCED_JERKIN_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9ed1f4db8e555c236ce5b63d2dcbd6ed" kind="enumvalue"><name>LEATHER_JERKIN_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a10bad6ea6f5174bb566adff564b5d849" kind="enumvalue"><name>LEATHER_JERKIN_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a979c6039e91caf07b2ab870b8c912eae" kind="enumvalue"><name>LEATHER_JERKIN_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64a680feff129af9826a9c5ddc356b88" kind="enumvalue"><name>PLATED_GREAVES_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa9fbbeaec767c5ed9f326029d4505cc8" kind="enumvalue"><name>PLATED_GREAVES_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9418c9a722e96b6bcd3a4cc856b58605" kind="enumvalue"><name>PLATED_GREAVES_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a631e6ab4dda580d0bad19634202b2bb6" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aea306b6e7dcaaf6b500ee91d62929b90" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ade33de59a5ceaf420a968a3d6e87c8ce" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad34a585d1eafab2c31c7ec22654e38cb" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349addea73d002995d8dc5c3248f1c79fe41" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9a019e98611a525946e5c8374e452a35" kind="enumvalue"><name>RANGERS_TROUSERS_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af0ab4e046927d279d62196d0b3b6d4d8" kind="enumvalue"><name>SILENT_LEGGINGS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad742e82a347e8d8271255e79bba84506" kind="enumvalue"><name>SILENT_LEGGINGS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a96d9b2192a3969a64a021c40c4680c5f" kind="enumvalue"><name>SILENT_LEGGINGS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aaf473d5978e76b37b25d8ca0c047440b" kind="enumvalue"><name>STEEL_SABATONS_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac9e497203694225fa8b2d467169dfc6d" kind="enumvalue"><name>STEEL_SABATONS_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af017a73db60244cdfbd37afcdaa61a9d" kind="enumvalue"><name>STEEL_SABATONS_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a32d7d3203b4bd9fb2fedf8b0604d747b" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab7fdd9e3250b470baf4fb283bb3b0f58" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349acebf6f1705229da82c4b39ab2d9b2755" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a209c690f6e44db118df5fc028ff3b5ae" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a3b28abeb0d7ed6c8b0e53be1fa99b72e" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a302898c09652f96e473081c91208b955" kind="enumvalue"><name>TRAVELERS_BOOTS_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a2c2a076badbdd2c5672ff497d701990d" kind="enumvalue"><name>WINDSTEP_BOOTS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae76486333553384abf78fe7d7ad56fdb" kind="enumvalue"><name>WINDSTEP_BOOTS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab511479f21b868f82e81e4e487cfeb03" kind="enumvalue"><name>WINDSTEP_BOOTS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0bf96b6fd6a910eddc2dd7cd69c0461f" kind="enumvalue"><name>GAUNTLETS_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5346f56648ce3b8aff535769ae4c5263" kind="enumvalue"><name>GAUNTLETS_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64d0b9fdd2014a54ce00b6a8ecf84bbe" kind="enumvalue"><name>GAUNTLETS_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4d0818c221f9ab58612c33d04849fdde" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a768d4e440afa0721e0dabe714a142d8d" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad82524f47a01da395825b90a4e11ae0e" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349addaf12445d8ea997860d1e1f6801e50a" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a91a2cedb34ea65387a723f9876b09662" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7aac11f48788934249fe191901657019" kind="enumvalue"><name>LEATHER_GLOVES_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7e69de10d7a5ba462e2af32614a91139" kind="enumvalue"><name>NIMBLE_GRIPS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa2d277dcc81834b68e4ff8f6e812efaf" kind="enumvalue"><name>NIMBLE_GRIPS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8cb2f03cd90c177e2fd13fa5b5c7158b" kind="enumvalue"><name>NIMBLE_GRIPS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aaac0712c440607cc2f66b6944dae3f1a" kind="enumvalue"><name>IRON_GORGET_OF_THE_GOLIATH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae39962e559415fce75a6f7ca8b30c43d" kind="enumvalue"><name>IRON_GORGET_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a607d8b0783fa115ba22741e737c58883" kind="enumvalue"><name>IRON_GORGET_OF_THE_BEAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64a918b7bd1a7c83ec82cd22b35d40ee" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_BOAR</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad4af08d7b58aa139241da310dee620b0" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae4d79bfaa8cc10947f527f95432f70f9" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac44ffcecdc8bae8d63e00dcd5fd27009" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a92d2415c43ace1b292bb5b877abef8d6" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_WOLF</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a523ebc6c2461ae6abea2ee3db6bcda80" kind="enumvalue"><name>PENDANT_OF_FOCUS_OF_THE_LICH</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8af08cedf9f9583f0607a4653e991e21" kind="enumvalue"><name>WHISPER_CHARM_OF_THE_FOX</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa1f04fbd5961090fdaf37d7c96a2ec80" kind="enumvalue"><name>WHISPER_CHARM_OF_THE_OWL</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a1f9e1530a644c34a39aa5aed5c1e7541" kind="enumvalue"><name>WHISPER_CHARM_OF_THE_RAVEN</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349affdf6466eae7f449035ef0a9cc688f5f" kind="enumvalue"><name>IRON_BAND_OF_THE_GOLIATH_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa8c55cb35c2a7cd1a8cc6b9ad65fbc55" kind="enumvalue"><name>IRON_BAND_OF_THE_BOAR_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a19d2662bccc7057bb5eb53c0d45efb05" kind="enumvalue"><name>IRON_BAND_OF_THE_BEAR_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa4f270e913a59acef181137130f76976" kind="enumvalue"><name>CARVED_RING_OF_THE_BOAR_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab89a0444b2d8d9133893230588f90ef9" kind="enumvalue"><name>CARVED_RING_OF_THE_FOX_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a889687636191d4ca6b7093f2336ddd19" kind="enumvalue"><name>CARVED_RING_OF_THE_OWL_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abcb6d149c7760e01b89d716d0dc514a4" kind="enumvalue"><name>CARVED_RING_OF_THE_RAVEN_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7d5f00703372ba51753e69879466805f" kind="enumvalue"><name>CARVED_RING_OF_THE_WOLF_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349acf1550443d1989c08b7d244f733c70c9" kind="enumvalue"><name>CARVED_RING_OF_THE_LICH_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aafb1536260b9cfe353404ff49600bf49" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_FOX_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac7ad391007b305a21486fd814f9f909c" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_OWL_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9af693c73c9ebcacdeeac88ab768ad0a" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_RAVEN_R</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af9e9021986a254d1615bcdb233747ad6" kind="enumvalue"><name>IRON_BAND_OF_THE_GOLIATH_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7a03f02b85ca62f964b84c493205f41d" kind="enumvalue"><name>IRON_BAND_OF_THE_BOAR_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4ae4f2d010f38644acf8c78512187267" kind="enumvalue"><name>IRON_BAND_OF_THE_BEAR_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a40b8892a0d69bc56ee927536b364f66b" kind="enumvalue"><name>CARVED_RING_OF_THE_BOAR_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a57648d41c839d49ddfb98406ce49d013" kind="enumvalue"><name>CARVED_RING_OF_THE_FOX_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abc58f518af89666895fd61bec66d6106" kind="enumvalue"><name>CARVED_RING_OF_THE_OWL_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ace938774be81f04f9aac84d15b53f771" kind="enumvalue"><name>CARVED_RING_OF_THE_RAVEN_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abb935206c652cbf7060740109a6e0179" kind="enumvalue"><name>CARVED_RING_OF_THE_WOLF_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4caa7bec040c29d9986b6e7dab5c8f02" kind="enumvalue"><name>CARVED_RING_OF_THE_LICH_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a31d33a424a5a2eb20e57834005a0d7d6" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_FOX_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349affca03440a75d27677a30e734a9b21a6" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_OWL_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aae0e801bea77dfce1d99bd0338dc414a" kind="enumvalue"><name>TRICKSTERS_LOOP_OF_THE_RAVEN_L</name></member>
+    <member refid="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a47f5f2da55ff9f3bcad3b9098b89101a" kind="enumvalue"><name>MAX_GEARS</name></member>
+  </compound>
+  <compound refid="loot__generation_8c" kind="file"><name>loot_generation.c</name>
+    <member refid="loot__generation_8c_1a2427aded795514fed55e92ac50312215" kind="function"><name>generate_loot</name></member>
+  </compound>
+  <compound refid="loot__generation_8h" kind="file"><name>loot_generation.h</name>
+    <member refid="loot__generation_8h_1a921bcb836d305218639f72b2b7ffb59b" kind="function"><name>generate_loot</name></member>
+  </compound>
+  <compound refid="potion_8c" kind="file"><name>potion.c</name>
+    <member refid="potion_8c_1adf67ce0ec6059e7e9cb3cf2596d0f04d" kind="function"><name>init_potion</name></member>
+    <member refid="potion_8c_1a63735ba539253270d0300d881921df2f" kind="function"><name>init_potion_table</name></member>
+    <member refid="potion_8c_1a2aeb283826679b67f0dc8f89baa5f1b6" kind="function"><name>potion_type_to_string</name></member>
+    <member refid="potion_8c_1abbaf98e9e4045fe9ab84a23ebc9ce366" kind="function"><name>free_potion_table</name></member>
+  </compound>
+  <compound refid="potion_8h" kind="file"><name>potion.h</name>
+    <member refid="potion_8h_1a926490acdf10b5a458712a05dc090773" kind="enum"><name>potion_type_t</name></member>
+    <member refid="potion_8h_1a926490acdf10b5a458712a05dc090773ad886be039be75c52df73f9ab01bf887b" kind="enumvalue"><name>HEALING</name></member>
+    <member refid="potion_8h_1a926490acdf10b5a458712a05dc090773a1c4a7afa43b850a5b5b364ab33ac8a3e" kind="enumvalue"><name>MANA</name></member>
+    <member refid="potion_8h_1a926490acdf10b5a458712a05dc090773a6bf06a15de893533dd8b5ea926d0e248" kind="enumvalue"><name>STAMINA</name></member>
+    <member refid="potion_8h_1a926490acdf10b5a458712a05dc090773aadddd4e3edcba71bfa2e90c83b915752" kind="enumvalue"><name>MAX_POTION_TYPES</name></member>
+    <member refid="potion_8h_1a473007080c1ddcbfea3dd17d013cb2f5" kind="function"><name>init_potion</name></member>
+    <member refid="potion_8h_1a63735ba539253270d0300d881921df2f" kind="function"><name>init_potion_table</name></member>
+    <member refid="potion_8h_1a2aeb283826679b67f0dc8f89baa5f1b6" kind="function"><name>potion_type_to_string</name></member>
+    <member refid="potion_8h_1a5cafd1e754c9c3b2fd622d7c58cc3768" kind="function"><name>free_potion</name></member>
+    <member refid="potion_8h_1abbaf98e9e4045fe9ab84a23ebc9ce366" kind="function"><name>free_potion_table</name></member>
+  </compound>
+  <compound refid="local__handler_8c" kind="file"><name>local_handler.c</name>
+    <member refid="local__handler_8c_1a837df2c29aacf37cb96c2b65acb312a6" kind="define"><name>PATH_SEP</name></member>
+    <member refid="local__handler_8c_1a55176447671733dbd21c6ae879523eea" kind="define"><name>LOCAL_DIRECTORY</name></member>
+    <member refid="local__handler_8c_1aeba54b786584795b4ae511e920ccca49" kind="typedef"><name>observer_node_t</name></member>
+    <member refid="local__handler_8c_1a27ad8ce98bebf37859d424e0faedbba3" kind="variable"><name>observer_list</name></member>
+    <member refid="local__handler_8c_1a79a0bab456c935315de1b43f2870e4a5" kind="variable"><name>local_file</name></member>
+    <member refid="local__handler_8c_1ad12c467ecc161f9eabe5b9ca274e508d" kind="variable"><name>current_lang</name></member>
+    <member refid="local__handler_8c_1ab04b232544b0352a2de6e954cd5235de" kind="function"><name>init_local_handler</name></member>
+    <member refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kind="function"><name>get_local_string</name></member>
+    <member refid="local__handler_8c_1a6e74532281d4166e72427bf99287ba82" kind="function"><name>set_language</name></member>
+    <member refid="local__handler_8c_1a2ee20b5ced1851dfa72bbdef34fa1e33" kind="function"><name>get_language</name></member>
+    <member refid="local__handler_8c_1aba89dc368496a4c4daad4102bb508a0e" kind="function"><name>observe_local</name></member>
+    <member refid="local__handler_8c_1a3172ed29ce8bc435a786e295a9d51fb4" kind="function"><name>shutdown_local_handler</name></member>
+  </compound>
+  <compound refid="local__handler_8h" kind="file"><name>local_handler.h</name>
+    <member refid="local__handler_8h_1a142bdded52e55045283beeb0bd1e40f9" kind="enum"><name>local_lang_t</name></member>
+    <member refid="local__handler_8h_1a142bdded52e55045283beeb0bd1e40f9afc390e748fbdcb7ea7f773f02ad48f6c" kind="enumvalue"><name>LANGE_EN</name></member>
+    <member refid="local__handler_8h_1a142bdded52e55045283beeb0bd1e40f9a6b03c335af17a0761cd8b49d937d44a6" kind="enumvalue"><name>LANGE_DE</name></member>
+    <member refid="local__handler_8h_1a142bdded52e55045283beeb0bd1e40f9a7043b065eb662e8beccd172cd4d2fc1c" kind="enumvalue"><name>MAX_LANG</name></member>
+    <member refid="local__handler_8h_1a9a49e3ab8751c9d6a906b547558d56e0" kind="variable"><name>lang</name></member>
+    <member refid="local__handler_8h_1a8505c513bc640d1f69e5f76fb32b24a8" kind="variable"><name>file_name</name></member>
+    <member refid="local__handler_8h_1a764f836e87043b2490f952704208d9ef" kind="variable"><name>local_file_mapping</name></member>
+    <member refid="local__handler_8h_1a33223505427924fc18c482876ff612ad" kind="function"><name>init_local_handler</name></member>
+    <member refid="local__handler_8h_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kind="function"><name>get_local_string</name></member>
+    <member refid="local__handler_8h_1ac976767164a4fd14798b38a185528b7e" kind="function"><name>set_language</name></member>
+    <member refid="local__handler_8h_1a2ee20b5ced1851dfa72bbdef34fa1e33" kind="function"><name>get_language</name></member>
+    <member refid="local__handler_8h_1aba89dc368496a4c4daad4102bb508a0e" kind="function"><name>observe_local</name></member>
+    <member refid="local__handler_8h_1a3172ed29ce8bc435a786e295a9d51fb4" kind="function"><name>shutdown_local_handler</name></member>
+  </compound>
+  <compound refid="logger_8c" kind="file"><name>logger.c</name>
+    <member refid="logger_8c_1a2c14e30b8edd80c33d5aca8e59eae234" kind="define"><name>STAT_STRUCT</name></member>
+    <member refid="logger_8c_1ac79f8734f2028b939fb79cbff7cbc473" kind="define"><name>STAT_FUNC</name></member>
+    <member refid="logger_8c_1a33f0483b64221b258b080bba5882cf3c" kind="define"><name>MKDIR</name></member>
+    <member refid="logger_8c_1a837df2c29aacf37cb96c2b65acb312a6" kind="define"><name>PATH_SEP</name></member>
+    <member refid="logger_8c_1a4620eb783fd7aaa1d61fe4fdaa750d74" kind="define"><name>MAX_PATH_SIZE</name></member>
+    <member refid="logger_8c_1a45a75d076fd0268db347a013fc2a81ed" kind="define"><name>LOG_DIRECTORY</name></member>
+    <member refid="logger_8c_1ac903c26f555c37dbf720f4fc283eaa70" kind="define"><name>LOG_FILE_FORMAT</name></member>
+    <member refid="logger_8c_1aa62433a7807cf7f0bc9cf3f8323ba80c" kind="define"><name>TIMESTAMP_FORMAT</name></member>
+    <member refid="logger_8c_1af8dd24004011a014ca1cd76e3946e933" kind="define"><name>MSG_FORMAT</name></member>
+    <member refid="logger_8c_1af20b78be3e637717e6e622f23bff02f4" kind="variable"><name>log_level_str</name></member>
+    <member refid="logger_8c_1ab936051f5aaca44c6c3c41dee0d19c36" kind="variable"><name>log_file</name></member>
+    <member refid="logger_8c_1ab4698c0d5c140a233de44e801491fc35" kind="variable"><name>log_buffer</name></member>
+    <member refid="logger_8c_1a4e9f18da6d462f70b0105ba3ee976e16" kind="variable"><name>logger_is_running</name></member>
+    <member refid="logger_8c_1a26004895b14f496087255e72745bee14" kind="variable"><name>file_id</name></member>
+    <member refid="logger_8c_1a03d231b23688d7e15fc0d99a2e291d49" kind="function"><name>ensure_log_dir</name></member>
+    <member refid="logger_8c_1a1c7d106319f285b516ab672dbdb42f89" kind="function"><name>open_log_file</name></member>
+    <member refid="logger_8c_1a244494b217506ed4f6b95e4e36283b43" kind="function"><name>check_log_file</name></member>
+    <member refid="logger_8c_1a4026eeab5ad9c9a701338f7f873ed33d" kind="function"><name>get_latest_file_id</name></member>
+    <member refid="logger_8c_1a564a76b9f2eaa839be733afb99ffb45d" kind="function"><name>start_log_writer_thread</name></member>
+    <member refid="logger_8c_1ac473ecd88ac8f7ac94805f2e335c67c5" kind="function"><name>log_writer_thread</name></member>
+    <member refid="logger_8c_1a542d97fece81d2a06b1e1ddf3d461c8a" kind="function"><name>init_logger</name></member>
+    <member refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kind="function"><name>log_msg</name></member>
+    <member refid="logger_8c_1a1d815b48f04fdfadbb66a1a6bebbe721" kind="function"><name>shutdown_logger</name></member>
+  </compound>
+  <compound refid="logger_8h" kind="file"><name>logger.h</name>
+    <member refid="logger_8h_1a6f88fc964660bd666be2ccd3e22b373e" kind="define"><name>DEBUG_STATE</name></member>
+    <member refid="logger_8h_1a557e5b28168e4dbe28adde2e0ac1fc0a" kind="define"><name>DEBUG_LOG</name></member>
+    <member refid="logger_8h_1a728e12a832014a011503585b706b9f2d" kind="define"><name>RETURN_WHEN_NULL</name></member>
+    <member refid="logger_8h_1ac70aabd12c1a5a9c502e4b62a13d87ab" kind="define"><name>RETURN_WHEN_TRUE</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1d" kind="enum"><name>log_level_t</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da0593585da9181e972974c1274d8f2b4f" kind="enumvalue"><name>DEBUG</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1dac5a963f145f3153de0afe16e7d8cec76" kind="enumvalue"><name>FINE</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da748005382152808a72b1a9177d9dc806" kind="enumvalue"><name>INFO</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da984de77c680eaff141ec910e25568a81" kind="enumvalue"><name>WARNING</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da2fd6f336d08340583bd620a7f5694c90" kind="enumvalue"><name>ERROR</name></member>
+    <member refid="logger_8h_1a98121d38a8cf3daf5246a349f912ca1daf4fa7fb60016e7205b8797cd64776377" kind="enumvalue"><name>MAX_LOG_LEVEL</name></member>
+    <member refid="logger_8h_1a542d97fece81d2a06b1e1ddf3d461c8a" kind="function"><name>init_logger</name></member>
+    <member refid="logger_8h_1a15a9f05fbdf8481839ab4755df4b7370" kind="function"><name>log_msg</name></member>
+    <member refid="logger_8h_1a1d815b48f04fdfadbb66a1a6bebbe721" kind="function"><name>shutdown_logger</name></member>
+  </compound>
+  <compound refid="logger__config_8h" kind="file"><name>logger_config.h</name>
+    <member refid="logger__config_8h_1a97b2c112bd61dee2d739084157fb6f13" kind="define"><name>MAX_N_FILES</name></member>
+    <member refid="logger__config_8h_1a649ad5274d988d17a275a3cead056746" kind="define"><name>MAX_FILE_SIZE</name></member>
+    <member refid="logger__config_8h_1ab4ef65077affc5d61e2b41556d4b8387" kind="define"><name>MAX_HEADER_SIZE</name></member>
+    <member refid="logger__config_8h_1a17e333794ae761cd55ec6fd6fc0f1bac" kind="define"><name>MAX_MSG_SIZE</name></member>
+  </compound>
+  <compound refid="ringbuffer_8c" kind="file"><name>ringbuffer.c</name>
+    <member refid="ringbuffer_8c_1ad4d35da4e3f53aee4bee3ed4ef6ee939" kind="define"><name>INIT_MUTEX</name></member>
+    <member refid="ringbuffer_8c_1af16d75c95404e3b8af2c49723961dbcc" kind="define"><name>INIT_COND</name></member>
+    <member refid="ringbuffer_8c_1acee06b78aa983e0c386113767604af10" kind="define"><name>MUTEX_LOCK</name></member>
+    <member refid="ringbuffer_8c_1a28d6bd003d684d61b6e86d364d91e7a8" kind="define"><name>MUTEX_UNLOCK</name></member>
+    <member refid="ringbuffer_8c_1a1f62e8e3a0bfd3a16ad6c26b225aff3f" kind="define"><name>SIGNAL_COND</name></member>
+    <member refid="ringbuffer_8c_1a39d9281b294348e000c6f8699bf3c91e" kind="define"><name>SIGNAL_WAIT</name></member>
+    <member refid="ringbuffer_8c_1a86f5eae634c5cf4a26e38fe79465a0db" kind="function"><name>init_ringbuffer</name></member>
+    <member refid="ringbuffer_8c_1a243fee15b0c1aefe76876d34499e15b3" kind="function"><name>free_ringbuffer</name></member>
+    <member refid="ringbuffer_8c_1a6a2f7a0f9d13c92f09b8f71259f0066b" kind="function"><name>write_to_ringbuffer</name></member>
+    <member refid="ringbuffer_8c_1a74823d7cc8118c5f71f3d7d6a6a30491" kind="function"><name>read_from_ringbuffer</name></member>
+  </compound>
+  <compound refid="ringbuffer_8h" kind="file"><name>ringbuffer.h</name>
+    <member refid="ringbuffer_8h_1a6b20d41d6252e9871430c242cb1a56e7" kind="define"><name>BUFFER_SIZE</name></member>
+    <member refid="ringbuffer_8h_1aae15a57359405fa67f39ff805c6eddd4" kind="define"><name>MAX_MSG_LENGTH</name></member>
+    <member refid="ringbuffer_8h_1a86f5eae634c5cf4a26e38fe79465a0db" kind="function"><name>init_ringbuffer</name></member>
+    <member refid="ringbuffer_8h_1a243fee15b0c1aefe76876d34499e15b3" kind="function"><name>free_ringbuffer</name></member>
+    <member refid="ringbuffer_8h_1a6a2f7a0f9d13c92f09b8f71259f0066b" kind="function"><name>write_to_ringbuffer</name></member>
+    <member refid="ringbuffer_8h_1a74823d7cc8118c5f71f3d7d6a6a30491" kind="function"><name>read_from_ringbuffer</name></member>
+  </compound>
+  <compound refid="main_8c" kind="file"><name>main.c</name>
+    <member refid="main_8c_1a5980c706060e9eb24ebfe324322b2a44" kind="variable"><name>init_done</name></member>
+    <member refid="main_8c_1abf1016c3ebdd03f2df8bbd9887e217ea" kind="function"><name>display_launch_screen_thread</name></member>
+    <member refid="main_8c_1a1698af259ee7833fc5c3cdd81e613d2e" kind="function"><name>shutdown_game</name></member>
+    <member refid="main_8c_1a05848de25ac2dbec233935058a1d24b4" kind="function"><name>init</name></member>
+    <member refid="main_8c_1a840291bc02cba5474a4cb46a9b9566fe" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="main_8h" kind="file"><name>main.h</name>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52a" kind="enum"><name>exit_code_t</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aac7f69f7c9e5aea9b8f54cf02870e2bf8" kind="enumvalue"><name>SUCCESS</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aafc8e9bdc50fc1314a71a44fa95c471f4" kind="enumvalue"><name>FAIL_TB_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa3fb5c62963d2b30551746b10f73c2e50" kind="enumvalue"><name>FAIL_MEM_POOL_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aab985ed5bcfc528a44c669db456ecee8a" kind="enumvalue"><name>FAIL_LOCAL_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa1a13f3e0d4cc291da9bafeb119150a7f" kind="enumvalue"><name>FAIL_IO_HANDLER_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa1d9306299fa96109d73e7c75e7074c05" kind="enumvalue"><name>FAIL_MAIN_MENU_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aae9255ff6c9ad457b447804769e18b9b6" kind="enumvalue"><name>FAIL_SAVE_MENU_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa2c25f13abe02a07ace09b7c1cc9b0190" kind="enumvalue"><name>FAIL_LANGUAGE_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa4676a4ec5a8e02a0ba4d697147e935ea" kind="enumvalue"><name>FAIL_GAME_MODE_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa846e6ff531d3e6a1d6604839072a058d" kind="enumvalue"><name>FAIL_INVENTORY_MODE_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa43af95868f9329ae88e275e3f2c68d1d" kind="enumvalue"><name>FAIL_GAME_ENTITY_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aa43b0de811a13594c0292a068afdec987" kind="enumvalue"><name>FAIL_STATS_MODE_INIT</name></member>
+    <member refid="main_8h_1a2d967eed409413b06a8450ff977ab52aac18bc1ff7bc14cdf6df68e8fea9dc4cb" kind="enumvalue"><name>FAIL_ERROR</name></member>
+    <member refid="main_8h_1a5980c706060e9eb24ebfe324322b2a44" kind="variable"><name>init_done</name></member>
+    <member refid="main_8h_1a840291bc02cba5474a4cb46a9b9566fe" kind="function"><name>main</name></member>
+  </compound>
+  <compound refid="draw__light_8c" kind="file"><name>draw_light.c</name>
+    <member refid="draw__light_8c_1ab67d8537d7cbc661256b3ff8bf69b9ad" kind="variable"><name>map_arr</name></member>
+    <member refid="draw__light_8c_1a66a2c20c290617dc6408a95e1c7add10" kind="variable"><name>revealed_map_arr</name></member>
+    <member refid="draw__light_8c_1adb9f19ae581e429692315003a3550795" kind="variable"><name>map_height</name></member>
+    <member refid="draw__light_8c_1ab374b68f7eae0e484bfe3d84115f8301" kind="variable"><name>map_width</name></member>
+    <member refid="draw__light_8c_1adc3328862eb47d99af8729a4f0255349" kind="variable"><name>player_position</name></member>
+    <member refid="draw__light_8c_1a395279899207ce7f17adf9fdb8ee97ee" kind="variable"><name>radius</name></member>
+    <member refid="draw__light_8c_1a92513834932dbf609e213e73d39c7cf5" kind="variable"><name>checks_vector</name></member>
+    <member refid="draw__light_8c_1a48bc83959eaf8a4c2ed4fe3ca7b85a8a" kind="function"><name>need_loop_break</name></member>
+    <member refid="draw__light_8c_1a552aa4663af1f8d0995e64c4b9f70759" kind="function"><name>process_tile</name></member>
+    <member refid="draw__light_8c_1ae3927f4475e220bef60e0f1d4399de2e" kind="function"><name>check_and_process_tile</name></member>
+    <member refid="draw__light_8c_1ad6e66101bbda342221669cfc3916aa83" kind="function"><name>process_light_in_direction</name></member>
+    <member refid="draw__light_8c_1af2515692e104a3aace73431f1281f1a9" kind="function"><name>draw_light_on_player</name></member>
+  </compound>
+  <compound refid="draw__light_8h" kind="file"><name>draw_light.h</name>
+    <member refid="draw__light_8h_1a5933a5d1d652eb55ba59e6d1f77941be" kind="function"><name>draw_light_on_player</name></member>
+  </compound>
+  <compound refid="map_8c" kind="file"><name>map.c</name>
+    <member refid="map_8c_1a6942d3ace4e85ac56e1f420c3a5074dd" kind="variable"><name>map</name></member>
+    <member refid="map_8c_1aa94d5f6df5a1c7d16e6151d07e302052" kind="variable"><name>revealed_map</name></member>
+    <member refid="map_8c_1aa808dd3c3447c55bab011a35eaf3f50d" kind="variable"><name>directions</name></member>
+  </compound>
+  <compound refid="map_8h" kind="file"><name>map.h</name>
+    <member refid="map_8h_1a241aeeb764887ae5e3de58b98f04b16d" kind="define"><name>WIDTH</name></member>
+    <member refid="map_8h_1aed89bd71aee8be823e8a20ec4e093c1e" kind="define"><name>HEIGHT</name></member>
+    <member refid="map_8h_1a0d3f165d6730034b8565cce40dadb3b2" kind="define"><name>ENEMY_COUNT</name></member>
+    <member refid="map_8h_1a7205248231817984a172ec244056cfaf" kind="define"><name>ENEMY_MIN_DISTANCE</name></member>
+    <member refid="map_8h_1afc0eef637f1016e8786e45e106a4881e" kind="define"><name>TOP</name></member>
+    <member refid="map_8h_1ae420caa0af9cbdf102ed255034e27c5b" kind="define"><name>BOTTOM</name></member>
+    <member refid="map_8h_1a437ef08681e7210d6678427030446a54" kind="define"><name>LEFT</name></member>
+    <member refid="map_8h_1a80fb826a684cf3f0d306b22aa100ddac" kind="define"><name>RIGHT</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddae" kind="enum"><name>map_tile_t</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeafca2faad41310c7e71ec303ef789c53a" kind="enumvalue"><name>WALL</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeab5c63c54204a3c25d5ff88ea4d1d8336" kind="enumvalue"><name>FLOOR</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaead511cddfda4ab9c0bf93cd3e584c05a6" kind="enumvalue"><name>START_DOOR</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeaf7b47b000164891549c28fb5160ccb8b" kind="enumvalue"><name>EXIT_DOOR</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea147e71049e3285d642d0d5268dba260f" kind="enumvalue"><name>KEY</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeadacf26a0db2c43cae84048dd2190db84" kind="enumvalue"><name>LIFE_FOUNTAIN</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea55bb7943551896665fca2e406b540eba" kind="enumvalue"><name>MANA_FOUNTAIN</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeafdbd3796c3ee76ea97f36cc85ebd7195" kind="enumvalue"><name>GOBLIN</name></member>
+    <member refid="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea41ae0a505430bf564b119bc82db7592d" kind="enumvalue"><name>HIDDEN</name></member>
+    <member refid="map_8h_1aa808dd3c3447c55bab011a35eaf3f50d" kind="variable"><name>directions</name></member>
+    <member refid="map_8h_1a6942d3ace4e85ac56e1f420c3a5074dd" kind="variable"><name>map</name></member>
+    <member refid="map_8h_1aa94d5f6df5a1c7d16e6151d07e302052" kind="variable"><name>revealed_map</name></member>
+  </compound>
+  <compound refid="map__generator_8c" kind="file"><name>map_generator.c</name>
+    <member refid="map__generator_8c_1a1fb44cd5e2856c8986bc05a389cb03b8" kind="variable"><name>visited</name></member>
+    <member refid="map__generator_8c_1ad3118d377904edf5faee1a65e7db8dd8" kind="variable"><name>exit_edge</name></member>
+    <member refid="map__generator_8c_1ada4b633ecd8c11a9b0a9d91347f8ccff" kind="variable"><name>exit_x</name></member>
+    <member refid="map__generator_8c_1af106871dd79d268d74ac02a47ccdf689" kind="variable"><name>exit_y</name></member>
+    <member refid="map__generator_8c_1aae1a89ecc59d74fb027dab317d5d0bdf" kind="function"><name>shuffle</name></member>
+    <member refid="map__generator_8c_1a2d793a007ce0af876db3acfc9d47b3b3" kind="function"><name>is_in_bounds</name></member>
+    <member refid="map__generator_8c_1a3767348d5be6302a6a2fee688c935b85" kind="function"><name>is_valid_cell</name></member>
+    <member refid="map__generator_8c_1a0647cbca4feacc83f84cf117e64b9a61" kind="function"><name>validate_exit_position</name></member>
+    <member refid="map__generator_8c_1ab96842437100cb2c82d4ab83aa6a545f" kind="function"><name>carve_passages</name></member>
+    <member refid="map__generator_8c_1a6a163f24c9a7f40664ade38459e2903e" kind="function"><name>check_neighboring_floors</name></member>
+    <member refid="map__generator_8c_1a498f4cea0549cd54906648c6fc40e122" kind="function"><name>add_loops</name></member>
+    <member refid="map__generator_8c_1ab4d107f9f6108635a651dc312eac887f" kind="function"><name>place_exit</name></member>
+    <member refid="map__generator_8c_1a91d5a2bf0c9f75e02e916d0287815c33" kind="function"><name>initialize_map</name></member>
+    <member refid="map__generator_8c_1ada9e87d77720e0e863a8b1530b772e5e" kind="function"><name>generate_maze</name></member>
+    <member refid="map__generator_8c_1afd7766718801e8ef393aefe34171e5ef" kind="function"><name>set_start_position</name></member>
+    <member refid="map__generator_8c_1ace7106029eed8d9dbf955619df653efb" kind="function"><name>make_exit_into_start</name></member>
+    <member refid="map__generator_8c_1afd4d517816b21083bfcbb8ca886f92a2" kind="function"><name>generate_map</name></member>
+  </compound>
+  <compound refid="map__generator_8h" kind="file"><name>map_generator.h</name>
+    <member refid="map__generator_8h_1afd4d517816b21083bfcbb8ca886f92a2" kind="function"><name>generate_map</name></member>
+  </compound>
+  <compound refid="map__mode_8c" kind="file"><name>map_mode.c</name>
+    <member refid="map__mode_8c_1a742486a64f52ed509d0a28a9d8b4feac" kind="variable"><name>map_anchor</name></member>
+    <member refid="map__mode_8c_1ac041da32033656fac1b136a4f89e777a" kind="variable"><name>player_pos</name></member>
+    <member refid="map__mode_8c_1a38e9cb4df79fdde3ef8077ab680fe86e" kind="variable"><name>player_has_key</name></member>
+    <member refid="map__mode_8c_1ae024ef3a957c36cc76cfe983e32b69c5" kind="variable"><name>first_function_call</name></member>
+    <member refid="map__mode_8c_1abfa7ec3d3858c36b2e932528bc65e28c" kind="function"><name>set_player_start_pos</name></member>
+    <member refid="map__mode_8c_1a67c95ce30cb5f437062cf1ef26db04f5" kind="function"><name>get_player_pos</name></member>
+    <member refid="map__mode_8c_1a08be0864635e4c0dd320820bb44e88e2" kind="function"><name>handle_input</name></member>
+    <member refid="map__mode_8c_1a48aad2953d4c5958998e5aa2560db3c0" kind="function"><name>map_mode_update</name></member>
+    <member refid="map__mode_8c_1a539c21922ae32b1b5766db999879cb12" kind="function"><name>init_map_mode</name></member>
+    <member refid="map__mode_8c_1ab4a4b1e8cfea4e98e9d136cfa98d03c8" kind="function"><name>shutdown_map_mode</name></member>
+  </compound>
+  <compound refid="map__mode_8h" kind="file"><name>map_mode.h</name>
+    <member refid="map__mode_8h_1aa948e5bccf1e1a22a5a44096dd2a65f5" kind="define"><name>COLOR_FOREGROUND</name></member>
+    <member refid="map__mode_8h_1af27cfac70191e90ee59f2fbfc0142df5" kind="define"><name>COLOR_BACKGROUND</name></member>
+    <member refid="map__mode_8h_1a94bf57bc173ee5b40923f7c4544148a4" kind="define"><name>LIGHT_RADIUS</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80a" kind="enum"><name>map_mode_result_t</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa49959dd441dcda75d6898cf2c68fb374" kind="enumvalue"><name>CONTINUE</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa76bdc8adfd6c6463ab269ff4c06be9b4" kind="enumvalue"><name>QUIT</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aaaa51025709353692e9e661942f44ce36" kind="enumvalue"><name>NEXT_FLOOR</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa9c918f1aa0dbc8c3ee98364633c14c84" kind="enumvalue"><name>COMBAT</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa12213812c3a9f7c0784fbbfed8d2370a" kind="enumvalue"><name>SHOW_MENU</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa433b9d812eeaff8431a6722daa0e75ee" kind="enumvalue"><name>SHOW_STATS</name></member>
+    <member refid="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aac7027f3f6c15c5d960298ecee12aacf8" kind="enumvalue"><name>SHOW_INVENTORY</name></member>
+    <member refid="map__mode_8h_1a1a3ecce91b699f12980b512b50fea7ae" kind="function"><name>set_player_start_pos</name></member>
+    <member refid="map__mode_8h_1a67c95ce30cb5f437062cf1ef26db04f5" kind="function"><name>get_player_pos</name></member>
+    <member refid="map__mode_8h_1a48aad2953d4c5958998e5aa2560db3c0" kind="function"><name>map_mode_update</name></member>
+    <member refid="map__mode_8h_1a539c21922ae32b1b5766db999879cb12" kind="function"><name>init_map_mode</name></member>
+    <member refid="map__mode_8h_1ab4a4b1e8cfea4e98e9d136cfa98d03c8" kind="function"><name>shutdown_map_mode</name></member>
+    <member refid="map__mode_8h_1a08be0864635e4c0dd320820bb44e88e2" kind="function"><name>handle_input</name></member>
+  </compound>
+  <compound refid="map__populator_8c" kind="file"><name>map_populator.c</name>
+    <member refid="map__populator_8c_1abc1bb5a6c12a3d6c94964074d6a4d651" kind="function"><name>is_dead_end</name></member>
+    <member refid="map__populator_8c_1aae2d8f46dcd0c445220952f57769e189" kind="function"><name>place_key</name></member>
+    <member refid="map__populator_8c_1a8cbc5251f1a513c147142a9adc21f2e5" kind="function"><name>is_close_to_enemy</name></member>
+    <member refid="map__populator_8c_1a76c2c3a9975718714be283d6ddee2b41" kind="function"><name>place_enemies</name></member>
+    <member refid="map__populator_8c_1aafb34bfe8c7ad04208099d20e823cb3e" kind="function"><name>place_fountains</name></member>
+    <member refid="map__populator_8c_1abc993b4ee63faeef704701dfb44853d6" kind="function"><name>populate_map</name></member>
+  </compound>
+  <compound refid="map__populator_8h" kind="file"><name>map_populator.h</name>
+    <member refid="map__populator_8h_1abc993b4ee63faeef704701dfb44853d6" kind="function"><name>populate_map</name></member>
+  </compound>
+  <compound refid="memory__management_8c" kind="file"><name>memory_management.c</name>
+    <member refid="memory__management_8c_1ac6d6edf6b3dc470f7e809e5f82b21658" kind="function"><name>init_memory_pool</name></member>
+    <member refid="memory__management_8c_1ad9c929376b0501e9ad79f3a293fe8a71" kind="function"><name>memory_pool_alloc</name></member>
+    <member refid="memory__management_8c_1af72f6fb9c867ee59c91532a9022e322e" kind="function"><name>memory_pool_free</name></member>
+    <member refid="memory__management_8c_1af069c92ca841b902a6be278fc9434d96" kind="function"><name>shutdown_memory_pool</name></member>
+  </compound>
+  <compound refid="memory__management_8h" kind="file"><name>memory_management.h</name>
+    <member refid="memory__management_8h_1af069c92ca841b902a6be278fc9434d96" kind="function"><name>shutdown_memory_pool</name></member>
+  </compound>
+  <compound refid="language__menu_8c" kind="file"><name>language_menu.c</name>
+    <member refid="language__menu_8c_1a31798017913b2b7aed434c3e1438d9c8" kind="function"><name>init_language_menu</name></member>
+    <member refid="language__menu_8c_1a9806daa700afe84eb4d0f064f73841c5" kind="function"><name>show_language_menu</name></member>
+    <member refid="language__menu_8c_1a6d1d8db91de63c764f5818a118138a2d" kind="function"><name>shutdown_language_menu</name></member>
+  </compound>
+  <compound refid="language__menu_8h" kind="file"><name>language_menu.h</name>
+    <member refid="language__menu_8h_1a0feb044bd3eed068e2237cbfa0663345" kind="function"><name>init_language_menu</name></member>
+    <member refid="language__menu_8h_1acd9bae39ab9a6261a4e5e2326e0829f2" kind="function"><name>show_language_menu</name></member>
+    <member refid="language__menu_8h_1a47ea19ec3b771b7121d5c8dd2567da24" kind="function"><name>shutdown_language_menu</name></member>
+  </compound>
+  <compound refid="language__menu__local_8c" kind="file"><name>language_menu_local.c</name>
+    <member refid="language__menu__local_8c_1ae9f223d84ef63eac528fcbed6da477aa" kind="variable"><name>language_menu_strings</name></member>
+    <member refid="language__menu__local_8c_1a40c6eed1cad23d1d7d0e5905c995ed47" kind="function"><name>update_language_menu_local</name></member>
+  </compound>
+  <compound refid="language__menu__local_8h" kind="file"><name>language_menu_local.h</name>
+    <member refid="language__menu__local_8h_1a29cd81bb143356da45f6621fc78f8a75" kind="enum"><name>language_menu_index</name></member>
+    <member refid="language__menu__local_8h_1a29cd81bb143356da45f6621fc78f8a75a7a0e14bc8ac0fde0782b762e31d2aac3" kind="enumvalue"><name>LANGUAGE_ENGLISH</name></member>
+    <member refid="language__menu__local_8h_1a29cd81bb143356da45f6621fc78f8a75a937e39bfe9c8739576918bea9e84d503" kind="enumvalue"><name>LANGUAGE_GERMAN</name></member>
+    <member refid="language__menu__local_8h_1a29cd81bb143356da45f6621fc78f8a75a18859d7b811a12fe71a940266e7fd32c" kind="enumvalue"><name>MAX_LANGUAGE_MENU_STRINGS</name></member>
+    <member refid="language__menu__local_8h_1ae9f223d84ef63eac528fcbed6da477aa" kind="variable"><name>language_menu_strings</name></member>
+    <member refid="language__menu__local_8h_1a40c6eed1cad23d1d7d0e5905c995ed47" kind="function"><name>update_language_menu_local</name></member>
+  </compound>
+  <compound refid="main__menu__local_8c" kind="file"><name>main_menu_local.c</name>
+    <member refid="main__menu__local_8c_1a02de0f905aa67ab6a376bf06f6e65f0a" kind="variable"><name>main_menu_strings</name></member>
+    <member refid="main__menu__local_8c_1a597b77f22a096b15521adc64ac318596" kind="function"><name>update_main_menu_local</name></member>
+  </compound>
+  <compound refid="main__menu__local_8h" kind="file"><name>main_menu_local.h</name>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1" kind="enum"><name>main_menu_index</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1aca49713b23113d589e23ce8137847d64" kind="enumvalue"><name>NEW_GAME_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1ae0542749298fd274193f73666ce53ee9" kind="enumvalue"><name>CONTINUE_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1ab782139908f38f4166629571ec081fed" kind="enumvalue"><name>SAVE_GAME_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1ae8b8b6f2cc7228370739f425d19d4c05" kind="enumvalue"><name>LOAD_GAME_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1ac595cf75351ddfa8706c69590313a0f7" kind="enumvalue"><name>CHANGE_LANGUAGE_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1aac2f5964e9e385b73c4d43b41a0f87e6" kind="enumvalue"><name>EXIT_STR</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1a0fe323f95f1d8326fe19bcd0dbcfabfc" kind="enumvalue"><name>QUESTION_CONTINUE</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1a07e7059d5840fb6bb6f69225659c91a3" kind="enumvalue"><name>QUESTION_EXIT</name></member>
+    <member refid="main__menu__local_8h_1a388262efe3f448ab2cb644710d4f98e1a53ce74a3ea938d27e0c18ceb20fde45c" kind="enumvalue"><name>MAX_MAIN_MENU_STRINGS</name></member>
+    <member refid="main__menu__local_8h_1a02de0f905aa67ab6a376bf06f6e65f0a" kind="variable"><name>main_menu_strings</name></member>
+    <member refid="main__menu__local_8h_1a597b77f22a096b15521adc64ac318596" kind="function"><name>update_main_menu_local</name></member>
+  </compound>
+  <compound refid="save__menu__local_8c" kind="file"><name>save_menu_local.c</name>
+    <member refid="save__menu__local_8c_1a3bce0123efb2210ed969e833f4770aa5" kind="variable"><name>save_menu_strings</name></member>
+    <member refid="save__menu__local_8c_1ab7442c7b4232e6b45cf0fca8dbd0fc6a" kind="function"><name>update_save_menu_local</name></member>
+  </compound>
+  <compound refid="save__menu__local_8h" kind="file"><name>save_menu_local.h</name>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716" kind="enum"><name>save_menu_index</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716a6587285fa898927ffa488a2d3ac75c32" kind="enumvalue"><name>SAVE_NAME_REQUEST</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716a93178243435f3def7428061452431939" kind="enumvalue"><name>SAVES_NOT_FOUND</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716a0325d5c3cbdcdd88f4d68c5b10d231de" kind="enumvalue"><name>SELECT_SAVE</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716ab843537c297252ffb57d9b2dac8af451" kind="enumvalue"><name>SAVING</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716af7f3040d7944cda421a2268a601193ed" kind="enumvalue"><name>NAVIGATE_INSTRUCTIONS</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716a4d0e8a584c3157c34cb615e68bfeb0a5" kind="enumvalue"><name>CONFIRM_QUESTION</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716a2ac222f6e8d187979ff9a993ee081240" kind="enumvalue"><name>WARNING_LOST_PROGRESS</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716aa7e0f2f244599116512ac4b6cb90508a" kind="enumvalue"><name>PRESS_ENTER_CONFIRM</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716aa72ded48811476273807c3e8d722de2f" kind="enumvalue"><name>PRESS_ANY_RETURN</name></member>
+    <member refid="save__menu__local_8h_1abdf74a8b5f17dccc6e004ccd146ac716aa7138c1b156d198594624aab02e9e3d4" kind="enumvalue"><name>MAX_SAVE_MENU_STRINGS</name></member>
+    <member refid="save__menu__local_8h_1a3bce0123efb2210ed969e833f4770aa5" kind="variable"><name>save_menu_strings</name></member>
+    <member refid="save__menu__local_8h_1ab7442c7b4232e6b45cf0fca8dbd0fc6a" kind="function"><name>update_save_menu_local</name></member>
+  </compound>
+  <compound refid="main__menu_8c" kind="file"><name>main_menu.c</name>
+    <member refid="main__menu_8c_1a60b4821f298d785d62074dc1e39fda93" kind="variable"><name>menu_active</name></member>
+    <member refid="main__menu_8c_1a7f2511447bb377fecd121985fe8a6621" kind="variable"><name>active_menu_state</name></member>
+    <member refid="main__menu_8c_1a5eb15f049d1dcc4876ac7f2a19cd2b8f" kind="function"><name>select_menu_option</name></member>
+    <member refid="main__menu_8c_1a7fe202208d64df8988be2191bf59a213" kind="function"><name>init_main_menu</name></member>
+    <member refid="main__menu_8c_1a5d16277bd27dbc55a1675bbe55305e37" kind="function"><name>show_main_menu</name></member>
+    <member refid="main__menu_8c_1ae888d257737440167bbff5f74705a8de" kind="function"><name>shutdown_main_menu</name></member>
+  </compound>
+  <compound refid="main__menu_8h" kind="file"><name>main_menu.h</name>
+    <member refid="main__menu_8h_1a4b0fe964a06f0ea2182f7e9e52177df4" kind="function"><name>init_main_menu</name></member>
+    <member refid="main__menu_8h_1a2c31ca9adcc57eb03e951dde451c03ec" kind="function"><name>show_main_menu</name></member>
+    <member refid="main__menu_8h_1ae888d257737440167bbff5f74705a8de" kind="function"><name>shutdown_main_menu</name></member>
+  </compound>
+  <compound refid="menu_8c" kind="file"><name>menu.c</name>
+    <member refid="menu_8c_1ad14c0d0a05faecc987a8ee07ccaba95d" kind="function"><name>draw_menu</name></member>
+    <member refid="menu_8c_1a1211f071bd0d7fffda3e6f596a0f0d83" kind="function"><name>show_confirmation</name></member>
+  </compound>
+  <compound refid="menu_8h" kind="file"><name>menu.h</name>
+    <member refid="menu_8h_1ac4b793234b87cba8eb1c4ef53be65b84" kind="define"><name>NEW_GAME_OPTION</name></member>
+    <member refid="menu_8h_1a168af1cdf3be13d2b1fbf22e949f6065" kind="define"><name>CONTINUE_OPTION</name></member>
+    <member refid="menu_8h_1a7ec0ceecea2a5a62af7d6fa65130cb43" kind="define"><name>SAVE_GAME_OPTION</name></member>
+    <member refid="menu_8h_1a5d1cacff743c1792a9b82013d89704ea" kind="define"><name>LOAD_GAME_OPTION</name></member>
+    <member refid="menu_8h_1ad5d13d2e3379333b452f57ec569c3656" kind="define"><name>CHANGE_LANGUAGE_OPTION</name></member>
+    <member refid="menu_8h_1a948b01d5dce6fec4bc6a40e1adfbc50f" kind="define"><name>EXIT_OPTION</name></member>
+    <member refid="menu_8h_1a60a56c499875b57369f7ef3a5a227cb9" kind="define"><name>TITLE</name></member>
+    <member refid="menu_8h_1ace62e62aff0a776f151616ee5e3aecb9" kind="define"><name>TITLE_COLOR</name></member>
+    <member refid="menu_8h_1a6694c4f608fb2f662dfd646c9a541b4a" kind="define"><name>MENU_START_Y</name></member>
+    <member refid="menu_8h_1a84842acd109bca3b9f7f45cd1695901d" kind="define"><name>MENU_START_X</name></member>
+    <member refid="menu_8h_1ae03eb48b54e966ac9a678c48a72705bc" kind="define"><name>MENU_ITEM_SPACING</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedc" kind="enum"><name>menu_result_t</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedca1252d2717730831011492af71b96fe18" kind="enumvalue"><name>MENU_START_GAME</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedcaddd8c30ac512a3f22d89a3fbd69bb24d" kind="enumvalue"><name>MENU_CONTINUE</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedcae112d3428824a9a18eef1bad04e7e753" kind="enumvalue"><name>MENU_SAVE_GAME</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedcafa8024c076ef88933aec61024b3deae9" kind="enumvalue"><name>MENU_LOAD_GAME</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedca294afeb69e8a754a38e6508a152b0b47" kind="enumvalue"><name>MENU_CHANGE_LANGUAGE</name></member>
+    <member refid="menu_8h_1adda2146013b43caf2fdfd3b85627bedcab2dd60772d55c02b2e7915b858ac6e44" kind="enumvalue"><name>MENU_EXIT</name></member>
+    <member refid="menu_8h_1a1211f071bd0d7fffda3e6f596a0f0d83" kind="function"><name>show_confirmation</name></member>
+    <member refid="menu_8h_1ad14c0d0a05faecc987a8ee07ccaba95d" kind="function"><name>draw_menu</name></member>
+  </compound>
+  <compound refid="save__menu_8c" kind="file"><name>save_menu.c</name>
+    <member refid="save__menu_8c_1aa38a4692eaf32617a6060c034710ae09" kind="variable"><name>selected_save_file_id</name></member>
+    <member refid="save__menu_8c_1ab4f5764236c374b42f6df1a4139da2c7" kind="variable"><name>last_save_name</name></member>
+    <member refid="save__menu_8c_1aa4ea0f5996ad112006ad87d6918df8e7" kind="function"><name>init_save_menu</name></member>
+    <member refid="save__menu_8c_1aaf4cff0b2621dc8147a58688127d3e1b" kind="function"><name>get_selected_save_file_id</name></member>
+    <member refid="save__menu_8c_1ab3fb8fa679d4f070fd005ca9227a5d4f" kind="function"><name>get_save_name</name></member>
+    <member refid="save__menu_8c_1a4a3e89677e576e3dd79366b4cb901cf8" kind="function"><name>show_save_game_menu</name></member>
+    <member refid="save__menu_8c_1a2543c68890f37c745b97d4112f166833" kind="function"><name>show_load_game_menu</name></member>
+    <member refid="save__menu_8c_1aa59c47dd0ae6b78827148e1b5b2b2431" kind="function"><name>shutdown_save_menu</name></member>
+  </compound>
+  <compound refid="save__menu_8h" kind="file"><name>save_menu.h</name>
+    <member refid="save__menu_8h_1aa38a4692eaf32617a6060c034710ae09" kind="variable"><name>selected_save_file_id</name></member>
+    <member refid="save__menu_8h_1ab4f5764236c374b42f6df1a4139da2c7" kind="variable"><name>last_save_name</name></member>
+    <member refid="save__menu_8h_1ae73fcc814c95e791b5202767bc1a2226" kind="function"><name>init_save_menu</name></member>
+    <member refid="save__menu_8h_1aaf4cff0b2621dc8147a58688127d3e1b" kind="function"><name>get_selected_save_file_id</name></member>
+    <member refid="save__menu_8h_1ab3fb8fa679d4f070fd005ca9227a5d4f" kind="function"><name>get_save_name</name></member>
+    <member refid="save__menu_8h_1a4a3e89677e576e3dd79366b4cb901cf8" kind="function"><name>show_save_game_menu</name></member>
+    <member refid="save__menu_8h_1a2543c68890f37c745b97d4112f166833" kind="function"><name>show_load_game_menu</name></member>
+    <member refid="save__menu_8h_1aa59c47dd0ae6b78827148e1b5b2b2431" kind="function"><name>shutdown_save_menu</name></member>
+  </compound>
+  <compound refid="stats__mode__local_8c" kind="file"><name>stats_mode_local.c</name>
+    <member refid="stats__mode__local_8c_1a0ce56594f60981bd1abf644cbea2dfdc" kind="variable"><name>stats_mode_strings</name></member>
+    <member refid="stats__mode__local_8c_1a2fecf4cc31411f0fe0da5fe2bdeeed1b" kind="function"><name>update_stats_local</name></member>
+  </compound>
+  <compound refid="stats__mode__local_8h" kind="file"><name>stats_mode_local.h</name>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734" kind="enum"><name>stats_mode_index</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734aad4ffaf47bf2d34e3f2968505e7c6c15" kind="enumvalue"><name>PLAYER_MENU_TITLE</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a7949073d0608c77f0745bbe967b3acd7" kind="enumvalue"><name>STATS_MENU_TITLE</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a502505d765033af68c4ccd34039c369e" kind="enumvalue"><name>INVENTORY_MENU_TITLE</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734af081496630233e12dbb91ebcce45de56" kind="enumvalue"><name>HEALTH_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734af23e168ab95e6fa633feb2bb3a5a482d" kind="enumvalue"><name>STAMINA_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a5b0db01e9c52d8d98cda2918a5195589" kind="enumvalue"><name>MANA_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734af599c6b3921ef5a293122bd7c230820a" kind="enumvalue"><name>STRENGTH_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a67c8cfeaf9727390cd7b49972fcda0c9" kind="enumvalue"><name>INTELLIGENCE_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a94e94f1132b8381d327a17c32c2ad8dd" kind="enumvalue"><name>DEXTERITY_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734aedeaae160b6b05bfdf4fbc967da166b1" kind="enumvalue"><name>CONSTITUTION_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a08c25fe442ac1ad858deb2e2c5f145c6" kind="enumvalue"><name>LEVEL_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a1b5beb39b52cda570f181b118a2a352c" kind="enumvalue"><name>EXP_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a6bcb067beea915a4f0e3f3d378feb793" kind="enumvalue"><name>ARMOR_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734acd006d268d507f0d207d6d205aadc775" kind="enumvalue"><name>MAGIC_RESISTANCE_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a29ee4fc6e01c87ad2f1e3dd9718ea26c" kind="enumvalue"><name>AVAILABLE_SKILL_POINTS_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a0873c193fedbaef4f111d6710e76a3de" kind="enumvalue"><name>EQUIPPED_ARMOR_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734a7b74d1909e76189e96841325bad36051" kind="enumvalue"><name>EMPTY_ARMOR_SLOT_STR</name></member>
+    <member refid="stats__mode__local_8h_1a22fa2857b48b9bd3edf41ec903990734afb10c8d814fdbad3bcc845146b0f1a2a" kind="enumvalue"><name>MAX_STATS_STRINGS</name></member>
+    <member refid="stats__mode__local_8h_1a0ce56594f60981bd1abf644cbea2dfdc" kind="variable"><name>stats_mode_strings</name></member>
+    <member refid="stats__mode__local_8h_1a2fecf4cc31411f0fe0da5fe2bdeeed1b" kind="function"><name>update_stats_local</name></member>
+  </compound>
+  <compound refid="stats_8c" kind="file"><name>stats.c</name>
+    <member refid="stats_8c_1adfd7b39cd04bd3bcd5280210f3c3ed76" kind="function"><name>raise_skill</name></member>
+  </compound>
+  <compound refid="stats_8h" kind="file"><name>stats.h</name>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077" kind="enum"><name>stat_type_t</name></member>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077a4ec80738f71bd12e613343cb7b09bfb4" kind="enumvalue"><name>STRENGTH</name></member>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077a7138c5b60705723846470f0f756a92c9" kind="enumvalue"><name>INTELLIGENCE</name></member>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077a101ab31241bc9ed4ae27605531638b6f" kind="enumvalue"><name>DEXTERITY</name></member>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077a8a80f93c76aa9b6d5d8f64f3b023cee1" kind="enumvalue"><name>CONSTITUTION</name></member>
+    <member refid="stats_8h_1a8bf61ab8e8cdacc870766e27efb25077a8beb5c8113079df6798434be4fb27cef" kind="enumvalue"><name>MAX_STATS</name></member>
+    <member refid="stats_8h_1adfd7b39cd04bd3bcd5280210f3c3ed76" kind="function"><name>raise_skill</name></member>
+  </compound>
+  <compound refid="stats__mode_8c" kind="file"><name>stats_mode.c</name>
+    <member refid="stats__mode_8c_1ae36f87c63a5d95e3d065715f6eb2b8a3" kind="variable"><name>selected_index</name></member>
+    <member refid="stats__mode_8c_1a228ffd4343e80a4ce2540d5bff871fe1" kind="function"><name>stats_mode</name></member>
+  </compound>
+  <compound refid="stats__mode_8h" kind="file"><name>stats_mode.h</name>
+    <member refid="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44" kind="enum"><name>stats_result_t</name></member>
+    <member refid="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44a2a30116961421be04d2938e3503a099a" kind="enumvalue"><name>STATS_WINDOW</name></member>
+    <member refid="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44a9f355e16a4019d974d9c90c58fc3e5a6" kind="enumvalue"><name>STATS_EXIT</name></member>
+    <member refid="stats__mode_8h_1a228ffd4343e80a4ce2540d5bff871fe1" kind="function"><name>stats_mode</name></member>
+  </compound>
+  <compound refid="thread__handler_8c" kind="file"><name>thread_handler.c</name>
+    <member refid="thread__handler_8c_1a540fff0fb1ad91933bfc6f44ac7a9a51" kind="function"><name>thread_wrapper</name></member>
+    <member refid="thread__handler_8c_1ae977c56a16e1c4409e2ed3cdb804a887" kind="function"><name>start_simple_thread</name></member>
+  </compound>
+  <compound refid="thread__handler_8h" kind="file"><name>thread_handler.h</name>
+    <member refid="thread__handler_8h_1ae977c56a16e1c4409e2ed3cdb804a887" kind="function"><name>start_simple_thread</name></member>
+  </compound>
+  <compound refid="dir_cf914bf64036ec92a184701ee3113d82" kind="dir"><name>src/asciiart</name>
+  </compound>
+  <compound refid="dir_cff08ed9a466d3fe1316b71e9cfad869" kind="dir"><name>src/character</name>
+  </compound>
+  <compound refid="dir_61f20e49ac5d6763f7282e8c799f7538" kind="dir"><name>src/combat</name>
+  </compound>
+  <compound refid="dir_3a7e1ce788c4943857fa98d6ce347bef" kind="dir"><name>src/io/output/common</name>
+  </compound>
+  <compound refid="dir_803ee67260c130b45d29089798491ab2" kind="dir"><name>src/database</name>
+  </compound>
+  <compound refid="dir_304a36c1bbb4dead77ebb9aed9cad8e9" kind="dir"><name>src/map/draw</name>
+  </compound>
+  <compound refid="dir_f19cf67b5895214871ced27260ec3b9b" kind="dir"><name>src/database/game</name>
+  </compound>
+  <compound refid="dir_2161321364b45a90bed1b463a91c9978" kind="dir"><name>src/io/input</name>
+  </compound>
+  <compound refid="dir_8aa3e05b3c778144162028379a6046fd" kind="dir"><name>src/inventory</name>
+  </compound>
+  <compound refid="dir_c184e51c84f2c3f0345bbc8a0d75d3e1" kind="dir"><name>src/io</name>
+  </compound>
+  <compound refid="dir_dc176e3d98aca08d5e74d18511208cd7" kind="dir"><name>src/item</name>
+  </compound>
+  <compound refid="dir_ce0c5e2e1b4aece46be1b47461832dfd" kind="dir"><name>src/combat/local</name>
+  </compound>
+  <compound refid="dir_47c9c9c3248eb4c161e8a61f85731d8b" kind="dir"><name>src/inventory/local</name>
+  </compound>
+  <compound refid="dir_c7eb4fb5b3548168e57f75b63628aa56" kind="dir"><name>src/local</name>
+  </compound>
+  <compound refid="dir_ab9399deceb40e8694938c11cb7b5ec6" kind="dir"><name>src/menu/local</name>
+  </compound>
+  <compound refid="dir_cc7ab1f7925769f8b51827cd4c767a66" kind="dir"><name>src/stats/local</name>
+  </compound>
+  <compound refid="dir_b3320b59a4aa4a7431bc8488b87009bf" kind="dir"><name>src/logging</name>
+  </compound>
+  <compound refid="dir_391513bbec656ad0f0b1433a02685683" kind="dir"><name>src/map</name>
+  </compound>
+  <compound refid="dir_edce87deac3eb1fdcdba2589984f60f0" kind="dir"><name>src/io/output/media</name>
+  </compound>
+  <compound refid="dir_94d7edf6f8f3d9af5fd63c44172da41c" kind="dir"><name>src/memory</name>
+  </compound>
+  <compound refid="dir_1a56cc8cdc1689899910be5fa4716ee4" kind="dir"><name>src/menu</name>
+  </compound>
+  <compound refid="dir_ef1490a8146ae01688e2ca36bbbfc035" kind="dir"><name>src/io/output</name>
+  </compound>
+  <compound refid="dir_a8ffeb7c236f38a2266e63e06d64582f" kind="dir"><name>src/io/output/specific</name>
+  </compound>
+  <compound refid="dir_68267d1309a1af8e8297ef4c3efbcdba" kind="dir"><name>src</name>
+  </compound>
+  <compound refid="dir_3de45fbf08d2e79aacff2f4de113ab26" kind="dir"><name>src/stats</name>
+  </compound>
+  <compound refid="dir_bfedb72b9d87795234454f6223b9ab1e" kind="dir"><name>src/thread</name>
+  </compound>
+</doxygenindex>

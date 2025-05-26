@@ -1,0 +1,504 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="gear_8c" kind="file" language="C++">
+    <compoundname>gear.c</compoundname>
+    <includes refid="gear_8h" local="yes">gear.h</includes>
+    <includes refid="item__database_8h" local="yes">../database/game/item_database.h</includes>
+    <includes refid="logger_8h" local="yes">../logging/logger.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">stdlib.h</includes>
+    <incdepgraph>
+      <node id="8">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="10">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="3">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="9">
+        <label>damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>../database/game/item_database.h</label>
+        <link refid="item__database_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/item/gear.c</label>
+        <link refid="gear_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="15">
+        <label>../../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="6">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="12">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>stdio.h</label>
+      </node>
+      <node id="17">
+        <label>stdlib.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="gear_8c_1a3c6e8a495a903764f6566fb54bd1aee3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structgear__t" kindref="compound">gear_t</ref> *</type>
+        <definition>gear_t * init_gear</definition>
+        <argsstring>(memory_pool_t *memory_pool, const char *name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t *ability_table, ability_names_t *abilities, int num_abilities)</argsstring>
+        <name>init_gear</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>gear_identifier_t</type>
+          <declname>gear_identifier</declname>
+        </param>
+        <param>
+          <type>gear_slot_t</type>
+          <declname>slot</declname>
+        </param>
+        <param>
+          <type><ref refid="structstats__t" kindref="compound">stats_t</ref></type>
+          <declname>stats</declname>
+        </param>
+        <param>
+          <type><ref refid="structdefenses__t" kindref="compound">defenses_t</ref></type>
+          <declname>defenses</declname>
+        </param>
+        <param>
+          <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+          <declname>ability_table</declname>
+        </param>
+        <param>
+          <type>ability_names_t *</type>
+          <declname>abilities</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>num_abilities</declname>
+        </param>
+        <briefdescription>
+<para>Initializes a gear object. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function creates and initializes a new <computeroutput><ref refid="structgear__t" kindref="compound">gear_t</ref></computeroutput> object with the specified parameters. It allocates memory, sets the properties of the object, and links it with the provided abilities.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the gear as a string. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>gear_identifier</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The unique identifier of the gear of type <computeroutput>gear_identifier_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The slot in which the gear will be equipped, of type <computeroutput>gear_slot_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>stats</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base stats of the gear, of type <computeroutput><ref refid="structstats__t" kindref="compound">stats_t</ref></computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>defenses</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defense values of the gear, of type <computeroutput><ref refid="structdefenses__t" kindref="compound">defenses_t</ref></computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ability_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the ability table containing the available abilities. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An array of ability names to be assigned to the gear. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>num_abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The number of abilities to be assigned to the gear. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A pointer to the initialized <computeroutput><ref refid="structgear__t" kindref="compound">gear_t</ref></computeroutput> object or <computeroutput>NULL</computeroutput> if initialization fails. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.c" line="14" column="8" bodyfile="src/item/gear.c" bodystart="14" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8c_1a8692ae861ae780f3af5db9d58fb9be00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+        <definition>gear_table_t * init_gear_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, const db_connection_t *db_connection, ability_table_t *ability_table)</argsstring>
+        <name>init_gear_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <param>
+          <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+          <declname>ability_table</declname>
+        </param>
+        <briefdescription>
+<para>Initializes a gear table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function creates and initializes a <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object by fetching gear data from the database, allocating memory for the table, and populating it with gear objects.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the database connection used to fetch gear data. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ability_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the ability table containing the available abilities. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A pointer to the initialized <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object or <computeroutput>NULL</computeroutput> if initialization fails. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.c" line="45" column="14" bodyfile="src/item/gear.c" bodystart="45" bodyend="72"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8c_1a0c01826fef93a02232f8e89733fbf35f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void free_gear_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, gear_table_t *table)</argsstring>
+        <name>free_gear_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+<para>Frees the memory allocated for a gear table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function releases all memory associated with a <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object, including the memory for each individual gear object and the table itself. It ensures that the memory pool and table pointers are not NULL before attempting to free memory.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object to be freed. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.c" line="74" column="6" bodyfile="src/item/gear.c" bodystart="74" bodyend="84"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8c_1abcd5746e9cf5f81afc0c81ef443c788e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * gear_slot_to_string</definition>
+        <argsstring>(gear_slot_t slot)</argsstring>
+        <name>gear_slot_to_string</name>
+        <param>
+          <type>gear_slot_t</type>
+          <declname>slot</declname>
+        </param>
+        <briefdescription>
+<para>Converts a gear slot enumeration value to its string representation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function takes a <computeroutput>gear_slot_t</computeroutput> enumeration value and returns a human-readable string that represents the corresponding gear slot. If the provided slot does not match any known value, the function returns &quot;Unknown Slot&quot;.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The gear slot enumeration value of type <computeroutput>gear_slot_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A string representing the gear slot. If the slot is invalid, returns &quot;Unknown Slot&quot;. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.c" line="86" column="12" bodyfile="src/item/gear.c" bodystart="86" bodyend="113"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implementation of the gear system. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="gear_8h" kindref="compound">gear.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="item__database_8h" kindref="compound">../database/game/item_database.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logger_8h" kindref="compound">../logging/logger.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14" refid="gear_8c_1a3c6e8a495a903764f6566fb54bd1aee3" refkind="member"><highlight class="normal"><ref refid="structgear__t" kindref="compound">gear_t</ref>*<sp/><ref refid="gear_8c_1a3c6e8a495a903764f6566fb54bd1aee3" kindref="member">init_gear</ref>(memory_pool_t*<sp/>memory_pool,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>name,<sp/>gear_identifier_t<sp/>gear_identifier,<sp/>gear_slot_t<sp/>slot,<sp/><ref refid="structstats__t" kindref="compound">stats_t</ref><sp/>stats,<sp/><ref refid="structdefenses__t" kindref="compound">defenses_t</ref><sp/>defenses,<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>ability_table,<sp/>ability_names_t*<sp/>abilities,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num_abilities)<sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(memory_pool,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>init_gear<sp/>memory<sp/>pool<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(name,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>init_gear<sp/>name<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structgear__t" kindref="compound">gear_t</ref>*<sp/>gear<sp/>=<sp/><ref refid="memory__management_8c_1ad9c929376b0501e9ad79f3a293fe8a71" kindref="member">memory_pool_alloc</ref>(memory_pool,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structgear__t" kindref="compound">gear_t</ref>));</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(gear,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>memory<sp/>for<sp/>gear:<sp/>%s&quot;</highlight><highlight class="normal">,<sp/>name);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(gear-&gt;local_key,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(gear-&gt;local_key),<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>name);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>gear-&gt;gear_identifier<sp/>=<sp/>gear_identifier;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>gear-&gt;slot<sp/>=<sp/>slot;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>gear-&gt;stats<sp/>=<sp/>stats;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>gear-&gt;defenses<sp/>=<sp/>defenses;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>gear-&gt;num_abilities<sp/>=<sp/>num_abilities;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>i<sp/>&lt;<sp/>MAX_ABILITY_PER_GEAR<sp/>&amp;&amp;<sp/>i<sp/>&lt;<sp/>num_abilities;<sp/>++i)<sp/>{</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ability_names_t<sp/>idx<sp/>=<sp/>abilities[i];</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(idx<sp/>&lt;<sp/>MAX_ABILITIES)<sp/>{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gear-&gt;abilities[i]<sp/>=<sp/>&amp;ability_table-&gt;abilities[abilities[i]];</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gear-&gt;abilities[i]<sp/>=<sp/>&amp;(<ref refid="structability__t" kindref="compound">ability_t</ref>)<sp/>{0};</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;<sp/>i<sp/>&lt;<sp/>MAX_ABILITY_PER_GEAR;<sp/>++i)<sp/>{</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gear-&gt;abilities[i]<sp/>=<sp/>&amp;(<ref refid="structability__t" kindref="compound">ability_t</ref>)<sp/>{0};</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>gear;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="gear_8c_1a8692ae861ae780f3af5db9d58fb9be00" refkind="member"><highlight class="normal"><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/><ref refid="gear_8c_1a8692ae861ae780f3af5db9d58fb9be00" kindref="member">init_gear_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection,<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>ability_table)<sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(memory_pool,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Memory<sp/>pool<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structgear__init__t" kindref="compound">gear_init_t</ref>*<sp/>rows<sp/>=<sp/><ref refid="item__database_8c_1a2eae64cf18b35cd4bfd748651d024061" kindref="member">init_gear_table_from_db</ref>(db_connection);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(rows,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Could<sp/>not<sp/>fetch<sp/>gear<sp/>data<sp/>from<sp/>DB&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count<sp/>=<sp/><ref refid="item__database_8c_1ac7d94bd95103f3f91acaa93718e04e8f" kindref="member">count_gear_in_db</ref>(db_connection);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/>table<sp/>=<sp/><ref refid="memory__management_8c_1ad9c929376b0501e9ad79f3a293fe8a71" kindref="member">memory_pool_alloc</ref>(memory_pool,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>));</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(table,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>gear<sp/>table&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>table-&gt;num_gears<sp/>=<sp/>count;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(table-&gt;gears,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>gear<sp/>array<sp/>for<sp/>table&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>count;<sp/>++i)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>table-&gt;gears[i]<sp/>=<sp/><ref refid="gear_8c_1a3c6e8a495a903764f6566fb54bd1aee3" kindref="member">init_gear</ref>(memory_pool,</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].name,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].gear_identifier,</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].slot,</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].stats,</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].defenses,</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ability_table,</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].ability_names,</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>rows[i].num_abilities);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="item__database_8c_1a68ae01e3f5393770191aa3c1171c7fc6" kindref="member">free_gear_table_from_db</ref>(rows,<sp/>db_connection);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>table;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="gear_8c_1a0c01826fef93a02232f8e89733fbf35f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="gear_8c_1a0c01826fef93a02232f8e89733fbf35f" kindref="member">free_gear_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/>table)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(memory_pool,<sp/>,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>free_gear_table<sp/>memory<sp/>pool<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(table,<sp/>,<sp/></highlight><highlight class="stringliteral">&quot;Gear&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;In<sp/>free_gear_table<sp/>table<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>table-&gt;num_gears;<sp/>++i)<sp/>{</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structgear__t" kindref="compound">gear_t</ref>*<sp/>gear<sp/>=<sp/>table-&gt;gears[i];</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(gear<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="memory__management_8c_1af72f6fb9c867ee59c91532a9022e322e" kindref="member">memory_pool_free</ref>(memory_pool,<sp/>gear);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="memory__management_8c_1af72f6fb9c867ee59c91532a9022e322e" kindref="member">memory_pool_free</ref>(memory_pool,<sp/>table);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="gear_8c_1abcd5746e9cf5f81afc0c81ef443c788e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="gear_8c_1abcd5746e9cf5f81afc0c81ef443c788e" kindref="member">gear_slot_to_string</ref>(gear_slot_t<sp/>slot)<sp/>{</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(slot)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_HEAD:</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Head&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_CHEST:</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Chest&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_LEGS:</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Legs&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_FEET:</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Feet&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_HANDS:</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Hands&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_NECK:</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Neck&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_FINGER_RIGHT:</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Right<sp/>Finger&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_FINGER_LEFT:</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Left<sp/>Finger&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_LEFT_HAND:</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Left<sp/>Hand&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_RIGHT_HAND:</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Right<sp/>Hand&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>SLOT_BOTH_HANDS:</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Both<sp/>Hands&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Unknown<sp/>Slot&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/item/gear.c"/>
+  </compounddef>
+</doxygen>

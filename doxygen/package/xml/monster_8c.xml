@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="monster_8c" kind="file" language="C++">
+    <compoundname>monster.c</compoundname>
+    <includes refid="monster_8h" local="yes">monster.h</includes>
+    <incdepgraph>
+      <node id="13">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="3">
+        <label>character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="1">
+        <label>src/character/monster.c</label>
+        <link refid="monster_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>../combat/ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="5">
+        <label>../combat/damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="16">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="9">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="14">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="monster_8c_1a87b9e3e8f61fce3027c7bbb280251702" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+        <definition>character_t * create_new_goblin</definition>
+        <argsstring>(memory_pool_t *memory_pool)</argsstring>
+        <name>create_new_goblin</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <briefdescription>
+<para>Creates and initializes a new goblin character. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for allocating the goblin character </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A pointer to the newly created goblin character, or NULL if memory allocation fails </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/character/monster.c" line="8" column="13" bodyfile="src/character/monster.c" bodystart="8" bodyend="20"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>This file contains functions for creating and initializing monster characters. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="monster_8h" kindref="compound">monster.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8" refid="monster_8c_1a87b9e3e8f61fce3027c7bbb280251702" refkind="member"><highlight class="normal"><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/><ref refid="monster_8c_1a87b9e3e8f61fce3027c7bbb280251702" kindref="member">create_new_goblin</ref>(memory_pool_t*<sp/>memory_pool)<sp/>{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(memory_pool,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Goblin&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Memory<sp/>pool<sp/>is<sp/>NULL&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>goblin<sp/>=<sp/><ref refid="character_8c_1a6475f3e7aa73cfe75a2371a6e07aba3d" kindref="member">init_character</ref>(memory_pool,<sp/>MONSTER,<sp/></highlight><highlight class="stringliteral">&quot;Goblin&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL_PTR_HANDLER_RETURN(goblin,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Goblin&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>memory<sp/>for<sp/>goblin&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a3f8d0f49cdd311f972cc95e12c27f36a" kindref="member">set_character_stats</ref>(goblin,<sp/>5,<sp/>5,<sp/>5,<sp/>5);</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a7c7f7133819e040d60b082e65d3479dc" kindref="member">set_character_dmg_modifier</ref>(goblin,<sp/>PHYSICAL,<sp/>10);</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a7c7f7133819e040d60b082e65d3479dc" kindref="member">set_character_dmg_modifier</ref>(goblin,<sp/>MAGICAL,<sp/>5);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1ac57163bbd7a9a6802ebd1554cc24b2e9" kindref="member">set_xp_reward</ref>(goblin,<sp/>120);</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1ae2022c4f067b5680708525477ff5bd4a" kindref="member">set_level</ref>(goblin,<sp/>1);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>goblin;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/character/monster.c"/>
+  </compounddef>
+</doxygen>

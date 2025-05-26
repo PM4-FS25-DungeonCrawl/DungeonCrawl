@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_304a36c1bbb4dead77ebb9aed9cad8e9" kind="dir">
+    <compoundname>src/map/draw</compoundname>
+    <innerfile refid="draw__light_8c">draw_light.c</innerfile>
+    <innerfile refid="draw__light_8h">draw_light.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/map/draw/"/>
+  </compounddef>
+</doxygen>

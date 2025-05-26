@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_b3320b59a4aa4a7431bc8488b87009bf" kind="dir">
+    <compoundname>src/logging</compoundname>
+    <innerfile refid="logger_8c">logger.c</innerfile>
+    <innerfile refid="logger_8h">logger.h</innerfile>
+    <innerfile refid="logger__config_8h">logger_config.h</innerfile>
+    <innerfile refid="ringbuffer_8c">ringbuffer.c</innerfile>
+    <innerfile refid="ringbuffer_8h">ringbuffer.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/logging/"/>
+  </compounddef>
+</doxygen>

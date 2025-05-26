@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structinput__event__t" kind="struct" language="C++" prot="public">
+    <compoundname>input_event_t</compoundname>
+    <includes refid="input__types_8h" local="no">input_types.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structinput__event__t_1a25a0fcb4c823fb0154447cb2a79053d8" prot="public" static="no" mutable="no">
+        <type><ref refid="input__types_8h_1ac2f78e4a482d0202ecb440c076ca7e70" kindref="member">input_t</ref></type>
+        <definition>input_t input_event_t::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <qualifiedname>input_event_t::type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/input/input_types.h" line="44" column="13" bodyfile="src/io/input/input_types.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinput__event__t_1a0849aa13a5c1d72a80c8156d3b0ead04" prot="public" static="no" mutable="no">
+        <type>ncinput</type>
+        <definition>ncinput input_event_t::raw_input</definition>
+        <argsstring></argsstring>
+        <name>raw_input</name>
+        <qualifiedname>input_event_t::raw_input</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/input/input_types.h" line="45" column="13" bodyfile="src/io/input/input_types.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Structure for advanced input events with context data. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>This structure combines our logical input type with the raw Notcurses input data. </para>
+    </detaileddescription>
+    <location file="src/io/input/input_types.h" line="43" column="1" bodyfile="src/io/input/input_types.h" bodystart="43" bodyend="46"/>
+    <listofallmembers>
+      <member refid="structinput__event__t_1a0849aa13a5c1d72a80c8156d3b0ead04" prot="public" virt="non-virtual"><scope>input_event_t</scope><name>raw_input</name></member>
+      <member refid="structinput__event__t_1a25a0fcb4c823fb0154447cb2a79053d8" prot="public" virt="non-virtual"><scope>input_event_t</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

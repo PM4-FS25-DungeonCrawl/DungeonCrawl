@@ -1,0 +1,467 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="damage_8c" kind="file" language="C++">
+    <compoundname>damage.c</compoundname>
+    <includes refid="damage_8h" local="yes">damage.h</includes>
+    <includes refid="character_8h" local="yes">../character/character.h</includes>
+    <includes refid="logger_8h" local="yes">../logging/logger.h</includes>
+    <includes refid="ability_8h" local="yes">ability.h</includes>
+    <includes local="no">stdlib.h</includes>
+    <incdepgraph>
+      <node id="12">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="5">
+        <label>../character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="10">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="1">
+        <label>src/combat/damage.c</label>
+        <link refid="damage_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="15">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="8">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="13">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>stdlib.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int roll_dice</definition>
+        <argsstring>(const dice_size_t dice_size)</argsstring>
+        <name>roll_dice</name>
+        <param>
+          <type>dice_size_t</type>
+          <declname>dice_size</declname>
+        </param>
+        <briefdescription>
+<para>Rolls given dice size and returns the result. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>dice_size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The dice that is rolled. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the dice roll. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="20" column="5" bodyfile="src/combat/damage.c" bodystart="20" bodyend="23" declfile="src/combat/damage.c" declline="13" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1a326516441810b6b000549221476d6a11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool roll_hit</definition>
+        <argsstring>(const int attacker_dex, const int defender_dex)</argsstring>
+        <name>roll_hit</name>
+        <param>
+          <type>int</type>
+          <declname>attacker_dex</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>defender_dex</declname>
+        </param>
+        <briefdescription>
+<para>Rolls a D20 to determine if an attack hits. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>attacker_dex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The dexterity of the attacker. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>defender_dex</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The dexterity of the defender. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The result of the dice roll. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="25" column="6" bodyfile="src/combat/damage.c" bodystart="25" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1aca0547c88b4f1c36c3c1afdf3ee88334" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int roll_damage</definition>
+        <argsstring>(const ability_t *ability)</argsstring>
+        <name>roll_damage</name>
+        <param>
+          <type>const <ref refid="structability__t" kindref="compound">ability_t</ref> *</type>
+          <declname>ability</declname>
+        </param>
+        <briefdescription>
+<para>Rolls damage based on the ability&apos;s roll amount and dice size. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>ability</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the ability used for rolling damage. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The total damage rolled. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="33" column="5" bodyfile="src/combat/damage.c" bodystart="33" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1a7226337610a43ca1ec17ce5b9904152c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int deal_damage</definition>
+        <argsstring>(character_t *character, damage_type_t damage_type, const int damage)</argsstring>
+        <name>deal_damage</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type>damage_type_t</type>
+          <declname>damage_type</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>damage</declname>
+        </param>
+        <briefdescription>
+<para>Deals damage to a character based on the damage type and amount. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the character receiving damage. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>damage_type</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The type of damage being dealt. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>damage</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The amount of damage to be dealt. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The actual damage dealt. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="42" column="5" bodyfile="src/combat/damage.c" bodystart="42" bodyend="54"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1aa21c3970e45e47130b84a456027be1f7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reset_current_stats</definition>
+        <argsstring>(character_t *character)</argsstring>
+        <name>reset_current_stats</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>character</declname>
+        </param>
+        <briefdescription>
+<para>Resets the current stats of a character to their base values. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Resets the current stats of a character to their base stats.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the character </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="56" column="6" bodyfile="src/combat/damage.c" bodystart="56" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1a13256bc582689bed3cbee939a691a318" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * dice_size_to_string</definition>
+        <argsstring>(const dice_size_t size)</argsstring>
+        <name>dice_size_to_string</name>
+        <param>
+          <type>dice_size_t</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+<para>Converts a dice size enum to a string representation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The dice size to convert. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The string representation of the dice size. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="61" column="12" bodyfile="src/combat/damage.c" bodystart="61" bodyend="76"/>
+      </memberdef>
+      <memberdef kind="function" id="damage_8c_1aae5971d1077b9b0c763897ced83a9fe3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * damage_type_to_string</definition>
+        <argsstring>(const damage_type_t type)</argsstring>
+        <name>damage_type_to_string</name>
+        <param>
+          <type>damage_type_t</type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+<para>Converts a damage type enum to a string representation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>type</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The damage type to convert. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>The string representation of the damage type. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/damage.c" line="78" column="12" bodyfile="src/combat/damage.c" bodystart="78" bodyend="87"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implements damage rolling, hit checks, and damage application logic. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="damage_8h" kindref="compound">damage.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character_8h" kindref="compound">../character/character.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logger_8h" kindref="compound">../logging/logger.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ability_8h" kindref="compound">ability.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kindref="member">roll_dice</ref>(dice_size_t<sp/>dice_size);</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kindref="member">roll_dice</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>dice_size_t<sp/>dice_size)<sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Seed<sp/>random<sp/>number<sp/>generator<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>rand()<sp/>%<sp/>dice_size<sp/>+<sp/>1;</highlight></codeline>
+<codeline lineno="23"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="damage_8c_1a326516441810b6b000549221476d6a11" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1a326516441810b6b000549221476d6a11" kindref="member">roll_hit</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>attacker_dex,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>defender_dex)<sp/>{</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>attacker_roll<sp/>=<sp/><ref refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kindref="member">roll_dice</ref>(D20);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>defender_roll<sp/>=<sp/><ref refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kindref="member">roll_dice</ref>(D20);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>hit<sp/>=<sp/></highlight><highlight class="keyword">false</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>attacker_roll<sp/>+<sp/>(attacker_dex<sp/>/<sp/>2)<sp/>&gt;<sp/>defender_roll<sp/>+<sp/>(defender_dex<sp/>/<sp/>2);</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="damage_8c_1aca0547c88b4f1c36c3c1afdf3ee88334" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1aca0547c88b4f1c36c3c1afdf3ee88334" kindref="member">roll_damage</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structability__t" kindref="compound">ability_t</ref>*<sp/>ability)<sp/>{</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>roll<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Roll<sp/>the<sp/>dice<sp/>several<sp/>times</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>ability-&gt;roll_amount;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>roll<sp/>+=<sp/><ref refid="damage_8c_1a3b5c105612c040e97f5b85d038f1e1a8" kindref="member">roll_dice</ref>(ability-&gt;dice_size);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>roll;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="damage_8c_1a7226337610a43ca1ec17ce5b9904152c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1a7226337610a43ca1ec17ce5b9904152c" kindref="member">deal_damage</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>character,<sp/>damage_type_t<sp/>damage_type,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>damage)<sp/>{</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>TODO<sp/>critical<sp/>hits<sp/>are<sp/>ignored</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>negative<sp/>damage<sp/>resistance<sp/>leads<sp/>to<sp/>more<sp/>damage</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>damage<sp/>+=<sp/>character-&gt;resistance[damage_type].value;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>damage<sp/>-=<sp/>character-&gt;current_stats.armor;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(damage<sp/>&lt;<sp/>character-&gt;current_resources.health)<sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>character-&gt;current_resources.health<sp/>-=<sp/>damage;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>character-&gt;current_resources.health<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>damage;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="character_8h_1aa21c3970e45e47130b84a456027be1f7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="damage_8c_1aa21c3970e45e47130b84a456027be1f7" kindref="member">reset_current_stats</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>character)<sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>character-&gt;current_stats<sp/>=<sp/>character-&gt;base_stats;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Helper<sp/>function<sp/>to<sp/>convert<sp/>dice_size_t<sp/>to<sp/>string</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="damage_8c_1a13256bc582689bed3cbee939a691a318" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="damage_8c_1a13256bc582689bed3cbee939a691a318" kindref="member">dice_size_to_string</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>dice_size_t<sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(size)<sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>D6:</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D6&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>D8:</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D8&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>D10:</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D10&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>D12:</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D12&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>D20:</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;D20&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Unknown&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="damage_8c_1aae5971d1077b9b0c763897ced83a9fe3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="damage_8c_1aae5971d1077b9b0c763897ced83a9fe3" kindref="member">damage_type_to_string</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>damage_type_t<sp/>type)<sp/>{</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(type)<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>PHYSICAL:</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Physical&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>MAGICAL:</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Magic&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/></highlight><highlight class="stringliteral">&quot;Unknown&quot;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/combat/damage.c"/>
+  </compounddef>
+</doxygen>

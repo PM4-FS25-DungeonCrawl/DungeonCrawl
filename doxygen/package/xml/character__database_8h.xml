@@ -1,0 +1,322 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="character__database_8h" kind="file" language="C++">
+    <compoundname>character_database.h</compoundname>
+    <includes refid="character_8h" local="yes">../../character/character.h</includes>
+    <includes refid="database_8h" local="yes">../database.h</includes>
+    <includedby refid="character__database_8c" local="yes">src/database/game/character_database.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <incdepgraph>
+      <node id="12">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="2">
+        <label>../../character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="10">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../combat/ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="4">
+        <label>../combat/damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="15">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="8">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="13">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/database/game/character_database.c</label>
+        <link refid="character__database_8c"/>
+      </node>
+      <node id="1">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="character__database_8h_1a842a3251a6fce7d096e1f3d3c5104d1a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void save_character</definition>
+        <argsstring>(const db_connection_t *db_connection, const character_t character, const sqlite3_int64 game_state_id)</argsstring>
+        <name>save_character</name>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structcharacter__t" kindref="compound">character_t</ref></type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type>const sqlite3_int64</type>
+          <declname>game_state_id</declname>
+        </param>
+        <briefdescription>
+<para>This function saves the character to the database. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the database connection </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the character to save </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>game_state_id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the game state id </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/character_database.h" line="18" column="6" bodyfile="src/database/game/character_database.c" bodystart="82" bodyend="266" declfile="src/database/game/character_database.h" declline="18" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="character__database_8h_1a85888aa564d562721e655fb1be302042" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void save_character_inventory</definition>
+        <argsstring>(const db_connection_t *db_connection, const character_t character, const sqlite3_int64 character_id)</argsstring>
+        <name>save_character_inventory</name>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structcharacter__t" kindref="compound">character_t</ref></type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type>const sqlite3_int64</type>
+          <declname>character_id</declname>
+        </param>
+        <briefdescription>
+<para>This function saves the character&apos;s inventory to the database. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the database connection </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the character whose inventory to save </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>character_id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the character id </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/character_database.h" line="27" column="6" bodyfile="src/database/game/character_database.c" bodystart="268" bodyend="503" declfile="src/database/game/character_database.h" declline="27" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="character__database_8h_1a98f082e8f07988f2e1fc2c2d7679040d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void get_character_from_db</definition>
+        <argsstring>(const db_connection_t *db_connection, character_t *character, int game_state_id)</argsstring>
+        <name>get_character_from_db</name>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>game_state_id</declname>
+        </param>
+        <briefdescription>
+<para>This function retrieves a character from the database. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the database connection </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the character to retrieve </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>game_state_id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the game state id </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/character_database.h" line="36" column="6" bodyfile="src/database/game/character_database.c" bodystart="505" bodyend="657" declfile="src/database/game/character_database.h" declline="36" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for working with the character and database. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>CHARACTER_DATABASE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CHARACTER_DATABASE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character_8h" kindref="compound">../../character/character.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="database_8h" kindref="compound">../database.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="character__database_8h_1a842a3251a6fce7d096e1f3d3c5104d1a" kindref="member">save_character</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref><sp/>character,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>sqlite3_int64<sp/>game_state_id);</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="character__database_8h_1a85888aa564d562721e655fb1be302042" kindref="member">save_character_inventory</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref><sp/>character,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>sqlite3_int64<sp/>character_id);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="character__database_8h_1a98f082e8f07988f2e1fc2c2d7679040d" kindref="member">get_character_from_db</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>character,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>game_state_id);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//CHARACTER_DATABASE_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/database/game/character_database.h"/>
+  </compounddef>
+</doxygen>

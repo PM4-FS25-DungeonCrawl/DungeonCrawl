@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="thread__handler_8h" kind="file" language="C++">
+    <compoundname>thread_handler.h</compoundname>
+    <includedby refid="io__handler_8c" local="yes">src/io/io_handler.c</includedby>
+    <includedby refid="logger_8c" local="yes">src/logging/logger.c</includedby>
+    <includedby refid="thread__handler_8c" local="yes">src/thread/thread_handler.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/io/io_handler.c</label>
+        <link refid="io__handler_8c"/>
+      </node>
+      <node id="3">
+        <label>src/logging/logger.c</label>
+        <link refid="logger_8c"/>
+      </node>
+      <node id="4">
+        <label>src/thread/thread_handler.c</label>
+        <link refid="thread__handler_8c"/>
+      </node>
+      <node id="1">
+        <label>src/thread/thread_handler.h</label>
+        <link refid="thread__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="thread__handler_8h_1ae977c56a16e1c4409e2ed3cdb804a887" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void start_simple_thread</definition>
+        <argsstring>(void(*thread_func)(void))</argsstring>
+        <name>start_simple_thread</name>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>thread_func</declname>
+        </param>
+        <briefdescription>
+<para>Starts a new thread with the given function. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The thread will be detached, so it will run independently.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>thread_func</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A simple function pointer to the function that will be executed in the thread. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/thread/thread_handler.h" line="15" column="6" bodyfile="src/thread/thread_handler.c" bodystart="56" bodyend="67" declfile="src/thread/thread_handler.h" declline="15" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for the thread_handler. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>THREAD_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>THREAD_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="thread__handler_8h_1ae977c56a16e1c4409e2ed3cdb804a887" kindref="member">start_simple_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*thread_func)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//THREAD_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/thread/thread_handler.h"/>
+  </compounddef>
+</doxygen>

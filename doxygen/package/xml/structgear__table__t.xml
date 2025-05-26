@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structgear__table__t" kind="struct" language="C++" prot="public">
+    <compoundname>gear_table_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgear__table__t_1a524103832f075ddc4d1c36e73f834620" prot="public" static="no" mutable="no">
+        <type><ref refid="structgear__t" kindref="compound">gear_t</ref> *</type>
+        <definition>gear_t* gear_table_t::gears[MAX_GEARS]</definition>
+        <argsstring>[MAX_GEARS]</argsstring>
+        <name>gears</name>
+        <qualifiedname>gear_table_t::gears</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="46" column="12" bodyfile="src/item/gear.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgear__table__t_1a8eb88b30b6bc1b93b3a7bdd86ac03b5d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int gear_table_t::num_gears</definition>
+        <argsstring></argsstring>
+        <name>num_gears</name>
+        <qualifiedname>gear_table_t::num_gears</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="47" column="9" bodyfile="src/item/gear.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="5">
+        <label>ability_t</label>
+        <link refid="structability__t"/>
+      </node>
+      <node id="4">
+        <label>defenses_t</label>
+        <link refid="structdefenses__t"/>
+      </node>
+      <node id="2">
+        <label>gear_t</label>
+        <link refid="structgear__t"/>
+        <childnode refid="3" relation="usage">
+          <edgelabel>stats</edgelabel>
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>defenses</edgelabel>
+        </childnode>
+        <childnode refid="5" relation="usage">
+          <edgelabel>abilities</edgelabel>
+        </childnode>
+      </node>
+      <node id="1">
+        <label>gear_table_t</label>
+        <link refid="structgear__table__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>gears</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>stats_t</label>
+        <link refid="structstats__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="src/item/gear.h" line="44" column="1" bodyfile="src/item/gear.h" bodystart="45" bodyend="48"/>
+    <listofallmembers>
+      <member refid="structgear__table__t_1a524103832f075ddc4d1c36e73f834620" prot="public" virt="non-virtual"><scope>gear_table_t</scope><name>gears</name></member>
+      <member refid="structgear__table__t_1a8eb88b30b6bc1b93b3a7bdd86ac03b5d" prot="public" virt="non-virtual"><scope>gear_table_t</scope><name>num_gears</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

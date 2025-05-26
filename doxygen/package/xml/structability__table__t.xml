@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structability__table__t" kind="struct" language="C++" prot="public">
+    <compoundname>ability_table_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structability__table__t_1a3302b1c8f27bf27448164beb119ac362" prot="public" static="no" mutable="no">
+        <type><ref refid="structability__t" kindref="compound">ability_t</ref></type>
+        <definition>ability_t ability_table_t::abilities[MAX_ABILITIES]</definition>
+        <argsstring>[MAX_ABILITIES]</argsstring>
+        <name>abilities</name>
+        <qualifiedname>ability_table_t::abilities</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/ability.h" line="58" column="15" bodyfile="src/combat/ability.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>ability_t</label>
+        <link refid="structability__t"/>
+      </node>
+      <node id="1">
+        <label>ability_table_t</label>
+        <link refid="structability__table__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>abilities</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/combat/ability.h" line="57" column="1" bodyfile="src/combat/ability.h" bodystart="57" bodyend="59"/>
+    <listofallmembers>
+      <member refid="structability__table__t_1a3302b1c8f27bf27448164beb119ac362" prot="public" virt="non-virtual"><scope>ability_table_t</scope><name>abilities</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

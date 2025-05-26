@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structvector2d__t" kind="struct" language="C++" prot="public">
+    <compoundname>vector2d_t</compoundname>
+    <includes refid="common_8h" local="no">common.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structvector2d__t_1abca75df5dac7704007389993747a0796" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vector2d_t::dx</definition>
+        <argsstring></argsstring>
+        <name>dx</name>
+        <qualifiedname>vector2d_t::dx</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/common.h" line="165" column="9" bodyfile="src/common.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structvector2d__t_1a092a33f620e4aee02c9b771a237d849e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int vector2d_t::dy</definition>
+        <argsstring></argsstring>
+        <name>dy</name>
+        <qualifiedname>vector2d_t::dy</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/common.h" line="166" column="9" bodyfile="src/common.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>2-dimensional vector struct </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/common.h" line="164" column="1" bodyfile="src/common.h" bodystart="164" bodyend="167"/>
+    <listofallmembers>
+      <member refid="structvector2d__t_1abca75df5dac7704007389993747a0796" prot="public" virt="non-virtual"><scope>vector2d_t</scope><name>dx</name></member>
+      <member refid="structvector2d__t_1a092a33f620e4aee02c9b771a237d849e" prot="public" virt="non-virtual"><scope>vector2d_t</scope><name>dy</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

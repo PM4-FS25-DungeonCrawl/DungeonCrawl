@@ -1,0 +1,447 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="local__handler_8c" kind="file" language="C++">
+    <compoundname>local_handler.c</compoundname>
+    <includes refid="local__handler_8h" local="yes">local_handler.h</includes>
+    <includes refid="logger_8h" local="yes">../logging/logger.h</includes>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">stdlib.h</includes>
+    <includes local="no">string.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>src/local/local_handler.c</label>
+        <link refid="local__handler_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>local_handler.h</label>
+        <link refid="local__handler_8h"/>
+      </node>
+      <node id="3">
+        <label>../logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="4">
+        <label>stdio.h</label>
+      </node>
+      <node id="5">
+        <label>stdlib.h</label>
+      </node>
+      <node id="6">
+        <label>string.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structobserver__node" prot="public">observer_node</innerclass>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="local__handler_8c_1a837df2c29aacf37cb96c2b65acb312a6" prot="public" static="no">
+        <name>PATH_SEP</name>
+        <initializer>&quot;/&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="17" column="14" bodyfile="src/local/local_handler.c" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="local__handler_8c_1a55176447671733dbd21c6ae879523eea" prot="public" static="no">
+        <name>LOCAL_DIRECTORY</name>
+        <initializer>&quot;resources/local&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="18" column="13" bodyfile="src/local/local_handler.c" bodystart="18" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="local__handler_8c_1aeba54b786584795b4ae511e920ccca49" prot="public" static="no">
+        <type>struct <ref refid="structobserver__node" kindref="compound">observer_node</ref></type>
+        <definition>typedef struct observer_node observer_node_t</definition>
+        <argsstring></argsstring>
+        <name>observer_node_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="21" column="28" bodyfile="src/local/local_handler.c" bodystart="21" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="local__handler_8c_1a27ad8ce98bebf37859d424e0faedbba3" prot="public" static="no" mutable="no">
+        <type><ref refid="structobserver__node" kindref="compound">observer_node_t</ref> *</type>
+        <definition>observer_node_t* observer_list</definition>
+        <argsstring></argsstring>
+        <name>observer_list</name>
+        <initializer>= NULL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="28" column="17" bodyfile="src/local/local_handler.c" bodystart="28" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="local__handler_8c_1a79a0bab456c935315de1b43f2870e4a5" prot="public" static="no" mutable="no">
+        <type>FILE *</type>
+        <definition>FILE* local_file</definition>
+        <argsstring></argsstring>
+        <name>local_file</name>
+        <initializer>= NULL</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="29" column="6" bodyfile="src/local/local_handler.c" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="local__handler_8c_1ad12c467ecc161f9eabe5b9ca274e508d" prot="public" static="no" mutable="no">
+        <type>local_lang_t</type>
+        <definition>local_lang_t current_lang</definition>
+        <argsstring></argsstring>
+        <name>current_lang</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="30" column="14" bodyfile="src/local/local_handler.c" bodystart="30" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="local__handler_8c_1ab04b232544b0352a2de6e954cd5235de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_local_handler</definition>
+        <argsstring>(const local_lang_t lang)</argsstring>
+        <name>init_local_handler</name>
+        <param>
+          <type>local_lang_t</type>
+          <declname>lang</declname>
+        </param>
+        <briefdescription>
+<para>Initialize the local language handler by setting up the language and opening the corresponding resource file. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function initializes the handler to use the specified language. It opens the associated language file based on a predefined mapping and prepares the observer list for updates. If the handler is already initialized, a warning is logged and initialization is skipped.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>lang</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the language to be set for the local handler </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 on success, or 1 if the resource file cannot be opened </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="32" column="5" bodyfile="src/local/local_handler.c" bodystart="32" bodyend="52"/>
+      </memberdef>
+      <memberdef kind="function" id="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char * get_local_string</definition>
+        <argsstring>(const char *key)</argsstring>
+        <name>get_local_string</name>
+        <param>
+          <type>const char *</type>
+          <declname>key</declname>
+        </param>
+        <briefdescription>
+<para>Get the localized string for the given key. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>key</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the key for the localized string </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>the localized string, if the key is not found, returns the key itself </para>
+</simplesect>
+<simplesect kind="note"><para>The caller must free the returned string. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="54" column="6" bodyfile="src/local/local_handler.c" bodystart="54" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="local__handler_8c_1a6e74532281d4166e72427bf99287ba82" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int set_language</definition>
+        <argsstring>(const local_lang_t lang)</argsstring>
+        <name>set_language</name>
+        <param>
+          <type>local_lang_t</type>
+          <declname>lang</declname>
+        </param>
+        <briefdescription>
+<para>Sets the current language for the local handler and updates all registered observers. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function updates the current language setting which determines the active language file to be used. It attempts to close the current language file, opens the new associated language resource file, and subsequently notifies the observer list by invoking their respective update functions. The function ensures the validity of the input language and handles errors related to file operations or uninitialized states.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>lang</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the language to be set (e.g., LANGE_EN, LANGE_DE) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 on success, 1 if the specified language file cannot be opened, or 2 if the handler is not initialized or the language is invalid </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="89" column="5" bodyfile="src/local/local_handler.c" bodystart="89" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="local__handler_8c_1a2ee20b5ced1851dfa72bbdef34fa1e33" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>local_lang_t</type>
+        <definition>local_lang_t get_language</definition>
+        <argsstring>(void)</argsstring>
+        <name>get_language</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Retrieve the currently set language of the local handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function returns the current language configured for the local handler. If the local handler is not initialized, it logs a warning message and defaults the language to English.</para>
+<para><simplesect kind="return"><para>the current language as a value of local_lang_t, or LANGE_EN if the handler is not initialized </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="116" column="14" bodyfile="src/local/local_handler.c" bodystart="116" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="function" id="local__handler_8c_1aba89dc368496a4c4daad4102bb508a0e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void observe_local</definition>
+        <argsstring>(void(*update_func)(void))</argsstring>
+        <name>observe_local</name>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>update_func</declname>
+        </param>
+        <briefdescription>
+<para>Registers an observer function to be notified of updates from the local handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function adds a new observer to the observer list maintained by the local handler. The observer function will be invoked when relevant updates occur. The observer handler must be initialized before calling this function. If the observer function or handler is invalid, the registration is aborted, and an error is logged.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>update_func</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>the observer function to be registered for receiving updates </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="124" column="6" bodyfile="src/local/local_handler.c" bodystart="124" bodyend="138"/>
+      </memberdef>
+      <memberdef kind="function" id="local__handler_8c_1a3172ed29ce8bc435a786e295a9d51fb4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_local_handler</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_local_handler</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shut down the local language handler by releasing resources and closing the resource file. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function deallocates all memory used by the observer list tied to the local handler. It ensures that all dynamically allocated observer nodes are freed to prevent memory leaks. Additionally, it closes the language resource file if it was previously opened.</para>
+<para>Proper usage of this function ensures a clean shutdown of the local language handler by releasing occupied resources and leaving no lingering operations. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="140" column="6" bodyfile="src/local/local_handler.c" bodystart="140" bodyend="150"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implements localization for the game. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="local__handler_8h" kindref="compound">local_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="logger_8h" kindref="compound">../logging/logger.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdlib.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;string.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>_WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>PATH_SEP<sp/>&quot;\\&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>LOCAL_DIRECTORY<sp/>&quot;resources\\local&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>PATH_SEP<sp/>&quot;/&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor"><sp/><sp/><sp/><sp/>#define<sp/>LOCAL_DIRECTORY<sp/>&quot;resources/local&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//_WIN32</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structobserver__node" kindref="compound">observer_node</ref><sp/>observer_node_t;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="structobserver__node" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structobserver__node" kindref="compound">observer_node</ref><sp/>{</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>void<sp/>(*update_func)(void);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_node_t*<sp/>next;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal">}<sp/>observer_node_t;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal">observer_node_t*<sp/>observer_list<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="29"><highlight class="normal">FILE*<sp/>local_file<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal">local_lang_t<sp/>current_lang;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="local__handler_8c_1ab04b232544b0352a2de6e954cd5235de" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="local__handler_8c_1ab04b232544b0352a2de6e954cd5235de" kindref="member">init_local_handler</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>local_lang_t<sp/>lang)<sp/>{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(local_file<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(WARNING,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Local<sp/>handler<sp/>is<sp/>already<sp/>initialized.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>current_lang<sp/>=<sp/>lang;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>rel_path[128];</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(rel_path,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(rel_path),<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal"><sp/>PATH_SEP<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>LOCAL_DIRECTORY,<sp/>local_file_mapping[lang].file_name);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>local_file<sp/>=<sp/>fopen(rel_path,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(local_file,<sp/>1,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>open<sp/>local<sp/>file.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_list<sp/>=<sp/>malloc(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(observer_node_t));</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(observer_list,<sp/>1,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>memory<sp/>for<sp/>observer<sp/>list.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_list-&gt;update_func<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_list-&gt;next<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="local__handler_8c_1a56c6d5e9fa7b72411ddbb39a37ebbaaf" kindref="member">get_local_string</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>key)<sp/>{</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(local_file,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Local<sp/>handler<sp/>is<sp/>not<sp/>initialized.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>line[512];</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>key_len<sp/>=<sp/>strlen(key);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>rewind(local_file);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(fgets(line,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(line),<sp/>local_file))<sp/>{</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//if<sp/>the<sp/>line<sp/>is<sp/>empty<sp/>or<sp/>a<sp/>comment,<sp/>skip<sp/>it</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(line[0]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal"><sp/>||<sp/>line[0]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;#&apos;</highlight><highlight class="normal">)<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(line[key_len]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;=&apos;</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(strncmp(line,<sp/>key,<sp/>key_len)<sp/>==<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>starting<sp/>position</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>start<sp/>=<sp/>strchr(line,<sp/></highlight><highlight class="charliteral">&apos;&quot;&apos;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!start)<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>get<sp/>the<sp/>end<sp/>position</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>end<sp/>=<sp/>strchr(start<sp/>+<sp/>1,<sp/></highlight><highlight class="charliteral">&apos;&quot;&apos;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!end)<sp/></highlight><highlight class="keywordflow">continue</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">size_t</highlight><highlight class="normal"><sp/>len<sp/>=<sp/>end<sp/>-<sp/>(start<sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>result<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*)<sp/>malloc(len<sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(result,<sp/>NULL,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>memory<sp/>for<sp/>local<sp/>string.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>snprintf(result,<sp/>len<sp/>+<sp/>1,<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>start<sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>result;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>strdup(key);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="local__handler_8c_1a6e74532281d4166e72427bf99287ba82" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="local__handler_8c_1a6e74532281d4166e72427bf99287ba82" kindref="member">set_language</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>local_lang_t<sp/>lang)<sp/>{</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(local_file,<sp/>2,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Local<sp/>handler<sp/>is<sp/>not<sp/>initialized.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(lang<sp/>&gt;=<sp/>MAX_LANG)<sp/>{</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(WARNING,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Invalid<sp/>language:<sp/>%d.&quot;</highlight><highlight class="normal">,<sp/>lang);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>2;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>current_lang<sp/>=<sp/>lang;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>fclose(local_file);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>rel_path[128];</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>snprintf(rel_path,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(rel_path),<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal"><sp/>PATH_SEP<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>LOCAL_DIRECTORY,<sp/>local_file_mapping[lang].file_name);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>local_file<sp/>=<sp/>fopen(rel_path,<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(local_file,<sp/>1,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>open<sp/>local<sp/>file.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>go<sp/>through<sp/>the<sp/>observer<sp/>list</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>observer_node_t*<sp/>current<sp/>=<sp/>observer_list;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(current<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(current-&gt;update_func<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current-&gt;update_func();</highlight><highlight class="comment">//call<sp/>the<sp/>observer<sp/>function</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current<sp/>=<sp/>current-&gt;next;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="local__handler_8c_1a2ee20b5ced1851dfa72bbdef34fa1e33" refkind="member"><highlight class="normal">local_lang_t<sp/><ref refid="local__handler_8c_1a2ee20b5ced1851dfa72bbdef34fa1e33" kindref="member">get_language</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(local_file<sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(WARNING,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Local<sp/>handler<sp/>is<sp/>not<sp/>initialized.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>LANGE_EN;</highlight><highlight class="comment">//<sp/>default<sp/>to<sp/>English<sp/>if<sp/>not<sp/>initialized</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>current_lang;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="local__handler_8c_1aba89dc368496a4c4daad4102bb508a0e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="local__handler_8c_1aba89dc368496a4c4daad4102bb508a0e" kindref="member">observe_local</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*update_func)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(local_file,<sp/>,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Local<sp/>handler<sp/>is<sp/>not<sp/>initialized.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(update_func,<sp/>,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Invalid<sp/>observer<sp/>function.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_node_t*<sp/>new_node<sp/>=<sp/>malloc(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(observer_node_t));</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>RETURN_WHEN_NULL(new_node,<sp/>,<sp/></highlight><highlight class="stringliteral">&quot;Local&quot;</highlight><highlight class="normal">,<sp/></highlight><highlight class="stringliteral">&quot;Failed<sp/>to<sp/>allocate<sp/>memory<sp/>for<sp/>observer<sp/>node.&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;update_func<sp/>=<sp/>update_func;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/>new_node-&gt;next<sp/>=<sp/>NULL;</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_node_t*<sp/>current<sp/>=<sp/>observer_list;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(current-&gt;next<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current<sp/>=<sp/>current-&gt;next;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>current-&gt;next<sp/>=<sp/>new_node;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="local__handler_8c_1a3172ed29ce8bc435a786e295a9d51fb4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="local__handler_8c_1a3172ed29ce8bc435a786e295a9d51fb4" kindref="member">shutdown_local_handler</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>free<sp/>the<sp/>observer<sp/>list</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/>observer_node_t*<sp/>current<sp/>=<sp/>observer_list;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(current<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>observer_node_t*<sp/>next<sp/>=<sp/>current-&gt;next;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>free(current);</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>current<sp/>=<sp/>next;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(local_file<sp/>!=<sp/>NULL)<sp/>fclose(local_file);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/local/local_handler.c"/>
+  </compounddef>
+</doxygen>

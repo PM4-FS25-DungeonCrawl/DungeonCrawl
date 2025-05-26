@@ -1,0 +1,362 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="map_8h" kind="file" language="C++">
+    <compoundname>map.h</compoundname>
+    <includes refid="common_8h" local="yes">../common.h</includes>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="map__output_8h" local="yes">src/io/output/specific/map_output.h</includedby>
+    <includedby refid="draw__light_8h" local="yes">src/map/draw/draw_light.h</includedby>
+    <includedby refid="map_8c" local="yes">src/map/map.c</includedby>
+    <includedby refid="map__generator_8c" local="yes">src/map/map_generator.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <includedby refid="map__populator_8c" local="yes">src/map/map_populator.c</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="1">
+        <label>src/map/map.h</label>
+        <link refid="map_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="4">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+      <node id="3">
+        <label>src/io/output/specific/map_output.h</label>
+        <link refid="map__output_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>src/map/draw/draw_light.c</label>
+        <link refid="draw__light_8c"/>
+      </node>
+      <node id="6">
+        <label>src/map/draw/draw_light.h</label>
+        <link refid="draw__light_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>src/map/map.c</label>
+        <link refid="map_8c"/>
+      </node>
+      <node id="1">
+        <label>src/map/map.h</label>
+        <link refid="map_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="5">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="10">
+        <label>src/map/map_populator.c</label>
+        <link refid="map__populator_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="map_8h_1a241aeeb764887ae5e3de58b98f04b16d" prot="public" static="no">
+        <name>WIDTH</name>
+        <initializer>39</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="8" column="9" bodyfile="src/map/map.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1aed89bd71aee8be823e8a20ec4e093c1e" prot="public" static="no">
+        <name>HEIGHT</name>
+        <initializer>19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="9" column="9" bodyfile="src/map/map.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1a0d3f165d6730034b8565cce40dadb3b2" prot="public" static="no">
+        <name>ENEMY_COUNT</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="11" column="9" bodyfile="src/map/map.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1a7205248231817984a172ec244056cfaf" prot="public" static="no">
+        <name>ENEMY_MIN_DISTANCE</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="12" column="9" bodyfile="src/map/map.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1afc0eef637f1016e8786e45e106a4881e" prot="public" static="no">
+        <name>TOP</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="14" column="9" bodyfile="src/map/map.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1ae420caa0af9cbdf102ed255034e27c5b" prot="public" static="no">
+        <name>BOTTOM</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="15" column="9" bodyfile="src/map/map.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1a437ef08681e7210d6678427030446a54" prot="public" static="no">
+        <name>LEFT</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="16" column="9" bodyfile="src/map/map.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map_8h_1a80fb826a684cf3f0d306b22aa100ddac" prot="public" static="no">
+        <name>RIGHT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="17" column="9" bodyfile="src/map/map.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="map_8h_1aaf89595a5d25d3dddf86ef442aecddae" prot="public" static="no" strong="no">
+        <type></type>
+        <name>map_tile_t</name>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeafca2faad41310c7e71ec303ef789c53a" prot="public">
+          <name>WALL</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeab5c63c54204a3c25d5ff88ea4d1d8336" prot="public">
+          <name>FLOOR</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaead511cddfda4ab9c0bf93cd3e584c05a6" prot="public">
+          <name>START_DOOR</name>
+          <initializer>= 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeaf7b47b000164891549c28fb5160ccb8b" prot="public">
+          <name>EXIT_DOOR</name>
+          <initializer>= 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea147e71049e3285d642d0d5268dba260f" prot="public">
+          <name>KEY</name>
+          <initializer>= 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeadacf26a0db2c43cae84048dd2190db84" prot="public">
+          <name>LIFE_FOUNTAIN</name>
+          <initializer>= 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea55bb7943551896665fca2e406b540eba" prot="public">
+          <name>MANA_FOUNTAIN</name>
+          <initializer>= 6</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaeafdbd3796c3ee76ea97f36cc85ebd7195" prot="public">
+          <name>GOBLIN</name>
+          <initializer>= 20</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map_8h_1aaf89595a5d25d3dddf86ef442aecddaea41ae0a505430bf564b119bc82db7592d" prot="public">
+          <name>HIDDEN</name>
+          <initializer>= 99</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="21" column="1" bodyfile="src/map/map.h" bodystart="21" bodyend="31"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="map_8h_1aa808dd3c3447c55bab011a35eaf3f50d" prot="public" static="no" extern="yes" mutable="no">
+        <type><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref></type>
+        <definition>vector2d_t directions[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>directions</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="33" column="19" bodyfile="src/map/map.c" bodystart="11" bodyend="16" declfile="src/map/map.h" declline="33" declcolumn="19"/>
+      </memberdef>
+      <memberdef kind="variable" id="map_8h_1a6942d3ace4e85ac56e1f420c3a5074dd" prot="public" static="no" extern="yes" mutable="no">
+        <type>map_tile_t</type>
+        <definition>map_tile_t map[WIDTH][HEIGHT]</definition>
+        <argsstring>[WIDTH][HEIGHT]</argsstring>
+        <name>map</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="36" column="19" bodyfile="src/map/map.c" bodystart="7" bodyend="-1" declfile="src/map/map.h" declline="36" declcolumn="19"/>
+      </memberdef>
+      <memberdef kind="variable" id="map_8h_1aa94d5f6df5a1c7d16e6151d07e302052" prot="public" static="no" extern="yes" mutable="no">
+        <type>map_tile_t</type>
+        <definition>map_tile_t revealed_map[WIDTH][HEIGHT]</definition>
+        <argsstring>[WIDTH][HEIGHT]</argsstring>
+        <name>revealed_map</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map.h" line="37" column="19" bodyfile="src/map/map.c" bodystart="8" bodyend="-1" declfile="src/map/map.h" declline="37" declcolumn="19"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes common types and constants for the games map. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WIDTH<sp/>39<sp/></highlight><highlight class="comment">//<sp/>must<sp/>be<sp/>odd</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HEIGHT<sp/>19</highlight><highlight class="comment">//<sp/>must<sp/>be<sp/>odd</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ENEMY_COUNT<sp/>8</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ENEMY_MIN_DISTANCE<sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TOP<sp/>0</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>BOTTOM<sp/>1</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LEFT<sp/>2</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RIGHT<sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>WALL<sp/>=<sp/>0,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>FLOOR<sp/>=<sp/>1,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>START_DOOR<sp/>=<sp/>2,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>EXIT_DOOR<sp/>=<sp/>3,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>KEY<sp/>=<sp/>4,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>LIFE_FOUNTAIN<sp/>=<sp/>5,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>MANA_FOUNTAIN<sp/>=<sp/>6,</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>GOBLIN<sp/>=<sp/>20,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>HIDDEN<sp/>=<sp/>99</highlight></codeline>
+<codeline lineno="31"><highlight class="normal">}<sp/>map_tile_t;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref><sp/>directions[4];</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="comment">//map<sp/>array</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/>map_tile_t<sp/>map[WIDTH][HEIGHT];</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/>map_tile_t<sp/>revealed_map[WIDTH][HEIGHT];</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//MAP_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/map/map.h"/>
+  </compounddef>
+</doxygen>

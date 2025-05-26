@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structobserver__node" kind="struct" language="C++" prot="public">
+    <compoundname>observer_node</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structobserver__node_1a9731626230424547e6977da6756878c7" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* observer_node::update_func) (void)</definition>
+        <argsstring>)(void)</argsstring>
+        <name>update_func</name>
+        <qualifiedname>observer_node::update_func</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="24" column="5" bodyfile="src/local/local_handler.c" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structobserver__node_1a0866c362b6a93fa16ae150423ca9fdb8" prot="public" static="no" mutable="no">
+        <type><ref refid="structobserver__node" kindref="compound">observer_node_t</ref> *</type>
+        <definition>observer_node_t* observer_node::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <qualifiedname>observer_node::next</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/local/local_handler.c" line="25" column="21" bodyfile="src/local/local_handler.c" bodystart="25" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>observer_node</label>
+        <link refid="structobserver__node"/>
+        <childnode refid="1" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/local/local_handler.c" line="23" column="1" bodyfile="src/local/local_handler.c" bodystart="23" bodyend="26"/>
+    <listofallmembers>
+      <member refid="structobserver__node_1a0866c362b6a93fa16ae150423ca9fdb8" prot="public" virt="non-virtual"><scope>observer_node</scope><name>next</name></member>
+      <member refid="structobserver__node_1a9731626230424547e6977da6756878c7" prot="public" virt="non-virtual"><scope>observer_node</scope><name>update_func</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,931 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="logger_8h" kind="file" language="C++">
+    <compoundname>logger.h</compoundname>
+    <includedby refid="character_8c" local="yes">src/character/character.c</includedby>
+    <includedby refid="level_8c" local="yes">src/character/level.c</includedby>
+    <includedby refid="damage_8c" local="yes">src/combat/damage.c</includedby>
+    <includedby refid="common_8h" local="yes">src/common.h</includedby>
+    <includedby refid="database_8c" local="yes">src/database/database.c</includedby>
+    <includedby refid="ability__database_8c" local="yes">src/database/game/ability_database.c</includedby>
+    <includedby refid="character__database_8c" local="yes">src/database/game/character_database.c</includedby>
+    <includedby refid="gamestate__database_8c" local="yes">src/database/game/gamestate_database.c</includedby>
+    <includedby refid="item__database_8c" local="yes">src/database/game/item_database.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="input__handler_8c" local="yes">src/io/input/input_handler.c</includedby>
+    <includedby refid="io__handler_8c" local="yes">src/io/io_handler.c</includedby>
+    <includedby refid="output__handler_8c" local="yes">src/io/output/common/output_handler.c</includedby>
+    <includedby refid="media__output_8c" local="yes">src/io/output/media/media_output.c</includedby>
+    <includedby refid="media__output__handler_8c" local="yes">src/io/output/media/media_output_handler.c</includedby>
+    <includedby refid="combat__output_8c" local="yes">src/io/output/specific/combat_output.c</includedby>
+    <includedby refid="inventory__output_8c" local="yes">src/io/output/specific/inventory_output.c</includedby>
+    <includedby refid="map__output_8c" local="yes">src/io/output/specific/map_output.c</includedby>
+    <includedby refid="stats__output_8c" local="yes">src/io/output/specific/stats_output.c</includedby>
+    <includedby refid="wait__output_8c" local="yes">src/io/output/specific/wait_output.c</includedby>
+    <includedby refid="gear_8c" local="yes">src/item/gear.c</includedby>
+    <includedby refid="local__handler_8c" local="yes">src/local/local_handler.c</includedby>
+    <includedby refid="logger_8c" local="yes">src/logging/logger.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="map__generator_8c" local="yes">src/map/map_generator.c</includedby>
+    <includedby refid="memory__management_8c" local="yes">src/memory/memory_management.c</includedby>
+    <includedby refid="main__menu_8c" local="yes">src/menu/main_menu.c</includedby>
+    <includedby refid="menu_8c" local="yes">src/menu/menu.c</includedby>
+    <includedby refid="stats_8c" local="yes">src/stats/stats.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/character/character.c</label>
+        <link refid="character_8c"/>
+      </node>
+      <node id="6">
+        <label>src/character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/character/level.c</label>
+        <link refid="level_8c"/>
+      </node>
+      <node id="7">
+        <label>src/character/level.h</label>
+        <link refid="level_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>src/character/monster.c</label>
+        <link refid="monster_8c"/>
+      </node>
+      <node id="10">
+        <label>src/character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>src/character/player.c</label>
+        <link refid="player_8c"/>
+      </node>
+      <node id="15">
+        <label>src/character/player.h</label>
+        <link refid="player_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>src/combat/ability.c</label>
+        <link refid="ability_8c"/>
+      </node>
+      <node id="30">
+        <label>src/combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="56">
+        <label>src/combat/combat_mode.h</label>
+        <link refid="combat__mode_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/combat/damage.c</label>
+        <link refid="damage_8c"/>
+      </node>
+      <node id="40">
+        <label>src/common.c</label>
+        <link refid="common_8c"/>
+      </node>
+      <node id="5">
+        <label>src/common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="40" relation="include">
+        </childnode>
+        <childnode refid="41" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="45" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="52" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="53" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="55" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="57" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="62" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+        <childnode refid="65" relation="include">
+        </childnode>
+      </node>
+      <node id="67">
+        <label>src/database/database.c</label>
+        <link refid="database_8c"/>
+      </node>
+      <node id="33">
+        <label>src/database/game/ability_database.c</label>
+        <link refid="ability__database_8c"/>
+      </node>
+      <node id="32">
+        <label>src/database/game/ability_database.h</label>
+        <link refid="ability__database_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>src/database/game/character_database.c</label>
+        <link refid="character__database_8c"/>
+      </node>
+      <node id="17">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="42">
+        <label>src/database/game/gamestate_database.c</label>
+        <link refid="gamestate__database_8c"/>
+      </node>
+      <node id="41">
+        <label>src/database/game/gamestate_database.h</label>
+        <link refid="gamestate__database_8h"/>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="43" relation="include">
+        </childnode>
+      </node>
+      <node id="35">
+        <label>src/database/game/item_database.c</label>
+        <link refid="item__database_8c"/>
+      </node>
+      <node id="34">
+        <label>src/database/game/item_database.h</label>
+        <link refid="item__database_8h"/>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="12">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="38">
+        <label>src/game_data.h</label>
+        <link refid="game__data_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="46">
+        <label>src/io/input/input_handler.c</label>
+        <link refid="input__handler_8c"/>
+      </node>
+      <node id="44">
+        <label>src/io/io_handler.c</label>
+        <link refid="io__handler_8c"/>
+      </node>
+      <node id="45">
+        <label>src/io/io_handler.h</label>
+        <link refid="io__handler_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="47">
+        <label>src/io/output/common/output_handler.c</label>
+        <link refid="output__handler_8c"/>
+      </node>
+      <node id="48">
+        <label>src/io/output/media/media_output.c</label>
+        <link refid="media__output_8c"/>
+      </node>
+      <node id="49">
+        <label>src/io/output/media/media_output_handler.c</label>
+        <link refid="media__output__handler_8c"/>
+      </node>
+      <node id="21">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="52">
+        <label>src/io/output/specific/combat_output.h</label>
+        <link refid="combat__output_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="22">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="53">
+        <label>src/io/output/specific/inventory_output.h</label>
+        <link refid="inventory__output_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="50">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+      <node id="54">
+        <label>src/io/output/specific/map_output.h</label>
+        <link refid="map__output_8h"/>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="23">
+        <label>src/io/output/specific/stats_output.h</label>
+        <link refid="stats__output_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="51">
+        <label>src/io/output/specific/wait_output.c</label>
+        <link refid="wait__output_8c"/>
+      </node>
+      <node id="36">
+        <label>src/item/gear.c</label>
+        <link refid="gear_8c"/>
+      </node>
+      <node id="39">
+        <label>src/item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>src/item/loot_generation.c</label>
+        <link refid="loot__generation_8c"/>
+      </node>
+      <node id="13">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="37">
+        <label>src/item/potion.c</label>
+        <link refid="potion_8c"/>
+      </node>
+      <node id="55">
+        <label>src/item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="56" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="38" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="68">
+        <label>src/local/local_handler.c</label>
+        <link refid="local__handler_8c"/>
+      </node>
+      <node id="69">
+        <label>src/logging/logger.c</label>
+        <link refid="logger_8c"/>
+      </node>
+      <node id="1">
+        <label>src/logging/logger.h</label>
+        <link refid="logger_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="67" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="42" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="46" relation="include">
+        </childnode>
+        <childnode refid="44" relation="include">
+        </childnode>
+        <childnode refid="47" relation="include">
+        </childnode>
+        <childnode refid="48" relation="include">
+        </childnode>
+        <childnode refid="49" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="50" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="51" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+        <childnode refid="68" relation="include">
+        </childnode>
+        <childnode refid="69" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="70" relation="include">
+        </childnode>
+        <childnode refid="63" relation="include">
+        </childnode>
+        <childnode refid="64" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="59">
+        <label>src/map/draw/draw_light.c</label>
+        <link refid="draw__light_8c"/>
+      </node>
+      <node id="58">
+        <label>src/map/draw/draw_light.h</label>
+        <link refid="draw__light_8h"/>
+        <childnode refid="59" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="60">
+        <label>src/map/map.c</label>
+        <link refid="map_8c"/>
+      </node>
+      <node id="57">
+        <label>src/map/map.h</label>
+        <link refid="map_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="54" relation="include">
+        </childnode>
+        <childnode refid="58" relation="include">
+        </childnode>
+        <childnode refid="60" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="61" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="28">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="26">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="61">
+        <label>src/map/map_populator.c</label>
+        <link refid="map__populator_8c"/>
+      </node>
+      <node id="70">
+        <label>src/memory/memory_management.c</label>
+        <link refid="memory__management_8c"/>
+      </node>
+      <node id="62">
+        <label>src/menu/language_menu.c</label>
+        <link refid="language__menu_8c"/>
+      </node>
+      <node id="63">
+        <label>src/menu/main_menu.c</label>
+        <link refid="main__menu_8c"/>
+      </node>
+      <node id="64">
+        <label>src/menu/menu.c</label>
+        <link refid="menu_8c"/>
+      </node>
+      <node id="43">
+        <label>src/menu/save_menu.c</label>
+        <link refid="save__menu_8c"/>
+      </node>
+      <node id="66">
+        <label>src/stats/stats.c</label>
+        <link refid="stats_8c"/>
+      </node>
+      <node id="65">
+        <label>src/stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="39" relation="include">
+        </childnode>
+        <childnode refid="66" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+      <node id="29">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="logger_8h_1a6f88fc964660bd666be2ccd3e22b373e" prot="public" static="no">
+        <name>DEBUG_STATE</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="9" column="9" bodyfile="src/logging/logger.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8h_1a557e5b28168e4dbe28adde2e0ac1fc0a" prot="public" static="no">
+        <name>DEBUG_LOG</name>
+        <param><defname>modul</defname></param>
+        <param><defname>format</defname></param>
+        <param><defname>...</defname></param>
+        <initializer>    if (DEBUG_STATE == 1) {                           \
+        <ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(DEBUG, modul, format, ##__VA_ARGS__); \
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="11" column="9" bodyfile="src/logging/logger.h" bodystart="11" bodyend="14"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8h_1a728e12a832014a011503585b706b9f2d" prot="public" static="no">
+        <name>RETURN_WHEN_NULL</name>
+        <param><defname>ptr</defname></param>
+        <param><defname>ret</defname></param>
+        <param><defname>modul</defname></param>
+        <param><defname>format</defname></param>
+        <param><defname>...</defname></param>
+        <initializer>    if (ptr == NULL) {                                 \
+        <ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(ERROR, modul, format, ##__VA_ARGS__);  \
+        return ret;                                    \
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="16" column="9" bodyfile="src/logging/logger.h" bodystart="16" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="define" id="logger_8h_1ac70aabd12c1a5a9c502e4b62a13d87ab" prot="public" static="no">
+        <name>RETURN_WHEN_TRUE</name>
+        <param><defname>expr</defname></param>
+        <param><defname>ret</defname></param>
+        <param><defname>modul</defname></param>
+        <param><defname>format</defname></param>
+        <param><defname>...</defname></param>
+        <initializer>    if (expr) {                                         \
+        <ref refid="logger_8c_1aa70df4f70b7969a40b70fda659005550" kindref="member">log_msg</ref>(ERROR, modul, format, ##__VA_ARGS__);   \
+        return ret;                                     \
+    }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="22" column="9" bodyfile="src/logging/logger.h" bodystart="22" bodyend="26"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1d" prot="public" static="no" strong="no">
+        <type></type>
+        <name>log_level_t</name>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da0593585da9181e972974c1274d8f2b4f" prot="public">
+          <name>DEBUG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1dac5a963f145f3153de0afe16e7d8cec76" prot="public">
+          <name>FINE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da748005382152808a72b1a9177d9dc806" prot="public">
+          <name>INFO</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da984de77c680eaff141ec910e25568a81" prot="public">
+          <name>WARNING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1da2fd6f336d08340583bd620a7f5694c90" prot="public">
+          <name>ERROR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="logger_8h_1a98121d38a8cf3daf5246a349f912ca1daf4fa7fb60016e7205b8797cd64776377" prot="public">
+          <name>MAX_LOG_LEVEL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="28" column="1" bodyfile="src/logging/logger.h" bodystart="28" bodyend="35"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="logger_8h_1a542d97fece81d2a06b1e1ddf3d461c8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void init_logger</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_logger</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initializes the logging system for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function sets up the logging system to be ready for recording log entries. It creates or opens the log file, initializes the ring buffer used for storing log entries temporarily, and starts the thread that asynchronously writes logs to the file. This ensures logging is operational and ready to use for the application&apos;s lifetime.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>This function can only be called once during the application&apos;s lifecycle. Subsequent calls will have no effect if the logger is already initialized.</para>
+</listitem><listitem><para>All required resources for logging, such as the log file and ring buffer, are prepared within this initialization process.</para>
+</listitem><listitem><para>If any of the initialization steps fail (e.g., ring buffer initialization or file operations), the function ensures cleanup of allocated resources. </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="54" column="6" bodyfile="src/logging/logger.c" bodystart="232" bodyend="244" declfile="src/logging/logger.h" declline="54" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8h_1a15a9f05fbdf8481839ab4755df4b7370" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void log_msg</definition>
+        <argsstring>(log_level_t level, const char *module, const char *format,...)</argsstring>
+        <name>log_msg</name>
+        <param>
+          <type>log_level_t</type>
+          <declname>level</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>module</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>format</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+<para>Logs a formatted message with a specified log level and module. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function generates a log entry that includes a timestamp, log level, module name, and a custom message formatted using a variable argument list. The log message is written to a ring buffer for asynchronous processing.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>The logging system must be initialized and running before using this function. Otherwise, the function will return without performing any operations.</para>
+</listitem><listitem><para>The log level determines the severity or importance of the message.</para>
+</listitem></itemizedlist>
+</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>level</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The severity level of the log message (e.g., DEBUG, INFO, ERROR). If the provided log level exceeds the maximum defined levels, the INFO level will be used as a fallback. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>module</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A string identifying the module or component generating the log message. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>format</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A printf-style format string for the message content. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>...</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Additional arguments to be formatted into the log message according to the format string. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="76" column="6" bodyfile="src/logging/logger.c" bodystart="246" bodyend="276" declfile="src/logging/logger.h" declline="76" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="logger_8h_1a1d815b48f04fdfadbb66a1a6bebbe721" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_logger</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_logger</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shuts down the logging system for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function terminates the logging system, ensuring that no further log entries are recorded. It sets the logger&apos;s running state to false, effectively disabling any ongoing or future logging operations.</para>
+<para>Use this function to cleanly release logging resources and mark the completion of logging operations at the end of the application&apos;s lifecycle or during application shutdown sequences.</para>
+<para>Notes:<itemizedlist>
+<listitem><para>Once this function is called, logging within the application will cease to function.</para>
+</listitem><listitem><para>This function should be called after all dependent systems and processes using the logger are finalized. </para>
+</listitem></itemizedlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/logging/logger.h" line="95" column="6" bodyfile="src/logging/logger.c" bodystart="278" bodyend="280" declfile="src/logging/logger.h" declline="95" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Header file for logging functionality of the game. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LOGGER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LOGGER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEBUG_STATE<sp/>1</highlight><highlight class="comment">//change<sp/>to<sp/>0<sp/>to<sp/>disable<sp/>debug<sp/>logging</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEBUG_LOG(modul,<sp/>format,<sp/>...)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="12"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>if<sp/>(DEBUG_STATE<sp/>==<sp/>1)<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="13"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_msg(DEBUG,<sp/>modul,<sp/>format,<sp/>##__VA_ARGS__);<sp/>\</highlight></codeline>
+<codeline lineno="14"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RETURN_WHEN_NULL(ptr,<sp/>ret,<sp/>modul,<sp/>format,<sp/>...)<sp/>\</highlight></codeline>
+<codeline lineno="17"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>if<sp/>(ptr<sp/>==<sp/>NULL)<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="18"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_msg(ERROR,<sp/>modul,<sp/>format,<sp/>##__VA_ARGS__);<sp/><sp/>\</highlight></codeline>
+<codeline lineno="19"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>ret;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="20"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>RETURN_WHEN_TRUE(expr,<sp/>ret,<sp/>modul,<sp/>format,<sp/>...)<sp/>\</highlight></codeline>
+<codeline lineno="23"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>if<sp/>(expr)<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="24"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>log_msg(ERROR,<sp/>modul,<sp/>format,<sp/>##__VA_ARGS__);<sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="25"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>return<sp/>ret;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="26"><highlight class="preprocessor"><sp/><sp/><sp/><sp/>}</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>DEBUG,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>FINE,</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>INFO,</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>WARNING,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>ERROR,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>MAX_LOG_LEVEL</highlight></codeline>
+<codeline lineno="35"><highlight class="normal">}<sp/>log_level_t;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8h_1a542d97fece81d2a06b1e1ddf3d461c8a" kindref="member">init_logger</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8h_1a15a9f05fbdf8481839ab4755df4b7370" kindref="member">log_msg</ref>(log_level_t<sp/>level,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>module,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>format,<sp/>...);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="logger_8h_1a1d815b48f04fdfadbb66a1a6bebbe721" kindref="member">shutdown_logger</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//LOGGER_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/logging/logger.h"/>
+  </compounddef>
+</doxygen>

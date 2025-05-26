@@ -1,0 +1,1162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="output__handler_8h" kind="file" language="C++">
+    <compoundname>output_handler.h</compoundname>
+    <includes local="no">notcurses/notcurses.h</includes>
+    <includes local="no">stdbool.h</includes>
+    <includedby refid="combat__mode_8c" local="yes">src/combat/combat_mode.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="io__handler_8c" local="yes">src/io/io_handler.c</includedby>
+    <includedby refid="io__handler_8h" local="yes">src/io/io_handler.h</includedby>
+    <includedby refid="output__handler_8c" local="yes">src/io/output/common/output_handler.c</includedby>
+    <includedby refid="media__output_8c" local="yes">src/io/output/media/media_output.c</includedby>
+    <includedby refid="media__output__handler_8c" local="yes">src/io/output/media/media_output_handler.c</includedby>
+    <includedby refid="combat__output_8c" local="yes">src/io/output/specific/combat_output.c</includedby>
+    <includedby refid="inventory__output_8c" local="yes">src/io/output/specific/inventory_output.c</includedby>
+    <includedby refid="map__output_8c" local="yes">src/io/output/specific/map_output.c</includedby>
+    <includedby refid="stats__output_8c" local="yes">src/io/output/specific/stats_output.c</includedby>
+    <includedby refid="wait__output_8c" local="yes">src/io/output/specific/wait_output.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <includedby refid="language__menu_8c" local="yes">src/menu/language_menu.c</includedby>
+    <includedby refid="main__menu_8c" local="yes">src/menu/main_menu.c</includedby>
+    <includedby refid="menu_8c" local="yes">src/menu/menu.c</includedby>
+    <includedby refid="save__menu_8c" local="yes">src/menu/save_menu.c</includedby>
+    <includedby refid="stats__mode_8c" local="yes">src/stats/stats_mode.c</includedby>
+    <incdepgraph>
+      <node id="1">
+        <label>src/io/output/common/output_handler.h</label>
+        <link refid="output__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>notcurses/notcurses.h</label>
+      </node>
+      <node id="3">
+        <label>stdbool.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="3">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="6">
+        <label>src/io/input/input_handler.c</label>
+        <link refid="input__handler_8c"/>
+      </node>
+      <node id="4">
+        <label>src/io/io_handler.c</label>
+        <link refid="io__handler_8c"/>
+      </node>
+      <node id="5">
+        <label>src/io/io_handler.h</label>
+        <link refid="io__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>src/io/output/common/output_handler.c</label>
+        <link refid="output__handler_8c"/>
+      </node>
+      <node id="1">
+        <label>src/io/output/common/output_handler.h</label>
+        <link refid="output__handler_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>src/io/output/media/media_output.c</label>
+        <link refid="media__output_8c"/>
+      </node>
+      <node id="9">
+        <label>src/io/output/media/media_output_handler.c</label>
+        <link refid="media__output__handler_8c"/>
+      </node>
+      <node id="10">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="11">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="12">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+      <node id="13">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="14">
+        <label>src/io/output/specific/wait_output.c</label>
+        <link refid="wait__output_8c"/>
+      </node>
+      <node id="15">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="16">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="17">
+        <label>src/menu/language_menu.c</label>
+        <link refid="language__menu_8c"/>
+      </node>
+      <node id="18">
+        <label>src/menu/main_menu.c</label>
+        <link refid="main__menu_8c"/>
+      </node>
+      <node id="19">
+        <label>src/menu/menu.c</label>
+        <link refid="menu_8c"/>
+      </node>
+      <node id="20">
+        <label>src/menu/save_menu.c</label>
+        <link refid="save__menu_8c"/>
+      </node>
+      <node id="21">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="output__handler_8h_1a1e8da20f9f71bafb2db6e9c8622e067d" prot="public" static="no">
+        <name>LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS</name>
+        <initializer>2000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="12" column="9" bodyfile="src/io/output/common/output_handler.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="output__handler_8h_1afcb66bf9a3097a30a0dd6c8b09f0c1ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool init_output_handler</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_output_handler</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initialize the output handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Sets up the output handling system. This function must be called before any other output functions.</para>
+<para><simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="22" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="26" bodyend="37" declfile="src/io/output/common/output_handler.h" declline="22" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1abc40cd622f423abf44084c8f8595f57f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void clear_screen</definition>
+        <argsstring>(void)</argsstring>
+        <name>clear_screen</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Clear the screen. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Clears the entire standard plane. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="29" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="39" bodyend="48" declfile="src/io/output/common/output_handler.h" declline="29" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a09c792afefa9c412b0eb42c83acad1fa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text</definition>
+        <argsstring>(int y, int x, const char *text, uint64_t ncchannel)</argsstring>
+        <name>print_text</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>ncchannel</declname>
+        </param>
+        <briefdescription>
+<para>Print text at a specific position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders text at the specified coordinates with the given foreground and background colors.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to render </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ncchannel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel (foreground and background) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="42" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="50" bodyend="59" declfile="src/io/output/common/output_handler.h" declline="42" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a1e09f2e647d1eea643c22b2e0205590d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text_default</definition>
+        <argsstring>(int y, int x, const char *text)</argsstring>
+        <name>print_text_default</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+<para>Print text at a specific position with default colors. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders text at the specified coordinates with the default colors.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to render </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="54" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="61" bodyend="63" declfile="src/io/output/common/output_handler.h" declline="54" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1adf4be6a9774847c7504abba004df9018" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text_multi_line</definition>
+        <argsstring>(int y, int x, const char *text, int max_width, u_int64_t ncchannel)</argsstring>
+        <name>print_text_multi_line</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>max_width</declname>
+        </param>
+        <param>
+          <type>u_int64_t</type>
+          <declname>ncchannel</declname>
+        </param>
+        <briefdescription>
+<para>Print multi-line text with word wrapping. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders text with word wrapping at the specified coordinates.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to render </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>max_width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The maximum width for line wrapping </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ncchannel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel (foreground and background) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="67" column="6" declfile="src/io/output/common/output_handler.h" declline="67" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1adee6e471ac5d56d82d014bf9f333bf25" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text_multi_line_default</definition>
+        <argsstring>(int y, int x, const char *text, int max_width)</argsstring>
+        <name>print_text_multi_line_default</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>max_width</declname>
+        </param>
+        <briefdescription>
+<para>Print multi-line text with word wrapping and default colors. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders text with word wrapping at the specified coordinates using default colors.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text to render </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>max_width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The maximum width for line wrapping </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="79" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="99" bodyend="101" declfile="src/io/output/common/output_handler.h" declline="79" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1aec8006d4b846af1b846902afa177ffa6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text_multi_strings</definition>
+        <argsstring>(int y, int x, const char *text[], int count, uint64_t ncchannel)</argsstring>
+        <name>print_text_multi_strings</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>ncchannel</declname>
+        </param>
+        <briefdescription>
+<para>Print multiple strings on consecutive lines. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders an array of strings starting at the specified coordinates.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the first string </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array of strings to render </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of strings in the array </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ncchannel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel (foreground and background) </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="92" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="103" bodyend="118" declfile="src/io/output/common/output_handler.h" declline="92" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a2e2984603187cc3f2f0a496ae9189935" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_text_multi_strings_default</definition>
+        <argsstring>(int y, int x, const char *text[], int count)</argsstring>
+        <name>print_text_multi_strings_default</name>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+<para>Print multiple strings on consecutive lines with default colors. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders an array of strings starting at the specified coordinates using default colors.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the first string </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array of strings to render </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of strings in the array </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="104" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="120" bodyend="122" declfile="src/io/output/common/output_handler.h" declline="104" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1aaf486a9e8bf78ab5e8a4fda01395f918" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_menu</definition>
+        <argsstring>(const char *title, const char **options, int option_count, int selected_index, int y, int x, uint64_t title_channel, uint64_t option_channel, uint64_t selected_channel)</argsstring>
+        <name>print_menu</name>
+        <param>
+          <type>const char *</type>
+          <declname>title</declname>
+        </param>
+        <param>
+          <type>const char **</type>
+          <declname>options</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>option_count</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>selected_index</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>title_channel</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>option_channel</declname>
+        </param>
+        <param>
+          <type>uint64_t</type>
+          <declname>selected_channel</declname>
+        </param>
+        <briefdescription>
+<para>Print a menu with selection highlighting. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders a menu with the specified options, highlighting the selected option.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>title</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The menu title </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>options</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array of option strings </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option_count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of options </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>selected_index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index of the selected option </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the menu start </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) for the menu start </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>title_channel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel for the title </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option_channel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel for the options </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>selected_channel</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The color channel for the selected option </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="122" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="124" bodyend="148" declfile="src/io/output/common/output_handler.h" declline="122" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1afbe3fda203ab199dae350ac75718ad3f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void print_menu_default</definition>
+        <argsstring>(const char *title, const char **options, int option_count, int selected_index, int y, int x)</argsstring>
+        <name>print_menu_default</name>
+        <param>
+          <type>const char *</type>
+          <declname>title</declname>
+        </param>
+        <param>
+          <type>const char **</type>
+          <declname>options</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>option_count</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>selected_index</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Print a menu with selection highlighting using default colors. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders a menu with the specified options, highlighting the selected option. Uses default colors for normal options and inverted colors for the selected option.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>title</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The menu title </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>options</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Array of option strings </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>option_count</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Number of options </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>selected_index</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Index of the selected option </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the menu start </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) for the menu start </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="141" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="150" bodyend="154" declfile="src/io/output/common/output_handler.h" declline="141" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a1549d56b82287ffa671bc296df68ec53" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool get_text_input</definition>
+        <argsstring>(const char *prompt, char *buffer, int buffer_size, const char *confirm_msg, int y, int x)</argsstring>
+        <name>get_text_input</name>
+        <param>
+          <type>const char *</type>
+          <declname>prompt</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>buffer</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>buffer_size</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>confirm_msg</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Get a text input from the user. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Displays a prompt and gets a text input from the user.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>prompt</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text prompt to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffer</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The buffer to store the input in </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>buffer_size</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The size of the buffer </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>confirm_msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The text explaining that Enter confirms (can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the prompt </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) for the prompt </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true if input was confirmed, false if canceled </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="157" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="156" bodyend="219" declfile="src/io/output/common/output_handler.h" declline="157" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1af7231f9a11f56c17d5115155eb76d834" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void show_message_screen</definition>
+        <argsstring>(const char *message, const char *continue_message, int y, int x)</argsstring>
+        <name>show_message_screen</name>
+        <param>
+          <type>const char *</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>continue_message</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <briefdescription>
+<para>Show a message screen. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Displays a message on the screen and waits for user input.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>message</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The message to display </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>continue_message</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Optional message explaining how to continue (can be NULL) </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The Y coordinate (row) for the message </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The X coordinate (column) for the message </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="170" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="221" bodyend="244" declfile="src/io/output/common/output_handler.h" declline="170" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a3e18b0ae03162818f0410141b4c5ecde" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool render_frame</definition>
+        <argsstring>(void)</argsstring>
+        <name>render_frame</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Render the current frame. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Renders all changes to the screen.</para>
+<para><simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="179" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="246" bodyend="255" declfile="src/io/output/common/output_handler.h" declline="179" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a4dcd19daec1563adb660a42885d97b75" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool get_screen_dimensions</definition>
+        <argsstring>(int *width, int *height)</argsstring>
+        <name>get_screen_dimensions</name>
+        <param>
+          <type>int *</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>height</declname>
+        </param>
+        <briefdescription>
+<para>Get the dimensions of the standard plane. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="out">width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to store the width </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to store the height </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>true on success, false on failure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="188" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="257" bodyend="268" declfile="src/io/output/common/output_handler.h" declline="188" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="output__handler_8h_1a382936f051e1cc32f8cb52b5e41d58c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_output_handler</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_output_handler</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shutdown the output handler. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Cleans up resources. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/common/output_handler.h" line="195" column="6" bodyfile="src/io/output/common/output_handler.c" bodystart="270" bodyend="274" declfile="src/io/output/common/output_handler.h" declline="195" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for outputting to the console. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>OUTPUT_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>OUTPUT_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;notcurses/notcurses.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdbool.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Define<sp/>constants<sp/>for<sp/>display<sp/>timing</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS<sp/>2000</highlight><highlight class="comment">//<sp/>Minimum<sp/>time<sp/>to<sp/>display<sp/>launch<sp/>screen<sp/>(5<sp/>seconds)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1afcb66bf9a3097a30a0dd6c8b09f0c1ab" kindref="member">init_output_handler</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1abc40cd622f423abf44084c8f8595f57f" kindref="member">clear_screen</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a09c792afefa9c412b0eb42c83acad1fa" kindref="member">print_text</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text,<sp/>uint64_t<sp/>ncchannel);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a1e09f2e647d1eea643c22b2e0205590d" kindref="member">print_text_default</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="output__handler_8h_1adf4be6a9774847c7504abba004df9018" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1adf4be6a9774847c7504abba004df9018" kindref="member">print_text_multi_line</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>max_width,<sp/>u_int64_t<sp/>ncchannel);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1adee6e471ac5d56d82d014bf9f333bf25" kindref="member">print_text_multi_line_default</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>max_width);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1aec8006d4b846af1b846902afa177ffa6" kindref="member">print_text_multi_strings</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text[],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<sp/>uint64_t<sp/>ncchannel);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a2e2984603187cc3f2f0a496ae9189935" kindref="member">print_text_multi_strings_default</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text[],<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1aaf486a9e8bf78ab5e8a4fda01395f918" kindref="member">print_menu</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>title,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**<sp/>options,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>option_count,</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>selected_index,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>title_channel,</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>option_channel,</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uint64_t<sp/>selected_channel);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1afbe3fda203ab199dae350ac75718ad3f" kindref="member">print_menu_default</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>title,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">**<sp/>options,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>option_count,</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>selected_index,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a1549d56b82287ffa671bc296df68ec53" kindref="member">get_text_input</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>prompt,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>buffer,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>buffer_size,</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>confirm_msg,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1af7231f9a11f56c17d5115155eb76d834" kindref="member">show_message_screen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>message,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>continue_message,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a3e18b0ae03162818f0410141b4c5ecde" kindref="member">render_frame</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a4dcd19daec1563adb660a42885d97b75" kindref="member">get_screen_dimensions</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">*<sp/>width,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">*<sp/>height);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="output__handler_8h_1a382936f051e1cc32f8cb52b5e41d58c5" kindref="member">shutdown_output_handler</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>OUTPUT_HANDLER_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/io/output/common/output_handler.h"/>
+  </compounddef>
+</doxygen>

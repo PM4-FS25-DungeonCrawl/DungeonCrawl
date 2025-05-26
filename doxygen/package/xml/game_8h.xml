@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="game_8h" kind="file" language="C++">
+    <compoundname>game.h</compoundname>
+    <includes refid="database_8h" local="yes">database/database.h</includes>
+    <includedby refid="combat__mode_8c" local="yes">src/combat/combat_mode.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="game__data_8c" local="yes">src/game_data.c</includedby>
+    <includedby refid="inventory__mode_8c" local="yes">src/inventory/inventory_mode.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <incdepgraph>
+      <node id="3">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="2">
+        <label>database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/game.h</label>
+        <link refid="game_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="3">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="1">
+        <label>src/game.h</label>
+        <link refid="game_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="5">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="6">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="7">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="game_8h_1a0e805e1f8e1b21737196a8e84c4e5879" prot="public" static="no">
+        <name>COLOR_FG_RGB</name>
+        <initializer>255, 255, 255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="11" column="9" bodyfile="src/game.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="game_8h_1ac1babe4934963eeb4fe16a0c2c821ffa" prot="public" static="no">
+        <name>COLOR_BG_RGB</name>
+        <initializer>0, 0, 0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="12" column="9" bodyfile="src/game.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="game_8h_1a4edce1ca040716922b6e4a79be4e414d" prot="public" static="no" strong="no">
+        <type></type>
+        <name>game_state_t</name>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414dac22743f1fc74de09544ecc9bab74a17b" prot="public">
+          <name>MAIN_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414da4f59c6bf65a3e71d360c98a62ebeb36c" prot="public">
+          <name>MAP_MODE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414dac7f6dff8615cb594b1028ede1732ca55" prot="public">
+          <name>COMBAT_MODE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414da67c8a07037abd747c196032fc8ac2f6d" prot="public">
+          <name>LOOT_MODE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414da164fd02fc2504911d192f2939c71a602" prot="public">
+          <name>INVENTORY_MODE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414daf77198f346acabfdfd686c7af732aa3f" prot="public">
+          <name>GENERATE_MAP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414da5d649bc746f4722f2affb004476ca041" prot="public">
+          <name>STATS_MODE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="game_8h_1a4edce1ca040716922b6e4a79be4e414da7a10b5d68d31711288e1fe0fa17dbf4f" prot="public">
+          <name>EXIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="18" column="1" bodyfile="src/game.h" bodystart="18" bodyend="27"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="game_8h_1a7cb72d70c08b314262fc0143c49e3166" prot="public" static="no" extern="yes" mutable="no">
+        <type>struct notcurses *</type>
+        <definition>struct notcurses* nc</definition>
+        <argsstring></argsstring>
+        <name>nc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="15" column="24" bodyfile="src/io/io_handler.c" bodystart="26" bodyend="-1" declfile="src/game.h" declline="15" declcolumn="24"/>
+      </memberdef>
+      <memberdef kind="variable" id="game_8h_1a95672e218c892e33e2e89fdd88d800bc" prot="public" static="no" extern="yes" mutable="no">
+        <type>struct ncplane *</type>
+        <definition>struct ncplane* stdplane</definition>
+        <argsstring></argsstring>
+        <name>stdplane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="16" column="22" bodyfile="src/io/io_handler.c" bodystart="27" bodyend="-1" declfile="src/game.h" declline="16" declcolumn="22"/>
+      </memberdef>
+      <memberdef kind="variable" id="game_8h_1ad75d7d0954f91ea9c6e31276f0317c31" prot="public" static="no" extern="yes" mutable="no">
+        <type><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref></type>
+        <definition>db_connection_t db_connection</definition>
+        <argsstring></argsstring>
+        <name>db_connection</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="29" column="24" bodyfile="src/game.c" bodystart="30" bodyend="-1" declfile="src/game.h" declline="29" declcolumn="24"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="game_8h_1a6ff802f40779291bfa8d943c1fc0cf97" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void run_game</definition>
+        <argsstring>()</argsstring>
+        <name>run_game</name>
+        <briefdescription>
+<para>Starts the game loop. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function initializes and runs the main game loop, handling the various game states and transitions until the game is exited. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="37" column="6" bodyfile="src/game.c" bodystart="62" bodyend="68" declfile="src/game.h" declline="37" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="game_8h_1a813f052b4434baac9f0410b9b29d9add" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void main_menu_state</definition>
+        <argsstring>()</argsstring>
+        <name>main_menu_state</name>
+        <briefdescription>
+<para>Handles the main menu state of the game. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function manages the interactions and transitions that occur within the main menu, including starting a new game, loading a game, and changing settings. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="46" column="6" bodyfile="src/game.c" bodystart="115" bodyend="184" declfile="src/game.h" declline="46" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="game_8h_1aa129a19e7fb247016f3205537f90cc8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void map_mode_state</definition>
+        <argsstring>()</argsstring>
+        <name>map_mode_state</name>
+        <briefdescription>
+<para>Handles the map mode state of the game. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function manages the interactions and transitions that occur within the map mode, including player movement, map exploration, and interactions with map elements. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="55" column="6" bodyfile="src/game.c" bodystart="186" bodyend="215" declfile="src/game.h" declline="55" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="game_8h_1a71b2f4c5f0e029545f44d9fef1f072cd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void inventory_mode_state</definition>
+        <argsstring>()</argsstring>
+        <name>inventory_mode_state</name>
+        <briefdescription>
+<para>Handles the inventory mode state of the game. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function manages the interactions and transitions that occur within the inventory mode, including item management, usage, and equipping items. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="64" column="6" bodyfile="src/game.c" bodystart="249" bodyend="257" declfile="src/game.h" declline="64" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="game_8h_1a00ee39adf3b283b23d1f0367980a2fa4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void loot_mode_state</definition>
+        <argsstring>()</argsstring>
+        <name>loot_mode_state</name>
+        <briefdescription>
+<para>Handles the loot mode state of the game. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function manages the interactions and transitions that occur when the player is looting after a combat encounter, including selecting items to take and managing inventory. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game.h" line="73" column="6" bodyfile="src/game.c" bodystart="238" bodyend="247" declfile="src/game.h" declline="73" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Declares core game states, global database connection, and main game control functions. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>GAME_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GAME_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="database_8h" kindref="compound">database/database.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Define<sp/>colors<sp/>with<sp/>notcurses</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>COLOR_FG_RGB<sp/>255,<sp/>255,<sp/>255</highlight><highlight class="comment">//<sp/>White</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>COLOR_BG_RGB<sp/>0,<sp/>0,<sp/>0<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>Black</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Global<sp/>notcurses<sp/>instance<sp/>and<sp/>plane</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">notcurses*<sp/>nc;</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">ncplane*<sp/>stdplane;</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>MAIN_MENU,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>MAP_MODE,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>COMBAT_MODE,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>LOOT_MODE,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>INVENTORY_MODE,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>GENERATE_MAP,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>STATS_MODE,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>EXIT</highlight></codeline>
+<codeline lineno="27"><highlight class="normal">}<sp/>game_state_t;</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref><sp/>db_connection;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="game_8h_1a6ff802f40779291bfa8d943c1fc0cf97" kindref="member">run_game</ref>();</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="game_8h_1a813f052b4434baac9f0410b9b29d9add" kindref="member">main_menu_state</ref>();</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="game_8h_1aa129a19e7fb247016f3205537f90cc8b" kindref="member">map_mode_state</ref>();</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="game_8h_1a71b2f4c5f0e029545f44d9fef1f072cd" kindref="member">inventory_mode_state</ref>();</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="game_8h_1a00ee39adf3b283b23d1f0367980a2fa4" kindref="member">loot_mode_state</ref>();</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>GAME_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/game.h"/>
+  </compounddef>
+</doxygen>

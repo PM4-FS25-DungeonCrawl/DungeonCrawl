@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="main_8h" kind="file" language="C++">
+    <compoundname>main.h</compoundname>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="1">
+        <label>src/main.h</label>
+        <link refid="main_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="main_8h_1a2d967eed409413b06a8450ff977ab52a" prot="public" static="no" strong="no">
+        <type></type>
+        <name>exit_code_t</name>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aac7f69f7c9e5aea9b8f54cf02870e2bf8" prot="public">
+          <name>SUCCESS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aafc8e9bdc50fc1314a71a44fa95c471f4" prot="public">
+          <name>FAIL_TB_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa3fb5c62963d2b30551746b10f73c2e50" prot="public">
+          <name>FAIL_MEM_POOL_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aab985ed5bcfc528a44c669db456ecee8a" prot="public">
+          <name>FAIL_LOCAL_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa1a13f3e0d4cc291da9bafeb119150a7f" prot="public">
+          <name>FAIL_IO_HANDLER_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa1d9306299fa96109d73e7c75e7074c05" prot="public">
+          <name>FAIL_MAIN_MENU_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aae9255ff6c9ad457b447804769e18b9b6" prot="public">
+          <name>FAIL_SAVE_MENU_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa2c25f13abe02a07ace09b7c1cc9b0190" prot="public">
+          <name>FAIL_LANGUAGE_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa4676a4ec5a8e02a0ba4d697147e935ea" prot="public">
+          <name>FAIL_GAME_MODE_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa846e6ff531d3e6a1d6604839072a058d" prot="public">
+          <name>FAIL_INVENTORY_MODE_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa43af95868f9329ae88e275e3f2c68d1d" prot="public">
+          <name>FAIL_GAME_ENTITY_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aa43b0de811a13594c0292a068afdec987" prot="public">
+          <name>FAIL_STATS_MODE_INIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="main_8h_1a2d967eed409413b06a8450ff977ab52aac18bc1ff7bc14cdf6df68e8fea9dc4cb" prot="public">
+          <name>FAIL_ERROR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.h" line="10" column="1" bodyfile="src/main.h" bodystart="10" bodyend="24"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="main_8h_1a5980c706060e9eb24ebfe324322b2a44" prot="public" static="no" extern="yes" mutable="no">
+        <type>volatile int</type>
+        <definition>volatile int init_done</definition>
+        <argsstring></argsstring>
+        <name>init_done</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.h" line="8" column="21" bodyfile="src/main.c" bodystart="31" bodyend="-1" declfile="src/main.h" declline="8" declcolumn="21"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="main_8h_1a840291bc02cba5474a4cb46a9b9566fe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int main</definition>
+        <argsstring>(void)</argsstring>
+        <name>main</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Main entry point for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function initializes the game, runs the main game loop, and performs cleanup before exiting. It handles the overall flow of the application.</para>
+<para><simplesect kind="return"><para>Exit code indicating success or failure. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/main.h" line="34" column="5" bodyfile="src/main.c" bodystart="178" bodyend="187" declfile="src/main.h" declline="34" declcolumn="5"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Declares application initialization, shutdown, and main entry point. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAIN_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAIN_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>init_done;</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/>SUCCESS,</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_TB_INIT,</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_MEM_POOL_INIT,</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_LOCAL_INIT,</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_IO_HANDLER_INIT,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_MAIN_MENU_INIT,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_SAVE_MENU_INIT,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_LANGUAGE_INIT,</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_GAME_MODE_INIT,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_INVENTORY_MODE_INIT,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_GAME_ENTITY_INIT,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_STATS_MODE_INIT,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>FAIL_ERROR,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal">}<sp/>exit_code_t;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="main_8h_1a840291bc02cba5474a4cb46a9b9566fe" kindref="member">main</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>MAIN_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/main.h"/>
+  </compounddef>
+</doxygen>

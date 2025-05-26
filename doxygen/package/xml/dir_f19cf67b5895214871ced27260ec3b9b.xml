@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_f19cf67b5895214871ced27260ec3b9b" kind="dir">
+    <compoundname>src/database/game</compoundname>
+    <innerfile refid="ability__database_8c">ability_database.c</innerfile>
+    <innerfile refid="ability__database_8h">ability_database.h</innerfile>
+    <innerfile refid="character__database_8c">character_database.c</innerfile>
+    <innerfile refid="character__database_8h">character_database.h</innerfile>
+    <innerfile refid="gamestate__database_8c">gamestate_database.c</innerfile>
+    <innerfile refid="gamestate__database_8h">gamestate_database.h</innerfile>
+    <innerfile refid="item__database_8c">item_database.c</innerfile>
+    <innerfile refid="item__database_8h">item_database.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/database/game/"/>
+  </compounddef>
+</doxygen>

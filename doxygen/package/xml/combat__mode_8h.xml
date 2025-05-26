@@ -1,0 +1,465 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="combat__mode_8h" kind="file" language="C++">
+    <compoundname>combat_mode.h</compoundname>
+    <includes refid="character__fw_8h" local="yes">../character/character_fw.h</includes>
+    <includes refid="potion_8h" local="yes">../item/potion.h</includes>
+    <includes refid="ability__fw_8h" local="yes">ability_fw.h</includes>
+    <includedby refid="combat__mode_8c" local="yes">src/combat/combat_mode.c</includedby>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <incdepgraph>
+      <node id="8">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="2">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="9">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="1">
+        <label>src/combat/combat_mode.h</label>
+        <link refid="combat__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="6">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="1">
+        <label>src/combat/combat_mode.h</label>
+        <link refid="combat__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="4">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4" prot="public" static="no" strong="no">
+        <type></type>
+        <name>internal_combat_state_t</name>
+        <enumvalue id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4aa7fb61de63d62ad4b299f6d45d1116ba" prot="public">
+          <name>COMBAT_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4ad1c2505cca3ebbf6feaf7f3b07ca5faa" prot="public">
+          <name>ABILITY_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4a13f5eaf9fe69924f1d9f2519740eaa08" prot="public">
+          <name>POTION_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4a4233c235093f96bff4d11ed50b48615c" prot="public">
+          <name>EVALUATE_COMBAT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1affadb28cd3873df3044e95c31bdb32b4ac6d73a6e3c835be9af5bac0c53336445" prot="public">
+          <name>COMBAT_EXIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="12" column="1" bodyfile="src/combat/combat_mode.h" bodystart="12" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="enum" id="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95" prot="public" static="no" strong="no">
+        <type></type>
+        <name>combat_result_t</name>
+        <enumvalue id="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95ac6ed3dc60c12c1e4641581f6f0b9a5ce" prot="public">
+          <name>CONTINUE_COMBAT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a00b176e6c55489ce5dce286b0160f3a7" prot="public">
+          <name>PLAYER_WON</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a7fb65b385f53ec2d6a89691c798aee90" prot="public">
+          <name>PLAYER_LOST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="combat__mode_8h_1a1945c45ca750ec18dc2931e6c9b39f95a4bf4cbde18067e0600c7c8a7a30ba316" prot="public">
+          <name>EXIT_GAME</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="20" column="1" bodyfile="src/combat/combat_mode.h" bodystart="20" bodyend="25"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="combat__mode_8h_1a4489642ac6f512336e297d437004cada" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_combat_mode</definition>
+        <argsstring>()</argsstring>
+        <name>init_combat_mode</name>
+        <briefdescription>
+<para>Initialize the combat mode. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>int 0 on success, 1 on failure </para>
+</simplesect>
+<simplesect kind="note"><para>This function must be called before using any other functions in this module.</para>
+</simplesect>
+<simplesect kind="note"><para>This function must be called before using any other functions in this module. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="32" column="5" bodyfile="src/combat/combat_mode.c" bodystart="67" bodyend="105" declfile="src/combat/combat_mode.h" declline="32" declcolumn="5"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1adff6a8146a18465b29aa76f4b54facb8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>combat_result_t</type>
+        <definition>combat_result_t start_combat</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>start_combat</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Starts the loop for combat between the player and the monster. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the player character. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the monster character. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>combat_result_t The result of the combat. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="39" column="17" bodyfile="src/combat/combat_mode.c" bodystart="107" bodyend="154" declfile="src/combat/combat_mode.h" declline="39" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1a0a514004243152865ac22b27d1211890" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>internal_combat_state_t</type>
+        <definition>internal_combat_state_t combat_menu</definition>
+        <argsstring>(const character_t *player, const character_t *monster)</argsstring>
+        <name>combat_menu</name>
+        <param>
+          <type>const <ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Collects the menu options for the ability menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the player character. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the monster character. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="45" column="25" bodyfile="src/combat/combat_mode.c" bodystart="156" bodyend="207" declfile="src/combat/combat_mode.h" declline="45" declcolumn="25"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1a77e3b5ffc58e6a523668d641c67f7fef" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>internal_combat_state_t</type>
+        <definition>internal_combat_state_t ability_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>ability_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Collects the menu options for the ability menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the player character. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the monster character. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="51" column="25" bodyfile="src/combat/combat_mode.c" bodystart="209" bodyend="260" declfile="src/combat/combat_mode.h" declline="51" declcolumn="25"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1a9327b2902374974c36b1c0db697dd93a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>internal_combat_state_t</type>
+        <definition>internal_combat_state_t potion_menu</definition>
+        <argsstring>(character_t *player, character_t *monster)</argsstring>
+        <name>potion_menu</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>monster</declname>
+        </param>
+        <briefdescription>
+<para>Collects the menu options for the potion menu. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the player character. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>monster</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the monster character. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="57" column="25" bodyfile="src/combat/combat_mode.c" bodystart="262" bodyend="318" declfile="src/combat/combat_mode.h" declline="57" declcolumn="25"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1a58ac73b65087af300431a59f02346a6d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void invoke_potion_effect</definition>
+        <argsstring>(character_t *character, potion_t *potion)</argsstring>
+        <name>invoke_potion_effect</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type><ref refid="structpotion__t" kindref="compound">potion_t</ref> *</type>
+          <declname>potion</declname>
+        </param>
+        <briefdescription>
+<para>Invoke the effect of a potion on a character. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the character which uses the potion. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>potion</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to which potion to be used. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="63" column="6" bodyfile="src/combat/combat_mode.c" bodystart="387" bodyend="417" declfile="src/combat/combat_mode.h" declline="63" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="combat__mode_8h_1ad30e839f60b72cef664ee95ea45b139a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_combat_mode</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_combat_mode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Shuts down the combat mode and frees allocated memory resources. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="note"><para>This function deallocates memory associated with combat mode and must be called before exiting the module to prevent memory leaks. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/combat_mode.h" line="71" column="6" bodyfile="src/combat/combat_mode.c" bodystart="511" bodyend="544" declfile="src/combat/combat_mode.h" declline="71" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Declares combat mode state machine, including menus and combat operations. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>COMBAT_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>COMBAT_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character__fw_8h" kindref="compound">../character/character_fw.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="potion_8h" kindref="compound">../item/potion.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ability__fw_8h" kindref="compound">ability_fw.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>COMBAT_MENU,</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>ABILITY_MENU,</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>POTION_MENU,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>EVALUATE_COMBAT,</highlight><highlight class="comment">//<sp/>checks<sp/>if<sp/>the<sp/>combat<sp/>reached<sp/>an<sp/>end</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>COMBAT_EXIT<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>exit<sp/>combat<sp/>&amp;<sp/>game</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal">}<sp/>internal_combat_state_t;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>CONTINUE_COMBAT,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>PLAYER_WON,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>PLAYER_LOST,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>EXIT_GAME</highlight></codeline>
+<codeline lineno="25"><highlight class="normal">}<sp/>combat_result_t;</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="combat__mode_8h_1a4489642ac6f512336e297d437004cada" kindref="member">init_combat_mode</ref>();</highlight></codeline>
+<codeline lineno="39"><highlight class="normal">combat_result_t<sp/><ref refid="combat__mode_8h_1adff6a8146a18465b29aa76f4b54facb8" kindref="member">start_combat</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal">internal_combat_state_t<sp/><ref refid="combat__mode_8h_1a0a514004243152865ac22b27d1211890" kindref="member">combat_menu</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal">internal_combat_state_t<sp/><ref refid="combat__mode_8h_1a77e3b5ffc58e6a523668d641c67f7fef" kindref="member">ability_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal">internal_combat_state_t<sp/><ref refid="combat__mode_8h_1a9327b2902374974c36b1c0db697dd93a" kindref="member">potion_menu</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>monster);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="combat__mode_8h_1a58ac73b65087af300431a59f02346a6d" kindref="member">invoke_potion_effect</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>character,<sp/><ref refid="structpotion__t" kindref="compound">potion_t</ref>*<sp/>potion);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="combat__mode_8h_1ad30e839f60b72cef664ee95ea45b139a" kindref="member">shutdown_combat_mode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//COMBAT_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/combat/combat_mode.h"/>
+  </compounddef>
+</doxygen>

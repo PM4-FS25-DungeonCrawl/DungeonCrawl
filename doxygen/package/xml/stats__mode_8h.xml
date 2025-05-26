@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="stats__mode_8h" kind="file" language="C++">
+    <compoundname>stats_mode.h</compoundname>
+    <includes refid="character_8h" local="yes">../character/character.h</includes>
+    <includes refid="stats_8h" local="yes">stats.h</includes>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="stats__mode_8c" local="yes">src/stats/stats_mode.c</includedby>
+    <incdepgraph>
+      <node id="12">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="2">
+        <label>../character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="10">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../combat/ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="4">
+        <label>../combat/damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="15">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="8">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="13">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="3">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+      <node id="1">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44" prot="public" static="no" strong="no">
+        <type></type>
+        <name>stats_result_t</name>
+        <enumvalue id="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44a2a30116961421be04d2938e3503a099a" prot="public">
+          <name>STATS_WINDOW</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="stats__mode_8h_1a349403d8ea5f94a859e505079f738f44a9f355e16a4019d974d9c90c58fc3e5a6" prot="public">
+          <name>STATS_EXIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/stats/stats_mode.h" line="10" column="1" bodyfile="src/stats/stats_mode.h" bodystart="10" bodyend="13"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="stats__mode_8h_1a228ffd4343e80a4ce2540d5bff871fe1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>stats_result_t</type>
+        <definition>stats_result_t stats_mode</definition>
+        <argsstring>(character_t *player)</argsstring>
+        <name>stats_mode</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <briefdescription>
+<para>Enter the stat mode for a given character. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the player character. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A stats_result_t enum of the next state. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/stats/stats_mode.h" line="21" column="16" bodyfile="src/stats/stats_mode.c" bodystart="14" bodyend="79" declfile="src/stats/stats_mode.h" declline="21" declcolumn="16"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions and enums for the stats_mode. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>STATS_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>STATS_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character_8h" kindref="compound">../character/character.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/>STATS_WINDOW,</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>STATS_EXIT</highlight></codeline>
+<codeline lineno="13"><highlight class="normal">}<sp/>stats_result_t;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal">stats_result_t<sp/><ref refid="stats__mode_8h_1a228ffd4343e80a4ce2540d5bff871fe1" kindref="member">stats_mode</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player);</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//STATS_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/stats/stats_mode.h"/>
+  </compounddef>
+</doxygen>

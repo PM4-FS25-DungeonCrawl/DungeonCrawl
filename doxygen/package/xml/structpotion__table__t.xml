@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structpotion__table__t" kind="struct" language="C++" prot="public">
+    <compoundname>potion_table_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpotion__table__t_1ace02d63a671f6263ac20bdbc34a449a3" prot="public" static="no" mutable="no">
+        <type><ref refid="structpotion__t" kindref="compound">potion_t</ref></type>
+        <definition>potion_t potion_table_t::potions[MAX_POTION_TYPES]</definition>
+        <argsstring>[MAX_POTION_TYPES]</argsstring>
+        <name>potions</name>
+        <qualifiedname>potion_table_t::potions</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/potion.h" line="27" column="14" bodyfile="src/item/potion.h" bodystart="27" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="2">
+        <label>potion_t</label>
+        <link refid="structpotion__t"/>
+      </node>
+      <node id="1">
+        <label>potion_table_t</label>
+        <link refid="structpotion__table__t"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>potions</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="src/item/potion.h" line="26" column="1" bodyfile="src/item/potion.h" bodystart="26" bodyend="28"/>
+    <listofallmembers>
+      <member refid="structpotion__table__t_1ace02d63a671f6263ac20bdbc34a449a3" prot="public" virt="non-virtual"><scope>potion_table_t</scope><name>potions</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

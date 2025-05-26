@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="ascii_8h" kind="file" language="C++">
+    <compoundname>ascii.h</compoundname>
+    <includedby refid="map__output_8c" local="yes">src/io/output/specific/map_output.c</includedby>
+    <invincdepgraph>
+      <node id="1">
+        <label>src/asciiart/ascii.h</label>
+        <link refid="ascii_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="ascii_8h_1a8975507d50cb2b5e954f1be28ecda212" prot="public" static="no">
+        <name>HELMET_WIDTH</name>
+        <initializer>29</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="8" column="9" bodyfile="src/asciiart/ascii.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ascii_8h_1a0ae384e0f8d270c7615b5fa0f85cd2e0" prot="public" static="no">
+        <name>HELMET_HEIGHT</name>
+        <initializer>19</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="9" column="9" bodyfile="src/asciiart/ascii.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ascii_8h_1a6f22eab2a73ceb7edabb3b82aa22c4d0" prot="public" static="no">
+        <name>GOBLIN_WIDTH</name>
+        <initializer>30</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="11" column="9" bodyfile="src/asciiart/ascii.h" bodystart="11" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ascii_8h_1a5b6af1ac5d6bfca69ba7398c4859d05d" prot="public" static="no">
+        <name>GOBLIN_HEIGHT</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="12" column="9" bodyfile="src/asciiart/ascii.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="ascii_8h_1afcc78f849494e6bd62f6be9362668ab0" prot="public" static="yes" mutable="no">
+        <type>const char</type>
+        <definition>const char ascii_helmet[HELMET_HEIGHT][HELMET_WIDTH]</definition>
+        <argsstring>[HELMET_HEIGHT][HELMET_WIDTH]</argsstring>
+        <name>ascii_helmet</name>
+        <initializer>= {
+        &quot;                _           &quot;,
+        &quot;                ,&apos;&apos;/., _    &quot;,
+        &quot;        `.-._\\`/. ( //&apos;/&apos;`. &quot;,
+        &quot;      _.-`-. ``&apos; ` `(   -. \\&quot;,
+        &quot;    ,&apos;  ,    ,-:._ _..-.. \\/&quot;,
+        &quot;   / ,&apos;/ ,`.( _.&apos;-&apos;.     )/ &quot;,
+        &quot;   `.\\ &apos;(   ,&apos;      `.      &quot;,
+        &quot;      `._\\ /&apos;       \\ \\     &quot;,
+        &quot;          /:         \\ \\-.  &quot;,
+        &quot;        ,;&apos;:._______...-&apos;_) &quot;,
+        &quot;        \\:/-.._______..-_|  &quot;,
+        &quot;         : :\\   `----&apos;|&apos;-;  &quot;,
+        &quot;          \\ :\\    : : ;:/   &quot;,
+        &quot;           \\ ``.   ; /;/    &quot;,
+        &quot;            )   `.  /,&apos;     &quot;,
+        &quot;          ,&apos;      `-&apos; \\     &quot;,
+        &quot;         /  .--.       )    &quot;,
+        &quot;        /_.---._`._   /     &quot;,
+        &quot;                `.__.&apos;      &quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="14" column="19" bodyfile="src/asciiart/ascii.h" bodystart="14" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="variable" id="ascii_8h_1a5fa21eff84b4fda532f1c65e51bb5785" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* ascii_goblin</definition>
+        <argsstring></argsstring>
+        <name>ascii_goblin</name>
+        <initializer>= {
+        &quot;             ,      ,       \n&quot;
+        &quot;            /(.-\&quot;\&quot;-.)\\    \n&quot;
+        &quot;        |\\  \\/      \\/  /|  \n&quot;
+        &quot;        | \\ / =.  .= \\ / |  \n&quot;
+        &quot;        \\( \\   o\\/o   / )/  \n&quot;
+        &quot;         \\_, &apos;-/  \\-&apos; ,_/   \n&quot;
+        &quot;           /   \\__/   \\     \n&quot;
+        &quot;           \\ \\__/\\__/ /     \n&quot;
+        &quot;         ___\\ \\|--|/ /___   \n&quot;
+        &quot;       /`    \\      /    `\\ \n&quot;
+        &quot;      /       &apos;----&apos;       \\\n&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/asciiart/ascii.h" line="35" column="19" bodyfile="src/asciiart/ascii.h" bodystart="35" bodyend="46"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes ascii art strings and metadata for those strings. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>ASCII_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ASCII_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HELMET_WIDTH<sp/>29</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>HELMET_HEIGHT<sp/>19</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GOBLIN_WIDTH<sp/>30</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GOBLIN_HEIGHT<sp/>11</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>ascii_helmet[HELMET_HEIGHT][HELMET_WIDTH]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,&apos;&apos;/.,<sp/>_<sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`.-._\\`/.<sp/>(<sp/>//&apos;/&apos;`.<sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/>_.-`-.<sp/>``&apos;<sp/>`<sp/>`(<sp/><sp/><sp/>-.<sp/>\\&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/>,&apos;<sp/><sp/>,<sp/><sp/><sp/><sp/>,-:._<sp/>_..-..<sp/>\\/&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/>/<sp/>,&apos;/<sp/>,`.(<sp/>_.&apos;-&apos;.<sp/><sp/><sp/><sp/><sp/>)/<sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/>`.\\<sp/>&apos;(<sp/><sp/><sp/>,&apos;<sp/><sp/><sp/><sp/><sp/><sp/>`.<sp/><sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/>`._\\<sp/>/&apos;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\<sp/>\\<sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\<sp/>\\-.<sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,;&apos;:._______...-&apos;_)<sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\:/-.._______..-_|<sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/>:\\<sp/><sp/><sp/>`----&apos;|&apos;-;<sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\<sp/>:\\<sp/><sp/><sp/><sp/>:<sp/>:<sp/>;:/<sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\<sp/>``.<sp/><sp/><sp/>;<sp/>/;/<sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/><sp/><sp/>`.<sp/><sp/>/,&apos;<sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,&apos;<sp/><sp/><sp/><sp/><sp/><sp/>`-&apos;<sp/>\\<sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/<sp/><sp/>.--.<sp/><sp/><sp/><sp/><sp/><sp/><sp/>)<sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/_.---._`._<sp/><sp/><sp/>/<sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>`.__.&apos;<sp/><sp/><sp/><sp/><sp/><sp/>&quot;</highlight><highlight class="normal">};</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>ascii_goblin<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/><sp/><sp/><sp/><sp/><sp/>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/(.-\&quot;\&quot;-.)\\<sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|\\<sp/><sp/>\\/<sp/><sp/><sp/><sp/><sp/><sp/>\\/<sp/><sp/>/|<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>\\<sp/>/<sp/>=.<sp/><sp/>.=<sp/>\\<sp/>/<sp/>|<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\(<sp/>\\<sp/><sp/><sp/>o\\/o<sp/><sp/><sp/>/<sp/>)/<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\_,<sp/>&apos;-/<sp/><sp/>\\-&apos;<sp/>,_/<sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/<sp/><sp/><sp/>\\__/<sp/><sp/><sp/>\\<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\<sp/>\\__/\\__/<sp/>/<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>___\\<sp/>\\|--|/<sp/>/___<sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>/`<sp/><sp/><sp/><sp/>\\<sp/><sp/><sp/><sp/><sp/><sp/>/<sp/><sp/><sp/><sp/>`\\<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/><sp/><sp/><sp/><sp/>/<sp/><sp/><sp/><sp/><sp/><sp/><sp/>&apos;----&apos;<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\\\n&quot;</highlight><highlight class="normal">};</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//ASCII_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/asciiart/ascii.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="loot__generation_8h" kind="file" language="C++">
+    <compoundname>loot_generation.h</compoundname>
+    <includes refid="monster_8h" local="yes">../character/monster.h</includes>
+    <includes refid="gear_8h" local="yes">../item/gear.h</includes>
+    <includes refid="potion_8h" local="yes">../item/potion.h</includes>
+    <includedby refid="game__data_8c" local="yes">src/game_data.c</includedby>
+    <includedby refid="loot__generation_8c" local="yes">src/item/loot_generation.c</includedby>
+    <incdepgraph>
+      <node id="13">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="3">
+        <label>character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="2">
+        <label>../character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>../combat/ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="5">
+        <label>../combat/damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="1">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="9">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="14">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="3">
+        <label>src/item/loot_generation.c</label>
+        <link refid="loot__generation_8c"/>
+      </node>
+      <node id="1">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="loot__generation_8h_1a921bcb836d305218639f72b2b7ffb59b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void generate_loot</definition>
+        <argsstring>(character_t *character, gear_table_t *gear_table, potion_table_t *potion_table, int rolls)</argsstring>
+        <name>generate_loot</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>character</declname>
+        </param>
+        <param>
+          <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+          <declname>gear_table</declname>
+        </param>
+        <param>
+          <type><ref refid="structpotion__table__t" kindref="compound">potion_table_t</ref> *</type>
+          <declname>potion_table</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>rolls</declname>
+        </param>
+        <briefdescription>
+<para>Generates loot for a character by randomly selecting a number of gear and potions. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>character</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The character to generate loot for. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>gear_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The table containing available gear. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>potion_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The table containing available potions. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>rolls</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The number of loot rolls to perform. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/loot_generation.h" line="20" column="6" bodyfile="src/item/loot_generation.c" bodystart="10" bodyend="17" declfile="src/item/loot_generation.h" declline="20" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for loot generation. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>LOOT_GENERATION_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LOOT_GENERATION_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="monster_8h" kindref="compound">../character/monster.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="gear_8h" kindref="compound">../item/gear.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="potion_8h" kindref="compound">../item/potion.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="loot__generation_8h_1a921bcb836d305218639f72b2b7ffb59b" kindref="member">generate_loot</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>character,<sp/><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/>gear_table,<sp/><ref refid="structpotion__table__t" kindref="compound">potion_table_t</ref>*<sp/>potion_table,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>rolls);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>LOOT_GENERATION_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/item/loot_generation.h"/>
+  </compounddef>
+</doxygen>

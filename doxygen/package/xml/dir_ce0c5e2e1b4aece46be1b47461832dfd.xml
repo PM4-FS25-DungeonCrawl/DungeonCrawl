@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_ce0c5e2e1b4aece46be1b47461832dfd" kind="dir">
+    <compoundname>src/combat/local</compoundname>
+    <innerfile refid="combat__mode__local_8c">combat_mode_local.c</innerfile>
+    <innerfile refid="combat__mode__local_8h">combat_mode_local.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/combat/local/"/>
+  </compounddef>
+</doxygen>

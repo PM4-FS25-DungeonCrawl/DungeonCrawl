@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="common_8c" kind="file" language="C++">
+    <compoundname>common.c</compoundname>
+    <includes refid="common_8h" local="yes">common.h</includes>
+    <incdepgraph>
+      <node id="1">
+        <label>src/common.c</label>
+        <link refid="common_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="4">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" prot="public" static="no" mutable="no">
+        <type>memory_pool_t *</type>
+        <definition>memory_pool_t* main_memory_pool</definition>
+        <argsstring></argsstring>
+        <name>main_memory_pool</name>
+        <briefdescription>
+<para>Global memory pool for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This variable holds the main memory pool used for dynamic memory allocation throughout the application. It is initialized during the application&apos;s startup and should be properly managed to avoid memory leaks. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/common.c" line="7" column="15" bodyfile="src/common.c" bodystart="7" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implements common utilities and global variables for application-wide use. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7" refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" refkind="member"><highlight class="normal">memory_pool_t*<sp/><ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>;</highlight></codeline>
+    </programlisting>
+    <location file="src/common.c"/>
+  </compounddef>
+</doxygen>

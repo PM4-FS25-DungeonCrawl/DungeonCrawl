@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structstring__max__t" kind="struct" language="C++" prot="public">
+    <compoundname>string_max_t</compoundname>
+    <includes refid="common_8h" local="no">common.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structstring__max__t_1a8c06aec4674ff5104d489104d072f9a4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char string_max_t::characters[MAX_STRING_LENGTH]</definition>
+        <argsstring>[MAX_STRING_LENGTH]</argsstring>
+        <name>characters</name>
+        <qualifiedname>string_max_t::characters</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/common.h" line="173" column="10" bodyfile="src/common.h" bodystart="173" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>String struct with a fixed maximum length, it is directly linked to the macro MAX_STRING_LENGTH. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/common.h" line="172" column="1" bodyfile="src/common.h" bodystart="172" bodyend="174"/>
+    <listofallmembers>
+      <member refid="structstring__max__t_1a8c06aec4674ff5104d489104d072f9a4" prot="public" virt="non-virtual"><scope>string_max_t</scope><name>characters</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

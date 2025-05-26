@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structpotion__init__t" kind="struct" language="C++" prot="public">
+    <compoundname>potion_init_t</compoundname>
+    <includes refid="item__database_8h" local="no">item_database.h</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpotion__init__t_1a1a90ce5650a3e8ed59855a3783cf97cf" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int potion_init_t::potion_type</definition>
+        <argsstring></argsstring>
+        <name>potion_type</name>
+        <qualifiedname>potion_init_t::potion_type</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/item_database.h" line="19" column="9" bodyfile="src/database/game/item_database.h" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpotion__init__t_1aa928ed4d34ce73db3db13ce7eb4abf77" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* potion_init_t::name</definition>
+        <argsstring></argsstring>
+        <name>name</name>
+        <qualifiedname>potion_init_t::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/item_database.h" line="20" column="10" bodyfile="src/database/game/item_database.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpotion__init__t_1ac11ac3d03c427aaeeb3a7b0b5a0acdee" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int potion_init_t::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>potion_init_t::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/database/game/item_database.h" line="21" column="9" bodyfile="src/database/game/item_database.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>To get potion table from the database, we need to define a struct This struct is for the initialization of the potion table The values of the struct corresponds to the <ref refid="potion_8c_1adf67ce0ec6059e7e9cb3cf2596d0f04d" kindref="member">init_potion()</ref> method in. </para>
+    </briefdescription>
+    <detaileddescription>
+<para><simplesect kind="see"><para>{<ref refid="potion_8h" kindref="compound">potion.h</ref>} &amp; </para>
+</simplesect>
+<simplesect kind="see"><para>{<ref refid="potion_8c" kindref="compound">potion.c</ref>} </para>
+</simplesect>
+</para>
+    </detaileddescription>
+    <location file="src/database/game/item_database.h" line="18" column="1" bodyfile="src/database/game/item_database.h" bodystart="18" bodyend="22"/>
+    <listofallmembers>
+      <member refid="structpotion__init__t_1aa928ed4d34ce73db3db13ce7eb4abf77" prot="public" virt="non-virtual"><scope>potion_init_t</scope><name>name</name></member>
+      <member refid="structpotion__init__t_1a1a90ce5650a3e8ed59855a3783cf97cf" prot="public" virt="non-virtual"><scope>potion_init_t</scope><name>potion_type</name></member>
+      <member refid="structpotion__init__t_1ac11ac3d03c427aaeeb3a7b0b5a0acdee" prot="public" virt="non-virtual"><scope>potion_init_t</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

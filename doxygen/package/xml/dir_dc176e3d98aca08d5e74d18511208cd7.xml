@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_dc176e3d98aca08d5e74d18511208cd7" kind="dir">
+    <compoundname>src/item</compoundname>
+    <innerfile refid="gear_8c">gear.c</innerfile>
+    <innerfile refid="gear_8h">gear.h</innerfile>
+    <innerfile refid="gear__identifier_8h">gear_identifier.h</innerfile>
+    <innerfile refid="loot__generation_8c">loot_generation.c</innerfile>
+    <innerfile refid="loot__generation_8h">loot_generation.h</innerfile>
+    <innerfile refid="potion_8c">potion.c</innerfile>
+    <innerfile refid="potion_8h">potion.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/item/"/>
+  </compounddef>
+</doxygen>

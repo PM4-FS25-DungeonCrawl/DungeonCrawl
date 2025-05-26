@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="game__data_8c" kind="file" language="C++">
+    <compoundname>game_data.c</compoundname>
+    <includes refid="game__data_8h" local="yes">game_data.h</includes>
+    <includes refid="monster_8h" local="yes">character/monster.h</includes>
+    <includes refid="player_8h" local="yes">character/player.h</includes>
+    <includes refid="common_8h" local="yes">common.h</includes>
+    <includes refid="game_8h" local="yes">game.h</includes>
+    <includes refid="loot__generation_8h" local="yes">item/loot_generation.h</includes>
+    <includes local="no">stddef.h</includes>
+    <includes local="no">stdio.h</includes>
+    <incdepgraph>
+      <node id="8">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="17">
+        <label>character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="16">
+        <label>character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>character/player.h</label>
+        <link refid="player_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="9">
+        <label>damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>game.h</label>
+        <link refid="game_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>game_data.h</label>
+        <link refid="game__data_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="20">
+        <label>item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="6">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="13">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="21">
+        <label>stddef.h</label>
+      </node>
+      <node id="22">
+        <label>stdio.h</label>
+      </node>
+    </incdepgraph>
+    <sectiondef kind="var">
+      <memberdef kind="variable" id="game__data_8c_1a86fda8be60af76230375ec70e9e76260" prot="public" static="no" mutable="no">
+        <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+        <definition>ability_table_t* ability_table</definition>
+        <argsstring></argsstring>
+        <name>ability_table</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="17" column="17" bodyfile="src/game_data.c" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="game__data_8c_1a4016d531529ccc5cbdf836fd035baaa5" prot="public" static="no" mutable="no">
+        <type><ref refid="structpotion__table__t" kindref="compound">potion_table_t</ref> *</type>
+        <definition>potion_table_t* potion_table</definition>
+        <argsstring></argsstring>
+        <name>potion_table</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="18" column="16" bodyfile="src/game_data.c" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="game__data_8c_1a19c1c03c9ec6672826c2f9dc35a79cf8" prot="public" static="no" mutable="no">
+        <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+        <definition>gear_table_t* gear_table</definition>
+        <argsstring></argsstring>
+        <name>gear_table</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="19" column="14" bodyfile="src/game_data.c" bodystart="19" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="game__data_8c_1a92893c24bb6a4e0637cf2f4162e17040" prot="public" static="no" mutable="no">
+        <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+        <definition>character_t* goblin</definition>
+        <argsstring></argsstring>
+        <name>goblin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="20" column="13" bodyfile="src/game_data.c" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="game__data_8c_1ae337ca840cc0321ce2538ec80cec3a1a" prot="public" static="no" mutable="no">
+        <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+        <definition>character_t* player</definition>
+        <argsstring></argsstring>
+        <name>player</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="21" column="13" bodyfile="src/game_data.c" bodystart="21" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="game__data_8c_1acf51ee7fcee6655d62576a4c3338122c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_game_data</definition>
+        <argsstring>()</argsstring>
+        <name>init_game_data</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initializes game data for the application. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function sets up the game data structures, including the ability table, potion table, gear table, and player character. It also initializes the goblin character and adds potions to the player.</para>
+<para><simplesect kind="return"><para>0 if successful, 1 if initialization failed. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="23" column="5" bodyfile="src/game_data.c" bodystart="23" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="game__data_8c_1ab2169a70baa362c11da5df787aa51e60" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int free_game_data</definition>
+        <argsstring>()</argsstring>
+        <name>free_game_data</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Frees game-related data structures and resources, such as ability tables, characters, and potions, by using the provided memory pool. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>0 if all resources are successfully freed. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="37" column="5" bodyfile="src/game_data.c" bodystart="37" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="game__data_8c_1a0ae43f25d543d2efa5fba4a6992e865e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int reset_goblin</definition>
+        <argsstring>()</argsstring>
+        <name>reset_goblin</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Resets the goblin character data by deallocating the current goblin instance and creating a new one. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The new goblin is initialized and assigned with the &quot;BITE&quot; ability.</para>
+<para><simplesect kind="return"><para>0 if the operation is successful, 1 if it fails due to invalid input or memory allocation issues. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="46" column="5" bodyfile="src/game_data.c" bodystart="46" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="function" id="game__data_8c_1abc7026a0adc4d59fba01fb4d0acfbd03" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int init_player</definition>
+        <argsstring>(char *name)</argsstring>
+        <name>init_player</name>
+        <param>
+          <type>char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+<para>Initializes the player character with default abilities and items. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function sets up the player with a base attack ability, adds default potions, and equips a starting piece of gear. It is used to prepare the player only for a new game. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the player character.</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>0 if successful, 1 if failed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="57" column="5" bodyfile="src/game_data.c" bodystart="57" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="game__data_8c_1a6f63aa6e155b314929b60f9b57c0a988" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int reset_player</definition>
+        <argsstring>()</argsstring>
+        <name>reset_player</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Resets the player character to its initial state, clearing all abilities, items, and stats. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function is used when loading a saved game.</para>
+<para><simplesect kind="return"><para>0 if successful, 1 if failed </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/game_data.c" line="77" column="5" bodyfile="src/game_data.c" bodystart="77" bodyend="86"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Implementation for game_data. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="game__data_8h" kindref="compound">game_data.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="monster_8h" kindref="compound">character/monster.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="player_8h" kindref="compound">character/player.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="game_8h" kindref="compound">game.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="loot__generation_8h" kindref="compound">item/loot_generation.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stddef.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="comment">//<sp/>===<sp/>External<sp/>Global<sp/>Variables<sp/>===</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>ability_table;</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><ref refid="structpotion__table__t" kindref="compound">potion_table_t</ref>*<sp/>potion_table;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/>gear_table;</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>goblin;</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="game__data_8c_1acf51ee7fcee6655d62576a4c3338122c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="game__data_8c_1acf51ee7fcee6655d62576a4c3338122c" kindref="member">init_game_data</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>ability_table<sp/>=<sp/><ref refid="ability_8c_1ab7a141920ca0b319993d2a758043f43a" kindref="member">init_ability_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>&amp;db_connection);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>potion_table<sp/>=<sp/><ref refid="potion_8c_1a63735ba539253270d0300d881921df2f" kindref="member">init_potion_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>&amp;db_connection);</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>gear_table<sp/>=<sp/><ref refid="gear_8c_1a8692ae861ae780f3af5db9d58fb9be00" kindref="member">init_gear_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>&amp;db_connection,<sp/>ability_table);</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>player<sp/>=<sp/><ref refid="player_8c_1a635592dee150d6e5e10e37074c77925c" kindref="member">create_new_player</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>);</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="game__data_8c_1a0ae43f25d543d2efa5fba4a6992e865e" kindref="member">reset_goblin</ref>();</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(ability_table<sp/>==<sp/>NULL<sp/>||<sp/>potion_table<sp/>==<sp/>NULL<sp/>||<sp/>gear_table<sp/>==<sp/>NULL<sp/>||<sp/>player<sp/>==<sp/>NULL)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a54c2a5ff451efcd844bcdc22d912d7e2" kindref="member">add_potion</ref>(goblin,<sp/>&amp;potion_table-&gt;potions[HEALING]);</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="game__data_8c_1ab2169a70baa362c11da5df787aa51e60" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="game__data_8c_1ab2169a70baa362c11da5df787aa51e60" kindref="member">free_game_data</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ability_8c_1aa23c1120061449449c0eed4b93ddbd7d" kindref="member">free_ability_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>ability_table);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="potion_8c_1abbaf98e9e4045fe9ab84a23ebc9ce366" kindref="member">free_potion_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>potion_table);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="gear_8c_1a0c01826fef93a02232f8e89733fbf35f" kindref="member">free_gear_table</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>gear_table);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a77ef40fdd4f884f5818d81a18d544460" kindref="member">free_character</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>player);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a77ef40fdd4f884f5818d81a18d544460" kindref="member">free_character</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>goblin);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="game__data_8c_1a0ae43f25d543d2efa5fba4a6992e865e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="game__data_8c_1a0ae43f25d543d2efa5fba4a6992e865e" kindref="member">reset_goblin</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="memory__management_8c_1af72f6fb9c867ee59c91532a9022e322e" kindref="member">memory_pool_free</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>goblin);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>goblin<sp/>=<sp/><ref refid="monster_8c_1a87b9e3e8f61fce3027c7bbb280251702" kindref="member">create_new_goblin</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(goblin<sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1ac1e7edc495be29bb8233cb226a2c2b15" kindref="member">add_ability</ref>(goblin,<sp/>&amp;ability_table-&gt;abilities[BITE]);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="loot__generation_8c_1a2427aded795514fed55e92ac50312215" kindref="member">generate_loot</ref>(goblin,<sp/>gear_table,<sp/>potion_table,<sp/>1);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="game__data_8c_1abc7026a0adc4d59fba01fb4d0acfbd03" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="game__data_8c_1abc7026a0adc4d59fba01fb4d0acfbd03" kindref="member">init_player</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>name)<sp/>{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a77ef40fdd4f884f5818d81a18d544460" kindref="member">free_character</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>player);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>player<sp/>=<sp/><ref refid="player_8c_1a635592dee150d6e5e10e37074c77925c" kindref="member">create_new_player</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(player<sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>player-&gt;base_attack<sp/>=<sp/>&amp;ability_table-&gt;abilities[PUNCH];</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1ac1e7edc495be29bb8233cb226a2c2b15" kindref="member">add_ability</ref>(player,<sp/>player-&gt;base_attack);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a54c2a5ff451efcd844bcdc22d912d7e2" kindref="member">add_potion</ref>(player,<sp/>&amp;potion_table-&gt;potions[HEALING]);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a54c2a5ff451efcd844bcdc22d912d7e2" kindref="member">add_potion</ref>(player,<sp/>&amp;potion_table-&gt;potions[MANA]);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a54c2a5ff451efcd844bcdc22d912d7e2" kindref="member">add_potion</ref>(player,<sp/>&amp;potion_table-&gt;potions[STAMINA]);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a3176d1d1f62a7fc8ceabef4df6a1062c" kindref="member">equip_gear</ref>(player,<sp/>gear_table-&gt;gears[ARMING_SWORD]);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(name<sp/>!=<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>snprintf(player-&gt;name,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(player-&gt;name),<sp/></highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/>name);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>snprintf(player-&gt;name,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(player-&gt;name),<sp/></highlight><highlight class="stringliteral">&quot;Hero&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="game__data_8c_1a6f63aa6e155b314929b60f9b57c0a988" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="game__data_8c_1a6f63aa6e155b314929b60f9b57c0a988" kindref="member">reset_player</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1a77ef40fdd4f884f5818d81a18d544460" kindref="member">free_character</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>,<sp/>player);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>player<sp/>=<sp/><ref refid="player_8c_1a635592dee150d6e5e10e37074c77925c" kindref="member">create_new_player</ref>(<ref refid="common_8c_1aa6cf31d02a8bab4aae26726869596f6d" kindref="member">main_memory_pool</ref>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(player<sp/>==<sp/>NULL)<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>player-&gt;base_attack<sp/>=<sp/>&amp;ability_table-&gt;abilities[PUNCH];</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="character_8c_1ac1e7edc495be29bb8233cb226a2c2b15" kindref="member">add_ability</ref>(player,<sp/>player-&gt;base_attack);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="src/game_data.c"/>
+  </compounddef>
+</doxygen>

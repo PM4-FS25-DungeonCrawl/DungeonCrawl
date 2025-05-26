@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="wait__output_8h" kind="file" language="C++">
+    <compoundname>wait_output.h</compoundname>
+    <includedby refid="io__handler_8c" local="yes">src/io/io_handler.c</includedby>
+    <includedby refid="wait__output_8c" local="yes">src/io/output/specific/wait_output.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/io/io_handler.c</label>
+        <link refid="io__handler_8c"/>
+      </node>
+      <node id="3">
+        <label>src/io/output/specific/wait_output.c</label>
+        <link refid="wait__output_8c"/>
+      </node>
+      <node id="1">
+        <label>src/io/output/specific/wait_output.h</label>
+        <link refid="wait__output_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="wait__output_8h_1a633ad329c9d4bbc85e167c14d69d86a2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void draw_loading_screen</definition>
+        <argsstring>(const char *text)</argsstring>
+        <name>draw_loading_screen</name>
+        <param>
+          <type>const char *</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+<para>Draw a loading screen with animation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function displays a loading screen with the specified message and a simple animation to indicate progress.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>text</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The message to display on the loading screen </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/specific/wait_output.h" line="16" column="6" bodyfile="src/io/output/specific/wait_output.c" bodystart="28" bodyend="63" declfile="src/io/output/specific/wait_output.h" declline="16" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__output_8h_1a4d088844951d67f0ba31dc7da59ce15e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void draw_launch_screen</definition>
+        <argsstring>(void)</argsstring>
+        <name>draw_launch_screen</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Draw the launch screen with title and animation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function displays the game launch screen with title, version, copyright information, and a loading animation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/specific/wait_output.h" line="24" column="6" bodyfile="src/io/output/specific/wait_output.c" bodystart="66" bodyend="117" declfile="src/io/output/specific/wait_output.h" declline="24" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="wait__output_8h_1a2c658aa459451809549a584cc482f854" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void draw_welcome_screen</definition>
+        <argsstring>(void)</argsstring>
+        <name>draw_welcome_screen</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Draw the welcome screen with a message. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function displays a welcome message on the screen and prompts the user to press any key to continue. It&apos;s typically shown after the launch screen animation completes. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/specific/wait_output.h" line="33" column="6" bodyfile="src/io/output/specific/wait_output.c" bodystart="120" bodyend="148" declfile="src/io/output/specific/wait_output.h" declline="33" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for drawing the laoding screen. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>WAIT_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>WAIT_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__output_8h_1a633ad329c9d4bbc85e167c14d69d86a2" kindref="member">draw_loading_screen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>text);</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__output_8h_1a4d088844951d67f0ba31dc7da59ce15e" kindref="member">draw_launch_screen</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="wait__output_8h_1a2c658aa459451809549a584cc482f854" kindref="member">draw_welcome_screen</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>WAIT_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/io/output/specific/wait_output.h"/>
+  </compounddef>
+</doxygen>

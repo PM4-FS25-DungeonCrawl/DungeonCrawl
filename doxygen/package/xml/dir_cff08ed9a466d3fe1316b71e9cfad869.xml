@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_cff08ed9a466d3fe1316b71e9cfad869" kind="dir">
+    <compoundname>src/character</compoundname>
+    <innerfile refid="character_8c">character.c</innerfile>
+    <innerfile refid="character_8h">character.h</innerfile>
+    <innerfile refid="character__fw_8h">character_fw.h</innerfile>
+    <innerfile refid="level_8c">level.c</innerfile>
+    <innerfile refid="level_8h">level.h</innerfile>
+    <innerfile refid="monster_8c">monster.c</innerfile>
+    <innerfile refid="monster_8h">monster.h</innerfile>
+    <innerfile refid="player_8c">player.c</innerfile>
+    <innerfile refid="player_8h">player.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/character/"/>
+  </compounddef>
+</doxygen>

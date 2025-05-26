@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_2161321364b45a90bed1b463a91c9978" kind="dir">
+    <compoundname>src/io/input</compoundname>
+    <innerfile refid="input__handler_8c">input_handler.c</innerfile>
+    <innerfile refid="input__handler_8h">input_handler.h</innerfile>
+    <innerfile refid="input__types_8h">input_types.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/io/input/"/>
+  </compounddef>
+</doxygen>

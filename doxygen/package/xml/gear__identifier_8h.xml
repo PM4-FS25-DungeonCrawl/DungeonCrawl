@@ -1,0 +1,1130 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="gear__identifier_8h" kind="file" language="C++">
+    <compoundname>gear_identifier.h</compoundname>
+    <includedby refid="gear_8h" local="yes">src/item/gear.h</includedby>
+    <invincdepgraph>
+      <node id="4">
+        <label>src/character/character.c</label>
+        <link refid="character_8c"/>
+      </node>
+      <node id="3">
+        <label>src/character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>src/character/level.c</label>
+        <link refid="level_8c"/>
+      </node>
+      <node id="5">
+        <label>src/character/level.h</label>
+        <link refid="level_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>src/character/monster.c</label>
+        <link refid="monster_8c"/>
+      </node>
+      <node id="9">
+        <label>src/character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="15">
+        <label>src/character/player.c</label>
+        <link refid="player_8c"/>
+      </node>
+      <node id="14">
+        <label>src/character/player.h</label>
+        <link refid="player_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="16">
+        <label>src/combat/damage.c</label>
+        <link refid="damage_8c"/>
+      </node>
+      <node id="18">
+        <label>src/database/game/character_database.c</label>
+        <link refid="character__database_8c"/>
+      </node>
+      <node id="17">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>src/database/game/item_database.c</label>
+        <link refid="item__database_8c"/>
+      </node>
+      <node id="30">
+        <label>src/database/game/item_database.h</label>
+        <link refid="item__database_8h"/>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="11">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="34">
+        <label>src/game_data.h</label>
+        <link refid="game__data_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="21">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="22">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="8">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="23">
+        <label>src/io/output/specific/stats_output.h</label>
+        <link refid="stats__output_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>src/item/gear.c</label>
+        <link refid="gear_8c"/>
+      </node>
+      <node id="2">
+        <label>src/item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/item/gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>src/item/loot_generation.c</label>
+        <link refid="loot__generation_8c"/>
+      </node>
+      <node id="12">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>src/item/potion.c</label>
+        <link refid="potion_8c"/>
+      </node>
+      <node id="24">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="27">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="28">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="26">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+      <node id="29">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349" prot="public" static="no" strong="no">
+        <type></type>
+        <name>gear_identifier_t</name>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a33e4b5b56dd96c33d999236764da9402" prot="public">
+          <name>LONGSWORD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4112e683048c4426083d52f87a4b7c8d" prot="public">
+          <name>BARDICHE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4f9adef2492fef9fca85c72bb600325d" prot="public">
+          <name>CROSSBOW</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5a9eb7f9437e3dd5d9c7850220021987" prot="public">
+          <name>MAGIC_STAFF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0d34a49295719eb2b78e1cbae279cbd6" prot="public">
+          <name>SHORT_AXE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0a794d28e176d279fa01308a0b16e089" prot="public">
+          <name>STILETTO_DAGGER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8c0d7f7e4e35089fc0e7604e769e3c42" prot="public">
+          <name>BUCKLER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a854ad25b4ccac11ba16811fb3740b921" prot="public">
+          <name>MACE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a684cc44c31c41f2bf9903ed2f9db29fd" prot="public">
+          <name>WAND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a76794112c7a74962a14329998bd5d322" prot="public">
+          <name>ARMING_SWORD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5f316bf79baf7585fb56cf5651cf1dba" prot="public">
+          <name>IRON_HELM_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a50499044debfe781caa4517b9b52b017" prot="public">
+          <name>IRON_HELM_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a2ce40bd3836227aa094343f035f3aee0" prot="public">
+          <name>IRON_HELM_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af5d19bbc80cb18e52d260af49eeb1d4f" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a50a015b83297fc5e469ed4ea4fb634c7" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa114dfa55cf509c07e29a1585d556e99" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9fc2d3e83c9c1e705f1a7afee1d4cc7f" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a071a009fc8dad6ae541747d2177f4456" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a987801919fa432484cd8454fa8f85197" prot="public">
+          <name>SCOUTS_HOOD_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a74199b003d6aa5ec72938ec0db35e71f" prot="public">
+          <name>SHADOW_HOOD_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a18f8df183a1c3d22e4e57d4133cd8c36" prot="public">
+          <name>SHADOW_HOOD_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab21e15833425e33ec617877f353e851b" prot="public">
+          <name>SHADOW_HOOD_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0640772b10eef037d3cb54409508f951" prot="public">
+          <name>BATTLEPLATE_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a1449be8489d4ff4d2ed1ed5db95154be" prot="public">
+          <name>BATTLEPLATE_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a654b54d0a3841b04fe5499ed0a1eea50" prot="public">
+          <name>BATTLEPLATE_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa027916ae077193649902a92ba65d0f7" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a07603e45252e1f5261a2446352e39170" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a6447c9cc090ddffebe3007d2e2c4310d" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae690325beed58a8aeb65114bbfcb2205" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab41723bd2c11f10c07a443d3fdbffe43" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae426bc648486831b959025732d9fa867" prot="public">
+          <name>REINFORCED_JERKIN_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9ed1f4db8e555c236ce5b63d2dcbd6ed" prot="public">
+          <name>LEATHER_JERKIN_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a10bad6ea6f5174bb566adff564b5d849" prot="public">
+          <name>LEATHER_JERKIN_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a979c6039e91caf07b2ab870b8c912eae" prot="public">
+          <name>LEATHER_JERKIN_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64a680feff129af9826a9c5ddc356b88" prot="public">
+          <name>PLATED_GREAVES_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa9fbbeaec767c5ed9f326029d4505cc8" prot="public">
+          <name>PLATED_GREAVES_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9418c9a722e96b6bcd3a4cc856b58605" prot="public">
+          <name>PLATED_GREAVES_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a631e6ab4dda580d0bad19634202b2bb6" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aea306b6e7dcaaf6b500ee91d62929b90" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ade33de59a5ceaf420a968a3d6e87c8ce" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad34a585d1eafab2c31c7ec22654e38cb" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349addea73d002995d8dc5c3248f1c79fe41" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9a019e98611a525946e5c8374e452a35" prot="public">
+          <name>RANGERS_TROUSERS_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af0ab4e046927d279d62196d0b3b6d4d8" prot="public">
+          <name>SILENT_LEGGINGS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad742e82a347e8d8271255e79bba84506" prot="public">
+          <name>SILENT_LEGGINGS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a96d9b2192a3969a64a021c40c4680c5f" prot="public">
+          <name>SILENT_LEGGINGS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aaf473d5978e76b37b25d8ca0c047440b" prot="public">
+          <name>STEEL_SABATONS_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac9e497203694225fa8b2d467169dfc6d" prot="public">
+          <name>STEEL_SABATONS_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af017a73db60244cdfbd37afcdaa61a9d" prot="public">
+          <name>STEEL_SABATONS_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a32d7d3203b4bd9fb2fedf8b0604d747b" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab7fdd9e3250b470baf4fb283bb3b0f58" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349acebf6f1705229da82c4b39ab2d9b2755" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a209c690f6e44db118df5fc028ff3b5ae" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a3b28abeb0d7ed6c8b0e53be1fa99b72e" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a302898c09652f96e473081c91208b955" prot="public">
+          <name>TRAVELERS_BOOTS_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a2c2a076badbdd2c5672ff497d701990d" prot="public">
+          <name>WINDSTEP_BOOTS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae76486333553384abf78fe7d7ad56fdb" prot="public">
+          <name>WINDSTEP_BOOTS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab511479f21b868f82e81e4e487cfeb03" prot="public">
+          <name>WINDSTEP_BOOTS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a0bf96b6fd6a910eddc2dd7cd69c0461f" prot="public">
+          <name>GAUNTLETS_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a5346f56648ce3b8aff535769ae4c5263" prot="public">
+          <name>GAUNTLETS_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64d0b9fdd2014a54ce00b6a8ecf84bbe" prot="public">
+          <name>GAUNTLETS_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4d0818c221f9ab58612c33d04849fdde" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a768d4e440afa0721e0dabe714a142d8d" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad82524f47a01da395825b90a4e11ae0e" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349addaf12445d8ea997860d1e1f6801e50a" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a91a2cedb34ea65387a723f9876b09662" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7aac11f48788934249fe191901657019" prot="public">
+          <name>LEATHER_GLOVES_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7e69de10d7a5ba462e2af32614a91139" prot="public">
+          <name>NIMBLE_GRIPS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa2d277dcc81834b68e4ff8f6e812efaf" prot="public">
+          <name>NIMBLE_GRIPS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8cb2f03cd90c177e2fd13fa5b5c7158b" prot="public">
+          <name>NIMBLE_GRIPS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aaac0712c440607cc2f66b6944dae3f1a" prot="public">
+          <name>IRON_GORGET_OF_THE_GOLIATH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae39962e559415fce75a6f7ca8b30c43d" prot="public">
+          <name>IRON_GORGET_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a607d8b0783fa115ba22741e737c58883" prot="public">
+          <name>IRON_GORGET_OF_THE_BEAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a64a918b7bd1a7c83ec82cd22b35d40ee" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_BOAR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ad4af08d7b58aa139241da310dee620b0" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ae4d79bfaa8cc10947f527f95432f70f9" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac44ffcecdc8bae8d63e00dcd5fd27009" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a92d2415c43ace1b292bb5b877abef8d6" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_WOLF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a523ebc6c2461ae6abea2ee3db6bcda80" prot="public">
+          <name>PENDANT_OF_FOCUS_OF_THE_LICH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a8af08cedf9f9583f0607a4653e991e21" prot="public">
+          <name>WHISPER_CHARM_OF_THE_FOX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa1f04fbd5961090fdaf37d7c96a2ec80" prot="public">
+          <name>WHISPER_CHARM_OF_THE_OWL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a1f9e1530a644c34a39aa5aed5c1e7541" prot="public">
+          <name>WHISPER_CHARM_OF_THE_RAVEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349affdf6466eae7f449035ef0a9cc688f5f" prot="public">
+          <name>IRON_BAND_OF_THE_GOLIATH_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa8c55cb35c2a7cd1a8cc6b9ad65fbc55" prot="public">
+          <name>IRON_BAND_OF_THE_BOAR_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a19d2662bccc7057bb5eb53c0d45efb05" prot="public">
+          <name>IRON_BAND_OF_THE_BEAR_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aa4f270e913a59acef181137130f76976" prot="public">
+          <name>CARVED_RING_OF_THE_BOAR_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ab89a0444b2d8d9133893230588f90ef9" prot="public">
+          <name>CARVED_RING_OF_THE_FOX_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a889687636191d4ca6b7093f2336ddd19" prot="public">
+          <name>CARVED_RING_OF_THE_OWL_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abcb6d149c7760e01b89d716d0dc514a4" prot="public">
+          <name>CARVED_RING_OF_THE_RAVEN_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7d5f00703372ba51753e69879466805f" prot="public">
+          <name>CARVED_RING_OF_THE_WOLF_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349acf1550443d1989c08b7d244f733c70c9" prot="public">
+          <name>CARVED_RING_OF_THE_LICH_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aafb1536260b9cfe353404ff49600bf49" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_FOX_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ac7ad391007b305a21486fd814f9f909c" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_OWL_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a9af693c73c9ebcacdeeac88ab768ad0a" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_RAVEN_R</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349af9e9021986a254d1615bcdb233747ad6" prot="public">
+          <name>IRON_BAND_OF_THE_GOLIATH_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a7a03f02b85ca62f964b84c493205f41d" prot="public">
+          <name>IRON_BAND_OF_THE_BOAR_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4ae4f2d010f38644acf8c78512187267" prot="public">
+          <name>IRON_BAND_OF_THE_BEAR_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a40b8892a0d69bc56ee927536b364f66b" prot="public">
+          <name>CARVED_RING_OF_THE_BOAR_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a57648d41c839d49ddfb98406ce49d013" prot="public">
+          <name>CARVED_RING_OF_THE_FOX_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abc58f518af89666895fd61bec66d6106" prot="public">
+          <name>CARVED_RING_OF_THE_OWL_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349ace938774be81f04f9aac84d15b53f771" prot="public">
+          <name>CARVED_RING_OF_THE_RAVEN_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349abb935206c652cbf7060740109a6e0179" prot="public">
+          <name>CARVED_RING_OF_THE_WOLF_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a4caa7bec040c29d9986b6e7dab5c8f02" prot="public">
+          <name>CARVED_RING_OF_THE_LICH_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a31d33a424a5a2eb20e57834005a0d7d6" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_FOX_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349affca03440a75d27677a30e734a9b21a6" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_OWL_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349aae0e801bea77dfce1d99bd0338dc414a" prot="public">
+          <name>TRICKSTERS_LOOP_OF_THE_RAVEN_L</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear__identifier_8h_1a01df1079d6525ea5b4124f7402984349a47f5f2da55ff9f3bcad3b9098b89101a" prot="public">
+          <name>MAX_GEARS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear_identifier.h" line="8" column="1" bodyfile="src/item/gear_identifier.h" bodystart="8" bodyend="116"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Defines a gear identifier struct. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>GEAR_IDENTIFIER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GEAR_IDENTIFIER_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="9"><highlight class="normal"><sp/><sp/><sp/><sp/>LONGSWORD,</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/><sp/><sp/>BARDICHE,</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><sp/><sp/>CROSSBOW,</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><sp/><sp/>MAGIC_STAFF,</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/><sp/><sp/>SHORT_AXE,</highlight></codeline>
+<codeline lineno="14"><highlight class="normal"><sp/><sp/><sp/><sp/>STILETTO_DAGGER,</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>BUCKLER,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>MACE,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>WAND,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>ARMING_SWORD,</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_HELM_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_HELM_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_HELM_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>SCOUTS_HOOD_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>SHADOW_HOOD_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>SHADOW_HOOD_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>SHADOW_HOOD_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>BATTLEPLATE_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>BATTLEPLATE_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>BATTLEPLATE_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>REINFORCED_JERKIN_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_JERKIN_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_JERKIN_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_JERKIN_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>PLATED_GREAVES_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>PLATED_GREAVES_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>PLATED_GREAVES_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>RANGERS_TROUSERS_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>SILENT_LEGGINGS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>SILENT_LEGGINGS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>SILENT_LEGGINGS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>STEEL_SABATONS_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/>STEEL_SABATONS_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/>STEEL_SABATONS_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>TRAVELERS_BOOTS_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>WINDSTEP_BOOTS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/>WINDSTEP_BOOTS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>WINDSTEP_BOOTS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>GAUNTLETS_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>GAUNTLETS_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>GAUNTLETS_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/>LEATHER_GLOVES_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>NIMBLE_GRIPS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/>NIMBLE_GRIPS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/>NIMBLE_GRIPS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_GORGET_OF_THE_GOLIATH,</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_GORGET_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_GORGET_OF_THE_BEAR,</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_BOAR,</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_WOLF,</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>PENDANT_OF_FOCUS_OF_THE_LICH,</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>WHISPER_CHARM_OF_THE_FOX,</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/>WHISPER_CHARM_OF_THE_OWL,</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>WHISPER_CHARM_OF_THE_RAVEN,</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_GOLIATH_R,</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_BOAR_R,</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_BEAR_R,</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_BOAR_R,</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_FOX_R,</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_OWL_R,</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_RAVEN_R,</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_WOLF_R,</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_LICH_R,</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_FOX_R,</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_OWL_R,</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_RAVEN_R,</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_GOLIATH_L,</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_BOAR_L,</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>IRON_BAND_OF_THE_BEAR_L,</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_BOAR_L,</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_FOX_L,</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_OWL_L,</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_RAVEN_L,</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_WOLF_L,</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>CARVED_RING_OF_THE_LICH_L,</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_FOX_L,</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_OWL_L,</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/>TRICKSTERS_LOOP_OF_THE_RAVEN_L,</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/>MAX_GEARS</highlight></codeline>
+<codeline lineno="116"><highlight class="normal">}<sp/>gear_identifier_t;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//GEAR_IDENTIFIER_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/item/gear_identifier.h"/>
+  </compounddef>
+</doxygen>

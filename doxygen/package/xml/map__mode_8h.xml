@@ -1,0 +1,452 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="map__mode_8h" kind="file" language="C++">
+    <compoundname>map_mode.h</compoundname>
+    <includes refid="character_8h" local="yes">../character/character.h</includes>
+    <includes refid="common_8h" local="yes">../common.h</includes>
+    <includes refid="input__handler_8h" local="yes">../io/input/input_handler.h</includes>
+    <includedby refid="game_8c" local="yes">src/game.c</includedby>
+    <includedby refid="main_8c" local="yes">src/main.c</includedby>
+    <includedby refid="map__generator_8c" local="yes">src/map/map_generator.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <incdepgraph>
+      <node id="12">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="2">
+        <label>../character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="10">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../combat/ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="4">
+        <label>../combat/damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="16">
+        <label>../io/input/input_handler.h</label>
+        <link refid="input__handler_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="17">
+        <label>input_types.h</label>
+        <link refid="input__types_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>../item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="15">
+        <label>../item/potion.h</label>
+        <link refid="potion_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="1">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="13">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>notcurses/notcurses.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="3">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="4">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="5">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="1">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="map__mode_8h_1aa948e5bccf1e1a22a5a44096dd2a65f5" prot="public" static="no">
+        <name>COLOR_FOREGROUND</name>
+        <initializer>0xffffff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="13" column="9" bodyfile="src/map/map_mode.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map__mode_8h_1af27cfac70191e90ee59f2fbfc0142df5" prot="public" static="no">
+        <name>COLOR_BACKGROUND</name>
+        <initializer>0x000000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="14" column="9" bodyfile="src/map/map_mode.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="map__mode_8h_1a94bf57bc173ee5b40923f7c4544148a4" prot="public" static="no">
+        <name>LIGHT_RADIUS</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="16" column="9" bodyfile="src/map/map_mode.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80a" prot="public" static="no" strong="no">
+        <type></type>
+        <name>map_mode_result_t</name>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa49959dd441dcda75d6898cf2c68fb374" prot="public">
+          <name>CONTINUE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa76bdc8adfd6c6463ab269ff4c06be9b4" prot="public">
+          <name>QUIT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aaaa51025709353692e9e661942f44ce36" prot="public">
+          <name>NEXT_FLOOR</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa9c918f1aa0dbc8c3ee98364633c14c84" prot="public">
+          <name>COMBAT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa12213812c3a9f7c0784fbbfed8d2370a" prot="public">
+          <name>SHOW_MENU</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aa433b9d812eeaff8431a6722daa0e75ee" prot="public">
+          <name>SHOW_STATS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="map__mode_8h_1a242a0e566e629f89180d23aa8bf3b80aac7027f3f6c15c5d960298ecee12aacf8" prot="public">
+          <name>SHOW_INVENTORY</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="18" column="1" bodyfile="src/map/map_mode.h" bodystart="18" bodyend="26"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="map__mode_8h_1a1a3ecce91b699f12980b512b50fea7ae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void set_player_start_pos</definition>
+        <argsstring>(int player_x, int player_y)</argsstring>
+        <name>set_player_start_pos</name>
+        <param>
+          <type>int</type>
+          <declname>player_x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>player_y</declname>
+        </param>
+        <briefdescription>
+<para>Sets the starting position of the player. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>player_x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The starting x position of the player. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>player_y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The starting y position of the player. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="34" column="6" bodyfile="src/map/map_mode.c" bodystart="26" bodyend="31" declfile="src/map/map_mode.h" declline="34" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="map__mode_8h_1a67c95ce30cb5f437062cf1ef26db04f5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref></type>
+        <definition>vector2d_t get_player_pos</definition>
+        <argsstring>()</argsstring>
+        <name>get_player_pos</name>
+        <briefdescription>
+<para>Get the current player position. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>the player position as a <ref refid="structvector2d__t" kindref="compound">vector2d_t</ref> structure </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="40" column="12" bodyfile="src/map/map_mode.c" bodystart="33" bodyend="35" declfile="src/map/map_mode.h" declline="40" declcolumn="12"/>
+      </memberdef>
+      <memberdef kind="function" id="map__mode_8h_1a48aad2953d4c5958998e5aa2560db3c0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>map_mode_result_t</type>
+        <definition>map_mode_result_t map_mode_update</definition>
+        <argsstring>(character_t *player)</argsstring>
+        <name>map_mode_update</name>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <briefdescription>
+<para>Updates the player position based on the player&apos;s input and redraws the maze. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="46" column="19" bodyfile="src/map/map_mode.c" bodystart="116" bodyend="137" declfile="src/map/map_mode.h" declline="46" declcolumn="19"/>
+      </memberdef>
+      <memberdef kind="function" id="map__mode_8h_1a539c21922ae32b1b5766db999879cb12" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void init_map_mode</definition>
+        <argsstring>(void)</argsstring>
+        <name>init_map_mode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Initializes the map mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="51" column="6" bodyfile="src/map/map_mode.c" bodystart="139" bodyend="145" declfile="src/map/map_mode.h" declline="51" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="map__mode_8h_1ab4a4b1e8cfea4e98e9d136cfa98d03c8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shutdown_map_mode</definition>
+        <argsstring>(void)</argsstring>
+        <name>shutdown_map_mode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+<para>Frees any resources associated with the map mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="55" column="6" bodyfile="src/map/map_mode.c" bodystart="147" bodyend="149" declfile="src/map/map_mode.h" declline="55" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="map__mode_8h_1a08be0864635e4c0dd320820bb44e88e2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>map_mode_result_t</type>
+        <definition>map_mode_result_t handle_input</definition>
+        <argsstring>(const input_event_t *input_event, character_t *player)</argsstring>
+        <name>handle_input</name>
+        <param>
+          <type>const <ref refid="structinput__event__t" kindref="compound">input_event_t</ref> *</type>
+          <declname>input_event</declname>
+        </param>
+        <param>
+          <type><ref refid="structcharacter__t" kindref="compound">character_t</ref> *</type>
+          <declname>player</declname>
+        </param>
+        <briefdescription>
+<para>Functions is only exposed for testing purposes. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/map/map_mode.h" line="61" column="19" bodyfile="src/map/map_mode.c" bodystart="37" bodyend="114" declfile="src/map/map_mode.h" declline="61" declcolumn="19"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Defines and manages functions for map exploration, player movement, and map interactions in map mode. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAP_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="character_8h" kindref="compound">../character/character.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="input__handler_8h" kindref="compound">../io/input/input_handler.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight><highlight class="comment">//<sp/>Notcurses<sp/>uses<sp/>RGB<sp/>channels<sp/>directly,<sp/>but<sp/>we<sp/>can<sp/>define<sp/>our<sp/>colors<sp/>for<sp/>consistency</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>COLOR_FOREGROUND<sp/>0xffffff</highlight><highlight class="comment">//<sp/>White</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>COLOR_BACKGROUND<sp/>0x000000</highlight><highlight class="comment">//<sp/>Black</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LIGHT_RADIUS<sp/>3</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>CONTINUE,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>QUIT,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>NEXT_FLOOR,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>COMBAT,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>SHOW_MENU,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>SHOW_STATS,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>SHOW_INVENTORY</highlight></codeline>
+<codeline lineno="26"><highlight class="normal">}<sp/>map_mode_result_t;</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__mode_8h_1a1a3ecce91b699f12980b512b50fea7ae" kindref="member">set_player_start_pos</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>player_x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>player_y);</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref><sp/><ref refid="map__mode_8h_1a67c95ce30cb5f437062cf1ef26db04f5" kindref="member">get_player_pos</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal">map_mode_result_t<sp/><ref refid="map__mode_8h_1a48aad2953d4c5958998e5aa2560db3c0" kindref="member">map_mode_update</ref>(<ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__mode_8h_1a539c21922ae32b1b5766db999879cb12" kindref="member">init_map_mode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__mode_8h_1ab4a4b1e8cfea4e98e9d136cfa98d03c8" kindref="member">shutdown_map_mode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">//<sp/>has<sp/>to<sp/>be<sp/>exposed<sp/>for<sp/>testing</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal">map_mode_result_t<sp/><ref refid="map__mode_8h_1a08be0864635e4c0dd320820bb44e88e2" kindref="member">handle_input</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structinput__event__t" kindref="compound">input_event_t</ref>*<sp/>input_event,<sp/><ref refid="structcharacter__t" kindref="compound">character_t</ref>*<sp/>player);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//MAP_MODE_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/map/map_mode.h"/>
+  </compounddef>
+</doxygen>

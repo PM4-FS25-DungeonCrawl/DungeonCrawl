@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="structpotion__t" kind="struct" language="C++" prot="public">
+    <compoundname>potion_t</compoundname>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpotion__t_1ad3c5d888a49701003407754366509b85" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char potion_t::name[MAX_NAME_LENGTH]</definition>
+        <argsstring>[MAX_NAME_LENGTH]</argsstring>
+        <name>name</name>
+        <qualifiedname>potion_t::name</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/potion.h" line="20" column="10" bodyfile="src/item/potion.h" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpotion__t_1a6ab85ade00a8a8c099493a0ec6170830" prot="public" static="no" mutable="no">
+        <type>potion_type_t</type>
+        <definition>potion_type_t potion_t::effectType</definition>
+        <argsstring></argsstring>
+        <name>effectType</name>
+        <qualifiedname>potion_t::effectType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/potion.h" line="21" column="19" bodyfile="src/item/potion.h" bodystart="21" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpotion__t_1af0df882f0654b9160e9a54e00b342183" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int potion_t::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <qualifiedname>potion_t::value</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/potion.h" line="22" column="9" bodyfile="src/item/potion.h" bodystart="22" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/item/potion.h" line="19" column="1" bodyfile="src/item/potion.h" bodystart="19" bodyend="24"/>
+    <listofallmembers>
+      <member refid="structpotion__t_1a6ab85ade00a8a8c099493a0ec6170830" prot="public" virt="non-virtual"><scope>potion_t</scope><name>effectType</name></member>
+      <member refid="structpotion__t_1ad3c5d888a49701003407754366509b85" prot="public" virt="non-virtual"><scope>potion_t</scope><name>name</name></member>
+      <member refid="structpotion__t_1af0df882f0654b9160e9a54e00b342183" prot="public" virt="non-virtual"><scope>potion_t</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

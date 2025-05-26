@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="map__output_8h" kind="file" language="C++">
+    <compoundname>map_output.h</compoundname>
+    <includes refid="common_8h" local="yes">../../../common.h</includes>
+    <includes refid="map_8h" local="yes">../../../map/map.h</includes>
+    <includedby refid="map__output_8c" local="yes">src/io/output/specific/map_output.c</includedby>
+    <includedby refid="map__mode_8c" local="yes">src/map/map_mode.c</includedby>
+    <incdepgraph>
+      <node id="2">
+        <label>../../../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/io/output/specific/map_output.h</label>
+        <link refid="map__output_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="5">
+        <label>../../../map/map.h</label>
+        <link refid="map_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/io/output/specific/map_output.c</label>
+        <link refid="map__output_8c"/>
+      </node>
+      <node id="1">
+        <label>src/io/output/specific/map_output.h</label>
+        <link refid="map__output_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+    </invincdepgraph>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="map__output_8h_1a7f8ccd25c8c548a3bfec5be59dfa2102" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void draw_map_mode</definition>
+        <argsstring>(const map_tile_t *arr, int height, int width, vector2d_t anchor, vector2d_t player_pos)</argsstring>
+        <name>draw_map_mode</name>
+        <param>
+          <type>const map_tile_t *</type>
+          <declname>arr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>height</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>width</declname>
+        </param>
+        <param>
+          <type><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref></type>
+          <declname>anchor</declname>
+        </param>
+        <param>
+          <type><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref></type>
+          <declname>player_pos</declname>
+        </param>
+        <briefdescription>
+<para>Draws the map mode UI based on the given parameters. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>arr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The map array to be drawn </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>height</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The height of the map </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>width</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The width of the map </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>anchor</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The anchor position of the map mode, defined as the top left corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>player_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The position of the player</para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="note"><para>This function checks makes different checks to ensure the given parameters are valid. The checks are done in the following order:<itemizedlist>
+<listitem><para>check if the array is NULL</para>
+</listitem><listitem><para>check if the height and width are greater than 0</para>
+</listitem><listitem><para>check if the anchor position is greater or equal 0</para>
+</listitem><listitem><para>check if the player position is within the bounds of the map If any of the checks fail, an error message is logged and the function returns. </para>
+</listitem></itemizedlist>
+</para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/specific/map_output.h" line="28" column="6" bodyfile="src/io/output/specific/map_output.c" bodystart="14" bodyend="94" declfile="src/io/output/specific/map_output.h" declline="28" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="map__output_8h_1aa88f7566f29a97a020de3128191cbc8c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void draw_player_info</definition>
+        <argsstring>(int x, int y, vector2d_t player_pos)</argsstring>
+        <name>draw_player_info</name>
+        <param>
+          <type>int</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref></type>
+          <declname>player_pos</declname>
+        </param>
+        <briefdescription>
+<para>Draws the player information for the map mode. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function renders player-related information such as health, position, and available commands.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The x position of the player info to be drawn </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The y position of the player info to be drawn </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>player_pos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The current player position </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/io/output/specific/map_output.h" line="39" column="6" bodyfile="src/io/output/specific/map_output.c" bodystart="97" bodyend="107" declfile="src/io/output/specific/map_output.h" declline="39" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for outputing to the screen while in the map mode. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>MAP_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAP_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../../../common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="map_8h" kindref="compound">../../../map/map.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__output_8h_1a7f8ccd25c8c548a3bfec5be59dfa2102" kindref="member">draw_map_mode</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>map_tile_t*<sp/>arr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>height,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>width,<sp/><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref><sp/>anchor,<sp/><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref><sp/>player_pos);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="map__output_8h_1aa88f7566f29a97a020de3128191cbc8c" kindref="member">draw_player_info</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>x,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>y,<sp/><ref refid="structvector2d__t" kindref="compound">vector2d_t</ref><sp/>player_pos);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//<sp/>MAP_OUTPUT_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/io/output/specific/map_output.h"/>
+  </compounddef>
+</doxygen>

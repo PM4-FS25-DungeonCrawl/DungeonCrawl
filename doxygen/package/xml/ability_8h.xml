@@ -1,0 +1,746 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="ability_8h" kind="file" language="C++">
+    <compoundname>ability.h</compoundname>
+    <includes refid="common_8h" local="yes">../common.h</includes>
+    <includes refid="database_8h" local="yes">../database/database.h</includes>
+    <includes refid="memory__management_8h" local="yes">../memory/memory_management.h</includes>
+    <includes refid="damage_8h" local="yes">damage.h</includes>
+    <includedby refid="character_8c" local="yes">src/character/character.c</includedby>
+    <includedby refid="ability_8c" local="yes">src/combat/ability.c</includedby>
+    <includedby refid="combat__mode_8c" local="yes">src/combat/combat_mode.c</includedby>
+    <includedby refid="damage_8c" local="yes">src/combat/damage.c</includedby>
+    <includedby refid="ability__database_8h" local="yes">src/database/game/ability_database.h</includedby>
+    <includedby refid="item__database_8h" local="yes">src/database/game/item_database.h</includedby>
+    <includedby refid="game__data_8h" local="yes">src/game_data.h</includedby>
+    <includedby refid="gear_8h" local="yes">src/item/gear.h</includedby>
+    <includedby refid="stats__mode_8c" local="yes">src/stats/stats_mode.c</includedby>
+    <incdepgraph>
+      <node id="6">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="8">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="1">
+        <label>src/combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="7">
+        <label>damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="4">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2">
+        <label>src/character/character.c</label>
+        <link refid="character_8c"/>
+      </node>
+      <node id="18">
+        <label>src/character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+        <childnode refid="34" relation="include">
+        </childnode>
+        <childnode refid="37" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
+        <label>src/character/level.c</label>
+        <link refid="level_8c"/>
+      </node>
+      <node id="19">
+        <label>src/character/level.h</label>
+        <link refid="level_8h"/>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
+        <label>src/character/monster.c</label>
+        <link refid="monster_8c"/>
+      </node>
+      <node id="22">
+        <label>src/character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="27">
+        <label>src/character/player.c</label>
+        <link refid="player_8c"/>
+      </node>
+      <node id="26">
+        <label>src/character/player.h</label>
+        <link refid="player_8h"/>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>src/combat/ability.c</label>
+        <link refid="ability_8c"/>
+      </node>
+      <node id="1">
+        <label>src/combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="5">
+        <label>src/combat/damage.c</label>
+        <link refid="damage_8c"/>
+      </node>
+      <node id="7">
+        <label>src/database/game/ability_database.c</label>
+        <link refid="ability__database_8c"/>
+      </node>
+      <node id="6">
+        <label>src/database/game/ability_database.h</label>
+        <link refid="ability__database_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="13">
+        <label>src/database/game/character_database.c</label>
+        <link refid="character__database_8c"/>
+      </node>
+      <node id="28">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>src/database/game/item_database.c</label>
+        <link refid="item__database_8c"/>
+      </node>
+      <node id="8">
+        <label>src/database/game/item_database.h</label>
+        <link refid="item__database_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="15">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="12">
+        <label>src/game_data.h</label>
+        <link refid="game__data_8h"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="29">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="30">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="31">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="21">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="32">
+        <label>src/io/output/specific/stats_output.h</label>
+        <link refid="stats__output_8h"/>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>src/item/gear.c</label>
+        <link refid="gear_8c"/>
+      </node>
+      <node id="17">
+        <label>src/item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="25">
+        <label>src/item/loot_generation.c</label>
+        <link refid="loot__generation_8c"/>
+      </node>
+      <node id="24">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+      </node>
+      <node id="11">
+        <label>src/item/potion.c</label>
+        <link refid="potion_8c"/>
+      </node>
+      <node id="16">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="35">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="36">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="34">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="35" relation="include">
+        </childnode>
+        <childnode refid="36" relation="include">
+        </childnode>
+      </node>
+      <node id="33">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+      <node id="37">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structability__t" prot="public">ability_t</innerclass>
+    <innerclass refid="structability__table__t" prot="public">ability_table_t</innerclass>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7" prot="public" static="no" strong="no">
+        <type></type>
+        <name>ability_names_t</name>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7aeefffe28464a015dfb1063783a8493b1" prot="public">
+          <name>BITE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a879a6c76ae965d139a24228d9e218cba" prot="public">
+          <name>QUICK_SLASH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a941996a06b8108fa8ba7268a54d5091e" prot="public">
+          <name>HEAVY_SWING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7abec66a3f44442684ba7ade2fc2a4b2d7" prot="public">
+          <name>SWEEPING_STRIKE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a55ea6694139e4dbbbb73df79dadb0084" prot="public">
+          <name>GUARDING_STANCE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7aa782ac063e59f8e0c58192329f5b3383" prot="public">
+          <name>HEAVY_CHOP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7acdfc07abeccb32d4da83e43c1748f2f8" prot="public">
+          <name>PIERCING_STRIKE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a887d2cbfd9131de5cc3745731421b34b" prot="public">
+          <name>EXECUTE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a7351718529b67ae7e729364cef25e907" prot="public">
+          <name>BERSERKER_RAGE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a09b10639eb463133712a3fd11f484c39" prot="public">
+          <name>QUICK_SHOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a05164a9a84518fe86be816727b66c6c4" prot="public">
+          <name>POWER_SHOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a97d26dcc6b3345cc6281e84edd547981" prot="public">
+          <name>STEADY_SHOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad89327a3b772df7e27e74154e577b646" prot="public">
+          <name>STEADY_AIM</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a27c6caf9a7735ccb1c4a9ec179b67a7f" prot="public">
+          <name>FIREBLAST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a4d358e60e3280c2db947379d0c2a14b9" prot="public">
+          <name>FIREBALL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7acbacde2f41a5d9e3144ed047e5163a9b" prot="public">
+          <name>PYROBLAST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ae9a4fc17cfbdb0c1a33d4e341408b534" prot="public">
+          <name>MANA_SHIELD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a04e2532882914275b932223e1f27c2ad" prot="public">
+          <name>CHOP</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a3dd5f47c18bf1516f81a4e8c22cc6e7e" prot="public">
+          <name>AXE_SWING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a8170ef2fdf6f94755b7f323376510ee9" prot="public">
+          <name>BACKSTAB</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a5a7e1551ef5193db68197bb1b9d7222b" prot="public">
+          <name>SINISTER_STRIKE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad8ee60cd8bbdca64bd96355ae5d5d0e9" prot="public">
+          <name>DEFLECT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a5f8860ccf0a48b1cd8d20d8867b439ec" prot="public">
+          <name>SHIELD_WALL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a29a5bf9d18933f178de07b2bd0baa401" prot="public">
+          <name>MACE_STRIKE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a19ef431f768e19a21ee539a507137fe1" prot="public">
+          <name>CRUSHING_BLOW</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7af055b6b2d3d7ca1aadf3b3e1fe46f810" prot="public">
+          <name>ARCANE_BOLT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ac8af8c5b589944a631fad6d089b2e46b" prot="public">
+          <name>ARCANE_MISSILE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7a19b9ae3f4a272e61afe0b35d963c6cc8" prot="public">
+          <name>SWORD_SLASH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ab68f8237a89b6200287c6a8a3440f37b" prot="public">
+          <name>RIPOSTE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7af3cb30feedc837a971b1907f1a96db5e" prot="public">
+          <name>PUNCH</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ability_8h_1a6293353f10b6a56e4f175782a8a7aab7ad97afce3c5cd4d5c10139b737d27ec5e" prot="public">
+          <name>MAX_ABILITIES</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/ability.h" line="14" column="1" bodyfile="src/combat/ability.h" bodystart="14" bodyend="46"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ability_8h_1a53cd1d93c5919734fcd897db24c0344c" prot="public" static="no">
+        <type>struct ability_t</type>
+        <definition>typedef struct ability_t ability_t</definition>
+        <argsstring></argsstring>
+        <name>ability_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/ability.h" line="55" column="11"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="ability_8h_1ab7a141920ca0b319993d2a758043f43a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+        <definition>ability_table_t * init_ability_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, const db_connection_t *db_connection)</argsstring>
+        <name>init_ability_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <briefdescription>
+<para>Initialize the ability table, allocates memory and returns the pointer to the table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the memory pool for allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the database connection </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>Pointer to the ability table. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/ability.h" line="69" column="17" bodyfile="src/combat/ability.c" bodystart="16" bodyend="42" declfile="src/combat/ability.h" declline="69" declcolumn="17"/>
+      </memberdef>
+      <memberdef kind="function" id="ability_8h_1aa23c1120061449449c0eed4b93ddbd7d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void free_ability_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, ability_table_t *table)</argsstring>
+        <name>free_ability_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+<para>Free the ability table, deallocates memory in the memory pool. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the memory pool for deallocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Pointer to the ability table to be freed. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/combat/ability.h" line="77" column="6" bodyfile="src/combat/ability.c" bodystart="45" bodyend="50" declfile="src/combat/ability.h" declline="77" declcolumn="6"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for working with abilities. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>ABILITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ABILITY_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="database_8h" kindref="compound">../database/database.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;../memory/memory_management.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="damage_8h" kindref="compound">damage.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight><highlight class="comment">//index<sp/>of<sp/>the<sp/>different<sp/>abilities<sp/>in<sp/>the<sp/>table</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/><sp/><sp/><sp/>BITE,</highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/><sp/><sp/>QUICK_SLASH,</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>HEAVY_SWING,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>SWEEPING_STRIKE,</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>GUARDING_STANCE,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>HEAVY_CHOP,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>PIERCING_STRIKE,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>EXECUTE,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>BERSERKER_RAGE,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>QUICK_SHOT,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>POWER_SHOT,</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>STEADY_SHOT,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>STEADY_AIM,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>FIREBLAST,</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/>FIREBALL,</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><sp/><sp/>PYROBLAST,</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/>MANA_SHIELD,</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/>CHOP,</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/>AXE_SWING,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/>BACKSTAB,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>SINISTER_STRIKE,</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>DEFLECT,</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/>SHIELD_WALL,</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/>MACE_STRIKE,</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/>CRUSHING_BLOW,</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/>ARCANE_BOLT,</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/>ARCANE_MISSILE,</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>SWORD_SLASH,</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>RIPOSTE,</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/>PUNCH,</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/>MAX_ABILITIES</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">}<sp/>ability_names_t;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="structability__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structability__t" kindref="compound">ability_t</ref><sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>name[MAX_NAME_LENGTH];</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>roll_amount;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>accuracy;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>resource_cost;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>dice_size_t<sp/>dice_size;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>damage_type_t<sp/>damage_type;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">}<sp/><ref refid="structability__t" kindref="compound">ability_t</ref>;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="structability__table__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structability__t" kindref="compound">ability_t</ref><sp/>abilities[MAX_ABILITIES];</highlight></codeline>
+<codeline lineno="59"><highlight class="normal">}<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/><ref refid="ability_8h_1ab7a141920ca0b319993d2a758043f43a" kindref="member">init_ability_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ability_8h_1aa23c1120061449449c0eed4b93ddbd7d" kindref="member">free_ability_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>table);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//ABILITY_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/combat/ability.h"/>
+  </compounddef>
+</doxygen>

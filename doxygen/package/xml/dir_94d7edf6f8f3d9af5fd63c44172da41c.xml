@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="dir_94d7edf6f8f3d9af5fd63c44172da41c" kind="dir">
+    <compoundname>src/memory</compoundname>
+    <innerfile refid="memory__management_8c">memory_management.c</innerfile>
+    <innerfile refid="memory__management_8h">memory_management.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="src/memory/"/>
+  </compounddef>
+</doxygen>

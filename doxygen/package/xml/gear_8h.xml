@@ -1,0 +1,754 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.14.0" xml:lang="en-US">
+  <compounddef id="gear_8h" kind="file" language="C++">
+    <compoundname>gear.h</compoundname>
+    <includes refid="ability_8h" local="yes">../combat/ability.h</includes>
+    <includes refid="common_8h" local="yes">../common.h</includes>
+    <includes refid="stats_8h" local="yes">../stats/stats.h</includes>
+    <includes refid="gear__identifier_8h" local="yes">gear_identifier.h</includes>
+    <includedby refid="character_8h" local="yes">src/character/character.h</includedby>
+    <includedby refid="item__database_8h" local="yes">src/database/game/item_database.h</includedby>
+    <includedby refid="game__data_8h" local="yes">src/game_data.h</includedby>
+    <includedby refid="inventory__mode_8c" local="yes">src/inventory/inventory_mode.c</includedby>
+    <includedby refid="gear_8c" local="yes">src/item/gear.c</includedby>
+    <includedby refid="loot__generation_8h" local="yes">src/item/loot_generation.h</includedby>
+    <incdepgraph>
+      <node id="7">
+        <label>../../include/sqlite3.h</label>
+      </node>
+      <node id="9">
+        <label>../character/character_fw.h</label>
+        <link refid="character__fw_8h"/>
+      </node>
+      <node id="2">
+        <label>../combat/ability.h</label>
+        <link refid="ability_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+      </node>
+      <node id="10">
+        <label>ability_fw.h</label>
+        <link refid="ability__fw_8h"/>
+      </node>
+      <node id="8">
+        <label>damage.h</label>
+        <link refid="damage_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>../common.h</label>
+        <link refid="common_8h"/>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>../database/database.h</label>
+        <link refid="database_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>src/item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>gear_identifier.h</label>
+        <link refid="gear__identifier_8h"/>
+      </node>
+      <node id="4">
+        <label>logging/logger.h</label>
+        <link refid="logger_8h"/>
+      </node>
+      <node id="5">
+        <label>memory/memory_management.h</label>
+        <link refid="memory__management_8h_source"/>
+      </node>
+      <node id="11">
+        <label>../stats/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3">
+        <label>src/character/character.c</label>
+        <link refid="character_8c"/>
+      </node>
+      <node id="2">
+        <label>src/character/character.h</label>
+        <link refid="character_8h"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>src/character/level.c</label>
+        <link refid="level_8c"/>
+      </node>
+      <node id="4">
+        <label>src/character/level.h</label>
+        <link refid="level_8h"/>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+      </node>
+      <node id="9">
+        <label>src/character/monster.c</label>
+        <link refid="monster_8c"/>
+      </node>
+      <node id="8">
+        <label>src/character/monster.h</label>
+        <link refid="monster_8h"/>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="14">
+        <label>src/character/player.c</label>
+        <link refid="player_8c"/>
+      </node>
+      <node id="13">
+        <label>src/character/player.h</label>
+        <link refid="player_8h"/>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>src/combat/combat_mode.c</label>
+        <link refid="combat__mode_8c"/>
+      </node>
+      <node id="15">
+        <label>src/combat/damage.c</label>
+        <link refid="damage_8c"/>
+      </node>
+      <node id="17">
+        <label>src/database/game/character_database.c</label>
+        <link refid="character__database_8c"/>
+      </node>
+      <node id="16">
+        <label>src/database/game/character_database.h</label>
+        <link refid="character__database_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+      </node>
+      <node id="30">
+        <label>src/database/game/item_database.c</label>
+        <link refid="item__database_8c"/>
+      </node>
+      <node id="29">
+        <label>src/database/game/item_database.h</label>
+        <link refid="item__database_8h"/>
+        <childnode refid="30" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="32" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>src/game.c</label>
+        <link refid="game_8c"/>
+      </node>
+      <node id="10">
+        <label>src/game_data.c</label>
+        <link refid="game__data_8c"/>
+      </node>
+      <node id="33">
+        <label>src/game_data.h</label>
+        <link refid="game__data_8h"/>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+      </node>
+      <node id="19">
+        <label>src/inventory/inventory_mode.c</label>
+        <link refid="inventory__mode_8c"/>
+      </node>
+      <node id="20">
+        <label>src/io/output/specific/combat_output.c</label>
+        <link refid="combat__output_8c"/>
+      </node>
+      <node id="21">
+        <label>src/io/output/specific/inventory_output.c</label>
+        <link refid="inventory__output_8c"/>
+      </node>
+      <node id="7">
+        <label>src/io/output/specific/stats_output.c</label>
+        <link refid="stats__output_8c"/>
+      </node>
+      <node id="22">
+        <label>src/io/output/specific/stats_output.h</label>
+        <link refid="stats__output_8h"/>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+      <node id="31">
+        <label>src/item/gear.c</label>
+        <link refid="gear_8c"/>
+      </node>
+      <node id="1">
+        <label>src/item/gear.h</label>
+        <link refid="gear_8h"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="33" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="31" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>src/item/loot_generation.c</label>
+        <link refid="loot__generation_8c"/>
+      </node>
+      <node id="11">
+        <label>src/item/loot_generation.h</label>
+        <link refid="loot__generation_8h"/>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+      </node>
+      <node id="32">
+        <label>src/item/potion.c</label>
+        <link refid="potion_8c"/>
+      </node>
+      <node id="23">
+        <label>src/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="26">
+        <label>src/map/map_generator.c</label>
+        <link refid="map__generator_8c"/>
+      </node>
+      <node id="27">
+        <label>src/map/map_mode.c</label>
+        <link refid="map__mode_8c"/>
+      </node>
+      <node id="25">
+        <label>src/map/map_mode.h</label>
+        <link refid="map__mode_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+      </node>
+      <node id="24">
+        <label>src/stats/stats_mode.c</label>
+        <link refid="stats__mode_8c"/>
+      </node>
+      <node id="28">
+        <label>src/stats/stats_mode.h</label>
+        <link refid="stats__mode_8h"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="24" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structgear__t" prot="public">gear_t</innerclass>
+    <innerclass refid="structgear__table__t" prot="public">gear_table_t</innerclass>
+    <sectiondef kind="define">
+      <memberdef kind="define" id="gear_8h_1ae35bb62091798902f2da854ffb0e26b0" prot="public" static="no">
+        <name>MAX_ABILITY_PER_GEAR</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="14" column="9" bodyfile="src/item/gear.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="enum">
+      <memberdef kind="enum" id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6" prot="public" static="no" strong="no">
+        <type></type>
+        <name>gear_slot_t</name>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a308e798a2e5a7f485d17a990663bc54a" prot="public">
+          <name>SLOT_HEAD</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a8138442d082e2c8afe9b5032b166f4ca" prot="public">
+          <name>SLOT_CHEST</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a4597ff756fc9fb37a15ff3ddbb98e2cd" prot="public">
+          <name>SLOT_LEGS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a5293b17245592b8efccfe0301165fbf3" prot="public">
+          <name>SLOT_FEET</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6aa3de6d8d1ec21034b289f9487d1b011c" prot="public">
+          <name>SLOT_HANDS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a1a3ee4ea26b2012e768e1219e2f71d3b" prot="public">
+          <name>SLOT_NECK</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6afd62312e99a559c4ec1b88bbbfd3a9af" prot="public">
+          <name>SLOT_FINGER_RIGHT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a56143156debdad16f66384b4c7a5b25c" prot="public">
+          <name>SLOT_FINGER_LEFT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a40facc3d86404599d1839f963354f884" prot="public">
+          <name>SLOT_LEFT_HAND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a763b23d48224aaeaef3afb6e15059d70" prot="public">
+          <name>SLOT_RIGHT_HAND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6ac586cbc5a646f5190a2a4f3541d2ceb8" prot="public">
+          <name>SLOT_BOTH_HANDS</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="gear_8h_1a7cac99c331b98ca3d2a64a7c568b46a6a7272571dd3fa9f8f18f940155e031610" prot="public">
+          <name>MAX_SLOT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="16" column="1" bodyfile="src/item/gear.h" bodystart="16" bodyend="29"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="gear_8h_1a3c6e8a495a903764f6566fb54bd1aee3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structgear__t" kindref="compound">gear_t</ref> *</type>
+        <definition>gear_t * init_gear</definition>
+        <argsstring>(memory_pool_t *memory_pool, const char *name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t *ability_table, ability_names_t *abilities, int num_abilities)</argsstring>
+        <name>init_gear</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>gear_identifier_t</type>
+          <declname>gear_identifier</declname>
+        </param>
+        <param>
+          <type>gear_slot_t</type>
+          <declname>slot</declname>
+        </param>
+        <param>
+          <type><ref refid="structstats__t" kindref="compound">stats_t</ref></type>
+          <declname>stats</declname>
+        </param>
+        <param>
+          <type><ref refid="structdefenses__t" kindref="compound">defenses_t</ref></type>
+          <declname>defenses</declname>
+        </param>
+        <param>
+          <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+          <declname>ability_table</declname>
+        </param>
+        <param>
+          <type>ability_names_t *</type>
+          <declname>abilities</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>num_abilities</declname>
+        </param>
+        <briefdescription>
+<para>Initializes a gear object. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function creates and initializes a new <computeroutput><ref refid="structgear__t" kindref="compound">gear_t</ref></computeroutput> object with the specified parameters. It allocates memory, sets the properties of the object, and links it with the provided abilities.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The name of the gear as a string. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>gear_identifier</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The unique identifier of the gear of type <computeroutput>gear_identifier_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The slot in which the gear will be equipped, of type <computeroutput>gear_slot_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>stats</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The base stats of the gear, of type <computeroutput><ref refid="structstats__t" kindref="compound">stats_t</ref></computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>defenses</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The defense values of the gear, of type <computeroutput><ref refid="structdefenses__t" kindref="compound">defenses_t</ref></computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ability_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the ability table containing the available abilities. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>An array of ability names to be assigned to the gear. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>num_abilities</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The number of abilities to be assigned to the gear. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A pointer to the initialized <computeroutput><ref refid="structgear__t" kindref="compound">gear_t</ref></computeroutput> object or <computeroutput>NULL</computeroutput> if initialization fails. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="67" column="8" bodyfile="src/item/gear.c" bodystart="14" bodyend="42" declfile="src/item/gear.h" declline="67" declcolumn="8"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8h_1a8692ae861ae780f3af5db9d58fb9be00" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+        <definition>gear_table_t * init_gear_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, const db_connection_t *db_connection, ability_table_t *ability_table)</argsstring>
+        <name>init_gear_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type>const <ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref> *</type>
+          <declname>db_connection</declname>
+        </param>
+        <param>
+          <type><ref refid="structability__table__t" kindref="compound">ability_table_t</ref> *</type>
+          <declname>ability_table</declname>
+        </param>
+        <briefdescription>
+<para>Initializes a gear table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function creates and initializes a <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object by fetching gear data from the database, allocating memory for the table, and populating it with gear objects.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>db_connection</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the database connection used to fetch gear data. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>ability_table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the ability table containing the available abilities. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A pointer to the initialized <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object or <computeroutput>NULL</computeroutput> if initialization fails. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="79" column="14" bodyfile="src/item/gear.c" bodystart="45" bodyend="72" declfile="src/item/gear.h" declline="79" declcolumn="14"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8h_1a0c01826fef93a02232f8e89733fbf35f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void free_gear_table</definition>
+        <argsstring>(memory_pool_t *memory_pool, gear_table_t *table)</argsstring>
+        <name>free_gear_table</name>
+        <param>
+          <type>memory_pool_t *</type>
+          <declname>memory_pool</declname>
+        </param>
+        <param>
+          <type><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref> *</type>
+          <declname>table</declname>
+        </param>
+        <briefdescription>
+<para>Frees the memory allocated for a gear table. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function releases all memory associated with a <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object, including the memory for each individual gear object and the table itself. It ensures that the memory pool and table pointers are not NULL before attempting to free memory.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>memory_pool</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the memory pool used for memory allocation. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>table</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>A pointer to the <computeroutput><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref></computeroutput> object to be freed. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="90" column="6" bodyfile="src/item/gear.c" bodystart="74" bodyend="84" declfile="src/item/gear.h" declline="90" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="gear_8h_1abcd5746e9cf5f81afc0c81ef443c788e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>const char *</type>
+        <definition>const char * gear_slot_to_string</definition>
+        <argsstring>(gear_slot_t slot)</argsstring>
+        <name>gear_slot_to_string</name>
+        <param>
+          <type>gear_slot_t</type>
+          <declname>slot</declname>
+        </param>
+        <briefdescription>
+<para>Converts a gear slot enumeration value to its string representation. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>This function takes a <computeroutput>gear_slot_t</computeroutput> enumeration value and returns a human-readable string that represents the corresponding gear slot. If the provided slot does not match any known value, the function returns &quot;Unknown Slot&quot;.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>slot</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The gear slot enumeration value of type <computeroutput>gear_slot_t</computeroutput>. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>A string representing the gear slot. If the slot is invalid, returns &quot;Unknown Slot&quot;. </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="src/item/gear.h" line="101" column="12" bodyfile="src/item/gear.c" bodystart="86" bodyend="113" declfile="src/item/gear.h" declline="101" declcolumn="12"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Exposes functions for working with gear. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>GEAR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>GEAR_H</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ability_8h" kindref="compound">../combat/ability.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="common_8h" kindref="compound">../common.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">../stats/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="gear__identifier_8h" kindref="compound">gear_identifier.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="12"><highlight class="normal"></highlight></codeline>
+<codeline lineno="13"><highlight class="normal"></highlight></codeline>
+<codeline lineno="14"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAX_ABILITY_PER_GEAR<sp/>4</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="17"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_HEAD,</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_CHEST,</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_LEGS,</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_FEET,</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_HANDS,</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_NECK,</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_FINGER_RIGHT,</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_FINGER_LEFT,</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_LEFT_HAND,<sp/></highlight><highlight class="comment">//<sp/>Weapon<sp/>slot</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_RIGHT_HAND,</highlight><highlight class="comment">//<sp/>Weapon<sp/>slot</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><sp/><sp/>SLOT_BOTH_HANDS,</highlight><highlight class="comment">//<sp/>Weapon<sp/>slot</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/>MAX_SLOT</highlight></codeline>
+<codeline lineno="29"><highlight class="normal">}<sp/>gear_slot_t;</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31" refid="structgear__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>local_key[MAX_NAME_LENGTH];</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>local_name;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/>gear_identifier_t<sp/>gear_identifier;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>gear_slot_t<sp/>slot;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structstats__t" kindref="compound">stats_t</ref><sp/>stats;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structdefenses__t" kindref="compound">defenses_t</ref><sp/>defenses;</highlight><highlight class="comment">//<sp/>Armor<sp/>Pieces<sp/>can<sp/>have<sp/>other<sp/>stats,<sp/>e.g.<sp/>+might<sp/>etc.<sp/>for<sp/>now<sp/>only<sp/>armor</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num_abilities;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structability__t" kindref="compound">ability_t</ref>*<sp/>abilities[MAX_ABILITY_PER_GEAR];</highlight></codeline>
+<codeline lineno="41"><highlight class="normal">}<sp/><ref refid="structgear__t" kindref="compound">gear_t</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="structgear__table__t" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structgear__t" kindref="compound">gear_t</ref>*<sp/>gears[MAX_GEARS];</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num_gears;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal">}<sp/><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><ref refid="structgear__t" kindref="compound">gear_t</ref>*<sp/><ref refid="gear_8h_1a3c6e8a495a903764f6566fb54bd1aee3" kindref="member">init_gear</ref>(memory_pool_t*<sp/>memory_pool,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/>name,<sp/>gear_identifier_t<sp/>gear_identifier,<sp/>gear_slot_t<sp/>slot,<sp/><ref refid="structstats__t" kindref="compound">stats_t</ref><sp/>stats,<sp/><ref refid="structdefenses__t" kindref="compound">defenses_t</ref><sp/>defenses,<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>ability_table,<sp/>ability_names_t*<sp/>abilities,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>num_abilities);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/><ref refid="gear_8h_1a8692ae861ae780f3af5db9d58fb9be00" kindref="member">init_gear_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structdb__connection__t" kindref="compound">db_connection_t</ref>*<sp/>db_connection,<sp/><ref refid="structability__table__t" kindref="compound">ability_table_t</ref>*<sp/>ability_table);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="gear_8h_1a0c01826fef93a02232f8e89733fbf35f" kindref="member">free_gear_table</ref>(memory_pool_t*<sp/>memory_pool,<sp/><ref refid="structgear__table__t" kindref="compound">gear_table_t</ref>*<sp/>table);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal">*<sp/><ref refid="gear_8h_1abcd5746e9cf5f81afc0c81ef443c788e" kindref="member">gear_slot_to_string</ref>(gear_slot_t<sp/>slot);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight><highlight class="comment">//GEAR_H</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="src/item/gear.h"/>
+  </compounddef>
+</doxygen>
