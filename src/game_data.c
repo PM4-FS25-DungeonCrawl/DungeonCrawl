@@ -1,3 +1,7 @@
+/**
+ * @file game_data.c
+ * @brief Implementation for game_data.
+ */
 #include "game_data.h"
 
 #include "character/monster.h"

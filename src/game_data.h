@@ -1,3 +1,7 @@
+/**
+ * @file game_data.h
+ * @brief Declares functions and globals for initializing, resetting, and freeing game data such as player, goblin, abilities, and potions.
+ */
 #ifndef GAME_DATA_H
 #define GAME_DATA_H
 
@@ -13,8 +17,13 @@ extern gear_table_t* gear_table;
 extern potion_table_t* potion_table;
 
 /**
- * Initialize game data
- * @return 0 if successful, 1 if failed
+ * @brief Initializes game data for the application.
+ *
+ * This function sets up the game data structures, including the ability table,
+ * potion table, gear table, and player character. It also initializes the goblin
+ * character and adds potions to the player.
+ *
+ * @return 0 if successful, 1 if initialization failed.
  */
 int init_game_data(void);
 /**

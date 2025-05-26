@@ -1,3 +1,7 @@
+/**
+ * @file game.c
+ * @brief Implements the main game loop and state handling for DungeonCrawl.
+ */
 #include "game.h"
 
 #include "character/character.h"
@@ -28,10 +32,31 @@ bool game_in_progress;
 game_state_t current_state;
 int exit_code;
 
+/**
+ * @brief The main game loop of the application.
+ */
 void game_loop();
 
+/**
+ * @brief The state machine for the combat mode. 
+ */
 void combat_mode_state();
+/**
+ * @brief Handles the stats mode state of the game.
+ *
+ * This function manages the interactions and transitions that occur
+ * within the stats mode, including displaying player stats and
+ * managing skill points.
+ */
 void stats_mode_state();
+
+/**
+ * @brief Load the a game from the database.
+ *
+ * @param game_state_id The id of the game state to be loaded.
+ * @param setter A setter for the player position.
+ * @return 0 on success, 1 if the player could not be propperly reset, 2 if game state could not be loaded, 3 if player is NULL
+ */
 int loading_game(int game_state_id, player_pos_setter_t setter);
 
 void run_game() {
@@ -189,6 +214,9 @@ void map_mode_state() {
     }
 }
 
+/**
+ * @brief The state machine of the combat mode.
+ */
 void combat_mode_state() {
     switch (start_combat(player, goblin)) {
         case CONTINUE_COMBAT:
@@ -228,6 +256,9 @@ void inventory_mode_state() {
     }
 }
 
+/**
+ * @brief The state machine for the stats mode.
+ */
 void stats_mode_state() {
     switch (stats_mode(player)) {
         case STATS_WINDOW:
