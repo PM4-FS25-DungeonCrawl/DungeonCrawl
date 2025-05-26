@@ -1,3 +1,7 @@
+/**
+ * @file input_handler.c
+ * @brief Implements functionality for handling input.
+ */
 #include "input_handler.h"
 
 #include "../../logging/logger.h"
