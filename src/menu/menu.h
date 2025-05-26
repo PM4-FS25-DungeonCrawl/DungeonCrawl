@@ -1,3 +1,7 @@
+/**
+ * @file menu.h
+ * @brief Exposes helper functions to work with menus.
+ */
 #ifndef MENU_H
 #define MENU_H
 

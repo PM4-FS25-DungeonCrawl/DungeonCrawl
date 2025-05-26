@@ -1,3 +1,7 @@
+/**
+ * @file menu.c
+ * @brief Implementation of helper functions for menus.
+ */
 #include "menu.h"
 
 #include "../common.h"
