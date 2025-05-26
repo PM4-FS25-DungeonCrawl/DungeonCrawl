@@ -1,3 +1,7 @@
+/**
+ * @file potion.h
+ * @brief Exposes functions for working with potions.
+ */
 #ifndef POTION_H
 #define POTION_H
 

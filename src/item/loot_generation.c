@@ -1,3 +1,7 @@
+/**
+ * @file loot_generation.c
+ * @brief Implements functionality to generate loot.
+ */
 #include "loot_generation.h"
 
 #include <stdlib.h>

@@ -1,3 +1,7 @@
+/**
+ * @file potion.c
+ * @brief Implements potion functionality.
+ */
 #include "potion.h"
 
 #include "../database/game/item_database.h"
