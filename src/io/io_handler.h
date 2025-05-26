@@ -1,3 +1,7 @@
+/**
+ * @file io_handler.h
+ * @brief Exposes functions for the IO-Handler.
+ */
 #ifndef IO_HANDLER_H
 #define IO_HANDLER_H
 

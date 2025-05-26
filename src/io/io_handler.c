@@ -1,3 +1,7 @@
+/**
+ * @file io_handler.c
+ * @brief Implementation of the handler for handling Input/Output.
+ */
 #include "io_handler.h"
 
 #include "../common.h"// Added for COMMON_SUCCESS
