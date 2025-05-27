@@ -1,5 +1,9 @@
 # DungeonCrawl
 
+## API Documentation
+
+A full API reference generated from the code comments with doxygen can be found [here](https://pm4-fs25-dungeoncrawl.github.io/DungeonCrawl/)
+
 ## Repo statistics
 The number of lines of source code written.
 ```
