@@ -35,12 +35,12 @@ static void free_media_resource(loaded_visual_t* resource);
 * ========================================================================= */
 
 bool init_media_output(void) {
-    if (!nc) {
+    if (!gio->nc) {
         log_msg(ERROR, "media_output", "Null Notcurses instance provided");
         return false;
     }
 
-    if (!stdplane) {
+    if (!gio->stdplane) {
         log_msg(ERROR, "media_output", "Null standard plane provided");
         return false;
     }
@@ -82,7 +82,7 @@ bool refresh_media_display(void) {
     //TODO: fix
 
     // Force a redraw of the terminal with error checking
-    bool result = notcurses_render(nc);
+    bool result = notcurses_render(gio->nc);
 
     if (!result) {
         log_msg(ERROR, "media_output", "Failed to refresh media display");
@@ -163,7 +163,7 @@ loaded_visual_t* load_media(const char* filename) {
     // Get visual dimensions
     struct ncvisual_options vopts = {0};
     struct ncvgeom geom = {0};
-    int geo_ret = ncvisual_geom(nc, visual, &vopts, &geom);
+    int geo_ret = ncvisual_geom(gio->nc, visual, &vopts, &geom);
 
     if (geo_ret) {
         log_msg(WARNING, "media_output", "Failed to get visual geometry, using default dimensions");
@@ -253,7 +253,7 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
     // Clean up existing plane if needed
     if (resource->plane) {
         ncplane_erase(resource->plane);// Clear contents first
-        notcurses_render(nc);          // Update display
+        notcurses_render(gio->nc);          // Update display
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
@@ -484,7 +484,7 @@ static void free_media_resource(loaded_visual_t* resource) {
         ncplane_erase(resource->plane);
 
         // Make sure the erase is visible
-        notcurses_render(nc);// Use direct render for reliability
+        notcurses_render(gio->nc);// Use direct render for reliability
 
         // Then destroy the plane
         ncplane_destroy(resource->plane);

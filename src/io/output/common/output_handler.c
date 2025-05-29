@@ -24,12 +24,12 @@
 // No need to redeclare them here as they're already included through io_handler.h
 
 bool init_output_handler() {
-    if (!nc) {
+    if (!gio || !gio->nc) {
         log_msg(ERROR, "output_handler", "Null Notcurses instance provided");
         return false;
     }
 
-    if (!stdplane) {
+    if (!gio->stdplane) {
         log_msg(ERROR, "output_handler", "Null standard plane provided");
         return false;
     }
@@ -37,25 +37,25 @@ bool init_output_handler() {
 }
 
 void clear_screen(void) {
-    if (!stdplane) {
+    if (!gio->stdplane) {
         log_msg(ERROR, "output_handler", "Output handler not initialized");
         return;
     }
 
     // Clear the plane with the default colors
-    ncplane_set_base(stdplane, " ", 0, DEFAULT_COLORS);
-    ncplane_erase(stdplane);
+    ncplane_set_base(gio->stdplane, " ", 0, DEFAULT_COLORS);
+    ncplane_erase(gio->stdplane);
 }
 
 void print_text(int y, int x, const char* text, uint64_t ncchannel) {
-    if (!stdplane || !text) {
+    if (!gio->stdplane || !text) {
         log_msg(ERROR, "output_handler", "Output handler not initialized or null text");
         return;
     }
 
     // Set the channels and print the text
-    ncplane_set_channels(stdplane, ncchannel);
-    ncplane_putstr_yx(stdplane, y, x, text);
+    ncplane_set_channels(gio->stdplane, ncchannel);
+    ncplane_putstr_yx(gio->stdplane, y, x, text);
 }
 
 void print_text_default(int y, int x, const char* text) {
@@ -63,13 +63,13 @@ void print_text_default(int y, int x, const char* text) {
 }
 
 void print_text_multi_line(int y, int x, const char* text, int max_width, uint64_t ncchannel) {
-    if (!stdplane || !text || max_width <= 0) {
+    if (!gio->stdplane || !text || max_width <= 0) {
         log_msg(ERROR, "output_handler", "Invalid parameters for print_text_multi_line");
         return;
     }
 
     // Set the channels
-    ncplane_set_channels(stdplane, ncchannel);
+    ncplane_set_channels(gio->stdplane, ncchannel);
 
     // Handle line wrapping
     const char* ptr = text;
@@ -86,7 +86,7 @@ void print_text_multi_line(int y, int x, const char* text, int max_width, uint64
         line_buffer[line_len] = '\0';
 
         // Print this line
-        ncplane_putstr_yx(stdplane, current_y, x, line_buffer);
+        ncplane_putstr_yx(gio->stdplane, current_y, x, line_buffer);
         current_y++;
 
         // Handle newline character
@@ -101,18 +101,18 @@ void print_text_multi_line_default(int y, int x, const char* text, int max_width
 }
 
 void print_text_multi_strings(int y, int x, const char* text[], int count, uint64_t ncchannel) {
-    if (!stdplane || !text || count <= 0) {
+    if (!gio->stdplane || !text || count <= 0) {
         log_msg(ERROR, "output_handler", "Invalid parameters for print_text_multi_strings");
         return;
     }
 
     // Set the channels
-    ncplane_set_channels(stdplane, ncchannel);
+    ncplane_set_channels(gio->stdplane, ncchannel);
 
     // Print each string on a new line
     for (int i = 0; i < count; i++) {
         if (text[i]) {
-            ncplane_putstr_yx(stdplane, y + i, x, text[i]);
+            ncplane_putstr_yx(gio->stdplane, y + i, x, text[i]);
         }
     }
 }
@@ -126,24 +126,24 @@ void print_menu(const char* title, const char** options, int option_count,
                 uint64_t title_channel,
                 uint64_t option_channel,
                 uint64_t selected_channel) {
-    if (!stdplane || !title || !options || option_count <= 0) {
+    if (!gio->stdplane || !title || !options || option_count <= 0) {
         log_msg(ERROR, "output_handler", "Invalid menu parameters");
         return;
     }
 
     // Print title
-    ncplane_set_channels(stdplane, title_channel);
-    ncplane_putstr_yx(stdplane, y, x, title);
+    ncplane_set_channels(gio->stdplane, title_channel);
+    ncplane_putstr_yx(gio->stdplane, y, x, title);
 
     // Print options
     for (int i = 0; i < option_count; i++) {
         if (i == selected_index) {
             // Highlight selected option
-            ncplane_set_channels(stdplane, selected_channel);
+            ncplane_set_channels(gio->stdplane, selected_channel);
         } else {
-            ncplane_set_channels(stdplane, option_channel);
+            ncplane_set_channels(gio->stdplane, option_channel);
         }
-        ncplane_putstr_yx(stdplane, y + i + 1, x, options[i]);
+        ncplane_putstr_yx(gio->stdplane, y + i + 1, x, options[i]);
     }
 }
 
@@ -155,7 +155,7 @@ void print_menu_default(const char* title, const char** options, int option_coun
 
 bool get_text_input(const char* prompt, char* buffer, int buffer_size,
                     const char* confirm_msg, int y, int x) {
-    if (!stdplane || !buffer || buffer_size <= 0) {
+    if (!gio->stdplane || !buffer || buffer_size <= 0) {
         log_msg(ERROR, "output_handler", "Invalid parameters for get_text_input");
         return false;
     }
@@ -219,7 +219,7 @@ bool get_text_input(const char* prompt, char* buffer, int buffer_size,
 }
 
 void show_message_screen(const char* message, const char* continue_message, int y, int x) {
-    if (!stdplane || !message) {
+    if (!gio->stdplane || !message) {
         log_msg(ERROR, "output_handler", "Invalid parameters for show_message_screen");
         return;
     }
@@ -244,31 +244,31 @@ void show_message_screen(const char* message, const char* continue_message, int 
 }
 
 bool render_frame(void) {
-    if (!nc) {
+    if (!gio->nc) {
         log_msg(ERROR, "output_handler", "Output handler not initialized");
         return false;
     }
 
     // Render all changes directly
-    int ret = notcurses_render(nc);
+    int ret = notcurses_render(gio->nc);
     return ret >= 0;
 }
 
 bool get_screen_dimensions(int* width, int* height) {
-    if (!stdplane || !width || !height) {
+    if (!gio->stdplane || !width || !height) {
         log_msg(ERROR, "output_handler", "Invalid parameters for get_screen_dimensions");
         return false;
     }
 
     // Get the dimensions of the standard plane
-    *width = ncplane_dim_x(stdplane);
-    *height = ncplane_dim_y(stdplane);
+    *width = ncplane_dim_x(gio->stdplane);
+    *height = ncplane_dim_y(gio->stdplane);
 
     return true;
 }
 
 void shutdown_output_handler(void) {
     // Reset the globals
-    nc = NULL;
-    stdplane = NULL;
+    gio->nc = NULL;
+    gio->stdplane = NULL;
 }

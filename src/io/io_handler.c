@@ -23,12 +23,8 @@
     #include <unistd.h>// for usleep
 #endif
 
-// Global notcurses instance and standard plane
-struct notcurses* nc = NULL;
-struct ncplane* stdplane = NULL;
-
 // Global io_handler instance
-io_handler_t* g_io_handler = NULL;
+io_handler_t* gio = NULL;
 
 /**
  * @brief Detect the current platform
@@ -156,22 +152,16 @@ void io_handler_shutdown(io_handler_t* handler) {
 
 int init_io_handler(void) {
     // Use the new structured approach
-    g_io_handler = io_handler_init();
-    if (!g_io_handler) {
+    gio = io_handler_init();
+    if (!gio) {
         return 1; // Error code
     }
     
-    // Update global references for backward compatibility
-    nc = g_io_handler->nc;
-    stdplane = g_io_handler->stdplane;
-    
     // Initialize input handler (which starts its own thread)
-    if (!init_input_handler(nc)) {
+    if (!init_input_handler(gio->nc)) {
         log_msg(ERROR, "io_handler", "Failed to initialize input handler");
-        io_handler_shutdown(g_io_handler);
-        g_io_handler = NULL;
-        nc = NULL;
-        stdplane = NULL;
+        io_handler_shutdown(gio);
+        gio = NULL;
         return 3;// Error code
     }
 
@@ -179,10 +169,8 @@ int init_io_handler(void) {
     if (!init_output_handler()) {
         log_msg(ERROR, "io_handler", "Failed to initialize output handler");
         shutdown_input_handler();
-        io_handler_shutdown(g_io_handler);
-        g_io_handler = NULL;
-        nc = NULL;
-        stdplane = NULL;
+        io_handler_shutdown(gio);
+        gio = NULL;
         return 4;// Error code
     }
 
@@ -213,15 +201,8 @@ void shutdown_io_handler(void) {
     shutdown_input_handler();
 
     // Shutdown the global io_handler
-    if (g_io_handler) {
-        io_handler_shutdown(g_io_handler);
-        g_io_handler = NULL;
-        nc = NULL;
-        stdplane = NULL;
-    } else if (nc) {
-        // Fallback for backward compatibility
-        notcurses_stop(nc);
-        nc = NULL;
-        stdplane = NULL;
+    if (gio) {
+        io_handler_shutdown(gio);
+        gio = NULL;
     }
 }

@@ -38,13 +38,8 @@ typedef struct io_handler {
 // Make the init_done flag accessible from other files
 extern volatile int init_done;
 
-// Global notcurses instance and standard plane
-// These are used directly for rendering and are no longer part of a separate output thread
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
-
-// Global io_handler instance
-extern io_handler_t* g_io_handler;
+// Global io_handler instance (named "gio" for brevity)
+extern io_handler_t* gio;
 
 /**
  * @brief Initialize the IO handler

@@ -142,7 +142,7 @@ static bool display_image(loaded_visual_t* resource) {
     opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->og_height;
     opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->og_width;
 
-    resource->plane = ncplane_create(stdplane, &opts);
+    resource->plane = ncplane_create(gio->stdplane, &opts);
     if (!resource->plane) {
         log_msg(ERROR, "media_output", "Failed to create plane for image at (%d, %d)",
                 resource->options.x, resource->options.y);
@@ -158,7 +158,7 @@ static bool display_image(loaded_visual_t* resource) {
     vopts.blitter = NCBLIT_2x2;// Simple blitter that works better
 
     // Use direct blit
-    if (!ncvisual_blit(nc, resource->visual, &vopts)) {
+    if (!ncvisual_blit(gio->nc, resource->visual, &vopts)) {
         log_msg(ERROR, "media_output", "Failed to blit visual to plane");
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
@@ -169,7 +169,7 @@ static bool display_image(loaded_visual_t* resource) {
     ncplane_move_top(resource->plane);
 
     // Make sure changes are visible - force a render
-    notcurses_render(nc);// Directly call notcurses_render for maximum compatibility
+    notcurses_render(gio->nc);// Directly call notcurses_render for maximum compatibility
 
     return true;
 }

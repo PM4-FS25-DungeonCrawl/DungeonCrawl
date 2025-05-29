@@ -103,9 +103,6 @@ bool init_input_handler(struct notcurses* notcurses_ptr) {
         return false;
     }
 
-    // Assign to the global variable
-    nc = notcurses_ptr;
-
     // Initialize input timing
     input_timing.first_key = true;
 
@@ -145,7 +142,7 @@ static bool should_process_key() {
 }
 
 bool get_input_blocking(input_event_t* event) {
-    if (!event || !nc) {
+    if (!event || !gio || !gio->nc) {
         log_msg(ERROR, "input_handler", "Null event pointer or uninitialized handler");
         return false;
     }
@@ -160,7 +157,7 @@ bool get_input_blocking(input_event_t* event) {
 
     // Loop until we get a valid input or notcurses returns an error
     while (true) {
-        uint32_t ret = notcurses_get_blocking(nc, &raw_input);
+        uint32_t ret = notcurses_get_blocking(gio->nc, &raw_input);
         if (ret <= 0) {
             // Error or no input
             return false;
@@ -179,7 +176,7 @@ bool get_input_blocking(input_event_t* event) {
 }
 
 bool get_input_nonblocking(input_event_t* event) {
-    if (!event || !nc) {
+    if (!event || !gio || !gio->nc) {
         log_msg(ERROR, "input_handler", "Null event pointer or uninitialized handler");
         return false;
     }
@@ -192,7 +189,7 @@ bool get_input_nonblocking(input_event_t* event) {
     event->type = INPUT_NONE;
     memset(&event->raw_input, 0, sizeof(ncinput));
 
-    uint32_t ret = notcurses_get_nblock(nc, &raw_input);
+    uint32_t ret = notcurses_get_nblock(gio->nc, &raw_input);
     if (ret <= 0) {
         // No input available
         return false;
@@ -210,5 +207,5 @@ bool get_input_nonblocking(input_event_t* event) {
 }
 
 void shutdown_input_handler(void) {
-    nc = NULL;
+    // Nothing to do here anymore, the actual cleanup will be done in io_handler_shutdown
 }
