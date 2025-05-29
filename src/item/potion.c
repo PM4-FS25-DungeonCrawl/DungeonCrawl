@@ -1,9 +1,12 @@
+/**
+ * @file potion.c
+ * @brief Implements potion functionality.
+ */
 #include "potion.h"
 
 #include "../database/game/item_database.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
 potion_t* init_potion(potion_t* potion, const char* name, const potion_type_t type, const int value) {
     NULL_PTR_HANDLER_RETURN(name, NULL, "Potion", "In init_potion name is NULL");

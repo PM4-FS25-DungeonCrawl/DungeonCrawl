@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['ability_5fmenu_0',['ability_menu',['../combat__mode_8c.html#a77e3b5ffc58e6a523668d641c67f7fef',1,'ability_menu(character_t *player, character_t *monster):&#160;combat_mode.c'],['../combat__mode_8h.html#a77e3b5ffc58e6a523668d641c67f7fef',1,'ability_menu(character_t *player, character_t *monster):&#160;combat_mode.c']]],
+  ['add_5fability_1',['add_ability',['../character_8c.html#ac1e7edc495be29bb8233cb226a2c2b15',1,'add_ability(character_t *character, ability_t *ability):&#160;character.c'],['../character_8h.html#ac1e7edc495be29bb8233cb226a2c2b15',1,'add_ability(character_t *character, ability_t *ability):&#160;character.c']]],
+  ['add_5fequipped_5fgear_2',['add_equipped_gear',['../character_8c.html#a7260b96f41aa6f3231f07bc00a63d9f6',1,'add_equipped_gear(character_t *character, gear_t *gear):&#160;character.c'],['../character_8h.html#a7260b96f41aa6f3231f07bc00a63d9f6',1,'add_equipped_gear(character_t *character, gear_t *gear):&#160;character.c']]],
+  ['add_5fgear_3',['add_gear',['../character_8c.html#a0ecf3b9eaff247ab9ee5c8af97c7d7ca',1,'add_gear(character_t *character, gear_t *gear):&#160;character.c'],['../character_8h.html#a0ecf3b9eaff247ab9ee5c8af97c7d7ca',1,'add_gear(character_t *character, gear_t *gear):&#160;character.c']]],
+  ['add_5floops_4',['add_loops',['../map__generator_8c.html#a498f4cea0549cd54906648c6fc40e122',1,'map_generator.c']]],
+  ['add_5fpotion_5',['add_potion',['../character_8c.html#a54c2a5ff451efcd844bcdc22d912d7e2',1,'add_potion(character_t *character, potion_t *potion):&#160;character.c'],['../character_8h.html#a54c2a5ff451efcd844bcdc22d912d7e2',1,'add_potion(character_t *character, potion_t *potion):&#160;character.c']]],
+  ['add_5fxp_6',['add_xp',['../level_8c.html#af549752973108dea0ccbd82ef2716be7',1,'add_xp(character_t *player, int xp_earned):&#160;level.c'],['../level_8h.html#af549752973108dea0ccbd82ef2716be7',1,'add_xp(character_t *player, int xp_earned):&#160;level.c']]],
+  ['arr2d_5fto_5fflat_5fjson_7',['arr2D_to_flat_json',['../gamestate__database_8c.html#aa55051e28e3b3b3fba26bfe29c3222a1',1,'arr2D_to_flat_json(const int *arr, const int width, const int height):&#160;gamestate_database.c'],['../gamestate__database_8h.html#a5c15109719339e7194e149f9ba5abc19',1,'arr2D_to_flat_json(const int *arr, int width, int height):&#160;gamestate_database.c']]]
+];

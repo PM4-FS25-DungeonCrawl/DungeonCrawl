@@ -1,3 +1,7 @@
+/**
+ * @file item_database.h
+ * @brief Declares functions to load and free potion and gear tables from the game database, and count entries.
+ */
 #ifndef ITEM_DATABASE_H
 #define ITEM_DATABASE_H
 

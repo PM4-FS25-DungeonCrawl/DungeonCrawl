@@ -1,3 +1,7 @@
+/**
+ * @file map_populator.c
+ * @brief Implements functionality for populating the generated game map.
+ */
 #include "map_populator.h"
 
 #include "map.h"
@@ -28,7 +32,7 @@ int is_dead_end(int x, int y) {
 
 
 /**
- * Place a key in a dead end that is not the start or exit edge
+ * @brief Place a key in a dead end that is not the start or exit edge
  */
 void place_key() {
     int x;
@@ -45,7 +49,7 @@ void place_key() {
 
 
 /**
- * Check if a cell is close to an enemy (based on ENEMY_MIN_DISTANCE)
+ * @brief Check if a cell is close to an enemy (based on ENEMY_MIN_DISTANCE)
  * @param x the x coordinate of the cell
  * @param y the y coordinate of the cell
  * @return 1 if the cell is close to an enemy, 0 otherwise
@@ -62,7 +66,7 @@ int is_close_to_enemy(int x, int y) {
 }
 
 /**
- * Place enemies in random locations on the map
+ * @brief Place enemies in random locations on the map
  */
 void place_enemies() {
     for (int i = 0; i < ENEMY_COUNT; i++) {
@@ -81,7 +85,7 @@ void place_enemies() {
 
 
 /**
- * Place a mana fountain and a life fountain in random dead ends on the map
+ * @brief Place a mana fountain and a life fountain in random dead ends on the map
  */
 void place_fountains() {
     int x;
@@ -105,9 +109,6 @@ void place_fountains() {
 }
 
 
-/**
- * populates the map with a key, enemies, and fountains
- */
 void populate_map() {
     place_key();
     place_enemies();

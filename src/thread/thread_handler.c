@@ -1,3 +1,7 @@
+/**
+ * @file thread_handler.c
+ * @brief The implementation of a thread handler for working with threads.
+ */
 #include "thread_handler.h"
 
 #include <stdlib.h>
@@ -9,6 +13,11 @@ typedef struct {
 #ifdef _WIN32
     #include <windows.h>
 
+/**
+ * @brief A wrapper function arround a thread for multi platform thread implementation.
+ *
+ * @param arg The arguments to pass to the thread.
+ */
 DWORD WINAPI thread_wrapper(LPVOID arg) {
     thread_func_wrapper_t* wrapper_arg = (thread_func_wrapper_t*) arg;
     wrapper_arg->func();
@@ -32,6 +41,11 @@ void start_simple_thread(void (*thread_func)(void)) {
 #else
     #include <pthread.h>
 
+/**
+ * @brief A wrapper function arround a thread for multi platform thread implementation.
+ *
+ * @param arg The arguments to pass to the thread.
+ */
 void* thread_wrapper(void* arg) {
     thread_func_wrapper_t* wrapper_arg = (thread_func_wrapper_t*) arg;
     wrapper_arg->func();
