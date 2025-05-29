@@ -9,6 +9,7 @@
 #include "../database/game/gamestate_database.h"
 #include "../io/input/input_handler.h"
 #include "../io/output/common/output_handler.h"
+#include "../io/output/common/text_output.h"
 #include "../local/local_handler.h"
 #include "local/save_menu_local.h"
 #include "src/menu/menu.h"

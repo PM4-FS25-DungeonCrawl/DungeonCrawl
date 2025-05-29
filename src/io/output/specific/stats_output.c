@@ -12,6 +12,7 @@
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;

@@ -10,6 +10,7 @@
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 #include "../media/media_files.h"
 #include "../media/media_output.h"
 
