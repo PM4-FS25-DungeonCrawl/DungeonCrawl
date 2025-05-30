@@ -59,7 +59,8 @@ combat_files = files(
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/local/combat_mode_local.c'
+    'src/combat/local/combat_mode_local.c',
+    'src/combat/local/ability_local.c',
 )
 
 # List of all database files

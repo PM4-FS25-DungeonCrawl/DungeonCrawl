@@ -19,6 +19,7 @@
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "combat/local/ability_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
@@ -149,6 +150,7 @@ int init() {
         log_msg(ERROR, "Stats", "Failed to initialize stats components");
         return FAIL_STATS_MODE_INIT;
     }
+    if (init_ability_local() != COMMON_SUCCESS) return FAIL_ABILITY_LOCAL_INIT;
 
     // When all initialization is done, switch back to game mode
     init_done = 1;// Set the global flag to signal completion
@@ -163,6 +165,7 @@ void shutdown_game() {
     // close database connection in game.c
     db_close(&db_connection);
 
+    shutdown_ability_local();
     shutdown_map_mode();
     shutdown_map_mode_local();
     shutdown_combat_mode();

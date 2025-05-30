@@ -32,6 +32,7 @@ helper_combat = files(
     '../src/combat/damage.c',
 
     '../src/combat/local/combat_mode_local.c',
+    '../src/combat/local/ability_local.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -139,6 +140,7 @@ helper_stats = files(
     '../src/combat/damage.c',
 
     '../src/combat/local/combat_mode_local.c',
+    '../src/combat/local/ability_local.c',
 
     '../src/local/local_handler.c',
 

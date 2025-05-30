@@ -4,7 +4,6 @@
  */
 #include "map_output.h"
 
-#include "../../../asciiart/ascii.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"

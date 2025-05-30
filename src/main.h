@@ -21,6 +21,7 @@ typedef enum {
     FAIL_GAME_ENTITY_INIT,
     FAIL_STATS_MODE_INIT,
     FAIL_MAP_MODE_LOCAL_INIT,
+    FAIL_ABILITY_LOCAL_INIT,
     FAIL_ERROR,
 } exit_code_t;
 
