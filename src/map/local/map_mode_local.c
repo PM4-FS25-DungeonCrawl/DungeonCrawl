@@ -1,7 +1,7 @@
 #include "map_mode_local.h"
 
-#include "../../local/local_handler.h"
 #include "../../common.h"
+#include "../../local/local_handler.h"
 
 #include <stdlib.h>
 
@@ -20,7 +20,7 @@ int init_map_mode_local(void) {
 }
 
 void update_map_mode_local(void) {
-    if (map_mode_strings == NULL) return; // module not initialized
+    if (map_mode_strings == NULL) return;// module not initialized
     for (int i = 0; i < MAX_MAP_MODE_STRINGS; i++) {
         if (map_mode_strings[i] != NULL) {
             free(map_mode_strings[i]);
