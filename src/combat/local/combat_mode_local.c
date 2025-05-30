@@ -35,8 +35,13 @@ void update_combat_local(void) {
     combat_mode_strings[ATTACK_FAIL] = get_local_string("COMBAT.ATTACK.FAIL");
     combat_mode_strings[POTION_USE] = get_local_string("COMBAT.POTION.USE");
 
+    combat_mode_strings[HEALTH_STR] = get_local_string("HEALTH");
+    combat_mode_strings[MANA_STR] = get_local_string("MANA");
+    combat_mode_strings[STAMINA_STR] = get_local_string("STAMINA");
+
     combat_mode_strings[WON_COMBAT_MSG1] = get_local_string("COMBAT.WON.MESSAGE1");
     combat_mode_strings[WON_COMBAT_MSG2] = get_local_string("COMBAT.WON.MESSAGE2");
+    combat_mode_strings[LOST_COMBAT_MSG] = get_local_string("COMBAT.LOST.MESSAGE");
 
     combat_mode_strings[PRESS_ANY_CONTINUE] = get_local_string("PRESS.ANY.CONTINUE");
     combat_mode_strings[PRESS_ANY_EXIT] = get_local_string("PRESS.ANY.EXIT");

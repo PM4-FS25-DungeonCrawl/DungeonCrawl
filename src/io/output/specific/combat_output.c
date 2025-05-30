@@ -13,8 +13,6 @@
 #include "../../../combat/local/combat_mode_local.h"
 #include "../media/media_output.h"
 
-#include <string.h>
-
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy,
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
@@ -83,7 +81,7 @@ void draw_game_over(void) {
     clear_screen();
 
     // Display game over message
-    print_text(1, 1, "Game over", RED_TEXT_COLORS);
+    print_text(1, 1, combat_mode_strings[LOST_COMBAT_MSG], RED_TEXT_COLORS);
     print_text_default(2, 1, combat_mode_strings[PRESS_ANY_EXIT]);
     render_frame();
 
@@ -98,12 +96,12 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
         return anchor.dy;
     }
 
-    char c_info[MAX_STRING_LENGTH];
-    snprintf(c_info, sizeof(c_info), "%-20s | HP: %4d/%-4d | Mana: %4d/%-4d | Stamina: %4d/%-4d",
+    char c_info[64];
+    snprintf(c_info, sizeof(c_info), "%-20s | %s: %4d/%-4d | %s: %4d/%-4d | %s: %4d/%-4d",
              c->name,
-             c->current_resources.health, c->max_resources.health,
-             c->current_resources.mana, c->max_resources.mana,
-             c->current_resources.stamina, c->max_resources.stamina);
+             combat_mode_strings[HEALTH_STR], c->current_resources.health, c->max_resources.health,
+             combat_mode_strings[MANA_STR], c->current_resources.mana, c->max_resources.mana,
+             combat_mode_strings[STAMINA_STR], c->current_resources.stamina, c->max_resources.stamina);
 
     print_text_default(anchor.dy, anchor.dx, c_info);
     anchor.dy++;
