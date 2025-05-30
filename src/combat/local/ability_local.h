@@ -7,4 +7,4 @@ int init_ability_local(void);
 
 void shutdown_ability_local(void);
 
-#endif //ABILITY_LOCAL_H
+#endif//ABILITY_LOCAL_H

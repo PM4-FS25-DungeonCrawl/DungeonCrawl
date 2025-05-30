@@ -1,9 +1,8 @@
 #include "ability_local.h"
 
-#include "../ability.h"
-
-#include "../../logging/logger.h"
 #include "../../local/local_handler.h"
+#include "../../logging/logger.h"
+#include "../ability.h"
 
 char** ability_names = NULL;
 
@@ -26,7 +25,6 @@ void shutdown_ability_local(void) {
         for (int i = 0; i < MAX_ABILITIES; i++) {
             if (ability_names[i] != NULL) {
                 free(ability_names[i]);
-
             }
         }
         free(ability_names);
@@ -35,7 +33,7 @@ void shutdown_ability_local(void) {
 }
 
 void update_ability_local(void) {
-    if (ability_names == NULL) return; // module not initialized
+    if (ability_names == NULL) return;// module not initialized
 
     for (int i = 0; i < MAX_ABILITIES; i++) {
         if (ability_names[i] != NULL) {

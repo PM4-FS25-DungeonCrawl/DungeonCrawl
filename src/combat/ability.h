@@ -46,7 +46,7 @@ typedef enum {
 } ability_names_t;
 
 typedef struct ability_t {
-    int id; // Unique identifier for the ability
+    int id;// Unique identifier for the ability
     char name[MAX_NAME_LENGTH];
     int roll_amount;
     int accuracy;

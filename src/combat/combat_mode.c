@@ -14,8 +14,8 @@
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
 #include "ability.h"
-#include "local/combat_mode_local.h"
 #include "local/ability_local.h"
+#include "local/combat_mode_local.h"
 
 #include <stdlib.h>
 #include <unistd.h>
