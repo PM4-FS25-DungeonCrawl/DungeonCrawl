@@ -32,4 +32,7 @@ void update_combat_local(void) {
     combat_mode_strings[ATTACK_MISS] = get_local_string("COMBAT.ATTACK.MISS");
     combat_mode_strings[ATTACK_FAIL] = get_local_string("COMBAT.ATTACK.FAIL");
     combat_mode_strings[POTION_USE] = get_local_string("COMBAT.POTION.USE");
+
+    combat_mode_strings[WON_COMBAT_MSG1] = get_local_string("COMBAT.WON.MESSAGE1");
+    combat_mode_strings[WON_COMBAT_MSG2] = get_local_string("COMBAT.WON.MESSAGE2");
 }

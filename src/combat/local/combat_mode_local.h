@@ -20,6 +20,9 @@ enum combat_mode_index {
     ATTACK_FAIL,
     POTION_USE,
 
+    WON_COMBAT_MSG1, // part 1 of the message when combat is won
+    WON_COMBAT_MSG2, // part 2 of the message when combat is won
+
     MAX_COMBAT_MODE_STRINGS
 };
 
