@@ -72,6 +72,7 @@ helper_map_generator = files(
     '../src/map/map_generator.c',
     '../src/map/map_populator.c',
     '../src/map/map_mode.c',
+    '../src/map/local/map_mode_local.c',
     '../src/map/draw/draw_light.c',
 
     '../src/logging/logger.c',
@@ -84,12 +85,15 @@ helper_map_generator = files(
     '../src/io/output/media/media_output.c',
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
+
+    '../src/local/local_handler.c',
 )
 
 helper_map_mode = files(
     '../src/map/map.c',
     '../src/map/map_mode.c',
     '../src/map/draw/draw_light.c',
+    '../src/map/local/map_mode_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -101,6 +105,8 @@ helper_map_mode = files(
     '../src/io/output/media/media_output.c',
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
+
+    '../src/local/local_handler.c',
 )
 
 
