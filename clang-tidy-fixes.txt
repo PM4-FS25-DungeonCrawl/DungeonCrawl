@@ -51,8 +51,8 @@
 ../src/logging/logger.c:183:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   183 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:82:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   82 |     srand(time(NULL));
+../src/main.c:83:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   83 |     srand(time(NULL));
       |     ^
-Suppressed 258248 warnings (258155 in non-user code, 93 with check filters).
+Suppressed 261201 warnings (261107 in non-user code, 94 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
