@@ -5,12 +5,12 @@
 #include "combat_output.h"
 
 #include "../../../character/character.h"
+#include "../../../combat/local/combat_mode_local.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../../../combat/local/combat_mode_local.h"
 #include "../media/media_output.h"
 
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy,
