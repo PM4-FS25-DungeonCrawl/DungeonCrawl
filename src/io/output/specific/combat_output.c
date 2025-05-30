@@ -10,7 +10,7 @@
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../media/media_files.h"
+#include "../../../combat/local/combat_mode_local.h"
 #include "../media/media_output.h"
 
 #include <string.h>
@@ -70,7 +70,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
 
     print_text_default(anchor.dy, anchor.dx, combat_log_message);
     anchor.dy++;
-    print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
+    print_text_default(anchor.dy, anchor.dx, combat_mode_strings[PRESS_ANY_CONTINUE]);
     anchor.dy++;
     render_frame();
 
@@ -84,7 +84,7 @@ void draw_game_over(void) {
 
     // Display game over message
     print_text(1, 1, "Game over", RED_TEXT_COLORS);
-    print_text_default(2, 1, "Press any key to exit...");
+    print_text_default(2, 1, combat_mode_strings[PRESS_ANY_EXIT]);
     render_frame();
 
     // Use our input handler to get any key press

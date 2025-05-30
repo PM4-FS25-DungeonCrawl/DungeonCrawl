@@ -35,4 +35,7 @@ void update_combat_local(void) {
 
     combat_mode_strings[WON_COMBAT_MSG1] = get_local_string("COMBAT.WON.MESSAGE1");
     combat_mode_strings[WON_COMBAT_MSG2] = get_local_string("COMBAT.WON.MESSAGE2");
+
+    combat_mode_strings[PRESS_ANY_CONTINUE] = get_local_string("PRESS.ANY.CONTINUE");
+    combat_mode_strings[PRESS_ANY_EXIT] = get_local_string("PRESS.ANY.EXIT");
 }
