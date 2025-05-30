@@ -135,7 +135,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
 
                 char message[64];
                 snprintf(message, sizeof(message), "%s %s %s",
-                    combat_mode_strings[WON_COMBAT_MSG1], monster->name, combat_mode_strings[WON_COMBAT_MSG2]);
+                         combat_mode_strings[WON_COMBAT_MSG1], monster->name, combat_mode_strings[WON_COMBAT_MSG2]);
                 draw_combat_log(anchor, message);
 
                 player->xp += monster->xp_reward;
