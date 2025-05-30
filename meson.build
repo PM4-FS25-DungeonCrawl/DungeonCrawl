@@ -13,11 +13,6 @@ src_files = files(
     'src/game.c',
     'src/game_data.c',
 
-    'src/map/map.c',
-    'src/map/map_mode.c',
-    'src/map/map_generator.c',
-    'src/map/map_populator.c',
-
     'src/map/draw/draw_light.c',
 
     'src/character/character.c',
@@ -29,6 +24,14 @@ src_files = files(
     'src/item/potion.c',
     'src/item/loot_generation.c'
 
+)
+
+map_files = files(
+    'src/map/map.c',
+    'src/map/map_mode.c',
+    'src/map/map_generator.c',
+    'src/map/map_populator.c',
+    'src/map/local/map_mode_local.c',
 )
 
 menu_files = files(
@@ -110,6 +113,7 @@ configure_file(
     executable(
     'DungeonCrawl',
     src_files,
+    map_files,
     menu_files,
     stats_files,
     inventory_files,

@@ -18,6 +18,7 @@
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "map/local/map_mode_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
@@ -109,6 +110,8 @@ int init() {
 
     // Initialize map mode
     init_map_mode();
+    // the local modul for map mode
+    if (init_map_mode_local() != COMMON_SUCCESS) return FAIL_MAP_MODE_LOCAL_INIT;
 
     // Initialize main menu
     if (init_main_menu() != COMMON_SUCCESS) {
@@ -157,11 +160,11 @@ int init() {
  */
 void shutdown_game() {
     free_game_data();
-    shutdown_local_handler();
     // close database connection in game.c
     db_close(&db_connection);
 
     shutdown_map_mode();
+    shutdown_map_mode_local();
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
@@ -169,6 +172,7 @@ void shutdown_game() {
     shutdown_save_menu();
     shutdown_main_menu();
 
+    shutdown_local_handler();
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
     shutdown_logger();
