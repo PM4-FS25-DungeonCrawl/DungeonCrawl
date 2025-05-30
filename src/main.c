@@ -14,11 +14,11 @@
 #include "io/output/specific/stats_output.h"
 #include "local/local_handler.h"
 #include "logging/logger.h"
+#include "map/local/map_mode_local.h"
 #include "map/map_mode.h"
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
-#include "map/local/map_mode_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep

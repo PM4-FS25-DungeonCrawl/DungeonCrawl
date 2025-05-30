@@ -17,4 +17,4 @@ void update_map_mode_local(void);
 
 void shutdown_map_mode_local(void);
 
-#endif //MAP_MODE_LOCAL_H
+#endif//MAP_MODE_LOCAL_H
