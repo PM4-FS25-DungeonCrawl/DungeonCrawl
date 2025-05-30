@@ -17,6 +17,8 @@ void update_combat_local(void) {
         }
     }
 
+    combat_mode_strings[COMBAT_MODE_TITLE] = get_local_string("COMBAT.MODE.TITLE");
+
     combat_mode_strings[MAIN_MENU_TITLE] = get_local_string("COMBAT.MAIN.MENU.TITLE");
     combat_mode_strings[ABILITY_MENU_TITLE] = get_local_string("COMBAT.ABILITY.MENU.TITLE");
     combat_mode_strings[POTION_MENU_TITLE] = get_local_string("COMBAT.POTION.MENU.TITLE");

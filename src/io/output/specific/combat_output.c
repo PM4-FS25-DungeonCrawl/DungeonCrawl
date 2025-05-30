@@ -23,7 +23,7 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     vector2d_t vec = {anchor.dx, anchor.dy};
 
     // Draw title
-    print_text_default(vec.dy, anchor.dx + 20, "Combat Mode");
+    print_text_default(vec.dy, anchor.dx + 20, combat_mode_strings[COMBAT_MODE_TITLE]);
     vec.dy += 2;
 
     // Draw resource bars

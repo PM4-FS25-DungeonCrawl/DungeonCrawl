@@ -6,6 +6,7 @@
 #define COMBAT_MODE_LOCAL_H
 
 enum combat_mode_index {
+    COMBAT_MODE_TITLE,
     MAIN_MENU_TITLE,
     ABILITY_MENU_TITLE,
     POTION_MENU_TITLE,
