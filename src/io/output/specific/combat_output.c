@@ -96,7 +96,7 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
         return anchor.dy;
     }
 
-    char c_info[64];
+    char c_info[128];
     snprintf(c_info, sizeof(c_info), "%-20s | %s: %4d/%-4d | %s: %4d/%-4d | %s: %4d/%-4d",
              c->name,
              combat_mode_strings[HEALTH_STR], c->current_resources.health, c->max_resources.health,
