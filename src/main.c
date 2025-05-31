@@ -5,6 +5,7 @@
 #include "main.h"
 
 #include "combat/combat_mode.h"
+#include "combat/local/ability_local.h"
 #include "common.h"
 #include "database/game/gamestate_database.h"
 #include "game.h"
@@ -14,10 +15,12 @@
 #include "io/output/specific/stats_output.h"
 #include "local/local_handler.h"
 #include "logging/logger.h"
+#include "map/local/map_mode_local.h"
 #include "map/map_mode.h"
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "item/local/gear_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
@@ -109,6 +112,8 @@ int init() {
 
     // Initialize map mode
     init_map_mode();
+    // the local modul for map mode
+    if (init_map_mode_local() != COMMON_SUCCESS) return FAIL_MAP_MODE_LOCAL_INIT;
 
     // Initialize main menu
     if (init_main_menu() != COMMON_SUCCESS) {
@@ -146,6 +151,8 @@ int init() {
         log_msg(ERROR, "Stats", "Failed to initialize stats components");
         return FAIL_STATS_MODE_INIT;
     }
+    if (init_ability_local() != COMMON_SUCCESS) return FAIL_ABILITY_LOCAL_INIT;
+    if (init_gear_local() != COMMON_SUCCESS) return FAIL_GEAR_LOCAL_INIT;
 
     // When all initialization is done, switch back to game mode
     init_done = 1;// Set the global flag to signal completion
@@ -157,11 +164,13 @@ int init() {
  */
 void shutdown_game() {
     free_game_data();
-    shutdown_local_handler();
     // close database connection in game.c
     db_close(&db_connection);
 
+    shutdown_gear_local();
+    shutdown_ability_local();
     shutdown_map_mode();
+    shutdown_map_mode_local();
     shutdown_combat_mode();
     shutdown_stats_mode();
     shutdown_inventory_mode();
@@ -169,6 +178,7 @@ void shutdown_game() {
     shutdown_save_menu();
     shutdown_main_menu();
 
+    shutdown_local_handler();
     //shutdown the main memory pool
     shutdown_memory_pool(main_memory_pool);
     shutdown_logger();

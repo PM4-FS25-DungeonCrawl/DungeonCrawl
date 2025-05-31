@@ -28,6 +28,7 @@ ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connect
             break;
 
         const int slot = rows[i].ability_number;
+        table->abilities[slot].id = slot;// Set the ID to the slot index
 
         init_ability(&table->abilities[slot],
                      rows[i].name,
