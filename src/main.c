@@ -13,6 +13,7 @@
 #include "inventory/inventory_mode.h"
 #include "io/io_handler.h"
 #include "io/output/specific/stats_output.h"
+#include "item/local/gear_local.h"
 #include "local/local_handler.h"
 #include "logging/logger.h"
 #include "map/local/map_mode_local.h"
@@ -20,7 +21,6 @@
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
-#include "item/local/gear_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep

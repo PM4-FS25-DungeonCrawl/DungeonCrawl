@@ -6,13 +6,13 @@
 
 #include "../../../character/character.h"
 #include "../../../character/level.h"
+#include "../../../item/local/gear_local.h"
 #include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../../memory/memory_management.h"
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../../../item/local/gear_local.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;

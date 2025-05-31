@@ -23,4 +23,4 @@ int init_gear_local(void);
  */
 void shutdown_gear_local(void);
 
-#endif //GEAR_LOCAL_H
+#endif//GEAR_LOCAL_H

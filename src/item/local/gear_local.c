@@ -33,7 +33,7 @@ void shutdown_gear_local(void) {
 }
 
 void update_gear_local(void) {
-    if (gear_names == NULL) return; // module not initialized
+    if (gear_names == NULL) return;// module not initialized
 
     // needs to free up the old strings until to gear: TRICKSTERS_LOOP_OF_THE_RAVEN_R
     for (int i = 0; i < IRON_BAND_OF_THE_GOLIATH_L; i++) {
