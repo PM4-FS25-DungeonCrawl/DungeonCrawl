@@ -181,7 +181,7 @@ void remove_gear(character_t* character, gear_t* gear) {
             return;
         }
     }
-    log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->local_key);
+    log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->name);
 }
 
 void remove_equipped_gear(character_t* character, gear_slot_t slot) {
@@ -235,7 +235,7 @@ bool add_equipped_gear(character_t* character, gear_t* gear) {
         return true;
     }
 
-    log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
+    log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->name);
     return false;
 }
 
@@ -285,7 +285,7 @@ void equip_gear(character_t* character, gear_t* gear) {
         update_character_resources(&character->current_resources, &character->max_resources, &character->base_stats);
 
     } else {
-        log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->local_key);
+        log_msg(WARNING, "Character", "Invalid slot for gear %s!", gear->name);
     }
 }
 

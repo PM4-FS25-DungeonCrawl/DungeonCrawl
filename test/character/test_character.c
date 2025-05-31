@@ -54,7 +54,7 @@ void test_add_ability() {
 
 void test_add_gear() {
     character_t* character = setup_character();
-    gear_t test_gear = {.local_key = "Test Gear", .slot = SLOT_HEAD};
+    gear_t test_gear = {.name = "Test Gear", .slot = SLOT_HEAD};
     add_gear(character, &test_gear);
     assert(character->gear_inventory[0] == &test_gear);
     assert(character->gear_count == 1);

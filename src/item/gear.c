@@ -19,7 +19,7 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
 
     NULL_PTR_HANDLER_RETURN(gear, NULL, "Gear", "Failed to allocate memory for gear: %s", name);
 
-    snprintf(gear->local_key, sizeof(gear->local_key), "%s", name);
+    snprintf(gear->name, sizeof(gear->name), "%s", name);
     gear->gear_identifier = gear_identifier;
     gear->slot = slot;
     gear->stats = stats;
