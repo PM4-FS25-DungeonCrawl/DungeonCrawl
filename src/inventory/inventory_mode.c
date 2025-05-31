@@ -6,10 +6,10 @@
 
 #include "../character/character.h"
 #include "../common.h"
-#include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/output/specific/inventory_output.h"
 #include "../item/gear.h"
+#include "../item/local/gear_local.h"
 #include "../local/local_handler.h"
 #include "../src/combat/combat_mode.h"
 #include "local/inventory_mode_local.h"
@@ -498,7 +498,7 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
     for (int i = 0; i < count; i++) {
         snprintf(inventory_gear_options[i], MAX_STRING_LENGTH,
                  inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
-                 gear_inventory[i]->name,
+                 gear_names[gear_inventory[i]->gear_identifier],
                  gear_slot_to_string(gear_inventory[i]->slot),
                  gear_inventory[i]->defenses.armor,
                  gear_inventory[i]->defenses.magic_resist);
@@ -535,7 +535,7 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
         if (equipment[i] != NULL) {
             snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
                      inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
-                     equipment[i]->name,
+                     gear_names[equipment[i]->gear_identifier],
                      gear_slot_to_string((gear_slot_t) i),
                      equipment[i]->defenses.armor,
                      equipment[i]->defenses.magic_resist);

@@ -20,6 +20,7 @@
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
+#include "item/local/gear_local.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep
@@ -151,6 +152,7 @@ int init() {
         return FAIL_STATS_MODE_INIT;
     }
     if (init_ability_local() != COMMON_SUCCESS) return FAIL_ABILITY_LOCAL_INIT;
+    if (init_gear_local() != COMMON_SUCCESS) return FAIL_GEAR_LOCAL_INIT;
 
     // When all initialization is done, switch back to game mode
     init_done = 1;// Set the global flag to signal completion
@@ -165,6 +167,7 @@ void shutdown_game() {
     // close database connection in game.c
     db_close(&db_connection);
 
+    shutdown_gear_local();
     shutdown_ability_local();
     shutdown_map_mode();
     shutdown_map_mode_local();

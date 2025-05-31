@@ -19,11 +19,6 @@ src_files = files(
     'src/character/player.c',
     'src/character/monster.c',
     'src/character/level.c',
-
-    'src/item/gear.c',
-    'src/item/potion.c',
-    'src/item/loot_generation.c'
-
 )
 
 map_files = files(
@@ -61,6 +56,13 @@ combat_files = files(
     'src/combat/damage.c',
     'src/combat/local/combat_mode_local.c',
     'src/combat/local/ability_local.c',
+)
+
+itme_files = files(
+    'src/item/gear.c',
+    'src/item/potion.c',
+    'src/item/loot_generation.c',
+    'src/item/local/gear_local.c',
 )
 
 # List of all database files
@@ -119,6 +121,7 @@ configure_file(
     stats_files,
     inventory_files,
     combat_files,
+    itme_files,
     database_files,
     logging_files,
     io_files,

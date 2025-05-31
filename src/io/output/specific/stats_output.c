@@ -12,6 +12,7 @@
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../../../item/local/gear_local.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;
@@ -79,7 +80,7 @@ void render_stats_window(const character_t* player) {
     for (int i = 0; i < MAX_SLOT; i++) {
         if (player->equipment[i] != NULL) {
             snprintf(stats_info, sizeof(stats_info), "%s: %s | %s: %-4d, %s: %-4d",
-                     stats_mode_strings[EQUIPPED_ARMOR_STR], player->equipment[i]->name,
+                     stats_mode_strings[EQUIPPED_ARMOR_STR], gear_names[player->equipment[i]->gear_identifier],
                      stats_mode_strings[ARMOR_STR], player->equipment[i]->defenses.armor,
                      stats_mode_strings[MAGIC_RESISTANCE_STR], player->equipment[i]->defenses.magic_resist);
         } else {

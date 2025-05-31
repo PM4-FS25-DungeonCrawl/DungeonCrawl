@@ -45,6 +45,7 @@ helper_combat = files(
     '../src/local/local_handler.c',
 
     '../src/item/gear.c',
+    '../src/item/local/gear_local.c',
     '../src/item/potion.c',
 
     '../src/logging/logger.c',
@@ -150,6 +151,7 @@ helper_stats = files(
     '../src/character/monster.c',
 
     '../src/item/gear.c',
+    '../src/item/local/gear_local.c',
     '../src/item/potion.c',
 
     '../src/logging/logger.c',
