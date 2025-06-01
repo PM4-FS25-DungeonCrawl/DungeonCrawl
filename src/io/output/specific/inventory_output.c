@@ -92,7 +92,7 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Display the log message
     print_text_default(anchor.dy, anchor.dx, inventory_log_message);
     anchor.dy++;
-    print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
+    print_text_default(anchor.dy, anchor.dx, inventory_mode_strings[PRESS_ANY_CONTINUE]);
     anchor.dy++;
 
     // Render the frame

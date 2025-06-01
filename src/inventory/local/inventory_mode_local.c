@@ -57,4 +57,5 @@ void update_inventory_local(void) {
     inventory_mode_strings[FINISH_LOOTING_MSG] = get_local_string("LOOT.FINISH");
 
     inventory_mode_strings[PRESS_C_RETURN] = get_local_string("PRESS.C.RETURN");
+    inventory_mode_strings[PRESS_ANY_CONTINUE] = get_local_string("PRESS.ANY.CONTINUE");
 }

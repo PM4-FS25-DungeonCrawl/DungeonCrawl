@@ -46,6 +46,7 @@ enum inventory_mode_index {
     FINISH_LOOTING_MSG,
 
     PRESS_C_RETURN,
+    PRESS_ANY_CONTINUE,
     MAX_INVENTORY_STRINGS
 };
 
