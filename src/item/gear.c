@@ -6,10 +6,13 @@
 
 #include "../database/game/item_database.h"
 #include "../logging/logger.h"
+#include "src/local/local_handler.h"
 
 #include <stdio.h>
-#include <stdlib.h>
 
+char** gear_slot_names = NULL;
+
+void update_gear_slot_local(void);
 
 gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "In init_gear memory pool is NULL");
@@ -45,6 +48,9 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
 gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t* db_connection, ability_table_t* ability_table) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "Memory pool is NULL");
 
+    gear_slot_names = malloc(sizeof(char*) * MAX_SLOT);
+    RETURN_WHEN_NULL(gear_slot_names, NULL, "Gear", "Failed to allocate memory for gear slot names");
+
     gear_init_t* rows = init_gear_table_from_db(db_connection);
     NULL_PTR_HANDLER_RETURN(rows, NULL, "Gear", "Could not fetch gear data from DB");
 
@@ -55,6 +61,10 @@ gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t*
 
     table->num_gears = count;
     NULL_PTR_HANDLER_RETURN(table->gears, NULL, "Gear", "Failed to allocate gear array for table");
+
+    for (int i = 0; i < MAX_SLOT; i++) {
+        gear_slot_names[i] = NULL;
+    }
 
     for (int i = 0; i < count; ++i) {
         table->gears[i] = init_gear(memory_pool,
@@ -68,6 +78,9 @@ gear_table_t* init_gear_table(memory_pool_t* memory_pool, const db_connection_t*
                                     rows[i].num_abilities);
     }
     free_gear_table_from_db(rows, db_connection);
+
+    update_gear_slot_local();
+    observe_local(update_gear_slot_local);
     return table;
 }
 
@@ -81,33 +94,50 @@ void free_gear_table(memory_pool_t* memory_pool, gear_table_t* table) {
         }
     }
     memory_pool_free(memory_pool, table);
+
+    if (gear_slot_names != NULL) {
+        for (int i = 0; i < MAX_SLOT; i++) {
+            if (gear_slot_names[i] != NULL) {
+                free(gear_slot_names[i]);
+            }
+        }
+        free(gear_slot_names);
+        gear_slot_names = NULL;
+    }
 }
 
-const char* gear_slot_to_string(gear_slot_t slot) {
-    switch (slot) {
-        case SLOT_HEAD:
-            return "Head";
-        case SLOT_CHEST:
-            return "Chest";
-        case SLOT_LEGS:
-            return "Legs";
-        case SLOT_FEET:
-            return "Feet";
-        case SLOT_HANDS:
-            return "Hands";
-        case SLOT_NECK:
-            return "Neck";
-        case SLOT_FINGER_RIGHT:
-            return "Right Finger";
-        case SLOT_FINGER_LEFT:
-            return "Left Finger";
-        case SLOT_LEFT_HAND:
-            return "Left Hand";
-        case SLOT_RIGHT_HAND:
-            return "Right Hand";
-        case SLOT_BOTH_HANDS:
-            return "Both Hands";
-        default:
-            return "Unknown Slot";
+const char* gear_slot_to_string(const gear_slot_t slot) {
+    const char* str;
+    if (slot < MAX_SLOT) {
+        if (gear_slot_names[slot] != NULL) {
+            str = gear_slot_names[slot];
+        } else {
+            str = "ERROR_GETTING_STR";
+        }
+    } else {
+        str = "ERROR_UNKNOWN_SLOT";
     }
+    return str;
+}
+
+void update_gear_slot_local(void) {
+    if (gear_slot_names == NULL) return; // module not initialized
+
+    for (int i = 0; i < MAX_SLOT; i++) {
+        if (gear_slot_names[i] != NULL) {
+            free(gear_slot_names[i]);
+        }
+    }
+
+    gear_slot_names[SLOT_HEAD] = get_local_string("GEAR.SLOT.HEAD");
+    gear_slot_names[SLOT_CHEST] = get_local_string("GEAR.SLOT.CHEST");
+    gear_slot_names[SLOT_LEGS] = get_local_string("GEAR.SLOT.LEGS");
+    gear_slot_names[SLOT_FEET] = get_local_string("GEAR.SLOT.FEET");
+    gear_slot_names[SLOT_HANDS] = get_local_string("GEAR.SLOT.HANDS");
+    gear_slot_names[SLOT_NECK] = get_local_string("GEAR.SLOT.NECK");
+    gear_slot_names[SLOT_FINGER_RIGHT] = get_local_string("GEAR.SLOT.FINGER.RIGHT");
+    gear_slot_names[SLOT_FINGER_LEFT] = get_local_string("GEAR.SLOT.FINGER.LEFT");
+    gear_slot_names[SLOT_LEFT_HAND] = get_local_string("GEAR.SLOT.HAND.LEFT");
+    gear_slot_names[SLOT_RIGHT_HAND] = get_local_string("GEAR.SLOT.HAND.RIGHT");
+    gear_slot_names[SLOT_BOTH_HANDS] = get_local_string("GEAR.SLOT.HAND.BOTH");
 }

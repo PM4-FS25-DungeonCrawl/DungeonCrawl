@@ -71,6 +71,16 @@ void free_potion_table(memory_pool_t* memory_pool, potion_table_t* table) {
     NULL_PTR_HANDLER_RETURN(table, , "Potion", "In free_potion_table table is NULL");
 
     memory_pool_free(memory_pool, table);
+
+    if (potion_type_strings != NULL) {
+        for (int i = 0; i < MAX_POTION_TYPES; i++) {
+            if (potion_type_strings[i] != NULL) {
+                free(potion_type_strings[i]);
+            }
+        }
+        free(potion_type_strings);
+        potion_type_strings = NULL;
+    }
 }
 
 void update_potion_type_local(void) {
