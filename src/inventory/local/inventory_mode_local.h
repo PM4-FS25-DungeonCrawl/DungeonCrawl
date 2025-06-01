@@ -11,6 +11,10 @@ enum inventory_mode_index {
     SHOW_EQUIPPED_GEAR,
     SHOW_POTIONS,
 
+    HEALTH_STR,
+    MANA_STR,
+    STAMINA_STR,
+
     INVENTORY_FULL_MSG,
     INVENTORY_EMPTY_MSG,
     INVENTORY_MENU_TITLE,

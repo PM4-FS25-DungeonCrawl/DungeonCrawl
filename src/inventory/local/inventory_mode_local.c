@@ -21,6 +21,11 @@ void update_inventory_local(void) {
     inventory_mode_strings[SHOW_GEAR] = get_local_string("INVENTORY.OPTION.SHOW.GEAR");
     inventory_mode_strings[SHOW_EQUIPPED_GEAR] = get_local_string("INVENTORY.OPTION.SHOW.GEAR.EQUIPPED");
     inventory_mode_strings[SHOW_POTIONS] = get_local_string("INVENTORY.OPTION.SHOW.POTIONS");
+
+    inventory_mode_strings[HEALTH_STR] = get_local_string("HEALTH");
+    inventory_mode_strings[MANA_STR] = get_local_string("MANA");
+    inventory_mode_strings[STAMINA_STR] = get_local_string("STAMINA");
+
     inventory_mode_strings[INVENTORY_FULL_MSG] = get_local_string("INVENTORY.FULL");
     inventory_mode_strings[INVENTORY_EMPTY_MSG] = get_local_string("INVENTORY.EMPTY");
     inventory_mode_strings[INVENTORY_MENU_TITLE] = get_local_string("INVENTORY.MENU.TITLE");
