@@ -47,6 +47,7 @@ helper_combat = files(
     '../src/item/gear.c',
     '../src/item/local/gear_local.c',
     '../src/item/potion.c',
+    '../src/item/local/potion_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -153,6 +154,7 @@ helper_stats = files(
     '../src/item/gear.c',
     '../src/item/local/gear_local.c',
     '../src/item/potion.c',
+    '../src/item/local/potion_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',

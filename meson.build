@@ -63,6 +63,7 @@ itme_files = files(
     'src/item/potion.c',
     'src/item/loot_generation.c',
     'src/item/local/gear_local.c',
+    'src/item/local/potion_local.c',
 )
 
 # List of all database files

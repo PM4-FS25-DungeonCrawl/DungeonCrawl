@@ -23,6 +23,7 @@ typedef enum {
     FAIL_MAP_MODE_LOCAL_INIT,
     FAIL_ABILITY_LOCAL_INIT,
     FAIL_GEAR_LOCAL_INIT,
+    FAIL_POTION_LOCAL_INIT,
     FAIL_ERROR,
 } exit_code_t;
 

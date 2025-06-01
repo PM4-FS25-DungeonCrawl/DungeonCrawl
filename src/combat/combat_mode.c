@@ -13,6 +13,7 @@
 #include "../io/output/media/media_files.h"
 #include "../io/output/specific/combat_output.h"
 #include "../local/local_handler.h"
+#include "../item/local/potion_local.h"
 #include "ability.h"
 #include "local/ability_local.h"
 #include "local/combat_mode_local.h"
@@ -374,7 +375,7 @@ void use_potion(character_t* player, const character_t* monster, potion_t* potio
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), combat_mode_strings[POTION_USE],//TODO: This Method of using formats is not safe!!
              player->name,
-             potion->name,
+             potion_names[potion->effectType],
              potion->value,
              potion_type_to_string(potion->effectType));
     draw_combat_log(anchor, message);
@@ -503,7 +504,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     for (int i = 0; i < count; i++) {
         snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
                  combat_mode_strings[POTION_FORMAT],//TODO: This Method of using formats is not safe!!
-                 potions[i]->name,
+                 potion_names[potions[i]->effectType],
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
     }

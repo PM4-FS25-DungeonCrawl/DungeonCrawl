@@ -14,6 +14,7 @@
 #include "io/io_handler.h"
 #include "io/output/specific/stats_output.h"
 #include "item/local/gear_local.h"
+#include "item/local/potion_local.h"
 #include "local/local_handler.h"
 #include "logging/logger.h"
 #include "map/local/map_mode_local.h"
@@ -153,6 +154,7 @@ int init() {
     }
     if (init_ability_local() != COMMON_SUCCESS) return FAIL_ABILITY_LOCAL_INIT;
     if (init_gear_local() != COMMON_SUCCESS) return FAIL_GEAR_LOCAL_INIT;
+    if (init_potion_local() != COMMON_SUCCESS) return FAIL_POTION_LOCAL_INIT;
 
     // When all initialization is done, switch back to game mode
     init_done = 1;// Set the global flag to signal completion
@@ -167,6 +169,7 @@ void shutdown_game() {
     // close database connection in game.c
     db_close(&db_connection);
 
+    shutdown_potion_local();
     shutdown_gear_local();
     shutdown_ability_local();
     shutdown_map_mode();
