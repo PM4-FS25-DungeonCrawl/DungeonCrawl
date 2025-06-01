@@ -24,11 +24,14 @@ stats_result_t stats_mode(character_t* player) {
     menu_options[2] = stats_mode_strings[DEXTERITY_STR];
     menu_options[3] = stats_mode_strings[CONSTITUTION_STR];
 
-    draw_stats_menu(
-            stats_mode_strings[STATS_MENU_TITLE],
-            menu_options,
-            4,
-            selected_index, "");
+    // Only show the skill points if the player has any
+    if (player->skill_points > 0) {
+        draw_stats_menu(
+                stats_mode_strings[STATS_MENU_TITLE],
+                menu_options,
+                4,
+                selected_index, "");
+    }
     // Check for input
     input_event_t input_event;
     if (get_input_nonblocking(&input_event)) {
