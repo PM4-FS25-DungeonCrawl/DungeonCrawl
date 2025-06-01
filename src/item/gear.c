@@ -5,8 +5,8 @@
 #include "gear.h"
 
 #include "../database/game/item_database.h"
-#include "../logging/logger.h"
 #include "../local/local_handler.h"
+#include "../logging/logger.h"
 
 #include <stdio.h>
 

@@ -6,11 +6,11 @@
 
 #include "../../../character/character.h"
 #include "../../../common.h"
+#include "../../../inventory/local/inventory_mode_local.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../../../inventory/local/inventory_mode_local.h"
 
 
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player) {
