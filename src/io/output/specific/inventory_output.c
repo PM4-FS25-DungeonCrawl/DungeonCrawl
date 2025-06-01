@@ -10,7 +10,7 @@
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "src/inventory/local/inventory_mode_local.h"
+#include "../../../inventory/local/inventory_mode_local.h"
 
 
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player) {

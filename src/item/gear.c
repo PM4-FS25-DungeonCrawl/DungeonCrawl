@@ -6,7 +6,7 @@
 
 #include "../database/game/item_database.h"
 #include "../logging/logger.h"
-#include "src/local/local_handler.h"
+#include "../local/local_handler.h"
 
 #include <stdio.h>
 
