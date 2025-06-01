@@ -1,5 +1,5 @@
-../src/combat/damage.c:22:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   22 |     return rand() % dice_size + 1;
+../src/combat/damage.c:118:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  118 |     return rand() % dice_size + 1;
       |            ^
 ../src/game.c:228:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
   228 |         case PLAYER_LOST:
@@ -44,15 +44,15 @@
 ../src/io/output/specific/wait_output.c:130:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   130 |     int msg_len = strlen(welcome_msg);
       |                   ^
-../src/item/gear.c:14:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
-   14 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
+../src/item/gear.c:17:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
+   17 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
       |                                                                                                                                                                                                           ^
       |                                                                                                                                                                                          const 
 ../src/logging/logger.c:183:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
   183 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:84:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   84 |     srand(time(NULL));
+../src/main.c:86:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   86 |     srand(time(NULL));
       |     ^
-Suppressed 264162 warnings (264067 in non-user code, 95 with check filters).
+Suppressed 267127 warnings (267027 in non-user code, 100 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
