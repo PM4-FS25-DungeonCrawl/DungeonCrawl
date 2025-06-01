@@ -84,7 +84,7 @@ void free_potion_table(memory_pool_t* memory_pool, potion_table_t* table) {
 }
 
 void update_potion_type_local(void) {
-    if (potion_type_strings == NULL) return; // module not initialized
+    if (potion_type_strings == NULL) return;// module not initialized
 
     for (int i = 0; i < MAX_POTION_TYPES; i++) {
         if (potion_type_strings[i] != NULL) {

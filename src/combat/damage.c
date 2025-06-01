@@ -5,8 +5,8 @@
 #include "damage.h"
 
 #include "../character/character.h"
-#include "../logging/logger.h"
 #include "../local/local_handler.h"
+#include "../logging/logger.h"
 #include "ability.h"
 
 #include <stdlib.h>
@@ -119,7 +119,7 @@ int roll_dice(const dice_size_t dice_size) {
 }
 
 void update_damage_local(void) {
-    if (damage_type_names == NULL) return; // module was not initialized
+    if (damage_type_names == NULL) return;// module was not initialized
 
     for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
         if (damage_type_names[i] != NULL) {

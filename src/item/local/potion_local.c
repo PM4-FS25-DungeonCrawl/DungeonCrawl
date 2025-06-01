@@ -33,7 +33,7 @@ void shutdown_potion_local(void) {
 }
 
 void update_potion_local(void) {
-    if (potion_names == NULL) return; // module not initialized
+    if (potion_names == NULL) return;// module not initialized
     for (int i = 0; i < MAX_POTION_TYPES; i++) {
         if (potion_names[i] != NULL) {
             free(potion_names[i]);

@@ -121,7 +121,7 @@ const char* gear_slot_to_string(const gear_slot_t slot) {
 }
 
 void update_gear_slot_local(void) {
-    if (gear_slot_names == NULL) return; // module not initialized
+    if (gear_slot_names == NULL) return;// module not initialized
 
     for (int i = 0; i < MAX_SLOT; i++) {
         if (gear_slot_names[i] != NULL) {

@@ -5,6 +5,7 @@
 #include "main.h"
 
 #include "combat/combat_mode.h"
+#include "combat/damage.h"
 #include "combat/local/ability_local.h"
 #include "common.h"
 #include "database/game/gamestate_database.h"
@@ -22,7 +23,6 @@
 #include "menu/language_menu.h"
 #include "menu/main_menu.h"
 #include "menu/save_menu.h"
-#include "combat/damage.h"
 
 #ifndef _WIN32
     #include <unistd.h>// for usleep

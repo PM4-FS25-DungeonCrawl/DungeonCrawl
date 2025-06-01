@@ -23,4 +23,4 @@ int init_potion_local(void);
  */
 void shutdown_potion_local(void);
 
-#endif //POTION_LOCAL_H
+#endif//POTION_LOCAL_H
