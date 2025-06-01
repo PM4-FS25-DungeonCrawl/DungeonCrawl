@@ -12,7 +12,8 @@
 
 typedef enum damage_type_t {
     PHYSICAL,
-    MAGICAL
+    MAGICAL,
+    MAX_DAMAGE_TYPES
 } damage_type_t;
 
 typedef enum dice_size_t {
@@ -27,6 +28,17 @@ typedef struct damage_resistance_t {
     damage_type_t type;
     int value;
 } damage_resistance_t;
+
+/**
+ * Initializes the local damage system.
+ * @return 0 if initialization was successful, non-zero otherwise.
+ */
+int init_damage_local(void);
+
+/**
+ * Shuts down the local damage system.
+ */
+void shutdown_damage_local(void);
 
 /**
  * @brief Rolls a D20 to determine if an attack hits.

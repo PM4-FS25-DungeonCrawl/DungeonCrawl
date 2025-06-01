@@ -6,20 +6,39 @@
 
 #include "../character/character.h"
 #include "../logging/logger.h"
+#include "../local/local_handler.h"
 #include "ability.h"
 
 #include <stdlib.h>
 
+char** damage_type_names = NULL;
+
 int roll_dice(dice_size_t dice_size);
 
-/**
- * @brief Rolls given dice size and returns the result.
- * @param dice_size The dice that is rolled.
- * @return The result of the dice roll.
- */
-int roll_dice(const dice_size_t dice_size) {
-    /* Seed random number generator */
-    return rand() % dice_size + 1;
+void update_damage_local(void);
+
+int init_damage_local(void) {
+    damage_type_names = malloc(sizeof(char*) * MAX_DAMAGE_TYPES);
+    RETURN_WHEN_NULL(damage_type_names, 1, "Damage Local", "Failed to allocate memory for damage type names");
+    for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
+        damage_type_names[i] = NULL;
+    }
+
+    update_damage_local();
+    observe_local(update_damage_local);
+    return 0;
+}
+
+void shutdown_damage_local(void) {
+    if (damage_type_names != NULL) {
+        for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
+            if (damage_type_names[i] != NULL) {
+                free(damage_type_names[i]);
+            }
+        }
+        free(damage_type_names);
+        damage_type_names = NULL;
+    }
 }
 
 bool roll_hit(const int attacker_dex, const int defender_dex) {
@@ -76,12 +95,38 @@ const char* dice_size_to_string(const dice_size_t size) {
 }
 
 const char* damage_type_to_string(const damage_type_t type) {
-    switch (type) {
-        case PHYSICAL:
-            return "Physical";
-        case MAGICAL:
-            return "Magic";
-        default:
-            return "Unknown";
+    const char* str;
+    if (type < MAX_DAMAGE_TYPES) {
+        if (damage_type_names[type] != NULL) {
+            str = damage_type_names[type];
+        } else {
+            str = "ERROR_GETTING_STR";
+        }
+    } else {
+        str = "UNKNOWN_POTION_TYPE";
     }
+    return str;
+}
+
+/**
+ * @brief Rolls given dice size and returns the result.
+ * @param dice_size The dice that is rolled.
+ * @return The result of the dice roll.
+ */
+int roll_dice(const dice_size_t dice_size) {
+    /* Seed random number generator */
+    return rand() % dice_size + 1;
+}
+
+void update_damage_local(void) {
+    if (damage_type_names == NULL) return; // module was not initialized
+
+    for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
+        if (damage_type_names[i] != NULL) {
+            free(damage_type_names[i]);
+        }
+    }
+
+    damage_type_names[PHYSICAL] = get_local_string("DAMAGE.TYPE.PHYSICAL");
+    damage_type_names[MAGICAL] = get_local_string("DAMAGE.TYPE.MAGICAL");
 }
