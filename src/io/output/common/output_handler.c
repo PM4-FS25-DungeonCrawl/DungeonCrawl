@@ -78,6 +78,38 @@ void clear_specific_plane(struct ncplane* plane) {
     ncplane_erase(plane);
 }
 
+bool handle_screen_resize(void) {
+    if (!gio->nc) {
+        log_msg(ERROR, "output_handler", "Output handler not initialized");
+        return false;
+    }
+
+    // Refresh notcurses to handle the resize
+    if (notcurses_refresh(gio->nc, NULL, NULL) < 0) {
+        log_msg(ERROR, "output_handler", "Failed to refresh after resize");
+        return false;
+    }
+
+    // Update the standard plane reference
+    gio->stdplane = notcurses_stdplane(gio->nc);
+    if (!gio->stdplane) {
+        log_msg(ERROR, "output_handler", "Failed to get standard plane after resize");
+        return false;
+    }
+
+    // Clear and redraw the screen
+    clear_screen();
+    
+    // Force a full render
+    if (!render_frame()) {
+        log_msg(ERROR, "output_handler", "Failed to render after resize");
+        return false;
+    }
+
+    log_msg(DEBUG, "output_handler", "Screen resize handled successfully");
+    return true;
+}
+
 bool render_frame(void) {
     if (!gio->nc) {
         log_msg(ERROR, "output_handler", "Output handler not initialized");

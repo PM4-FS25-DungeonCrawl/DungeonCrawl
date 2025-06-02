@@ -48,6 +48,14 @@ void clear_standard_plane(void);
 void clear_specific_plane(struct ncplane* plane);
 
 /**
+ * @brief Handle screen resize event
+ *
+ * Refreshes the display and redraws content after a terminal resize.
+ * @return true on success, false on failure
+ */
+bool handle_screen_resize(void);
+
+/**
  * @brief Render the current frame
  * 
  * Renders all changes to the screen.
