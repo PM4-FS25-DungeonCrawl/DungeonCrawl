@@ -32,6 +32,7 @@ helper_combat = files(
     '../src/combat/damage.c',
 
     '../src/combat/local/combat_mode_local.c',
+    '../src/combat/local/ability_local.c',
 
     '../src/character/character.c',
     '../src/character/level.c',
@@ -44,7 +45,9 @@ helper_combat = files(
     '../src/local/local_handler.c',
 
     '../src/item/gear.c',
+    '../src/item/local/gear_local.c',
     '../src/item/potion.c',
+    '../src/item/local/potion_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -72,6 +75,7 @@ helper_map_generator = files(
     '../src/map/map_generator.c',
     '../src/map/map_populator.c',
     '../src/map/map_mode.c',
+    '../src/map/local/map_mode_local.c',
     '../src/map/draw/draw_light.c',
 
     '../src/logging/logger.c',
@@ -84,12 +88,15 @@ helper_map_generator = files(
     '../src/io/output/media/media_output.c',
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
+
+    '../src/local/local_handler.c',
 )
 
 helper_map_mode = files(
     '../src/map/map.c',
     '../src/map/map_mode.c',
     '../src/map/draw/draw_light.c',
+    '../src/map/local/map_mode_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',
@@ -104,6 +111,8 @@ helper_map_mode = files(
     '../src/io/output/media/media_output.c',
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/map_output.c',
+
+    '../src/local/local_handler.c',
 )
 
 
@@ -136,6 +145,7 @@ helper_stats = files(
     '../src/combat/damage.c',
 
     '../src/combat/local/combat_mode_local.c',
+    '../src/combat/local/ability_local.c',
 
     '../src/local/local_handler.c',
 
@@ -145,7 +155,9 @@ helper_stats = files(
     '../src/character/monster.c',
 
     '../src/item/gear.c',
+    '../src/item/local/gear_local.c',
     '../src/item/potion.c',
+    '../src/item/local/potion_local.c',
 
     '../src/logging/logger.c',
     '../src/logging/ringbuffer.c',

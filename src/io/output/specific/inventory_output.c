@@ -6,6 +6,7 @@
 
 #include "../../../character/character.h"
 #include "../../../common.h"
+#include "../../../inventory/local/inventory_mode_local.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
@@ -91,7 +92,7 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
     // Display the log message
     print_text_default(anchor.dy, anchor.dx, inventory_log_message);
     anchor.dy++;
-    print_text_default(anchor.dy, anchor.dx, "Press any key to continue...");
+    print_text_default(anchor.dy, anchor.dx, inventory_mode_strings[PRESS_ANY_CONTINUE]);
     anchor.dy++;
 
     // Render the frame
@@ -104,11 +105,11 @@ void draw_inventory_log(vector2d_t anchor, const char* inventory_log_message) {
 
 int draw_inventory_resource_bar(vector2d_t anchor, const character_t* c) {
     char c_info[MAX_STRING_LENGTH];
-    snprintf(c_info, sizeof(c_info), "%-20s | HP: %4d/%-4d | Mana: %4d/%-4d | Stamina: %4d/%-4d",
+    snprintf(c_info, sizeof(c_info), "%-20s | %s: %4d/%-4d | %s: %4d/%-4d | %s: %4d/%-4d",
              c->name,
-             c->current_resources.health, c->max_resources.health,
-             c->current_resources.mana, c->max_resources.mana,
-             c->current_resources.stamina, c->max_resources.stamina);
+             inventory_mode_strings[HEALTH_STR], c->current_resources.health, c->max_resources.health,
+             inventory_mode_strings[MANA_STR], c->current_resources.mana, c->max_resources.mana,
+             inventory_mode_strings[STAMINA_STR], c->current_resources.stamina, c->max_resources.stamina);
 
     // Display the resource bar
     print_text_default(anchor.dy, anchor.dx, c_info);

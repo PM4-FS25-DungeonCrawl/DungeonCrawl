@@ -91,9 +91,10 @@ void test_add_and_remove_potion() {
     printf("Test: test_add_and_remove_potion() passed\n");
 }
 
+
 void test_add_and_remove_gear() {
     character_t* c = setup_character();
-    gear_t test_gear = {.local_key = "Test Gear", .slot = SLOT_HEAD};
+    gear_t test_gear = {.name = "Test Gear", .slot = SLOT_HEAD};
 
     add_gear(c, &test_gear);
     assert(c->gear_inventory[0] == &test_gear);
@@ -109,8 +110,7 @@ void test_add_and_remove_gear() {
 void test_equip_and_unequip_gear() {
     character_t* c = setup_character();
     gear_t test_gear = {
-            .local_key = "Test Gear",
-            .local_name = "Test Gear",
+            .name = "Test Gear",
             .slot = SLOT_HEAD,
             .stats = {
                     .constitution = 1,

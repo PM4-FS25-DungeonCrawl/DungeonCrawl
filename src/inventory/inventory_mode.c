@@ -6,10 +6,11 @@
 
 #include "../character/character.h"
 #include "../common.h"
-#include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/output/specific/inventory_output.h"
 #include "../item/gear.h"
+#include "../item/local/gear_local.h"
+#include "../item/local/potion_local.h"
 #include "../local/local_handler.h"
 #include "../src/combat/combat_mode.h"
 #include "local/inventory_mode_local.h"
@@ -432,7 +433,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                     char message[MAX_STRING_LENGTH];
                     snprintf(message, sizeof(message), inventory_mode_strings[POTION_USE],//TODO: This method of using formats is not safe!
                              player->name,
-                             player->potion_inventory[selected_index]->name,
+                             potion_names[player->potion_inventory[selected_index]->effectType],
                              player->potion_inventory[selected_index]->value,
                              potion_type_to_string(player->potion_inventory[selected_index]->effectType));
 
@@ -498,7 +499,7 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
     for (int i = 0; i < count; i++) {
         snprintf(inventory_gear_options[i], MAX_STRING_LENGTH,
                  inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
-                 gear_inventory[i]->local_key,
+                 gear_names[gear_inventory[i]->gear_identifier],
                  gear_slot_to_string(gear_inventory[i]->slot),
                  gear_inventory[i]->defenses.armor,
                  gear_inventory[i]->defenses.magic_resist);
@@ -535,7 +536,7 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
         if (equipment[i] != NULL) {
             snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
                      inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
-                     equipment[i]->local_key,
+                     gear_names[equipment[i]->gear_identifier],
                      gear_slot_to_string((gear_slot_t) i),
                      equipment[i]->defenses.armor,
                      equipment[i]->defenses.magic_resist);
@@ -586,7 +587,7 @@ void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
     for (int i = 0; i < count; i++) {
         snprintf(inventory_potion_options[i], MAX_STRING_LENGTH,
                  inventory_mode_strings[POTION_FORMAT],
-                 potion_inventory[i]->name,
+                 potion_names[potion_inventory[i]->effectType],
                  potion_type_to_string(potion_inventory[i]->effectType),
                  potion_inventory[i]->value);
     }

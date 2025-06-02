@@ -7,14 +7,15 @@
 #include "../character/character.h"
 #include "../character/level.h"
 #include "../common.h"
-#include "../game.h"
 #include "../io/input/input_handler.h"
 #include "../io/io_handler.h"
 #include "../io/output/common/output_handler.h"
 #include "../io/output/media/media_files.h"
 #include "../io/output/specific/combat_output.h"
+#include "../item/local/potion_local.h"
 #include "../local/local_handler.h"
 #include "ability.h"
+#include "local/ability_local.h"
 #include "local/combat_mode_local.h"
 
 #include <stdlib.h>
@@ -127,8 +128,9 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 clear_screen();
                 media_cleanup();
 
-                char message[MAX_STRING_LENGTH];
-                snprintf(message, sizeof(message), "You won the combat! %s is dead.", monster->name);
+                char message[64];
+                snprintf(message, sizeof(message), "%s %s %s",
+                         combat_mode_strings[WON_COMBAT_MSG1], monster->name, combat_mode_strings[WON_COMBAT_MSG2]);
                 draw_combat_log(anchor, message);
 
                 player->xp += monster->xp_reward;
@@ -336,7 +338,7 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), combat_mode_strings[ATTACK_SUCCESS],//TODO: This Method of using formats is not safe!!
                      attacker->name,
-                     ability->name,
+                     ability_names[ability->id],
                      damage_dealt,
                      damage_type_to_string(ability->damage_type),
                      target->name);
@@ -347,14 +349,14 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
             memset(message, 0, sizeof(message));
             snprintf(message, sizeof(message), combat_mode_strings[ATTACK_MISS],//TODO: This Method of using formats is not safe!!
                      attacker->name,
-                     ability->name);
+                     ability_names[ability->id]);
             draw_combat_log(anchor, message);
         }
     } else {
         memset(message, 0, sizeof(message));
         snprintf(message, sizeof(message), combat_mode_strings[ATTACK_FAIL],//TODO: This Method of using formats is not safe!!
                  attacker->name,
-                 ability->name);
+                 ability_names[ability->id]);
         draw_combat_log(anchor, message);
     }
     render_frame();
@@ -367,7 +369,7 @@ void use_potion(character_t* player, const character_t* monster, potion_t* potio
     char message[MAX_STRING_LENGTH];
     snprintf(message, sizeof(message), combat_mode_strings[POTION_USE],//TODO: This Method of using formats is not safe!!
              player->name,
-             potion->name,
+             potion_names[potion->effectType],
              potion->value,
              potion_type_to_string(potion->effectType));
     draw_combat_log(anchor, message);
@@ -458,7 +460,7 @@ void collect_ability_menu_options(ability_t* abilities[], const int count) {
     for (int i = 0; i < count; i++) {
         snprintf(ability_menu_options[i], MAX_STRING_LENGTH,
                  combat_mode_strings[ABILITY_FORMAT],//TODO: This Method of using formats is not safe!!
-                 abilities[i]->name,
+                 ability_names[abilities[i]->id],
                  abilities[i]->roll_amount,
                  abilities[i]->accuracy,
                  abilities[i]->resource_cost,
@@ -496,7 +498,7 @@ void collect_potion_menu_options(potion_t* potions[], const int count) {
     for (int i = 0; i < count; i++) {
         snprintf(potion_menu_options[i], MAX_STRING_LENGTH,
                  combat_mode_strings[POTION_FORMAT],//TODO: This Method of using formats is not safe!!
-                 potions[i]->name,
+                 potion_names[potions[i]->effectType],
                  potion_type_to_string(potions[i]->effectType),
                  potions[i]->value);
     }
