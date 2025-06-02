@@ -30,6 +30,7 @@ typedef enum {
 
     // Special inputs
     INPUT_QUIT,// Ctrl+C or other quit command
+    INPUT_RESIZE,// Terminal resize event
 
     // No input received
     INPUT_NONE
