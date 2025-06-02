@@ -22,9 +22,30 @@ bool init_output_handler(void);
  * @brief Clear the screen
  *
  * Clears the entire standard plane.
- * TODO: this should be split into different functions, depending on whether we need to clear all planes, the standard plane, or a specific plane.
  */
 void clear_screen(void);
+
+/**
+ * @brief Clear all planes in the display stack
+ *
+ * Clears all visible planes, including media and overlay planes.
+ */
+void clear_all_planes(void);
+
+/**
+ * @brief Clear the standard plane only
+ *
+ * Clears only the standard plane, leaving other planes intact.
+ */
+void clear_standard_plane(void);
+
+/**
+ * @brief Clear a specific plane
+ *
+ * Clears the specified plane.
+ * @param plane Pointer to the plane to clear
+ */
+void clear_specific_plane(struct ncplane* plane);
 
 /**
  * @brief Render the current frame

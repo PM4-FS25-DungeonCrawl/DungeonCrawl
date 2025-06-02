@@ -37,6 +37,27 @@ bool init_output_handler() {
 }
 
 void clear_screen(void) {
+    clear_standard_plane();
+}
+
+void clear_all_planes(void) {
+    if (!gio->nc) {
+        log_msg(ERROR, "output_handler", "Output handler not initialized");
+        return;
+    }
+
+    // Get the standard plane and clear all planes above and including it
+    struct ncplane* plane = gio->stdplane;
+    while (plane) {
+        ncplane_erase(plane);
+        plane = ncplane_below(plane);
+    }
+
+    // Also clear the standard plane
+    clear_standard_plane();
+}
+
+void clear_standard_plane(void) {
     if (!gio->stdplane) {
         log_msg(ERROR, "output_handler", "Output handler not initialized");
         return;
@@ -45,6 +66,16 @@ void clear_screen(void) {
     // Clear the plane with the default colors
     ncplane_set_base(gio->stdplane, " ", 0, DEFAULT_COLORS);
     ncplane_erase(gio->stdplane);
+}
+
+void clear_specific_plane(struct ncplane* plane) {
+    if (!plane) {
+        log_msg(ERROR, "output_handler", "Invalid plane provided to clear_specific_plane");
+        return;
+    }
+
+    // Clear the specific plane
+    ncplane_erase(plane);
 }
 
 bool render_frame(void) {
