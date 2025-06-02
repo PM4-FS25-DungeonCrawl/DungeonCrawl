@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode.h
+ * @brief Exposes functions for working with the inventory mode.
+ */
 #ifndef INVENTORY_MODE_H
 #define INVENTORY_MODE_H
 

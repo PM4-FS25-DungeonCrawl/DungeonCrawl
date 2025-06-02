@@ -1,3 +1,7 @@
+/**
+ * @file map_output.h
+ * @brief Exposes functions for outputing to the screen while in the map mode.
+ */
 #ifndef MAP_OUTPUT_H
 #define MAP_OUTPUT_H
 
@@ -7,14 +11,19 @@
 /**
  * @brief Draws the map mode UI based on the given parameters.
  *
- * This function renders the map view for the game, including the map tiles and player information.
- * It uses the centralized IO handler for all drawing operations.
- *
  * @param arr The map array to be drawn
  * @param height The height of the map
- * @param width The width of the map 
+ * @param width The width of the map
  * @param anchor The anchor position of the map mode, defined as the top left corner
  * @param player_pos The position of the player
+ *
+ * @note This function checks makes different checks to ensure the given parameters are valid.
+ * The checks are done in the following order:
+ * - check if the array is NULL
+ * - check if the height and width are greater than 0
+ * - check if the anchor position is greater or equal 0
+ * - check if the player position is within the bounds of the map
+ * If any of the checks fail, an error message is logged and the function returns.
  */
 void draw_map_mode(const map_tile_t* arr, int height, int width, vector2d_t anchor, vector2d_t player_pos);
 

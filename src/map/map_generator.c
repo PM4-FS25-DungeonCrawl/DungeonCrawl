@@ -1,3 +1,7 @@
+/**
+ * @file map_generator.c
+ * @brief Implements functionality for generating the game map.
+ */
 #include "map_generator.h"
 
 #include "../logging/logger.h"
@@ -18,9 +22,12 @@ int exit_y = 0;
 
 
 /**
- * Shuffle array using Fisher-Yates algorithm
- * @param dir array of directions
- * @param n size of the array
+ * @brief Shuffle array using Fisher-Yates algorithm.
+ *
+ * This function randomly shuffles the elements of the given array of directions.
+ *
+ * @param dir Array of directions to be shuffled.
+ * @param n Size of the array.
  */
 void shuffle(vector2d_t* dir, int n) {
     for (int i = n - 1; i > 0; i--) {
@@ -200,7 +207,7 @@ void place_exit(int start_edge) {
 
 
 /**
- * Initialize the map with walls
+ * @brief Initialize the map with walls
  */
 void initialize_map() {
     for (int y = 0; y < HEIGHT; y++) {
@@ -213,7 +220,10 @@ void initialize_map() {
 }
 
 /**
- * Generate a new maze using recursive backtracking
+ * @brief Generate a new maze using recursive backtracking
+ *
+ * @param start_x Starting x coordinate
+ * @param start_y Starting y coordinate
  */
 void generate_maze(int start_x, int start_y) {
     // Make sure start position is valid for dfs (odd coordinates)
@@ -234,7 +244,7 @@ void generate_maze(int start_x, int start_y) {
 }
 
 /**
- * set the start position on the map
+ * @brief Set the start position on the map
  * @param start_edge the edge from which the player enters the map
  * @param start_x pointer to the x coordinate of the start position
  * @param start_y pointer to the y coordinate of the start position
@@ -268,7 +278,7 @@ void set_start_position(int start_edge, int* start_x, int* start_y) {
 }
 
 /**
- * Set the start position on the map based on the previous exit position
+ * @brief Set the start position on the map based on the previous exit position
  * @param start_x pointer to the x coordinate of the start position
  * @param start_y pointer to the y coordinate of the start position
  */
@@ -304,9 +314,6 @@ void make_exit_into_start(int* start_edge, int* start_x, int* start_y) {
     }
 }
 
-/**
- * generate the map and populate it with keys, enemies, and the exit
- */
 void generate_map() {
     // Better random seed using a combination of time and process info
     unsigned int seed = (unsigned int) time(NULL);

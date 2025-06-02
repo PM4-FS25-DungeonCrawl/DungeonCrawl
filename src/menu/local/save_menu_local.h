@@ -1,3 +1,7 @@
+/**
+ * @file save_menu_local.h
+ * @brief Declares functions and data for localized save menu UI.
+ */
 #ifndef SAVE_MENU_LOCAL_H
 #define SAVE_MENU_LOCAL_H
 
@@ -18,6 +22,12 @@ enum save_menu_index {
 
 extern char** save_menu_strings;
 
+/**
+ * @brief Updates the localized strings for the save menu.
+ *
+ * This function retrieves the localized strings for the save menu
+ * and updates the corresponding entries in the save menu strings array.
+ */
 void update_save_menu_local(void);
 
 #endif//SAVE_MENU_LOCAL_H

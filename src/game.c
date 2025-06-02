@@ -1,14 +1,19 @@
+/**
+ * @file game.c
+ * @brief Implements the main game loop and state handling for DungeonCrawl.
+ */
 #include "game.h"
 
 #include "character/character.h"
 #include "combat/combat_mode.h"
 #include "database/database.h"
+#include "database/game/character_database.h"
 #include "database/game/gamestate_database.h"
 #include "game_data.h"
 #include "inventory/inventory_mode.h"
 #include "io/input/input_types.h"
 #include "io/io_handler.h"
-#include "io/output/common/common_output.h"
+#include "io/output/common/output_handler.h"
 #include "logging/logger.h"
 #include "map/map.h"
 #include "map/map_generator.h"
@@ -19,7 +24,6 @@
 #include "stats/stats_mode.h"
 
 #include <locale.h>
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -30,13 +34,34 @@ int exit_code;
 //TODO: safe into DB
 int current_floor = 1;
 
+/**
+ * @brief The main game loop of the application.
+ */
 void game_loop();
 
+/**
+ * @brief The state machine for the combat mode. 
+ */
 void combat_mode_state();
+/**
+ * @brief Handles the stats mode state of the game.
+ *
+ * This function manages the interactions and transitions that occur
+ * within the stats mode, including displaying player stats and
+ * managing skill points.
+ */
 void stats_mode_state();
 
+/**
+ * @brief Load the a game from the database.
+ *
+ * @param game_state_id The id of the game state to be loaded.
+ * @param setter A setter for the player position.
+ * @return 0 on success, 1 if the player could not be propperly reset, 2 if game state could not be loaded, 3 if player is NULL
+ */
+int loading_game(int game_state_id, player_pos_setter_t setter);
+
 void run_game() {
-    log_msg(INFO, "Game", "Starting game loop");
     game_in_progress = false;// Flag to track if a game has been started
 
     current_state = MAIN_MENU;
@@ -45,7 +70,6 @@ void run_game() {
 }
 
 void game_loop() {
-    log_msg(INFO, "Game", "Entering game loop");
     bool running = true;//should only be set in the state machine
 
     while (running) {
@@ -88,13 +112,13 @@ void game_loop() {
 
     // Close database connection
     db_close(&db_connection);
-    shutdown_combat_mode();
-    shutdown_logger();
 }
 
 void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
         case MENU_START_GAME:
+            // TODO: Add a function to get the player name from the user
+            init_player("Hero");
             game_in_progress = true;// Mark that a game is now in progress
             clear_screen();
             current_state = GENERATE_MAP;
@@ -111,39 +135,44 @@ void main_menu_state() {
             }
 
             // Save the game with the provided name
-            save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
-            log_msg(INFO, "Game", "Game state saved as '%s'", save_name);
+            const sqlite_int64 game_state_id = save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
+            save_character(&db_connection, *player, game_state_id);
 
             clear_screen();
             current_state = MAP_MODE;
             break;
         }
         case MENU_LOAD_GAME: {
-            const int save_id = get_selected_save_file_id();
-            bool load_success = false;
-
-            if (save_id != -1) {
-                // Load the selected save file
-                log_msg(INFO, "Game", "Loading save file ID: %d", save_id);
-                load_success = get_game_state_by_id(&db_connection, save_id, map, revealed_map, WIDTH, HEIGHT,
-                                                    set_player_start_pos);
-            } else {
-                // No save file was selected, try loading the latest save
-                log_msg(INFO, "Game", "No save ID provided, loading most recent save");
-                load_success = get_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, set_player_start_pos);
-            }
-
-            if (load_success) {
-                // Set game_in_progress flag
-                game_in_progress = true;
-
-                log_msg(INFO, "Game", "Game state loaded successfully");
-                clear_screen();
-                current_state = MAP_MODE;
-            } else {
-                log_msg(ERROR, "Game", "Failed to load game state - generating new map");
-                clear_screen();
-                current_state = GENERATE_MAP;
+            const int save_id = get_selected_save_file_id() != -1 ? get_selected_save_file_id() : get_latest_save_id(&db_connection);
+            const int load_status = loading_game(save_id, set_player_start_pos);
+            switch (load_status) {
+                case 0:
+                    log_msg(INFO, "Game", "Game loaded successfully");
+                    // Set game_in_progress flag
+                    game_in_progress = true;
+                    clear_screen();
+                    current_state = MAP_MODE;
+                    break;
+                case 1:
+                    log_msg(ERROR, "Game", "Failed to reset player character - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                case 2:
+                    log_msg(ERROR, "Game", "Failed to load game state - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                case 3:
+                    log_msg(ERROR, "Game", "Failed to load player character - generating new map");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
+                default:
+                    log_msg(ERROR, "Game", "Unknown error loading game state");
+                    clear_screen();
+                    current_state = GENERATE_MAP;
+                    break;
             }
             break;
         }
@@ -165,7 +194,7 @@ void map_mode_state() {
             break;
         case NEXT_FLOOR:
             clear_screen();
-            reset_current_stats(player);// Heal player before entering new floor
+            reset_player_stats(player);// Heal player before entering new floor
             current_floor++;
             reset_goblin();
             current_state = GENERATE_MAP;
@@ -189,12 +218,14 @@ void map_mode_state() {
     }
 }
 
+/**
+ * @brief The state machine of the combat mode.
+ */
 void combat_mode_state() {
     switch (start_combat(player, goblin)) {
         case CONTINUE_COMBAT:
             break;
         case PLAYER_WON:
-            log_msg(FINE, "Game", "Player won the combat");
             clear_screen();
             current_state = LOOT_MODE;
             break;
@@ -229,6 +260,9 @@ void inventory_mode_state() {
     }
 }
 
+/**
+ * @brief The state machine for the stats mode.
+ */
 void stats_mode_state() {
     switch (stats_mode(player)) {
         case STATS_WINDOW:
@@ -237,4 +271,12 @@ void stats_mode_state() {
             current_state = MAP_MODE;
             break;
     }
+}
+
+int loading_game(const int game_state_id, const player_pos_setter_t setter) {
+    if (reset_player() != 0) return 1;
+    if (get_game_state_by_id(&db_connection, game_state_id, map, revealed_map, WIDTH, HEIGHT, setter) != 1) return 2;
+    get_character_from_db(&db_connection, player, game_state_id);
+    if (player == NULL) return 3;
+    return 0;
 }

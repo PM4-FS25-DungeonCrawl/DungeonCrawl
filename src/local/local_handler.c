@@ -1,3 +1,7 @@
+/**
+ * @file local_handler.c
+ * @brief Implements localization for the game.
+ */
 #include "local_handler.h"
 
 #include "../logging/logger.h"

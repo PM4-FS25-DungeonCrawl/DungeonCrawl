@@ -1,3 +1,7 @@
+/**
+ * @file local_handler.h
+ * @brief Exposes public functions for the localization handler.
+ */
 #ifndef LOCAL_HANDLER_H
 #define LOCAL_HANDLER_H
 
@@ -62,7 +66,7 @@ int set_language(local_lang_t lang);
 local_lang_t get_language(void);
 
 /**
- * Registers an observer function to be notified of updates from the local handler.
+ * @brief Registers an observer function to be notified of updates from the local handler.
  *
  * This function adds a new observer to the observer list maintained by the local handler. The observer
  * function will be invoked when relevant updates occur. The observer handler must be initialized before

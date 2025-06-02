@@ -1,3 +1,7 @@
+/**
+ * @file gear.c
+ * @brief Implementation of the gear system.
+ */
 #include "gear.h"
 
 #include "../database/game/item_database.h"
@@ -20,6 +24,7 @@ gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_
     gear->slot = slot;
     gear->stats = stats;
     gear->defenses = defenses;
+    gear->num_abilities = num_abilities;
 
     int i = 0;
     for (; i < MAX_ABILITY_PER_GEAR && i < num_abilities; ++i) {

@@ -1,3 +1,7 @@
+/**
+ * @file ability_database.c
+ * @brief Implements functionality for working with abilites and the database.
+ */
 #include "ability_database.h"
 
 #include "../../logging/logger.h"
@@ -28,6 +32,8 @@ ability_init_t* get_ability_table_from_db(const db_connection_t* db_connection) 
         sqlite3_finalize(stmt);
         return NULL;
     }
+
+    memset(ability_init_table, 0, sizeof(ability_init_t) * MAX_ABILITIES);
 
     // Execute the statement and fetch the results
     int index = 0;

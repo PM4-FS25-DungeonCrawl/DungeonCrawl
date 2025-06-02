@@ -1,3 +1,7 @@
+/**
+ * @file save_menu_local.c
+ * @brief Loads and updates localized strings for the save game menu UI.
+ */
 #include "save_menu_local.h"
 
 #include "../../local/local_handler.h"

@@ -1,3 +1,7 @@
+/**
+ * @file damage.c
+ * @brief Implements damage rolling, hit checks, and damage application logic.
+ */
 #include "damage.h"
 
 #include "../character/character.h"
@@ -8,6 +12,11 @@
 
 int roll_dice(dice_size_t dice_size);
 
+/**
+ * @brief Rolls given dice size and returns the result.
+ * @param dice_size The dice that is rolled.
+ * @return The result of the dice roll.
+ */
 int roll_dice(const dice_size_t dice_size) {
     /* Seed random number generator */
     return rand() % dice_size + 1;
