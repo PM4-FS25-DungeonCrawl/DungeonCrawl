@@ -5,6 +5,10 @@ project('DungeonCrawl', 'c',
 add_project_arguments('-Wno-incompatible-pointer-types', language : 'c')
 # List of external dependencies
 notcurses = dependency('notcurses', required : true)
+mathlib = dependency('libm', required : false)
+if not mathlib.found()
+    mathlib = meson.get_compiler('c').find_library('m', required : true)
+endif
 
 # List of all source files. Per meson convention all files are listed seperately.
 src_files = files(
@@ -80,6 +84,7 @@ io_files = files(
     'src/io/input/input_handler.c',
     'src/io/output/common/output_handler.c',
     'src/io/output/common/text_output.c',
+    'src/io/output/common/effect_output.c',
     'src/io/output/media/media_output_handler.c',
     'src/io/output/media/media_output.c',
     'src/io/output/specific/combat_output.c',
@@ -120,5 +125,5 @@ configure_file(
     io_files,
     local_files,
     memory_files,
-    dependencies : [notcurses]
+    dependencies : [notcurses, mathlib]
 )
