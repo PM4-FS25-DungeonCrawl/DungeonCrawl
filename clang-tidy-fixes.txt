@@ -1,3 +1,13 @@
+../src/character/character.h:211:6: warning: function 'reset_player_stats' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+  211 | void reset_player_stats(character_t* player);
+      |      ^
+../src/character/character.c:341:6: note: the definition seen here
+  341 | void reset_player_stats(character_t* character) {
+      |      ^
+../src/character/character.h:211:6: note: differing parameters are named here: ('player'), in definition: ('character')
+  211 | void reset_player_stats(character_t* player);
+      |      ^                               ~~~~~~
+      |                                      character
 ../src/combat/damage.c:22:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
    22 |     return rand() % dice_size + 1;
       |            ^
@@ -54,21 +64,5 @@
 ../src/main.c:81:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    81 |     srand(time(NULL));
       |     ^
-Suppressed 253825 warnings (253733 in non-user code, 92 with check filters).
-../src/menu/save_menu.c:100:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  100 |             save_name[name_length++] = key_id;
-      |                                        ^
-../src/menu/save_menu.c:193:13: warning: if with identical then and else branches [bugprone-branch-clone]
-  193 |             if (i == selected_save_index) {
-      |             ^
-../src/menu/save_menu.c:196:15: note: else branch starts here
-  196 |             } else {
-      |               ^
-../src/stats/stats_mode.c:11:26: warning: redundant 'nc' declaration [readability-redundant-declaration]
-   11 | extern struct notcurses* nc;
-      | ~~~~~~~~~~~~~~~~~~~~~~~~~^~~
-../src/io/output/specific/../../io_handler.h:17:26: note: previously declared here
-   17 | extern struct notcurses* nc;
-      |                          ^
-Suppressed 348955 warnings (348767 in non-user code, 188 with check filters).
+Suppressed 293313 warnings (293216 in non-user code, 97 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
