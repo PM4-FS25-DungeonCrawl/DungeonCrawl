@@ -48,12 +48,6 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
  * @param potion Pointer to the potion to be used.
  */
 void use_potion(character_t* player, const character_t* monster, potion_t* potion);
-/** @brief Consumes the mana or stamina resource of the attacker character.
- * @param attacker Pointer to the attacker character.
- * @param ability Pointer to the ability to be used.
- * @return true if the resource was consumed, false otherwise.
- */
-bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 /** @brief Get a random ability from the character's abilities.
  * @param character Pointer to the character whose abilities are to be used.
  * @return Pointer to the randomly selected ability.
