@@ -213,6 +213,38 @@ void show_message_screen(const char* message, const char* continue_message, int 
     while (!get_input_blocking(&input_event));
 }
 
+bool prompt_player_name(char* name_buffer) {
+    if (!name_buffer) {
+        log_msg(ERROR, "text_output", "Invalid name buffer for prompt_player_name");
+        return false;
+    }
+
+    // Get screen dimensions for centering
+    int screen_width, screen_height;
+    if (!get_screen_dimensions(&screen_width, &screen_height)) {
+        screen_width = 80;
+        screen_height = 24;
+    }
+
+    // Center the dialog
+    int dialog_y = screen_height / 2 - 4;
+    int dialog_x = screen_width / 2 - 20;
+
+    // Use the existing get_text_input function with appropriate parameters
+    const char* prompt = "Welcome, brave adventurer!";
+    const char* instruction = "Enter your name (press Enter to confirm, C to cancel):";
+    
+    bool success = get_text_input(prompt, name_buffer, MAX_NAME_LENGTH, instruction, dialog_y, dialog_x);
+    
+    // Validate the name
+    if (success && strlen(name_buffer) == 0) {
+        // If empty name was entered, use default
+        snprintf(name_buffer, MAX_NAME_LENGTH, "Hero");
+    }
+    
+    return success;
+}
+
 static uint64_t apply_transparency(uint64_t channel, text_transparency_t transparency) {
     switch (transparency) {
         case TEXT_TRANSPARENCY_TEXT_ONLY:

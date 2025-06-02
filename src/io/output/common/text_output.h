@@ -176,6 +176,16 @@ bool get_text_input(const char* prompt, char* buffer, int buffer_size,
 void show_message_screen(const char* message, const char* continue_message, int y, int x);
 
 /**
+ * @brief Prompt the user to enter their player name
+ * 
+ * Displays a centered dialog asking for the player's name with validation.
+ * 
+ * @param name_buffer Buffer to store the entered name (must be at least MAX_NAME_LENGTH)
+ * @return true if name was entered and confirmed, false if canceled
+ */
+bool prompt_player_name(char* name_buffer);
+
+/**
  * @brief Print text with advanced formatting options
  * 
  * Renders text with alignment, style, transparency, and color options.

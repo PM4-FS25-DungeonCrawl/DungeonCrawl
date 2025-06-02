@@ -62,4 +62,11 @@ int init_player(char* name);
  */
 int reset_player(void);
 
+/**
+ * Gets the current player's name.
+ *
+ * @return Pointer to the player's name string, or "Unknown" if player is null
+ */
+const char* get_player_name(void);
+
 #endif//GAME_DATA_H

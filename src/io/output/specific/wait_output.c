@@ -6,6 +6,7 @@
 
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
+#include "../../../game_data.h"
 #include "../common/output_handler.h"
 #include "../common/text_output.h"
 #include "../media/media_files.h"
@@ -125,8 +126,11 @@ void draw_welcome_screen(void) {
     // Clear the screen
     clear_screen();
 
-    // Draw welcome message
-    const char* welcome_msg = "Welcome to Dungeon Crawl! Press any key to continue...";
+    // Create personalized welcome message
+    char welcome_msg[256];
+    const char* player_name = get_player_name();
+    snprintf(welcome_msg, sizeof(welcome_msg), "Welcome to Dungeon Crawl, %s! Press any key to continue...", player_name);
+    
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;
     int msg_y = height / 2;

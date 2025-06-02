@@ -14,6 +14,7 @@
 #include "io/input/input_types.h"
 #include "io/io_handler.h"
 #include "io/output/common/output_handler.h"
+#include "io/output/common/text_output.h"
 #include "logging/logger.h"
 #include "map/map.h"
 #include "map/map_generator.h"
@@ -114,13 +115,20 @@ void game_loop() {
 
 void main_menu_state() {
     switch (show_main_menu(game_in_progress)) {
-        case MENU_START_GAME:
-            // TODO: Add a function to get the player name from the user
-            init_player("Hero");
-            game_in_progress = true;// Mark that a game is now in progress
-            clear_screen();
-            current_state = GENERATE_MAP;
+        case MENU_START_GAME: {
+            // Prompt for player name
+            char player_name[MAX_NAME_LENGTH];
+            if (prompt_player_name(player_name)) {
+                init_player(player_name);
+                game_in_progress = true;// Mark that a game is now in progress
+                clear_screen();
+                current_state = GENERATE_MAP;
+            } else {
+                // Player canceled name input, stay in menu
+                current_state = MAIN_MENU;
+            }
             break;
+        }
         case MENU_CONTINUE:
             clear_screen();
             current_state = MAP_MODE;
