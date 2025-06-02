@@ -1,5 +1,15 @@
-../src/combat/damage.c:118:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  118 |     return rand() % dice_size + 1;
+../src/character/character.h:211:6: warning: function 'reset_player_stats' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+  211 | void reset_player_stats(character_t* player);
+      |      ^
+../src/character/character.c:341:6: note: the definition seen here
+  341 | void reset_player_stats(character_t* character) {
+      |      ^
+../src/character/character.h:211:6: note: differing parameters are named here: ('player'), in definition: ('character')
+  211 | void reset_player_stats(character_t* player);
+      |      ^                               ~~~~~~
+      |                                      character
+../src/combat/damage.c:22:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   22 |     return rand() % dice_size + 1;
       |            ^
 ../src/game.c:228:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
   228 |         case PLAYER_LOST:

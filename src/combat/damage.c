@@ -72,10 +72,6 @@ int deal_damage(character_t* character, damage_type_t damage_type, const int dam
     return damage;
 }
 
-void reset_current_stats(character_t* character) {
-    character->current_stats = character->base_stats;
-}
-
 // Helper function to convert dice_size_t to string
 const char* dice_size_to_string(const dice_size_t size) {
     switch (size) {

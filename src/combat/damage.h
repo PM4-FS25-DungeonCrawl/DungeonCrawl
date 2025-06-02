@@ -8,8 +8,6 @@
 #include "../character/character_fw.h"
 #include "ability_fw.h"
 
-#define DAMAGE_TYPE_COUNT 2
-
 typedef enum damage_type_t {
     PHYSICAL,
     MAGICAL,
@@ -66,7 +64,6 @@ int deal_damage(character_t* character, damage_type_t damage_type, int damage);
  * @brief Resets the current stats of a character to their base stats.
  * @param character Pointer to the character whose stats are to be reset.
  */
-void reset_current_stats(character_t* character);
 /**
  * @brief Converts a dice size enum to a string representation.
  * @param size The dice size to convert.
