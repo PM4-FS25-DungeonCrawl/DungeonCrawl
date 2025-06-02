@@ -1,15 +1,5 @@
-../src/character/character.h:211:6: warning: function 'reset_player_stats' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-  211 | void reset_player_stats(character_t* player);
-      |      ^
-../src/character/character.c:341:6: note: the definition seen here
-  341 | void reset_player_stats(character_t* character) {
-      |      ^
-../src/character/character.h:211:6: note: differing parameters are named here: ('player'), in definition: ('character')
-  211 | void reset_player_stats(character_t* player);
-      |      ^                               ~~~~~~
-      |                                      character
-../src/combat/damage.c:22:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   22 |     return rand() % dice_size + 1;
+../src/combat/damage.c:114:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  114 |     return rand() % dice_size + 1;
       |            ^
 ../src/game.c:228:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
   228 |         case PLAYER_LOST:
@@ -64,5 +54,5 @@
 ../src/main.c:86:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    86 |     srand(time(NULL));
       |     ^
-Suppressed 267127 warnings (267027 in non-user code, 100 with check filters).
+Suppressed 308832 warnings (308728 in non-user code, 104 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
