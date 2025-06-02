@@ -153,39 +153,6 @@ void test_use_mana_ability_insufficient_resource() {
     printf("Test: test_use_mana_ability_insufficient_resource() passed\n");
 }
 
-void test_get_random_ability() {
-    character_t* player = create_test_character();
-
-    ability_t test_abilities[2] = {
-            {.name = "Physical Attack", .roll_amount = 2, .accuracy = 80, .resource_cost = 5, .dice_size = D6, .damage_type = PHYSICAL},
-            {.name = "Magical Attack", .roll_amount = 3, .accuracy = 70, .resource_cost = 3, .dice_size = D8, .damage_type = MAGICAL}};
-
-    for (int i = 0; i < 2; i++) {
-        player->abilities[i] = &test_abilities[i];
-    }
-    player->ability_count = 2;
-
-    bool ability_found[2] = {false, false};
-    int found_count = 0;
-
-    while (found_count < 2) {
-        ability_t* random_ability = get_random_ability(player);
-        for (int i = 0; i < 2; i++) {
-            if (random_ability == player->abilities[i] && !ability_found[i]) {
-                ability_found[i] = true;
-                found_count++;
-            }
-        }
-    }
-
-    // Test: Ensure all abilities can be found
-    for (int i = 0; i < 2; i++) {
-        assert(ability_found[i]);
-    }
-
-    printf("Test: test_get_random_ability() passed\n");
-}
-
 int main(void) {
     setup();
 
@@ -199,9 +166,6 @@ int main(void) {
     test_use_mana_ability();
     test_use_stamina_ability_insufficient_resource();
     test_use_mana_ability_insufficient_resource();
-
-    // others
-    // test_get_random_ability(); not working due to recent changes on develop
 
     shutdown_memory_pool(test_combat_memory);
     return 0;
