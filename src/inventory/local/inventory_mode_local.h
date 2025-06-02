@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode_local.h
+ * @brief Exposes functions for localizing the inventory mode.
+ */
 #ifndef INVENTORY_MODE_LOCAL_H
 #define INVENTORY_MODE_LOCAL_H
 
@@ -18,6 +22,7 @@ enum inventory_mode_index {
     EQUIPMENT_MENU_TITLE,
     EQUIPMENT_MENU_HEADER,
     EQUIPMENT_SLOT_FULL,
+    EQUIPMENT_HANDS_SLOT_FULL,
 
     POTION_FORMAT,
     POTION_MENU_TITLE,
@@ -36,12 +41,16 @@ enum inventory_mode_index {
     LOOT_POTION_MENU_HEADER,
     FINISH_LOOTING_MSG,
 
-    PRESS_ESC_RETURN,
+    PRESS_C_RETURN,
     MAX_INVENTORY_STRINGS
 };
 
 extern char** inventory_mode_strings;
 
+/**
+ * @brief Updates the inventory mode strings with the actual local strings.
+ * @note This function must be called after initializing the local handler.
+ */
 void update_inventory_local(void);
 
 #endif//INVENTORY_MODE_LOCAL_H

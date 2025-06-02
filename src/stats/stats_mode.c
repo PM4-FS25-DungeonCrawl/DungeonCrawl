@@ -1,14 +1,14 @@
+/**
+ * @file stats_mode.c
+ * @brief Implementation for the stats_mode.
+ */
 #include "stats_mode.h"
 
 #include "../combat/ability.h"
 #include "../io/input/input_handler.h"
-#include "../io/io_handler.h"
-#include "../io/output/common/common_output.h"
+#include "../io/output/common/output_handler.h"
 #include "../io/output/specific/stats_output.h"
 #include "local/stats_mode_local.h"
-
-// Change from definition to declaration
-extern struct notcurses* nc;
 int selected_index = 0;
 
 stats_result_t stats_mode(character_t* player) {
@@ -24,11 +24,14 @@ stats_result_t stats_mode(character_t* player) {
     menu_options[2] = stats_mode_strings[DEXTERITY_STR];
     menu_options[3] = stats_mode_strings[CONSTITUTION_STR];
 
-    draw_stats_menu(
-            stats_mode_strings[STATS_MENU_TITLE],
-            menu_options,
-            4,
-            selected_index, "");
+    // Only show the skill points if the player has any
+    if (player->skill_points > 0) {
+        draw_stats_menu(
+                stats_mode_strings[STATS_MENU_TITLE],
+                menu_options,
+                4,
+                selected_index, "");
+    }
     // Check for input
     input_event_t input_event;
     if (get_input_nonblocking(&input_event)) {
@@ -67,8 +70,6 @@ stats_result_t stats_mode(character_t* player) {
                 break;
             case INPUT_CANCEL:
             case INPUT_STATS:
-                // Clear the screen before drawing a new menu
-                clear_screen();
                 result = STATS_EXIT;
                 break;
             default:
@@ -76,6 +77,6 @@ stats_result_t stats_mode(character_t* player) {
         }
     }
 
-    render_io_frame();
+    render_frame();
     return result;
 }

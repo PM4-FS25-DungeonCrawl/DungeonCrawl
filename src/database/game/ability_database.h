@@ -1,3 +1,7 @@
+/**
+ * @file ability_database.h
+ * @brief Declares functions to load and free ability definitions from the game database.
+ */
 #ifndef ABILITY_DATABASE_H
 #define ABILITY_DATABASE_H
 

@@ -1,3 +1,7 @@
+/**
+ * @file combat_output.h
+ * @brief Exposes functions for outputing to the screen while in the combat mode.
+ */
 #ifndef COMBAT_OUTPUT_H
 #define COMBAT_OUTPUT_H
 
@@ -53,6 +57,7 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message);
  * This function displays a game over message and waits for user input.
  */
 void draw_game_over(void);
+
 
 /**
  * @brief Draws the resource bar for a character.

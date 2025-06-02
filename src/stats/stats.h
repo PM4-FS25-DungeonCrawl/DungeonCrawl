@@ -1,3 +1,7 @@
+/**
+ * @file stats.h
+ * @brief Exposes functions for working with stats.
+ */
 #ifndef STATS_H
 #define STATS_H
 
@@ -29,6 +33,16 @@ typedef struct {
     int magic_resist;// reduced magical damage taken
 } defenses_t;
 
+/**
+ * @brief Raises a specified skill by one point.
+ *
+ * This function increases the value of the specified skill in the stats structure
+ * by one, provided that the skill point is valid.
+ *
+ * @param stats Pointer to the stats structure.
+ * @param stat The type of stat to raise (e.g., STRENGTH, INTELLIGENCE).
+ * @param skillpoint The number of skill points available for allocation.
+ */
 void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint);
 
 #endif//STATS_H

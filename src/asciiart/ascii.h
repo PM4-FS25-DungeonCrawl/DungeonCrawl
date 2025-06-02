@@ -1,3 +1,7 @@
+/**
+ * @file ascii.h
+ * @brief Exposes ascii art strings and metadata for those strings.
+ */
 #ifndef ASCII_H
 #define ASCII_H
 

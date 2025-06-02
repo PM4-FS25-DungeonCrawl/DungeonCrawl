@@ -1,3 +1,8 @@
+/**
+ * @file logger.c
+ * @brief Implements logging functionality for the game.
+ */
+
 #include "logger.h"
 
 #include "../thread/thread_handler.h"
@@ -107,6 +112,7 @@ int ensure_log_dir(void) {
     }
     return 0;
 }
+
 
 int open_log_file(const int is_init) {
     char name[16];

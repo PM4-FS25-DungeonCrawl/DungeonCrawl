@@ -1,3 +1,7 @@
+/**
+ * @file database.h
+ * @brief Exposes functions for working with the database.
+ */
 #ifndef DATABASE_H
 #define DATABASE_H
 
@@ -34,7 +38,6 @@ typedef enum db_type_t {
  * @param db_name the path name of the database
  * @return 0 for success
  */
-
 int db_open(db_connection_t* db_connection, const char* db_name);
 
 /**
@@ -51,6 +54,13 @@ void db_close(db_connection_t* db_connection);
  * @return 1 if open, otherwise 0
  */
 int db_is_open(const db_connection_t* db_connection);
+/**
+ * This function is for the opening of the database with multiple access.
+ *
+ * @param db_connection the database connection
+ * @param type the type of the database
+ * @return 0 for success
+ */
 int db_open_multiple_access(db_connection_t* db_connection, db_type_t type);
 
 #endif//DATABASE_H

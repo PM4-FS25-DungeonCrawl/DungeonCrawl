@@ -1,3 +1,7 @@
+/**
+ * @file inventory_mode.c
+ * @brief Implements functionality for the inventory mode.
+ */
 #include "inventory_mode.h"
 
 #include "../character/character.h"
@@ -10,11 +14,30 @@
 #include "../src/combat/combat_mode.h"
 #include "local/inventory_mode_local.h"
 
-#include <notcurses/notcurses.h>
-
 // === Internal Functions ===
+/**
+ * @brief Checks if the equipment can be equipped in case it occupies a hands slot.
+ * @param player The player character.
+ * @param gear The gear to check.
+ * @return bool True if the gear can be equipped, false otherwise.
+ */
+bool can_equip_gear(character_t* player, gear_t* gear);
+/**
+ * @brief Checks which options are available in the inventory menu for display.
+ * @param gear_inventory The gear inventory to check.
+ * @param count The number of items in the gear inventory.
+ */
 void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
+/**
+ * @brief Checks which options are available in the equipment menu for display.
+ * @param equipment The equipment to check.
+ */
 void collect_inventory_equipment_options(gear_t* equipment[]);
+/**
+ * @brief Checks which options are available in the potion menu for display.
+ * @param potion_inventory The potion inventory to check.
+ * @param count The number of items in the potion inventory.
+ */
 void collect_inv_potion_options(potion_t* potion_inventory[], int count);
 
 // === Intern Global Variables ===
@@ -28,9 +51,6 @@ char** inventory_gear_options = NULL;
 char** inventory_equipment_options = NULL;
 char** inventory_potion_options = NULL;
 
-/**
- * @brief Initializes the inventory mode.
- */
 int init_inventory_mode() {
     inventory_mode_strings = (char**) malloc(sizeof(char*) * MAX_INVENTORY_STRINGS);
     RETURN_WHEN_NULL(inventory_mode_strings, -1, "Inventory Mode", "Failed to allocate memory for inventory mode strings");
@@ -58,9 +78,6 @@ int init_inventory_mode() {
     return 0;
 }
 
-/**
- * @brief Starts the inventory mode.
- */
 inventory_result_t start_inventory(character_t* player, character_t* monster) {
     if (monster != NULL) {
         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
@@ -92,9 +109,6 @@ inventory_result_t start_inventory(character_t* player, character_t* monster) {
     return CONTINUE_INVENTORY;
 }
 
-/**
- * @brief Displays the main inventory menu.
- */
 internal_inventory_state_t inventory_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -121,7 +135,7 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                                 3,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -149,17 +163,17 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
                 submenu_selected = true;
                 break;
             case INPUT_CANCEL:
+            case INPUT_INVENTORY:
                 new_state = INVENTORY_EXIT;
                 submenu_selected = true;
+                break;
+            default:
                 break;
         }
     }
     return new_state;
 }
 
-/**
- * @brief Displays the gear inventory menu.
- */
 internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -182,7 +196,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                                 monster->gear_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[INVENTORY_MENU_TITLE],
@@ -191,7 +205,7 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                                 player->gear_count,
                                 selected_index,
                                 inventory_mode_strings[INVENTORY_DROP_GEAR_MSG],
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -206,10 +220,10 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
         // Handle input using logical input types
         switch (input_event.type) {
             case INPUT_UP:
-                selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
+                selected_index = (selected_index - 1 + target->gear_count) % target->gear_count;
                 break;
             case INPUT_DOWN:
-                selected_index = (selected_index + 1) % player->gear_count;
+                selected_index = (selected_index + 1) % target->gear_count;
                 break;
             case INPUT_CONFIRM:
                 if (monster != NULL) {
@@ -223,8 +237,13 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
                     }
                 } else {
                     if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
-                        equip_gear(player, player->gear_inventory[selected_index]);
-                        collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                        if (can_equip_gear(player, player->gear_inventory[selected_index])) {
+                            equip_gear(player, player->gear_inventory[selected_index]);
+                            collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_HANDS_SLOT_FULL]);
+                        }
                     } else {
                         anchor = draw_inventory_view(inventory_view_anchor, target);
                         draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_SLOT_FULL]);
@@ -249,8 +268,25 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
 }
 
 /**
- * @brief Displays the equipment inventory menu.
+ * @brief Checks wether the character can equip certain gear or not.
+ *
+ * @param player Pointer to the player.
+ * @param gear Pointer to the gear to check.
+ * @return true if player can equip the gear false if not.
  */
+bool can_equip_gear(character_t* player, gear_t* gear) {
+    if (gear->slot == SLOT_BOTH_HANDS) {
+        if (player->equipment[SLOT_LEFT_HAND] != NULL || player->equipment[SLOT_RIGHT_HAND] != NULL) {
+            return false;
+        }
+    } else if (gear->slot == SLOT_LEFT_HAND || gear->slot == SLOT_RIGHT_HAND) {
+        if (player->equipment[SLOT_BOTH_HANDS] != NULL) {
+            return false;
+        }
+    }
+    return true;
+}
+
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -268,7 +304,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[EQUIPMENT_MENU_TITLE],
@@ -277,7 +313,7 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -324,14 +360,13 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
                 new_state = INVENTORY_MENU;
                 item_selected_or_esc = true;
                 break;
+            default:
+                break;
         }
     }
     return new_state;
 }
 
-/**
- * @brief Displays the potion inventory menu.
- */
 internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -354,7 +389,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                                 monster->potion_count,
                                 selected_index,
                                 NULL,
-                                inventory_mode_strings[FINISH_LOOTING_MSG]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
                                 inventory_mode_strings[POTION_MENU_TITLE],
@@ -363,7 +398,7 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
                                 player->potion_count,
                                 selected_index,
                                 inventory_mode_strings[POTION_DROP_POTION_MSG],
-                                inventory_mode_strings[PRESS_ESC_RETURN]);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
@@ -378,10 +413,10 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
         // Handle input using logical input types
         switch (input_event.type) {
             case INPUT_UP:
-                selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
+                selected_index = (selected_index - 1 + target->potion_count) % target->potion_count;
                 break;
             case INPUT_DOWN:
-                selected_index = (selected_index + 1) % player->potion_count;
+                selected_index = (selected_index + 1) % target->potion_count;
                 break;
             case INPUT_CONFIRM:
                 if (monster != NULL) {
@@ -425,7 +460,10 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
 }
 
 /**
- * @brief Collects gear inventory options for display.
+ * @brief Collects all the options for inventory gear for displaying.
+ *
+ * @param gear_inventory An array of gear.
+ * @param count Ammount of items in the array.
  */
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
     if (inventory_gear_options != NULL) {
@@ -469,6 +507,8 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 
 /**
  * @brief Collects equipment inventory options for display.
+ *
+ * @param equipment An array of equipment.
  */
 void collect_inventory_equipment_options(gear_t* equipment[]) {
     if (inventory_equipment_options != NULL) {
@@ -507,6 +547,12 @@ void collect_inventory_equipment_options(gear_t* equipment[]) {
     }
 }
 
+/**
+ * @brief Collects all the options for inventory potions for displaying.
+ *
+ * @param potion_inventory An array of potions.
+ * @param count Ammount of potions in the array.
+ */
 void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
     if (inventory_potion_options != NULL) {
         for (int i = 0; i < inventory_potion_count; i++) {
@@ -546,9 +592,6 @@ void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
     }
 }
 
-/**
- * @brief Shuts down the inventory mode and frees allocated resources.
- */
 void shutdown_inventory_mode(void) {
     // free the local strings
     if (inventory_mode_strings != NULL) {

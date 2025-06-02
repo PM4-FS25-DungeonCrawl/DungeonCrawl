@@ -1,3 +1,7 @@
+/**
+ * @file combat_mode_local.c
+ * @brief Implementation for the localization of the combat mode.
+ */
 #include "combat_mode_local.h"
 
 #include "../../local/local_handler.h"
@@ -21,7 +25,7 @@ void update_combat_local(void) {
 
     combat_mode_strings[ABILITY_FORMAT] = get_local_string("COMBAT.ABILITY.FORMAT");
     combat_mode_strings[POTION_FORMAT] = get_local_string("POTION.FORMAT");
-    combat_mode_strings[PRESS_ESC_RETURN] = get_local_string("PRESS.ESC.RETURN");
+    combat_mode_strings[PRESS_C_RETURN] = get_local_string("PRESS.C.RETURN");
     combat_mode_strings[NO_MORE_POTIONS] = get_local_string("POTION.EMPTY");
 
     combat_mode_strings[ATTACK_SUCCESS] = get_local_string("COMBAT.ATTACK.SUCCESS");

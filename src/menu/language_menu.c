@@ -1,14 +1,14 @@
+/**
+ * @file language_menu.c
+ * @brief Implements the functionality of the language menu.
+ */
 #include "language_menu.h"
 
 #include "../common.h"
 #include "../io/input/input_handler.h"
+#include "../io/output/common/output_handler.h"
 #include "../local/local_handler.h"
 #include "local/language_menu_local.h"
-
-#include <notcurses/notcurses.h>
-
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
 
 int init_language_menu() {
     language_menu_strings = (char**) malloc(sizeof(char*) * MAX_LANGUAGE_MENU_STRINGS);

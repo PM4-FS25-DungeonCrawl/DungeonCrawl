@@ -1,59 +1,60 @@
-../src/combat/damage.c:14:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   14 |     return rand() % dice_size + 1;
+../src/combat/damage.c:22:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   22 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:197:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  197 |         case PLAYER_LOST:
+../src/game.c:228:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  228 |         case PLAYER_LOST:
       |         ^
-../src/game.c:203:18: note: last of these clones ends here
-  203 |             break;
+../src/game.c:234:18: note: last of these clones ends here
+  234 |             break;
       |                  ^
-../src/io/input/input_handler.h:17:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
-   17 | bool init_input_handler(struct notcurses* nc);
+../src/io/input/input_handler.h:21:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
+   21 | bool init_input_handler(struct notcurses* nc);
       |      ^
-../src/io/input/input_handler.c:65:6: note: the definition seen here
-   65 | bool init_input_handler(struct notcurses* notcurses_ptr) {
+../src/io/input/input_handler.c:100:6: note: the definition seen here
+  100 | bool init_input_handler(struct notcurses* notcurses_ptr) {
       |      ^
-../src/io/input/input_handler.h:17:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
-   17 | bool init_input_handler(struct notcurses* nc);
+../src/io/input/input_handler.h:21:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
+   21 | bool init_input_handler(struct notcurses* nc);
       |      ^                                    ~~
       |                                           notcurses_ptr
-../src/io/output/common/common_output.c:170:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  170 |     *width = ncplane_dim_x(stdplane);
+../src/io/output/common/output_handler.c:213:37: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  213 |             buffer[text_length++] = key_id;
+      |                                     ^
+../src/io/output/common/output_handler.c:264:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  264 |     *width = ncplane_dim_x(stdplane);
       |              ^
-../src/io/output/common/common_output.c:171:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  171 |     *height = ncplane_dim_y(stdplane);
+../src/io/output/common/output_handler.c:265:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  265 |     *height = ncplane_dim_y(stdplane);
       |               ^
-../src/io/output/specific/wait_output.c:40:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   40 |     int msg_len = strlen(loading_message);
+../src/io/output/specific/wait_output.c:46:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   46 |     int msg_len = strlen(loading_message);
       |                   ^
-../src/io/output/specific/wait_output.c:75:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   75 |     int title_len = strlen(title);
+../src/io/output/specific/wait_output.c:76:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   76 |     int title_len = strlen(title);
       |                     ^
-../src/io/output/specific/wait_output.c:86:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   86 |     int version_len = strlen(version);
+../src/io/output/specific/wait_output.c:87:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   87 |     int version_len = strlen(version);
       |                       ^
-../src/io/output/specific/wait_output.c:87:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   87 |     int copyright_len = strlen(copyright);
+../src/io/output/specific/wait_output.c:88:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   88 |     int copyright_len = strlen(copyright);
       |                         ^
-../src/io/output/specific/wait_output.c:97:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   97 |     int loading_len = strlen(loading_msg);
+../src/io/output/specific/wait_output.c:98:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   98 |     int loading_len = strlen(loading_msg);
       |                       ^
-../src/io/output/specific/wait_output.c:100:25: warning: redundant 'init_done' declaration [readability-redundant-declaration]
-  100 |     extern volatile int init_done;
-      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
-../src/io/output/specific/../../io_handler.h:13:21: note: previously declared here
-   13 | extern volatile int init_done;
-      |                     ^
-../src/item/gear.c:10:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
-   10 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
+../src/io/output/specific/wait_output.c:130:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  130 |     int msg_len = strlen(welcome_msg);
+      |                   ^
+../src/item/gear.c:14:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
+   14 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
       |                                                                                                                                                                                                           ^
       |                                                                                                                                                                                          const 
-../src/logging/logger.c:177:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
-  177 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
+../src/logging/logger.c:183:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
+  183 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
       |             ^
-../src/main.c:68:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   68 |     srand(time(NULL));
+../src/main.c:81:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
+   81 |     srand(time(NULL));
       |     ^
+Suppressed 253825 warnings (253733 in non-user code, 92 with check filters).
 ../src/menu/save_menu.c:100:40: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
   100 |             save_name[name_length++] = key_id;
       |                                        ^

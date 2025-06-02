@@ -1,5 +1,9 @@
 # DungeonCrawl
 
+## API Documentation
+
+A full API reference generated from the code comments with doxygen can be found [here](https://pm4-fs25-dungeoncrawl.github.io/DungeonCrawl/)
+
 ## Repo statistics
 The number of lines of source code written.
 ```
@@ -37,6 +41,12 @@ Lucien
 
 # TestCoverage
 The testcoverage can be checked <a href="https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html" target="_blank">here</a>.
+
+# Development Progress
+![Sprint 1](documents/burndownchart/sprint_1.svg)
+![Sprint 2](documents/burndownchart/sprint_2.svg)
+![Sprint 3](documents/burndownchart/sprint_3.svg)
+![Sprint 4](documents/burndownchart/sprint_4.svg)
 
 # Project Documentation
 
@@ -232,20 +242,4 @@ erDiagram
 
     character_has_stats }|--|| Character : "m"
     character_has_stats }|--|| Stats : "2"
-```
-## Localization Diagram
-```mermaid
-erDiagram
-    Attribute ||--o{ AT_ID : has
-    Attribute ||--o{ AT_NAME : has
-
-    Localization ||--o{ LC_ID : has
-    Localization ||--o{ LC_AT_1 : has
-    Localization ||--o{ LC_AT_2 : has
-    Localization ||--o{ LC_AT_3 : has
-    Localization ||--o{ LC_AT_4 : has
-    Localization ||--o{ LC_TEXT_DE : has
-    Localization ||--o{ LC_TEXT_EN : has
-
-    Attribute ||--o{ Localization : "ID"
 ```

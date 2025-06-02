@@ -1,3 +1,7 @@
+/**
+ * @file stats_output.c
+ * @brief Implements outputting to the screen for the stats mode.
+ */
 #include "stats_output.h"
 
 #include "../../../character/character.h"
@@ -7,7 +11,7 @@
 #include "../../../memory/memory_management.h"
 #include "../../../stats/local/stats_mode_local.h"
 #include "../../io_handler.h"
-#include "../common/common_output.h"
+#include "../common/output_handler.h"
 
 // Store menu options for stats menu
 static string_max_t* stats_menu_options;
@@ -34,16 +38,10 @@ int init_stats_mode() {
     return 0;
 }
 
-/**
- * @brief Render the stats window
- *
- * @param player Pointer to the player character
- */
+
 void render_stats_window(const character_t* player) {
     // Clear the screen
-    //clear_screen();
-    ncplane_erase(stdplane);
-
+    clear_screen();
 
     int y = 0;
     int x = 0;
@@ -97,15 +95,6 @@ void render_stats_window(const character_t* player) {
     print_text_default(y, x, stats_info);
 }
 
-/**
- * @brief Draw the stats menu
- *
- * @param title Menu title
- * @param options Array of option strings
- * @param option_count Number of options
- * @param selected_index Currently selected option index
- * @param footer Text to display at the bottom of the menu
- */
 void draw_stats_menu(const char* title, const char** options, int option_count, int selected_index, const char* footer) {
     // Set menu position
     int y = 20;
@@ -120,17 +109,12 @@ void draw_stats_menu(const char* title, const char** options, int option_count, 
     print_text_default(y, x, footer);
 }
 
-/**
- * @brief Display a message in the stats log
- *
- * @param message The message to display
- */
 void draw_stats_log(const char* message) {
     // Display message
     print_text_default(1, 2, message);
 
     // Render the frame
-    render_io_frame();
+    render_frame();
 }
 
 void shutdown_stats_mode() {
