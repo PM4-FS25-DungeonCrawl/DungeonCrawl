@@ -277,8 +277,8 @@ void print_text_formatted(int y, int x, const char* text, uint64_t ncchannel,
     
     // Print the text
     if (width > 0 && alignment != TEXT_ALIGN_LEFT) {
-        // Use notcurses alignment function for non-left alignment
-        ncplane_putstr_aligned(gio->stdplane, y, alignment, text);
+        // Use notcurses alignment function for non-left alignment - cast to suppress warning
+        ncplane_putstr_aligned(gio->stdplane, y, (ncalign_e)alignment, text);
     } else {
         ncplane_putstr_yx(gio->stdplane, y, aligned_x, text);
     }

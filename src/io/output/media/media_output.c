@@ -304,6 +304,10 @@ static bool display_animation(loaded_visual_t *resource, float fps, bool loop) {
         return false;
     }
 
+    // Note: fps and loop parameters are for future animation timing implementation
+    (void)fps;  // Suppress unused parameter warning
+    (void)loop; // Suppress unused parameter warning
+
     // Clean up existing plane if needed
     if (resource->plane) {
         ncplane_destroy(resource->plane);

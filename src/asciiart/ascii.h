@@ -32,7 +32,7 @@ static const char ascii_helmet[HELMET_HEIGHT][HELMET_WIDTH] = {
         "        /_.---._`._   /     ",
         "                `.__.'      "};
 
-static const char* ascii_goblin = {
+static const char* ascii_goblin __attribute__((unused)) = {
         "             ,      ,       \n"
         "            /(.-\"\"-.)\\    \n"
         "        |\\  \\/      \\/  /|  \n"
