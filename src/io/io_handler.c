@@ -97,10 +97,15 @@ io_handler_t* io_handler_init_with_flags(uint64_t flags) {
     // Detect the platform
     handler->platform = io_handler_get_platform();
     
-    // Initialize notcurses with custom flags
+    // Initialize notcurses with custom flags and proper settings
     notcurses_options ncopt;
     memset(&ncopt, 0, sizeof(ncopt));
-    ncopt.flags = flags;
+    ncopt.flags = flags | NCOPTION_NO_ALTERNATE_SCREEN | NCOPTION_INHIBIT_SETLOCALE;
+    // Set terminal margins 
+    ncopt.margin_t = 2;
+    ncopt.margin_r = 2;
+    ncopt.margin_b = 2;
+    ncopt.margin_l = 2;
     
     handler->nc = notcurses_init(&ncopt, stdout);
     if (!handler->nc) {
