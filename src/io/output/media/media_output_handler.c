@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 
 /* =========================================================================
@@ -50,10 +51,9 @@ bool init_media_output(void) {
     resource_count = 0;
 
     // Ensure the media directory exists
-    //TODO: implement directory_exists function
-    /*if (!directory_exists(MEDIA_PATH)) {
-        log_msg(ERROR, "media_output", "Failed to ensure media directory exists");
-    }*/
+    if (!directory_exists(MEDIA_PATH)) {
+        log_msg(WARNING, "media_output", "Media directory does not exist: %s", MEDIA_PATH);
+    }
 
     return true;
 }
@@ -77,9 +77,8 @@ void destroy_media(loaded_visual_t* media) {
     free_media_resource(media);
 }
 
-// Refresh media display
+/**\n * @brief Force a refresh of the media display\n * @return bool indicating success or failure\n */
 bool refresh_media_display(void) {
-    //TODO: fix
 
     // Force a redraw of the terminal with error checking
     bool result = notcurses_render(gio->nc);
@@ -289,41 +288,202 @@ bool unload_media(const char* filename) {
     return false;
 }
 
-// Preload a media file into memory
-/*bool preload_media(const char* filename) {
-    // coming soon
-    return false;
-}*/
+/**
+ * @brief Preload a media file into memory
+ * @param filename File name to preload
+ * @return true on success, false on failure
+ */
+bool preload_media(const char* filename) {
+    if (!filename) {
+        log_msg(ERROR, "media_output", "Null filename for preload_media");
+        return false;
+    }
 
-// Reload media after terminal resize
-/*bool reload_media_after_resize(void) {
-    // coming soon
-    return false;
-}*/
+    // Try to load the media - this will cache it in our resources array
+    loaded_visual_t* resource = load_media(filename);
+    if (!resource) {
+        log_msg(ERROR, "media_output", "Failed to preload media: %s", filename);
+        return false;
+    }
+
+    log_msg(DEBUG, "media_output", "Successfully preloaded media: %s", filename);
+    return true;
+}
+
+/**
+ * @brief Reload media after terminal resize
+ * @return true on success, false on failure
+ */
+bool reload_media_after_resize(void) {
+    if (!gio->nc || !gio->stdplane) {
+        log_msg(ERROR, "media_output", "Notcurses not properly initialized for resize");
+        return false;
+    }
+
+    bool all_successful = true;
+    
+    // Reload all currently loaded resources
+    for (int i = 0; i < resource_count; i++) {
+        if (resources[i].is_loaded) {
+            // Destroy the current plane if it exists
+            if (resources[i].plane) {
+                ncplane_destroy(resources[i].plane);
+                resources[i].plane = NULL;
+            }
+            
+            // If this was a fullscreen media, recalculate dimensions
+            if (resources[i].options.scaling == NCSCALE_STRETCH) {
+                int screen_width, screen_height;
+                if (get_screen_dimensions(&screen_width, &screen_height)) {
+                    // Update options for new screen size
+                    if (resources[i].options.leny == (unsigned int)screen_height && 
+                        resources[i].options.lenx == (unsigned int)screen_width) {
+                        // This was fullscreen, update to new dimensions
+                        resources[i].options.leny = screen_height;
+                        resources[i].options.lenx = screen_width;
+                    }
+                }
+            }
+            
+            // The visual itself doesn't need reloading, just the plane
+            // will be recreated on next render
+        }
+    }
+    
+    log_msg(DEBUG, "media_output", "Media resources prepared for terminal resize");
+    return all_successful;
+}
 
 /* =========================================================================
  * REENDERING AND DISPLAY FUNCTIONS
  * ========================================================================= */
 
-/*bool media_output_render(loaded_visual_t* media) {
-    //coming soon...
-    return false;
-}*/
+/**
+ * @brief Display a loaded media file on its assigned plane
+ * @param media Pointer to a loaded media instance
+ * @return true on success, false on failure
+ */
+bool media_output_render(loaded_visual_t* media) {
+    if (!media || !media->is_loaded || !media->visual) {
+        log_msg(ERROR, "media_output", "Invalid media resource for rendering");
+        return false;
+    }
 
-/*bool media_output_render_next_frame(loaded_visual_t* media) {
-    //coming soon...
-    return false;
-}*/
+    if (!gio->nc || !gio->stdplane) {
+        log_msg(ERROR, "media_output", "Notcurses not properly initialized");
+        return false;
+    }
 
-/*bool media_output_can_display_images(void) {
-    //coming soon...
-    return false;
-}*/
+    // Create a plane if we don't have one
+    if (!media->plane) {
+        // Set the plane to be a child of the standard plane
+        media->options.n = gio->stdplane;
+        
+        // Create the plane using the visual
+        media->plane = ncvisual_blit(gio->nc, media->visual, &media->options);
+        if (!media->plane) {
+            log_msg(ERROR, "media_output", "Failed to create plane for media rendering");
+            return false;
+        }
+    } else {
+        // Use existing plane, just blit the visual to it
+        if (ncvisual_blit(gio->nc, media->visual, &media->options) == NULL) {
+            log_msg(ERROR, "media_output", "Failed to blit visual to existing plane");
+            return false;
+        }
+    }
 
-/*bool media_output_can_display_videos(void) {
-    //coming soon...
-    return false;
-}*/
+    // Render the changes
+    if (notcurses_render(gio->nc) < 0) {
+        log_msg(ERROR, "media_output", "Failed to render media to screen");
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * @brief Display the next frame of an animation or video
+ * @param media Pointer to a loaded media instance
+ * @return true on success, false on failure or end of media
+ */
+bool media_output_render_next_frame(loaded_visual_t* media) {
+    if (!media || !media->is_loaded || !media->visual) {
+        log_msg(ERROR, "media_output", "Invalid media resource for next frame");
+        return false;
+    }
+
+    // Only applicable for animated media types
+    if (media->media_type != MEDIA_GIF && media->media_type != MEDIA_MP4) {
+        // For static images, just render the current frame
+        return media_output_render(media);
+    }
+
+    // Decode the next frame
+    int decode_result = ncvisual_decode(media->visual);
+    if (decode_result == 1) {
+        // End of animation reached
+        log_msg(DEBUG, "media_output", "End of animation reached");
+        return false;
+    } else if (decode_result < 0) {
+        log_msg(ERROR, "media_output", "Error decoding next frame");
+        return false;
+    }
+
+    // Render the new frame
+    return media_output_render(media);
+}
+
+/**
+ * @brief Check if the notcurses implementation supports image loading
+ * @return true if supported, false otherwise
+ */
+bool media_output_can_display_images(void) {
+    if (!gio->nc) {
+        log_msg(WARNING, "media_output", "Notcurses not initialized, cannot check image support");
+        return false;
+    }
+
+    // Check if we can create a visual from a simple test
+    // We'll check if the terminal supports any image blitting
+    bool supports_images = false;
+    
+    // Check various blitters that support images
+    if (notcurses_check_pixel_support(gio->nc) > 0) {
+        supports_images = true; // Pixel graphics supported
+    } else if (notcurses_canopen_images(gio->nc)) {
+        supports_images = true; // Image loading supported
+    }
+
+    return supports_images;
+}
+
+/**
+ * @brief Check if the notcurses implementation supports video loading
+ * @return true if supported, false otherwise
+ */
+bool media_output_can_display_videos(void) {
+    if (!gio->nc) {
+        log_msg(WARNING, "media_output", "Notcurses not initialized, cannot check video support");
+        return false;
+    }
+
+    // Video support typically requires the same capabilities as images
+    // plus the ability to decode video formats
+    bool supports_videos = false;
+    
+    // Check if we have image support first (prerequisite for video)
+    if (media_output_can_display_images()) {
+        // Check if notcurses was compiled with video support
+        // This is a basic check - in practice, you might want to
+        // try loading a simple video file to be sure
+        if (notcurses_canopen_videos(gio->nc)) {
+            supports_videos = true;
+        }
+    }
+
+    return supports_videos;
+}
 
 /* =========================================================================
  * SCALING FUNCTIONS
@@ -395,10 +555,25 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
  * FILE AND PATH HANDLING FUNCTIONS
  * ========================================================================= */
 
-/*bool directory_exists(const char* path) {
-    // coming soon
+/**
+ * @brief Check if a directory exists
+ * @param path Path to the directory
+ * @return true if directory exists, false otherwise
+ */
+bool directory_exists(const char* path) {
+    if (!path) {
+        return false;
+    }
+
+    struct stat stat_buf;
+    
+    // Use stat to check if the path exists and is a directory
+    if (stat(path, &stat_buf) == 0) {
+        return S_ISDIR(stat_buf.st_mode);
+    }
+    
     return false;
-}*/
+}
 
 media_type_t get_file_type(const char* filename) {
     if (is_file_extension(filename, ".png")) {
