@@ -36,6 +36,12 @@ vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, 
     display_image_at(enemy_sprite, vec.dx + 10, vec.dy, sprite_height, 2 * sprite_height, SCALE_STRETCH);
     vec.dy += sprite_height + 2;
 
+    // Show enemy level TODO: no sprintf
+    char enemy_level_str[32];
+    snprintf(enemy_level_str, sizeof(enemy_level_str), "Enemy Level: %d", enemy->level);
+    print_text_default(vec.dy, anchor.dx, enemy_level_str);
+    vec.dy += 2;
+
     // Render the frame
     render_frame();
 

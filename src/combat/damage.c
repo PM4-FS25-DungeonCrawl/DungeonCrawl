@@ -40,7 +40,7 @@ int roll_damage(const ability_t* ability) {
 }
 
 int deal_damage(character_t* character, damage_type_t damage_type, const int damage) {
-    // TODO critical hits are ignored
+    // TODO critical hits amd strength/intelligence are ignored
     // negative damage resistance leads to more damage
     // damage += character->resistance[damage_type].value;
     // damage -= character->current_stats.armor;

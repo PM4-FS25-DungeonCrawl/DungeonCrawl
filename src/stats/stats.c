@@ -12,8 +12,8 @@ void raise_skill(stats_t* stats, stat_type_t stat, int skillpoint) {
         log_msg(ERROR, "Stats", "Stats pointer is NULL");
         return;
     }
-    if (1 <= skillpoint) {
-        skillpoint--;
+    if (skillpoint > 0) {
+        //skillpoint--; does not work because it is passed by value
         switch (stat) {
             case STRENGTH:
                 stats->strength++;

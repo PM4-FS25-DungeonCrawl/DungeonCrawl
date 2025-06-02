@@ -31,6 +31,8 @@ db_connection_t db_connection;
 bool game_in_progress;
 game_state_t current_state;
 int exit_code;
+//TODO: safe into DB
+int current_floor = 1;
 
 /**
  * @brief The main game loop of the application.
@@ -193,6 +195,8 @@ void map_mode_state() {
         case NEXT_FLOOR:
             clear_screen();
             reset_player_stats(player);// Heal player before entering new floor
+            current_floor++;
+            reset_goblin();
             current_state = GENERATE_MAP;
             break;
         case COMBAT:
