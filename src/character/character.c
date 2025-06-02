@@ -10,6 +10,17 @@
 
 #include <stdio.h>
 
+// Internal functions
+/**
+ * @brief Sets the stats for a character
+ * @param stats Pointer to the stats structure to set
+ * @param strength Strength value
+ * @param intelligence Intelligence value
+ * @param dexterity Dexterity value
+ * @param constitution Constitution value
+ */
+void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
+
 character_t* init_character(memory_pool_t* memory_pool, const character_type_t type, const char* name) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Character", "In init_character memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(name, NULL, "Character", "In init_character name is NULL");
@@ -24,7 +35,7 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
     character->max_resources = (resources_t) {0};
     character->current_resources = (resources_t) {0};
 
-    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
+    for (int i = 0; i < MAX_DAMAGE_TYPE; i++) {
         character->resistance[i].type = i;
         character->resistance[i].value = 0;
     }
@@ -50,6 +61,7 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
     for (int i = 0; i < MAX_SLOT; i++) {
         character->equipment[i] = NULL;
     }
+
     character->level = 0;
     character->xp = 0;
     character->xp_reward = 0;
@@ -115,12 +127,11 @@ void update_character_resources(resources_t* current_resources, resources_t* max
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_character_dmg_modifier character is NULL");
 
-    for (int i = 0; i < DAMAGE_TYPE_COUNT; i++) {
-        if (character->resistance[i].type == type) {
-            character->resistance[i].value = value;
-            return;
-        }
+    if (type >= 0 && type < MAX_DAMAGE_TYPE) {
+        character->resistance[type].value = value;
+        return;
     }
+
     log_msg(WARNING, "Character", "Unknown damage type: %d", type);
 }
 
@@ -317,11 +328,20 @@ void set_skill_points(character_t* character, int skill_points) {
     character->skill_points = skill_points;
 }
 
-void reset_player_stats(character_t* player) {
-    if (player == NULL) return;
+void reset_current_stats(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_stats character is NULL");
+    character->current_stats = character->base_stats;
+}
+
+void reset_current_resources(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_resources character is NULL");
+    character->current_resources = character->max_resources;
+}
+
+void reset_player_stats(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_resources character is NULL");
 
     // reset current stats to their starting values
-    player->current_resources.health = player->max_resources.health;
-    player->current_resources.mana = player->max_resources.mana;
-    player->current_resources.stamina = player->max_resources.stamina;
+    reset_current_stats(character);
+    reset_current_resources(character);
 }

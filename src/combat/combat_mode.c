@@ -48,12 +48,6 @@ void use_ability(character_t* attacker, character_t* target, const ability_t* ab
  * @param potion Pointer to the potion to be used.
  */
 void use_potion(character_t* player, const character_t* monster, potion_t* potion);
-/** @brief Consumes the mana or stamina resource of the attacker character.
- * @param attacker Pointer to the attacker character.
- * @param ability Pointer to the ability to be used.
- * @return true if the resource was consumed, false otherwise.
- */
-bool consume_ability_resource(character_t* attacker, const ability_t* ability);
 /** @brief Get a random ability from the character's abilities.
  * @param character Pointer to the character whose abilities are to be used.
  * @return Pointer to the randomly selected ability.
@@ -384,36 +378,36 @@ ability_t* get_random_ability(const character_t* character) {
     return character->abilities[random_index];
 }
 
-void invoke_potion_effect(character_t* character, potion_t* potion) {
+bool invoke_potion_effect(character_t* character, potion_t* potion) {
+    int* c_max_resource;
+    int* c_curr_resource;
+
     switch (potion->effectType) {
         case HEALING:
-            if (potion->value > (character->max_resources.health - character->current_resources.health)) {
-                character->current_resources.health = character->max_resources.health;
-            } else {
-                character->current_resources.health += potion->value;
-            }
+            c_max_resource = &character->max_resources.health;
+            c_curr_resource = &character->current_resources.health;
             break;
         case MANA:
-            if (potion->value > (character->max_resources.mana - character->current_resources.mana)) {
-                character->current_resources.mana = character->max_resources.mana;
-            } else {
-                character->current_resources.mana += potion->value;
-            }
+            c_max_resource = &character->max_resources.mana;
+            c_curr_resource = &character->current_resources.mana;
             break;
-
         case STAMINA:
-            if (potion->value > (character->max_resources.stamina - character->current_resources.stamina)) {
-                character->current_resources.stamina = character->max_resources.stamina;
-            } else {
-                character->current_resources.stamina += potion->value;
-            }
+            c_max_resource = &character->max_resources.stamina;
+            c_curr_resource = &character->current_resources.stamina;
             break;
-
         default:
             log_msg(ERROR, "Character", "Unknown potion effect type: %d", potion->effectType);
-            break;
+            return false;
     }
+
+    if (potion->value > (*c_max_resource - *c_curr_resource)) {
+        *c_curr_resource = *c_max_resource;
+    } else {
+        *c_curr_resource += potion->value;
+    }
+
     remove_potion(character, potion);
+    return true;
 }
 
 bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
