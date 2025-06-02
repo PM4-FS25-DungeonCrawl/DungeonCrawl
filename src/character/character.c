@@ -35,7 +35,7 @@ character_t* init_character(memory_pool_t* memory_pool, const character_type_t t
     character->max_resources = (resources_t) {0};
     character->current_resources = (resources_t) {0};
 
-    for (int i = 0; i < MAX_DAMAGE_TYPE; i++) {
+    for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
         character->resistance[i].type = i;
         character->resistance[i].value = 0;
     }
@@ -75,7 +75,7 @@ void free_character(memory_pool_t* memory_pool, character_t* character) {
     memory_pool_free(memory_pool, character);
 }
 
-void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution) {
+void set_character_stats(character_t* character, const int strength, const int intelligence, const int dexterity, const int constitution) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_character_stats character is NULL");
 
     set_stats(&character->base_stats, strength, intelligence, dexterity, constitution);
@@ -127,7 +127,7 @@ void update_character_resources(resources_t* current_resources, resources_t* max
 void set_character_dmg_modifier(character_t* character, damage_type_t type, int value) {
     NULL_PTR_HANDLER_RETURN(character, , "Character", "In set_character_dmg_modifier character is NULL");
 
-    if (type >= 0 && type < MAX_DAMAGE_TYPE) {
+    if (type >= 0 && type < MAX_DAMAGE_TYPES) {
         character->resistance[type].value = value;
         return;
     }
@@ -338,10 +338,10 @@ void reset_current_resources(character_t* character) {
     character->current_resources = character->max_resources;
 }
 
-void reset_player_stats(character_t* character) {
-    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_resources character is NULL");
+void reset_player_stats(character_t* player) {
+    NULL_PTR_HANDLER_RETURN(player, , "Character", "In reset_current_resources character is NULL");
 
     // reset current stats to their starting values
-    reset_current_stats(character);
-    reset_current_resources(character);
+    reset_current_stats(player);
+    reset_current_resources(player);
 }
