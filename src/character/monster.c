@@ -4,11 +4,13 @@
  */
 
 #include "monster.h"
+
 #include "../character/level.h"
 #include "../game.h"
+
 #include <math.h>
 
-stat_type_t scaling_stats[8] = { STRENGTH, CONSTITUTION, STRENGTH, DEXTERITY, INTELLIGENCE, CONSTITUTION, DEXTERITY, STRENGTH};
+stat_type_t scaling_stats[8] = {STRENGTH, CONSTITUTION, STRENGTH, DEXTERITY, INTELLIGENCE, CONSTITUTION, DEXTERITY, STRENGTH};
 
 character_t* create_new_goblin(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Goblin", "Memory pool is NULL");
@@ -33,9 +35,9 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
  * @return new scaled value
  */
 int scale_xp_reward(int base) {
-    float mult_increase = 0.1f; // increase per floor
+    float mult_increase = 0.1f;// increase per floor
     float multiplier = 1 + ((current_floor - 1) * mult_increase);
-    return (int)round(base * multiplier);
+    return (int) round(base * multiplier);
 }
 
 /**
