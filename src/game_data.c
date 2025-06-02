@@ -70,7 +70,7 @@ int init_player(char* name) {
     if (name != NULL) {
         snprintf(player->name, sizeof(player->name), "%s", name);
     } else {
-        snprintf(player->name, sizeof(player->name), "Hero");
+        snprintf(player->name, sizeof(player->name), "Ash Ketchup");
     }
     return 0;
 }
@@ -88,7 +88,7 @@ int reset_player() {
 
 const char* get_player_name(void) {
     if (player == NULL || strlen(player->name) == 0) {
-        return "Unknown";
+        return "Ash Ketchup";
     }
     return player->name;
 }

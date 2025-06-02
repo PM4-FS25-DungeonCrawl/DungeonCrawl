@@ -137,7 +137,8 @@ void main_menu_state() {
             // Get the save name from the menu
             const char* save_name = get_save_name();
             if (save_name == NULL) {
-                save_name = "Unnamed Save";// Default name if none provided
+                // Use player name as default if no save name provided
+                save_name = get_player_name();
             }
 
             // Save the game with the provided name

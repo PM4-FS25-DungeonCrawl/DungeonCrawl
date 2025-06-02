@@ -239,7 +239,7 @@ bool prompt_player_name(char* name_buffer) {
     // Validate the name
     if (success && strlen(name_buffer) == 0) {
         // If empty name was entered, use default
-        snprintf(name_buffer, MAX_NAME_LENGTH, "Hero");
+        snprintf(name_buffer, MAX_NAME_LENGTH, "Ash Ketchup");
     }
     
     return success;
