@@ -328,11 +328,20 @@ void set_skill_points(character_t* character, int skill_points) {
     character->skill_points = skill_points;
 }
 
-void reset_player_stats(character_t* player) {
-    if (player == NULL) return;
+void reset_current_stats(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_stats character is NULL");
+    character->current_stats = character->base_stats;
+}
+
+void reset_current_resources(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_resources character is NULL");
+    character->current_resources = character->max_resources;
+}
+
+void reset_player_stats(character_t* character) {
+    NULL_PTR_HANDLER_RETURN(character, , "Character", "In reset_current_resources character is NULL");
 
     // reset current stats to their starting values
-    player->current_resources.health = player->max_resources.health;
-    player->current_resources.mana = player->max_resources.mana;
-    player->current_resources.stamina = player->max_resources.stamina;
+    reset_current_stats(character);
+    reset_current_resources(character);
 }
