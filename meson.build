@@ -87,6 +87,7 @@ io_files = files(
     'src/io/output/common/effect_output.c',
     'src/io/output/media/media_output_handler.c',
     'src/io/output/media/media_output.c',
+    'src/io/output/media/audio_output_handler.c',
     'src/io/output/specific/combat_output.c',
     'src/io/output/specific/inventory_output.c',
     'src/io/output/specific/map_output.c',
