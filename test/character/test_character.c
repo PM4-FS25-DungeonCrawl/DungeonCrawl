@@ -3,6 +3,7 @@
 #include "../../src/combat/ability.h"
 
 #include <assert.h>
+#include <string.h>
 #include <stdio.h>
 
 memory_pool_t* test_character_memory_pool;
