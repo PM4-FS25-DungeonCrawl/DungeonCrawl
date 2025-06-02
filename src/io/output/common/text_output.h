@@ -5,6 +5,36 @@
 #include <stdbool.h>
 
 /**
+ * @brief Text alignment options
+ */
+typedef enum text_align {
+    TEXT_ALIGN_LEFT = NCALIGN_LEFT,
+    TEXT_ALIGN_CENTER = NCALIGN_CENTER,
+    TEXT_ALIGN_RIGHT = NCALIGN_RIGHT
+} text_align_t;
+
+/**
+ * @brief Text style options
+ */
+typedef enum text_style {
+    TEXT_STYLE_NORMAL   = 0,
+    TEXT_STYLE_BOLD     = NCSTYLE_BOLD,
+    TEXT_STYLE_ITALIC   = NCSTYLE_ITALIC,
+    TEXT_STYLE_UNDERLINE = NCSTYLE_UNDERLINE
+} text_style_t;
+
+/**
+ * @brief Text transparency options
+ */
+typedef enum text_transparency {
+    TEXT_TRANSPARENCY_NONE = 0,         // Fully opaque
+    TEXT_TRANSPARENCY_TEXT_ONLY,        // Only text visible, background transparent
+    TEXT_TRANSPARENCY_BACKGROUND_LIGHT, // Background slightly visible (25%)
+    TEXT_TRANSPARENCY_BACKGROUND_MEDIUM,// Background partially visible (50%)
+    TEXT_TRANSPARENCY_BACKGROUND_HEAVY  // Background mostly visible (75%)
+} text_transparency_t;
+
+/**
  * @brief Print text at a specific position
  * 
  * Renders text at the specified coordinates with the given foreground and background colors.
@@ -144,5 +174,62 @@ bool get_text_input(const char* prompt, char* buffer, int buffer_size,
  * @param x The X coordinate (column) for the message
  */
 void show_message_screen(const char* message, const char* continue_message, int y, int x);
+
+/**
+ * @brief Print text with advanced formatting options
+ * 
+ * Renders text with alignment, style, transparency, and color options.
+ * 
+ * @param y The Y coordinate (row)
+ * @param x The X coordinate (column)
+ * @param text The text to render
+ * @param ncchannel The color channel (foreground and background)
+ * @param alignment Text alignment option
+ * @param style Text style option
+ * @param transparency Text transparency option
+ * @param width Width for alignment calculation (0 for auto)
+ */
+void print_text_formatted(int y, int x, const char* text, uint64_t ncchannel,
+                          text_align_t alignment, text_style_t style,
+                          text_transparency_t transparency, int width);
+
+/**
+ * @brief Print text with alignment only
+ * 
+ * Renders text with specified alignment using default colors and style.
+ * 
+ * @param y The Y coordinate (row)
+ * @param x The X coordinate (column)
+ * @param text The text to render
+ * @param alignment Text alignment option
+ * @param width Width for alignment calculation
+ */
+void print_text_aligned(int y, int x, const char* text, text_align_t alignment, int width);
+
+/**
+ * @brief Print text with style only
+ * 
+ * Renders text with specified style using default colors and alignment.
+ * 
+ * @param y The Y coordinate (row)
+ * @param x The X coordinate (column)
+ * @param text The text to render
+ * @param style Text style option
+ * @param ncchannel The color channel (foreground and background)
+ */
+void print_text_styled(int y, int x, const char* text, text_style_t style, uint64_t ncchannel);
+
+/**
+ * @brief Print text with transparency only
+ * 
+ * Renders text with specified transparency using default colors and style.
+ * 
+ * @param y The Y coordinate (row)
+ * @param x The X coordinate (column)
+ * @param text The text to render
+ * @param transparency Text transparency option
+ * @param ncchannel The color channel (foreground and background)
+ */
+void print_text_transparent(int y, int x, const char* text, text_transparency_t transparency, uint64_t ncchannel);
 
 #endif // TEXT_OUTPUT_H

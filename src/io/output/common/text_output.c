@@ -212,3 +212,89 @@ void show_message_screen(const char* message, const char* continue_message, int 
     input_event_t input_event;
     while (!get_input_blocking(&input_event));
 }
+
+static uint64_t apply_transparency(uint64_t channel, text_transparency_t transparency) {
+    switch (transparency) {
+        case TEXT_TRANSPARENCY_TEXT_ONLY:
+            // Make background transparent
+            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_TRANSPARENT);
+            break;
+        case TEXT_TRANSPARENCY_BACKGROUND_LIGHT:
+            // 25% background visibility
+            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
+            break;
+        case TEXT_TRANSPARENCY_BACKGROUND_MEDIUM:
+            // 50% background visibility
+            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
+            break;
+        case TEXT_TRANSPARENCY_BACKGROUND_HEAVY:
+            // 75% background visibility  
+            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
+            break;
+        case TEXT_TRANSPARENCY_NONE:
+        default:
+            // No transparency changes
+            break;
+    }
+    return channel;
+}
+
+static int calculate_aligned_x(int base_x, const char* text, text_align_t alignment, int width) {
+    if (!text || width <= 0) {
+        return base_x;
+    }
+    
+    int text_len = strlen(text);
+    
+    switch (alignment) {
+        case TEXT_ALIGN_CENTER:
+            return base_x + (width - text_len) / 2;
+        case TEXT_ALIGN_RIGHT:
+            return base_x + width - text_len;
+        case TEXT_ALIGN_LEFT:
+        default:
+            return base_x;
+    }
+}
+
+void print_text_formatted(int y, int x, const char* text, uint64_t ncchannel,
+                          text_align_t alignment, text_style_t style,
+                          text_transparency_t transparency, int width) {
+    if (!gio->stdplane || !text) {
+        log_msg(ERROR, "output_handler", "Output handler not initialized or null text");
+        return;
+    }
+
+    // Apply transparency to channel
+    uint64_t modified_channel = apply_transparency(ncchannel, transparency);
+    
+    // Calculate aligned X position
+    int aligned_x = (width > 0) ? calculate_aligned_x(x, text, alignment, width) : x;
+    
+    // Set the channels and styles
+    ncplane_set_channels(gio->stdplane, modified_channel);
+    ncplane_set_styles(gio->stdplane, style);
+    
+    // Print the text
+    if (width > 0 && alignment != TEXT_ALIGN_LEFT) {
+        // Use notcurses alignment function for non-left alignment
+        ncplane_putstr_aligned(gio->stdplane, y, alignment, text);
+    } else {
+        ncplane_putstr_yx(gio->stdplane, y, aligned_x, text);
+    }
+    
+    // Reset styles to normal
+    ncplane_set_styles(gio->stdplane, TEXT_STYLE_NORMAL);
+}
+
+void print_text_aligned(int y, int x, const char* text, text_align_t alignment, int width) {
+    print_text_formatted(y, x, text, DEFAULT_COLORS, alignment, TEXT_STYLE_NORMAL, TEXT_TRANSPARENCY_NONE, width);
+}
+
+void print_text_styled(int y, int x, const char* text, text_style_t style, uint64_t ncchannel) {
+    print_text_formatted(y, x, text, ncchannel, TEXT_ALIGN_LEFT, style, TEXT_TRANSPARENCY_NONE, 0);
+}
+
+void print_text_transparent(int y, int x, const char* text, text_transparency_t transparency, uint64_t ncchannel) {
+    print_text_formatted(y, x, text, ncchannel, TEXT_ALIGN_LEFT, TEXT_STYLE_NORMAL, transparency, 0);
+}
