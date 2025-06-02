@@ -492,6 +492,11 @@ bool media_output_can_display_videos(void) {
 // Helper function to set up scaling options
 void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                            int target_width, int target_height) {
+    if (!visual) {
+        log_msg(ERROR, "media_output", "Invalid visual parameter for setup_scaling_options");
+        return;
+    }
+
     // Clear options first
     memset(&visual->options, 0, sizeof(visual->options));
 
@@ -499,10 +504,25 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
     switch (scale_type) {
         case SCALE_PRESERVE:
             // Scale preserving aspect ratio
-            visual->options.scaling = NCSCALE_SCALE;
-            // When using NCSCALE_SCALE, a zero value for lenx/leny means auto-scale
-            visual->options.leny = target_height > 0 ? target_height : 0;
-            visual->options.lenx = target_width > 0 ? target_width : 0;
+            visual->options.scaling = NCSCALE_SCALE_HIRES;
+            if (target_width > 0 && target_height > 0) {
+                // Calculate aspect-preserving dimensions
+                double aspect_ratio = (double)visual->og_width / visual->og_height;
+                int calc_width = target_width;
+                int calc_height = (int)(target_width / aspect_ratio);
+                
+                if (calc_height > target_height) {
+                    calc_height = target_height;
+                    calc_width = (int)(target_height * aspect_ratio);
+                }
+                
+                visual->options.leny = calc_height;
+                visual->options.lenx = calc_width;
+            } else {
+                // Use original dimensions if target dimensions are invalid
+                visual->options.leny = visual->og_height;
+                visual->options.lenx = visual->og_width;
+            }
             break;
 
         case SCALE_STRETCH:
@@ -512,14 +532,16 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                 visual->options.leny = target_height;
                 visual->options.lenx = target_width;
             } else {
-                // Fall back to no scaling if dimensions are invalid
+                // Fall back to original size if dimensions are invalid
                 visual->options.scaling = NCSCALE_NONE;
+                visual->options.leny = visual->og_height;
+                visual->options.lenx = visual->og_width;
             }
             break;
 
         case SCALE_CELL:
             // Scale to fit in a single cell
-            visual->options.scaling = NCSCALE_SCALE;
+            visual->options.scaling = NCSCALE_SCALE_HIRES;
             visual->options.leny = 1;
             visual->options.lenx = 1;
             break;
@@ -532,23 +554,43 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             if (get_screen_dimensions(&screen_width, &screen_height)) {
                 visual->options.leny = screen_height;
                 visual->options.lenx = screen_width;
+                log_msg(DEBUG, "media_output", "Fullscreen scaling to %dx%d", screen_width, screen_height);
             } else {
                 // Fallback to original dimensions
                 visual->options.leny = visual->og_height;
                 visual->options.lenx = visual->og_width;
-                log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size");
+                log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size %dx%d", 
+                        visual->og_width, visual->og_height);
             }
             break;
 
         case SCALE_NONE:
         default:
-            // No scaling
+            // No scaling - use original dimensions
             visual->options.scaling = NCSCALE_NONE;
+            visual->options.leny = visual->og_height;
+            visual->options.lenx = visual->og_width;
             break;
     }
 
-    // Set blitter to a reliable one
-    visual->options.blitter = NCBLIT_2x1;
+    // Set blitter based on scaling type for better quality
+    switch (scale_type) {
+        case SCALE_CELL:
+            visual->options.blitter = NCBLIT_1x1;  // ASCII for single cell
+            break;
+        case SCALE_FULLSCREEN:
+        case SCALE_STRETCH:
+            visual->options.blitter = NCBLIT_PIXEL; // Best quality for large images
+            break;
+        default:
+            visual->options.blitter = NCBLIT_2x2;   // Good balance for most cases
+            break;
+    }
+
+    log_msg(DEBUG, "media_output", "Scaling setup: type=%d, target=%dx%d, result=%dx%d, scaling=%d, blitter=%d",
+            scale_type, target_width, target_height, 
+            visual->options.lenx, visual->options.leny,
+            visual->options.scaling, visual->options.blitter);
 }
 
 /* =========================================================================
