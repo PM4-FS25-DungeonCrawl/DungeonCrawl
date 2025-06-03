@@ -25,7 +25,7 @@
 #endif
 
 // Define the minimum time between key presses (milliseconds)
-#define KEY_DEBOUNCE_TIME_MS 20
+#define KEY_DEBOUNCE_TIME_MS 100
 
 // Structure to track input timing for debouncing
 typedef struct {
