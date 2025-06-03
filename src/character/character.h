@@ -33,7 +33,7 @@ typedef struct character_t {
     resources_t max_resources;
     resources_t current_resources;
 
-    damage_resistance_t resistance[DAMAGE_TYPE_COUNT];
+    damage_resistance_t resistance[MAX_DAMAGE_TYPES];
     defenses_t defenses;
 
     ability_t* abilities[MAX_ABILITY_LIMIT];
@@ -72,23 +72,13 @@ void free_character(memory_pool_t* memory_pool, character_t* character);
 
 /**
  * @brief Sets the stats for a character
- * @param c Pointer to the character to set stats for
+ * @param character Pointer to the character to set stats for
  * @param strength Strength value
  * @param intelligence Intelligence value
  * @param dexterity Dexterity value
  * @param constitution Constitution value
  */
 void set_character_stats(character_t* character, int strength, int intelligence, int dexterity, int constitution);
-
-/**
- * @brief Sets the stats for a character
- * @param stats Pointer to the stats structure to set
- * @param strength Strength value
- * @param intelligence Intelligence value
- * @param dexterity Dexterity value
- * @param constitution Constitution value
- */
-void set_stats(stats_t* stats, int strength, int intelligence, int dexterity, int constitution);
 
 /**
  * @brief Updates the character's resources based on their stats
@@ -184,6 +174,7 @@ void unequip_gear(character_t* character, gear_slot_t slot);
  * @param character Pointer to the character
  */
 void reset_current_stats(character_t* character);
+void reset_current_resources(character_t* character);
 
 /**
  * @brief Sets the level for a character

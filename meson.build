@@ -17,22 +17,20 @@ src_files = files(
     'src/game.c',
     'src/game_data.c',
 
-    'src/map/map.c',
-    'src/map/map_mode.c',
-    'src/map/map_generator.c',
-    'src/map/map_populator.c',
-
     'src/map/draw/draw_light.c',
 
     'src/character/character.c',
     'src/character/player.c',
     'src/character/monster.c',
     'src/character/level.c',
+)
 
-    'src/item/gear.c',
-    'src/item/potion.c',
-    'src/item/loot_generation.c'
-
+map_files = files(
+    'src/map/map.c',
+    'src/map/map_mode.c',
+    'src/map/map_generator.c',
+    'src/map/map_populator.c',
+    'src/map/local/map_mode_local.c',
 )
 
 menu_files = files(
@@ -60,7 +58,16 @@ combat_files = files(
     'src/combat/combat_mode.c',
     'src/combat/ability.c',
     'src/combat/damage.c',
-    'src/combat/local/combat_mode_local.c'
+    'src/combat/local/combat_mode_local.c',
+    'src/combat/local/ability_local.c',
+)
+
+itme_files = files(
+    'src/item/gear.c',
+    'src/item/potion.c',
+    'src/item/loot_generation.c',
+    'src/item/local/gear_local.c',
+    'src/item/local/potion_local.c',
 )
 
 # List of all database files
@@ -117,10 +124,12 @@ configure_file(
     executable(
     'DungeonCrawl',
     src_files,
+    map_files,
     menu_files,
     stats_files,
     inventory_files,
     combat_files,
+    itme_files,
     database_files,
     logging_files,
     io_files,

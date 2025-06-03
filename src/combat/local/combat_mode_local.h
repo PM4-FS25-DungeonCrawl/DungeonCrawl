@@ -6,6 +6,7 @@
 #define COMBAT_MODE_LOCAL_H
 
 enum combat_mode_index {
+    COMBAT_MODE_TITLE,
     MAIN_MENU_TITLE,
     ABILITY_MENU_TITLE,
     POTION_MENU_TITLE,
@@ -19,6 +20,17 @@ enum combat_mode_index {
     ATTACK_MISS,
     ATTACK_FAIL,
     POTION_USE,
+
+    HEALTH_STR,
+    MANA_STR,
+    STAMINA_STR,
+
+    WON_COMBAT_MSG1,// part 1 of the message when combat is won
+    WON_COMBAT_MSG2,// part 2 of the message when combat is won
+    LOST_COMBAT_MSG,
+
+    PRESS_ANY_CONTINUE,
+    PRESS_ANY_EXIT,
 
     MAX_COMBAT_MODE_STRINGS
 };

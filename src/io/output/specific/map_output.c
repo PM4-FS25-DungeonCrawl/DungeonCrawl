@@ -4,11 +4,11 @@
  */
 #include "map_output.h"
 
-#include "../../../asciiart/ascii.h"
 #include "../../../common.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../src/map/local/map_mode_local.h"
 #include "../common/text_output.h"
 
 
@@ -97,12 +97,12 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
 
 void draw_player_info(int x, int y, const vector2d_t player_pos) {
     // Player information using centralized IO
-    print_text_default(y++, x, "Press 'M' for Menu");
-    print_text_default(y++, x, "Press 'L' for Stats");
-    print_text_default(y++, x, "Press 'I' for Inventory");
+    print_text_default(y++, x, map_mode_strings[PRESS_KEY_MENU]);
+    print_text_default(y++, x, map_mode_strings[PRESS_KEY_STATS]);
+    print_text_default(y++, x, map_mode_strings[PRESS_KEY_INVENTORY]);
 
     // Format player position string
     char pos_str[64];
-    snprintf(pos_str, sizeof(pos_str), "Player Position: %d, %d", player_pos.dx, player_pos.dy);
+    snprintf(pos_str, sizeof(pos_str), "%s: %d, %d", map_mode_strings[PLAYER_POSITION_STR], player_pos.dx, player_pos.dy);
     print_text_default(y + 4, x, pos_str);
 }
