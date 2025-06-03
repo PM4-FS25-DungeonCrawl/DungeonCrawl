@@ -99,7 +99,7 @@ bool handle_screen_resize(void) {
 
     // Clear and redraw the screen
     clear_screen();
-    
+
     // Force a full render
     if (!render_frame()) {
         log_msg(ERROR, "output_handler", "Failed to render after resize");

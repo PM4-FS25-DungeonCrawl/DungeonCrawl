@@ -8,8 +8,8 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
-#include "../src/map/local/map_mode_local.h"
 #include "../common/text_output.h"
+#include "../src/map/local/map_mode_local.h"
 
 
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,

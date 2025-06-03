@@ -29,10 +29,10 @@ typedef enum platform_type {
  * Encapsulates the notcurses context and provides interface to input/output handlers
  */
 typedef struct io_handler {
-    struct notcurses* nc;        // Main notcurses context
-    struct ncplane* stdplane;    // Standard plane for basic operations
-    bool initialized;            // Flag to track initialization state
-    platform_type_t platform;    // Current platform
+    struct notcurses* nc;    // Main notcurses context
+    struct ncplane* stdplane;// Standard plane for basic operations
+    bool initialized;        // Flag to track initialization state
+    platform_type_t platform;// Current platform
 } io_handler_t;
 
 // Make the init_done flag accessible from other files

@@ -17,9 +17,9 @@ typedef enum text_align {
  * @brief Text style options
  */
 typedef enum text_style {
-    TEXT_STYLE_NORMAL   = 0,
-    TEXT_STYLE_BOLD     = NCSTYLE_BOLD,
-    TEXT_STYLE_ITALIC   = NCSTYLE_ITALIC,
+    TEXT_STYLE_NORMAL = 0,
+    TEXT_STYLE_BOLD = NCSTYLE_BOLD,
+    TEXT_STYLE_ITALIC = NCSTYLE_ITALIC,
     TEXT_STYLE_UNDERLINE = NCSTYLE_UNDERLINE
 } text_style_t;
 
@@ -242,4 +242,4 @@ void print_text_styled(int y, int x, const char* text, text_style_t style, uint6
  */
 void print_text_transparent(int y, int x, const char* text, text_transparency_t transparency, uint64_t ncchannel);
 
-#endif // TEXT_OUTPUT_H
+#endif// TEXT_OUTPUT_H

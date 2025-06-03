@@ -44,29 +44,29 @@ platform_type_t io_handler_get_platform(void) {
 }
 
 io_handler_t* io_handler_init(void) {
-    io_handler_t* handler = (io_handler_t*)malloc(sizeof(io_handler_t));
+    io_handler_t* handler = (io_handler_t*) malloc(sizeof(io_handler_t));
     if (!handler) {
         log_msg(ERROR, "io_handler", "Failed to allocate memory for io_handler");
         return NULL;
     }
-    
+
     // Zero-initialize the handler
     memset(handler, 0, sizeof(io_handler_t));
-    
+
     // Detect the platform
     handler->platform = io_handler_get_platform();
-    
+
     // Initialize notcurses
     notcurses_options ncopt;
     memset(&ncopt, 0, sizeof(ncopt));
-    
+
     handler->nc = notcurses_init(&ncopt, stdout);
     if (!handler->nc) {
         log_msg(ERROR, "io_handler", "Failed to initialize notcurses");
         free(handler);
         return NULL;
     }
-    
+
     handler->stdplane = notcurses_stdplane(handler->nc);
     if (!handler->stdplane) {
         log_msg(ERROR, "io_handler", "Failed to get standard plane");
@@ -74,46 +74,46 @@ io_handler_t* io_handler_init(void) {
         free(handler);
         return NULL;
     }
-    
+
     // Set background color
     ncplane_set_bg_rgb(handler->stdplane, 0x281D10);
-    
+
     // Mark as initialized
     handler->initialized = true;
-    
+
     return handler;
 }
 
 io_handler_t* io_handler_init_with_flags(uint64_t flags) {
-    io_handler_t* handler = (io_handler_t*)malloc(sizeof(io_handler_t));
+    io_handler_t* handler = (io_handler_t*) malloc(sizeof(io_handler_t));
     if (!handler) {
         log_msg(ERROR, "io_handler", "Failed to allocate memory for io_handler");
         return NULL;
     }
-    
+
     // Zero-initialize the handler
     memset(handler, 0, sizeof(io_handler_t));
-    
+
     // Detect the platform
     handler->platform = io_handler_get_platform();
-    
+
     // Initialize notcurses with custom flags and proper settings
     notcurses_options ncopt;
     memset(&ncopt, 0, sizeof(ncopt));
     ncopt.flags = flags | NCOPTION_NO_ALTERNATE_SCREEN | NCOPTION_INHIBIT_SETLOCALE;
-    // Set terminal margins 
+    // Set terminal margins
     ncopt.margin_t = 2;
     ncopt.margin_r = 2;
     ncopt.margin_b = 2;
     ncopt.margin_l = 2;
-    
+
     handler->nc = notcurses_init(&ncopt, stdout);
     if (!handler->nc) {
         log_msg(ERROR, "io_handler", "Failed to initialize notcurses");
         free(handler);
         return NULL;
     }
-    
+
     handler->stdplane = notcurses_stdplane(handler->nc);
     if (!handler->stdplane) {
         log_msg(ERROR, "io_handler", "Failed to get standard plane");
@@ -121,13 +121,13 @@ io_handler_t* io_handler_init_with_flags(uint64_t flags) {
         free(handler);
         return NULL;
     }
-    
+
     // Set background color
     ncplane_set_bg_rgb(handler->stdplane, 0x281D10);
-    
+
     // Mark as initialized
     handler->initialized = true;
-    
+
     return handler;
 }
 
@@ -135,7 +135,7 @@ bool io_handler_render(io_handler_t* handler) {
     if (!handler || !handler->nc || !handler->initialized) {
         return false;
     }
-    
+
     return notcurses_render(handler->nc) >= 0;
 }
 
@@ -143,13 +143,13 @@ void io_handler_shutdown(io_handler_t* handler) {
     if (!handler) {
         return;
     }
-    
+
     if (handler->nc) {
         notcurses_stop(handler->nc);
         handler->nc = NULL;
         handler->stdplane = NULL;
     }
-    
+
     handler->initialized = false;
     free(handler);
 }
@@ -159,9 +159,9 @@ int init_io_handler(void) {
     // Use the new structured approach
     gio = io_handler_init();
     if (!gio) {
-        return 1; // Error code
+        return 1;// Error code
     }
-    
+
     // Initialize input handler (which starts its own thread)
     if (!init_input_handler(gio->nc)) {
         log_msg(ERROR, "io_handler", "Failed to initialize input handler");

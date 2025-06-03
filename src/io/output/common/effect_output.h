@@ -1,32 +1,32 @@
 #ifndef EFFECT_OUTPUT_H
 #define EFFECT_OUTPUT_H
 
+#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <notcurses/notcurses.h>
 
 /**
  * Effect types for visual enhancements
  */
 typedef enum effect_type {
-    EFFECT_FADE,     // Fade in/out
-    EFFECT_PULSE,    // Pulse colors
-    EFFECT_FLASH,    // Flash briefly
-    EFFECT_BLINK     // Toggle visibility
+    EFFECT_FADE, // Fade in/out
+    EFFECT_PULSE,// Pulse colors
+    EFFECT_FLASH,// Flash briefly
+    EFFECT_BLINK // Toggle visibility
 } effect_type_t;
 
 /**
  * Effect state for tracking effect progress
  */
 typedef struct effect_state {
-    effect_type_t type;        // Type of effect
-    struct ncplane* plane;     // Target plane
-    int duration_ms;           // Total duration in milliseconds
-    int elapsed_ms;            // Elapsed time in milliseconds
-    uint64_t start_channels;   // Starting channels
-    uint64_t end_channels;     // Ending channels (for fades)
-    bool active;               // Is the effect currently active
-    struct effect_state* next; // For linked list of effects
+    effect_type_t type;       // Type of effect
+    struct ncplane* plane;    // Target plane
+    int duration_ms;          // Total duration in milliseconds
+    int elapsed_ms;           // Elapsed time in milliseconds
+    uint64_t start_channels;  // Starting channels
+    uint64_t end_channels;    // Ending channels (for fades)
+    bool active;              // Is the effect currently active
+    struct effect_state* next;// For linked list of effects
 } effect_state_t;
 
 /**

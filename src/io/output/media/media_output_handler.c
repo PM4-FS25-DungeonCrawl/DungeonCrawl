@@ -79,7 +79,6 @@ void destroy_media(loaded_visual_t* media) {
 
 /**\n * @brief Force a refresh of the media display\n * @return bool indicating success or failure\n */
 bool refresh_media_display(void) {
-
     // Force a redraw of the terminal with error checking
     bool result = notcurses_render(gio->nc);
 
@@ -252,7 +251,7 @@ loaded_visual_t* ready_media(const char* filename, int x, int y, int height, int
     // Clean up existing plane if needed
     if (resource->plane) {
         ncplane_erase(resource->plane);// Clear contents first
-        notcurses_render(gio->nc);          // Update display
+        notcurses_render(gio->nc);     // Update display
         ncplane_destroy(resource->plane);
         resource->plane = NULL;
     }
@@ -321,7 +320,7 @@ bool reload_media_after_resize(void) {
     }
 
     bool all_successful = true;
-    
+
     // Reload all currently loaded resources
     for (int i = 0; i < resource_count; i++) {
         if (resources[i].is_loaded) {
@@ -330,26 +329,26 @@ bool reload_media_after_resize(void) {
                 ncplane_destroy(resources[i].plane);
                 resources[i].plane = NULL;
             }
-            
+
             // If this was a fullscreen media, recalculate dimensions
             if (resources[i].options.scaling == NCSCALE_STRETCH) {
                 int screen_width, screen_height;
                 if (get_screen_dimensions(&screen_width, &screen_height)) {
                     // Update options for new screen size
-                    if (resources[i].options.leny == (unsigned int)screen_height && 
-                        resources[i].options.lenx == (unsigned int)screen_width) {
+                    if (resources[i].options.leny == (unsigned int) screen_height &&
+                        resources[i].options.lenx == (unsigned int) screen_width) {
                         // This was fullscreen, update to new dimensions
                         resources[i].options.leny = screen_height;
                         resources[i].options.lenx = screen_width;
                     }
                 }
             }
-            
+
             // The visual itself doesn't need reloading, just the plane
             // will be recreated on next render
         }
     }
-    
+
     log_msg(DEBUG, "media_output", "Media resources prepared for terminal resize");
     return all_successful;
 }
@@ -378,7 +377,7 @@ bool media_output_render(loaded_visual_t* media) {
     if (!media->plane) {
         // Set the plane to be a child of the standard plane
         media->options.n = gio->stdplane;
-        
+
         // Create the plane using the visual
         media->plane = ncvisual_blit(gio->nc, media->visual, &media->options);
         if (!media->plane) {
@@ -447,12 +446,12 @@ bool media_output_can_display_images(void) {
     // Check if we can create a visual from a simple test
     // We'll check if the terminal supports any image blitting
     bool supports_images = false;
-    
+
     // Check various blitters that support images
     if (notcurses_check_pixel_support(gio->nc) > 0) {
-        supports_images = true; // Pixel graphics supported
+        supports_images = true;// Pixel graphics supported
     } else if (notcurses_canopen_images(gio->nc)) {
-        supports_images = true; // Image loading supported
+        supports_images = true;// Image loading supported
     }
 
     return supports_images;
@@ -471,7 +470,7 @@ bool media_output_can_display_videos(void) {
     // Video support typically requires the same capabilities as images
     // plus the ability to decode video formats
     bool supports_videos = false;
-    
+
     // Check if we have image support first (prerequisite for video)
     if (media_output_can_display_images()) {
         // Check if notcurses was compiled with video support
@@ -507,15 +506,15 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
             visual->options.scaling = NCSCALE_SCALE_HIRES;
             if (target_width > 0 && target_height > 0) {
                 // Calculate aspect-preserving dimensions
-                double aspect_ratio = (double)visual->og_width / visual->og_height;
+                double aspect_ratio = (double) visual->og_width / visual->og_height;
                 int calc_width = target_width;
-                int calc_height = (int)(target_width / aspect_ratio);
-                
+                int calc_height = (int) (target_width / aspect_ratio);
+
                 if (calc_height > target_height) {
                     calc_height = target_height;
-                    calc_width = (int)(target_height * aspect_ratio);
+                    calc_width = (int) (target_height * aspect_ratio);
                 }
-                
+
                 visual->options.leny = calc_height;
                 visual->options.lenx = calc_width;
             } else {
@@ -559,7 +558,7 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
                 // Fallback to original dimensions
                 visual->options.leny = visual->og_height;
                 visual->options.lenx = visual->og_width;
-                log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size %dx%d", 
+                log_msg(WARNING, "media_output", "Could not get screen dimensions, using original size %dx%d",
                         visual->og_width, visual->og_height);
             }
             break;
@@ -576,19 +575,19 @@ void setup_scaling_options(loaded_visual_t* visual, scale_type_t scale_type,
     // Set blitter based on scaling type for better quality
     switch (scale_type) {
         case SCALE_CELL:
-            visual->options.blitter = NCBLIT_1x1;  // ASCII for single cell
+            visual->options.blitter = NCBLIT_1x1;// ASCII for single cell
             break;
         case SCALE_FULLSCREEN:
         case SCALE_STRETCH:
-            visual->options.blitter = NCBLIT_PIXEL; // Best quality for large images
+            visual->options.blitter = NCBLIT_PIXEL;// Best quality for large images
             break;
         default:
-            visual->options.blitter = NCBLIT_2x2;   // Good balance for most cases
+            visual->options.blitter = NCBLIT_2x2;// Good balance for most cases
             break;
     }
 
     log_msg(DEBUG, "media_output", "Scaling setup: type=%d, target=%dx%d, result=%dx%d, scaling=%d, blitter=%d",
-            scale_type, target_width, target_height, 
+            scale_type, target_width, target_height,
             visual->options.lenx, visual->options.leny,
             visual->options.scaling, visual->options.blitter);
 }
@@ -608,12 +607,12 @@ bool directory_exists(const char* path) {
     }
 
     struct stat stat_buf;
-    
+
     // Use stat to check if the path exists and is a directory
     if (stat(path, &stat_buf) == 0) {
         return S_ISDIR(stat_buf.st_mode);
     }
-    
+
     return false;
 }
 

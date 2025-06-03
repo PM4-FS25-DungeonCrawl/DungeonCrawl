@@ -1,4 +1,3 @@
-
 #include "text_output.h"
 
 #include "../../../common.h"
@@ -233,15 +232,15 @@ bool prompt_player_name(char* name_buffer) {
     // Use the existing get_text_input function with appropriate parameters
     const char* prompt = "Welcome, brave adventurer!";
     const char* instruction = "Enter your name (press Enter to confirm, C to cancel):";
-    
+
     bool success = get_text_input(prompt, name_buffer, MAX_NAME_LENGTH, instruction, dialog_y, dialog_x);
-    
+
     // Validate the name
     if (success && strlen(name_buffer) == 0) {
         // If empty name was entered, use default
         snprintf(name_buffer, MAX_NAME_LENGTH, "Ash Ketchup");
     }
-    
+
     return success;
 }
 
@@ -260,7 +259,7 @@ static uint64_t apply_transparency(uint64_t channel, text_transparency_t transpa
             channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
             break;
         case TEXT_TRANSPARENCY_BACKGROUND_HEAVY:
-            // 75% background visibility  
+            // 75% background visibility
             channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
             break;
         case TEXT_TRANSPARENCY_NONE:
@@ -275,9 +274,9 @@ static int calculate_aligned_x(int base_x, const char* text, text_align_t alignm
     if (!text || width <= 0) {
         return base_x;
     }
-    
+
     int text_len = strlen(text);
-    
+
     switch (alignment) {
         case TEXT_ALIGN_CENTER:
             return base_x + (width - text_len) / 2;
@@ -299,22 +298,22 @@ void print_text_formatted(int y, int x, const char* text, uint64_t ncchannel,
 
     // Apply transparency to channel
     uint64_t modified_channel = apply_transparency(ncchannel, transparency);
-    
+
     // Calculate aligned X position
     int aligned_x = (width > 0) ? calculate_aligned_x(x, text, alignment, width) : x;
-    
+
     // Set the channels and styles
     ncplane_set_channels(gio->stdplane, modified_channel);
     ncplane_set_styles(gio->stdplane, style);
-    
+
     // Print the text
     if (width > 0 && alignment != TEXT_ALIGN_LEFT) {
         // Use notcurses alignment function for non-left alignment - cast to suppress warning
-        ncplane_putstr_aligned(gio->stdplane, y, (ncalign_e)alignment, text);
+        ncplane_putstr_aligned(gio->stdplane, y, (ncalign_e) alignment, text);
     } else {
         ncplane_putstr_yx(gio->stdplane, y, aligned_x, text);
     }
-    
+
     // Reset styles to normal
     ncplane_set_styles(gio->stdplane, TEXT_STYLE_NORMAL);
 }

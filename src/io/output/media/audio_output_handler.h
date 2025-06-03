@@ -9,22 +9,22 @@
  */
 typedef enum audio_format {
     AUDIO_FORMAT_UNKNOWN = 0,
-    AUDIO_FORMAT_WAV,    // WAV format
-    AUDIO_FORMAT_MP3,    // MP3 format
-    AUDIO_FORMAT_OGG     // OGG Vorbis format
+    AUDIO_FORMAT_WAV,// WAV format
+    AUDIO_FORMAT_MP3,// MP3 format
+    AUDIO_FORMAT_OGG // OGG Vorbis format
 } audio_format_t;
 
 /**
  * Audio instance structure
  */
 typedef struct audio_instance {
-    void* handle;            // Backend-specific handle
-    char* filename;          // Path to audio file
-    bool is_playing;         // Is audio currently playing
-    bool is_looping;         // Should audio loop when finished
-    float volume;            // Volume level (0.0 - 1.0)
-    int channel;             // Audio channel (for mixing)
-    audio_format_t format;   // Audio format
+    void* handle;         // Backend-specific handle
+    char* filename;       // Path to audio file
+    bool is_playing;      // Is audio currently playing
+    bool is_looping;      // Should audio loop when finished
+    float volume;         // Volume level (0.0 - 1.0)
+    int channel;          // Audio channel (for mixing)
+    audio_format_t format;// Audio format
 } audio_instance_t;
 
 /**

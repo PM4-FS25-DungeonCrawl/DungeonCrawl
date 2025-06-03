@@ -5,7 +5,7 @@
 #include "input_handler.h"
 
 #include "../../logging/logger.h"
-#include "../io_handler.h"// Include io_handler.h to access global nc
+#include "../io_handler.h"                  // Include io_handler.h to access global nc
 #include "../output/common/output_handler.h"// For handle_screen_resize
 
 #include <stdbool.h>
@@ -116,29 +116,29 @@ static bool check_and_handle_resize(void) {
     if (!get_screen_dimensions(&current_width, &current_height)) {
         return false;
     }
-    
+
     if (!screen_size_initialized) {
         last_screen_width = current_width;
         last_screen_height = current_height;
         screen_size_initialized = true;
         return false;
     }
-    
+
     if (current_width != last_screen_width || current_height != last_screen_height) {
         log_msg(DEBUG, "input_handler", "Screen resize detected: %dx%d -> %dx%d",
                 last_screen_width, last_screen_height, current_width, current_height);
-        
+
         last_screen_width = current_width;
         last_screen_height = current_height;
-        
+
         if (!handle_screen_resize()) {
             log_msg(ERROR, "input_handler", "Failed to handle screen resize");
             return false;
         }
-        
+
         return true;
     }
-    
+
     return false;
 }
 
@@ -209,7 +209,7 @@ bool get_input_blocking(input_event_t* event) {
             memset(&event->raw_input, 0, sizeof(ncinput));
             return true;
         }
-        
+
         uint32_t ret = notcurses_get_blocking(gio->nc, &raw_input);
         if (ret <= 0) {
             // Error or no input
@@ -224,7 +224,7 @@ bool get_input_blocking(input_event_t* event) {
         // Translate and fill the event structure
         event->type = translate_input(&raw_input);
         event->raw_input = raw_input;
-        
+
         return true;
     }
 }
@@ -265,7 +265,7 @@ bool get_input_nonblocking(input_event_t* event) {
     // Translate and fill the event structure
     event->type = translate_input(&raw_input);
     event->raw_input = raw_input;
-    
+
     return true;
 }
 

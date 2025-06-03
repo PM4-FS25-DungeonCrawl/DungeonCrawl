@@ -22,7 +22,7 @@
 // Forward declarations for internal functions
 static bool display_image(loaded_visual_t* resource);
 
-static bool display_animation(loaded_visual_t *resource, float fps, bool loop);
+static bool display_animation(loaded_visual_t* resource, float fps, bool loop);
 
 /* =========================================================================
  * PNG DISPLAY FUNCTIONS
@@ -298,15 +298,15 @@ static bool display_image(loaded_visual_t* resource) {
     return true;
 }
 
-static bool display_animation(loaded_visual_t *resource, float fps, bool loop) {
+static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
     if (!resource || !resource->visual) {
         log_msg(ERROR, "media_output", "Invalid parameters for display_animation");
         return false;
     }
 
     // Note: fps and loop parameters are for future animation timing implementation
-    (void)fps;  // Suppress unused parameter warning
-    (void)loop; // Suppress unused parameter warning
+    (void) fps; // Suppress unused parameter warning
+    (void) loop;// Suppress unused parameter warning
 
     // Clean up existing plane if needed
     if (resource->plane) {
