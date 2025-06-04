@@ -21,7 +21,7 @@ vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
 int player_has_key = 0;
 bool first_function_call = true;
-
+int current_floor = 1;
 
 void set_player_start_pos(const int player_x, const int player_y) {
     player_pos.dx = player_x;
@@ -83,6 +83,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
                     player_has_key = 0;
                     player_pos.dx = new_x;
                     player_pos.dy = new_y;
+                    current_floor++;
                     return NEXT_FLOOR;
                 }
                 break;

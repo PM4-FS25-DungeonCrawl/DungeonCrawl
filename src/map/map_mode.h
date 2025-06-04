@@ -25,6 +25,8 @@ typedef enum {
     SHOW_INVENTORY
 } map_mode_result_t;
 
+extern int current_floor;
+
 /**
  * @brief Sets the starting position of the player.
  *
