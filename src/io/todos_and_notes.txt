@@ -1,6 +1,0 @@
-TODOS AND NOTES FOR IO HANDLING
-
-OUTPUT
-[] use ncplane_putstr_aligned(plane, int, ALIGNMENT, text)
-[] use notcurses_stop(nc) for shutdown
-[] put colors in designated colors.h file (not in common.h)

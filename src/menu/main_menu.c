@@ -7,6 +7,7 @@
 #include "../common.h"
 #include "../io/input/input_handler.h"
 #include "../io/output/common/output_handler.h"
+#include "../io/output/common/text_output.h"
 #include "../logging/logger.h"
 #include "language_menu.h"
 #include "local/main_menu_local.h"

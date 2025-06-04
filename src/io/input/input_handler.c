@@ -5,7 +5,8 @@
 #include "input_handler.h"
 
 #include "../../logging/logger.h"
-#include "../io_handler.h"// Include io_handler.h to access global nc
+#include "../io_handler.h"                  // Include io_handler.h to access global nc
+#include "../output/common/output_handler.h"// For handle_screen_resize
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -24,7 +25,7 @@
 #endif
 
 // Define the minimum time between key presses (milliseconds)
-#define KEY_DEBOUNCE_TIME_MS 20
+#define KEY_DEBOUNCE_TIME_MS 100
 
 // Structure to track input timing for debouncing
 typedef struct {
@@ -35,6 +36,11 @@ typedef struct {
 // Global input timing tracker
 static input_timing_t input_timing = {
         .first_key = true};
+
+// Track screen dimensions for resize detection
+static int last_screen_width = 0;
+static int last_screen_height = 0;
+static bool screen_size_initialized = false;
 
 /**
  * @brief Calculate time difference in milliseconds
@@ -69,6 +75,9 @@ input_t translate_input(const ncinput* raw_input) {
         return INPUT_QUIT;
     }
 
+    // Check for resize event (in older notcurses versions, resize might be detected differently)
+    // For now, we'll handle resize through other means since NCTYPE_RESIZE may not be available
+
     // Check if this is a key event (allow both NCTYPE_UNKNOWN and NCTYPE_PRESS)
     if (raw_input->evtype == NCTYPE_PRESS || raw_input->evtype == NCTYPE_UNKNOWN) {
         // Arrow keys for navigation
@@ -97,14 +106,47 @@ input_t translate_input(const ncinput* raw_input) {
     return INPUT_NONE;
 }
 
+/**
+ * @brief Check if the screen has been resized
+ * 
+ * @return true if resize was detected and handled, false otherwise
+ */
+static bool check_and_handle_resize(void) {
+    int current_width, current_height;
+    if (!get_screen_dimensions(&current_width, &current_height)) {
+        return false;
+    }
+
+    if (!screen_size_initialized) {
+        last_screen_width = current_width;
+        last_screen_height = current_height;
+        screen_size_initialized = true;
+        return false;
+    }
+
+    if (current_width != last_screen_width || current_height != last_screen_height) {
+        log_msg(DEBUG, "input_handler", "Screen resize detected: %dx%d -> %dx%d",
+                last_screen_width, last_screen_height, current_width, current_height);
+
+        last_screen_width = current_width;
+        last_screen_height = current_height;
+
+        if (!handle_screen_resize()) {
+            log_msg(ERROR, "input_handler", "Failed to handle screen resize");
+            return false;
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 bool init_input_handler(struct notcurses* notcurses_ptr) {
     if (!notcurses_ptr) {
         log_msg(ERROR, "input_handler", "Null Notcurses instance provided");
         return false;
     }
-
-    // Assign to the global variable
-    nc = notcurses_ptr;
 
     // Initialize input timing
     input_timing.first_key = true;
@@ -145,7 +187,7 @@ static bool should_process_key() {
 }
 
 bool get_input_blocking(input_event_t* event) {
-    if (!event || !nc) {
+    if (!event || !gio || !gio->nc) {
         log_msg(ERROR, "input_handler", "Null event pointer or uninitialized handler");
         return false;
     }
@@ -160,7 +202,15 @@ bool get_input_blocking(input_event_t* event) {
 
     // Loop until we get a valid input or notcurses returns an error
     while (true) {
-        uint32_t ret = notcurses_get_blocking(nc, &raw_input);
+        // Check for resize before getting input
+        if (check_and_handle_resize()) {
+            // Return a resize event
+            event->type = INPUT_RESIZE;
+            memset(&event->raw_input, 0, sizeof(ncinput));
+            return true;
+        }
+
+        uint32_t ret = notcurses_get_blocking(gio->nc, &raw_input);
         if (ret <= 0) {
             // Error or no input
             return false;
@@ -174,12 +224,13 @@ bool get_input_blocking(input_event_t* event) {
         // Translate and fill the event structure
         event->type = translate_input(&raw_input);
         event->raw_input = raw_input;
+
         return true;
     }
 }
 
 bool get_input_nonblocking(input_event_t* event) {
-    if (!event || !nc) {
+    if (!event || !gio || !gio->nc) {
         log_msg(ERROR, "input_handler", "Null event pointer or uninitialized handler");
         return false;
     }
@@ -192,7 +243,15 @@ bool get_input_nonblocking(input_event_t* event) {
     event->type = INPUT_NONE;
     memset(&event->raw_input, 0, sizeof(ncinput));
 
-    uint32_t ret = notcurses_get_nblock(nc, &raw_input);
+    // Check for resize first
+    if (check_and_handle_resize()) {
+        // Return a resize event
+        event->type = INPUT_RESIZE;
+        memset(&event->raw_input, 0, sizeof(ncinput));
+        return true;
+    }
+
+    uint32_t ret = notcurses_get_nblock(gio->nc, &raw_input);
     if (ret <= 0) {
         // No input available
         return false;
@@ -206,9 +265,10 @@ bool get_input_nonblocking(input_event_t* event) {
     // Translate and fill the event structure
     event->type = translate_input(&raw_input);
     event->raw_input = raw_input;
+
     return true;
 }
 
 void shutdown_input_handler(void) {
-    nc = NULL;
+    // Nothing to do here anymore, the actual cleanup will be done in io_handler_shutdown
 }

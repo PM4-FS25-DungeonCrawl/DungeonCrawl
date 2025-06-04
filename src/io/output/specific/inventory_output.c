@@ -11,6 +11,7 @@
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 
 
 vector2d_t draw_inventory_view(const vector2d_t anchor, const character_t* player) {

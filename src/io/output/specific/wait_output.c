@@ -4,9 +4,11 @@
  */
 #include "wait_output.h"
 
+#include "../../../game_data.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 #include "../media/media_files.h"
 #include "../media/media_output.h"
 
@@ -24,7 +26,6 @@
 static char loading_message[256] = "";
 
 
-// TODO: Attention multiple pre-declaration! io_handler.h & wait_output.h
 void draw_loading_screen(const char* text) {
     if (!text) {
         log_msg(ERROR, "Wait Output", "Loading screen text is NULL");
@@ -125,16 +126,16 @@ void draw_welcome_screen(void) {
     // Clear the screen
     clear_screen();
 
-    // Draw welcome message
-    const char* welcome_msg = "Welcome to Dungeon Crawl! Press any key to continue...";
+    // Create personalized welcome message
+    char welcome_msg[256];
+    const char* player_name = get_player_name();
+    snprintf(welcome_msg, sizeof(welcome_msg), "Welcome to Dungeon Crawl, %s! Press any key to continue...", player_name);
+
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;
     int msg_y = height / 2;
 
     print_text_default(msg_y, msg_x, welcome_msg);
-
-    // display image stretched to specific size
-    display_image_at(GOBLIN_PNG, 20, msg_y - 10, 20, 25, SCALE_STRETCH);
 
     // Render the frame using centralized IO handler
     render_frame();

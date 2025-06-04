@@ -8,6 +8,7 @@
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 #include "../src/map/local/map_mode_local.h"
 
 

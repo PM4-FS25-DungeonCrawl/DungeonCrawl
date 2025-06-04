@@ -44,7 +44,6 @@ void shutdown_damage_local(void) {
 bool roll_hit(const int attacker_dex, const int defender_dex) {
     const int attacker_roll = roll_dice(D20);
     const int defender_roll = roll_dice(D20);
-    bool hit = false;
 
     return attacker_roll + (attacker_dex / 2) > defender_roll + (defender_dex / 2);
 }
@@ -63,6 +62,9 @@ int deal_damage(character_t* character, damage_type_t damage_type, const int dam
     // negative damage resistance leads to more damage
     // damage += character->resistance[damage_type].value;
     // damage -= character->current_stats.armor;
+
+    // Suppress unused parameter warning - damage_type will be used when resistance is implemented
+    (void) damage_type;
 
     if (damage < character->current_resources.health) {
         character->current_resources.health -= damage;

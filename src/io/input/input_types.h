@@ -29,7 +29,8 @@ typedef enum {
     INPUT_INVENTORY,// Show inventory (I key)
 
     // Special inputs
-    INPUT_QUIT,// Ctrl+C or other quit command
+    INPUT_QUIT,  // Ctrl+C or other quit command
+    INPUT_RESIZE,// Terminal resize event
 
     // No input received
     INPUT_NONE

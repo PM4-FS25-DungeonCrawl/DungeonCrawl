@@ -5,6 +5,9 @@
 #ifndef WAIT_OUTPUT_H
 #define WAIT_OUTPUT_H
 
+// Define constants for display timing
+#define LAUNCH_SCREEN_MIN_DISPLAY_TIME_MS 2000// Minimum time to display launch screen (2 seconds)
+
 /**
  * @brief Draw a loading screen with animation
  *

@@ -1,48 +1,90 @@
-../src/combat/damage.c:114:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  114 |     return rand() % dice_size + 1;
+../src/combat/damage.c:116:12: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  116 |     return rand() % dice_size + 1;
       |            ^
-../src/game.c:228:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
-  228 |         case PLAYER_LOST:
+../src/game.c:237:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
+  237 |         case PLAYER_LOST:
       |         ^
-../src/game.c:234:18: note: last of these clones ends here
-  234 |             break;
+../src/game.c:243:18: note: last of these clones ends here
+  243 |             break;
       |                  ^
 ../src/io/input/input_handler.h:21:6: warning: function 'init_input_handler' has a definition with different parameter names [readability-inconsistent-declaration-parameter-name]
    21 | bool init_input_handler(struct notcurses* nc);
       |      ^
-../src/io/input/input_handler.c:100:6: note: the definition seen here
-  100 | bool init_input_handler(struct notcurses* notcurses_ptr) {
+../src/io/input/input_handler.c:145:6: note: the definition seen here
+  145 | bool init_input_handler(struct notcurses* notcurses_ptr) {
       |      ^
 ../src/io/input/input_handler.h:21:6: note: differing parameters are named here: ('nc'), in definition: ('notcurses_ptr')
    21 | bool init_input_handler(struct notcurses* nc);
       |      ^                                    ~~
       |                                           notcurses_ptr
-../src/io/output/common/output_handler.c:213:37: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  213 |             buffer[text_length++] = key_id;
-      |                                     ^
-../src/io/output/common/output_handler.c:264:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  264 |     *width = ncplane_dim_x(stdplane);
+../src/io/output/common/effect_output.c:14:22: warning: redundant 'gio' declaration [readability-redundant-declaration]
+   14 | extern io_handler_t* gio;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/io/output/common/../../io_handler.h:42:22: note: previously declared here
+   42 | extern io_handler_t* gio;
+      |                      ^
+../src/io/output/common/effect_output.c:21:23: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+   21 |     return (uint8_t) (start + (end - start) * progress);
+      |                       ^
+../src/io/output/common/effect_output.c:21:31: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+   21 |     return (uint8_t) (start + (end - start) * progress);
+      |                               ^
+../src/io/output/common/effect_output.c:256:60: warning: narrowing conversion from 'int' to 'float' [cppcoreguidelines-narrowing-conversions]
+  256 |             float progress = (float) current->elapsed_ms / current->duration_ms;
+      |                                                            ^
+../src/io/output/common/effect_output.c:277:41: warning: narrowing conversion from 'double' to 'float' [cppcoreguidelines-narrowing-conversions]
+  277 |                     float pulse = (sinf(progress * M_PI * 2) + 1) / 2.0f;
+      |                                         ^
+../src/io/output/common/output_handler.c:131:14: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  131 |     *width = ncplane_dim_x(gio->stdplane);
       |              ^
-../src/io/output/common/output_handler.c:265:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  265 |     *height = ncplane_dim_y(stdplane);
+../src/io/output/common/output_handler.c:132:15: warning: narrowing conversion from 'unsigned int' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  132 |     *height = ncplane_dim_y(gio->stdplane);
       |               ^
-../src/io/output/specific/wait_output.c:46:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   46 |     int msg_len = strlen(loading_message);
+../src/io/output/common/text_output.c:182:37: warning: narrowing conversion from 'uint32_t' (aka 'unsigned int') to signed type 'char' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  182 |             buffer[text_length++] = key_id;
+      |                                     ^
+../src/io/output/common/text_output.c:253:9: warning: switch has 3 consecutive identical branches [bugprone-branch-clone]
+  253 |         case TEXT_TRANSPARENCY_BACKGROUND_LIGHT:
+      |         ^
+../src/io/output/common/text_output.c:264:18: note: last of these clones ends here
+  264 |             break;
+      |                  ^
+../src/io/output/common/text_output.c:278:20: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  278 |     int text_len = strlen(text);
+      |                    ^
+../src/io/output/media/audio_output_handler.c:12:22: warning: redundant 'gio' declaration [readability-redundant-declaration]
+   12 | extern io_handler_t* gio;
+      | ~~~~~~~~~~~~~~~~~~~~~^~~~
+../src/io/output/common/../../io_handler.h:42:22: note: previously declared here
+   42 | extern io_handler_t* gio;
+      |                      ^
+../src/io/output/media/media_output_handler.c:451:53: warning: repeated branch body in conditional chain [bugprone-branch-clone]
+  451 |     if (notcurses_check_pixel_support(gio->nc) > 0) {
+      |                                                     ^
+../src/io/output/media/media_output_handler.c:453:6: note: end of the original
+  453 |     } else if (notcurses_canopen_images(gio->nc)) {
+      |      ^
+../src/io/output/media/media_output_handler.c:453:51: note: clone 1 starts here
+  453 |     } else if (notcurses_canopen_images(gio->nc)) {
+      |                                                   ^
+../src/io/output/specific/wait_output.c:47:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   47 |     int msg_len = strlen(loading_message);
       |                   ^
-../src/io/output/specific/wait_output.c:76:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   76 |     int title_len = strlen(title);
+../src/io/output/specific/wait_output.c:77:21: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   77 |     int title_len = strlen(title);
       |                     ^
-../src/io/output/specific/wait_output.c:87:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   87 |     int version_len = strlen(version);
+../src/io/output/specific/wait_output.c:88:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   88 |     int version_len = strlen(version);
       |                       ^
-../src/io/output/specific/wait_output.c:88:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   88 |     int copyright_len = strlen(copyright);
+../src/io/output/specific/wait_output.c:89:25: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   89 |     int copyright_len = strlen(copyright);
       |                         ^
-../src/io/output/specific/wait_output.c:98:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-   98 |     int loading_len = strlen(loading_msg);
+../src/io/output/specific/wait_output.c:99:23: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+   99 |     int loading_len = strlen(loading_msg);
       |                       ^
-../src/io/output/specific/wait_output.c:130:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
-  130 |     int msg_len = strlen(welcome_msg);
+../src/io/output/specific/wait_output.c:134:19: warning: narrowing conversion from 'unsigned long' to signed type 'int' is implementation-defined [cppcoreguidelines-narrowing-conversions]
+  134 |     int msg_len = strlen(welcome_msg);
       |                   ^
 ../src/item/gear.c:17:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
    17 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
@@ -54,5 +96,5 @@
 ../src/main.c:86:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
    86 |     srand(time(NULL));
       |     ^
-Suppressed 308832 warnings (308728 in non-user code, 104 with check filters).
+Suppressed 332590 warnings (332470 in non-user code, 120 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

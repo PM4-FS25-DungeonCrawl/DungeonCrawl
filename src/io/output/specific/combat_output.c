@@ -11,11 +11,15 @@
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
+#include "../common/text_output.h"
 #include "../media/media_output.h"
 
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy,
                             const char* enemy_sprite, const int sprite_height, const bool red_enemy_sprite) {
     clear_screen();
+
+    // Suppress unused parameter warning - red_enemy_sprite will be used for future sprite coloring
+    (void) red_enemy_sprite;
 
     // Copy of the anchor
     vector2d_t vec = {anchor.dx, anchor.dy};

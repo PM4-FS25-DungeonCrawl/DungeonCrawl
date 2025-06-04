@@ -12,6 +12,7 @@
 
 #include <stddef.h>
 #include <stdio.h>
+#include <string.h>
 
 // === External Global Variables ===
 ability_table_t* ability_table;
@@ -83,4 +84,11 @@ int reset_player() {
     player->base_attack = &ability_table->abilities[PUNCH];
     add_ability(player, player->base_attack);
     return 0;
+}
+
+const char* get_player_name(void) {
+    if (player == NULL || strlen(player->name) == 0) {
+        return "Hero";
+    }
+    return player->name;
 }
