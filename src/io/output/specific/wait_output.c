@@ -137,9 +137,6 @@ void draw_welcome_screen(void) {
 
     print_text_default(msg_y, msg_x, welcome_msg);
 
-    // display image stretched to specific size
-    display_image_at(GOBLIN_PNG, 20, msg_y - 10, 20, 25, SCALE_STRETCH);
-
     // Render the frame using centralized IO handler
     render_frame();
 
