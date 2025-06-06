@@ -1,75 +1,93 @@
+/**
+ * @file inventory_mode.c
+ * @brief Implements functionality for the inventory mode.
+ */
 #include "inventory_mode.h"
 
 #include "../character/character.h"
 #include "../common.h"
-#include "../game.h"
+#include "../io/input/input_handler.h"
+#include "../io/output/specific/inventory_output.h"
 #include "../item/gear.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
+#include "../item/local/gear_local.h"
+#include "../item/local/potion_local.h"
+#include "../local/local_handler.h"
 #include "../src/combat/combat_mode.h"
-#include "./draw/draw_inventory_mode.h"
-
-#include <notcurses/notcurses.h>
-#include <stdbool.h>
+#include "local/inventory_mode_local.h"
 
 // === Internal Functions ===
-void collect_inventory_gear_options(gear_t* gear_inventory[], const int count);
-void collect_inventory_equipment_options(gear_t* equipment[]);
-
 /**
- * @brief Updates the localized strings used in the inventory mode menus.
- *
- * This function populates the localized string buffers with values retrieved
- * from the localization system. These strings are used in various menus within
- * the inventory mode, such as the main menu, ability menu, and potion menu. It also
- * updates messages like the tail message and inventory-specific messages.
- *
- * @note This function is automatically called during initialization of inventory
- * mode to ensure that all strings are properly localized before use. It is
- * also registered as an observer to keep menu strings updated whenever the locale changes.
+ * @brief Checks if the equipment can be equipped in case it occupies a hands slot.
+ * @param player The player character.
+ * @param gear The gear to check.
+ * @return bool True if the gear can be equipped, false otherwise.
  */
-void update_inventory_local(void);
+bool can_equip_gear(character_t* player, gear_t* gear);
+/**
+ * @brief Checks which options are available in the inventory menu for display.
+ * @param gear_inventory The gear inventory to check.
+ * @param count The number of items in the gear inventory.
+ */
+void collect_inventory_gear_options(gear_t* gear_inventory[], int count);
+/**
+ * @brief Checks which options are available in the equipment menu for display.
+ * @param equipment The equipment to check.
+ */
+void collect_inventory_equipment_options(gear_t* equipment[]);
+/**
+ * @brief Checks which options are available in the potion menu for display.
+ * @param potion_inventory The potion inventory to check.
+ * @param count The number of items in the potion inventory.
+ */
+void collect_inv_potion_options(potion_t* potion_inventory[], int count);
 
 // === Intern Global Variables ===
 vector2d_t inventory_view_anchor = {1, 1};
 internal_inventory_state_t inventory_state = INVENTORY_MENU;
 
-string_max_t* inventory_gear_options;
-string_max_t* inventory_equipment_options;
-string_max_t* inventory_potion_options;
+int inventory_gear_count = 0;
+int inventory_potion_count = 0;
 
-/**
- * @brief Initializes the inventory mode.
- */
+char** inventory_gear_options = NULL;
+char** inventory_equipment_options = NULL;
+char** inventory_potion_options = NULL;
+
 int init_inventory_mode() {
-    inventory_gear_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_GEAR_LIMIT);
-    NULL_PTR_HANDLER_RETURN(inventory_gear_options, -1, "Inventory Mode", "Failed to allocate memory for inventory gear options");
+    inventory_mode_strings = (char**) malloc(sizeof(char*) * MAX_INVENTORY_STRINGS);
+    RETURN_WHEN_NULL(inventory_mode_strings, -1, "Inventory Mode", "Failed to allocate memory for inventory mode strings");
 
-    inventory_equipment_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_SLOT);
-    NULL_PTR_HANDLER_RETURN(inventory_equipment_options, -1, "Inventory Mode", "Failed to allocate memory for inventory equipment options");
+    inventory_equipment_options = (char**) malloc(sizeof(char*) * MAX_SLOT);
+    if (inventory_equipment_options == NULL) {
+        free(inventory_mode_strings);
+        log_msg(ERROR, "Inventory Mode", "Failed to allocate memory for inventory equipment options");
+        return -1;
+    }
 
-    inventory_potion_options = memory_pool_alloc(main_memory_pool, sizeof(string_max_t) * MAX_POTION_LIMIT);
-    NULL_PTR_HANDLER_RETURN(inventory_potion_options, -1, "Inventory Mode", "Failed to allocate memory for inventory potion options");
+    // preset the strings to NULL
+    for (int i = 0; i < MAX_INVENTORY_STRINGS; i++) {
+        inventory_mode_strings[i] = NULL;
+    }
+    // preset the equipped gear options to NULL
+    for (int i = 0; i < MAX_SLOT; i++) {
+        inventory_equipment_options[i] = NULL;
+    }
 
     //update local once, so the strings are initialized
     update_inventory_local();
     //add update local function to the observer list
-    add_local_observer(update_inventory_local);
+    observe_local(update_inventory_local);
     return 0;
 }
 
-/**
- * @brief Starts the inventory mode.
- */
 inventory_result_t start_inventory(character_t* player, character_t* monster) {
     if (monster != NULL) {
         collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
         collect_inventory_equipment_options(monster->equipment);
-        collect_potion_options(inventory_potion_options, monster->potion_inventory, monster->potion_count, inmo_potion_format);
+        collect_inv_potion_options(monster->potion_inventory, monster->potion_count);
     } else {
         collect_inventory_gear_options(player->gear_inventory, player->gear_count);
         collect_inventory_equipment_options(player->equipment);
-        collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
+        collect_inv_potion_options(player->potion_inventory, player->potion_count);
     }
 
     switch (inventory_state) {
@@ -92,9 +110,6 @@ inventory_result_t start_inventory(character_t* player, character_t* monster) {
     return CONTINUE_INVENTORY;
 }
 
-/**
- * @brief Displays the main inventory menu.
- */
 internal_inventory_state_t inventory_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     const vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -106,63 +121,67 @@ internal_inventory_state_t inventory_menu(character_t* player, character_t* mons
     while (!submenu_selected) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                                local_strings[lomo_main_menu_title.idx].characters,
+                                inventory_mode_strings[LOOT_MAIN_MENU_TITLE],
                                 NULL,
-                                &local_strings[lomo_main_menu_option1.idx],
-                                MAX_INMO_MAIN_MENU_OPTION,
+                                &inventory_mode_strings[LOOT_OPTION_SHOW_GEAR],
+                                3,
                                 selected_index,
                                 NULL,
-                                local_strings[lomo_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[FINISH_LOOTING_MSG]);
         } else {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_main_menu_title.idx].characters,
+                                inventory_mode_strings[MAIN_MENU_TITLE],
                                 NULL,
-                                &local_strings[inmo_main_menu_option1.idx],
-                                MAX_INMO_MAIN_MENU_OPTION,
+                                &inventory_mode_strings[SHOW_GEAR],
+                                3,
                                 selected_index,
                                 NULL,
-                                local_strings[como_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + MAX_INMO_MAIN_MENU_OPTION) % MAX_INMO_MAIN_MENU_OPTION;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % MAX_INMO_MAIN_MENU_OPTION;
-        } else if (event.id == NCKEY_ENTER) {
-            if (selected_index == 0) {
-                new_state = INVENTORY_GEAR_MENU;
-            } else if (selected_index == 1) {
-                new_state = INVENTORY_EQUIPMENT_MENU;
-            } else if (selected_index == 2) {
-                new_state = INVENTORY_POTION_MENU;
-            }
-            submenu_selected = true;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_EXIT;
-            submenu_selected = true;
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + 3) % 3;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % 3;
+                break;
+            case INPUT_CONFIRM:
+                if (selected_index == 0) {
+                    new_state = INVENTORY_GEAR_MENU;
+                } else if (selected_index == 1) {
+                    new_state = INVENTORY_EQUIPMENT_MENU;
+                } else if (selected_index == 2) {
+                    new_state = INVENTORY_POTION_MENU;
+                }
+                submenu_selected = true;
+                break;
+            case INPUT_CANCEL:
+            case INPUT_INVENTORY:
+                new_state = INVENTORY_EXIT;
+                submenu_selected = true;
+                break;
+            default:
+                break;
         }
     }
     return new_state;
 }
 
-/**
- * @brief Displays the gear inventory menu.
- */
 internal_inventory_state_t inventory_gear_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     if (target->gear_count == 0) {
-        draw_inventory_log(anchor, local_strings[inmo_no_more_gear.idx].characters);
+        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_EMPTY_MSG]);
         return INVENTORY_MENU;
     }
 
@@ -172,71 +191,103 @@ internal_inventory_state_t inventory_gear_menu(character_t* player, character_t*
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_inventory_menu_title.idx].characters,
-                                local_strings[lomo_inventory_header_message.idx].characters,
-                                inventory_gear_options,
+                                inventory_mode_strings[INVENTORY_MENU_TITLE],
+                                inventory_mode_strings[LOOT_GEAR_MENU_HEADER],
+                                inventory_gear_options,// TODO
                                 monster->gear_count,
                                 selected_index,
                                 NULL,
-                                local_strings[lomo_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_inventory_menu_title.idx].characters,
-                                local_strings[inmo_inventory_header_message.idx].characters,
-                                inventory_gear_options,
+                                inventory_mode_strings[INVENTORY_MENU_TITLE],
+                                inventory_mode_strings[INVENTORY_MENU_HEADER],
+                                inventory_gear_options,// TODO
                                 player->gear_count,
                                 selected_index,
-                                local_strings[inmo_submenu_key_message.idx].characters,
-                                local_strings[como_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[INVENTORY_DROP_GEAR_MSG],
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+        // For character keys like 'd'/'D', we need to check the raw input value
+        uint32_t key_id = input_event.raw_input.id;
 
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + player->gear_count) % player->gear_count;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % player->gear_count;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (player->gear_count < MAX_GEAR_LIMIT) {
-                    add_gear(player, monster->gear_inventory[selected_index]);
-                    remove_gear(monster, monster->gear_inventory[selected_index]);
-                    collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + target->gear_count) % target->gear_count;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % target->gear_count;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (player->gear_count < MAX_GEAR_LIMIT) {
+                        add_gear(player, monster->gear_inventory[selected_index]);
+                        remove_gear(monster, monster->gear_inventory[selected_index]);
+                        collect_inventory_gear_options(monster->gear_inventory, monster->gear_count);
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                    }
                 } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+                    if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
+                        if (can_equip_gear(player, player->gear_inventory[selected_index])) {
+                            equip_gear(player, player->gear_inventory[selected_index]);
+                            collect_inventory_gear_options(player->gear_inventory, player->gear_count);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_HANDS_SLOT_FULL]);
+                        }
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[EQUIPMENT_SLOT_FULL]);
+                    }
                 }
-            } else {
-                if (player->equipment[player->gear_inventory[selected_index]->slot] == NULL) {
-                    equip_gear(player, player->gear_inventory[selected_index]);
+                return INVENTORY_GEAR_MENU;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
+            default:
+                // Handle special character keys
+                if ((key_id == 'd' || key_id == 'D') && monster == NULL) {
+                    remove_gear(player, player->gear_inventory[selected_index]);
                     collect_inventory_gear_options(player->gear_inventory, player->gear_count);
-                } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, local_strings[inmo_no_free_equipment_slot.idx].characters);
+                    return INVENTORY_GEAR_MENU;
                 }
-            }
-            return INVENTORY_GEAR_MENU;
-        } else if ((event.id == 'd' || event.id == 'D') && monster == NULL) {
-            remove_gear(player, player->gear_inventory[selected_index]);
-            collect_inventory_gear_options(player->gear_inventory, player->gear_count);
-            return INVENTORY_GEAR_MENU;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                break;
         }
     }
     return new_state;
 }
 
 /**
- * @brief Displays the equipment inventory menu.
+ * @brief Checks wether the character can equip certain gear or not.
+ *
+ * @param player Pointer to the player.
+ * @param gear Pointer to the gear to check.
+ * @return true if player can equip the gear false if not.
  */
+bool can_equip_gear(character_t* player, gear_t* gear) {
+    if (gear->slot == SLOT_BOTH_HANDS) {
+        if (player->equipment[SLOT_LEFT_HAND] != NULL || player->equipment[SLOT_RIGHT_HAND] != NULL) {
+            return false;
+        }
+    } else if (gear->slot == SLOT_LEFT_HAND || gear->slot == SLOT_RIGHT_HAND) {
+        if (player->equipment[SLOT_BOTH_HANDS] != NULL) {
+            return false;
+        }
+    }
+    return true;
+}
+
 internal_inventory_state_t inventory_equipment_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
@@ -248,79 +299,82 @@ internal_inventory_state_t inventory_equipment_menu(character_t* player, charact
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_equipment_menu_title.idx].characters,
-                                local_strings[lomo_equipment_header_message.idx].characters,
-                                inventory_equipment_options,
+                                inventory_mode_strings[EQUIPMENT_MENU_TITLE],
+                                inventory_mode_strings[LOOT_EQUIPMENT_MENU_HEADER],
+                                inventory_equipment_options,// TODO
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                local_strings[lomo_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_equipment_menu_title.idx].characters,
-                                local_strings[inmo_equipment_header_message.idx].characters,
-                                inventory_equipment_options,
+                                inventory_mode_strings[EQUIPMENT_MENU_TITLE],
+                                inventory_mode_strings[EQUIPMENT_MENU_HEADER],
+                                inventory_equipment_options,// TODO
                                 MAX_SLOT,
                                 selected_index,
                                 NULL,
-                                local_strings[como_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
-
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % MAX_SLOT;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (monster->equipment[selected_index] != NULL) {
-                    if (player->gear_count < MAX_GEAR_LIMIT) {
-                        add_gear(player, monster->equipment[selected_index]);
-                        remove_equipped_gear(monster, (gear_slot_t) selected_index);
-                        collect_inventory_equipment_options(monster->equipment);
-                    } else {
-                        anchor = draw_inventory_view(inventory_view_anchor, target);
-                        draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + MAX_SLOT) % MAX_SLOT;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % MAX_SLOT;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (monster->equipment[selected_index] != NULL) {
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            add_gear(player, monster->equipment[selected_index]);
+                            remove_equipped_gear(monster, (gear_slot_t) selected_index);
+                            collect_inventory_equipment_options(monster->equipment);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
                     }
-                    return INVENTORY_EQUIPMENT_MENU;
-                }
-            } else {
-                if (player->equipment[selected_index] != NULL) {
-                    if (player->gear_count < MAX_GEAR_LIMIT) {
-                        unequip_gear(player, (gear_slot_t) selected_index);
-                        collect_inventory_equipment_options(player->equipment);
-                    } else {
-                        anchor = draw_inventory_view(inventory_view_anchor, target);
-                        draw_inventory_log(anchor, local_strings[inmo_no_more_gear_slot.idx].characters);
+                } else {
+                    if (player->equipment[selected_index] != NULL) {
+                        if (player->gear_count < MAX_GEAR_LIMIT) {
+                            unequip_gear(player, (gear_slot_t) selected_index);
+                            collect_inventory_equipment_options(player->equipment);
+                        } else {
+                            anchor = draw_inventory_view(inventory_view_anchor, target);
+                            draw_inventory_log(anchor, inventory_mode_strings[INVENTORY_FULL_MSG]);
+                        }
+                        return INVENTORY_EQUIPMENT_MENU;
                     }
-                    return INVENTORY_EQUIPMENT_MENU;
                 }
-            }
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                break;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
+            default:
+                break;
         }
     }
     return new_state;
 }
 
-/**
- * @brief Displays the potion inventory menu.
- */
 internal_inventory_state_t inventory_potion_menu(character_t* player, character_t* monster) {
     const character_t* target = (monster != NULL) ? monster : player;
     vector2d_t anchor = draw_inventory_view(inventory_view_anchor, target);
     int selected_index = 0;
 
     if (target->potion_count == 0) {
-        draw_inventory_log(anchor, local_strings[como_no_more_potions.idx].characters);
+        draw_inventory_log(anchor, inventory_mode_strings[POTION_EMPTY_MSG]);
         return INVENTORY_MENU;
     }
 
@@ -330,84 +384,122 @@ internal_inventory_state_t inventory_potion_menu(character_t* player, character_
     while (!item_selected_or_esc) {
         if (monster != NULL) {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_potion_menu_title.idx].characters,
-                                local_strings[lomo_potion_header_message.idx].characters,
-                                inventory_potion_options,
+                                inventory_mode_strings[POTION_MENU_TITLE],
+                                inventory_mode_strings[LOOT_POTION_MENU_HEADER],
+                                inventory_potion_options,// TODO
                                 monster->potion_count,
                                 selected_index,
                                 NULL,
-                                local_strings[lomo_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[PRESS_C_RETURN]);
         } else {
             draw_inventory_menu(anchor,
-                                local_strings[inmo_potion_menu_title.idx].characters,
-                                local_strings[inmo_potion_header_message.idx].characters,
-                                inventory_potion_options,
+                                inventory_mode_strings[POTION_MENU_TITLE],
+                                inventory_mode_strings[POTION_MENU_HEADER],
+                                inventory_potion_options,// TODO
                                 player->potion_count,
                                 selected_index,
-                                local_strings[inmo_submenu_key_message.idx].characters,
-                                local_strings[como_submenu_tail_message.idx].characters);
+                                inventory_mode_strings[POTION_DROP_POTION_MSG],
+                                inventory_mode_strings[PRESS_C_RETURN]);
         }
 
         // check for input
-        ncinput event;
-        memset(&event, 0, sizeof(event));
-        notcurses_get_blocking(nc, &event);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        // skip if key event is release
-        if (!(event.evtype == NCTYPE_UNKNOWN || event.evtype == NCTYPE_PRESS)) { continue; }
+        // For character keys like 'd'/'D', we need to check the raw input value
+        uint32_t key_id = input_event.raw_input.id;
 
-        if (event.id == NCKEY_UP) {
-            selected_index = (selected_index - 1 + player->potion_count) % player->potion_count;
-        } else if (event.id == NCKEY_DOWN) {
-            selected_index = (selected_index + 1) % player->potion_count;
-        } else if (event.id == NCKEY_ENTER) {
-            if (monster != NULL) {
-                if (player->potion_count < MAX_POTION_LIMIT) {
-                    add_potion(player, monster->potion_inventory[selected_index]);
-                    remove_potion(monster, monster->potion_inventory[selected_index]);
-                    collect_potion_options(inventory_potion_options, monster->potion_inventory, monster->potion_count, inmo_potion_format);
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
+                selected_index = (selected_index - 1 + target->potion_count) % target->potion_count;
+                break;
+            case INPUT_DOWN:
+                selected_index = (selected_index + 1) % target->potion_count;
+                break;
+            case INPUT_CONFIRM:
+                if (monster != NULL) {
+                    if (player->potion_count < MAX_POTION_LIMIT) {
+                        add_potion(player, monster->potion_inventory[selected_index]);
+                        remove_potion(monster, monster->potion_inventory[selected_index]);
+                        collect_inv_potion_options(monster->potion_inventory, monster->potion_count);
+                    } else {
+                        anchor = draw_inventory_view(inventory_view_anchor, target);
+                        draw_inventory_log(anchor, inventory_mode_strings[POTION_FULL_MSG]);
+                    }
                 } else {
-                    anchor = draw_inventory_view(inventory_view_anchor, target);
-                    draw_inventory_log(anchor, local_strings[inmo_no_more_potion_slot.idx].characters);
-                }
-            } else {
-                char message[MAX_STRING_LENGTH];
-                snprintf(message, sizeof(message), local_strings[como_potion_use.idx].characters,//TODO: This method of using formats is not safe!
-                         player->name,
-                         player->potion_inventory[selected_index]->name,
-                         player->potion_inventory[selected_index]->value,
-                         potion_type_to_string(player->potion_inventory[selected_index]->effectType));
+                    char message[MAX_STRING_LENGTH];
+                    snprintf(message, sizeof(message), inventory_mode_strings[POTION_USE],//TODO: This method of using formats is not safe!
+                             player->name,
+                             potion_names[player->potion_inventory[selected_index]->effectType],
+                             player->potion_inventory[selected_index]->value,
+                             potion_type_to_string(player->potion_inventory[selected_index]->effectType));
 
-                invoke_potion_effect(player, player->potion_inventory[selected_index]);
-                anchor = draw_inventory_view(inventory_view_anchor, target);
-                draw_inventory_log(anchor, message);
-                collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
-            }
-            return INVENTORY_POTION_MENU;
-        } else if ((event.id == 'd' || event.id == 'D') && monster == NULL) {
-            remove_potion(player, player->potion_inventory[selected_index]);
-            collect_potion_options(inventory_potion_options, player->potion_inventory, player->potion_count, inmo_potion_format);
-            return INVENTORY_POTION_MENU;
-        } else if (event.id == NCKEY_ESC) {
-            new_state = INVENTORY_MENU;
-            item_selected_or_esc = true;
+                    invoke_potion_effect(player, player->potion_inventory[selected_index]);
+                    anchor = draw_inventory_view(inventory_view_anchor, target);
+                    draw_inventory_log(anchor, message);
+                    collect_inv_potion_options(player->potion_inventory, player->potion_count);
+                }
+                return INVENTORY_POTION_MENU;
+            case INPUT_CANCEL:
+                new_state = INVENTORY_MENU;
+                item_selected_or_esc = true;
+                break;
+            default:
+                // Handle special character keys
+                if ((key_id == 'd' || key_id == 'D') && monster == NULL) {
+                    remove_potion(player, player->potion_inventory[selected_index]);
+                    collect_inv_potion_options(player->potion_inventory, player->potion_count);
+                    return INVENTORY_POTION_MENU;
+                }
+                break;
         }
     }
     return new_state;
 }
 
 /**
- * @brief Collects gear inventory options for display.
+ * @brief Collects all the options for inventory gear for displaying.
+ *
+ * @param gear_inventory An array of gear.
+ * @param count Ammount of items in the array.
  */
 void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
-    for (int i = 0; i < MAX_GEAR_LIMIT; i++) {
-        memset(inventory_gear_options[i].characters, '\0', MAX_STRING_LENGTH);
+    if (inventory_gear_options != NULL) {
+        for (int i = 0; i < inventory_gear_count; i++) {
+            if (inventory_gear_options[i] != NULL) {
+                free(inventory_gear_options[i]);
+                inventory_gear_options[i] = NULL;
+            }
+        }
+        free(inventory_gear_options);
+        inventory_gear_options = NULL;
+    }
+
+    inventory_gear_count = count;
+    inventory_gear_options = (char**) malloc(count * sizeof(char*));
+    RETURN_WHEN_NULL(inventory_gear_options, , "Inventory Mode", "Failed to allocate memory for inventory gear options");
+
+    for (int i = 0; i < count; i++) {
+        inventory_gear_options[i] = (char*) malloc(MAX_STRING_LENGTH * sizeof(char));
+        if (inventory_gear_options[i] == NULL) {
+            for (int j = 0; j < i; j++) {
+                free(inventory_gear_options[j]);
+                inventory_gear_options[j] = NULL;
+            }
+            free(inventory_gear_options);
+            inventory_gear_options = NULL;
+            log_msg(ERROR, "Inventory Mode", "Failed to allocate memory for inventory gear options");
+            return;
+        }
     }
 
     for (int i = 0; i < count; i++) {
-        snprintf(inventory_gear_options[i].characters, MAX_STRING_LENGTH,
-                 local_strings[inmo_inventory_format.idx].characters,
-                 gear_inventory[i]->name,
+        snprintf(inventory_gear_options[i], MAX_STRING_LENGTH,
+                 inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
+                 gear_names[gear_inventory[i]->gear_identifier],
                  gear_slot_to_string(gear_inventory[i]->slot),
                  gear_inventory[i]->defenses.armor,
                  gear_inventory[i]->defenses.magic_resist);
@@ -416,80 +508,126 @@ void collect_inventory_gear_options(gear_t* gear_inventory[], const int count) {
 
 /**
  * @brief Collects equipment inventory options for display.
+ *
+ * @param equipment An array of equipment.
  */
 void collect_inventory_equipment_options(gear_t* equipment[]) {
-    for (int i = 0; i < MAX_SLOT; i++) {
-        memset(inventory_equipment_options[i].characters, '\0', MAX_STRING_LENGTH);
+    if (inventory_equipment_options != NULL) {
+        for (int i = 0; i < MAX_SLOT; i++) {
+            if (inventory_equipment_options[i] != NULL) {
+                free(inventory_equipment_options[i]);
+                inventory_equipment_options[i] = NULL;
+            }
+        }
+        for (int i = 0; i < MAX_SLOT; i++) {
+            inventory_equipment_options[i] = (char*) malloc(MAX_STRING_LENGTH * sizeof(char));
+            if (inventory_equipment_options[i] == NULL) {
+                for (int j = 0; j < i; j++) {
+                    free(inventory_equipment_options[j]);
+                    inventory_equipment_options[j] = NULL;
+                }
+                log_msg(ERROR, "Inventory Mode", "Failed to allocate memory for inventory equipment options");
+                return;
+            }
+        }
     }
 
     for (int i = 0; i < MAX_SLOT; i++) {
         if (equipment[i] != NULL) {
-            snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
-                     local_strings[inmo_equipment_format.idx].characters,
-                     equipment[i]->name,
+            snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
+                     inventory_mode_strings[INVENTORY_GEAR_FORMAT],//TODO: This method of using formats is not safe!
+                     gear_names[equipment[i]->gear_identifier],
                      gear_slot_to_string((gear_slot_t) i),
                      equipment[i]->defenses.armor,
                      equipment[i]->defenses.magic_resist);
         } else {
-            snprintf(inventory_equipment_options[i].characters, MAX_STRING_LENGTH,
-                     local_strings[inmo_equipment_format_empty.idx].characters,
+            snprintf(inventory_equipment_options[i], MAX_STRING_LENGTH,
+                     inventory_mode_strings[INVENTORY_GEAR_FORMAT_EMPTY],//TODO: This method of using formats is not safe!
                      gear_slot_to_string((gear_slot_t) i));
         }
     }
 }
 
-void update_inventory_local(void) {
-    //inventory menu
-    snprintf(local_strings[inmo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_title.key));
-    snprintf(local_strings[inmo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option1.key));
-    snprintf(local_strings[inmo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option2.key));
-    snprintf(local_strings[inmo_main_menu_option3.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_main_menu_option3.key));
+/**
+ * @brief Collects all the options for inventory potions for displaying.
+ *
+ * @param potion_inventory An array of potions.
+ * @param count Ammount of potions in the array.
+ */
+void collect_inv_potion_options(potion_t* potion_inventory[], int count) {
+    if (inventory_potion_options != NULL) {
+        for (int i = 0; i < inventory_potion_count; i++) {
+            if (inventory_potion_options[i] != NULL) {
+                free(inventory_potion_options[i]);
+                inventory_potion_options[i] = NULL;
+            }
+        }
+        free(inventory_potion_options);
+        inventory_potion_options = NULL;
+    }
 
-    //loot menu
-    snprintf(local_strings[lomo_main_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_title.key));
-    snprintf(local_strings[lomo_main_menu_option1.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option1.key));
-    snprintf(local_strings[lomo_main_menu_option2.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option2.key));
-    snprintf(local_strings[lomo_main_menu_option3.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_main_menu_option3.key));
+    inventory_potion_count = count;
+    inventory_potion_options = (char**) malloc(count * sizeof(char*));
+    RETURN_WHEN_NULL(inventory_potion_options, , "Inventory Mode", "Failed to allocate memory for inventory potion options");
 
-    //inventory gear menu
-    snprintf(local_strings[inmo_inventory_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_menu_title.key));
-    snprintf(local_strings[inmo_inventory_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_format.key));
+    for (int i = 0; i < count; i++) {
+        inventory_potion_options[i] = (char*) malloc(MAX_STRING_LENGTH * sizeof(char));
+        if (inventory_potion_options[i] == NULL) {
+            for (int j = 0; j < i; j++) {
+                free(inventory_potion_options[j]);
+                inventory_potion_options[j] = NULL;
+            }
+            free(inventory_potion_options);
+            inventory_potion_options = NULL;
+            log_msg(ERROR, "Inventory Mode", "Failed to allocate memory for inventory potion options");
+            return;
+        }
+    }
 
-    //inventory equipment menu
-    snprintf(local_strings[inmo_equipment_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_menu_title.key));
-    snprintf(local_strings[inmo_equipment_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format.key));
-    snprintf(local_strings[inmo_equipment_format_empty.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_format_empty.key));
-
-    //inventory potion menu
-    snprintf(local_strings[inmo_potion_menu_title.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_menu_title.key));
-    snprintf(local_strings[inmo_potion_format.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_format.key));
-
-    //header messages
-    snprintf(local_strings[inmo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_inventory_header_message.key));
-    snprintf(local_strings[inmo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_equipment_header_message.key));
-    snprintf(local_strings[inmo_potion_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_potion_header_message.key));
-    snprintf(local_strings[lomo_inventory_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_inventory_header_message.key));
-    snprintf(local_strings[lomo_equipment_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_equipment_header_message.key));
-    snprintf(local_strings[lomo_potion_header_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_potion_header_message.key));
-
-    //tail messages
-    snprintf(local_strings[inmo_submenu_key_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_submenu_key_message.key));
-    snprintf(local_strings[como_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_submenu_tail_message.key));
-    snprintf(local_strings[lomo_submenu_tail_message.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(lomo_submenu_tail_message.key));
-
-    //inventory messages
-    snprintf(local_strings[inmo_no_more_gear.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear.key));
-    snprintf(local_strings[como_no_more_potions.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(como_no_more_potions.key));
-    snprintf(local_strings[inmo_no_more_gear_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_gear_slot.key));
-    snprintf(local_strings[inmo_no_more_potion_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_more_potion_slot.key));
-    snprintf(local_strings[inmo_no_free_equipment_slot.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(inmo_no_free_equipment_slot.key));
+    for (int i = 0; i < count; i++) {
+        snprintf(inventory_potion_options[i], MAX_STRING_LENGTH,
+                 inventory_mode_strings[POTION_FORMAT],
+                 potion_names[potion_inventory[i]->effectType],
+                 potion_type_to_string(potion_inventory[i]->effectType),
+                 potion_inventory[i]->value);
+    }
 }
 
-/**
- * @brief Shuts down the inventory mode and frees allocated resources.
- */
 void shutdown_inventory_mode(void) {
-    memory_pool_free(main_memory_pool, inventory_gear_options);
-    memory_pool_free(main_memory_pool, inventory_equipment_options);
-    memory_pool_free(main_memory_pool, inventory_potion_options);
+    // free the local strings
+    if (inventory_mode_strings != NULL) {
+        for (int i = 0; i < MAX_INVENTORY_STRINGS; i++) {
+            if (inventory_mode_strings[i] != NULL) {
+                free(inventory_mode_strings[i]);
+            }
+        }
+        free(inventory_mode_strings);
+    }
+    // free the inventory gear options
+    if (inventory_gear_options != NULL) {
+        for (int i = 0; i < inventory_gear_count; i++) {
+            if (inventory_gear_options[i] != NULL) {
+                free(inventory_gear_options[i]);
+            }
+        }
+        free(inventory_gear_options);
+    }
+    // free the inventory equipped gear options
+    if (inventory_equipment_options != NULL) {
+        for (int i = 0; i < MAX_SLOT; i++) {
+            if (inventory_equipment_options[i] != NULL) {
+                free(inventory_equipment_options[i]);
+            }
+        }
+        free(inventory_equipment_options);
+    }
+    // free the inventory potion options
+    if (inventory_potion_options != NULL) {
+        for (int i = 0; i < inventory_potion_count; i++) {
+            if (inventory_potion_options[i] != NULL) {
+                free(inventory_potion_options[i]);
+            }
+        }
+        free(inventory_potion_options);
+    }
 }

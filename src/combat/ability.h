@@ -1,3 +1,7 @@
+/**
+ * @file ability.h
+ * @brief Exposes functions for working with abilities.
+ */
 #ifndef ABILITY_H
 #define ABILITY_H
 
@@ -37,10 +41,12 @@ typedef enum {
     ARCANE_MISSILE,
     SWORD_SLASH,
     RIPOSTE,
+    PUNCH,
     MAX_ABILITIES
 } ability_names_t;
 
 typedef struct ability_t {
+    int id;// Unique identifier for the ability
     char name[MAX_NAME_LENGTH];
     int roll_amount;
     int accuracy;
@@ -62,6 +68,7 @@ typedef struct {
  * @return Pointer to the ability table.
  */
 ability_table_t* init_ability_table(memory_pool_t* memory_pool, const db_connection_t* db_connection);
+
 /**
  * Free the ability table, deallocates memory in the memory pool.
  *

@@ -1,3 +1,8 @@
+/**
+ * @file logger_config.h
+ * @brief Configuration file for the logger.
+ */
+
 #ifndef LOGGER_CONFIG_H
 #define LOGGER_CONFIG_H
 

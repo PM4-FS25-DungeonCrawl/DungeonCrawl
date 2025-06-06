@@ -1,3 +1,7 @@
+/**
+ * @file ability_fw.h
+ * @brief Exposes a forward struct for abilites.
+ */
 #ifndef ABILITY_FW_H
 #define ABILITY_FW_H
 
