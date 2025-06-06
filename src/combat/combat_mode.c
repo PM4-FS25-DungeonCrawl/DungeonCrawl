@@ -315,7 +315,7 @@ internal_combat_state_t potion_menu(character_t* player, character_t* monster) {
 
 void use_ability(character_t* attacker, character_t* target, const ability_t* ability) {
     if (attacker->current_resources.health <= 0 || target->current_resources.health <= 0) {
-        return; // Skip the attack if either character is dead
+        return;// Skip the attack if either character is dead
     }
 
     character_t* player;
