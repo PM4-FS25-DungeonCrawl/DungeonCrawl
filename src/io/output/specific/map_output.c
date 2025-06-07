@@ -105,10 +105,10 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     // Format current floor information
     char floor_str[64];
     snprintf(floor_str, sizeof(floor_str), "Current Floor: %d", current_floor);
-    print_text_default(y + 4, x, floor_str);
+    print_text_default(y++, x, floor_str);
 
     // Format player position string
     char pos_str[64];
     snprintf(pos_str, sizeof(pos_str), "%s: %d, %d", map_mode_strings[PLAYER_POSITION_STR], player_pos.dx, player_pos.dy);
-    print_text_default(y++, x, pos_str);
+    print_text_default(y + 2, x, pos_str);
 }
