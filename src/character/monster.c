@@ -4,8 +4,9 @@
  */
 
 #include "monster.h"
-#include "../stats/stats.h"
+
 #include "../map/map_mode.h"
+#include "../stats/stats.h"
 
 stat_type_t goblin_scaling[10] = {CONSTITUTION, CONSTITUTION, STRENGTH, INTELLIGENCE, DEXTERITY, CONSTITUTION, STRENGTH, DEXTERITY, CONSTITUTION, STRENGTH};
 
@@ -26,7 +27,7 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
 }
 
 void distribute_monster_skillpoints(character_t* goblin) {
-    for(int i = 0; i < (goblin->level - 1); i++) {
+    for (int i = 0; i < (goblin->level - 1); i++) {
         raise_skill(&goblin->base_stats, goblin_scaling[i % 10], goblin->skill_points);
         goblin->skill_points--;
     }
