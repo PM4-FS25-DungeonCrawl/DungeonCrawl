@@ -14,4 +14,6 @@
  */
 character_t* create_new_goblin(memory_pool_t* memory_pool);
 
+void distribute_monster_skillpoints(character_t* goblin);
+
 #endif//MONSTER_H
