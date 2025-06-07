@@ -121,6 +121,7 @@ void main_menu_state() {
             if (prompt_player_name(player_name)) {
                 init_player(player_name);
                 game_in_progress = true;// Mark that a game is now in progress
+                current_floor = 1;
                 clear_screen();
                 current_state = GENERATE_MAP;
             } else {

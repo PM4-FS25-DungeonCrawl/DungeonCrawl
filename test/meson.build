@@ -31,6 +31,13 @@ helper_combat = files(
     '../src/combat/ability.c',
     '../src/combat/damage.c',
 
+    '../src/map/map_mode.c',
+    '../src/map/map.c',
+    '../src/map/draw/draw_light.c',
+    '../src/map/local/map_mode_local.c',
+    
+    '../src/stats/stats.c',
+
     '../src/combat/local/combat_mode_local.c',
     '../src/combat/local/ability_local.c',
 
@@ -69,6 +76,7 @@ helper_combat = files(
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/combat_output.c',
     '../src/io/output/specific/inventory_output.c',
+    '../src/io/output/specific/map_output.c',
 )
 
 helper_map_generator = files(
@@ -150,6 +158,11 @@ helper_stats = files(
     '../src/combat/local/combat_mode_local.c',
     '../src/combat/local/ability_local.c',
 
+    '../src/map/map_mode.c',
+    '../src/map/map.c',
+    '../src/map/draw/draw_light.c',
+    '../src/map/local/map_mode_local.c',
+
     '../src/local/local_handler.c',
 
     '../src/character/character.c',
@@ -186,6 +199,7 @@ helper_stats = files(
     '../src/io/output/media/media_output_handler.c',
     '../src/io/output/specific/stats_output.c',
     '../src/io/output/specific/combat_output.c',
+    '../src/io/output/specific/map_output.c',
 )
 
 notcurses = dependency('notcurses')
