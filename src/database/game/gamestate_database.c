@@ -346,14 +346,14 @@ int get_game_state_by_id(const db_connection_t* db_connection, const int game_st
     rc = sqlite3_prepare_v2(db_connection->db, SQL_SELECT_FLOOR, -1, &stmt, NULL);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "Character", "Failed to prepare statement: %s", sqlite3_errmsg(db_connection->db));
-        return;
+        return 0;
     }
     // Bind the game state ID to the statement
     rc = sqlite3_bind_int(stmt, 1, game_state_id);
     if (rc != SQLITE_OK) {
         log_msg(ERROR, "Character", "Failed to bind game state ID: %s", sqlite3_errmsg(db_connection->db));
         sqlite3_finalize(stmt);
-        return;
+        return 0;
     }
     // Execute the statement
     rc = sqlite3_step(stmt);
