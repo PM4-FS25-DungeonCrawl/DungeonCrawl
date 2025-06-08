@@ -3,6 +3,7 @@
       |            ^
 ../src/game.c:238:9: warning: switch has 2 consecutive identical branches [bugprone-branch-clone]
   238 |         case PLAYER_LOST:
+
       |         ^
 ../src/game.c:244:18: note: last of these clones ends here
   244 |             break;
@@ -97,4 +98,5 @@
    86 |     srand(time(NULL));
       |     ^
 Suppressed 364205 warnings (364084 in non-user code, 121 with check filters).
+
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.

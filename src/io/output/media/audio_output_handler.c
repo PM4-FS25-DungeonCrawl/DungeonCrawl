@@ -8,9 +8,6 @@
 #include <string.h>
 #include <strings.h>
 
-// Use the global gio from io_handler.h
-extern io_handler_t* gio;
-
 // This implementation uses a platform-specific approach for audio
 // SDL2_mixer is a common choice for cross-platform audio
 // This implementation provides the API but requires linking against

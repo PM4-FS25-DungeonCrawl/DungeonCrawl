@@ -63,7 +63,7 @@ typedef struct
  * @param num_abilities The number of abilities to be assigned to the gear.
  * @return A pointer to the initialized `gear_t` object or `NULL` if initialization fails.
  */
-gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities);
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, const ability_names_t* abilities, int num_abilities);
 /**
  * @brief Initializes a gear table.
  *
