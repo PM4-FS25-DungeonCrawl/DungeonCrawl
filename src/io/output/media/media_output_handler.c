@@ -448,10 +448,8 @@ bool media_output_can_display_images(void) {
     bool supports_images = false;
 
     // Check various blitters that support images
-    if (notcurses_check_pixel_support(gio->nc) > 0) {
-        supports_images = true;// Pixel graphics supported
-    } else if (notcurses_canopen_images(gio->nc)) {
-        supports_images = true;// Image loading supported
+    if ((notcurses_check_pixel_support(gio->nc) > 0) || (notcurses_canopen_images(gio->nc))) {
+        supports_images = true;// Pixel graphics supported or Image loading supported
     }
 
     return supports_images;
