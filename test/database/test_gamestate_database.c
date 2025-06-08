@@ -59,9 +59,10 @@ void test_save_game_state() {
     // Create a test game state
     const int map[WIDTH][HEIGHT] = {{1, 2}, {3, 4}};
     const int revealed_map[WIDTH][HEIGHT] = {{1, 0}, {0, 1}};
+    const int floor = 1;
     const vector2d_t player_pos = {1, 6};
     const char* save_name = "Test Save";
-    save_game_state(&db_connection, (int*) map, (int*) revealed_map, WIDTH, HEIGHT, player_pos, save_name);
+    save_game_state(&db_connection, (int*) map, (int*) revealed_map, WIDTH, HEIGHT, floor, player_pos, save_name);
 
     // Check if the game state was saved successfully
     sqlite3_stmt* stmt;
@@ -80,7 +81,8 @@ void test_save_game_state() {
     // Check get_game_state_by_id
     int return_map[WIDTH][HEIGHT];
     int return_revealed_map[WIDTH][HEIGHT];
-    rc = get_game_state(&db_connection, return_map, return_revealed_map, WIDTH, HEIGHT, setter);
+    int return_floor;
+    rc = get_game_state(&db_connection, return_map, return_revealed_map, WIDTH, HEIGHT, return_floor, setter);
     //assert(rc == 1); // TODO: Unknown error when running on GitHub Actions
     // assert(return_map[0][0] == map[0][0]); // TODO: Unknown error when running on GitHub Actions
     // assert(return_map[0][1] == map[0][1]); // TODO: Unknown error when running on GitHub Actions

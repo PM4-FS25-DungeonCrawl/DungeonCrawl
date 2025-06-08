@@ -25,6 +25,7 @@
     "\"MS_REVEALED\"	TEXT,"                                          \
     "\"MS_HEIGHT\"	INTEGER,"                                         \
     "\"MS_WIDTH\"	INTEGER,"                                          \
+    "\"MS_FLOOR\"	INTEGER,"                                          \
     "\"MS_GS_ID\"	INTEGER NOT NULL UNIQUE,"                          \
     "PRIMARY KEY(\"MS_ID\" AUTOINCREMENT),"                          \
     "FOREIGN KEY(\"MS_GS_ID\") REFERENCES \"game_state\"(\"GS_ID\")" \
@@ -70,7 +71,7 @@ void create_tables_game_state(const db_connection_t* db_connection);
  * @param save_name A name for the save file.
  * @return 0 on success none 0 on failure.
  */
-sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, vector2d_t player, const char* save_name);
+sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* map, const int* revealed_map, int width, int height, int floor, vector2d_t player, const char* save_name);
 /**
  * @brief  Load the game state from the database. 
  *
@@ -82,7 +83,7 @@ sqlite_int64 save_game_state(const db_connection_t* db_connection, const int* ma
  * @param setter A setter for the player position.
  * @return 0 on success none 0 on failure.
  */
-int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+int get_game_state(const db_connection_t* db_connection, int* map, int* revealed_map, int width, int height, int* floor, player_pos_setter_t setter);
 /**
  * @brief  Load the game state for a specific id from the database. 
  *
@@ -95,7 +96,7 @@ int get_game_state(const db_connection_t* db_connection, int* map, int* revealed
  * @param setter A setter for the player position.
  * @return 0 on success none 0 on failure.
  */
-int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, player_pos_setter_t setter);
+int get_game_state_by_id(const db_connection_t* db_connection, int game_state_id, int* map, int* revealed_map, int width, int height, int* floor, player_pos_setter_t setter);
 /**
  * @brief Get the info of the saves.
  *
