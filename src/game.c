@@ -284,6 +284,7 @@ int loading_game(const int game_state_id, const player_pos_setter_t setter) {
     int* return_floor = &current_floor;
     if (get_game_state_by_id(&db_connection, game_state_id, map, revealed_map, WIDTH, HEIGHT, return_floor, setter) != 1) return 2;
     current_floor = *return_floor;
+    reset_goblin();
     get_character_from_db(&db_connection, player, game_state_id);
     if (player == NULL) return 3;
     return 0;
