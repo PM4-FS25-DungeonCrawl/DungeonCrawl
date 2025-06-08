@@ -3,7 +3,6 @@
  * @brief Implements outputting to the screen for the map mode.
  */
 #include "map_output.h"
-#include "../src/map/map_mode.h"
 
 #include "../../../common.h"
 #include "../../../logging/logger.h"
@@ -11,6 +10,7 @@
 #include "../common/output_handler.h"
 #include "../common/text_output.h"
 #include "../src/map/local/map_mode_local.h"
+#include "../src/map/map_mode.h"
 
 
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
