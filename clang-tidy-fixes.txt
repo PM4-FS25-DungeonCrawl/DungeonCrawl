@@ -4,24 +4,5 @@
 ../src/game.c:243:18: note: last of these clones ends here
   243 |             break;
       |                  ^
-../src/io/output/media/media_output_handler.c:451:53: warning: repeated branch body in conditional chain [bugprone-branch-clone]
-  451 |     if (notcurses_check_pixel_support(gio->nc) > 0) {
-      |                                                     ^
-../src/io/output/media/media_output_handler.c:453:6: note: end of the original
-  453 |     } else if (notcurses_canopen_images(gio->nc)) {
-      |      ^
-../src/io/output/media/media_output_handler.c:453:51: note: clone 1 starts here
-  453 |     } else if (notcurses_canopen_images(gio->nc)) {
-      |                                                   ^
-../src/item/gear.c:17:203: warning: pointer parameter 'abilities' can be pointer to const [readability-non-const-parameter]
-   17 | gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
-      |                                                                                                                                                                                                           ^
-      |                                                                                                                                                                                          const 
-../src/logging/logger.c:183:13: warning: 'sscanf' used to convert a string to an integer value, but function will not report conversion errors; consider using 'strtol' instead [cert-err34-c]
-  183 |         if (sscanf(entry->d_name, LOG_FILE_FORMAT, &id) == 1 && id >= 0 && id < MAX_N_FILES) {
-      |             ^
-../src/main.c:86:5: warning: random number generator seeded with a disallowed source of seed value will generate a predictable sequence of values [cert-msc51-cpp]
-   86 |     srand(time(NULL));
-      |     ^
 Suppressed 332588 warnings (332470 in non-user code, 118 with check filters).
 Use -header-filter=.* to display errors from all non-system headers. Use -system-headers to display errors from system headers as well.
