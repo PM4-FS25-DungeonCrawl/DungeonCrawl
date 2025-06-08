@@ -15,10 +15,10 @@
  * Sets up the input handling system.
  * This function must be called before any other input functions.
  * 
- * @param nc The Notcurses instance to use for input handling
+ * @param notcurses_ptr Pointer to the Notcurses instance to use for input handling
  * @return true on success, false on failure
  */
-bool init_input_handler(struct notcurses* nc);
+bool init_input_handler(struct notcurses* notcurses_ptr);
 
 /**
  * @brief Get the next input event (blocking)

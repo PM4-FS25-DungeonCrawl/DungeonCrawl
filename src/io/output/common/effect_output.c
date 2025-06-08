@@ -10,9 +10,6 @@
 #include "../../io_handler.h"
 #include "effect_output.h"
 
-// We'll use the global gio from io_handler.h
-extern io_handler_t* gio;
-
 // Linked list of active effects
 static effect_state_t* active_effects = NULL;
 

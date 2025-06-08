@@ -250,19 +250,13 @@ static uint64_t apply_transparency(uint64_t channel, text_transparency_t transpa
             // Make background transparent
             channel = ncchannels_set_bg_alpha(&channel, NCALPHA_TRANSPARENT);
             break;
-        case TEXT_TRANSPARENCY_BACKGROUND_LIGHT:
-            // 25% background visibility
-            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
-            break;
         case TEXT_TRANSPARENCY_BACKGROUND_MEDIUM:
             // 50% background visibility
             channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
             break;
-        case TEXT_TRANSPARENCY_BACKGROUND_HEAVY:
-            // 75% background visibility
-            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_BLEND);
-            break;
         case TEXT_TRANSPARENCY_NONE:
+            // 100% background visibility
+            channel = ncchannels_set_bg_alpha(&channel, NCALPHA_OPAQUE);
         default:
             // No transparency changes
             break;
