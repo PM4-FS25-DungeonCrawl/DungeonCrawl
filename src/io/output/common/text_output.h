@@ -29,9 +29,7 @@ typedef enum text_style {
 typedef enum text_transparency {
     TEXT_TRANSPARENCY_NONE = 0,         // Fully opaque
     TEXT_TRANSPARENCY_TEXT_ONLY,        // Only text visible, background transparent
-    TEXT_TRANSPARENCY_BACKGROUND_LIGHT, // Background slightly visible (25%)
     TEXT_TRANSPARENCY_BACKGROUND_MEDIUM,// Background partially visible (50%)
-    TEXT_TRANSPARENCY_BACKGROUND_HEAVY  // Background mostly visible (75%)
 } text_transparency_t;
 
 /**

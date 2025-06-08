@@ -14,7 +14,7 @@ char** gear_slot_names = NULL;
 
 void update_gear_slot_local(void);
 
-gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, ability_names_t* abilities, int num_abilities) {
+gear_t* init_gear(memory_pool_t* memory_pool, const char* name, gear_identifier_t gear_identifier, gear_slot_t slot, stats_t stats, defenses_t defenses, ability_table_t* ability_table, const ability_names_t* abilities, int num_abilities) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Gear", "In init_gear memory pool is NULL");
     NULL_PTR_HANDLER_RETURN(name, NULL, "Gear", "In init_gear name is NULL");
     gear_t* gear = memory_pool_alloc(memory_pool, sizeof(gear_t));
