@@ -81,7 +81,7 @@ void test_save_game_state() {
     // Check get_game_state_by_id
     int return_map[WIDTH][HEIGHT];
     int return_revealed_map[WIDTH][HEIGHT];
-    int return_floor;
+    int* return_floor = &floor;
     rc = get_game_state(&db_connection, return_map, return_revealed_map, WIDTH, HEIGHT, return_floor, setter);
     //assert(rc == 1); // TODO: Unknown error when running on GitHub Actions
     // assert(return_map[0][0] == map[0][0]); // TODO: Unknown error when running on GitHub Actions
