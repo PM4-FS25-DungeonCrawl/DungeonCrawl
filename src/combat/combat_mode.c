@@ -128,7 +128,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
                 clear_screen();
                 media_cleanup();
 
-                char message[64];
+                char message[128];
                 snprintf(message, sizeof(message), "%s %s %s",
                          combat_mode_strings[WON_COMBAT_MSG1], monster->name, combat_mode_strings[WON_COMBAT_MSG2]);
                 draw_combat_log(anchor, message);
@@ -421,6 +421,9 @@ bool consume_ability_resource(character_t* attacker, const ability_t* ability) {
             break;
         case MAGICAL:
             resource = &attacker->current_resources.mana;
+            break;
+        default:
+            log_msg(ERROR, "Combat Mode", "Unknown ability damage type: %d", ability->damage_type);
             break;
     }
 

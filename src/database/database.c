@@ -49,7 +49,7 @@ int db_open_multiple_access(db_connection_t* db_connection, db_type_t type) {
             return DB_OPEN_STATUS_FAILURE;
     }
 
-    for (int i = 0; i < sizeof(potential_paths) / sizeof(char*); i++) {
+    for (unsigned int i = 0; i < sizeof(potential_paths) / sizeof(char*); i++) {
         const int rc = sqlite3_open_v2(potential_paths[i], &db_connection->db, SQLITE_OPEN_READWRITE, NULL);
         if (rc == SQLITE_OK) {
             return DB_OPEN_STATUS_SUCCESS;
