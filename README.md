@@ -34,7 +34,7 @@ Lucien
 - code runs and does what it is supposed to do
 - code is reviewed
 - has positive and negative unit tests
-- test coverage of at least 90%
+- test coverage of at least 80% for the modules where it makes sense
 - can build on all platforms
 - fulfills clean code standards
 - code is documented
