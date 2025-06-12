@@ -22,11 +22,23 @@ int init_gear_local(void) {
 
 void shutdown_gear_local(void) {
     if (gear_names != NULL) {
-        for (int i = 0; i < MAX_GEARS; i++) {
+        // Only free up to the aliased gear names to avoid double-free
+        for (int i = 0; i < IRON_BAND_OF_THE_GOLIATH_L; i++) {
             if (gear_names[i] != NULL) {
                 free(gear_names[i]);
                 gear_names[i] = NULL;
             }
+        }
+        // Free the right-hand gear names (which are the original allocations)
+        for (int i = IRON_BAND_OF_THE_GOLIATH_R; i <= TRICKSTERS_LOOP_OF_THE_RAVEN_R; i++) {
+            if (gear_names[i] != NULL) {
+                free(gear_names[i]);
+                gear_names[i] = NULL;
+            }
+        }
+        // Clear the aliased left-hand pointers without freeing
+        for (int i = IRON_BAND_OF_THE_GOLIATH_L; i <= TRICKSTERS_LOOP_OF_THE_RAVEN_L; i++) {
+            gear_names[i] = NULL;
         }
         free(gear_names);
         gear_names = NULL;

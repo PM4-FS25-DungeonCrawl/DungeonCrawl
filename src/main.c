@@ -188,9 +188,10 @@ void shutdown_game() {
     shutdown_save_menu();
     shutdown_main_menu();
     shutdown_local_handler();
-    shutdown_logger();
     shutdown_io_handler();
     shutdown_memory_pool(main_memory_pool);
+    main_memory_pool = NULL;
+    shutdown_logger();
 }
 
 int main(void) {

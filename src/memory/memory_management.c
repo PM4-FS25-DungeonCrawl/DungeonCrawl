@@ -125,5 +125,4 @@ void shutdown_memory_pool(memory_pool_t* pool) {
 
     free(pool->memory);
     free(pool);
-    pool = NULL;
 }

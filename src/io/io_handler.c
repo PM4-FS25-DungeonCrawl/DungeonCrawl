@@ -203,5 +203,6 @@ void shutdown_io_handler(void) {
     // Shutdown the global io_handler
     if (gio) {
         io_handler_shutdown(gio);
+        gio = NULL;
     }
 }
