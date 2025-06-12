@@ -49,7 +49,7 @@ void print_text_multi_line(int y, int x, const char* text, int max_width, uint64
     while (*ptr) {
         // Copy characters until max_width or newline
         line_len = 0;
-        while (*ptr && *ptr != '\n' && line_len < max_width) {
+        while (*ptr && *ptr != '\n' && line_len < max_width && line_len < 255) {
             line_buffer[line_len++] = *ptr++;
         }
         line_buffer[line_len] = '\0';
