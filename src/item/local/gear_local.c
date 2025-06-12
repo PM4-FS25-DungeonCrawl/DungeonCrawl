@@ -25,6 +25,7 @@ void shutdown_gear_local(void) {
         for (int i = 0; i < MAX_GEARS; i++) {
             if (gear_names[i] != NULL) {
                 free(gear_names[i]);
+                gear_names[i] = NULL;
             }
         }
         free(gear_names);

@@ -26,6 +26,7 @@ void shutdown_map_mode_local(void) {
         for (int i = 0; i < MAX_MAP_MODE_STRINGS; i++) {
             if (map_mode_strings[i] != NULL) {
                 free(map_mode_strings[i]);
+                map_mode_strings[i] = NULL;
             }
         }
         free(map_mode_strings);

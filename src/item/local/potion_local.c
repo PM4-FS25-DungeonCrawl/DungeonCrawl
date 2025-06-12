@@ -25,6 +25,7 @@ void shutdown_potion_local(void) {
         for (int i = 0; i < MAX_POTION_TYPES; i++) {
             if (potion_names[i] != NULL) {
                 free(potion_names[i]);
+                potion_names[i] = NULL;
             }
         }
         free(potion_names);

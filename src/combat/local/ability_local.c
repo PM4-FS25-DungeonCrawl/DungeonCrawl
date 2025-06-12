@@ -25,6 +25,7 @@ void shutdown_ability_local(void) {
         for (int i = 0; i < MAX_ABILITIES; i++) {
             if (ability_names[i] != NULL) {
                 free(ability_names[i]);
+                ability_names[i] = NULL;
             }
         }
         free(ability_names);

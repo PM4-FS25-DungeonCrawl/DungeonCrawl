@@ -34,6 +34,7 @@ void shutdown_damage_local(void) {
         for (int i = 0; i < MAX_DAMAGE_TYPES; i++) {
             if (damage_type_names[i] != NULL) {
                 free(damage_type_names[i]);
+                damage_type_names[i] = NULL;
             }
         }
         free(damage_type_names);
