@@ -121,6 +121,7 @@ void main_menu_state() {
             if (prompt_player_name(player_name)) {
                 init_player(player_name);
                 game_in_progress = true;// Mark that a game is now in progress
+                current_floor = 1;
                 clear_screen();
                 current_state = GENERATE_MAP;
             } else {
@@ -142,7 +143,7 @@ void main_menu_state() {
             }
 
             // Save the game with the provided name
-            const sqlite_int64 game_state_id = save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, get_player_pos(), save_name);
+            const sqlite_int64 game_state_id = save_game_state(&db_connection, map, revealed_map, WIDTH, HEIGHT, current_floor, get_player_pos(), save_name);
             save_character(&db_connection, *player, game_state_id);
 
             clear_screen();
@@ -280,7 +281,10 @@ void stats_mode_state() {
 
 int loading_game(const int game_state_id, const player_pos_setter_t setter) {
     if (reset_player() != 0) return 1;
-    if (get_game_state_by_id(&db_connection, game_state_id, map, revealed_map, WIDTH, HEIGHT, setter) != 1) return 2;
+    int* return_floor = &current_floor;
+    if (get_game_state_by_id(&db_connection, game_state_id, map, revealed_map, WIDTH, HEIGHT, return_floor, setter) != 1) return 2;
+    current_floor = *return_floor;
+    reset_goblin();
     get_character_from_db(&db_connection, player, game_state_id);
     if (player == NULL) return 3;
     return 0;
