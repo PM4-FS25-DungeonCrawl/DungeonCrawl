@@ -192,7 +192,6 @@ void remove_gear(character_t* character, gear_t* gear) {
             return;
         }
     }
-    log_msg(WARNING, "Character", "Gear %s not found in inventory!", gear->name);
 }
 
 void remove_equipped_gear(character_t* character, gear_slot_t slot) {
@@ -285,6 +284,7 @@ void equip_gear(character_t* character, gear_t* gear) {
     NULL_PTR_HANDLER_RETURN(gear, , "Character", "In equip_gear gear is NULL");
 
     if (add_equipped_gear(character, gear)) {
+        if ()
         remove_gear(character, gear);
 
         character->base_stats.strength += gear->stats.strength;
