@@ -133,9 +133,3 @@ bool get_screen_dimensions(int* width, int* height) {
 
     return true;
 }
-
-void shutdown_output_handler(void) {
-    // Reset the globals
-    gio->nc = NULL;
-    gio->stdplane = NULL;
-}

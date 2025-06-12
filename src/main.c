@@ -183,12 +183,10 @@ void shutdown_game() {
     shutdown_language_menu();
     shutdown_save_menu();
     shutdown_main_menu();
-
     shutdown_local_handler();
-    //shutdown the main memory pool
-    shutdown_memory_pool(main_memory_pool);
     shutdown_logger();
     shutdown_io_handler();
+    shutdown_memory_pool(main_memory_pool);
 }
 
 int main(void) {

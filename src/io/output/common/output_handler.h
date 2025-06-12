@@ -73,11 +73,4 @@ bool render_frame(void);
  */
 bool get_screen_dimensions(int* width, int* height);
 
-/**
- * @brief Shutdown the output handler
- * 
- * Cleans up resources.
- */
-void shutdown_output_handler(void);
-
 #endif// OUTPUT_HANDLER_H

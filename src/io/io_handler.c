@@ -173,7 +173,6 @@ int init_io_handler(void) {
     // Initialize common output handler
     if (!init_output_handler()) {
         log_msg(ERROR, "io_handler", "Failed to initialize output handler");
-        shutdown_input_handler();
         io_handler_shutdown(gio);
         gio = NULL;
         return 4;// Error code
@@ -201,13 +200,8 @@ bool run_background_task(void (*callback)(void)) {
 }
 
 void shutdown_io_handler(void) {
-    // Shutdown subsystems in reverse order of initialization
-    shutdown_output_handler();
-    shutdown_input_handler();
-
     // Shutdown the global io_handler
     if (gio) {
         io_handler_shutdown(gio);
-        gio = NULL;
     }
 }

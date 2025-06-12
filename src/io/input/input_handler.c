@@ -268,7 +268,3 @@ bool get_input_nonblocking(input_event_t* event) {
 
     return true;
 }
-
-void shutdown_input_handler(void) {
-    // Nothing to do here anymore, the actual cleanup will be done in io_handler_shutdown
-}
