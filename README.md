@@ -21,6 +21,7 @@ SUM:                           116           1634           2076           7163
 we will use then C2X standard with Meson as our build tool and for unit testing
 
 indentation will be 4 spaces
+
 regular C naming conventions
 
 
@@ -30,11 +31,31 @@ Jil & Nino
 # Manual 
 Lucien
 
+# Decision Record
+## Why write the game in C?
+We decided to use C because not being able to rely on objects and built-in features of modern programming languages was an interesting challenge.
+
+Having to use pointers and structs instead of objects led to a lot of challenges, but it was an interesting learning opportunity nonetheless. That being said, in the future we would rather use a modern object-oriented language like Go for a project like this. 
+
+## Why use SQL for saving gamestates?
+Primarily just because we wanted to use SQL, but also because saving the gamestate in a .txt or something similar would make it very easy for the player to manipulate their game.
+
+Using SQL was definitely more time consuming and required more effort than a simpler solution, but we think it was worth it.
+
+## Why use property files for localization?
+Initially, we used SQL for localization as well but later decided to switch to property files for a number of reasons:
+- Localization took way too long to load.
+- It was difficult to quickly add new text.
+Property files provided a much simpler solution that was both faster to expand and easier to intergrate into our program.
+
+## Why use notcurses?
+Because notcurses is one of the best and most-used terminal I/O libraries for C. We started with the library termbox but later switched to notcurses because termbox has no Windows support and is very limited in functionality.
+
 # Definition of Done
 - code runs and does what it is supposed to do
 - code is reviewed
 - has positive and negative unit tests
-- test coverage of at least 90%
+- test coverage of at least 80% for the modules where it makes sense
 - can build on all platforms
 - fulfills clean code standards
 - code is documented
