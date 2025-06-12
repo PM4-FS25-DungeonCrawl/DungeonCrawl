@@ -171,13 +171,9 @@ void shutdown_game() {
     // close database connection in game.c
     db_close(&db_connection);
 
-    log_msg(INFO, "Main", "Shutdown damage local");
     shutdown_damage_local();
-    log_msg(INFO, "Main", "Shutdown potion local");
     shutdown_potion_local();
-    log_msg(INFO, "Main", "Shutdown gear local");
     shutdown_gear_local();
-    log_msg(INFO, "Main", "Shutdown ability local");
     shutdown_ability_local();
     shutdown_map_mode();
     shutdown_map_mode_local();
