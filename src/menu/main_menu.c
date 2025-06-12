@@ -1,30 +1,18 @@
+/**
+ * @file main_menu.c
+ * @brief Implementation of the main menu.
+ */
 #include "main_menu.h"
 
 #include "../common.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
+#include "../io/input/input_handler.h"
+#include "../io/output/common/output_handler.h"
+#include "../io/output/common/text_output.h"
 #include "../logging/logger.h"
 #include "language_menu.h"
-#include "notcurses/nckeys.h"
+#include "local/main_menu_local.h"
 #include "save_menu.h"
-
-#include <notcurses/notcurses.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>// For nanosleep
-//
-#ifdef __APPLE__
-    #define KEY_EVENT NCTYPE_PRESS
-#else
-    #define KEY_EVENT NCTYPE_UNKNOWN
-#endif /* ifdef __APPLE__ */
-
-
-// External reference to notcurses context
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
+#include "src/local/local_handler.h"
 
 // === Internal Functions ===
 /**
@@ -34,20 +22,22 @@ extern struct ncplane* stdplane;
  */
 void select_menu_option(int selected_index, bool game_in_progress);
 
-void update_main_menu_local(void);
-
 // === Internal Global Variables ===
 bool menu_active;
 menu_result_t active_menu_state;
 
 int init_main_menu() {
+    main_menu_strings = (char**) malloc(sizeof(char*) * MAX_MAIN_MENU_STRINGS);
+    RETURN_WHEN_NULL(main_menu_strings, 1, "Main Menu", "Failed to allocate memory for main menu strings.");
+
+    for (int i = 0; i < MAX_MAIN_MENU_STRINGS; i++) {
+        main_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_main_menu_local();
     // add update local function to the observer list
-    add_local_observer(update_main_menu_local);
-
-    init_save_menu();
-    init_language_menu();
+    observe_local(update_main_menu_local);
     return 0;
 }
 
@@ -56,21 +46,21 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     int menu_count;
 
     // Always include New Game
-    menu_options[0] = &local_strings[mame_new_game_option.idx].characters[0];
+    menu_options[0] = main_menu_strings[NEW_GAME_STR];
 
     if (game_in_progress) {
         // If game is in progress, show all options
-        menu_options[1] = &local_strings[mame_continue_option.idx].characters[0];
-        menu_options[2] = &local_strings[mame_save_game_option.idx].characters[0];
-        menu_options[3] = &local_strings[mame_load_game_option.idx].characters[0];
-        menu_options[4] = &local_strings[mame_change_language_option.idx].characters[0];
-        menu_options[5] = &local_strings[mame_exit_option.idx].characters[0];
+        menu_options[1] = main_menu_strings[CONTINUE_STR];
+        menu_options[2] = main_menu_strings[SAVE_GAME_STR];
+        menu_options[3] = main_menu_strings[LOAD_GAME_STR];
+        menu_options[4] = main_menu_strings[CHANGE_LANGUAGE_STR];
+        menu_options[5] = main_menu_strings[EXIT_STR];
         menu_count = 6;
     } else {
         // If no game in progress, only show New Game, Load Game and Exit
-        menu_options[1] = &local_strings[mame_load_game_option.idx].characters[0];
-        menu_options[2] = &local_strings[mame_change_language_option.idx].characters[0];
-        menu_options[3] = &local_strings[mame_exit_option.idx].characters[0];
+        menu_options[1] = main_menu_strings[LOAD_GAME_STR];
+        menu_options[2] = main_menu_strings[CHANGE_LANGUAGE_STR];
+        menu_options[3] = main_menu_strings[EXIT_STR];
         menu_count = 4;
     }
 
@@ -81,34 +71,30 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     while (menu_active) {
         draw_menu(menu_options, menu_count, selected_index);
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
-
-        switch (input.id) {
-            case NCKEY_UP:
+        // Using our input type to navigate the menu
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_index = (selected_index - 1 + menu_count) % menu_count;
                 break;
-            case NCKEY_DOWN:
+            case INPUT_DOWN:
                 selected_index = (selected_index + 1) % menu_count;
                 break;
-            case NCKEY_ENTER: {
+            case INPUT_CONFIRM: {
                 // Get the selected menu option
-                const char* selected_option = menu_options[selected_index];
                 select_menu_option(selected_index, game_in_progress);
                 break;
             }
-            case 'c':
-                // if only c was pressed and not ctrl-c break. seems the cleanest solution to me
-                if (!(input.modifiers & NCKEY_MOD_CTRL)) {
-                    break;
-                }
+            case INPUT_QUIT:
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
                 break;
-            case NCKEY_ESC:
+            case INPUT_CANCEL:
+            case INPUT_MENU:
                 active_menu_state = MENU_CONTINUE;
                 menu_active = false;
                 break;
@@ -121,13 +107,19 @@ menu_result_t show_main_menu(const bool game_in_progress) {
     return active_menu_state;
 }
 
+/**
+ * @brief Select a menu option.
+ *
+ * @param selected_index The index of the menu option that is to be selected.
+ * @param game_in_progress A boolean which shows if the game is in progress or not.
+ */
 void select_menu_option(const int selected_index, const bool game_in_progress) {
     //if the game is not in progress and the selected index is bigger than 0, we need to add 2 to the selected index
     const int true_index = selected_index > 0 && !game_in_progress ? selected_index + 2 : selected_index;
 
     switch (true_index) {
         case 0:// New Game
-            if (!game_in_progress || show_confirmation(local_strings[mame_confirm_continue.idx].characters)) {
+            if (!game_in_progress || show_confirmation(main_menu_strings[QUESTION_CONTINUE])) {
                 active_menu_state = MENU_START_GAME;
                 menu_active = false;
             }
@@ -155,7 +147,7 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
             }
             break;
         case 5:// Exit
-            if (!game_in_progress || show_confirmation(local_strings[mame_confirm_exit.idx].characters)) {
+            if (!game_in_progress || show_confirmation(main_menu_strings[QUESTION_EXIT])) {
                 active_menu_state = MENU_EXIT;
                 menu_active = false;
             }
@@ -166,14 +158,13 @@ void select_menu_option(const int selected_index, const bool game_in_progress) {
     }
 }
 
-void update_main_menu_local(void) {
-    snprintf(local_strings[mame_new_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_new_game_option.key));
-    snprintf(local_strings[mame_continue_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_continue_option.key));
-    snprintf(local_strings[mame_save_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_save_game_option.key));
-    snprintf(local_strings[mame_load_game_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_load_game_option.key));
-    snprintf(local_strings[mame_change_language_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_change_language_option.key));
-    snprintf(local_strings[mame_exit_option.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_exit_option.key));
-
-    snprintf(local_strings[mame_confirm_continue.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_confirm_continue.key));
-    snprintf(local_strings[mame_confirm_exit.idx].characters, MAX_STRING_LENGTH, "%s", get_local_string(mame_confirm_exit.key));
+void shutdown_main_menu(void) {
+    if (main_menu_strings != NULL) {
+        for (int i = 0; i < MAX_MAIN_MENU_STRINGS; i++) {
+            if (main_menu_strings[i] != NULL) {
+                free(main_menu_strings[i]);
+            }
+        }
+        free(main_menu_strings);
+    }
 }

@@ -1,10 +1,13 @@
+/**
+ * @file map_mode.h
+ * @brief Defines and manages functions for map exploration, player movement, and map interactions in map mode.
+ */
 #ifndef MAP_MODE_H
 #define MAP_MODE_H
 
 #include "../character/character.h"
 #include "../common.h"
-
-#include <notcurses/notcurses.h>
+#include "../io/input/input_handler.h"
 
 // Notcurses uses RGB channels directly, but we can define our colors for consistency
 #define COLOR_FOREGROUND 0xffffff// White
@@ -22,6 +25,14 @@ typedef enum {
     SHOW_INVENTORY
 } map_mode_result_t;
 
+extern int current_floor;
+
+/**
+ * @brief Sets the starting position of the player.
+ *
+ * @param player_x The starting x position of the player.
+ * @param player_y The starting y position of the player.
+ */
 void set_player_start_pos(int player_x, int player_y);
 
 /**
@@ -30,10 +41,24 @@ void set_player_start_pos(int player_x, int player_y);
  */
 vector2d_t get_player_pos();
 
+/**
+ * Updates the player position based on the player's input and redraws the maze.
+ * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
+ */
 map_mode_result_t map_mode_update(character_t* player);
 
+/**
+ * @brief Initializes the map mode
+ */
 void init_map_mode(void);
+/**
+ * @brief Frees any resources associated with the map mode.
+ */
+void shutdown_map_mode(void);
 
 // has to be exposed for testing
-map_mode_result_t handle_input(const ncinput* event, character_t* player);
+/**
+ * @brief Functions is only exposed for testing purposes.
+ */
+map_mode_result_t handle_input(const input_event_t* input_event, character_t* player);
 #endif//MAP_MODE_H

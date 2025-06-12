@@ -1,5 +1,29 @@
+/**
+ * @file logger.h
+ * @brief Header file for logging functionality of the game.
+ */
+
 #ifndef LOGGER_H
 #define LOGGER_H
+
+#define DEBUG_STATE 1//change to 0 to disable debug logging
+
+#define DEBUG_LOG(modul, format, ...)                 \
+    if (DEBUG_STATE == 1) {                           \
+        log_msg(DEBUG, modul, format, ##__VA_ARGS__); \
+    }
+
+#define RETURN_WHEN_NULL(ptr, ret, modul, format, ...) \
+    if (ptr == NULL) {                                 \
+        log_msg(ERROR, modul, format, ##__VA_ARGS__);  \
+        return ret;                                    \
+    }
+
+#define RETURN_WHEN_TRUE(expr, ret, modul, format, ...) \
+    if (expr) {                                         \
+        log_msg(ERROR, modul, format, ##__VA_ARGS__);   \
+        return ret;                                     \
+    }
 
 typedef enum {
     DEBUG,

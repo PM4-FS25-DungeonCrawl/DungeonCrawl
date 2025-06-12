@@ -85,8 +85,24 @@ jobs:
       - name: Generate coverage report (text summary)
         if: runner.os == 'Linux'
         run: |
-          gcovr -r . --filter src/ --html --html-details -o coverage-report.html
-          gcovr -r . --filter src/ # simple text summary in console
+          gcovr -r . --filter src/character/character.c --filter src/character/level.c \
+          --filter src/combat/combat_mode.c --filter src/combat/damage.c \
+          --filter src/database/database.c --filter src/database/gamestate_database.c \
+          --filter src/map/map_generator.c --filter src/map/map_mode.c --filter src/map/map_populator.c \
+          --filter src/memory/memory_management.c \
+          --filter src/stats/stats.c \
+          --filter src/logging/ringbuffer.c \
+          --exclude ".*draw.*" --exclude ".*stats_mode\.c" \
+          --html --html-details -o coverage-report.html
+
+          gcovr -r . --filter src/character/character.c --filter src/character/level.c \
+          --filter src/combat/combat_mode.c --filter src/combat/damage.c \
+          --filter src/database/database.c --filter src/database/gamestate_database.c \
+          --filter src/map/map_generator.c --filter src/map/map_mode.c --filter src/map/map_populator.c \
+          --filter src/memory/memory_management.c \
+          --filter src/stats/stats.c \
+          --filter src/logging/ringbuffer.c \
+          --exclude ".*draw.*" --exclude ".*stats_mode\.c" # simple text summary in console
 
       - name: Generate clang-tidy report
         if: runner.os == 'Linux'

@@ -1,9 +1,13 @@
+/**
+ * @file memory_management.c
+ * @brief Implements memory management functionality.
+ */
 #include "memory_management.h"
 
 #include "../logging/logger.h"
 
 /**
- * Initialize a memory pool of the given size.
+ * @brief Initialize a memory pool of the given size.
  * @param size the size of the memory pool to initialize,
  * when the given size is smaller than 1MB, the size will be automatically set to 1MB
  * @return the pointer to the memory pool. When NULL, the initialization failed
@@ -37,7 +41,7 @@ memory_pool_t* init_memory_pool(size_t size) {
 }
 
 /**
- * Allocates memory on the given memory pool.
+ * @brief Allocates memory on the given memory pool.
  * If the remaining memory space is lager enough, creates a new unused block for the remaining memory.
  *
  * @param pool the pool to allocate memory from
@@ -80,7 +84,7 @@ void* memory_pool_alloc(memory_pool_t* pool, size_t size) {
 }
 
 /**
- * Sets the given data pointer to not active in the given memory pool.
+ * @brief Sets the given data pointer to not active in the given memory pool.
  * But first checks if the pointer is contained in the memory pool.
  * If needed it will defragment the memory pool and merge free blocks.
  *
@@ -113,10 +117,6 @@ void memory_pool_free(memory_pool_t* pool, void* ptr) {
     }
 }
 
-/**
- * Frees the allocated memory pool.
- * @param pool the pool to free
- */
 void shutdown_memory_pool(memory_pool_t* pool) {
     if (!pool) {
         log_msg(ERROR, "Memory", "Pool is NULL");
@@ -125,5 +125,4 @@ void shutdown_memory_pool(memory_pool_t* pool) {
 
     free(pool->memory);
     free(pool);
-    pool = NULL;
 }

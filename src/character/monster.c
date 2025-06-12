@@ -5,13 +5,11 @@
 
 #include "monster.h"
 
-#include <stdlib.h>
+#include "../map/map_mode.h"
+#include "../stats/stats.h"
 
-/**
- * @brief Creates and initializes a new goblin character
- * @param memory_pool A pointer to the memory pool used for allocating the goblin character
- * @return A pointer to the newly created goblin character, or NULL if memory allocation fails
- */
+stat_type_t goblin_scaling[10] = {CONSTITUTION, CONSTITUTION, STRENGTH, INTELLIGENCE, DEXTERITY, CONSTITUTION, STRENGTH, DEXTERITY, CONSTITUTION, STRENGTH};
+
 character_t* create_new_goblin(memory_pool_t* memory_pool) {
     NULL_PTR_HANDLER_RETURN(memory_pool, NULL, "Goblin", "Memory pool is NULL");
 
@@ -22,6 +20,16 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);
     set_xp_reward(goblin, 120);
-    set_level(goblin, 1);
+    set_level(goblin, current_floor);
+    set_skill_points(goblin, current_floor - 1);
+    distribute_monster_skillpoints(goblin);
     return goblin;
+}
+
+void distribute_monster_skillpoints(character_t* goblin) {
+    for (int i = 0; i < (goblin->level - 1); i++) {
+        raise_skill(&goblin->base_stats, goblin_scaling[i % 10], goblin->skill_points);
+        goblin->skill_points--;
+    }
+    update_character_resources(&goblin->current_resources, &goblin->max_resources, &goblin->base_stats);
 }

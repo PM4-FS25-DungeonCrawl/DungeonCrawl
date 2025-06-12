@@ -1,31 +1,40 @@
+/**
+ * @file save_menu.c
+ * @brief Implementation of the save menu.
+ */
 #include "save_menu.h"
 
 #include "../common.h"
 #include "../database/database.h"
 #include "../database/game/gamestate_database.h"
-#include "../local/local.h"
-#include "../logging/logger.h"
-#include "notcurses/nckeys.h"
+#include "../io/input/input_handler.h"
+#include "../io/output/common/output_handler.h"
+#include "../io/output/common/text_output.h"
+#include "../local/local_handler.h"
+#include "local/save_menu_local.h"
 #include "src/menu/menu.h"
 
-#include <notcurses/notcurses.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 
-// === Internal Functions ===
-void update_save_menu_local(void);
 
-// Global variables to store menu state
 int selected_save_file_id = -1;
 char last_save_name[50] = {0};
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
 
-void init_save_menu() {
+int init_save_menu() {
+    save_menu_strings = malloc(sizeof(char*) * MAX_SAVE_MENU_STRINGS);
+    RETURN_WHEN_NULL(save_menu_strings, 1, "Save Menu", "Failed to allocate memory for save menu strings.");
+
+    for (int i = 0; i < MAX_SAVE_MENU_STRINGS; i++) {
+        save_menu_strings[i] = NULL;
+    }
+
     // update local once, so the strings are initialized
     update_save_menu_local();
     // add update local function to the observer list
-    add_local_observer(update_save_menu_local);
+    observe_local(update_save_menu_local);
+    return 0;
 }
 
 
@@ -34,7 +43,6 @@ int get_selected_save_file_id(void) {
 }
 
 const char* get_save_name(void) {
-    log_msg(INFO, "Save Menu", "Getting save name: %s", last_save_name[0] == '\0' ? "NULL" : last_save_name);
     if (last_save_name[0] == '\0') {
         return NULL;
     }
@@ -42,77 +50,29 @@ const char* get_save_name(void) {
 }
 
 menu_result_t show_save_game_menu(void) {
-    log_msg(INFO, "Save Menu", "Entering show_save_game_menu");
     char save_name[50] = {0};
-    int name_length = 0;
-    bool input_active = true;
     menu_result_t result = MENU_CONTINUE;
 
-    // Get save name from user
-    while (input_active && name_length < 49) {
-        // clear screen
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-            }
-        }
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Enter name for save file:");
-        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "%s", save_name);
-        ncplane_printf_yx(stdplane, MENU_START_Y + 4, MENU_START_X, "Press Enter when done");
-        notcurses_render(nc);
+    // Get save name from user using the output handler
+    bool confirmed = get_text_input(
+            save_menu_strings[SAVE_NAME_REQUEST],
+            save_name,
+            sizeof(save_name),
+            save_menu_strings[PRESS_ENTER_CONFIRM],
+            MENU_START_Y,
+            MENU_START_X);
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
-
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
-
-        switch (input.id) {
-            case NCKEY_ENTER:
-                if (name_length > 0) {
-                    input_active = false;
-                }
-                break;
-            case NCKEY_BACKSPACE:
-                // Handle both the standard TB_KEY_BACKSPACE (0x08) and TB_KEY_BACKSPACE2 (0x7f)
-                if (name_length > 0) {
-                    save_name[--name_length] = '\0';
-                }
-                break;
-            case NCKEY_ESC:
-                // Cancel save
-                input_active = false;
-                name_length = 0;// Set length to 0 to indicate cancellation
-                break;
-            default:
-                if (input.id != 0 && name_length < 49) {
-                    save_name[name_length++] = input.id;
-                    save_name[name_length] = '\0';
-                }
-                break;
-        }
-    }
-
-    if (name_length > 0) {
+    if (confirmed) {
         // Store the save name for later use
         strncpy(last_save_name, save_name, sizeof(last_save_name) - 1);
         last_save_name[sizeof(last_save_name) - 1] = '\0';// Ensure null termination
 
         // Show saving message
-        // clear screen
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-            }
-        }
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Saving game...");
-        notcurses_render(nc);
-
-        log_msg(INFO, "Menu", "Saving game with name: %s", save_name);
+        show_message_screen(
+                save_menu_strings[SAVING],
+                NULL,
+                MENU_START_Y,
+                MENU_START_X);
 
         result = MENU_SAVE_GAME;
     }
@@ -123,44 +83,55 @@ menu_result_t show_save_game_menu(void) {
 menu_result_t show_load_game_menu(bool game_in_progress) {
     menu_result_t result = MENU_CONTINUE;
 
-    if (game_in_progress && !show_confirmation("Do you want to continue?")) {
+    if (game_in_progress && !show_confirmation(save_menu_strings[CONFIRM_QUESTION])) {
         // User declined, return to continue
         return MENU_CONTINUE;
     }
 
-    // Create a database connection for the menu to use
-    db_connection_t menu_db_connection;
-    // TODO: we need to discuss (this is probably reason why the database opens 3 times)
-    if (db_open(&menu_db_connection, "../resources/database/game/dungeoncrawl_game.db") != DB_OPEN_STATUS_SUCCESS) {
-        log_msg(ERROR, "Menu", "Failed to open database for save file listing");
-        return MENU_CONTINUE;
-    }
+    // Use the global database connection from game.h instead of creating a new one
+    extern db_connection_t db_connection;
 
-    save_info_container_t* save_infos = get_save_infos(&menu_db_connection);
+    save_info_container_t* save_infos = get_save_infos(&db_connection);
     if (save_infos == NULL) {
         log_msg(ERROR, "Menu", "Failed to get save files");
-        db_close(&menu_db_connection);
         return MENU_CONTINUE;
     }
 
     if (save_infos->count == 0) {
-        // No saves available
-        // clear screen
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-            }
-        }
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "No saved games found.");
-        ncplane_printf_yx(stdplane, MENU_START_Y + 2, MENU_START_X, "Press any key to return to the menu.");
-        notcurses_render(nc);
+        // No saves available - show message and return
+        show_message_screen(
+                save_menu_strings[SAVES_NOT_FOUND],
+                save_menu_strings[PRESS_ANY_RETURN],
+                MENU_START_Y,
+                MENU_START_X);
 
-
-        db_close(&menu_db_connection);
         free_save_infos(save_infos);
         return MENU_CONTINUE;
+    }
+
+    // Prepare the save file options for the menu
+    const char** save_options = malloc(save_infos->count * sizeof(char*));
+    if (!save_options) {
+        log_msg(ERROR, "Menu", "Failed to allocate memory for save options");
+        free_save_infos(save_infos);
+        return MENU_CONTINUE;
+    }
+
+    // Format save info strings for the menu
+    for (int i = 0; i < save_infos->count; i++) {
+        save_options[i] = malloc(MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 5);
+        if (!save_options[i]) {
+            // Clean up previously allocated memory
+            for (int j = 0; j < i; j++) {
+                free((void*) save_options[j]);
+            }
+            free(save_options);
+            free_save_infos(save_infos);
+            log_msg(ERROR, "Menu", "Failed to allocate memory for save option");
+            return MENU_CONTINUE;
+        }
+        snprintf((char*) save_options[i], MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 5,
+                 "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
     }
 
     // Display the save files and let the user select one
@@ -168,66 +139,81 @@ menu_result_t show_load_game_menu(bool game_in_progress) {
     bool selection_active = true;
 
     while (selection_active) {
-        // clear screen
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-            for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-                ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-            }
-        }
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, MENU_START_Y, MENU_START_X, "Select a save file:");
+        // Clear the screen
+        clear_screen();
 
-        int y = MENU_START_Y + 2;
+        // Print the title and options
+        print_text_default(MENU_START_Y, MENU_START_X, save_menu_strings[SELECT_SAVE]);
+
+        // Print the save options with highlighting
         for (int i = 0; i < save_infos->count; i++) {
-            char save_info[MAX_STRING_LENGTH + TIMESTAMP_LENGTH + 3];
-            snprintf(save_info, sizeof(save_info), "%s (%s)", save_infos->infos[i].name, save_infos->infos[i].timestamp);
-
             if (i == selected_save_index) {
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
+                // Highlight selected option with inverted colors
+                print_text(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING),
+                           MENU_START_X,
+                           save_options[i],
+                           INVERTED_COLORS);
             } else {
-                ncplane_set_channels(stdplane, DEFAULT_COLORS);
-                ncplane_printf_yx(stdplane, y, MENU_START_X, "%s", save_info);
+                // Normal option
+                print_text_default(MENU_START_Y + 2 + (i * MENU_ITEM_SPACING),
+                                   MENU_START_X,
+                                   save_options[i]);
             }
-            y += MENU_ITEM_SPACING;
         }
 
-        ncplane_set_channels(stdplane, DEFAULT_COLORS);
-        ncplane_printf_yx(stdplane, y + 2, MENU_START_X, "Arrow keys: Navigate | Enter: Select | Esc: Back");
-        notcurses_render(nc);
+        // Print the navigation instructions
+        print_text_default(MENU_START_Y + 2 + (save_infos->count * MENU_ITEM_SPACING) + 2,
+                           MENU_START_X,
+                           save_menu_strings[NAVIGATE_INSTRUCTIONS]);
 
+        // Render the frame
+        render_frame();
 
-        ncinput input;
-        memset(&input, 0, sizeof(input));
-        notcurses_get_blocking(nc, &input);
+        // Get input
+        input_event_t input_event;
+        if (!get_input_blocking(&input_event)) {
+            continue;
+        }
 
-        if (!(input.evtype == NCTYPE_UNKNOWN || input.evtype == NCTYPE_PRESS)) { continue; }
-        switch (input.id) {
-            case NCKEY_UP:
+        // Use our logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_save_index = (selected_save_index - 1 + save_infos->count) % save_infos->count;
                 break;
-            case NCKEY_DOWN:
+            case INPUT_DOWN:
                 selected_save_index = (selected_save_index + 1) % save_infos->count;
                 break;
-            case NCKEY_ENTER:
+            case INPUT_CONFIRM:
                 // Set the selected save file ID for loading
                 result = MENU_LOAD_GAME;
                 selected_save_file_id = save_infos->infos[selected_save_index].id;
                 selection_active = false;
                 break;
-            case NCKEY_ESC:
+            case INPUT_CANCEL:
                 selection_active = false;
+                break;
+            default:
                 break;
         }
     }
 
-    // Clean up the save files
+    // Clean up resources
+    for (int i = 0; i < save_infos->count; i++) {
+        free((void*) save_options[i]);
+    }
+    free(save_options);
     free_save_infos(save_infos);
-    db_close(&menu_db_connection);
 
     return result;
 }
 
-void update_save_menu_local(void) {
+void shutdown_save_menu(void) {
+    if (save_menu_strings != NULL) {
+        for (int i = 0; i < MAX_SAVE_MENU_STRINGS; i++) {
+            if (save_menu_strings[i] != NULL) {
+                free(save_menu_strings[i]);
+            }
+        }
+        free(save_menu_strings);
+    }
 }

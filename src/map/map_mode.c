@@ -1,26 +1,27 @@
+/**
+ * @file map_mode.c
+ * @brief Implements functions for the map mode of the game.
+ */
 #include "map_mode.h"
 
 #include "../game.h"
+#include "../inventory/inventory_mode.h"
+#include "../io/input/input_handler.h"
+#include "../io/io_handler.h"
+#include "../io/output/common/output_handler.h"
+#include "../io/output/specific/map_output.h"
 #include "draw/draw_light.h"
-#include "draw/draw_map_mode.h"
 #include "map.h"
-#include "src/inventory/inventory_mode.h"
 
-#include <notcurses/notcurses.h>
 #include <stdbool.h>
 #include <stdint.h>
-
-#ifdef __APPLE__
-    #define KEY_EVENT NCTYPE_PRESS
-#else
-    #define KEY_EVENT NCTYPE_UNKNOWN
-#endif /* ifdef __APPLE__ */
+#include <string.h>
 
 vector2d_t map_anchor = {5, 2};
 vector2d_t player_pos;
 int player_has_key = 0;
 bool first_function_call = true;
-
+int current_floor = 1;
 
 void set_player_start_pos(const int player_x, const int player_y) {
     player_pos.dx = player_x;
@@ -33,25 +34,33 @@ vector2d_t get_player_pos() {
     return player_pos;
 }
 
-map_mode_result_t handle_input(const ncinput* event, character_t* player) {
+map_mode_result_t handle_input(const input_event_t* input_event, character_t* player) {
     int new_x = player_pos.dx;
     int new_y = player_pos.dy;
 
-    if (event->id == 'c' && (event->modifiers & NCKEY_MOD_CTRL)) return QUIT;
+    if (input_event->type == INPUT_QUIT) return QUIT;
+    if (input_event->type == INPUT_MENU) return SHOW_MENU;
 
-    // Check for 'M' key press for menu
-    if (event->id == 'm' || event->id == 'M' || event->id == NCKEY_ESC) return SHOW_MENU;
-    // Check for 'I' key press for inventory
-    if (event->id == 'i' || event->id == 'I') return SHOW_INVENTORY;
-    // Check for 'L' key press for stats
-    if (event->id == 'l' || event->id == 'L') return SHOW_STATS;
+    // Process different modes
+    if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;
+    if (input_event->type == INPUT_STATS) return SHOW_STATS;
 
-    // Only process arrow key events that are PRESS type (ignore RELEASE events)
-    if (event->evtype == NCTYPE_UNKNOWN || event->evtype == NCTYPE_PRESS) {
-        if (event->id == NCKEY_UP) new_y--;
-        if (event->id == NCKEY_DOWN) new_y++;
-        if (event->id == NCKEY_LEFT) new_x--;
-        if (event->id == NCKEY_RIGHT) new_x++;
+    // Process movement using logical input types
+    switch (input_event->type) {
+        case INPUT_UP:
+            new_y--;
+            break;
+        case INPUT_DOWN:
+            new_y++;
+            break;
+        case INPUT_LEFT:
+            new_x--;
+            break;
+        case INPUT_RIGHT:
+            new_x++;
+            break;
+        default:
+            break;
     }
 
 
@@ -74,6 +83,7 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
                     player_has_key = 0;
                     player_pos.dx = new_x;
                     player_pos.dy = new_y;
+                    current_floor++;
                     return NEXT_FLOOR;
                 }
                 break;
@@ -104,35 +114,25 @@ map_mode_result_t handle_input(const ncinput* event, character_t* player) {
     return CONTINUE;
 }
 
-/**
- * Updates the player position based on the player's input and redraws the maze.
- * @return CONTINUE (0) if the game continue, QUIT (1) if the player pressed the exit key.
- */
 map_mode_result_t map_mode_update(character_t* player) {
     map_mode_result_t next_state = CONTINUE;
-    ncinput ev;
-    memset(&ev, 0, sizeof(ev));
+
     if (!first_function_call) {
-        const uint32_t ret = notcurses_get_blocking(nc, &ev);
-        if (ret > 0) {
-            // Only process the event if it's a key press (not release or repeat)
-            if (ev.evtype == NCTYPE_UNKNOWN || ev.evtype == NCTYPE_PRESS) {
-                next_state = handle_input(&ev, player);
-            }
+        input_event_t input_event;
+
+        // Use our input handler to get input
+        if (get_input_nonblocking(&input_event)) {
+            next_state = handle_input(&input_event, player);
         }
     }
     first_function_call = false;
 
-    // clear screen
-    ncplane_set_channels(stdplane, DEFAULT_COLORS);
-    for (uint i = 0; i < ncplane_dim_x(stdplane); i++) {
-        for (uint j = 0; j < ncplane_dim_y(stdplane); j++) {
-            ncplane_printf_yx(stdplane, (int) j, (int) i, " ");
-        }
-    }
+    // clear screen using the IO handler
+    clear_screen();
     draw_light_on_player((map_tile_t*) map, (map_tile_t*) revealed_map, HEIGHT, WIDTH, player_pos, LIGHT_RADIUS);
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
-    notcurses_render(nc);
+    // Use the centralized render function instead of direct notcurses call
+    render_frame();
 
     return next_state;
 }
@@ -143,4 +143,8 @@ void init_map_mode(void) {
             revealed_map[x][y] = HIDDEN;
         }
     }
+}
+
+void shutdown_map_mode(void) {
+    // Free any resources if needed
 }

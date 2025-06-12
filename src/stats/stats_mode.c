@@ -1,46 +1,50 @@
+/**
+ * @file stats_mode.c
+ * @brief Implementation for the stats_mode.
+ */
 #include "stats_mode.h"
 
 #include "../combat/ability.h"
-#include "../local/local.h"
-#include "../local/local_strings.h"
-#include "./draw/draw_stats.h"
+#include "../io/input/input_handler.h"
+#include "../io/output/common/output_handler.h"
+#include "../io/output/common/text_output.h"
+#include "../io/output/specific/stats_output.h"
+#include "local/stats_mode_local.h"
+int selected_index = 0;
 
-// Change from definition to declaration
-extern struct notcurses* nc;
-extern struct ncplane* stdplane;
+stats_result_t stats_mode(character_t* player) {
+    clear_screen();
+    stats_result_t result = STATS_WINDOW;
 
-void stats_mode(character_t* player) {
-    stdplane = notcurses_stdplane(nc);
-    int selected_index = 0;
+    // Draw stats window
+    render_stats_window(player);
+    const char* menu_options[4];
 
-    bool points_allocated_or_esc = false;
+    menu_options[0] = stats_mode_strings[STRENGTH_STR];
+    menu_options[1] = stats_mode_strings[INTELLIGENCE_STR];
+    menu_options[2] = stats_mode_strings[DEXTERITY_STR];
+    menu_options[3] = stats_mode_strings[CONSTITUTION_STR];
 
-    while (!points_allocated_or_esc) {
-        // Draw stats menu
-        render_stats_window(player);
-        const char* menu_options[4];
-
-        menu_options[0] = &local_strings[stmo_ability_strength.idx].characters[0];
-        menu_options[1] = &local_strings[stmo_ability_intelligence.idx].characters[0];
-        menu_options[2] = &local_strings[stmo_ability_dexterity.idx].characters[0];
-        menu_options[3] = &local_strings[stmo_ability_constitution.idx].characters[0];
-
+    // Only show the skill points if the player has any
+    if (player->skill_points > 0) {
         draw_stats_menu(
-                local_strings[stmo_menu_stats_title.idx].characters,
+                stats_mode_strings[STATS_MENU_TITLE],
                 menu_options,
                 4,
                 selected_index, "");
-        // Check for input
-        ncinput input;
-        // Remove unused variable
-        int ret = (int) notcurses_get_nblock(nc, &input);
-        if (ret > 0) {
-            // Handle arrow keys
-            if (input.id == NCKEY_UP) {
+    }
+    // Check for input
+    input_event_t input_event;
+    if (get_input_nonblocking(&input_event)) {
+        // Handle input using logical input types
+        switch (input_event.type) {
+            case INPUT_UP:
                 selected_index = (selected_index > 0) ? selected_index - 1 : MAX_STATS - 1;
-            } else if (input.id == NCKEY_DOWN) {
+                break;
+            case INPUT_DOWN:
                 selected_index = (selected_index + 1) % MAX_STATS;
-            } else if (input.id == NCKEY_ENTER) {
+                break;
+            case INPUT_CONFIRM:
                 if (player->skill_points > 0) {
                     switch (selected_index) {
                         case 0:
@@ -58,23 +62,22 @@ void stats_mode(character_t* player) {
                         default:;
                     }
                     player->skill_points--;
-                    update_character_resources(&player->max_resources, &player->base_stats);
+                    update_character_resources(&player->current_resources, &player->max_resources, &player->base_stats);
                 } else {
                     char word[MAX_STRING_LENGTH - 4];
-                    snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", local_strings[stmo_option_skillpoints.idx].characters);
-                    ncplane_putstr_yx(stdplane, 20, 17, word);
-                    notcurses_render(nc);
+                    snprintf(word, MAX_STRING_LENGTH - 4, "%s: 0", stats_mode_strings[AVAILABLE_SKILL_POINTS_STR]);
+                    print_text_default(20, 17, word);
                 }
-            } else if (input.id == NCKEY_ESC || input.id == 'l' || input.id == 'L') {
-                // Clear the screen before drawing a new menu
-                ncplane_erase(stdplane);
-                points_allocated_or_esc = true;
-            }
-
-            // Re-render after input
-            notcurses_render(nc);
+                break;
+            case INPUT_CANCEL:
+            case INPUT_STATS:
+                result = STATS_EXIT;
+                break;
+            default:
+                break;
         }
     }
-    ncplane_erase(stdplane);
-    notcurses_render(nc);
+
+    render_frame();
+    return result;
 }

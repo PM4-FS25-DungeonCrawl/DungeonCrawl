@@ -1,3 +1,7 @@
+/**
+ * @file database.c
+ * @brief Implents functionality for working with the database.
+ */
 #include "database.h"
 
 #include "../logging/logger.h"
@@ -11,7 +15,6 @@ int db_open(db_connection_t* db_connection, const char* db_name) {
         log_msg(ERROR, "Database", "Can't open database: %s", sqlite3_errmsg(db_connection->db));
         return DB_OPEN_STATUS_FAILURE;
     }
-    log_msg(INFO, "Database", "Opened database successfully");
     return DB_OPEN_STATUS_SUCCESS;
 }
 
@@ -26,4 +29,32 @@ int db_is_open(const db_connection_t* db_connection) {
         return 0;
     }
     return 1;
+}
+
+int db_open_multiple_access(db_connection_t* db_connection, db_type_t type) {
+    const char* potential_paths[3];
+    switch (type) {
+        case DB_GAME:
+            potential_paths[0] = DB_BUILD_DIR_PATH(dungeoncrawl_game.db);
+            potential_paths[1] = DB_RESOURCE_PATH(game, dungeoncrawl_game.db);
+            potential_paths[2] = DB_RESOURCE_PATH_UP(game, dungeoncrawl_game.db);
+            break;
+        case DB_LOCAL:
+            potential_paths[0] = DB_BUILD_DIR_PATH(dungeoncrawl_local.db);
+            potential_paths[1] = DB_RESOURCE_PATH(local, dungeoncrawl_local.db);
+            potential_paths[2] = DB_RESOURCE_PATH_UP(local, dungeoncrawl_local.db);
+            break;
+        default:
+            log_msg(ERROR, "Database", "Invalid database type");
+            return DB_OPEN_STATUS_FAILURE;
+    }
+
+    for (unsigned int i = 0; i < sizeof(potential_paths) / sizeof(char*); i++) {
+        const int rc = sqlite3_open_v2(potential_paths[i], &db_connection->db, SQLITE_OPEN_READWRITE, NULL);
+        if (rc == SQLITE_OK) {
+            return DB_OPEN_STATUS_SUCCESS;
+        }
+        log_msg(WARNING, "Database", "Can't open database: %s", sqlite3_errmsg(db_connection->db));
+    }
+    return DB_OPEN_STATUS_FAILURE;
 }

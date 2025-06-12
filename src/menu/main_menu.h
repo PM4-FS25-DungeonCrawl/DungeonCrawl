@@ -1,3 +1,7 @@
+/**
+ * @file main_menu.h
+ * @brief Exposes functions for the main menu.
+ */
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
@@ -20,5 +24,10 @@ int init_main_menu(void);
  *         MENU_SAVE_GAME to save the game, MENU_LOAD_GAME to load a game, MENU_EXIT to exit the game
  */
 menu_result_t show_main_menu(bool game_in_progress);
+
+/**
+ * @brief Shuts down the main menu and frees associated data.
+ */
+void shutdown_main_menu(void);
 
 #endif// MAIN_MENU_H
