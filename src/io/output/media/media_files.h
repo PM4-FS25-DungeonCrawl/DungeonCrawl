@@ -10,7 +10,7 @@
  * ========================================================================= */
 
 #define MEDIA_PATH "resources/art/"// Path to media files
-#define MAX_PATH_LEN 256     // Maximum length for file paths
+#define MAX_PATH_LEN 256           // Maximum length for file paths
 
 #define GOBLIN_PNG "goblin.png"
 #define GOBLIN_HEIGHT 12
