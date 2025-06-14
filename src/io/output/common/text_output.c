@@ -1,6 +1,7 @@
 #include "text_output.h"
 
 #include "../../../common.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../input/input_types.h"
@@ -226,15 +227,21 @@ bool prompt_player_name(char* name_buffer) {
     int dialog_x = screen_width / 2 - 20;
 
     // Use the existing get_text_input function with appropriate parameters
-    const char* prompt = "Welcome, brave adventurer!";
-    const char* instruction = "Enter your name (press Enter to confirm):";
+    char* prompt = get_local_string("PLAYER.NAME.WELCOME");
+    char* instruction = get_local_string("PLAYER.NAME.PROMPT");
 
     bool success = get_text_input(prompt, name_buffer, MAX_NAME_LENGTH, instruction, dialog_y, dialog_x);
+
+    // Free localized strings
+    free(prompt);
+    free(instruction);
 
     // Validate the name
     if (success && strlen(name_buffer) == 0) {
         // If empty name was entered, use default
-        snprintf(name_buffer, MAX_NAME_LENGTH, "Ash Ketchup");
+        char* default_name = get_local_string("CHARACTER.DEFAULT.PLAYER");
+        snprintf(name_buffer, MAX_NAME_LENGTH, "%s", default_name);
+        free(default_name);
     }
 
     return success;

@@ -7,6 +7,7 @@
 #include "../../../character/character.h"
 #include "../../../combat/local/combat_mode_local.h"
 #include "../../../common.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
@@ -108,8 +109,10 @@ void draw_death_screen(void) {
     // Clear the screen
     clear_screen();
 
+    char* death_text = get_local_string("GAME.DEATH.MESSAGE");
     char welcome_msg[256];
-    snprintf(welcome_msg, sizeof(welcome_msg), "This is the end! Press any key to return to menu...");
+    snprintf(welcome_msg, sizeof(welcome_msg), "%s", death_text);
+    free(death_text);
 
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;

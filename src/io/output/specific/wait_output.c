@@ -5,6 +5,7 @@
 #include "wait_output.h"
 
 #include "../../../game_data.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
@@ -73,7 +74,7 @@ void draw_launch_screen(void) {
     clear_screen();
 
     // Draw game title
-    const char* title = "DUNGEON CRAWL";
+    char* title = get_local_string("LAUNCH.TITLE");
     int title_len = strlen(title);
     int title_x = (width - title_len) / 2;
     int title_y = height / 3;
@@ -82,8 +83,8 @@ void draw_launch_screen(void) {
     print_text(title_y, title_x, title, RED_TEXT_COLORS);
 
     // Draw version and copyright
-    const char* version = "Version 1.0";
-    const char* copyright = "(C) 2025 DungeonCrawl Team";
+    char* version = get_local_string("LAUNCH.VERSION");
+    char* copyright = get_local_string("LAUNCH.COPYRIGHT");
 
     int version_len = strlen(version);
     int copyright_len = strlen(copyright);
@@ -94,8 +95,13 @@ void draw_launch_screen(void) {
     print_text_default(title_y + 2, version_x, version);
     print_text_default(title_y + 3, copyright_x, copyright);
 
+    // Free localized strings
+    free(title);
+    free(version);
+    free(copyright);
+
     // Draw a loading message
-    const char* loading_msg = "Loading game...";
+    char* loading_msg = get_local_string("LAUNCH.LOADING");
     int loading_len = strlen(loading_msg);
 
     // Show simple animation
@@ -106,6 +112,9 @@ void draw_launch_screen(void) {
     snprintf(animation_str, sizeof(animation_str), "%s %c", loading_msg, anim[frame]);
 
     print_text_default(height - 5, (width - loading_len - 2) / 2, animation_str);
+
+    // Free localized string
+    free(loading_msg);
 
     // Render the frame using centralized IO handler
     render_frame();
@@ -126,8 +135,10 @@ void draw_welcome_screen(void) {
     // Clear the screen
     clear_screen();
 
+    char* welcome_text = get_local_string("LAUNCH.WELCOME");
     char welcome_msg[256];
-    snprintf(welcome_msg, sizeof(welcome_msg), "Welcome to Dungeon Crawl! Press any key to continue...");
+    snprintf(welcome_msg, sizeof(welcome_msg), "%s", welcome_text);
+    free(welcome_text);
 
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;

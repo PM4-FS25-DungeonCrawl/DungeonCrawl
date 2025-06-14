@@ -5,6 +5,7 @@
 #include "map_output.h"
 
 #include "../../../common.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
@@ -25,7 +26,9 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                      "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     // Print the title using centralized IO handler
-    print_text(anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl", RED_TEXT_COLORS);
+    char* map_title = get_local_string("MAP.TITLE");
+    print_text(anchor.dy, anchor.dx + width / 2 - 7, map_title, RED_TEXT_COLORS);
+    free(map_title);
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -123,8 +126,10 @@ void draw_transition_screen(void) {
     // Clear the screen
     clear_screen();
 
+    char* transition_text = get_local_string("MAP.FLOOR.TRANSITION");
     char welcome_msg[256];
-    snprintf(welcome_msg, sizeof(welcome_msg), "Moving to next floor! Press any key to continue...");
+    snprintf(welcome_msg, sizeof(welcome_msg), "%s", transition_text);
+    free(transition_text);
 
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;
