@@ -40,6 +40,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
 
     if (input_event->type == INPUT_QUIT) return QUIT;
     if (input_event->type == INPUT_MENU) return SHOW_MENU;
+    //if (input_event->type == INPUT_RESIZE) return CONTINUE;
 
     // Process different modes
     if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;

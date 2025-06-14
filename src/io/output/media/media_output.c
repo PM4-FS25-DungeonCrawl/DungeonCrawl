@@ -265,6 +265,7 @@ static bool display_image(loaded_visual_t* resource) {
     opts.x = resource->options.x;
     opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->og_height;
     opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->og_width;
+    //opts.resizecb = standard_resize_callback;  // Add resize callback for proper handling
 
     resource->plane = ncplane_create(gio->stdplane, &opts);
     if (!resource->plane) {
@@ -320,6 +321,7 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
     opts.x = resource->options.x;
     opts.rows = resource->options.leny > 0 ? resource->options.leny : resource->og_height;
     opts.cols = resource->options.lenx > 0 ? resource->options.lenx : resource->og_width;
+    //opts.resizecb = standard_resize_callback;  // Add resize callback for proper handling
 
     resource->plane = ncplane_create(gio->stdplane, &opts);
     if (!resource->plane) {
