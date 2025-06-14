@@ -9,7 +9,7 @@
  * MEDIA PATHS AND NAMES
  * ========================================================================= */
 
-#define MEDIA_PATH "src/art/"// Path to media files
+#define MEDIA_PATH "resources/art/"// Path to media files
 #define MAX_PATH_LEN 256     // Maximum length for file paths
 
 #define GOBLIN_PNG "goblin.png"
