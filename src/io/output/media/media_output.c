@@ -129,7 +129,7 @@ bool display_gif_background(const char* filename, float fps, bool loop) {
         return false;
     }
 
-    
+
     // Load and display the GIF at full screen size
     loaded_visual_t* resource = ready_media(filename, 0, 0, height, width, SCALE_FULLSCREEN);
     if (!resource) {
@@ -262,12 +262,12 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
 
     // Validate fps
     if (fps <= 0.0f) {
-        fps = 10.0f; // Default to 10 FPS
+        fps = 10.0f;// Default to 10 FPS
         log_msg(WARNING, "media_output", "Invalid FPS, using default 10 FPS");
     }
 
     // Calculate frame delay in microseconds
-    int frame_delay_us = (int)(1000000.0f / fps);
+    int frame_delay_us = (int) (1000000.0f / fps);
 
     // Set up initial display (similar to display_image)
     if (resource->plane) {
@@ -316,9 +316,9 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
 
         // Sleep for frame duration
 #ifdef _WIN32
-        Sleep(frame_delay_us / 1000); // Windows Sleep takes milliseconds
+        Sleep(frame_delay_us / 1000);// Windows Sleep takes milliseconds
 #else
-        usleep(frame_delay_us); // Unix usleep takes microseconds
+        usleep(frame_delay_us);// Unix usleep takes microseconds
 #endif
 
         // Try to decode next frame

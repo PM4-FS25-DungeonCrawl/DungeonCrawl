@@ -140,11 +140,11 @@ void draw_welcome_screen(void) {
     // Render the frame using centralized IO handler
     render_frame();
 
-    display_gif_at(INTRO_GIF, (width-INTRO_WIDTH)/2, msg_y + 5, INTRO_HEIGHT, INTRO_WIDTH, SCALE_STRETCH, 5, true);
+    display_gif_at(INTRO_GIF, (width - INTRO_WIDTH) / 2, msg_y + 5, INTRO_HEIGHT, INTRO_WIDTH, SCALE_STRETCH, 5, true);
 
     // Wait for user input
     input_event_t input_event;
-    get_input_blocking(&input_event); 
+    get_input_blocking(&input_event);
 
     // Clear the screen after input
     media_cleanup();
