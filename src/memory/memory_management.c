@@ -68,8 +68,6 @@ void* memory_pool_alloc(memory_pool_t* pool, size_t size) {
                 current->size = size;// set the size of the current block
 
                 current->next = new_block;// link to the new block
-            } else {
-                log_msg(WARNING, "Memory", "No more space left in the block, using the whole block");
             }
 
             //the remaining memory space is too small, so the current block will be used entirely
@@ -93,7 +91,7 @@ void* memory_pool_alloc(memory_pool_t* pool, size_t size) {
  */
 void memory_pool_free(memory_pool_t* pool, void* ptr) {
     if (!ptr) {
-        log_msg(ERROR, "Memory", "Pointer is NULL");
+        log_msg(ERROR, "Memory", "In 'memory_pool_free' given pointer is NULL");
         return;
     }
 
@@ -119,7 +117,7 @@ void memory_pool_free(memory_pool_t* pool, void* ptr) {
 
 void shutdown_memory_pool(memory_pool_t* pool) {
     if (!pool) {
-        log_msg(ERROR, "Memory", "Pool is NULL");
+        log_msg(ERROR, "Memory", "In 'shutdown_memory_pool' given pool is NULL");
         return;
     }
 
