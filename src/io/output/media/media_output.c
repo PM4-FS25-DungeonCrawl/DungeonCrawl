@@ -9,6 +9,7 @@
 #include "../common/output_handler.h"// For get_screen_dimensions and render_frame
 #include "media_files.h"
 #include "media_output_handler.h"
+#include "../../input/input_handler.h"  // For non-blocking input
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -313,6 +314,15 @@ static bool display_animation(loaded_visual_t* resource, float fps, bool loop) {
         // Make sure the plane is visible and render
         ncplane_move_top(resource->plane);
         notcurses_render(gio->nc);
+
+        // Check for user input to allow interruption
+        input_event_t input_event;
+        if (get_input_nonblocking(&input_event)) {
+            // Input detected - animation should be interrupted
+            log_msg(DEBUG, "media_output", "Animation interrupted by user input");
+            resource->is_playing = false;
+            return true; // Return true to indicate successful completion (even though interrupted)
+        }
 
         // Sleep for frame duration
 #ifdef _WIN32
