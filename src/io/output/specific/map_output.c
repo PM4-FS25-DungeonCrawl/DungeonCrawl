@@ -108,9 +108,11 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     print_text_default(y++, x, map_mode_strings[PRESS_KEY_INVENTORY]);
 
     // Format current floor information
+    char* current_floor_text = get_local_string("MAP.CURRENT.FLOOR");
     char floor_str[64];
-    snprintf(floor_str, sizeof(floor_str), "Current Floor: %d", current_floor);
+    snprintf(floor_str, sizeof(floor_str), "%s %d", current_floor_text, current_floor);
     print_text_default(y++, x, floor_str);
+    free(current_floor_text);
 
     // Format player position string
     char pos_str[64];
