@@ -37,8 +37,6 @@ typedef struct {
 static input_timing_t input_timing = {
         .first_key = true};
 
-// Removed manual screen dimension tracking - using notcurses' built-in NCKEY_RESIZE instead
-
 /**
  * @brief Calculate time difference in milliseconds
  *

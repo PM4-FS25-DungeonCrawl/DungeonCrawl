@@ -166,10 +166,6 @@ bool get_text_input(const char* prompt, char* buffer, int buffer_size,
             // Enter was pressed and we have input
             input_active = false;
             confirmed = true;
-        } else if (input_event.type == INPUT_CANCEL) {
-            // Escape was pressed
-            input_active = false;
-            confirmed = false;
         } else if (key_id == NCKEY_BACKSPACE && text_length > 0) {
             // Backspace was pressed and we have characters to delete
             buffer[--text_length] = '\0';
@@ -231,7 +227,7 @@ bool prompt_player_name(char* name_buffer) {
 
     // Use the existing get_text_input function with appropriate parameters
     const char* prompt = "Welcome, brave adventurer!";
-    const char* instruction = "Enter your name (press Enter to confirm, C to cancel):";
+    const char* instruction = "Enter your name (press Enter to confirm):";
 
     bool success = get_text_input(prompt, name_buffer, MAX_NAME_LENGTH, instruction, dialog_y, dialog_x);
 
