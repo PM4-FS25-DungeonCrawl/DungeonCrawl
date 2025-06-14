@@ -236,8 +236,7 @@ void combat_mode_state() {
             current_state = LOOT_MODE;
             break;
         case PLAYER_LOST:
-            //TODO: instead of exiting the game, a death screen should be shown
-            current_state = EXIT;
+            current_state = MAIN_MENU;
             break;
         case EXIT_GAME:
             current_state = EXIT;

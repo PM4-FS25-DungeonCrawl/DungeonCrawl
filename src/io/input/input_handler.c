@@ -37,11 +37,6 @@ typedef struct {
 static input_timing_t input_timing = {
         .first_key = true};
 
-// Track screen dimensions for resize detection
-static int last_screen_width = 0;
-static int last_screen_height = 0;
-static bool screen_size_initialized = false;
-
 /**
  * @brief Calculate time difference in milliseconds
  *
@@ -75,9 +70,6 @@ input_t translate_input(const ncinput* raw_input) {
         return INPUT_QUIT;
     }
 
-    // Check for resize event (in older notcurses versions, resize might be detected differently)
-    // For now, we'll handle resize through other means since NCTYPE_RESIZE may not be available
-
     // Check if this is a key event (allow both NCTYPE_UNKNOWN and NCTYPE_PRESS)
     if (raw_input->evtype == NCTYPE_PRESS || raw_input->evtype == NCTYPE_UNKNOWN) {
         // Arrow keys for navigation
@@ -106,41 +98,7 @@ input_t translate_input(const ncinput* raw_input) {
     return INPUT_NONE;
 }
 
-/**
- * @brief Check if the screen has been resized
- * 
- * @return true if resize was detected and handled, false otherwise
- */
-static bool check_and_handle_resize(void) {
-    int current_width, current_height;
-    if (!get_screen_dimensions(&current_width, &current_height)) {
-        return false;
-    }
-
-    if (!screen_size_initialized) {
-        last_screen_width = current_width;
-        last_screen_height = current_height;
-        screen_size_initialized = true;
-        return false;
-    }
-
-    if (current_width != last_screen_width || current_height != last_screen_height) {
-        log_msg(DEBUG, "input_handler", "Screen resize detected: %dx%d -> %dx%d",
-                last_screen_width, last_screen_height, current_width, current_height);
-
-        last_screen_width = current_width;
-        last_screen_height = current_height;
-
-        if (!handle_screen_resize()) {
-            log_msg(ERROR, "input_handler", "Failed to handle screen resize");
-            return false;
-        }
-
-        return true;
-    }
-
-    return false;
-}
+// Removed check_and_handle_resize() - now using notcurses' built-in NCKEY_RESIZE event handling
 
 bool init_input_handler(struct notcurses* notcurses_ptr) {
     if (!notcurses_ptr) {
@@ -202,14 +160,6 @@ bool get_input_blocking(input_event_t* event) {
 
     // Loop until we get a valid input or notcurses returns an error
     while (true) {
-        // Check for resize before getting input
-        if (check_and_handle_resize()) {
-            // Return a resize event
-            event->type = INPUT_RESIZE;
-            memset(&event->raw_input, 0, sizeof(ncinput));
-            return true;
-        }
-
         uint32_t ret = notcurses_get_blocking(gio->nc, &raw_input);
         if (ret <= 0) {
             // Error or no input
@@ -242,14 +192,6 @@ bool get_input_nonblocking(input_event_t* event) {
     // Set default values in case we return early
     event->type = INPUT_NONE;
     memset(&event->raw_input, 0, sizeof(ncinput));
-
-    // Check for resize first
-    if (check_and_handle_resize()) {
-        // Return a resize event
-        event->type = INPUT_RESIZE;
-        memset(&event->raw_input, 0, sizeof(ncinput));
-        return true;
-    }
 
     uint32_t ret = notcurses_get_nblock(gio->nc, &raw_input);
     if (ret <= 0) {

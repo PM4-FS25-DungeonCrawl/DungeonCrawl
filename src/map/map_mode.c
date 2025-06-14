@@ -40,6 +40,7 @@ map_mode_result_t handle_input(const input_event_t* input_event, character_t* pl
 
     if (input_event->type == INPUT_QUIT) return QUIT;
     if (input_event->type == INPUT_MENU) return SHOW_MENU;
+    //if (input_event->type == INPUT_RESIZE) return CONTINUE;
 
     // Process different modes
     if (input_event->type == INPUT_INVENTORY) return SHOW_INVENTORY;
@@ -133,6 +134,10 @@ map_mode_result_t map_mode_update(character_t* player) {
     draw_map_mode((const map_tile_t*) revealed_map, HEIGHT, WIDTH, map_anchor, player_pos);
     // Use the centralized render function instead of direct notcurses call
     render_frame();
+
+    if (next_state == NEXT_FLOOR) {
+        draw_transition_screen();
+    }
 
     return next_state;
 }

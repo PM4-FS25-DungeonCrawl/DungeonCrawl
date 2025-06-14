@@ -84,29 +84,23 @@ bool handle_screen_resize(void) {
         return false;
     }
 
-    // Refresh notcurses to handle the resize
+    // Use notcurses_refresh to handle the resize - it automatically:
+    // 1. Gets new terminal geometry
+    // 2. Repaints the screen with current content
+    // 3. Handles plane resizing through resize callbacks
     if (notcurses_refresh(gio->nc, NULL, NULL) < 0) {
         log_msg(ERROR, "output_handler", "Failed to refresh after resize");
         return false;
     }
 
-    // Update the standard plane reference
+    // Update the standard plane reference (may have changed after resize)
     gio->stdplane = notcurses_stdplane(gio->nc);
     if (!gio->stdplane) {
         log_msg(ERROR, "output_handler", "Failed to get standard plane after resize");
         return false;
     }
 
-    // Clear and redraw the screen
-    clear_screen();
-
-    // Force a full render
-    if (!render_frame()) {
-        log_msg(ERROR, "output_handler", "Failed to render after resize");
-        return false;
-    }
-
-    log_msg(DEBUG, "output_handler", "Screen resize handled successfully");
+    log_msg(DEBUG, "output_handler", "Screen resize handled successfully using notcurses_refresh");
     return true;
 }
 

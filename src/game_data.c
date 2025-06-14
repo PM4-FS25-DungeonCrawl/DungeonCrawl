@@ -9,6 +9,7 @@
 #include "common.h"
 #include "game.h"
 #include "item/loot_generation.h"
+#include "local/local_handler.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -70,7 +71,9 @@ int init_player(char* name) {
     if (name != NULL) {
         snprintf(player->name, sizeof(player->name), "%s", name);
     } else {
-        snprintf(player->name, sizeof(player->name), "Hero");
+        char* default_name = get_local_string("PLAYER.DEFAULT.NAME");
+        snprintf(player->name, sizeof(player->name), "%s", default_name);
+        free(default_name);
     }
     return 0;
 }
@@ -88,7 +91,11 @@ int reset_player() {
 
 const char* get_player_name(void) {
     if (player == NULL || strlen(player->name) == 0) {
-        return "Hero";
+        char* default_name = get_local_string("PLAYER.DEFAULT.NAME");
+        static char fallback_name[64];
+        snprintf(fallback_name, sizeof(fallback_name), "%s", default_name);
+        free(default_name);
+        return fallback_name;
     }
     return player->name;
 }

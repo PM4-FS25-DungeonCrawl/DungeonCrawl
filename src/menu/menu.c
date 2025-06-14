@@ -8,6 +8,7 @@
 #include "../io/input/input_handler.h"
 #include "../io/output/common/output_handler.h"
 #include "../io/output/common/text_output.h"
+#include "../local/local_handler.h"
 #include "../logging/logger.h"
 #include "local/save_menu_local.h"
 
@@ -18,7 +19,9 @@ void draw_menu(const char** menu_options, int menu_count, int selected_index) {
     clear_screen();
 
     // Draw title
-    print_text(MENU_START_Y, MENU_START_X, TITLE, RED_TEXT_COLORS);
+    char* title = get_local_string("LAUNCH.TITLE");
+    print_text(MENU_START_Y, MENU_START_X, title, RED_TEXT_COLORS);
+    free(title);
 
     // Draw menu options
     int y = MENU_START_Y + 3;
@@ -44,7 +47,9 @@ bool show_confirmation(const char* message) {
     // Print confirmation messages
     print_text_default(MENU_START_Y, MENU_START_X, save_menu_strings[WARNING_LOST_PROGRESS]);
     print_text_default(MENU_START_Y + 2, MENU_START_X, message);
-    print_text_default(MENU_START_Y + 4, MENU_START_X, "(Y/N)");
+    char* yes_no = get_local_string("CONFIRM.YES_NO");
+    print_text_default(MENU_START_Y + 4, MENU_START_X, yes_no);
+    free(yes_no);
 
     // Render the frame
     render_frame();

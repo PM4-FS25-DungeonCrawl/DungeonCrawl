@@ -38,4 +38,11 @@ void draw_map_mode(const map_tile_t* arr, int height, int width, vector2d_t anch
  */
 void draw_player_info(int x, int y, vector2d_t player_pos);
 
+/**
+ * @brief Draws the transition screen when the player moves to a new floor.
+ *
+ * This function displays an animation and waits for user input before proceeding.
+ */
+void draw_transition_screen(void);
+
 #endif// MAP_OUTPUT_H
