@@ -122,7 +122,7 @@ void draw_death_screen(void) {
 
     // Wait for user input while animation plays
     input_event_t input_event;
-    display_gif_at_interruptible(YOU_DIED_GIF, (width - YOU_DIED_WIDTH) / 2, msg_y + 5, YOU_DIED_HEIGHT, YOU_DIED_WIDTH, SCALE_STRETCH, 5, true, &input_event);
+    display_gif_at_interruptible(YOU_DIED_GIF, (width - YOU_DIED_WIDTH) / 2, msg_y + 1, YOU_DIED_HEIGHT, YOU_DIED_WIDTH, SCALE_STRETCH, 5, true, &input_event);
 
     // If no input was captured during animation, wait for input
     if (input_event.type == INPUT_NONE) {

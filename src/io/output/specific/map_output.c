@@ -137,7 +137,7 @@ void draw_transition_screen(void) {
 
     // Wait for user input while animation plays
     input_event_t input_event;
-    display_gif_at_interruptible(PLAYER_RUN_GIF, (width - PLAYER_RUN_WIDTH) / 2, msg_y + 5, PLAYER_RUN_HEIGHT, PLAYER_RUN_WIDTH, SCALE_STRETCH, 5, true, &input_event);
+    display_gif_at_interruptible(PLAYER_RUN_GIF, (width - PLAYER_RUN_WIDTH) / 2, msg_y + 1, PLAYER_RUN_HEIGHT, PLAYER_RUN_WIDTH, SCALE_STRETCH, 5, true, &input_event);
 
     // If no input was captured during animation, wait for input
     if (input_event.type == INPUT_NONE) {
