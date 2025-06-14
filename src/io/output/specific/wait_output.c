@@ -126,10 +126,8 @@ void draw_welcome_screen(void) {
     // Clear the screen
     clear_screen();
 
-    // Create personalized welcome message
     char welcome_msg[256];
-    const char* player_name = get_player_name();
-    snprintf(welcome_msg, sizeof(welcome_msg), "Welcome to Dungeon Crawl, %s! Press any key to continue...", player_name);
+    snprintf(welcome_msg, sizeof(welcome_msg), "Welcome to Dungeon Crawl! Press any key to continue...");
 
     int msg_len = strlen(welcome_msg);
     int msg_x = (width - msg_len) / 2;

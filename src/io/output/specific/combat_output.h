@@ -51,13 +51,6 @@ void draw_combat_menu(vector2d_t anchor, const char* menu_name, char** menu_opti
  */
 void draw_combat_log(vector2d_t anchor, const char* combat_log_message);
 
-/**
- * @brief Draws the game over screen.
- *
- * This function displays a game over message and waits for user input.
- */
-void draw_game_over(void);
-
 
 /**
  * @brief Draws the resource bar for a character.
@@ -69,5 +62,12 @@ void draw_game_over(void);
  * @return The updated y-coordinate after drawing the resource bar
  */
 int draw_resource_bar(vector2d_t anchor, const character_t* c);
+
+/**
+ * @brief Draws the death screen.
+ *
+ * This function displays a death message and waits for user input.
+ */
+void draw_death_screen(void);
 
 #endif// COMBAT_OUTPUT_H

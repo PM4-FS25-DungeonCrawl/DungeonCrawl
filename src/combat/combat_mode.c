@@ -121,7 +121,7 @@ combat_result_t start_combat(character_t* player, character_t* monster) {
             // evaluate the combat result
             if (player->current_resources.health <= 0) {
                 media_cleanup();
-                draw_game_over();
+                draw_death_screen();
                 return PLAYER_LOST;
             }
             if (monster->current_resources.health <= 0) {

@@ -135,6 +135,10 @@ map_mode_result_t map_mode_update(character_t* player) {
     // Use the centralized render function instead of direct notcurses call
     render_frame();
 
+    if (next_state == NEXT_FLOOR) {
+        draw_transition_screen();
+    }
+
     return next_state;
 }
 

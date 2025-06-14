@@ -20,6 +20,12 @@
 #define INTRO_HEIGHT 15
 #define INTRO_WIDTH 60
 
-#define SKULL_GIF "skull.gif"
+#define PLAYER_RUN_GIF "player_run_an.gif"
+#define PLAYER_RUN_HEIGHT 20
+#define PLAYER_RUN_WIDTH 20
+
+#define YOU_DIED_GIF "you_died.gif"
+#define YOU_DIED_HEIGHT 20
+#define YOU_DIED_WIDTH 60
 
 #endif /*MEDIA_FILES_H*/

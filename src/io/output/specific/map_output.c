@@ -11,6 +11,8 @@
 #include "../common/text_output.h"
 #include "../src/map/local/map_mode_local.h"
 #include "../src/map/map_mode.h"
+#include "../media/media_files.h"
+#include "../media/media_output.h"
 
 
 void draw_map_mode(const map_tile_t* arr, const int height, const int width, const vector2d_t anchor,
@@ -111,4 +113,37 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     char pos_str[64];
     snprintf(pos_str, sizeof(pos_str), "%s: %d, %d", map_mode_strings[PLAYER_POSITION_STR], player_pos.dx, player_pos.dy);
     print_text_default(y + 2, x, pos_str);
+}
+
+void draw_transition_screen(void) {
+    // Get screen dimensions
+    int width, height;
+    get_screen_dimensions(&width, &height);
+
+    // Clear the screen
+    clear_screen();
+
+    char welcome_msg[256];
+    snprintf(welcome_msg, sizeof(welcome_msg), "Moving to next floor! Press any key to continue...");
+
+    int msg_len = strlen(welcome_msg);
+    int msg_x = (width - msg_len) / 2;
+    int msg_y = height / 4;
+
+    print_text_default(msg_y, msg_x, welcome_msg);
+
+    // Render the frame using centralized IO handler
+    render_frame();
+
+    // Wait for user input while animation plays
+    input_event_t input_event;
+    display_gif_at_interruptible(PLAYER_RUN_GIF, (width - PLAYER_RUN_WIDTH) / 2, msg_y + 5, PLAYER_RUN_HEIGHT, PLAYER_RUN_WIDTH, SCALE_STRETCH, 5, true, &input_event);
+
+    // If no input was captured during animation, wait for input
+    if (input_event.type == INPUT_NONE) {
+        get_input_blocking(&input_event);
+    }
+
+    // Clear the screen after input
+    media_cleanup();
 }
