@@ -15,7 +15,11 @@
 #define GOBLIN_PNG "goblin.png"
 #define GOBLIN_HEIGHT 12
 #define GOBLIN_WIDTH 24
+
+#define INTRO_GIF "intro_text.gif"
+#define INTRO_HEIGHT 15
+#define INTRO_WIDTH 60
+
 #define SKULL_GIF "skull.gif"
-#define DUNGEON_INTRO_GIF "dungeon_intro.gif"
 
 #endif /*MEDIA_FILES_H*/
