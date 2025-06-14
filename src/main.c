@@ -112,7 +112,6 @@ int init() {
     }
     create_tables_game_state(&db_connection);
 
-    
 
     // Initialize map mode
     init_map_mode();
