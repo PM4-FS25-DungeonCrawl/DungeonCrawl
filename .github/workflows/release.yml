@@ -23,11 +23,12 @@ jobs:
           meson setup builddir --buildtype=release
           ninja -C builddir
 
+        # Statements that contain "|| true" are optional 
       - name: Create package
         run: |
           mkdir -p release-linux
           cp builddir/DungeonCrawl release-linux/
-          cp Manual.pdf release-linux/
+          cp Manual.pdf release-linux/ || true
           cp -r resources/ release-linux/ || true
           cd release-linux
           zip -r ../dungeonCrawl-Linux.zip .
@@ -51,12 +52,13 @@ jobs:
           meson setup builddir --buildtype=release
           ninja -C builddir
 
+        # Statements that contain "|| true" are optional 
       - name: Create package
         run: |
           mkdir -p release-macos
           cp builddir/DungeonCrawl release-macos/
           cp -r resources/ release-macos/ || true
-          cp Manual.pdf release-macos/
+          cp Manual.pdf release-macos/ || true
           cd release-macos
           zip -r ../dungeonCrawl-macOS.zip .
 
@@ -66,47 +68,8 @@ jobs:
           name: dungeonCrawl-executable-macOS
           path: dungeonCrawl-macOS.zip
 
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build with MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: >-
-            mingw-w64-x86_64-toolchain
-            mingw-w64-x86_64-meson
-            mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-notcurses
-            zip
-
-      - name: Compile
-        shell: msys2 {0}
-        run: |
-          meson setup builddir --buildtype=release
-          ninja -C builddir
-
-      - name: Create package
-        shell: msys2 {0}
-        run: |
-          mkdir -p release-windows
-          cp builddir/DungeonCrawl.exe release-windows/
-          cp -r database/ release-windows/ || true
-          cp -r resources/ release-windows/ || true
-          cd release-windows
-          zip -r ../dungeonCrawl-Windows.zip .
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dungeonCrawl-executable-windows
-          path: dungeonCrawl-windows.zip
-
   release:
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-linux, build-macos]
 
     runs-on: ubuntu-latest
 
@@ -129,12 +92,6 @@ jobs:
       - name: Debug List artifact contents
         run: ls -R artifacts/
 
-#      - name: Rename Artifacts for Clarity
-#        run: |
-#            mv artifacts/dungeonCrawl-executable-Linux/ artifacts/dungeonCrawl-executable-Linux/DungeonCrawl-Linux.zip
-#            mv artifacts/dungeonCrawl-executable-macOS/release-macos/ artifacts/dungeonCrawl-executable-macOS/DungeonCrawl-macOS.zip
-
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -146,7 +103,6 @@ jobs:
           files: |
             artifacts/dungeonCrawl-executable-Linux/dungeonCrawl-Linux.zip
             artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-macOS.zip
-            artifacts/dungeonCrawl-executable-macOS/dungeonCrawl-windows.zip
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
