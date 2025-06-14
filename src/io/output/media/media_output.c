@@ -5,8 +5,9 @@
 #include "media_output.h"
 
 #include "../../../logging/logger.h"
-#include "../../io_handler.h"        // Include this to access global nc and stdplane
-#include "../common/output_handler.h"// For get_screen_dimensions and render_frame
+#include "../../input/input_handler.h"// For non-blocking input
+#include "../../io_handler.h"         // Include this to access global nc and stdplane
+#include "../common/output_handler.h" // For get_screen_dimensions and render_frame
 #include "media_files.h"
 #include "media_output_handler.h"
 #include "../../input/input_handler.h"  // For non-blocking input
