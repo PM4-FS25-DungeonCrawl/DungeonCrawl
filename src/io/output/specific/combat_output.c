@@ -7,11 +7,13 @@
 #include "../../../character/character.h"
 #include "../../../combat/local/combat_mode_local.h"
 #include "../../../common.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../input/input_handler.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
 #include "../common/text_output.h"
+#include "../media/media_files.h"
 #include "../media/media_output.h"
 
 vector2d_t draw_combat_view(const vector2d_t anchor, const character_t* player, const character_t* enemy,
@@ -81,19 +83,6 @@ void draw_combat_log(vector2d_t anchor, const char* combat_log_message) {
     get_input_blocking(&input_event);
 }
 
-void draw_game_over(void) {
-    clear_screen();
-
-    // Display game over message
-    print_text(1, 1, combat_mode_strings[LOST_COMBAT_MSG], RED_TEXT_COLORS);
-    print_text_default(2, 1, combat_mode_strings[PRESS_ANY_EXIT]);
-    render_frame();
-
-    // Use our input handler to get any key press
-    input_event_t input_event;
-    get_input_blocking(&input_event);
-}
-
 int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     if (c == NULL) {
         log_msg(ERROR, "Combat Output", "Character is NULL");
@@ -110,4 +99,39 @@ int draw_resource_bar(vector2d_t anchor, const character_t* c) {
     print_text_default(anchor.dy, anchor.dx, c_info);
     anchor.dy++;
     return anchor.dy;
+}
+
+void draw_death_screen(void) {
+    // Get screen dimensions
+    int width, height;
+    get_screen_dimensions(&width, &height);
+
+    // Clear the screen
+    clear_screen();
+
+    char* death_text = get_local_string("GAME.DEATH.MESSAGE");
+    char welcome_msg[256];
+    snprintf(welcome_msg, sizeof(welcome_msg), "%s", death_text);
+    free(death_text);
+
+    int msg_len = strlen(welcome_msg);
+    int msg_x = (width - msg_len) / 2;
+    int msg_y = height / 4;
+
+    print_text_default(msg_y, msg_x, welcome_msg);
+
+    // Render the frame using centralized IO handler
+    render_frame();
+
+    // Wait for user input while animation plays
+    input_event_t input_event;
+    display_gif_at_interruptible(YOU_DIED_GIF, (width - YOU_DIED_WIDTH) / 2, msg_y + 1, YOU_DIED_HEIGHT, YOU_DIED_WIDTH, SCALE_STRETCH, 5, true, &input_event);
+
+    // If no input was captured during animation, wait for input
+    if (input_event.type == INPUT_NONE) {
+        get_input_blocking(&input_event);
+    }
+
+    // Clear the screen after input
+    media_cleanup();
 }

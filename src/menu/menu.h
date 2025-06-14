@@ -8,16 +8,7 @@
 
 #include <stdbool.h>
 
-// Menu options strings
-#define NEW_GAME_OPTION "New Game"
-#define CONTINUE_OPTION "Continue"
-#define SAVE_GAME_OPTION "Save Game"
-#define LOAD_GAME_OPTION "Load Game"
-#define CHANGE_LANGUAGE_OPTION "Change Language"
-#define EXIT_OPTION "Exit"
-
 // Menu constants
-#define TITLE "DUNGEON CRAWL"
 #define TITLE_COLOR TB_RED
 #define MENU_START_Y 5
 #define MENU_START_X 10

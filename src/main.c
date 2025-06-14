@@ -94,6 +94,12 @@ int init() {
         return FAIL_IO_HANDLER_INIT;
     }
 
+    // Initialize localization
+    if (init_local_handler(LANGE_EN) != COMMON_SUCCESS) {
+        log_msg(ERROR, "Main", "Failed to initialize local handler");
+        return FAIL_LOCAL_INIT;
+    }
+
     // Start the launch screen in a background thread
     // don't need multithreading anymore, init is too fast
     display_launch_screen_thread();
@@ -106,11 +112,6 @@ int init() {
     }
     create_tables_game_state(&db_connection);
 
-    // Initialize localization
-    if (init_local_handler(LANGE_EN) != COMMON_SUCCESS) {
-        log_msg(ERROR, "Main", "Failed to initialize local handler");
-        return FAIL_LOCAL_INIT;
-    }
 
     // Initialize map mode
     init_map_mode();

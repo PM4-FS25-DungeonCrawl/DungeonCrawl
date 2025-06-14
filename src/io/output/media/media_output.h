@@ -5,6 +5,7 @@
 #ifndef MEDIA_OUTPUT_H
 #define MEDIA_OUTPUT_H
 
+#include "../../input/input_types.h"
 #include "media_output_handler.h"
 
 #include <notcurses/notcurses.h>
@@ -73,6 +74,22 @@ bool display_gif_at(const char* filename, int x, int y, int height, int width, s
  * @return true on success, false on failure
  */
 bool display_gif_background(const char* filename, float fps, bool loop);
+
+/**
+ * Display an interruptible animation file at specified coordinates with scaling
+ * 
+ * @param filename Animation file name (GIF supported, loaded from src/art/gif/)
+ * @param x X coordinate in terminal cells
+ * @param y Y coordinate in terminal cells
+ * @param height Height in terminal cells
+ * @param width Width in terminal cells (0 for auto)
+ * @param scaling Scaling mode to use
+ * @param fps Frames per second
+ * @param loop Whether to loop the animation
+ * @param[out] interrupt_event If provided, will contain the input event that interrupted the animation
+ * @return true on success, false on failure
+ */
+bool display_gif_at_interruptible(const char* filename, int x, int y, int height, int width, scale_type_t scale_type, float fps, bool loop, input_event_t* interrupt_event);
 
 /**
  * Display a video file at specified coordinates with scaling

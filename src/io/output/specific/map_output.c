@@ -5,10 +5,13 @@
 #include "map_output.h"
 
 #include "../../../common.h"
+#include "../../../local/local_handler.h"
 #include "../../../logging/logger.h"
 #include "../../io_handler.h"
 #include "../common/output_handler.h"
 #include "../common/text_output.h"
+#include "../media/media_files.h"
+#include "../media/media_output.h"
 #include "../src/map/local/map_mode_local.h"
 #include "../src/map/map_mode.h"
 
@@ -23,7 +26,9 @@ void draw_map_mode(const map_tile_t* arr, const int height, const int width, con
                      "Draw Map Mode", "In draw_map_mode given player position is negative or out of bounds");
 
     // Print the title using centralized IO handler
-    print_text(anchor.dy, anchor.dx + width / 2 - 7, "Dungeon Crawl", RED_TEXT_COLORS);
+    char* map_title = get_local_string("MAP.TITLE");
+    print_text(anchor.dy, anchor.dx + width / 2 - 7, map_title, RED_TEXT_COLORS);
+    free(map_title);
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
@@ -103,12 +108,49 @@ void draw_player_info(int x, int y, const vector2d_t player_pos) {
     print_text_default(y++, x, map_mode_strings[PRESS_KEY_INVENTORY]);
 
     // Format current floor information
+    char* current_floor_text = get_local_string("MAP.CURRENT.FLOOR");
     char floor_str[64];
-    snprintf(floor_str, sizeof(floor_str), "Current Floor: %d", current_floor);
+    snprintf(floor_str, sizeof(floor_str), "%s %d", current_floor_text, current_floor);
     print_text_default(y++, x, floor_str);
+    free(current_floor_text);
 
     // Format player position string
     char pos_str[64];
     snprintf(pos_str, sizeof(pos_str), "%s: %d, %d", map_mode_strings[PLAYER_POSITION_STR], player_pos.dx, player_pos.dy);
     print_text_default(y + 2, x, pos_str);
+}
+
+void draw_transition_screen(void) {
+    // Get screen dimensions
+    int width, height;
+    get_screen_dimensions(&width, &height);
+
+    // Clear the screen
+    clear_screen();
+
+    char* transition_text = get_local_string("MAP.FLOOR.TRANSITION");
+    char welcome_msg[256];
+    snprintf(welcome_msg, sizeof(welcome_msg), "%s", transition_text);
+    free(transition_text);
+
+    int msg_len = strlen(welcome_msg);
+    int msg_x = (width - msg_len) / 2;
+    int msg_y = height / 4;
+
+    print_text_default(msg_y, msg_x, welcome_msg);
+
+    // Render the frame using centralized IO handler
+    render_frame();
+
+    // Wait for user input while animation plays
+    input_event_t input_event;
+    display_gif_at_interruptible(PLAYER_RUN_GIF, (width - PLAYER_RUN_WIDTH) / 2, msg_y + 1, PLAYER_RUN_HEIGHT, PLAYER_RUN_WIDTH, SCALE_STRETCH, 5, true, &input_event);
+
+    // If no input was captured during animation, wait for input
+    if (input_event.type == INPUT_NONE) {
+        get_input_blocking(&input_event);
+    }
+
+    // Clear the screen after input
+    media_cleanup();
 }
