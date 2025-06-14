@@ -5,8 +5,8 @@
 #ifndef MEDIA_OUTPUT_H
 #define MEDIA_OUTPUT_H
 
-#include "media_output_handler.h"
 #include "../../input/input_types.h"
+#include "media_output_handler.h"
 
 #include <notcurses/notcurses.h>
 #include <stdbool.h>
