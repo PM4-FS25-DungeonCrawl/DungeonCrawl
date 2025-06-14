@@ -1,5 +1,8 @@
 # DungeonCrawl
 
+## Manual
+If you are unsure how to play the game, check out the manual [here](Manual.pdf)
+
 ## API Documentation
 
 A full API reference generated from the code comments with doxygen can be found [here](https://pm4-fs25-dungeoncrawl.github.io/DungeonCrawl/)
