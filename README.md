@@ -43,13 +43,13 @@ Having to use pointers and structs instead of objects led to a lot of challenges
 ## Why use SQL for saving gamestates?
 Primarily just because we wanted to use SQL, but also because saving the gamestate in a .txt or something similar would make it very easy for the player to manipulate their game.
 
-Using SQL was definitely more time consuming and required more effort than a simpler solution, but we think it was worth it.
+Using SQL was definitely more time-consuming and required more effort than a simpler solution, but we think it was worth it.
 
 ## Why use property files for localization?
 Initially, we used SQL for localization as well but later decided to switch to property files for a number of reasons:
 - Localization took way too long to load.
 - It was difficult to quickly add new text.
-Property files provided a much simpler solution that was both faster to expand and easier to intergrate into our program.
+Property files provided a much simpler solution that was both faster to expand and easier to integrate into our program.
 
 ## Why use notcurses?
 Because notcurses is one of the best and most-used terminal I/O libraries for C. We started with the library termbox but later switched to notcurses because termbox has no Windows support and is very limited in functionality.
@@ -64,13 +64,14 @@ Because notcurses is one of the best and most-used terminal I/O libraries for C.
 - code is documented
 
 # TestCoverage
-The testcoverage can be checked <a href="https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html" target="_blank">here</a>.
+The test coverage can be checked <a href="https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html" target="_blank">here</a>.
 
 # Development Progress
 ![Sprint 1](documents/burndownchart/sprint_1.svg)
 ![Sprint 2](documents/burndownchart/sprint_2.svg)
 ![Sprint 3](documents/burndownchart/sprint_3.svg)
 ![Sprint 4](documents/burndownchart/sprint_4.svg)
+![Sprint 5](documents/burndownchart/sprint_5.svg)
 
 # Project Documentation
 
