@@ -85,8 +85,8 @@ int init() {
     // Seed random function
     srand(time(NULL));
 
-    // Initialize logger
-    init_logger();
+    // Optional: Initialize logger
+    // init_logger(); // for the release version, we disable logging
 
     // First initialize the IO handler (needed for the splash screen)
     if (init_io_handler() != COMMON_SUCCESS) {
