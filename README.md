@@ -1,23 +1,33 @@
-# DungeonCrawl
+# 🟥 DungeonCrawl 🟥
 
-## Manual
+Welcome to the Readme for the hit game DungeonCrawl inspired by the 80's classic "Rogue"!
+
+## 🔴 Supported Platforms 🔴
+Because Microsoft is a very small company with very few resources, the windows terminal is not state of the art and cannot handle images being displayed in correctly unless it is running WSL.
+The game Runs on Linux and Macos.
+
+Simply download the binary from the releases and run it. You may have to grant permisions from the operating system.
+
+## 🔴 Manual 🔴
 If you are unsure how to play the game, check out the manual [here](Manual.pdf)
 
-## API Documentation
+## 🔴 API Documentation 🔴
 
 A full API reference generated from the code comments with doxygen can be found [here](https://pm4-fs25-dungeoncrawl.github.io/DungeonCrawl/)
 
-## Repo statistics
+##  🔴 Repo statistics 🔴 
 The number of lines of source code written.
 ```
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-C                               60           1209           1223           5770
-C/C++ Header                    55            385            845           1251
-Meson                            1             40              8            142
+C                               70           1791           1775           8546
+C/C++ Header                    65            535           2220           1479
+Text                             1            112              0            454
+Meson                            1             46              6            179
+Markdown                         1             10              0             27
 -------------------------------------------------------------------------------
-SUM:                           116           1634           2076           7163
+SUM:                           138           2494           4001          10685
 -------------------------------------------------------------------------------
 ```
 
@@ -27,34 +37,27 @@ indentation will be 4 spaces
 
 regular C naming conventions
 
-
-# Scrum people
-Jil & Nino
-
-# Manual 
-Lucien
-
-# Decision Record
-## Why write the game in C?
+# 🟧 Decision Record 🟧
+## 🟠 Why write the game in C? 🟠
 We decided to use C because not being able to rely on objects and built-in features of modern programming languages was an interesting challenge.
 
 Having to use pointers and structs instead of objects led to a lot of challenges, but it was an interesting learning opportunity nonetheless. That being said, in the future we would rather use a modern object-oriented language like Go for a project like this. 
 
-## Why use SQL for saving gamestates?
+## 🟠 Why use SQL for saving gamestates? 🟠
 Primarily just because we wanted to use SQL, but also because saving the gamestate in a .txt or something similar would make it very easy for the player to manipulate their game.
 
 Using SQL was definitely more time-consuming and required more effort than a simpler solution, but we think it was worth it.
 
-## Why use property files for localization?
+## 🟠 Why use property files for localization? 🟠
 Initially, we used SQL for localization as well but later decided to switch to property files for a number of reasons:
 - Localization took way too long to load.
 - It was difficult to quickly add new text.
 Property files provided a much simpler solution that was both faster to expand and easier to integrate into our program.
 
-## Why use notcurses?
+## 🟠 Why use notcurses? 🟠
 Because notcurses is one of the best and most-used terminal I/O libraries for C. We started with the library termbox but later switched to notcurses because termbox has no Windows support and is very limited in functionality.
 
-# Definition of Done
+# 🟨 Definition of Done 🟨
 - code runs and does what it is supposed to do
 - code is reviewed
 - has positive and negative unit tests
@@ -63,41 +66,41 @@ Because notcurses is one of the best and most-used terminal I/O libraries for C.
 - fulfills clean code standards
 - code is documented
 
-# TestCoverage
+# 🟩 TestCoverage 🟩
 The test coverage can be checked <a href="https://raw.githack.com/PM4-FS25-DungeonCrawl/DungeonCrawl/refs/heads/develop/documents/coverage/coverage-report.html" target="_blank">here</a>.
 
-## Testing Scope
+## 🟦 Testing Scope 🟦
 
-### Character:
+### 🔵 Character: 🔵 
 - character.c
 
-### Combat:
+### 🔵  Combat: 🔵 
 - combat_mode.c
     - invoke_potion_effect()
     - consume_ability_resource()
     - get_random_ability()
 - damage.c
 
-### Database:
+### 🔵  Database: 🔵 
 - database.c
 
-### Map:
+### 🔵 Map: 🔵 
 - map_generator.c
 - map_mode.c
 - draw_light.c
 
-### Stats:
+### 🔵 Stats: 🔵 
 - stats.c
 
-### Memory:
+### 🔵 Memory: 🔵 
 - memory_management.c
 
-### Logging:
+### 🔵 Logging: 🔵 
 - ringbuffer.c
 
-## Decisions Made in Testing
+## 🔵 Decisions Made in Testing 🔵 
 
-### UI components
+### 🔵 UI components 🔵 
 - **Description**: UI components with the sole purpose of displaying text for the player are playtested and don't have automated tests.
 - **Reasoning**: Testing the UI through automation would only work if the components are fixed and won't change by using a framework or tool. Our UI components are subject to change so we deemed the effort not worthwhile at this stage.
 - **Impact**: Visual bugs might appear in release version if they weren't found during playtesting.
@@ -109,9 +112,9 @@ The test coverage can be checked <a href="https://raw.githack.com/PM4-FS25-Dunge
 ![Sprint 4](documents/burndownchart/sprint_4.svg)
 ![Sprint 5](documents/burndownchart/sprint_5.svg)
 
-# Project Documentation
+# 🟪 Project Documentation 🟪
 
-## Architecture Diagram
+## 🟣 Architecture Diagram 🟣
 This architecture diagram gives an overview of the different modules that our codebase consists of.
 ```mermaid
 graph TD
@@ -150,7 +153,7 @@ graph TD
 
     S --> Z[SQLite Backend]
 ```
-## Data Flow Diagram
+## 🟣 Data Flow Diagram 🟣
 This diagram shows the general flow of data within our application.
 ```mermaid
 graph TD
@@ -195,7 +198,7 @@ graph TD
         Q --> C
     end
 ```
-## State Diagram
+## 🟣 State Diagram 🟣
 High level overview of the game flow. The game flow is mostly implemented via multiple nested 
 ```mermaid
 stateDiagram-v2
@@ -234,8 +237,7 @@ stateDiagram-v2
     SaveMenu --> MapMode : Back to Map
 
 ```
-# Entity Relation Diagrams
-## Gamestate Diagram
+## 🟣 Gamestate Diagram 🟣
 ```mermaid
 erDiagram
     Game_State ||--o{ GS_ID : has
@@ -255,7 +257,7 @@ erDiagram
     Player_State ||--o{ PS_Y : has
     Player_State ||--o{ PS_GS_ID : has
 ```
-## Items and Abilities Diagram
+## 🟣 Items and Abilities Diagram 🟣
 ```mermaid
 erDiagram
     Game_State ||--o{ GS_ID : has
