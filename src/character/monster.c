@@ -19,7 +19,7 @@ character_t* create_new_goblin(memory_pool_t* memory_pool) {
     free(goblin_name);
     NULL_PTR_HANDLER_RETURN(goblin, NULL, "Goblin", "Failed to allocate memory for goblin");
 
-    set_character_stats(goblin, 5, 5, 5, 5);
+    set_character_stats(goblin, 5, 5, 8, 5);
     set_character_dmg_modifier(goblin, PHYSICAL, 10);
     set_character_dmg_modifier(goblin, MAGICAL, 5);
     set_xp_reward(goblin, 120);

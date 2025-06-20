@@ -15,7 +15,7 @@ character_t* create_new_player(memory_pool_t* memory_pool) {
     free(player_name);
     NULL_PTR_HANDLER_RETURN(player, NULL, "Player", "Failed to allocate memory for player");
 
-    set_character_stats(player, 5, 5, 5, 10);
+    set_character_stats(player, 5, 5, 15, 10);
     set_initial_xp(player, 0);
     set_level(player, 1);
     set_skill_points(player, 5);
