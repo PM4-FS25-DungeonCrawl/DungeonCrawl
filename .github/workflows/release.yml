@@ -56,8 +56,9 @@ jobs:
       - name: Create package
         run: |
           mkdir -p release-macos
+          mkdir -p release-macos/resources
           cp builddir/DungeonCrawl release-macos/
-          cp -r resources/ release-macos/ || true
+          cp -r resources/ release-macos/resources || true
           cp Manual.pdf release-macos/ || true
           cd release-macos
           zip -r ../dungeonCrawl-macOS.zip .
