@@ -6,6 +6,9 @@ Welcome to the Readme for the hit game DungeonCrawl inspired by the 80's classic
 Because Microsoft is a very small company with very few resources, the windows terminal is not state of the art and cannot handle images being displayed in correctly unless it is running WSL.
 The game Runs on Linux and Macos.
 
+On macos run brew install notcurses
+On linux run sudo apt install libnotcurses-dev libnotcurses3
+
 Simply download the binary from the releases and run it. You may have to grant permisions from the operating system.
 
 ## 🔴 Manual 🔴
