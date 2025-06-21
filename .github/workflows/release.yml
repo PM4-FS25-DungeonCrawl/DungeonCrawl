@@ -27,9 +27,10 @@ jobs:
       - name: Create package
         run: |
           mkdir -p release-linux
+          mkdir -p release-linux/resources
           cp builddir/DungeonCrawl release-linux/
           cp Manual.pdf release-linux/ || true
-          cp -r resources/ release-linux/ || true
+          cp -r resources/ release-linux/resources || true
           cd release-linux
           zip -r ../dungeonCrawl-Linux.zip .
 
