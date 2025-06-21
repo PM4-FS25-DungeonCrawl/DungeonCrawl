@@ -7,6 +7,7 @@ Because Microsoft is a very small company with very few resources, the windows t
 The game Runs on Linux and Macos.
 
 On macos run brew install notcurses
+
 On linux run sudo apt install libnotcurses-dev libnotcurses3
 
 Simply download the binary from the releases and run it. You may have to grant permisions from the operating system.
